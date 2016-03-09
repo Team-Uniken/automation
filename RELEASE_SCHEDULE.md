@@ -67,8 +67,8 @@
 - **REL-IDgateway**
 - **REL-IDcore Stability**
 - **REL-IDcore Expansion**
-	- Windows Desktop wrapper and device fingerprinting
-	- Windows Use/Install Documentation
+	1. Windows Desktop wrapper and device fingerprinting
+	2. Windows Use/Install Documentation
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**
@@ -77,12 +77,13 @@
 ##1-Jun-2016
 - **ConnectSecure**
 - **REL-IDmobile**
+	1. React Native Ref App on iOS published
 - **REL-IDdesktop**
 - **REL-IDgateway**
 - **REL-IDcore Stability**
 - **REL-IDcore Expansion**
-	- OSX wrapper and device fingerprinting
-	- OSX Use/Install Documentation
+	1. OSX wrapper and device fingerprinting
+	2. OSX Use/Install Documentation
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**
@@ -93,7 +94,7 @@
 - **ConnectSecure**
 - **REL-IDmobile**
 - **REL-IDdesktop**
-	- Reference App for Windows in Electron
+	1. Reference App for Windows in Electron published
 - **REL-IDgateway**
 - **REL-IDcore Stability**
 - **REL-IDcore Expansion**
@@ -106,12 +107,13 @@
 ##1-Jul-2016
 - **ConnectSecure**
 - **REL-IDmobile**
+	1. React Native Ref App on Android published
 - **REL-IDdesktop**
-	- Reference App for OSX in Electron
+	1. Reference App for OSX in Electron published
 - **REL-IDgateway**
 - **REL-IDcore Stability**
 - **REL-IDcore Expansion**
-	- Citrix Integration on Windows wrapper
+	1. Citrix Integration on Windows wrapper
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**
@@ -124,7 +126,7 @@
 - **REL-IDgateway**
 - **REL-IDcore Stability**
 - **REL-IDcore Expansion**
-	- Citrix Integration on OSX wrapper
+	1. Citrix Integration on OSX wrapper
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**
