@@ -1,12 +1,34 @@
+### Marketing
+* **Swati**
+	- [ ] Get 20sec script to Sanjay and James
+	- [ ] Follow up on Sony Stuff
+	- [ ] Get all in cost for RSA
+	- [ ] Submit Bimal's name for standard track
+	- [ ] Get cost on custom Package
+	- [ ] Brief James and Julie on Gartner
+	- [ ] Pass on info to Julie on the website
+	- [ ] Share Transition Plan
+* **James**
+	- [ ] Send email to Adrian about London Lab contact
+	- [x] Share Client One Pager with Julie
+	- [ ] New Pitch Deck fluent with it - write lines for him
+	- [ ] Do Bio stuff
+	- [ ] Review Transition Plan
+	- [ ] Let Swati know about transition plan chat
+	- [ ] Schedule stuff for the following two weeks when I can go back(?)
+* **Julie**
+	- [ ] Update Client One Pager
+	- [ ] Print 40 Client One Pagers in color
+	- [ ] Print 15 Intro Decks 
+	- [ ] Write up 50 tweets for @ceouniken and @pmuniken
+	- [ ] Review Transition Plan
+	- [ ] Let Swati know about transition plan chat
 
-### Solar System Exploration, 1950s – 1960s
-
-- [ ] Mercury
-- [x] Venus
-- [x] Earth (Orbit/Moon)
-- [x] Mars
-- [ ] Jupiter
-- [ ] Saturn
-- [ ] Uranus
-- [ ] Neptune
-- [ ] Comet Haley
+### Engineering
+* **Tejas**
+	- [ ] Build Development Plan through April
+	- [ ] Better Spec Information / Metrics
+	- [ ] 
+* **James**
+	- [ ] Review Gateway Manager
+	- [ ]

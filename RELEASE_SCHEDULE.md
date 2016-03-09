@@ -61,12 +61,71 @@
 ##1-May-2016
 
 ##15-May-2016
+- **ConnectSecure**
+- **REL-IDmobile**
+- **REL-IDdesktop**
+- **REL-IDgateway**
+- **REL-IDcore Stability**
+- **REL-IDcore Expansion**
+	- Windows Desktop wrapper and device fingerprinting
+	- Windows Use/Install Documentation
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**
 
 ##1-Jun-2016
+- **ConnectSecure**
+- **REL-IDmobile**
+- **REL-IDdesktop**
+- **REL-IDgateway**
+- **REL-IDcore Stability**
+- **REL-IDcore Expansion**
+	- OSX wrapper and device fingerprinting
+	- OSX Use/Install Documentation
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**
+
 
 ##15-Jun-2016
+- **ConnectSecure**
+- **REL-IDmobile**
+- **REL-IDdesktop**
+	- Reference App for Windows in Electron
+- **REL-IDgateway**
+- **REL-IDcore Stability**
+- **REL-IDcore Expansion**
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**
+
 
 ##1-Jul-2016
+- **ConnectSecure**
+- **REL-IDmobile**
+- **REL-IDdesktop**
+	- Reference App for OSX in Electron
+- **REL-IDgateway**
+- **REL-IDcore Stability**
+- **REL-IDcore Expansion**
+	- Citrix Integration on Windows wrapper
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**
 
 ##15-Jul-2016
-
+- **ConnectSecure**
+- **REL-IDmobile**
+- **REL-IDdesktop**
+- **REL-IDgateway**
+- **REL-IDcore Stability**
+- **REL-IDcore Expansion**
+	- Citrix Integration on OSX wrapper
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**
