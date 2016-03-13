@@ -7,10 +7,9 @@
 	4. React Native Ref App functions
 - **REL-IDdesktop**
 - **REL-IDgateway**
+- **REL-IDcore**
 	1. iOS fingerprinting wrapper
 	2. Android fingerprinting wrapper
-- **REL-IDcore Stability**
-- **REL-IDcore Expansion**
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**
@@ -23,11 +22,10 @@
 	1. Engineering Documentation for iOS
 	2. Engineering Documentation for Android
 - **REL-IDdesktop**
-	1. Electron Prototype with R&D completion for REL-OD Desktop app development using Electron. 
+	1. Electron Prototype with R&D completion for REL-ID Desktop app development using Electron. 
 	2. Election Desktop specifications
 - **REL-IDgateway**
-- **REL-IDcore Stability**
-- **REL-IDcore Expansion**
+- **REL-IDcore**
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**
@@ -38,8 +36,7 @@
 - **ConnectSecure**
 - **REL-IDmobile**
 - **REL-IDgateway**
-- **REL-IDcore Stability**
-- **REL-IDcore Expansion**
+- **REL-IDcore**
 - **REL-IDzero**
 - **REL-IDpeer**
 - **REL-IDsmart**

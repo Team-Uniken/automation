@@ -1,23 +1,24 @@
 ### Marketing
 * **Swati**
-	- [ ] Get 20sec script to Sanjay and James
+	- [x] Get 20sec script to Sanjay and James
 	- [ ] Follow up on Sony Stuff
-	- [ ] Get all in cost for RSA
-	- [ ] Submit Bimal's name for standard track
-	- [ ] Get cost on custom Package
+	- [x] Get all in cost for RSA
+	- [x] Submit Bimal's name for standard track
+	- [x] Get cost on custom Package
 	- [ ] Brief James and Julie on Gartner
 	- [ ] Pass on info to Julie on the website
-	- [ ] Share Transition Plan
+	- [x] Share Transition Plan
+	- [ ] Draft Video Language for Diffie
 * **James**
-	- [ ] Send email to Adrian about London Lab contact
+	- [x] Send email to Adrian about London Lab contact
 	- [x] Share Client One Pager with Julie
 	- [ ] New Pitch Deck fluent with it - write lines for him
-	- [ ] Do Bio stuff
+	- [x] Do Bio stuff
 	- [ ] Review Transition Plan
 	- [ ] Let Swati know about transition plan chat
 	- [ ] Schedule stuff for the following two weeks when I can go back(?)
 * **Julie**
-	- [ ] Update Client One Pager
+	- [x] Update Client One Pager
 	- [ ] Print 40 Client One Pagers in color
 	- [ ] Print 15 Intro Decks 
 	- [ ] Write up 50 tweets for @ceouniken and @pmuniken
@@ -32,3 +33,8 @@
 * **James**
 	- [ ] Review Gateway Manager
 	- [ ]
+
+
+* **TEAM**
+	- [ ] Think of Indian Companies that could be good Beta-1 testers.
+	
