@@ -27,14 +27,18 @@
 
 ### Engineering
 * **Tejas**
-	- [ ] Build Development Plan through April
+	- [x] Build Development Plan through April
 	- [ ] Better Spec Information / Metrics
-	- [ ] 
+	- [x] Verify POC capabilities with team
 * **James**
 	- [ ] Review Gateway Manager
-	- [ ]
+	- [ ] Send out Integrations List
+	- [ ] Put POX capabilities into Github
+	- [ ] Review Dev plan and put into Release Schedule
 
 
 * **TEAM**
 	- [ ] Think of Indian Companies that could be good Beta-1 testers.
-	
+	- [ ] Create Github accounts
+	- [ ] Add integration ideas to list
+	- [ ]
