@@ -43,10 +43,10 @@ Versioning should follow a consistent alphanumerical pattern across all products
 A _**Major**_ release is a release that provides such significant changes to framework or functionality that backwards compatability may be impacted.
 
 ###Minor Release
-A _**Major**_ release is incremented when only minor features or significant fixes have been added. This number reverts back to zero whenever a major release occurs.
+A _**Minor**_ release is incremented when only minor features or significant fixes have been added. This number reverts back to zero whenever a major release occurs.
 
 ###Stage
-The _**Stag**_ number is an abbreviation of representation of the current stage of that release in the product lifecycle. The stage reverts back to alpha whenever a minor release occurs.  Some minor releases may never make it to beta or become release candidates before becoming absorbed into entirely new minor release.
+The _**Stage**_ number is an abbreviation of representation of the current stage of that release in the product lifecycle. The stage reverts back to alpha whenever a minor release occurs.  Some minor releases may never make it to beta or become release candidates before becoming absorbed into entirely new minor release.
 
 ###Revision or Build Release
 A _**Build**_ revision numbers increment when minor bugs are fixed.  Typically these are "hotfixes" that can be pushed quickly on published code in order to resolve customer requests or feedback. These numbers start back from zero whenever a major, minor, or stage change occurs.  Hotfixes to beta versions do not revert the stage back to alpha. 
