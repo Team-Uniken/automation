@@ -128,3 +128,22 @@
 - **REL-IDpeer**
 - **REL-IDsmart**
 - **R&D**
+
+
+
+
+##Business Features
+- **ConnectSecure**
+- **REL-IDmobile**
+	1. [ ] __
+- **REL-IDdesktop**
+- **REL-IDgateway**
+- **REL-IDcore**
+	1. [x] __Static Application Identity__ - Only REL-ID enabled appplication will contain a REL-ID issued secret key (REL-ID Admin will handover this to your application developer).  This enables verification of a valid enterprise-approved REL-ID application at the client end.  Someone with the REL-ID API SDK cannot connect to your enterprise without the secret key embedded inside the binary.
+	2. [x] __Application Version Control__ – Only specific versions of your applications will be able to connect to your backend enterprise application server.  This extends the functionality of the static app identity to include versioning of your applications.
+	3. [ ] __Simple Application Fingerprinting__ - Fingerprinting of the runtime environment of your application is part of the identity that is verified by the backend.  This includes looking at  
+	4. [ ] __Advanced Application Fingerprinting__ - Fingerprinting of the runtime environment of your application is part of the identity that is verified by the backend.  This includes looking at 
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**

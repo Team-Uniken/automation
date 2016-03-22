@@ -35,6 +35,7 @@
 	- [ ] Send out Integrations List
 	- [ ] Put POX capabilities into Github
 	- [ ] Review Dev plan and put into Release Schedule
+	- [ ] Review Swati's new script for Video
 
 
 * **TEAM**
