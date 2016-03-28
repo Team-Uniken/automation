@@ -160,6 +160,11 @@
 	- [ ] Confirm amount before payment completion
 	- [ ] Set "deliver by" date for payment
 
+14. [ ] As a user I want to be able to add new devices from my initial device
+	- [ ] Request a new activation code
+	- [ ] See activation code on initial screen without an extra click
+	- [ ] Set time limits on the activation code from 30min to 1 month
+	- [ ] See verification on code
 
 ##Fututre User Stories (TBD development)
 1. [ ] As a user I want to login into my bank account securely with my __(integration)__

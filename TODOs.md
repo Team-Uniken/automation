@@ -9,6 +9,7 @@
 	- [ ] Pass on info to Julie on the website
 	- [x] Share Transition Plan
 	- [ ] Draft Video Language for Diffie
+
 * **James**
 	- [x] Send email to Adrian about London Lab contact
 	- [x] Share Client One Pager with Julie
@@ -17,6 +18,7 @@
 	- [ ] Review Transition Plan
 	- [ ] Let Swati know about transition plan chat
 	- [ ] Schedule stuff for the following two weeks when I can go back(?)
+
 * **Julie**
 	- [x] Update Client One Pager
 	- [ ] Print 40 Client One Pagers in color
@@ -24,22 +26,42 @@
 	- [ ] Write up 50 tweets for @ceouniken and @pmuniken
 	- [ ] Review Transition Plan
 	- [ ] Let Swati know about transition plan chat
+	- [ ] Update about us section on WEbsite to include Robert, James, and Julie
+	- [ ] 
 
 ### Engineering
 * **Tejas**
 	- [x] Build Development Plan through April
 	- [ ] Better Spec Information / Metrics
 	- [x] Verify POC capabilities with team
+
 * **James**
 	- [ ] Review Gateway Manager
 	- [ ] Send out Integrations List
-	- [ ] Put POX capabilities into Github
+	- [ ] Put POC capabilities into Github
 	- [ ] Review Dev plan and put into Release Schedule
-	- [ ] Review Swati's new script for Video
+	- [x] Review Swati's new script for Video
+	- [x] Add features to Ref App use cases
+	- [ ] Refine feature list with 
+	- [ ] Split out wishlist from v1 backloag
+	- [ ] Send out invite for weekly RefApp meetings
+	- [ ] Clean up and put in md the iOS Wrapper Documenation
+	- [ ] Send comments on Benchmarks
 
+* **Amit**
+	- [ ] Send James a RefApp v1 schedule (week by week)
 
 * **TEAM**
 	- [ ] Think of Indian Companies that could be good Beta-1 testers.
 	- [ ] Create Github accounts
 	- [ ] Add integration ideas to list
-	- [ ]
+
+### Sales
+* **James**
+	- [ ] Add 
+	- [ ] Investment Memo for NWD
+	- [ ] Wednesday Roadmap 
+	- [ ] May 2nd as Video Site
+	- [ ] Get Bimal video, set colors
+	- [ ] Fill out Reqs on Hybrid POC
+	- [ ] 
