@@ -1,33 +1,19 @@
 ### Marketing
 * **Swati**
-	- [x] Get 20sec script to Sanjay and James
 	- [ ] Follow up on Sony Stuff
-	- [x] Get all in cost for RSA
-	- [x] Submit Bimal's name for standard track
-	- [x] Get cost on custom Package
 	- [ ] Brief James and Julie on Gartner
 	- [ ] Pass on info to Julie on the website
-	- [x] Share Transition Plan
 	- [ ] Draft Video Language for Diffie
+	- [ ] Marketing email for Sales team to send to people in India about the REport
 
 * **James**
-	- [x] Send email to Adrian about London Lab contact
-	- [x] Share Client One Pager with Julie
 	- [ ] New Pitch Deck fluent with it - write lines for him
-	- [x] Do Bio stuff
-	- [ ] Review Transition Plan
-	- [ ] Let Swati know about transition plan chat
-	- [ ] Schedule stuff for the following two weeks when I can go back(?)
+	- [ ] Product update for newsletter - future, brand list, release list, ent/mob/iot
+	- [ ] Set up Mailchimp account and mailing newsletter basics for Julie
 
 * **Julie**
-	- [x] Update Client One Pager
-	- [ ] Print 40 Client One Pagers in color
-	- [ ] Print 15 Intro Decks 
-	- [ ] Write up 50 tweets for @ceouniken and @pmuniken
-	- [ ] Review Transition Plan
-	- [ ] Let Swati know about transition plan chat
-	- [ ] Update about us section on WEbsite to include Robert, James, and Julie
-	- [ ] 
+	- [ ] Update about us section on Website to include Robert, James, and Julie 
+	- [ ] RSA follow up with Swati
 
 ### Engineering
 * **Tejas**
@@ -40,13 +26,13 @@
 	- [ ] Send out Integrations List
 	- [ ] Put POC capabilities into Github
 	- [ ] Review Dev plan and put into Release Schedule
-	- [x] Review Swati's new script for Video
-	- [x] Add features to Ref App use cases
-	- [ ] Refine feature list with 
+	- [ ] Refine feature list with Tejas' input
 	- [ ] Split out wishlist from v1 backloag
 	- [ ] Send out invite for weekly RefApp meetings
 	- [ ] Clean up and put in md the iOS Wrapper Documenation
 	- [ ] Send comments on Benchmarks
+
+	- [ ] GATEWAY FIX: Admin/vs default group changes (import doesn't do anything)
 
 * **Amit**
 	- [ ] Send James a RefApp v1 schedule (week by week)
@@ -55,13 +41,12 @@
 	- [ ] Think of Indian Companies that could be good Beta-1 testers.
 	- [ ] Create Github accounts
 	- [ ] Add integration ideas to list
+	- [ ] 
 
 ### Sales
 * **James**
-	- [ ] Add 
 	- [ ] Investment Memo for NWD
-	- [ ] Wednesday Roadmap 
+	- [ ] Wednesday POC Roadmap for Wells
 	- [ ] May 2nd as Video Site
 	- [ ] Get Bimal video, set colors
 	- [ ] Fill out Reqs on Hybrid POC
-	- [ ] 

@@ -1,7 +1,6 @@
 
 #Uniken Glossary
 
-
 ##FEATURES
 
 ###Discovery
@@ -25,10 +24,10 @@ A feature moves from Design to PreAlpha when the features and designs have been 
 Alpha testing is simulated or actual operational testing by a test team at the developers' site.  Alpha testing begins when features are completed and moved to QA.  A product is said to be in alpha so long as this QA/internal testing process is continuing.  As much as is feasible, Alpha testing should involve internal teams using the product within the company. Alpha releases may resolve involve bugs fixes, hotfixes, minor design tweaks, as well as the new features that have finished development and move into QA after the majority of other features. 
 
 ###Beta testing 
-Beta testing is a form of external user acceptance testing. Versions of the software, known as beta versions, are released to a limited audience outside of the programming team known as beta testers. The software is released to groups of people so that further testing can ensure the product has few faults or bugs.  A product goes from alpha to beta when internal QA is complete and it is _ready_ to be shared with the first beta tester, but not necessarily shared yet.  Beta releases may resolve involve bugs fixes, hotfixes, and minor design tweaks.  Beta releases should _not_ involve major feature additions.  Customers should be aware that _beta releases_ may not be stable enough for production use and that caution should be taken.
+Beta testing is a form of external user acceptance testing. Versions of the software, known as beta versions, are released to a limited audience outside of the programming team known as beta testers. The software is released to groups of people so that further testing can ensure the product has few faults or bugs.  A product goes from alpha to beta when internal QA is complete and it is _ready_ to be shared with the first beta tester, but not necessarily shared yet.  Build eleases in beta may resolve/involve bugs fixes, hotfixes, and minor design tweaks.  Beta build releases should _not_ involve feature additions.  Customers should be aware that _beta releases_ may not be stable enough for production use and that caution should be taken.
 
 ###Release Candidate
-A release candidate (RC) is a beta version with potential to be a final product, which is ready to release unless significant bugs emerge. In this stage of product stabilization, all product features have been designed, coded and tested through one or more beta cycles with no known showstopper-class bug. A release is called code complete when the development team agrees that no entirely new source code will be added to this release. There could still be source code changes to fix defects, changes to documentation and data files, and peripheral code for test cases or utilities. Beta testers, if privately selected, will often be credited for using the release candidate as though it were a finished product. Beta testing is conducted in a client's or customer's location and to test the software from a user's perspective. A beta release will can be considered a full _release candidate_ when showstopper bugs have been resolved and bug requests from beta users have dropped or leveled off.
+A release candidate (RC) is a beta version with potential to be a final product, which is ready to release unless significant bugs emerge. In this stage of product stabilization, all product features have been designed, coded and tested through one or more beta cycles with no known showstopper-class bug. A release is called code complete when the development team agrees that no entirely new source code will be added to this release. There could still be source code changes to fix defects, changes to documentation and data files, and peripheral code for test cases or utilities. Beta testers, if privately selected, will often be credited for using the release candidate as though it were a finished product. Beta testing is conducted in a client's or customer's location and to test the software from a user's perspective. A beta release can be considered a full _release candidate_ when showstopper bugs have been resolved and bug requests from beta users have dropped or leveled off.
 
 ###Gold Master
 The term "release to manufacturing", also known as "going gold", is a term used when a software product is ready to be delivered or provided to the customer. This build may be digitally signed, allowing the end user to verify the integrity and authenticity of the software purchase. A copy of the RTM build known as the "gold master" or GM is sent for mass duplication. RTM precedes general availability (GA), when the product is released to the public.  A product goes from a _beta release candidate_ to a _gold master_ when all major and minor bugs have been resolved or pushed to later major versions.
@@ -40,10 +39,10 @@ Versioning should follow a consistent alphanumerical pattern across all products
 [major].[minor].[stage].[build]
 
 ###Major Release
-A _**Major**_ release is a release that provides such significant changes to framework or functionality that backwards compatability may be impacted.
+A _**Major**_ release is a release that provides such significant changes to framework or functionality that backwards compatability may be impacted. Major releases may interrupt or cause issue with compatability.
 
 ###Minor Release
-A _**Minor**_ release is incremented when only minor features or significant fixes have been added. This number reverts back to zero whenever a major release occurs.
+A _**Minor**_ release is incremented when only minor features or significant fixes have been added. This number reverts back to zero whenever a major release occurs. Minor releases typically are co-compatible.
 
 ###Stage
 The _**Stage**_ number is an abbreviation of representation of the current stage of that release in the product lifecycle. The stage reverts back to alpha whenever a minor release occurs.  Some minor releases may never make it to beta or become release candidates before becoming absorbed into entirely new minor release.

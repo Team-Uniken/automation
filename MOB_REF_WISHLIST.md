@@ -1,5 +1,17 @@
 #REL-ID Mobile Reference App 
 
+
+Resource for RefApp - Vinay
+ReactNative Plugin Acceptance Criteria
+API in JS that we are looking at
+OpenBank possibility
+Full React Work Plan
+
+
+
+
+
+
 ##Screens
 1. [ ] Loading Screen
 	- [x] Wireframe ()
@@ -165,6 +177,7 @@
 	- [ ] See activation code on initial screen without an extra click
 	- [ ] Set time limits on the activation code from 30min to 1 month
 	- [ ] See verification on code
+
 
 ##Fututre User Stories (TBD development)
 1. [ ] As a user I want to login into my bank account securely with my __(integration)__
