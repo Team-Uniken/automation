@@ -6,10 +6,15 @@
 #username is 
 ssh ec2-user@122.248.254.84
 #must be root
-sudo su
+sudo -s
 cd /usr/local
 ls -l
+wget http://46.137.245.22:8080/REL-ID_Client/uniken.pg9.4.sra.20160328_3.tgz
+wget http://46.137.245.22:8080/REL-ID_Client/configure-once.sh
 #copy from internet to server on uniken.pg9.sra.20160328_3.tgz
+
+#sudo bash ./configure-once.sh
+#OR
 ./configure-once.sh
 #set new password for user uniken
 uniken123$

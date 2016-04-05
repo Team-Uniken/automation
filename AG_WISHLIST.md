@@ -1,7 +1,7 @@
 ##Business Features
 - **ConnectSecure**
 - **REL-IDmobile**
-	1. [ ] __ QuickSkin_
+	1. [ ] __ QuickSkin__
 - **REL-IDdesktop**
 - **REL-IDgateway**
 - **REL-IDcore**
