@@ -1,0 +1,73 @@
+
+
+
+	- [ ] Bimal to send signatures on note for Nilesh (Exfinity money?)
+	- We will close quarter at $265,000, mostly from BOI
+	- Forecast was 121,000 for Q1
+	- Q2 goal was 276,000
+	- Of the 276,000... recurring is 79k, new internal is 10k, 158k is new customers
+	- Q2 strong pipeline is 350k, which would be likely 40%
+	- ICICI is not strong lead.  
+	- [ ] NILESH - put a note for Bimal to Mohan on ICICI to push sale
+	- Even if ICICI moves, it'll take 2 Qs to move
+	- [ ] NILESH - send Bimal the entire India pipeline issue
+	- The shortfall is 100k if we miss CRIS
+	- [ ] NILESH - send Rajiv's number so Bimal can make a call
+	- Shortfall starts in April at 40k because of CRIS
+	- [ ] Prakash - reset all the report rates
+	- Support contracts are getting redone.  BOI is good.  Margin is 15% more, but is absolute margin is 65-70%.  SBI is "accepting" the new deal, but negotiations are still happening. They are targeting 65-70% there as well.  
+	- [ ] Prakash - if we can't get margin on support, terminate contract.
+	- In Oct, Yuco bank might get renewed, so there's an opportunity to do that.
+	- With private banks we can try to look at midyear rate adjustments.
+	- [ ] Prakash - identify private banks for midyear service rate adjustments
+	- From Swati:
+		1. submitted Accenture application
+			- [ ] SWATI - drop note to Adrian
+		2. ________ 5th of April on results for ________
+			- 13th of April would be the event
+		3. After we finalized Times stuff, we got confirmation.  Expecting publication tomorrow.
+		4. New newsletter draft - Bimal wants update on Uniken, on the product.  Make sense of "continuing to grow" and "here's some stories"
+		5. Working on Diffie change
+		6. Swati added new banner
+		7. New Contact us button at bottom, but need further refinement
+		8. Created a solutions page
+		9. [ ] JULIE - work with James to redo the Solutions page layout.
+		10. [ ] SWATI - Layout clear follow up guidelines for post tomorrow.
+	- [ ] JAMES - change color on "learn more" on site
+	- Prakash sent the dashbook
+	- CDSL rolled out 80% of users.  There was some slowness but analyzed the issue and it was a proxy on the CDSL side, which is now resolved. 2200 users with 1800 users live.  There is a small issue on the FTP site, but we are waiting for stable environment to dig into the FTP problem and identify resolution.
+	- BOI Kenya, customers have not been enrolled yet
+	- _______ continues to enroll more customers, but they are not in a prod bank yet
+	- Indus Bank is slow to roll out, but user acceptance testing continues with all 18 of their apps
+	- Still waiting for Mohindra to get hardware
+	- [ ] PRAKASH - ASAP from 2014 provide quarter by quarter customers/user names and counts
+	- Prakash needs help from dev side with file transfer product.  Tejas needs some capacity, but its not impacting the June timelines on API-SDK.  The file transfer team is cross pipeline, so he can pull a couple of resources to enhance file transfer stability.
+	- FT crashes after consistent usage on Windows.  
+	- [ ] TEJAS - Come back with acceptance criteria and capability metrics on the FT fix.  It is a KTLO offering.
+	- [ ] PRAKASH - Come back with user base, revenue base, pros/cons of customer value for FT product.
+	- [ ] JAMES - check out market on secure file transfer product
+	- [ ] JAMES - build template on product resolution document
+	- [ ] TEJAS - Come back with affirmative on Double Sign on - can ConnectSecure Viewer handle SSO (google, facebook, SAML, OAuth2,  etc.) across platforms (iOS, OSX, Windows, Winphone, Android)
+	- Six quotes have been made for an internal dev environment work.  Can you set up an internal mail solution as well?
+	- Expectations for Secure Environment
+		- Core unobfuscated, uncompiled binary code never sits on a single machine outside the office.
+		- [ ] EASHWAR - Come back with virtualization options and business case: pros/cons/costs/benefits of various options (RDPvsVM)
+	- There is no room for error until the term sheets are issued and signed.  It needs to be flawless.  We need to work harder for the next 60 days. Realistic expectations and communication at all times.
+	- If there are material needs in engineering - comeback with needs and we'll hire a recruiter and talk.
+	- Our new POC strategy is "up and running in 4 hours"
+		1. Test lab up and running in 4 hours
+		2. ConnectSecure with a deployed app
+		3. Use REL-ID API-SDK in a dev version of their app
+	- [ ] JAMES - iOS Integration Document clean up
+	- [ ] TEJAS - Send timeslots for walkthrough on standing up POC in 4 hours
+
+
+
+
+
+
+
+
+
+
+
