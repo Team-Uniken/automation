@@ -1,16 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
 ##15-Mar-2016
 - **ConnectSecure**
 - **REL-IDmobile**

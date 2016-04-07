@@ -216,6 +216,11 @@ Metrics should eventually be broken out by product and then by four categories -
 
 ## 6. Market and Customer Research
 
+### Need to integrate the Biometric or third party Piece as Demo and estbalish timeline for new product integration
+
+### Need to look at FIDO for a standard for MFA (???)
+
+
 ### Feedback Loop as Product
 We must look to feedback options built in to each product that we release.  As whitelabel agents, these must be configurable for end clients.  But we should also encourage a standardized feedback channel to collect information from all types of users.  This can be part of our new contract around REL-IDmobile and REL-IDdesktop.
 

@@ -3,6 +3,11 @@
 	- __FLEXIBILITY__
 		1. [ ] Whole Device Tunneling Mobile - 
 		1. [ ] Whole Device Tunneling Desktop - 
+		1. [ ] Plugins - 
+			- Outlook 
+				-OSX
+				-WIndows
+			- Other email client???
 	- __SIMPLICITY__
 	- __SECURITY__
 	- __SCALABILITY__
@@ -32,12 +37,27 @@
 		17. [ ] __Digitally Sign a Transaction__ - SHRIRANG has notes	
 		18. [ ] __Active Device ID__ - A REL-ID is issued a the T=0 moment and is stored on the device in a secure manner, not reissued via the primary channel.  This, in effect, combines the primary and secondary channel, trading the standard user credential for an embedded device credential.  This enables faster connectivity, but marginally increases device compromise risk.  This is required for passwordless authentication.
 		19. [ ] __Passwordless Authentication__ - an expansion of the Active Device ID feature.  This enables device recognition and secure channel creation on top of the Active Device ID.  This can be achieved without Active Device ID, relying on the device fingerprint, but this is discouraged.
+		1. [ ] __Rootkit Detection__ - SUPER IMPORTANT
+			- [ ] Rootkit Detection API in SDK on client device
+			- [ ] Rootkit Detection as Policy managed from Gateway
+		1. [ ] __Malware Detection__ - SUPER IMPORTANT
+		1. [ ] __Jailbreak Detection__ - 
+			- [ ] Jailbreak Detection API in SDK on client device
+			- [ ] Jailbreak Detection as Policy managed from Gateway
+		1. [ ] __Risk Assessment Engine__ - 
+		1. [ ] __Location Deep Authentication__ - 
+			- [ ] Location by country managed as Policy from Gateway
+			- [ ] Geofencing managed as Policy from Gateway
+			- [ ] Location by distance from Lat/Lon from Gateway
+		1. [ ] __Micro Kernel, ported to many OS's__ - See Robert for list
+		1. [ ] __SUpport for session & non-session transport__ - Broadly, this is UDP for IOT
 - **REL-IDgateway**
 	- __FLEXIBILITY__
 		1. [ ] __First Time Activation Policy Managment__ - 
 		1. [ ] __Primary Channel Policy Management__ - 
 		1. [ ] __Secondary Channel Policy Management__ - 
 		1. [ ] __Device Manager Policy Management__ - 
+		1. [ ] __Multi-app whitelisting from Gateway (i.e. RDP and XXX)__ - 
 	- __SIMPLICITY__
 		1. [ ] __Soft-Appliance Offering__ - For easy deploymoent, the REL-IDgateway is delivered as a soft-appliance, either as a virtual image or a package, depending on your infrastructure (physical/virtual).
 			- [ ] Compatible with CentOS vX+
@@ -74,6 +94,10 @@
 			- [ ] OAuth2/SAML permissions can be stored across REL-ID sessions on a device.
 			- [ ] OAuth2/SAML permissions can be made permanent for a device, inside REL-ID.
 		1. [ ] __Custom RDBMS User Directory Integration__ - 
+		1. [ ] __Secure Profile on Amazon__ - 
+		1. [ ] __Secure Profile on Azure__ - 
+		1. [ ] __Secure Profile on DigitalOcean__ - 
+		1. [ ] __Secure Vagrant Standup__ - 
 	- __SECURITY__
 		1. [ ] __Application Driven Crypto-segmentation__ - You can use a single REL-IDgateway Server to separate different applications accessing different application servers (For example, HR App has access to HRMS server and LMS app to your LMS server)
 		1. [ ] __User Management__ - You can perform all major CRUD operations on a user.  Tejas 
@@ -88,25 +112,44 @@
 		1. [ ] __Faster than VPN connectivity__ - REL-ID pages and assets load faster through REL-ID than through a standard VPN product
 
 - **REL-IDmobile**
+		1. [ ] __Easy Integration__ - 
+		1. [ ] __QuickSkin__ - 
+		1. [ ] __Secure Messaging__ -
+		1. [ ] __iOS Fingerprint Login__ - 
+		1. [ ] __SayPay or Other Auth Login__ - 
+		1. [ ] __Integrate to Nuance (??? ASK BIMAL)__ - 
+		1. [ ] __Integrate to EyeVerify (???)__ - 
+		1. [ ] __Auto Update Mechanism__ - 
 	- __FLEXIBILITY__ - 
 	- __SIMPLICITY__ - 
 	- __SECURITY__ - 
 	- __SCALABILITY__ - 
+- **REL-IDdesktop**
 		1. [ ] __Easy Integration__ - 
 		1. [ ] __QuickSkin__ - 
-- **REL-IDdesktop**
-		12.[ ] __Easy Integration__ - 
-		1. [ ] __QuickSkin__ - 
+		1. [ ] __Default Browser Use__ - 
+		1. [ ] __Secure / Off-the-Record Messaging__ -
+		1. [ ] __Auto Update Mechanism__ - 
+	- __FLEXIBILITY__ - 
+	- __SIMPLICITY__ - 
+	- __SECURITY__ - 
+	- __SCALABILITY__ - 
 - **REL-IDzero**
+	1. [ ] __Browser Fingerprinting__ 
+	1. [ ] __Browser Fingerprint Intelligence__ - We collect data provided in both real-time as well as offline, such as geographical and time attributes, plug ins, IP address, etc. We then run risking, such as velocity & consistency checks, web view & proxy detection, tampering checks, and blacklist comparisons to identify any potential fraud indicators.
+	1. [ ] 
+	1. [ ] __Cross-Channel Binding__ - Connect browsers to other REL-ID connected elements
 	1. [R&D] __In-Band Authorization__
 	1. [R&D] __Zero-Footprint JS package__ - this enables limited javascript based REL-ID authentication from inside a standard browser window.  Though not secure on its own, this feature is most appropriately coupled with in-band verification.
 - **REL-IDpeer**
+	1. [ ] __Access Gateway Module for Webserver__ - Decryption is managed as a plugin in the same environment as the backend app service.
 	1. [R&D] __Mobile-to-Mobile__
 	1. [R&D] __Gateway-to-Gateway__
 	1. [R&D] __Mobile-to-Gateway-Single-Pass__
 	1. [R&D] __UDP__
 	1. [R&D] __Mobile-to-App-Server (Agent to Agent)__ 
 - **REL-IDsmart**
+	1. [ ] __Session and non-session transport__ - Think secure meters with cumulative data
 
 - **R&D**
 
