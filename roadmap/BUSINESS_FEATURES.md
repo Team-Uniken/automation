@@ -1,3 +1,8 @@
+Sec
+See spreadsheet version at:
+[https://docs.google.com/a/uniken.com/spreadsheets/d/1HeYMXbrav3Ff6okiZ_KvDBbJkcx2OtMNckmT8fgAl_w/edit?usp=sharing](https://docs.google.com/a/uniken.com/spreadsheets/d/1HeYMXbrav3Ff6okiZ_KvDBbJkcx2OtMNckmT8fgAl_w/edit?usp=sharing)
+
+Thic
 ##Business Features
 - **REL-IDcore**
 	- __FLEXIBILITY__
@@ -18,8 +23,32 @@
 		5. [x] __Man in the Middle Resistant Channel__ - 
 		6. [ ] __True Mutual Authentication Protocol__ - 
 		7. [ ] __Secure External Communication__ - 
-		8. [ ] __Cross-Platform Capability__ - 
-		9. [ ] __Thick and Thin Client Support__ - After the initial identification and authentication process, 
+		8. [ ] __Cross-Platform Capability__ - You can use REL-IDcore (sdk) on almost all major platforms
+			- [ ] Wrapper for OSX
+				- [ ] Snow Leopard
+				- [ ] Lion
+				- [ ] Mountain Lion
+				- [ ] Mavericks
+				- [ ] Yosemite
+				- [ ] El Capitan
+			- [ ] Wrapper for Windows
+				- [ ] 7
+				- [ ] 8
+				- [ ] 10
+			- [ ] Wrapper for iOS
+				- [ ] 7
+				- [ ] 8
+				- [ ] 9
+			- [ ] Wrapper for Android
+				- [ ] Jelly Bean
+				- [ ] KitKat
+				- [ ] Lollipop
+				- [ ] Marshmallow
+			- [ ] Wrapper for Winphone
+				- [ ] 7.8
+				- [ ] 8
+				- [ ] 8.1
+ 		9. [ ] __Thick and Thin Client Support__ - After the initial identification and authentication process, 
 		10. [ ] __User-Driven Device Management__ -
 		11. [ ] __Encryption Scopes__ - You can encrypt data based on different scopes through simple API calls. These scopes include:
 			- Session
@@ -34,7 +63,9 @@
 		14. [ ] __Plug-n-Play Ciphers__ - Because of our history in the military sector, REL-ID has had to maintain flexibility with regard to the ciphers employed by our customers.  We are committed to that flexibility moving forward, so you can continue to use your homegrown or industry standard ciphers inside the REL-IDcore.
 		15. [ ] __Integrated CipherSuite__ - Not every company has the resources to develop there own secure ciphers, and most shouldn't attempt to! On the flip-side, open-source crypto libraries of industry standard ciphers carry their own risks.  REL-IDcore provides an integrated, locked-down, fully-tested ciphersuite of the most commonly used ciphers available today.  You get the trust of a published cipher with the strength of a verified, locked-down library.
 		16. [ ] __Digitally Sign the contents of your App__ - SHRIRANG has notes
-		17. [ ] __Digitally Sign a Transaction__ - SHRIRANG has notes	
+		17. [ ] __Digitally Sign a Transaction__ - SHRIRANG has notes 
+			TODO: Need to compare against the patent by Glen Benson http://patents.justia.com/patent/7082538, so we can go to JPMorgan Transaction mgmt
+
 		18. [ ] __Active Device ID__ - A REL-ID is issued a the T=0 moment and is stored on the device in a secure manner, not reissued via the primary channel.  This, in effect, combines the primary and secondary channel, trading the standard user credential for an embedded device credential.  This enables faster connectivity, but marginally increases device compromise risk.  This is required for passwordless authentication.
 		19. [ ] __Passwordless Authentication__ - an expansion of the Active Device ID feature.  This enables device recognition and secure channel creation on top of the Active Device ID.  This can be achieved without Active Device ID, relying on the device fingerprint, but this is discouraged.
 		1. [ ] __Rootkit Detection__ - SUPER IMPORTANT
@@ -113,7 +144,11 @@
 
 - **REL-IDmobile**
 		1. [ ] __Easy Integration__ - 
-		1. [ ] __QuickSkin__ - 
+		1. [ ] __QuickSkin__ - You can use a single configuration json file to change color scheme and UI/UX options from a default set up of the reference application.  This is for simplicity, but also for internal sales.
+		1. [ ] __QuickDev__ - The standard whitelabel solution is a common, easily learned frontend framework
+			- [ ] __ReactNative Reference__ - the reference app is built on ReactNative.
+			- [ ] __ReactNative Whitelabel__ - the new ConnectSecure product whitelabel offering is built in ReactNative
+		1. [ ] __Opensource plugin capabilities__ - 
 		1. [ ] __Secure Messaging__ -
 		1. [ ] __iOS Fingerprint Login__ - 
 		1. [ ] __SayPay or Other Auth Login__ - 

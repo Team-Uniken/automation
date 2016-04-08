@@ -20,4 +20,10 @@
 	- **Time to establish 1 Million connections:** Time taken to establish 1 Million connections on the Gateway server
 	- **Time to serve 1 Million requests:** Time taken to process 1 Million requests by the Gateway server
 
+##Thigns to consider:
+	- Throughput Rate
+	- Connection Rate
+	- Drop Queue Rate
+	- Memory Consumption
+
 
