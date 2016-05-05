@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "97a5aa30-ea10-46b2-9392-452a990f902b++4151",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9355C068-9A20-4960-ACD5-285F8526BB9D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : "ReactNativeSRA\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DemoApp1",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ReactRefrenceApp\/ReactRefereneApp\/ios\/DemoApp1.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/engdev",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "97a5aa30-ea10-46b2-9392-452a990f902b++4151"
+    }
+  ]
+}

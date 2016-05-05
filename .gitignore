@@ -1,1 +1,15 @@
 TODOs.md
+.DS_Store
+.svn
+/REL-IDmobile/ReactReferenceApp/android/build
+/REL-IDmobile/ReactReferenceApp/android/gradle
+/REL-IDmobile/ReactReferenceApp/android/keystores
+/REL-IDmobile/ReactReferenceApp/android/.gradle
+/REL-IDmobile/ReactReferenceApp/android/.idea
+/REL-IDmobile/ReactReferenceApp/android/local.properties
+/REL-IDmobile/ReactReferenceApp/android/ReactRefApp.iml
+/REL-IDmobile/ReactReferenceApp/android/app/build
+/REL-IDmobile/ReactReferenceApp/android/app/libs
+/REL-IDmobile/ReactReferenceApp/android/app/app.iml
+/REL-IDmobile/ReactReferenceApp/android/app/BUCK
+/REL-IDmobile/ReactReferenceApp/ios/api-sdk

@@ -1,0 +1,36 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6e416058-ee1f-40bc-b3a3-9c790494852a++365",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++365" : {
+
+    },
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : {
+      "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "branches\/mobdev\/iOS\/branches",
+      "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "branches\/mobdev\/iOS\/tags"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++365" : 0,
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "22597F7A-23AD-469A-A11A-F838F9279C57",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++365" : "RMilestone\/",
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ReactRefApp",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ReactRefereneApp\/ios\/ReactRefApp.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/relidapisdk",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6e416058-ee1f-40bc-b3a3-9c790494852a++365"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/engdev",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "97a5aa30-ea10-46b2-9392-452a990f902b++4151"
+    }
+  ]
+}
