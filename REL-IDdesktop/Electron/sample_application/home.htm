@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <script src="RDNA.js"></script>
+  <link rel="stylesheet" href="css/style_home.css">
+</head>
+<body>
+  <section class="container" id="rdnaPostLogin">
+    <a onclick="rdnaInitialize()" class="button blue">Initialize</a>
+    
+    <a onclick="rdnaPause()" class="button blue">Pause</a>
+    
+    <a onclick="rdnaResume()" class="button blue">Resume</a>
+    
+    <a onclick="rdnaTerminate()" class="button blue">Terminate</a>
+    
+    <a onclick="rdnaGetSDKVersion()" class="button blue">GetSDKVersion</a>
+    
+    <a onclick="rdnaGetSessionID()" class="button blue">GetSessionID</a>
+    
+    <a onclick="rdnaGetAgentID()" class="button blue">GetAgentID</a>
+    
+    <a onclick="rdnaGetDefaultCipherSpec()" class="button blue">GetDefaultCipherSpec</a>
+    <a onclick="rdnaGetDefaultCipherSalt()" class="button blue">GetDefaultCipherSalt</a>
+    <a onclick="rdnaGetDeviceID()" class="button blue">GetDeviceID</a>
+    <a onclick="rdnaGetServiceByName()" class="button blue">GetServiceByName</a>
+    <a onclick="rdnaGetServiceBytargetCoordinate()" class="button blue">GetServiceByTargetCoordinate</a>
+    <a onclick="rdnaGetAllServices()" class="button blue">GetAllServices</a>
+    <a onclick="rdnaStartService()" class="button blue">StartService</a>
+    <a onclick="rdnaStopService()" class="button blue">StopService</a>
+    <a onclick="rdnaStartAllServices()" class="button blue">StartAllServices</a>
+    <a onclick="rdnaStopAllServices()" class="button blue">StopAllServices</a>
+    <a onclick="rdnaEncryptDataPacket()" class="button blue">EncryptDataPkt</a>
+    <a onclick="rdnaDecryptDataPacket()" class="button blue">DecryptDataPkt</a>
+    <a onclick="rdnaEncryptHTTPReq()" class="button blue">EncryptHTTPReq</a>
+    <a onclick="rdnaDecryptHTTPResp()" class="button blue">DecryptHTTPResp</a>
+  </section><br><br>
+  <textarea rows="6" cols="50" id="txtField1"></textarea><textarea rows="6" cols="50" id="txtField2"></textarea><br><br>
+  ----------------------------------------------------------------------------------<br><br>
+  <textarea rows="10" cols="100" id="t1"></textarea>
+</body>
+</html>
