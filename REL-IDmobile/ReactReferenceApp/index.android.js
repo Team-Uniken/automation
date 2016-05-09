@@ -18,7 +18,6 @@ var QBank = require('./App/Components/Qbank');
 var ComingSoon = require('./App/Components/ComingSoon');
 var UserLogin = require('./App/Components/UserLogin');
 var PasswordVerification = require('./App/Components/PasswordVerification');
-var Progress = require('./App/Components/Progress');
 var Appointment = require('./App/Components/Appointment');
 var AddAppointment = require('./App/Components/AddAppointment');
 var SecureChat = require('./App/Components/secure_chat/Navigation');
@@ -148,8 +147,6 @@ class DemoApp1 extends React.Component{
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "QBank"){
       return (<QBank navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }else if (id == "Progress"){
-      return (<Progress navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "Appointment"){
         return (<Appointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "AddAppointment"){

@@ -13,7 +13,7 @@ import React, {
 
 var GiftedMessenger = require('react-native-gifted-messenger');
 var Communications = require('react-native-communications');
-
+var SENDER_NAME = 'James Villarubia';
 
 var STATUS_BAR_HEIGHT = Navigator.NavigationBar.Styles.General.StatusBarHeight;
 if (Platform.OS === 'android') {
@@ -44,7 +44,7 @@ class GiftedMessengerContainer extends Component {
     
     setTimeout(() => {
       this.setState({
-        typingMessage: 'React-Bot is typing a message...',
+        typingMessage: 'BOA Support is typing a message...',
       });
     }, 1000); // simulating network
 
@@ -57,8 +57,8 @@ class GiftedMessengerContainer extends Component {
     
     setTimeout(() => {
       this.handleReceive({
-        text: 'Hello Awesome Developer', 
-        name: 'React-Bot', 
+        text: 'Hello ' + SENDER_NAME, 
+        name: 'BOA Support', 
         image: {uri: 'https://facebook.github.io/react/img/logo_og.png'}, 
         position: 'left', 
         date: new Date(),
@@ -74,16 +74,16 @@ class GiftedMessengerContainer extends Component {
   getInitialMessages() {
     return [
       {
-        text: 'Are you building a chat app?', 
-        name: 'React-Bot', 
+        text: 'Welcome to Bank Of America support, How may I help you?', 
+        name: 'BOA Support', 
         image: {uri: 'https://facebook.github.io/react/img/logo_og.png'}, 
         position: 'left', 
         date: new Date(2016, 3, 14, 13, 0),
         uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
       },
       {
-        text: "Yes, and I use Gifted Messenger!", 
-        name: 'Awesome Developer', 
+        text: "How to open an savings account?", 
+        name: SENDER_NAME, 
         image: null, 
         position: 'right', 
         date: new Date(2016, 3, 14, 13, 1),
@@ -132,6 +132,30 @@ class GiftedMessengerContainer extends Component {
     // mark the sent message as Seen
     setTimeout(() => {
       this.setMessageStatus(message.uniqueId, 'Seen'); // here you can replace 'Seen' by any string you want
+
+      //Simulating bot typing
+      this.setState({
+        typingMessage: 'BOA Support is typing a message...',
+      });
+
+      //Simulating bot message
+      setTimeout(() => {
+        //Simulating bot typing
+        this.setState({
+          typingMessage: '',
+        });
+
+        this.handleReceive({
+              text: 'Yes', 
+              name: 'BOA Support', 
+              image: {uri: 'https://facebook.github.io/react/img/logo_og.png'}, 
+              position: 'left', 
+              date: new Date(),
+              uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
+           });
+
+        }, 1000);
+
     }, 1000);
 
     // if you couldn't send the message to your server :
@@ -153,14 +177,14 @@ class GiftedMessengerContainer extends Component {
     var earlierMessages = [
       {
         text: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. https://github.com/facebook/react-native', 
-        name: 'React-Bot', 
+        name: 'BOA Support', 
         image: {uri: 'https://facebook.github.io/react/img/logo_og.png'}, 
         position: 'left', 
         date: new Date(2016, 0, 1, 20, 0),
         uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
       }, {
         text: 'This is a touchable phone number 0606060606 parsed by taskrabbit/react-native-parsed-text', 
-        name: 'Awesome Developer', 
+        name: SENDER_NAME, 
         image: null, 
         position: 'right', 
         date: new Date(2016, 0, 2, 12, 0),
@@ -219,7 +243,7 @@ class GiftedMessengerContainer extends Component {
         loadEarlierMessagesButton={!this.state.allLoaded}
         onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
 
-        senderName='Awesome Developer'
+        senderName= {SENDER_NAME}
         senderImage={null}
         onImagePress={this.onImagePress}
         displayNames={true}
