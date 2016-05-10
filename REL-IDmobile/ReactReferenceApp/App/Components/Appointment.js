@@ -6,9 +6,9 @@ var dataPoints;
 
 
   var appointmentData =[{"date":"2016-05-06","time":"20:00","location":"Nagpur","msg":"React native demo ..."},
-{"date":"2016-03-07","time":"18:00","location":"pune","msg":"hi.."},
-{"date":"2016-03-07","time":"08:00","location":"mumbai","msg":"Hello.."},
-{"date":"2016-09-08","time":"19:00","location":"pune","msg":"Yoyo kndflkjhlkfnaskhfaa cwba cb qfasq asqb adcieajj d asbqd acckenoas qjb AXLWNWBA CJBVINXXZ EJOMGONAX ..."}];
+{"date":"2016-03-07","time":"18:00","location":"pune","msg":"Meeting with Robbert"},
+{"date":"2016-03-07","time":"08:00","location":"mumbai","msg":"REL_ID Demo ...."},
+{"date":"2016-09-08","time":"19:00","location":"pune","msg":"Team Lunch .."}];
 
 
 
