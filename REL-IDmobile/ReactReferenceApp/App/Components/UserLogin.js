@@ -164,8 +164,9 @@ class UserLogin extends React.Component{
 	}
 
 	checkUsername(){
-					this.state.progress = 0;
+		this.state.progress = 0;
 		var un = this.state.inputUsername;
+    if(un.length>0){
     Main.dnaUserName = un;
 		var count = this.state.loginAttempts;
 		responseJson = this.props.url;
@@ -198,7 +199,7 @@ class UserLogin extends React.Component{
 		         alert(response[0].error);
 		      }
 
-		    })
+                               })}else{alert('Please enter User ID');}
 	}
 
 	checkUsernameSuccess(){

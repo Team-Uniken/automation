@@ -39,7 +39,7 @@ var SampleRow = React.createClass({
 					 <View style={styles.col}>
 						<View style={styles.row }>
 							<Text style={styles.date}>{this.props.date}</Text>
-							<Text style={styles.time}>{this.props.time}  </Text>
+							<Text style={styles.time}>{this.props.time}</Text>
 						</View>
 						<View style={styles.row }>
 						<Image source={require('image!location')} style={styles.location} />
@@ -230,8 +230,9 @@ var styles = {
         time: {
              fontSize: 20,
              color :DATE_TIME,
-						 width:Dimensions.get('window').width/2,
+						 width:Dimensions.get('window').width/2-16,
 textAlign:'right',
+        marginRight:16,
 
            },
 };

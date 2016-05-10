@@ -414,6 +414,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = F78S5YW242;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ReactRefApp" */;
@@ -676,6 +679,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -684,6 +688,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
 				INFOPLIST_FILE = ReactRefApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -693,7 +698,9 @@
 					"-ObjC",
 					"-lresolv",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.sdk;
 				PRODUCT_NAME = ReactRefApp;
+				PROVISIONING_PROFILE = "be5ac3bf-c578-435a-b60a-2a489e8ab54f";
 			};
 			name = Debug;
 		};
@@ -701,6 +708,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -708,6 +717,7 @@
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
 				INFOPLIST_FILE = ReactRefApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -717,7 +727,9 @@
 					"-ObjC",
 					"-lresolv",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.sdk;
 				PRODUCT_NAME = ReactRefApp;
+				PROVISIONING_PROFILE = "be5ac3bf-c578-435a-b60a-2a489e8ab54f";
 			};
 			name = Release;
 		};
