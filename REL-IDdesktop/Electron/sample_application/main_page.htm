@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>REL-ID Secure App 1.0</title>
+    <link rel='stylesheet  prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_home.css">
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="RDNA.js"></script>
+    <script>
+      document.onreadystatechange = function ()
+      {
+        if (document.readyState === "interactive")
+        {
+          setVersion();
+          importDefaultConnProfiles();
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="mainContainer">
+      <div class="pen-title">
+        <h1>Welcome to REL-ID Secure App</h1>
+        <span>
+        <i class="fa fa-shield"></i>Version-<a href='http://wiki.uniken.com/index.php/API-SDK_Release_Notes' target="_blank"><span id="verDiv"></span></a>
+        </span>
+      </div>
+      <div class="module form-module" id="myDIV">
+        <div id="btnSettings" class="toggle">
+          <i class="fa fa-times fa-pencil"></i>
+          <div class="tooltip">Settings</div>
+        </div>
+        <div class="form">
+          <form id="initFrm">
+            <input id="btnInit" class="btn" type="button" value="Initialize" onclick="displayProgress();rdnaInitialize();">
+          </form>
+          <form id="loginFrm" style="display: none;">
+            <h2>Login to your account</h2>
+            <input type="text" placeholder="Username"/>
+            <input type="password" placeholder="Password"/>
+            <input class="btn" type="button" value="Login" onclick="displayProgress()">
+          </form>
+        </div>
+        <div class="form">                                                                   <!-- Settings form -->
+          <section class="centered">                                                         <!-- Tab Bar -->
+            <nav>
+              <ul class="nav">
+                <li id="liProxy" class="active"><a onclick="myFunctionProxy()" title="PxySettings">Proxy Settings</a></li>
+                <li id="liConnection"><a onclick="myFunctionConnection()" title="ConnProfiles">Connection Profiles</a></li>
+              </ul>
+            </nav>
+          </section>
+          <br>
+          <div id="frmProxy">                                                                  <!-- Proxy Tab -->
+            <section class="centered">
+              <input id="pxyHost" type="text" placeholder="Host"/>
+              <input id="pxyPort" type="tel" placeholder="Port"/>
+              <input id="pxyUsrNm" type="text" placeholder="Username"/>
+              <input id="pxyPswd" type="password" placeholder="Password"/>
+              <input class="btn" type="button" value="Save" onclick="saveProxySettings()">
+            </section>
+          </div>
+          <div id="frmConnection">                                                             <!-- Connection Tab -->
+            <section class="centered">
+                <input type="file" id="fileChooser" style="display: block" onchange='importProfiles(event)'>
+                <!--<input class="btn" type="button" value="Import profiles from file" onclick="importProfiles()">-->
+              <br>
+              <div id="connProWrapper" class="connListWrapper" style="display: none">
+                <ul id="connList" class="connProfiles">
+                </ul>
+              </div>
+              <br>
+              <!--<input class="btn" type="button" value="Save" onclick="saveConnSettings()">-->
+            </section>
+          </div>
+        </div>
+        <div class="cta" >
+          <a id="forgotPswdLink" onclick="myFunctionForgotPassword()" style="display: none">Forgot your password?</a>
+        </div>
+      </div>
+      <div id="fountainG" style="display: none;margin-top: -170px">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+        <br><br><br>
+        <div style="margin-left: 70px;font-size: 18px;">Initializing</div>
+      </div>
+      <div id="Login" style="display: none;margin-top: -250px">
+      <div id="fountainG_1" class="fountainG"></div>
+      <div id="fountainG_2" class="fountainG"></div>
+      <div id="fountainG_3" class="fountainG"></div>
+      <div id="fountainG_4" class="fountainG"></div>
+      <div id="fountainG_5" class="fountainG"></div>
+      <div id="fountainG_6" class="fountainG"></div>
+      <div id="fountainG_7" class="fountainG"></div>
+      <div id="fountainG_8" class="fountainG"></div>
+      <br><br><br>
+      <div style="margin-left: 70px;font-size: 18px;">Logging in</div>
+    </div>
+    </div>
+    <div id="landingPage" style="display: none">
+      <section class="container" id="rdnaPostLogin">
+        <a onclick="rdnaInitialize()" class="button blue">Initialize</a>
+        <a onclick="rdnaPause()" class="button blue">Pause</a>
+        <a onclick="rdnaResume()" class="button blue">Resume</a>
+        <a onclick="rdnaTerminate()" class="button blue">Terminate</a>
+        <a onclick="rdnaGetSDKVersion()" class="button blue">GetSDKVersion</a>
+        <a onclick="rdnaGetSessionID()" class="button blue">GetSessionID</a>
+        <a onclick="rdnaGetAgentID()" class="button blue">GetAgentID</a>
+        <a onclick="rdnaGetDefaultCipherSpec()" class="button blue">GetDefaultCipherSpec</a>
+        <a onclick="rdnaGetDefaultCipherSalt()" class="button blue">GetDefaultCipherSalt</a>
+        <a onclick="rdnaGetDeviceID()" class="button blue">GetDeviceID</a>
+        <a onclick="rdnaGetServiceByName()" class="button blue">GetServiceByName</a>
+        <a onclick="rdnaGetServiceBytargetCoordinate()" class="button blue">GetServiceByTargetCoordinate</a>
+        <a onclick="rdnaGetAllServices()" class="button blue">GetAllServices</a>
+        <a onclick="rdnaStartService()" class="button blue">StartService</a>
+        <a onclick="rdnaStopService()" class="button blue">StopService</a>
+        <a onclick="rdnaStartAllServices()" class="button blue">StartAllServices</a>
+        <a onclick="rdnaStopAllServices()" class="button blue">StopAllServices</a>
+        <a onclick="rdnaEncryptDataPacket()" class="button blue">EncryptDataPkt</a>
+        <a onclick="rdnaDecryptDataPacket()" class="button blue">DecryptDataPkt</a>
+        <a onclick="rdnaEncryptHTTPReq()" class="button blue">EncryptHTTPReq</a>
+        <a onclick="rdnaDecryptHTTPResp()" class="button blue">DecryptHTTPResp</a>
+      </section>
+      <textarea rows="6" cols="50" id="txtField1"></textarea><textarea rows="6" cols="50" id="txtField2"></textarea><br><br>
+      ----------------------------------------------------------------------------------<br><br>
+      <textarea rows="10" cols="100" id="t1"></textarea>
+    </div>
+    <script src="js/index.js"></script>
+  </body>
+</html>
