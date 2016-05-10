@@ -168,7 +168,7 @@ class DemoApp1 extends React.Component{
         style={styles.navigator}
         renderScene={this.renderScene}
         initialRoute={
-          {id: "SecureChat"}
+          {id: "Load"}
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {
