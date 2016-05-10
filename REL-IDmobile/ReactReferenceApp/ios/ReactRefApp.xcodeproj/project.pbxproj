@@ -28,9 +28,9 @@
 		656227EE1CB50B2300AD7F6C /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 656227EC1CB50B2300AD7F6C /* icomoon.ttf */; };
 		6562280B1CB50BEA00AD7F6C /* RDNARequestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */; };
 		6562280C1CB50BEA00AD7F6C /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
+		6563ED6F1CDB703B00D580B9 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6563ED6E1CDB703B00D580B9 /* libapi-sdk.a */; };
 		6567FBCB1CC1122F00AC6A04 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		6567FBCD1CC1127B00AC6A04 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
-		656BED291CD9CC3300245CF7 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656BED281CD9CC3300245CF7 /* libapi-sdk.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -141,10 +141,10 @@
 		656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDNARequestUtility.m; sourceTree = "<group>"; };
 		656228061CB50BEA00AD7F6C /* RelIDRequestInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelIDRequestInterceptor.h; sourceTree = "<group>"; };
 		656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelIDRequestInterceptor.m; sourceTree = "<group>"; };
+		6563ED6C1CDB703B00D580B9 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		6563ED6E1CDB703B00D580B9 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		6567FBCA1CC1122F00AC6A04 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; name = App; path = ../App; sourceTree = "<group>"; };
 		6567FBCC1CC1127B00AC6A04 /* index.ios.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
-		656BED261CD9CC3300245CF7 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		656BED281CD9CC3300245CF7 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,7 +165,7 @@
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
-				656BED291CD9CC3300245CF7 /* libapi-sdk.a in Frameworks */,
+				6563ED6F1CDB703B00D580B9 /* libapi-sdk.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
@@ -277,27 +277,27 @@
 			path = NativeModules;
 			sourceTree = "<group>";
 		};
-		656BED241CD9CC3300245CF7 /* api-sdk */ = {
+		6563ED6A1CDB703B00D580B9 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
-				656BED251CD9CC3300245CF7 /* include */,
-				656BED271CD9CC3300245CF7 /* libs */,
+				6563ED6B1CDB703B00D580B9 /* include */,
+				6563ED6D1CDB703B00D580B9 /* libs */,
 			);
 			path = "api-sdk";
 			sourceTree = "<group>";
 		};
-		656BED251CD9CC3300245CF7 /* include */ = {
+		6563ED6B1CDB703B00D580B9 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				656BED261CD9CC3300245CF7 /* RDNA.h */,
+				6563ED6C1CDB703B00D580B9 /* RDNA.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		656BED271CD9CC3300245CF7 /* libs */ = {
+		6563ED6D1CDB703B00D580B9 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				656BED281CD9CC3300245CF7 /* libapi-sdk.a */,
+				6563ED6E1CDB703B00D580B9 /* libapi-sdk.a */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -338,7 +338,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				656BED241CD9CC3300245CF7 /* api-sdk */,
+				6563ED6A1CDB703B00D580B9 /* api-sdk */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
 				656227EC1CB50B2300AD7F6C /* icomoon.ttf */,
 				6567FBCC1CC1127B00AC6A04 /* index.ios.js */,
