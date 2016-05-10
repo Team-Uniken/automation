@@ -21,6 +21,8 @@ var PasswordVerification = require('./App/Components/PasswordVerification');
 var Appointment = require('./App/Components/Appointment');
 var AddAppointment = require('./App/Components/AddAppointment');
 var SecureChat = require('./App/Components/secure_chat/Navigation');
+//var Demo = require('./App/Components/demo');
+var Activation = require('./App/Components/Activation');
 
 
 
@@ -153,7 +155,11 @@ class DemoApp1 extends React.Component{
           return (<AddAppointment navigator={nav} url={route.url} title={route.title}/>);//rdna={route.DnaObject}/>);
     }else if (id == "SecureChat"){
       return (<SecureChat navigator={nav}/>);
-    }
+    }else if (id == "Activation"){
+      return (<Activation navigator={nav}/>);
+    }/*else if (id == "Demo"){
+      return (<Demo navigator={nav}/>);
+    }*/
   }
 
   render() {
@@ -162,7 +168,7 @@ class DemoApp1 extends React.Component{
         style={styles.navigator}
         renderScene={this.renderScene}
         initialRoute={
-          {id: "Load"}
+          {id: "SecureChat"}
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {

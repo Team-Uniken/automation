@@ -230,7 +230,7 @@ class GiftedMessengerContainer extends Component {
         styles={{
           bubbleRight: {
             marginLeft: 70,
-            backgroundColor: '#007aff',
+            backgroundColor: '#2579a2',
           },
         }}
         
