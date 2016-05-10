@@ -142,6 +142,7 @@ class PasswordVerification extends React.Component{
 	checkPassword(){
 //    alert(Main.dnaUserName);
 		var pw = this.state.inputPassword;
+    if(pw.length>0){
 		var count = this.state.passAttempts;
     var pw = this.state.inputPassword;
     responseJson = this.props.url;
@@ -156,7 +157,9 @@ class PasswordVerification extends React.Component{
                                 console.log('immediate response is'+response[0].error);
                                 // alert(response[0].error);
                                 }
-                                })
+                                })}else{
+        alert('Please enter password');
+      }
 	}
 
 	checkPasswordSuccess(){
