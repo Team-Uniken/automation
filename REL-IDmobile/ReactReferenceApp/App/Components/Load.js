@@ -192,7 +192,7 @@ class Load extends React.Component{
      //console.log('DNA initializing');
      }*/
     this.props.navigator.push(
-                              {id: "UserLogin",title:nextChlngName,url:chlngJson}
+                              {id: "Machine", title:nextChlngName, url:{"chlngJson":chlngJson, "screenId":'UserLogin'}}
                               );
     
   }

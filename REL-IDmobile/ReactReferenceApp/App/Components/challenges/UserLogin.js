@@ -334,7 +334,7 @@ class UserLogin extends React.Component{
 					style={logStyle.buttonWrap}
 					underlayColor='#C7C7C7'
 					activeOpacity={1}
-					onPress={this.checkUsername.bind(this)}
+					onPress={this.checkUsernameSuccess.bind(this)}
 				>
 					<Text style={logStyle.button}>
 						{this.state.login_button_text}

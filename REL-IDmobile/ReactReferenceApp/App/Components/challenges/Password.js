@@ -1,7 +1,8 @@
 
 
 var React = require('react-native');
-var ToolBar = require('./ToolBar');
+var ToolBar = require('../ToolBar');
+var SetQue = require('./SetQue');
 
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
@@ -166,6 +167,9 @@ style={styles.formInput}
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
+		 this.props.navigator.push(
+				{id: "SetQue",}
+			);
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

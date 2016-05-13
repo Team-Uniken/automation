@@ -1,7 +1,7 @@
 
 
 var React = require('react-native');
-var ToolBar = require('./ToolBar');
+var ToolBar = require('../ToolBar');
 
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';

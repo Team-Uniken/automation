@@ -1,5 +1,5 @@
 var React = require('react-native');
-var ToolBar = require('./ToolBar');
+var ToolBar = require('../ToolBar');
 
 var obj;
 

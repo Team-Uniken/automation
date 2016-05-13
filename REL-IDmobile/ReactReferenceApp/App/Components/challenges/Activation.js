@@ -3,7 +3,9 @@
 var React = require('react-native');
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
-var ToolBar = require('./ToolBar');
+var ToolBar = require('../ToolBar');
+var Password = require('./Password');
+
 
 var {
 	View,
@@ -152,11 +154,15 @@ onChange={(event) => this.setState({devName: event.nativeEvent.text})}
 style={styles.formInput}
  />
 </View>
+<Text style={styles.step}>3 Attempts Left</Text>
 
 
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
+		 this.props.navigator.push(
+				{id: "Password",}
+			);
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
@@ -166,7 +172,6 @@ style={styles.formInput}
 
 
 
-<Text style={styles.step}>3 Attempts Left</Text>
 </ScrollView >
 			</View>
 		);

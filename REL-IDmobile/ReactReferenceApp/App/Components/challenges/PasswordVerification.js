@@ -133,7 +133,7 @@ class PasswordVerification extends React.Component{
                     }else{
                       console.log('complete');
                       this.props.navigator.push(
-                                                {id: "Main"}
+                                                {id: "Activation"}
                                                 );
                       }
                 }).bind(this), 5);
@@ -249,7 +249,7 @@ onChange={this.onPasswordChange.bind(this)}
 style={logStyle.buttonWrap}
 underlayColor='#C7C7C7'
 activeOpacity={1}
-onPress={this.checkPassword.bind(this)}
+onPress={this.checkPasswordSuccess.bind(this)}
 >
 <Text style={logStyle.button}>
 	{this.state.login_button_text}
