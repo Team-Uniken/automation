@@ -34,25 +34,25 @@ let PickerItem = Picker.Item;
 
 let LOCATION = {
 Branch1: {
-name: 'Branch1',
+name: 'Goa',
 },
 Branch2: {
-name: 'Branch2',
+name: 'Mumbai',
 },
 Branch3: {
-name: 'Branch3',
+name: 'Pune',
 },
 Branch4: {
-name: 'Branch4',
+name: 'Nagpur',
 },
 Branch5: {
-name: 'Branch5',
+name: 'Nashik',
 },
 Branch6: {
-name: 'Branc6',
+name: 'New Delhi',
 },
 Branch7: {
-name: 'Branch7',
+name: 'Surat',
 },
 };
 
@@ -293,7 +293,7 @@ class AddAppointment extends React.Component{
             <View
             style={styles.dropdown} >
             <TouchableOpacity onPress={() => this.open()}>
-            <Text style={styles.edittextstyle}>Select {make.name}</Text>
+            <Text style={styles.edittextstyle}>{make.name}</Text>
             </TouchableOpacity>
             </View>
             </View>

@@ -2,7 +2,7 @@ var React = require('react-native');
 var Menu = require('./Menu');
 var Main = require('./Main');
 var Web = require('./Web');
-var UserLogin = require('./UserLogin');
+var UserLogin = require('./challenges/UserLogin');
 
 
 

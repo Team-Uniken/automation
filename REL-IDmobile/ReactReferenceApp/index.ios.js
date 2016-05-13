@@ -8,20 +8,23 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 var PixelRatio = require('PixelRatio');
-// var NavigationBar = require('react-native-navbar');
 
 var Main = require('./App/Components/Main');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
 var Menu = require('./App/Components/Menu');
-var ComingSoon = require('./App/Components/ComingSoon');
-var UserLogin = require('./App/Components/UserLogin');
-var PasswordVerification = require('./App/Components/PasswordVerification');
 var QBank = require('./App/Components/Qbank');
-var MainStyleSheet = require('./App/Components/MainStyleSheet');
-var SecureChat = require('./App/Components/secure_chat/Navigation');
+var ComingSoon = require('./App/Components/ComingSoon');
+var UserLogin = require('./App/Components/challenges/UserLogin');
+var PasswordVerification = require('./App/Components/challenges/PasswordVerification');
 var Appointment = require('./App/Components/Appointment');
 var AddAppointment = require('./App/Components/AddAppointment');
+var SecureChat = require('./App/Components/secure_chat/Navigation');
+var Demo = require('./App/Components/demo');
+var Activation = require('./App/Components/challenges/Activation');
+var Password = require('./App/Components/challenges/Password');
+var Otp = require('./App/Components/challenges/Otp');
+var SetQue = require('./App/Components/challenges/SetQue');
 
 
 var buildStyleInterpolator = require('buildStyleInterpolator');

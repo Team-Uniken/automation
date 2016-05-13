@@ -1,10 +1,11 @@
 'use strict';
 
 var React = require('react-native');
-var Menu = require('./Menu');
-var Main = require('./Main');
-var Web = require('./Web');
+var Menu = require('../Menu');
+var Main = require('../Main');
+var Web = require('../Web');
 var PasswordVerification = require('./PasswordVerification');
+//var Machine = require('./TwoFactorAuthMachine');
 
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -59,6 +60,8 @@ var subscriptions;
 class UserLogin extends React.Component{
 	constructor(props){
 		super(props);
+		//var testClass = new Machine(); 
+		//testClass.dummyFunc();
 		this.state = {
 			r_opac_val: new Animated.Value(0),
 			i_opac_val: new Animated.Value(0),

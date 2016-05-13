@@ -2,9 +2,9 @@
 
 import Spinner from 'react-native-loading-spinner-overlay';
 var React = require('react-native');
-var Menu = require('./Menu');
-var Main = require('./Main');
-var Web = require('./Web');
+var Menu = require('../Menu');
+var Main = require('../Main');
+var Web = require('../Web');
 var total=0.3;
 
 
