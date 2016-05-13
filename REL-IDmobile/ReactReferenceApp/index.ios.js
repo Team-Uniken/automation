@@ -25,7 +25,7 @@ var Activation = require('./App/Components/challenges/Activation');
 var Password = require('./App/Components/challenges/Password');
 var Otp = require('./App/Components/challenges/Otp');
 var SetQue = require('./App/Components/challenges/SetQue');
-
+var Machine = require('./App/Components/TwoFactorAuthMachine');
 
 var buildStyleInterpolator = require('buildStyleInterpolator');
 
@@ -156,7 +156,9 @@ class ReactRefApp extends React.Component{
       return (<Appointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "AddAppointment"){
       return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }
+    }else if (id == "Machine"){
+      return (<Machine navigator={nav} url={route.url} title={route.title}/>);
+    } 
 
   }
 
