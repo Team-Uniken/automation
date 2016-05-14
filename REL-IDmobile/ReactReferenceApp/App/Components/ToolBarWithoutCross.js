@@ -1,0 +1,40 @@
+var React = require('react-native');
+
+
+
+var {
+Dimensions,
+    StyleSheet,
+    View,
+    Text,
+	Dimensions,
+  Dimensions,
+} = React;
+
+var Appointment = React.createClass({
+
+
+  render() {
+
+    return (
+      <View style={styles.toolbarrow}>
+      <Text
+        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
+      >{this.props.title}</Text>
+      </View>
+		);
+
+
+
+
+  },
+});
+
+var styles = {
+  toolbarrow: {
+            flexDirection:'row',
+            backgroundColor: '#fff',
+            width:Dimensions.get('window').width,
+  },
+};
+module.exports = Appointment;
