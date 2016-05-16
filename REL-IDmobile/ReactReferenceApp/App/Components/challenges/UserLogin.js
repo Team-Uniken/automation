@@ -87,7 +87,7 @@ class UserLogin extends React.Component{
 			login_button_text: 'Login',
 			loginAttempts: 5,
 			passAttempts: 5,
-			Challenge:this.props.url,
+			Challenge:this.props.url.chlngJson,
 			failureMessage : ''
 
 		};
@@ -176,7 +176,7 @@ class UserLogin extends React.Component{
     if(un.length>0){
     Main.dnaUserName = un;
 		var count = this.state.loginAttempts;
-		responseJson = this.props.url;
+		responseJson = this.props.url.chlngJson;
 		responseJson = responseJson.chlng;
 		responseJson[0].chlng_resp[0].response = un;
 		var temp = {'chlng':responseJson};

@@ -83,7 +83,7 @@ class PasswordVerification extends React.Component{
 			login_button_text: 'Login',
 			loginAttempts: 5,
 			passAttempts: 5,
-			Challenge:this.props.url,
+			Challenge:this.props.url.chlngJson,
 			failureMessage : ''
 
 		};
@@ -146,7 +146,7 @@ class PasswordVerification extends React.Component{
     if(pw.length>0){
 		var count = this.state.passAttempts;
     var pw = this.state.inputPassword;
-    responseJson = this.props.url;
+    responseJson = this.props.url.chlngJson;
     var temp = JSON.parse(responseJson);
     temp.chlng[0].chlng_resp[0].response = pw;
     var userRespo = JSON.stringify(temp);

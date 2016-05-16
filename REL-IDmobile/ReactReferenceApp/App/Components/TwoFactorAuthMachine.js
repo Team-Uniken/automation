@@ -123,7 +123,7 @@ render() {
       <Navigator
         renderScene={this.renderScene}
         initialRoute={
-          {id: this.props.url.screenId}
+          {id: this.props.url.screenId,url: this.props.url,title: this.props.title}
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {
