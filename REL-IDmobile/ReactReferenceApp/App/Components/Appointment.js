@@ -1,5 +1,7 @@
 var React = require('react-native');
 var AddAppointment = require('./AddAppointment');
+var ToolBar = require('./ToolBar');
+
 var obj;
 var dataPoints;
 
@@ -119,22 +121,8 @@ var Appointment = React.createClass({
   render() {
     return (
 						<View style={styles.container}>
-		 <View style={styles.toolbarrow}>
-		 <Text
-			 style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
-		 >{this.props.title}</Text>
-		 <TouchableHighlight
-			 onPress={()=>{
-							 this.props.navigator.pop();
-			 }}
-			 underlayColor={'#FFFFFF'}
-			 activeOpacity={0.6}
-		 >
-			 <Text
-				 style={{textAlign: 'right',fontSize:24,color: '#2579a2',margin:12,}}
-			 >X</Text>
-		 </TouchableHighlight>
-		 </View>
+     <ToolBar navigator={this.props.navigator} title={this.props.title}/>
+
 
 		 <ListView
        ref="listView"

@@ -81,9 +81,6 @@ var styles = StyleSheet.create({
 	margin:1,
 	textAlign:'center',
 	textAlignVertical:'center',
-	borderWidth: 1,
-	borderColor: "#555555",
-	borderRadius: 9,
 	color: '#FFF',
 	marginTop:16,
 	},
@@ -95,38 +92,23 @@ var styles = StyleSheet.create({
 	marginLeft:Dimensions.get('window').width/2-140,
 	borderWidth: 1,
 	borderColor: "#fff",
-	backgroundColor:'#183F5B',
+	backgroundColor: 'rgba(255,255,255,0.1)',
 	borderRadius: 30,
 	},
-	roundcorneredittext: {
-		height: 56,
-		width: 280,
-	marginTop:16,
-	marginLeft:Dimensions.get('window').width/2-140,
-	backgroundColor:'#fff',
-	borderRadius: 10,
-	},
-	formInput: {
-		height: 56,
-		width: 280,
-	fontSize: 16,
-	textAlign:'center',
-	color: "#555555",
-	backgroundColor:'transparent'
-	},
+
 	input: {
 		fontFamily: 'Century Gothic',
 		backgroundColor: 'rgba(255,255,255,0.1)',
-		height: 55,
-		fontSize: 22,
+		height: 56,
+		fontSize:16,
 		width: 280,
-		color: 'rgba(255,255,255,1)',
-		alignItems: 'center',
 		marginTop:16,
-		borderWidth: 1,
-		borderColor: "#555555",
-		borderRadius: 8,
+		color: 'rgba(255,255,255,1)',
+		marginLeft:Dimensions.get('window').width/2-140,
+		textAlign:'center',
+		alignItems: 'center',
 	},
+
 });
 
 
@@ -147,13 +129,16 @@ class Activation extends React.Component{
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Activation Code</Text>
 
-<View style={styles.roundcorneredittext}>
+
+
 <TextInput
-placeholder={'Enter Activation Code'}
-onChange={(event) => this.setState({devName: event.nativeEvent.text})}
-style={styles.formInput}
- />
-</View>
+	autoCorrect={false}
+	placeholder={'Enter Activation Code'}
+	placeholderTextColor={'rgba(255,255,255,0.5)'}
+	style={styles.input}
+/>
+
+
 <Text style={styles.step}>3 Attempts Left</Text>
 
 

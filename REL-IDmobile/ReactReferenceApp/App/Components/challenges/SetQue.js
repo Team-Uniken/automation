@@ -117,15 +117,12 @@ var Appointment = React.createClass({
          <Text style={styles.Varification}>Question and Answer</Text>
 <Text style={styles.div}> </Text>
 
-<View style={styles.roundcorneredittext}>
 <TextInput
-placeholder={'Type/Select question'}
-value={''}
-onChange={(event) => this.setState({devName: event.nativeEvent.text})}
-style={styles.formInput}
- />
-</View>
-
+ autoCorrect={false}
+ placeholder={'Type/Select question'}
+ placeholderTextColor={'rgba(255,255,255,0.5)'}
+ style={styles.input}
+/>
 
  <View style={styles.que}>
  <ListView
@@ -136,14 +133,14 @@ style={styles.formInput}
  />
  </View>
 <Text style={styles.div}> </Text>
-<View style={styles.roundcorneredittext}>
+
+
 <TextInput
-secureTextEntry={true}
-placeholder={'Enter your secret answer'}
-onChange={(event) => this.setState({devName: event.nativeEvent.text})}
-style={styles.formInput}
- />
-</View>
+ autoCorrect={false}
+ placeholder={'Enter your secret answer'}
+ placeholderTextColor={'rgba(255,255,255,0.5)'}
+ style={styles.input}
+/>
 
  <Text style={styles.div}> </Text>
 
@@ -238,9 +235,6 @@ var styles = {
   margin:1,
   textAlign:'center',
   textAlignVertical:'center',
-  borderWidth: 1,
-  borderColor: "#555555",
-  borderRadius: 9,
   color: '#FFF',
   marginTop:16,
   },
@@ -267,35 +261,32 @@ var styles = {
   marginLeft:Dimensions.get('window').width/2-140,
   borderWidth: 1,
   borderColor: "#fff",
-  backgroundColor:'#183F5B',
+  backgroundColor: 'rgba(255,255,255,0.1)',
   borderRadius: 30,
   },
   input: {
-    fontFamily: 'Century Gothic',
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    height: 55,
-    fontSize: 22,
-    width: 280,
-    color: 'rgba(255,255,255,1)',
-    alignItems: 'center',
-    marginTop:16,
-    borderWidth: 1,
-    borderColor: "#555555",
-    borderRadius: 8,
-  },
+		fontFamily: 'Century Gothic',
+		backgroundColor: 'rgba(255,255,255,0.1)',
+		height: 56,
+		fontSize:16,
+		width: 280,
+		marginTop:16,
+		color: 'rgba(255,255,255,1)',
+		marginLeft:Dimensions.get('window').width/2-140,
+		textAlign:'center',
+		alignItems: 'center',
+	},
 		customerow: {
 			backgroundColor:'#122941',
-			marginTop:8,
+			marginTop:2,
 			width:Dimensions.get('window').width,
 		},
 			questyle:{
 					fontSize: 16,
 					color : MSG,
-					height:32,
-					marginTop:8,
+					height:40,
+					marginTop:6,
 					width:Dimensions.get('window').width,
-				  marginRight:8,
-					marginLeft: 8,
 					textAlign:'center',
 					textAlignVertical:'center',
 					 },

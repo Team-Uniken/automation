@@ -2,6 +2,7 @@
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-simple-modal';
 import PickerAndroid from 'react-native-picker-android';
+var ToolBar = require('./ToolBar');
 
 var React = require('react-native');
 
@@ -72,7 +73,7 @@ var styles = StyleSheet.create({
                                alignItems: 'center',
                                backgroundColor: 'rgba(8,26,60,0.9)'
                                },
-                               
+
                                toolbarrow: {
                                flexDirection:'row',
                                backgroundColor: '#fff',
@@ -93,7 +94,7 @@ var styles = StyleSheet.create({
                                marginTop: 16,
                                height:172,
                                },
-                               
+
                                col: {
                                width:Dimensions.get('window').width,
                                marginTop: 16,
@@ -113,8 +114,8 @@ var styles = StyleSheet.create({
                                fontSize: 16,
                                marginTop:16,
                                width:100,
-                               
-                               
+
+
                                },
                                edittextstyle:{
                                color: TEXT_COLOR,
@@ -122,7 +123,7 @@ var styles = StyleSheet.create({
                                alignItems: 'center',
                                fontSize: 16,
                                width:Dimensions.get('window').width-100,
-                               
+
                                },
                                input:{
                                color: TEXT_COLOR,
@@ -140,15 +141,15 @@ var styles = StyleSheet.create({
                                marginRight:16,
                                borderColor: '#fff',
                                },
-                               
+
                                dropdown:{
                                fontSize: 16,
                                marginRight:16,
                                width:Dimensions.get('window').width-116,
                                textAlignVertical: 'top',
-                               
+
                                },
-                               
+
                                button: {
                                fontFamily: 'Century Gothic',
                                backgroundColor: 'transparent',
@@ -178,7 +179,7 @@ var styles = StyleSheet.create({
                                },
                                branchstyle: {
                                backgroundColor: '#fff',
-                               
+
                                position: 'absolute',
                                top: 0,
                                bottom: 0,
@@ -187,20 +188,20 @@ var styles = StyleSheet.create({
                                width: Dimensions.get('window').width,
                                height: Dimensions.get('window').height,
                                },
-                               
+
                                selecteditemstyle: {
                                color: '#f00',
                                fontSize: 20,
                                width:Dimensions.get('window').width-116,
                                },
-                               
-                               
+
+
                                });
 
 
 
 class AddAppointment extends React.Component{
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -212,47 +213,30 @@ class AddAppointment extends React.Component{
   _getOptionList() {
     return this.refs['OPTIONLIST'];
   }
-  
+
   state = {
   date:this.props.url.date,
   time: this.props.url.time,
   location:this.props.url.location,
-    
+
   }
   componentDidMount() {
-    
+
     message = this.props.url.msg
   }
-  
+
   open(){
-    
+
     this.setState({open: true})
   }
   render() {
     let make = LOCATION[this.state.SelectedBranch];
-    
+
     return (
-            
+
             <View style={styles.container}>
-            <View style={styles.toolbarrow}>
-            <Text
-            style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
-            >{this.props.title}</Text>
-            <TouchableHighlight
-            onPress={()=>{
-            
-            this.props.navigator.pop();
-            
-            }}
-            underlayColor={'#FFFFFF'}
-            activeOpacity={0.6}
-            >
-            <Text
-            style={{textAlign: 'right',fontSize:24,color: '#2579a2',margin:12,}}
-            >X</Text>
-            </TouchableHighlight>
-            </View>
-            
+            <ToolBar navigator={this.props.navigator} title={this.props.title}/>
+
             <ScrollView >
             <View style={styles.row}>
             <Text style={styles.textstyle}> Date : </Text>
@@ -270,10 +254,10 @@ class AddAppointment extends React.Component{
             maxDate="2018-12-31"
             onDateChange={(date) => {this.setState({date: date})}}
             />
-            
+
             </Animated.View>
             </View>
-            
+
             <View style={styles.row}>
             <Text style={styles.textstyle}> Time : </Text>
             <Text style={styles.edittextstyle}>{this.state.time}</Text>
@@ -285,7 +269,7 @@ class AddAppointment extends React.Component{
             format="HH:mm"
             onDateChange={(time) => {this.setState({time: time})}}
             />
-            
+
             </Animated.View>
             </View>
             <View style={styles.row}>
@@ -297,8 +281,8 @@ class AddAppointment extends React.Component{
             </TouchableOpacity>
             </View>
             </View>
-            
-            
+
+
             <View style={styles.msgrow}>
             <Text style={styles.msgtextstyle}> Message : </Text>
             <View style={styles.border}>
@@ -311,10 +295,10 @@ class AddAppointment extends React.Component{
             >
             </TextInput>
             </View>
-            
+
             </View>
-            
-            
+
+
             <View style={{flexDirection:'row',}}>
             <TouchableHighlight
             style={styles.buttonWrap}
@@ -326,10 +310,10 @@ class AddAppointment extends React.Component{
             <Text style={styles.button}>
             {this.props.url.buttontext}</Text>
             </TouchableHighlight>
-            
+
             </View>
-            
-            
+
+
             </ScrollView >
             <Modal
             style={styles.branchstyle}
@@ -351,7 +335,7 @@ class AddAppointment extends React.Component{
             </Picker>
             </Modal>
             </View>
-            
+
             );
   }
 };

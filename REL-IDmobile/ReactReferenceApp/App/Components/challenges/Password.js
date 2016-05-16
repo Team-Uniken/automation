@@ -81,9 +81,6 @@ var styles = StyleSheet.create({
 	margin:1,
 	textAlign:'center',
 	textAlignVertical:'center',
-	borderWidth: 1,
-	borderColor: "#555555",
-	borderRadius: 9,
 	color: '#FFF',
 	marginTop:16,
 	},
@@ -110,21 +107,21 @@ var styles = StyleSheet.create({
 	marginLeft:Dimensions.get('window').width/2-140,
 	borderWidth: 1,
 	borderColor: "#fff",
-	backgroundColor:'#183F5B',
+	backgroundColor: 'rgba(255,255,255,0.1)',
 	borderRadius:30,
 	},
+
 	input: {
 		fontFamily: 'Century Gothic',
 		backgroundColor: 'rgba(255,255,255,0.1)',
-		height: 55,
-		fontSize: 22,
+		height: 56,
+		fontSize:16,
 		width: 280,
-		color: 'rgba(255,255,255,1)',
-		alignItems: 'center',
 		marginTop:16,
-		borderWidth: 1,
-		borderColor: "#555555",
-		borderRadius: 8,
+		color: 'rgba(255,255,255,1)',
+		marginLeft:Dimensions.get('window').width/2-140,
+		textAlign:'center',
+		alignItems: 'center',
 	},
 });
 
@@ -141,25 +138,23 @@ class Password extends React.Component{
          <Text style={styles.Varification}>Set Access</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Set Account Password</Text>
-<View style={styles.roundcorneredittext}>
+
 <TextInput
-placeholder={'Enter Password'}
-secureTextEntry={true}
-onChange={(event) => this.setState({devName: event.nativeEvent.text})}
-style={styles.formInput}
- />
-</View>
-
+	autoCorrect={false}
+	secureTextEntry={true}
+	placeholder={'Enter Password'}
+	placeholderTextColor={'rgba(255,255,255,0.5)'}
+	style={styles.input}
+/>
  <Text style={styles.div}> </Text>
- <View style={styles.roundcorneredittext}>
- <TextInput
- secureTextEntry={true}
- placeholder={'Confirm Password'}
- onChange={(event) => this.setState({devName: event.nativeEvent.text})}
- style={styles.formInput}
-  />
-	</View>
 
+	<TextInput
+		autoCorrect={false}
+		secureTextEntry={true}
+		placeholder={'Confirm Password'}
+		placeholderTextColor={'rgba(255,255,255,0.5)'}
+		style={styles.input}
+	/>
 
 <Text style={styles.match}>To make stronger password : {"\n"}Add uppercase letter, Add number</Text>
 <Text style={styles.div}> </Text>

@@ -26,7 +26,7 @@ var Activation = require('./App/Components/challenges/Activation');
 var Password = require('./App/Components/challenges/Password');
 var Otp = require('./App/Components/challenges/Otp');
 var SetQue = require('./App/Components/challenges/SetQue');
-var Machine = require('./App/Components/TwoFactorAuthMachine');
+var QuestionVerification = require('./App/Components/challenges/questionVerification');
 
 
 
@@ -134,7 +134,6 @@ class DemoApp1 extends React.Component{
 
   constructor(props){
     super(props);
-    var machine = new Machine();
   }
 
   renderScene(route,nav) {
@@ -168,11 +167,11 @@ class DemoApp1 extends React.Component{
       return (<Otp navigator={nav}/>);
     }else if (id == "SetQue"){
       return (<SetQue navigator={nav}/>);
+    }else if (id == "QuestionVerification"){
+      return (<QuestionVerification navigator={nav}/>);
     }else if (id == "Demo"){
       return (<Demo navigator={nav}/>);
-    }else if (id == "Machine"){
-      return (<Machine navigator={nav} url={route.url} title={route.title}/>);
-    } 
+    }
   }
 
   render() {
@@ -181,7 +180,7 @@ class DemoApp1 extends React.Component{
         style={styles.navigator}
         renderScene={this.renderScene}
         initialRoute={
-          {id: "Load"}
+          {id: "QuestionVerification"}
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {

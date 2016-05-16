@@ -6,6 +6,7 @@ var Menu = require('../Menu');
 var Main = require('../Main');
 var Web = require('../Web');
 var total=0.3;
+var ToolBar = require('../ToolBarWithoutCross');
 
 
 var Platform = require("react-native").Platform;
@@ -133,7 +134,7 @@ class PasswordVerification extends React.Component{
                     }else{
                       console.log('complete');
                       this.props.navigator.push(
-                                                {id: "Activation"}
+                                                {id: "Main"}
                                                 );
                       }
                 }).bind(this), 5);
@@ -208,6 +209,8 @@ class PasswordVerification extends React.Component{
 		return (
 
 			<View style={styles.container}>
+			<ToolBar navigator={this.props.navigator} title="Login"/>
+<View>
             <Animated.View style={[progStyle.wrap,{opacity: this.state.progWrapOpac}]}>
             <Text style={[progStyle.warning]}>
             Loading...
@@ -245,20 +248,22 @@ onSubmitEditing={this.checkPassword.bind(this)}
 onChange={this.onPasswordChange.bind(this)}
 />
 
+
 <TouchableHighlight
-style={logStyle.buttonWrap}
-underlayColor='#C7C7C7'
-activeOpacity={1}
-onPress={this.checkPasswordSuccess.bind(this)}
+style={logStyle.roundcorner}
+onPress={this.checkPassword.bind(this)}
+
+	underlayColor={'#082340'}
+	activeOpacity={0.6}
 >
-<Text style={logStyle.button}>
-	{this.state.login_button_text}
-</Text>
+<Text style={logStyle.button}>{this.state.login_button_text}</Text>
 </TouchableHighlight>
+
 </View>
 </Animated.View>
 
 
+</View>
 
 
 			</View>
@@ -318,12 +323,25 @@ var logStyle = StyleSheet.create({
 		backgroundColor: 'transparent'
 	},
 	button: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'transparent',
-		height: 55,
-		fontSize: 22,
-		marginTop: 16,
-		color: MIDBLUE,
+			fontFamily: 'Century Gothic',
+		backgroundColor:'transparent',
+	flex:1,
+	fontSize: 16,
+	margin:1,
+	textAlign:'center',
+	textAlignVertical:'center',
+	color: '#FFF',
+	marginTop:16,
+	},
+
+	roundcorner: {
+		height: 56,
+		width: 280,
+	marginTop:16,
+	borderWidth: 1,
+	borderColor: "#fff",
+	backgroundColor:'rgba(255,255,255,0.1)',
+	borderRadius: 30,
 	},
 	buttonWrap: {
 		top: 15,
@@ -337,6 +355,7 @@ var logStyle = StyleSheet.create({
 		height: 55,
 		fontSize: 22,
 		width: 280,
+		textAlign:'center',
 		color: 'rgba(255,255,255,1)',
 		alignItems: 'center',
 	},

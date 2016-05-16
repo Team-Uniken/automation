@@ -5,6 +5,10 @@ var Menu = require('../Menu');
 var Main = require('../Main');
 var Web = require('../Web');
 var PasswordVerification = require('./PasswordVerification');
+var Activation = require('./Activation');
+
+var ToolBar = require('../ToolBarWithoutCross');
+
 //var Machine = require('./TwoFactorAuthMachine');
 
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
@@ -60,7 +64,7 @@ var subscriptions;
 class UserLogin extends React.Component{
 	constructor(props){
 		super(props);
-		//var testClass = new Machine(); 
+		//var testClass = new Machine();
 		//testClass.dummyFunc();
 		this.state = {
 			r_opac_val: new Animated.Value(0),
@@ -209,7 +213,7 @@ class UserLogin extends React.Component{
     subscriptions.remove();
 		InteractionManager.runAfterInteractions(() => {
 				this.props.navigator.push(
-					{id: "PasswordVerification",title:nextChlngName,url:chlngJson}
+					{id: "Activation",title:nextChlngName,url:chlngJson}
 				);
 			});
 	}
@@ -289,6 +293,7 @@ class UserLogin extends React.Component{
 	render() {
 		return (
 			<View style={styles.container}>
+			<ToolBar navigator={this.props.navigator} title="Login"/>
 
 
 			<Animated.View style={[progStyle.wrap,{opacity: this.state.progWrapOpac}]}>
@@ -330,15 +335,16 @@ class UserLogin extends React.Component{
 					onSubmitEditing={this.checkUsername.bind(this)}
 					onChange={this.onUsernameChange.bind(this)}
 				/>
+
+
 				<TouchableHighlight
-					style={logStyle.buttonWrap}
-					underlayColor='#C7C7C7'
-					activeOpacity={1}
-					onPress={this.checkUsernameSuccess.bind(this)}
+				style={logStyle.roundcorner}
+				onPress={this.checkUsername.bind(this)}
+
+					underlayColor={'#082340'}
+					activeOpacity={0.6}
 				>
-					<Text style={logStyle.button}>
-						{this.state.login_button_text}
-					</Text>
+				<Text style={logStyle.button}>{this.state.login_button_text}</Text>
 				</TouchableHighlight>
 					</View>
 			</Animated.View>
@@ -388,14 +394,28 @@ var logStyle = StyleSheet.create({
 	image_center: {
 		alignItems: 'center',
 	},
-	button: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'transparent',
-		height: 55,
-		fontSize: 22,
-		marginTop: 13,
-		color: MIDBLUE,
-	},
+
+		button: {
+				fontFamily: 'Century Gothic',
+			backgroundColor:'transparent',
+		flex:1,
+		fontSize: 16,
+		margin:1,
+		textAlign:'center',
+		textAlignVertical:'center',
+		color: '#FFF',
+		marginTop:16,
+		},
+
+		roundcorner: {
+			height: 56,
+			width: 280,
+		marginTop:16,
+		borderWidth: 1,
+		borderColor: "#fff",
+		backgroundColor:'rgba(255,255,255,0.1)',
+		borderRadius: 30,
+		},
 	buttonWrap: {
 		top: 15,
 		width: 280,
@@ -409,6 +429,7 @@ var logStyle = StyleSheet.create({
 		fontSize: 22,
 		width: 280,
 		color: 'rgba(255,255,255,1)',
+		textAlign:'center',
 		alignItems: 'center',
 	},
 	warning: {
@@ -416,7 +437,7 @@ var logStyle = StyleSheet.create({
 		color: 'rgba(255,255,255,0.8)',
 		fontSize: 22,
 		textAlign: 'center',
-		height: 35,
+		width: 280,
 	}
 });
 

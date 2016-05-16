@@ -80,9 +80,6 @@ var styles = StyleSheet.create({
 	margin:1,
 	textAlign:'center',
 	textAlignVertical:'center',
-	borderWidth: 1,
-	borderColor: "#555555",
-	borderRadius: 9,
 	color: '#FFF',
 	marginTop:16,
 	},
@@ -109,21 +106,20 @@ var styles = StyleSheet.create({
 	marginLeft:Dimensions.get('window').width/2-140,
 	borderWidth: 1,
 	borderColor: "#fff",
-	backgroundColor:'#183F5B',
+	backgroundColor: 'rgba(255,255,255,0.1)',
 	borderRadius: 30,
 	},
 	input: {
 		fontFamily: 'Century Gothic',
 		backgroundColor: 'rgba(255,255,255,0.1)',
-		height: 55,
-		fontSize: 22,
+		height: 56,
+		fontSize:16,
 		width: 280,
-		color: 'rgba(255,255,255,1)',
-		alignItems: 'center',
 		marginTop:16,
-		borderWidth: 1,
-		borderColor: "#555555",
-		borderRadius: 8,
+		color: 'rgba(255,255,255,1)',
+		marginLeft:Dimensions.get('window').width/2-140,
+		textAlign:'center',
+		alignItems: 'center',
 	},
 });
 
@@ -146,14 +142,14 @@ class Activation extends React.Component{
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Access Code</Text>
 <Text style={styles.div}> </Text>
-<View style={styles.roundcorneredittext}>
-<TextInput
-placeholder={'Enter Access Code'}
-secureTextEntry={true}
-onChange={(event) => this.setState({devName: event.nativeEvent.text})}
-style={styles.formInput}
+
+ <TextInput
+ 	autoCorrect={false}
+	secureTextEntry={true}
+	placeholder={'Enter Access Code'}
+ 	placeholderTextColor={'rgba(255,255,255,0.5)'}
+ 	style={styles.input}
  />
-</View>
 
  <Text style={styles.step}>3 Attempts Left</Text>
  <Text style={styles.div}> </Text>

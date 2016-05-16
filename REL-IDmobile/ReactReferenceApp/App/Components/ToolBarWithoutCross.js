@@ -19,7 +19,7 @@ var Appointment = React.createClass({
     return (
       <View style={styles.toolbarrow}>
       <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
+        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width,textAlign:'center',}}
       >{this.props.title}</Text>
       </View>
 		);

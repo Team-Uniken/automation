@@ -21,17 +21,17 @@ var Appointment = React.createClass({
     return (
       <View style={styles.toolbarrow}>
       <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
+        style={{fontSize:24,color: '#2579a2',marginTop:12,marginLeft:40,fontWeight: 'bold', width:Dimensions.get('window').width-80,textAlign:'center',}}
       >{this.props.title}</Text>
       <TouchableHighlight
         onPress={()=>{
                 this.props.navigator.pop();
         }}
-        underlayColor={'#FFFFFF'}
+        underlayColor={'#FFF'}
         activeOpacity={0.6}
       >
         <Text
-          style={{textAlign: 'right',fontSize:24,color: '#2579a2',margin:12,}}
+          style={{textAlign: 'right',fontSize:24,color: '#2579a2',margin:12}}
         >X</Text>
       </TouchableHighlight>
       </View>
