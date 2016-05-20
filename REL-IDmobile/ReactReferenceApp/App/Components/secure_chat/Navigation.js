@@ -1,4 +1,5 @@
 'use strict';
+var ToolBar = require('../ToolBar');
 
 var androidBackPressListener, obj;
 var navigator;
@@ -67,25 +68,11 @@ componentDidMount() {
   render() {
     return (
       <View style={styles.container}>
-      <View style={styles.toolbarrow}>
-      <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
-      >Chat</Text>
-      <TouchableHighlight
-        onPress={()=>{
-                this.props.navigator.pop();
 
-        }}
-        underlayColor={'#FFFFFF'}
-        activeOpacity={0.6}
-      >
-        <Text
-          style={{textAlign: 'right',fontSize:24,color: '#2579a2',margin:12,}}
-        >X</Text>
-      </TouchableHighlight>
-      </View>
+      <ToolBar navigator={this.props.navigator} title="Chat"/>
+
        <View style={{backgroundColor:'#2579a2', height:1}}>
-       </View> 
+       </View>
       <ExNavigator
         initialRoute={Router.GiftedMessenger()}
         style={{flex: 1}}

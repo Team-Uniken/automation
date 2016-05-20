@@ -108,13 +108,13 @@ class TwoFactorAuthMachine extends React.Component{
 	    }else if (id == "PasswordVerification"){
 	      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
 	    }else if (id == "Activation"){
-      	  return (<Activation navigator={nav}/>);
+      	  return (<Activation navigator={nav} url={route.url} title={route.title}/>);
 	    }else if (id == "Password"){
-	      return (<Password navigator={nav}/>);
+	      return (<Password navigator={nav} url={route.url} title={route.title}/>);
 	    }else if (id == "Otp"){
-	      return (<Otp navigator={nav}/>);
+	      return (<Otp navigator={nav} url={route.url} title={route.title}/>);
 	    }else if (id == "SetQue"){
-	      return (<SetQue navigator={nav}/>);
+	      return (<SetQue navigator={nav} url={route.url} title={route.title}/>);
 	    }
 	}
 

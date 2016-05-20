@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var ToolBar = require('./ToolBar');
 
 
 var {
@@ -169,38 +170,14 @@ class ComingSoon extends React.Component{
   render() {
     return (
       <View style={[styles.container]}>
+        <ToolBar navigator={this.props.navigator} title={this.props.title}/>
 
-        <View style={styles.navbar}>
-          <TouchableHighlight 
-            style={[styles.navButton,styles.navLeft]} 
-            underlayColor={'#FFFFFF'}
-            activeOpacity={0.6}
-          >
-            <View style={styles.navButtonText}>
-            </View>
-          </TouchableHighlight>
-
-          <Text style={styles.navTitle}>{this.props.title}</Text>
-
-          <TouchableHighlight 
-            style={[styles.navButton,styles.navRight]}
-            onPress={()=>{
-              this.props.navigator.pop();
-            }}
-            underlayColor={'#FFFFFF'}
-            activeOpacity={0.6}
-          >
-            <Text
-              style={[styles.navButtonText,{textAlign: 'right',fontSize:22}]}
-            >X</Text>
-          </TouchableHighlight>
-        </View>
         <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
 
         <Text style={{padding:30,textAlign:'center',flex:1,backgroundColor:'#50accd',color:"#ffffff"}}>
           This is a Customizable Feature Slot.  Put your own web app here!
         </Text>
-        
+
       </View>
     );
   }
