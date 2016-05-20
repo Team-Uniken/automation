@@ -14,6 +14,7 @@ var Machine = require('./TwoFactorAuthMachine');
 var UserLogin = require('./challenges/UserLogin');
 var PasswordVerification = require('./challenges/PasswordVerification');
 
+var subscriptions;
 
 var {
 	Component,
@@ -94,11 +95,30 @@ class TwoFactorAuthMachine extends React.Component{
 
 	componentDidMount(){
 		screenId = "UserLogin";//this.props.screenId;
+    //subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this));
 	}
 
-	componentDidMount(){
+  /*onCheckChallengeResponseStatus(e){
+    var res = JSON.parse(e.response);
+    var statusCode= res.pArgs.response.StatusCode
+    if(e.errCode == 0){
+        if (statusCode==100) {
+          chlngJson = res.pArgs.response.ResponseData;
+          //This is important, hardcoding is done for testing purpose
+          // var temp = JSON.parse(chlngJson);
+          // nextChlngName = temp.chlng[0].chlng_name
+          nextChlngName = 'PasswordVerification';
+          obj.checkUsernameSuccess();
+        }else{
+          statusMessage = res.pArgs.response.StatusMsg;
+          obj.checkUsernameFailure();
+        }
+    } else {
+      alert();
+    }
+  }*/
 
-	}
+
 
 	renderScene(route,nav) {
 	    var id = route.id;
