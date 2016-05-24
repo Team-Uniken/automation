@@ -15,9 +15,11 @@ var SetQue = require('./challenges/SetQue');
 var Machine = require('./TwoFactorAuthMachine');
 var UserLogin = require('./challenges/UserLogin');
 var PasswordVerification = require('./challenges/PasswordVerification');
+var QuestionVerification = require('./challenges/questionVerification');
 var DeviceBinding = require('./challenges/devbind');
 var DeviceName = require('./challenges/devname'); 
 var EventEmitter = require('EventEmitter');
+var Constants = require('./Constants'); 
 var Events = require('react-native-simple-events');
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -148,7 +150,7 @@ class TwoFactorAuthMachine extends React.Component{
           this.props.navigator.push({id: "Machine", title:nextChlngName, url:{"chlngJson":chlngJson, "screenId":nextChlngName}});
 
         }else{
-          statusMessage = res.pArgs.response.StatusMsg;
+          alert(res.pArgs.response.StatusMsg);
         }
     } else {
       alert();
@@ -170,26 +172,35 @@ class TwoFactorAuthMachine extends React.Component{
 	renderScene(route,nav) {
 	    var id = route.id;
 	    console.log('---------- renderScene ' + id);
+      var challengeOperation = route.url.chlngJson.challengeOperation;
 
-	    if(id == "checkuser"){
-	    	return (<UserLogin navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-	    }else if (id == "pass"){
-	      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-	    }else if (id == "actcode"){
-      	  return (<Activation navigator={nav} url={route.url} title={route.title}/>);
-	    }else if (id == "pass"){
-	      return (<Password navigator={nav} url={route.url} title={route.title}/>);
-	    }else if (id == "otp"){
-	      return (<Otp navigator={nav} url={route.url} title={route.title}/>);
-	    }else if (id == "secqa"){
-	      return (<SetQue navigator={nav} url={route.url} title={route.title}/>);
-	    }else if (id == "secondarySecqa"){
-        return (<SetQue navigator={nav} url={route.url} title={route.title}/>);
-      }else if (id == "devname"){
-        return (<DeviceName navigator={nav} url={route.url} title={route.title}/>);
-      }else if (id == "devbind"){
-        return (<DeviceBinding navigator={nav} url={route.url} title={route.title}/>);
-      }
+  	    if(id == "checkuser"){
+  	    	return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
+  	    }
+        else if (id == "actcode"){
+        	  return (<Activation navigator={nav} url={route.url} title={route.title}/>);
+  	    }
+        else if (id == "pass"){
+          if(challengeOperation = Constants.CHLNG_VERIFICATION_MODE)
+            return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
+          else   
+            return (<Password navigator={nav} url={route.url} title={route.title}/>);
+  	    }
+        else if (id == "otp"){
+  	      return (<Otp navigator={nav} url={route.url} title={route.title}/>);
+  	    }
+        else if (id == "secqa" || id == "secondarySecqa"){
+          if(challengeOperation = Constants.CHLNG_VERIFICATION_MODE)
+            return (<QuestionVerification navigator={nav} url={route.url} title={route.title}/>);    
+  	      else
+            return (<SetQue navigator={nav} url={route.url} title={route.title}/>);
+  	    }
+        else if (id == "devname"){
+          return (<DeviceName navigator={nav} url={route.url} title={route.title}/>);
+        }
+        else if (id == "devbind"){
+          return (<DeviceBinding navigator={nav} url={route.url} title={route.title}/>);
+        }
 	}
 
 render() {
@@ -198,7 +209,7 @@ render() {
         ref={(ref) => this.stateNavigator = ref}
         renderScene={this.renderScene}
         initialRoute={
-          {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge()},title: this.props.title}
+          {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length},title: this.props.title}
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {
@@ -234,12 +245,10 @@ render() {
     currentIndex ++;
     if(obj.hasNextChallenge()){
       // Show Next challenge screen
-      console.log("----- showNextChallenge currentIndex " + currentIndex);
       var currentChlng = obj.getCurrentChallenge();
-      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng},title: obj.props.title});
+      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length},title: obj.props.title});
     } else {
        // Call checkChallenge
-       console.log("----- call checkChallenge " + obj.stateNavigator);
        obj.callCheckChallenge();
     }
   }
