@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var ToolBar = require('../ToolBar');
+var Events = require('react-native-simple-events');
 
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
@@ -158,6 +159,7 @@ class Activation extends React.Component{
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
+	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

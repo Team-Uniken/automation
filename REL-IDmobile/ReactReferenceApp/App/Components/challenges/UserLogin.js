@@ -9,8 +9,6 @@ var Activation = require('./Activation');
 
 var ToolBar = require('../ToolBarWithoutCross');
 
-//var Machine = require('./TwoFactorAuthMachine');
-
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 var LIGHTBLUE = '#50ADDC';
@@ -45,12 +43,13 @@ var {
 	ProgressViewIOS,
 	Dimensions,
 	Platform,
+	AsyncStorage,
 } = React;
 
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
+var Events = require('react-native-simple-events');
 
 var ProgressBar = require('react-native-progress-bar');
-
 
 var {DeviceEventEmitter} = require('react-native');
 //var DeviceEventEmitter = require('DeviceEventEmitter');
@@ -64,8 +63,6 @@ var subscriptions;
 class UserLogin extends React.Component{
 	constructor(props){
 		super(props);
-		//var testClass = new Machine();
-		//testClass.dummyFunc();
 		this.state = {
 			r_opac_val: new Animated.Value(0),
 			i_opac_val: new Animated.Value(0),
@@ -116,7 +113,7 @@ class UserLogin extends React.Component{
 	componentDidMount() {
 
 		obj = this;
-    subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this))
+    //subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this))
 
 		Animated.sequence([
 			Animated.parallel([
@@ -147,6 +144,11 @@ class UserLogin extends React.Component{
 			this.refs.inputUsername.focus();
 		});
 	}
+
+	componentWillMount(){
+		console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+	}
+
 	updateProgress() {
 
 		setTimeout((function() {
@@ -173,44 +175,21 @@ class UserLogin extends React.Component{
 	checkUsername(){
 		this.state.progress = 0;
 		var un = this.state.inputUsername;
+		
     if(un.length>0){
-    Main.dnaUserName = un;
-		var count = this.state.loginAttempts;
+    	AsyncStorage.setItem("userId", un);
+    	Main.dnaUserName = un;
 		responseJson = this.props.url.chlngJson;
-		responseJson = responseJson.chlng;
-		responseJson[0].chlng_resp[0].response = un;
-		var temp = {'chlng':responseJson};
-	    var userRespo = JSON.stringify(temp);
+		responseJson.chlng_resp[0].response = un;
+		Events.trigger('showNextChallenge', {response: responseJson}); 
 		// this.updateProgress();
-		 ReactRdna.checkChallenges(userRespo,un,(response) => {
-		     if (response[0].error==0) {
-		        console.log('immediate response is'+response[0].error);
-		        // alert(response[0].error);
-						Animated.sequence([
-							Animated.timing(this.state.logWrapOpac, {
-								toValue: 0,
-								duration: 100 * Spd,
-								delay: 100 * Spd
-								}
-							),
-						Animated.timing(this.state.progWrapOpac, {
-							toValue: 1,
-							duration: 500 * Spd,
-							delay: 0 * Spd
-						})
-						]).start();
-						this.state.progress = 0;
-							this.updateProgress();
-		      }else{
-		        console.log('immediate response is'+response[0].error);
-		         alert(response[0].error);
-		      }
-
-                               })}else{alert('Please enter User ID');}
+	}else{
+		 	alert('Please enter User ID');
+		 }
 	}
 
 	checkUsernameSuccess(){
-    subscriptions.remove();
+    //subscriptions.remove();
 		InteractionManager.runAfterInteractions(() => {
 				this.props.navigator.push(
 					{id: "Activation",title:nextChlngName,url:chlngJson}

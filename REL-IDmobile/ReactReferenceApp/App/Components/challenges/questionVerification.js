@@ -5,7 +5,7 @@ var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
-
+var Events = require('react-native-simple-events');
 
 var {
 	View,
@@ -144,6 +144,7 @@ class Activation extends React.Component{
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
+	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
 			 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

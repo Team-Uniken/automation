@@ -5,6 +5,7 @@ var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
+var Events = require('react-native-simple-events');
 
 var check=false;
 var {
@@ -215,9 +216,7 @@ onPress={this.check.bind(this)}
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
-		 this.props.navigator.push(
-				{id: "Password",}
-			);
+		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

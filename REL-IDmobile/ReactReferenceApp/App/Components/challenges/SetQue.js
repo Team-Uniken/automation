@@ -1,5 +1,6 @@
 var React = require('react-native');
 var ToolBar = require('../ToolBar');
+var Events = require('react-native-simple-events');
 
 var obj;
 
@@ -147,6 +148,7 @@ var Appointment = React.createClass({
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
+    Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

@@ -7,6 +7,7 @@ var Main = require('../Main');
 var Web = require('../Web');
 var total=0.3;
 var ToolBar = require('../ToolBarWithoutCross');
+var Events = require('react-native-simple-events');
 
 
 var Platform = require("react-native").Platform;
@@ -144,21 +145,8 @@ class PasswordVerification extends React.Component{
 //    alert(Main.dnaUserName);
 		var pw = this.state.inputPassword;
     if(pw.length>0){
-		var count = this.state.passAttempts;
-    var pw = this.state.inputPassword;
-    responseJson = this.props.url.chlngJson;
-    var temp = JSON.parse(responseJson);
-    temp.chlng[0].chlng_resp[0].response = pw;
-    var userRespo = JSON.stringify(temp);
-      ReactRdna.checkChallenges(userRespo,Main.dnaUserName,(response) => {
-                                if (response) {
-                                console.log('immediate response is'+response[0].error);
-                                // alert(response[0].error);
-                                }else{
-                                console.log('immediate response is'+response[0].error);
-                                // alert(response[0].error);
-                                }
-                                })}else{
+		Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
+		}else{
         alert('Please enter password');
       }
 	}
