@@ -191,41 +191,65 @@ class Web extends React.Component{
 
   render() {
     return (
-      <View style={[styles.container]}>
-        <ToolBar navigator={this.props.navigator} title={this.props.title}/>
-
-        <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
-        <SecuredWebview
-          ref={WEBVIEW_REF}
-          automaticallyAdjustContentInsets={false}
-          style={styles.webView}
-          source={{uri: this.props.url}}
-          proxy={{host:'127.0.0.1', port:28000}}
-          javaScriptEnabledAndroid={true}
-          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-          scalesPageToFit={true}
-        />
-
-        <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
-        <View style={[styles.bottomBar]}>
-          <TouchableOpacity
+            <View style={[styles.container]}>
+            
+            <View style={styles.navbar}>
+            <TouchableHighlight
+            style={[styles.navButton,styles.navLeft]}
+            underlayColor={'#FFFFFF'}
+            activeOpacity={0.6}
+            >
+            <View style={styles.navButtonText}>
+            </View>
+            </TouchableHighlight>
+            
+            <Text style={styles.navTitle}>{this.props.title}</Text>
+            
+            <TouchableHighlight
+            style={[styles.navButton,styles.navRight]}
+            onPress={()=>{
+            this.props.navigator.pop();
+            }}
+            underlayColor={'#FFFFFF'}
+            activeOpacity={0.6}
+            >
+            <Text
+            style={[styles.navButtonText,{textAlign: 'right',fontSize:22}]}
+            >X</Text>
+            </TouchableHighlight>
+            </View>
+            <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
+            
+            <SecuredWebview
+		          ref={WEBVIEW_REF}
+		          automaticallyAdjustContentInsets={false}
+		          style={styles.webView}
+		          source={{uri: this.props.url}}
+		          proxy={{host:'127.0.0.1', port:28000}}
+		          javaScriptEnabledAndroid={true}
+		          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+		          scalesPageToFit={true}
+            />
+            <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
+            <View style={[styles.bottomBar]}>
+            <TouchableOpacity
             onPress={this.goBack.bind(this)}
             style={[styles.backForButton,this.state.backButtonEnabled ? styles.navButton : styles.disabledButton]}>
             <Text style={this.state.backButtonEnabled ? styles.buttonText : styles.disabledButtonText}>
-               {'<'}
+            {'<'}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            </TouchableOpacity>
+            <TouchableOpacity
             onPress={this.goForward.bind(this)}
             style={[styles.backForButton,this.state.forwardButtonEnabled ? styles.navButton : styles.disabledButton]}>
             <Text style={this.state.forwardButtonEnabled ? styles.buttonText : styles.disabledButtonText}>
-              {'>'}
+            {'>'}
             </Text>
-          </TouchableOpacity>
-        </View>
-
-      </View>
-    );
+            </TouchableOpacity>
+            </View>
+            
+            </View>
+            );
   }
 
 
