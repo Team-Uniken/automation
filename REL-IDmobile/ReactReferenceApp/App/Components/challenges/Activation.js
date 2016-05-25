@@ -6,7 +6,7 @@ var MIDBLUE = '#2579A2';
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
 var Events = require('react-native-simple-events');
-
+var Events = require('react-native-simple-events');
 var {
 	View,
 	Text,
@@ -114,6 +114,29 @@ var styles = StyleSheet.create({
 
 
 class Activation extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      activatonCode : ''
+      
+    };
+  }
+  
+  checkActivationCode(){
+    var vkey = this.state.activatonCode;
+    if(vkey.length>0){
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = vkey;
+      Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter Verification Key');
+    }
+  }
+  onActivationCodeChange(event){
+    this.setState({activatonCode: event.nativeEvent.text});
+  }
+  
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -123,9 +146,9 @@ class Activation extends React.Component{
       <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>1</Text></Text>
          <Text style={styles.Varification}>Verify and Activate</Text>
 <Text style={styles.div}> </Text>
-<Text style={styles.Varificationkey}>95nekc</Text>
+<Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
 <Text style={styles.Varification}>Verification Key</Text>
-<Text style={styles.match}>Match varificatin key and{"\n"}enter activation code send to you</Text>
+<Text style={styles.match}>Match verificatin key and{"\n"}enter activation code send to you</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Activation Code</Text>
 
@@ -133,9 +156,11 @@ class Activation extends React.Component{
 
 <TextInput
 	autoCorrect={false}
+  ref='activatonCode'
 	placeholder={'Enter Activation Code'}
 	placeholderTextColor={'rgba(255,255,255,0.5)'}
 	style={styles.input}
+  onChange={this.onActivationCodeChange.bind(this)}
 />
 
 
@@ -144,9 +169,10 @@ class Activation extends React.Component{
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
-	 }}
+//	 onPress={()=>{
+            onPress={this.checkActivationCode.bind(this)}
+//		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+//	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >

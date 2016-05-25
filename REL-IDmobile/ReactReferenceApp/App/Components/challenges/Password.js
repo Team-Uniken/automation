@@ -3,7 +3,7 @@
 var React = require('react-native');
 var ToolBar = require('../ToolBar');
 var SetQue = require('./SetQue');
-
+var Events = require('react-native-simple-events');
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
 
@@ -128,6 +128,43 @@ var styles = StyleSheet.create({
 
 
 class Password extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      password : '',
+      cPassword : ''
+      
+    };
+  }
+  
+  setPassword(){
+    var pw = this.state.password;
+    var cpw = this.state.cPassword;
+    
+    if(pw.length>0){
+      if(cpw.length>0){
+        if(pw == cpw){
+        responseJson = this.props.url.chlngJson;
+        responseJson.chlng_resp[0].response = pw;
+          Events.trigger('showNextChallenge', {response: responseJson});
+        }
+        else{
+          alert('Password and Confirm Password do not match');
+        }}else{alert('Please enter confirm password ');}
+    }
+    else{
+      alert('Please enter password ');
+    }
+  }
+  
+  onPasswordChange(event){
+    this.setState({password: event.nativeEvent.text});
+  }
+  
+  onConfirmPasswordChange(event){
+    this.setState({cPassword: event.nativeEvent.text});
+  }
+  
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -145,6 +182,8 @@ class Password extends React.Component{
 	placeholder={'Enter Password'}
 	placeholderTextColor={'rgba(255,255,255,0.5)'}
 	style={styles.input}
+            ref='password'
+            onChange={this.onPasswordChange.bind(this)}
 />
  <Text style={styles.div}> </Text>
 
@@ -154,6 +193,8 @@ class Password extends React.Component{
 		placeholder={'Confirm Password'}
 		placeholderTextColor={'rgba(255,255,255,0.5)'}
 		style={styles.input}
+            ref='cPassowrd'
+            onChange={this.onConfirmPasswordChange.bind(this)}
 	/>
 
 <Text style={styles.match}>To make stronger password : {"\n"}Add uppercase letter, Add number</Text>
@@ -161,11 +202,12 @@ class Password extends React.Component{
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-		 this.props.navigator.push(
-				{id: "SetQue",}
-			);
-	 }}
+             onPress={this.setPassword.bind(this)}
+//	 onPress={()=>{
+//		 this.props.navigator.push(
+//				{id: "SetQue",}
+//			);
+//	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
