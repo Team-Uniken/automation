@@ -127,6 +127,9 @@ var styles = StyleSheet.create({
 
 
 class Activation extends React.Component{
+
+		componentDidMount() {
+		}
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -134,12 +137,12 @@ class Activation extends React.Component{
 
 			<ScrollView >
 
-      <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>6</Text></Text>
+      <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>{this.props.url.chlngJson.chlng_idx}</Text></Text>
          <Text style={styles.Varification}>Set Access</Text>
 <Text style={styles.div}> </Text>
-<Text style={styles.Varificationkey}>3bfq2fp</Text>
+<Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
 <Text style={styles.Varification}>Verification Key</Text>
-<Text style={styles.match}>Please contact help-desk if{"\n"}keys does not match</Text>
+<Text style={styles.match}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Access Code</Text>
 <Text style={styles.div}> </Text>
@@ -152,14 +155,14 @@ class Activation extends React.Component{
  	style={styles.input}
  />
 
- <Text style={styles.step}>3 Attempts Left</Text>
+ <Text style={styles.step}>{this.props.url.chlngJson.chlng_idx} Attempts Left</Text>
  <Text style={styles.div}> </Text>
 
 
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
-	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

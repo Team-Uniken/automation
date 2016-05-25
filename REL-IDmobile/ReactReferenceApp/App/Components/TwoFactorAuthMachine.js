@@ -16,7 +16,7 @@ var Machine = require('./TwoFactorAuthMachine');
 var UserLogin = require('./challenges/UserLogin');
 var PasswordVerification = require('./challenges/PasswordVerification');
 var DeviceBinding = require('./challenges/devbind');
-var DeviceName = require('./challenges/devname'); 
+var DeviceName = require('./challenges/devname');
 var EventEmitter = require('EventEmitter');
 var Events = require('react-native-simple-events');
 
@@ -110,7 +110,7 @@ class TwoFactorAuthMachine extends React.Component{
 	componentDidMount(){
 		screenId = "UserLogin";//this.props.screenId;
     obj = this;
-    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge) 
+    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge)
 	}
 
   componentWillMount(){
@@ -228,7 +228,7 @@ render() {
     console.log("----- showNextChallenge jsonResponse " + JSON.stringify(args));
     //alert(JSON.stringify(args));
 
-    var i = challengeJsonArr.indexOf(currentIndex); 
+    var i = challengeJsonArr.indexOf(currentIndex);
     challengeJsonArr[i] = args.response;
 
     currentIndex ++;
@@ -278,18 +278,22 @@ render() {
 	}
 
   callCheckChallenge(){
-    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
-  ReactRdna.checkChallenges(JSON.stringify(challengeJson), 'vedika3',(response) => {
-         if (response[0].error==0) {
-            console.log('immediate response is'+response[0].error);
-            // alert(response[0].error);
-          }else{
-            console.log('immediate response is'+response[0].error);
-             alert(response[0].error);
-          }
+	   console.log('----- Main.dnaUserName ' + Main.dnaUserName);
+	   AsyncStorage.getItem("userId").then((value) => {
+	                                       //                                       this.setState({"userId": value});
 
-                    })
-  }
+	                                       ReactRdna.checkChallenges(JSON.stringify(challengeJson), value,(response) => {
+	                                                                 if (response[0].error==0) {
+	                                                                 console.log('immediate response is'+response[0].error);
+	                                                                 // alert(response[0].error);
+	                                                                 }else{
+	                                                                 console.log('immediate response is'+response[0].error);
+	                                                                 alert(response[0].error);
+	                                                                 }
+
+	                                                                 })
+	                                       }).done();
+	 }
 }
 
 
