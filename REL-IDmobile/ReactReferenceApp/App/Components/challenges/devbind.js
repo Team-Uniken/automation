@@ -172,7 +172,13 @@ class DeviceBinding extends React.Component{
 
 
 	  }
-
+  setDeviceBinding(){
+    var dBind = this.state.type;
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = dBind;
+      Events.trigger('showNextChallenge', {response: responseJson});
+  }
+  
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -215,9 +221,10 @@ onPress={this.check.bind(this)}
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
-	 }}
+//	 onPress={()=>{
+//		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+//	 }}
+            onPress={this.setDeviceBinding.bind(this)}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
