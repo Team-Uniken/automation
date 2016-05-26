@@ -128,13 +128,13 @@ class Menu extends React.Component{
 					<TouchableHighlight style={[styles.grid,styles.D]} activeOpacity={0.8} underlayColor={MENU_HVR_COLOR}
 						onPress={()=>{
 							this.props.navigator.push(
-								{id: "Web",title:"Email",url:"https://mail.google.com/mail/u/0/#inbox"}
+								{id: "Device",title:"Device",url:"https://mail.google.com/mail/u/0/#inbox"}
 							);}
 						}
 					>
 						<View>
 							<Text style={styles.icon}>o</Text>
-							<Text style={styles.iconText}>Email</Text>
+							<Text style={styles.iconText}>Device</Text>
 						</View>
 					</TouchableHighlight>
 				</View>

@@ -184,9 +184,6 @@ class TwoFactorAuthMachine extends React.Component{
     var id = route.id;
     console.log('---------- renderScene ' + id + " url " + route.url);
 
-    var info = {"chlngJson":obj.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length};
-    console.log('---------- info ' + JSON.stringify(info));
-
     var challengeOperation;
     if(route.url!=undefined){
       challengeOperation = route.url.chlngJson.challengeOperation;

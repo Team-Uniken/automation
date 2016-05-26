@@ -10,6 +10,7 @@ var Dimensions = require('Dimensions');
 var PixelRatio = require('PixelRatio');
 
 var Main = require('./App/Components/Main');
+var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
 var Menu = require('./App/Components/Menu');
@@ -158,6 +159,8 @@ class ReactRefApp extends React.Component{
       return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "Machine"){
       return (<Machine navigator={nav} url={route.url} title={route.title}/>);
+    }else if (id == "Device"){
+      return (<Device navigator={nav} url={route.url} title={route.title}/>);
     } 
 
   }

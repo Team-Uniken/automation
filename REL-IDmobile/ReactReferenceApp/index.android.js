@@ -11,6 +11,7 @@ var PixelRatio = require('PixelRatio');
 // var NavigationBar = require('react-native-navbar');
 
 var Main = require('./App/Components/Main');
+var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
 var Menu = require('./App/Components/Menu');
@@ -174,7 +175,9 @@ class DemoApp1 extends React.Component{
       return (<Demo navigator={nav}/>);
     }else if (id == "Machine"){
       return (<Machine navigator={nav} url={route.url} title={route.title}/>);
-    } 
+    }else if (id == "Device"){
+      return (<Device navigator={nav} url={route.url} title={route.title}/>);
+    }
   }
 
   render() {
