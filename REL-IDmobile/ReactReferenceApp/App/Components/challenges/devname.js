@@ -115,35 +115,67 @@ var styles = StyleSheet.create({
 
 
 class DevName extends React.Component{
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      deviceName : ''      
+      
+    };
+  }
+  
+  componentDidMount(){
+    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
+    this.setState({deviceName: this.props.url.chlngJson.chlng_resp[0].response});
+  }
+  
+  setDeviceName(){
+    var dName = this.state.deviceName;
+    
+    if(dName.length>0){
+          responseJson = this.props.url.chlngJson;
+          responseJson.chlng_resp[0].response = dName;
+          Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter Device Name ');
+    }
+  }
+  
+  onDeviceNameChange(event){
+    this.setState({deviceName: event.nativeEvent.text});
+  }
+  onDeviceNameChangeText(event){
+  this.setState({deviceName: event.nativeEvent.text});
+  }
+  
 	render() {
 		return (
 			<View style={styles.Container}>
 			<ToolBar navigator={this.props.navigator} title="Login"/>
 			<ScrollView >
 
-         <Text style={styles.Varification}>Register Device Name</Text>
-<Text style={styles.match}>Please give a name for this device</Text>
-<Text style={styles.div}> </Text>
+      <Text style={styles.Varification}>Register Device Name</Text>
+      <Text style={styles.match}>Please give a name for this device</Text>
+      <Text style={styles.div}> </Text>
+            
+      <TextInput
+        autoCorrect={false}
+        placeholder={'Enter name of the device'}
+        placeholderTextColor={'rgba(255,255,255,0.5)'}
+        style={styles.input}
+        ref='deviceName'
+        value={this.state.deviceName}
+        onChange={this.onDeviceNameChange.bind(this)}
+      />
 
-
-
-<TextInput
-	autoCorrect={false}
-	placeholder={'Enter name of the device'}
-	placeholderTextColor={'rgba(255,255,255,0.5)'}
-	style={styles.input}
-/>
-
-<Text style={styles.div}> </Text>
+      <Text style={styles.div}></Text>
 
 
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-		 //this.props.navigator.push({id: "self", title:'DashBoard', url:''});
-	 }}
+   onPress={this.setDeviceName.bind(this)}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
