@@ -55,7 +55,8 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontSize: 20,
-		width:Dimensions.get('window').width,
+		marginLeft:Dimensions.get('window').width/2-120,
+		width:240,
 	},
 	Varificationkey:{
 		 textAlign: "center",
@@ -118,10 +119,10 @@ class Activation extends React.Component{
     super(props);
     this.state = {
       activatonCode : ''
-      
+
     };
   }
-  
+
   checkActivationCode(){
     var vkey = this.state.activatonCode;
     if(vkey.length>0){
@@ -136,21 +137,22 @@ class Activation extends React.Component{
   onActivationCodeChange(event){
     this.setState({activatonCode: event.nativeEvent.text});
   }
-  
+
 	render() {
 		return (
 			<View style={styles.Container}>
 			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-      <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>1</Text></Text>
+			<Text style={styles.step}>{this.props.url.chlngJson.chlng_idx}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Verify and Activate</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-<Text style={styles.Varification}>Verification Key</Text>
-<Text style={styles.match}>Match verificatin key and{"\n"}enter activation code send to you</Text>
+<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+<Text style={styles.match}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
+
 <Text style={styles.div}> </Text>
-<Text style={styles.Varification}>Activation Code</Text>
+<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 
 
 
@@ -162,16 +164,14 @@ class Activation extends React.Component{
 	style={styles.input}
   onChange={this.onActivationCodeChange.bind(this)}
 />
-
-
-<Text style={styles.step}>3 Attempts Left</Text>
+<Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
 
 
  <TouchableHighlight
  style={styles.roundcorner}
 //	 onPress={()=>{
             onPress={this.checkActivationCode.bind(this)}
-//		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+//		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
 //	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
