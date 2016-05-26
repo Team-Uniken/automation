@@ -46,7 +46,7 @@ opacity: {
 value: 1.0,
 type: 'constant',
 },
-  
+
 transformTranslate: {
 from: {x: Dimensions.get('window').width, y: 0, z: 0},
 to: {x: 0, y: 0, z: 0},
@@ -56,7 +56,7 @@ type: 'linear',
 extrapolate: true,
 round: PixelRatio.get(),
 },
-  
+
 translateX: {
 from: Dimensions.get('window').width,
 to: 0,
@@ -66,7 +66,7 @@ type: 'linear',
 extrapolate: true,
 round: PixelRatio.get(),
 },
-  
+
 scaleX: {
 value: 1,
 type: 'constant',
@@ -92,7 +92,7 @@ opacity: {
 value: 1.0,
 type: 'constant',
 },
-  
+
 translateX: {
 from: 0,
 to: -Dimensions.get('window').width,
@@ -109,14 +109,15 @@ class TwoFactorAuthMachine extends React.Component{
     super(props);
     console.log('---------- Machine param ');
   }
-  
+
   componentDidMount(){
     screenId = "UserLogin";//this.props.screenId;
-    obj = this;
+
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge)
-  }
-  
+	}
+
   componentWillMount(){
+    obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
     challengeJsonArr = challengeJson.chlng;
@@ -125,17 +126,17 @@ class TwoFactorAuthMachine extends React.Component{
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
     subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this));
   }
-  
+
   componentWillUnmount() {
     console.log("----- TwoFactorAuthMachine unmounted");
   }
-  
+
   onCheckChallengeResponseStatus(e){
     var res = JSON.parse(e.response);
     var statusCode= res.pArgs.response.StatusCode
     if(res.errCode == 0){
       if (statusCode==100) {
-        
+
         //Unregister All Events
         // We can also unregister in componentWillUnmount
         subscriptions.remove();
@@ -143,7 +144,7 @@ class TwoFactorAuthMachine extends React.Component{
         if(res.pArgs.response.ResponseData){
         var chlngJson = JSON.parse(res.pArgs.response.ResponseData);
         var nextChlngName = chlngJson.chlng[0].chlng_name
-        
+
         //this.props.navigator.pop();
         //this.props.navigator.replace();
           if(chlngJson!=null){
@@ -158,7 +159,7 @@ class TwoFactorAuthMachine extends React.Component{
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1,1));
           this.props.navigator.push({id: "Main", title:'DashBoard', url:''});
         }
-        
+
       }else{
         alert(res.pArgs.response.StatusMsg);
       }
@@ -166,8 +167,8 @@ class TwoFactorAuthMachine extends React.Component{
       alert();
     }
   }
-  
-  
+
+
   /**
    public static final String CHLNG_CHECK_USER       = "checkuser";
    public static final String CHLNG_ACTIVATION_CODE  = "actcode";
@@ -178,16 +179,19 @@ class TwoFactorAuthMachine extends React.Component{
    public static final String CHLNG_OTP              = "otp";
    public static final String CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
    **/
-  
+
   renderScene(route,nav) {
     var id = route.id;
-    console.log('---------- renderScene ' + id);
-    
+    console.log('---------- renderScene ' + id + " url " + route.url);
+
+    var info = {"chlngJson":obj.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length};
+    console.log('---------- info ' + JSON.stringify(info));
+
     var challengeOperation;
     if(route.url!=undefined){
       challengeOperation = route.url.chlngJson.challengeOperation;
     }
-    
+
     if(id == "checkuser"){
       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
     }
@@ -216,27 +220,27 @@ class TwoFactorAuthMachine extends React.Component{
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title}/>);
     }
   }
-  
+
   render() {
     return (
             <Navigator
             ref={(ref) => this.stateNavigator = ref}
             renderScene={this.renderScene}
             initialRoute={
-            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length},title: this.props.title}
+            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex+1},title: this.props.title}
             //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
             }
             configureScene={(route) => {
             var config = Navigator.SceneConfigs.FloatFromRight;
             config ={
-            
+
             // Rebound spring parameters when transitioning FROM this scene
             springFriction: 26,
             springTension: 200,
-            
+
             // Velocity to start at when transitioning without gesture
             defaultTransitionVelocity: 1.5,
-            
+
             // Animation interpolators for horizontal transitioning:
             animationInterpolators: {
             into: buildStyleInterpolator(FromTheRight),
@@ -248,62 +252,63 @@ class TwoFactorAuthMachine extends React.Component{
             />
             );
   }
-  
+
   showNextChallenge(args){
     console.log("----- showNextChallenge jsonResponse " + JSON.stringify(args));
     //alert(JSON.stringify(args));
-    
+
     var i = challengeJsonArr.indexOf(currentIndex);
     challengeJsonArr[i] = args.response;
-    
+
     currentIndex ++;
     if(obj.hasNextChallenge()){
       // Show Next challenge screen
       var currentChlng = obj.getCurrentChallenge();
-      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length},title: obj.props.title});
+      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex+1},title: obj.props.title});
     } else {
       // Call checkChallenge
       obj.callCheckChallenge();
     }
   }
-  
+
   hasNextChallenge(){
     return challengeJsonArr.length > currentIndex;
   }
-  
+
   hasPreviousChallenge(){
-    
+
   }
-  
+
   showPreviousChallenge(){
-    
+
   }
-  
+
   showCurrentChallenge(){
-    
+
   }
-  
+
   start(json, nav){
     challengeJson = json;
     currentIndex = 0;
   }
-  
+
   stop(){
-    
+
   }
-  
+
   getCurrentChallenge(){
     return challengeJsonArr[currentIndex];
   }
-  
+
   getTotalChallenges(){
-    
+
   }
-  
+
   callCheckChallenge(){
+
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem("userId").then((value) => {
-                                        
+
         ReactRdna.checkChallenges(JSON.stringify(challengeJson), value,(response) => {
                                   if (response[0].error==0) {
                                   console.log('immediate response is'+response[0].error);
@@ -312,7 +317,7 @@ class TwoFactorAuthMachine extends React.Component{
                                   console.log('immediate response is'+response[0].error);
                                   alert(response[0].error);
                                   }
-                                  
+
                                   })
         }).done();
   }

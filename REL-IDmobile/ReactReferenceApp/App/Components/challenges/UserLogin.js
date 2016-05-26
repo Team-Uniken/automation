@@ -175,13 +175,13 @@ class UserLogin extends React.Component{
 	checkUsername(){
 		this.state.progress = 0;
 		var un = this.state.inputUsername;
-		
+
     if(un.length>0){
     	AsyncStorage.setItem("userId", un);
     	Main.dnaUserName = un;
 		responseJson = this.props.url.chlngJson;
 		responseJson.chlng_resp[0].response = un;
-		Events.trigger('showNextChallenge', {response: responseJson}); 
+		Events.trigger('showNextChallenge', {response: responseJson});
 		// this.updateProgress();
 	}else{
 		 	alert('Please enter User ID');

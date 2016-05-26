@@ -55,7 +55,8 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontSize: 20,
-		width:Dimensions.get('window').width,
+		marginLeft:Dimensions.get('window').width/2-120,
+		width:240,
 	},
 	Varificationkey:{
 		 textAlign: "center",
@@ -133,14 +134,14 @@ class Password extends React.Component{
     this.state = {
       password : '',
       cPassword : ''
-      
+
     };
   }
-  
+
   setPassword(){
     var pw = this.state.password;
     var cpw = this.state.cPassword;
-    
+
     if(pw.length>0){
       if(cpw.length>0){
         if(pw == cpw){
@@ -156,22 +157,22 @@ class Password extends React.Component{
       alert('Please enter password ');
     }
   }
-  
+
   onPasswordChange(event){
     this.setState({password: event.nativeEvent.text});
   }
-  
+
   onConfirmPasswordChange(event){
     this.setState({cPassword: event.nativeEvent.text});
   }
-  
+
 	render() {
 		return (
 			<View style={styles.Container}>
 			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-      <Text style={styles.step}>Step 4/<Text style={{color:MIDBLUE}}>5</Text></Text>
+			<Text style={styles.step}>{this.props.url.chlngJson.chlng_idx}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Set Access</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Set Account Password</Text>
@@ -197,7 +198,7 @@ class Password extends React.Component{
             onChange={this.onConfirmPasswordChange.bind(this)}
 	/>
 
-<Text style={styles.match}>To make stronger password : {"\n"}Add uppercase letter, Add number</Text>
+	<Text style={styles.match}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 <Text style={styles.div}> </Text>
 
  <TouchableHighlight
