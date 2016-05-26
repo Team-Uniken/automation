@@ -224,4 +224,4 @@ class testDemo extends Component {
 }
 
 //AppRegistry.registerComponent('testDemo', () => testDemo);
-
+module.exports = testDemo;
