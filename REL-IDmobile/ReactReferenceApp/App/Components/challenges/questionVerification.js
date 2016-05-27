@@ -130,11 +130,11 @@ class Activation extends React.Component{
          <Text style={styles.Varification}>Authentication</Text>
 				 <Text style={styles.match}>Answer your secret question</Text>
 <Text style={styles.div}> </Text>
-
-<Text style={styles.Varificationkey}>Question</Text>
-<Text style={styles.Varification}>What is your school name</Text>
+<Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
 <Text style={styles.div}> </Text>
-<Text style={styles.Varification}>Answer</Text>
+<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
+
 
 
 
@@ -145,8 +145,7 @@ class Activation extends React.Component{
 	style={styles.input}
 />
 
-
-<Text style={styles.step}>3 Attempts Left</Text>
+<Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
