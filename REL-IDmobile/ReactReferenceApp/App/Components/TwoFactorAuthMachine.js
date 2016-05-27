@@ -112,7 +112,7 @@ class TwoFactorAuthMachine extends React.Component{
 
   componentDidMount(){
     screenId = "UserLogin";//this.props.screenId;
-    
+
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge)
 	}
 
@@ -183,7 +183,7 @@ class TwoFactorAuthMachine extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
     console.log('---------- renderScene ' + id + " url " + route.url);
-    
+
     var info = {"chlngJson":obj.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length};
     console.log('---------- info ' + JSON.stringify(info));
 
