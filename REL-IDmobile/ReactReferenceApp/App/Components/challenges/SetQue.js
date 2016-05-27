@@ -114,7 +114,7 @@ var Appointment = React.createClass({
 			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-      <Text style={styles.step}>{this.props.url.chlngJson.chlng_idx}/{this.props.url.chlngsCount}</Text>
+      <Text style={styles.step}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Question and Answer</Text>
 <Text style={styles.div}> </Text>
 

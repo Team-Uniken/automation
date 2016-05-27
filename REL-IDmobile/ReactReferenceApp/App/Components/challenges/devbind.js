@@ -132,6 +132,12 @@ var styles = StyleSheet.create({
 
 
 class DeviceBinding extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
 	constructor(props){
 		super(props);
 		//var testClass = new Machine();
@@ -182,7 +188,7 @@ class DeviceBinding extends React.Component{
 <Text style={styles.Varification}>Remember Device</Text>
 <Text style={styles.div}> </Text>
 <View style={styles.row}>
-<Text style={styles.remember}>Remember this device for{"\n"}future access</Text>
+<Text style={styles.remember}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 
 <View>
 <Animated.View style={[styles.wrap,{opacity:1}]}>
@@ -216,12 +222,12 @@ onPress={this.check.bind(this)}
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Continue</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 
 

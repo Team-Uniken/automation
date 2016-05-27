@@ -115,14 +115,21 @@ var styles = StyleSheet.create({
 
 
 class DevName extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
 	render() {
 		return (
 			<View style={styles.Container}>
 			<ToolBar navigator={this.props.navigator} title="Login"/>
 			<ScrollView >
+			<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
 
-         <Text style={styles.Varification}>Register Device Name</Text>
 <Text style={styles.match}>Please give a name for this device</Text>
+
 <Text style={styles.div}> </Text>
 
 
@@ -132,6 +139,7 @@ class DevName extends React.Component{
 	placeholder={'Enter name of the device'}
 	placeholderTextColor={'rgba(255,255,255,0.5)'}
 	style={styles.input}
+	value={this.props.url.chlngJson.chlng_resp[0].response}
 />
 
 <Text style={styles.div}> </Text>
@@ -147,7 +155,7 @@ class DevName extends React.Component{
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Submit</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 
 

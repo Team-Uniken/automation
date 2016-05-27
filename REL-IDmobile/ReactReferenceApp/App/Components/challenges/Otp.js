@@ -129,7 +129,17 @@ var styles = StyleSheet.create({
 class Activation extends React.Component{
 
 		componentDidMount() {
+
 		}
+
+btnText(){
+	if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+		return "Submit";
+	}else{
+		return "Continue";
+	}}
+
+
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -167,7 +177,7 @@ class Activation extends React.Component{
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Continue</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 </ScrollView >
 			</View>

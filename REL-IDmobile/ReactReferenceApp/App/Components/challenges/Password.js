@@ -172,7 +172,7 @@ class Password extends React.Component{
 			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-			<Text style={styles.step}>{this.props.url.chlngJson.chlng_idx}/{this.props.url.chlngsCount}</Text>
+			<Text style={styles.step}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Set Access</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varification}>Set Account Password</Text>

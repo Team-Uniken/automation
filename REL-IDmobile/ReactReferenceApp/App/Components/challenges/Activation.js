@@ -115,6 +115,12 @@ var styles = StyleSheet.create({
 
 
 class Activation extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
   constructor(props){
     super(props);
     this.state = {
@@ -177,7 +183,7 @@ class Activation extends React.Component{
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Submit</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 
 
