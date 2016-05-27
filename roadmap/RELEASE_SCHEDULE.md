@@ -44,6 +44,14 @@
 - **R&D**
 
 ##1-May-2016
+- **ConnectSecure**
+- **REL-IDmobile**
+- **REL-IDgateway**
+- **REL-IDcore**
+- **REL-IDzero**
+- **REL-IDpeer**
+- **REL-IDsmart**
+- **R&D**
 
 ##15-May-2016
 - **ConnectSecure**

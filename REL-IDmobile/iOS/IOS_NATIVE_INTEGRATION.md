@@ -29,19 +29,19 @@ In this step, we'll create a new project in Xcode. If you don't already have Xco
 
 #### **Create a new Xcode project**
 
-<img src="./media/image01.png" width="624" height="408" />
+<img src="./assets/image01.png" width="624" height="408" />
 
 Navigate to **File &gt; New &gt; Project**. Select **Single View Application** under iOS apps, and click **Next**.
 
 **Name your project**
 
-<img src="./media/image04.png" width="624" height="444" />
+<img src="./assets/image04.png" width="624" height="444" />
 
 Give your project the name "SampleApp". Choose "Objective-C" for the language. Then click **Next**.
 
 **Select a project location**
 
-<img src="./media/image09.png" width="624" height="393" />
+<img src="./assets/image09.png" width="624" height="393" />
 
 Select a location for your project, and click **Create** to finish creating a new project.
 
@@ -59,11 +59,11 @@ If you don't already have the REL-ID API-SDK, grab and unzip it.
 
 #### **Add the RDNA.h and RDNA.a files to the project.**
 
-<img src="./media/image11.png" width="324" height="425" />
+<img src="./assets/image11.png" width="324" height="425" />
 
 Right-click on the SampleApp project, and choose **Add Files To "SampleApp".**
 
-<img src="./media/image06.png" width="624" height="484" />
+<img src="./assets/image06.png" width="624" height="484" />
 
 Add the rdna.a and RDNA.h.
 
@@ -99,7 +99,7 @@ The quickest way to add a reference is to open up ViewController.m for an Object
 
 7.  Type "-lresolv" (no quotes) and press enter.
 
-<img src="./media/image10.png" width="624" height="384" />
+<img src="./assets/image10.png" width="624" height="384" />
 
 #### **Rebuild your project**
 
