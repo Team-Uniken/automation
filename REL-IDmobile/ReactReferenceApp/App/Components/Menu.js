@@ -4,6 +4,7 @@ var React = require('react-native');
 var Web = require('./Web');
 var QBank = require('./Qbank');
 var Appointment = require('./Appointment');
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 //var Main = require('./Main');
 
@@ -127,6 +128,7 @@ class Menu extends React.Component{
 					</TouchableHighlight>
 					<TouchableHighlight style={[styles.grid,styles.D]} activeOpacity={0.8} underlayColor={MENU_HVR_COLOR}
 						onPress={()=>{
+							
 							this.props.navigator.push(
 								{id: "Device",title:"Device",url:"https://mail.google.com/mail/u/0/#inbox"}
 							);}

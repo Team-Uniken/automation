@@ -3,6 +3,8 @@ var React = require('react-native');
 var ToolBar = require('./ToolBar');
 var TEXTCOLOR = '#A9A9A9';
 
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
 var FAKE_BOOK_DATA = [
                       {volumeInfo: {title: 'Row number 1', authors: "J. D. one", imageLinks: {thumbnail: 'http://books.google.com/books/content?id=PCDengEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'}}},
                       {volumeInfo: {title: 'Row number 2', authors: "J. D. two", imageLinks: {thumbnail: 'http://books.google.com/books/content?id=PCDengEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'}}},
@@ -24,6 +26,7 @@ var {
   TextInput,
   TouchableHighlight,
   Dimensions,
+  AsyncStorage,
 } = React;
 
 var status;
@@ -124,6 +127,10 @@ class Device extends Component {
     this.setState({
                   dataSource: this.state.dataSource.cloneWithRows(books)
                   });
+    AsyncStorage.getItem("userId").then((value) => {
+        ReactRdna.getRegisteredDeviceDetails(value, (response) => { });
+    }).done();
+    
   }
 
   render() {
