@@ -105,6 +105,7 @@ var styles = StyleSheet.create({
 		height: 56,
 		width: 280,
 	marginTop:16,
+	marginBottom:16,
 	marginLeft:Dimensions.get('window').width/2-140,
 	borderWidth: 1,
 	borderColor: "#fff",

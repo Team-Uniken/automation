@@ -2,13 +2,12 @@ var React = require('react-native');
 var ToolBar = require('../ToolBar');
 var Events = require('react-native-simple-events');
 
-var obj;
-
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
 var MSG = '#A9A9A9';
 
-var selectedque='';
+var selectedque='nikhil';
+var obj;
 
 
   var que =[{"msg":"What is your name?"},
@@ -36,6 +35,8 @@ var SampleRow = React.createClass({
 			<TouchableHighlight
 			style={styles.customerow}
 				onPress={()=>{
+          obj.selectedque=this.props.msg;
+          console.log('-----{this.props.msg}- '+selectedque);
 				}}
 				underlayColor={'#163651'}
 				activeOpacity={0.6}
@@ -76,7 +77,7 @@ var SetQue = React.createClass({
   		return "Continue";
   	}},
   getInitialState: function() {
-		obj=this;
+    obj=this;
     var ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
       rowHasChanged: (r1, r2) => r1 !== r2
@@ -130,6 +131,7 @@ var SetQue = React.createClass({
  placeholder={'Type/Select question'}
  placeholderTextColor={'rgba(255,255,255,0.5)'}
  style={styles.input}
+ value={selectedque}
 />
 
  <View style={styles.que}>
@@ -267,6 +269,7 @@ var styles = {
     height: 56,
     width: 280,
   marginTop:16,
+  marginBottom:16,
   marginLeft:Dimensions.get('window').width/2-140,
   borderWidth: 1,
   borderColor: "#fff",
