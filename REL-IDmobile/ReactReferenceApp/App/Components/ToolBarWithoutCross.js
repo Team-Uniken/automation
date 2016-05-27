@@ -19,7 +19,7 @@ var Appointment = React.createClass({
     return (
       <View style={styles.toolbarrow}>
       <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width,textAlign:'center',}}
+        style={{fontSize:22,color: '#2579a2',marginTop:12,fontWeight: 'bold', width:Dimensions.get('window').width,textAlign:'center',}}
       >{this.props.title}</Text>
       </View>
 		);
@@ -34,6 +34,7 @@ var styles = {
   toolbarrow: {
             flexDirection:'row',
             backgroundColor: '#fff',
+            height:56,
             width:Dimensions.get('window').width,
   },
 };
