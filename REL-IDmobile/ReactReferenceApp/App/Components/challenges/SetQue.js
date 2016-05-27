@@ -9,16 +9,6 @@ var MSG = '#A9A9A9';
 var selectedque='nikhil';
 var obj;
 
-
-  var que =[{"msg":"What is your name?"},
-{"msg":"what is your date of birth?"},
-{"msg":"what is your school name?"},
-{"msg":"how old you are?"},
-{"msg":"how long you are?"},
-{"msg":"what is your mother name?"},];
-
-
-
   function compare(a,b) {
   if (a.msg < b.msg)
     return -1;
@@ -33,17 +23,19 @@ var SampleRow = React.createClass({
 
     return (
 			<TouchableHighlight
-			style={styles.customerow}
-				onPress={()=>{
-          obj.selectedque=this.props.msg;
-          console.log('-----{this.props.msg}- '+selectedque);
-				}}
-				underlayColor={'#163651'}
-				activeOpacity={0.6}
-			>
-			<Text style={styles.questyle}>{this.props.msg}</Text>
+      style={styles.customerow}
 
-			</TouchableHighlight>
+        onPress={()=>{
+          obj._textInput.setNativeProps({text: this.props.msg});
+          obj.setState({secQA: this.props.msg});
+        }}
+
+        underlayColor={'#163651'}
+        activeOpacity={0.6}
+      >
+      <Text style={styles.questyle}>{this.props.msg}</Text>
+
+      </TouchableHighlight>
 
     );
   }
@@ -70,12 +62,14 @@ Dimensions,
 } = React;
 
 var SetQue = React.createClass({
+
   btnText(){
   	if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
   		return "Submit";
   	}else{
   		return "Continue";
   	}},
+
   getInitialState: function() {
     obj=this;
     var ds = new ListView.DataSource({
@@ -83,15 +77,26 @@ var SetQue = React.createClass({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-   	var {data, sectionIds} = this.renderListViewData(que.sort(compare));
+   	//var {data, sectionIds} = this.renderListViewData(que.sort(compare));
 
     return {
-      dataSource: ds.cloneWithRowsAndSections(data, sectionIds)
+      dataSource: ds,
+      secQA: '',
+      secAnswer: '',
     };
+  },
+
+  componentWillMount() {
   },
 
   componentDidMount() {
     var listViewScrollView = this.refs.listView.getScrollResponder();
+
+    var {data, sectionIds} = obj.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+
+    obj.setState({
+                  dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
+    });
   },
 
   renderListViewData(users) {
@@ -99,16 +104,38 @@ var SetQue = React.createClass({
     var sectionIds = [];
 
     users.map((user) => {
-      var section = user.msg.charAt(0);
+      var qData = {"msg":user};
+      var section = qData.msg.charAt(0);
       if (sectionIds.indexOf(section) === -1) {
         sectionIds.push(section);
         data[section] = [];
       }
-      data[section].push(user);
+      data[section].push(qData);
     });
     return {data, sectionIds};
   },
 
+  onQuestionChange(event){
+    this.setState({secQA: event.nativeEvent.text});
+  },
+
+  onAnswerChange(event){
+    this.setState({secAnswer: event.nativeEvent.text});
+  },
+
+  setSecrets(){
+    var kSecQ = this.state.secQA;
+    var vSecA = this.state.secAnswer;
+    if(kSecQ.length>0 && vSecA.length>0){
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].challenge = kSecQ;
+      responseJson.chlng_resp[0].response = vSecA;
+      Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter valid data');
+    }
+  },
 
   renderRow(rowData) {
     return <SampleRow {...rowData} style={styles.row} />
@@ -127,11 +154,12 @@ var SetQue = React.createClass({
 <Text style={styles.div}> </Text>
 
 <TextInput
+ ref={component => this._textInput = component}
  autoCorrect={false}
  placeholder={'Type/Select question'}
  placeholderTextColor={'rgba(255,255,255,0.5)'}
+ onChange={this.onQuestionChange.bind(this)}
  style={styles.input}
- value={selectedque}
 />
 
  <View style={styles.que}>
@@ -150,15 +178,14 @@ var SetQue = React.createClass({
  placeholder={'Enter your secret answer'}
  placeholderTextColor={'rgba(255,255,255,0.5)'}
  style={styles.input}
+ onChange={this.onAnswerChange.bind(this)}
 />
 
  <Text style={styles.div}> </Text>
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-    Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-	 }}
+	 onPress={this.setSecrets.bind(this)}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
