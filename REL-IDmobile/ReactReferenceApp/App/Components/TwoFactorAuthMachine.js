@@ -227,7 +227,7 @@ class TwoFactorAuthMachine extends React.Component{
             ref={(ref) => this.stateNavigator = ref}
             renderScene={this.renderScene}
             initialRoute={
-            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex},title: this.props.title}
+            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex+1},title: this.props.title}
             //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
             }
             configureScene={(route) => {
@@ -264,7 +264,7 @@ class TwoFactorAuthMachine extends React.Component{
     if(obj.hasNextChallenge()){
       // Show Next challenge screen
       var currentChlng = obj.getCurrentChallenge();
-      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex},title: obj.props.title});
+      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex+1},title: obj.props.title});
     } else {
       // Call checkChallenge
       obj.callCheckChallenge();
