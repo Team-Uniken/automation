@@ -114,13 +114,19 @@ var styles = StyleSheet.create({
 
 
 class Activation extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
 	render() {
 		return (
 			<View style={styles.Container}>
 			<ToolBar navigator={this.props.navigator} title="Login"/>
 			<ScrollView >
 
-      <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>1</Text></Text>
+			<Text style={styles.step}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Authentication</Text>
 				 <Text style={styles.match}>Answer your secret question</Text>
 <Text style={styles.div}> </Text>
@@ -149,7 +155,7 @@ class Activation extends React.Component{
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Continue</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 
 

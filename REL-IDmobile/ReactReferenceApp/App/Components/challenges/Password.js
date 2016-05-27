@@ -129,6 +129,12 @@ var styles = StyleSheet.create({
 
 
 class Password extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
   constructor(props){
     super(props);
     this.state = {
@@ -212,7 +218,7 @@ class Password extends React.Component{
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Continue</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 
 

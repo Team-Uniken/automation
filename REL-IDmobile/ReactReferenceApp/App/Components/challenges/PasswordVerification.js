@@ -63,6 +63,12 @@ var statusMessage;
 var ProgressBar = require('react-native-progress-bar');
 
 class PasswordVerification extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
 	constructor(props){
 		super(props);
 		this.state = {
@@ -248,7 +254,7 @@ onPress={this.checkPassword.bind(this)}
 	underlayColor={'#082340'}
 	activeOpacity={0.6}
 >
-<Text style={logStyle.button}>{this.state.login_button_text}</Text>
+<Text style={logStyle.button}>{this.btnText()}</Text>
 </TouchableHighlight>
 
 </View>

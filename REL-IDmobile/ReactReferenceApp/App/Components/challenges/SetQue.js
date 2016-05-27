@@ -68,7 +68,13 @@ Dimensions,
   ScrollView,
 } = React;
 
-var Appointment = React.createClass({
+var SetQue = React.createClass({
+  btnText(){
+  	if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+  		return "Submit";
+  	}else{
+  		return "Continue";
+  	}},
   getInitialState: function() {
 		obj=this;
     var ds = new ListView.DataSource({
@@ -108,6 +114,7 @@ var Appointment = React.createClass({
   },
 
   render() {
+
 
     return (
 			<View style={styles.Container}>
@@ -153,7 +160,7 @@ var Appointment = React.createClass({
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
- <Text style={styles.button}>Submit</Text>
+ <Text style={styles.button}>{this.btnText()}</Text>
  </TouchableHighlight>
 </ScrollView >
 			</View>
@@ -294,4 +301,4 @@ var styles = {
 					 },
 
 };
-module.exports = Appointment;
+module.exports = SetQue;

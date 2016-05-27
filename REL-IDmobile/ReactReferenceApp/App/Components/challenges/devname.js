@@ -116,11 +116,47 @@ var styles = StyleSheet.create({
 
 class DevName extends React.Component{
 	btnText(){
+		console.log('------ devname ' + this.props.url.chlngJson.chlng_idx+  this.props.url.chlngsCount );
+
 		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
 			return "Submit";
 		}else{
 			return "Continue";
 		}}
+
+  constructor(props){
+    super(props);
+    this.state = {
+      deviceName : ''
+
+    };
+  }
+
+  componentDidMount(){
+    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
+    this.setState({deviceName: this.props.url.chlngJson.chlng_resp[0].response});
+  }
+
+  setDeviceName(){
+    var dName = this.state.deviceName;
+
+    if(dName.length>0){
+          responseJson = this.props.url.chlngJson;
+          responseJson.chlng_resp[0].response = dName;
+          Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter Device Name ');
+    }
+  }
+
+  onDeviceNameChange(event){
+    this.setState({deviceName: event.nativeEvent.text});
+  }
+  onDeviceNameChangeText(event){
+  this.setState({deviceName: event.nativeEvent.text});
+  }
+
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -144,14 +180,9 @@ class DevName extends React.Component{
 
 <Text style={styles.div}> </Text>
 
-
-
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-		 //this.props.navigator.push({id: "self", title:'DashBoard', url:''});
-	 }}
+   onPress={this.setDeviceName.bind(this)}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
