@@ -141,7 +141,8 @@ class DevName extends React.Component{
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
+		 //this.props.navigator.push({id: "self", title:'DashBoard', url:''});
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

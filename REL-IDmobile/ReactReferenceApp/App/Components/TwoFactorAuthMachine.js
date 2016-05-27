@@ -112,11 +112,12 @@ class TwoFactorAuthMachine extends React.Component{
 
   componentDidMount(){
     screenId = "UserLogin";//this.props.screenId;
-    obj = this;
+    
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge)
 	}
 
   componentWillMount(){
+    obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
     challengeJsonArr = challengeJson.chlng;
@@ -181,7 +182,11 @@ class TwoFactorAuthMachine extends React.Component{
 
   renderScene(route,nav) {
     var id = route.id;
-    console.log('---------- renderScene ' + id);
+    console.log('---------- renderScene ' + id + " url " + route.url);
+    
+    var info = {"chlngJson":obj.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length};
+    console.log('---------- info ' + JSON.stringify(info));
+
     var challengeOperation;
     if(route.url!=undefined){
       challengeOperation = route.url.chlngJson.challengeOperation;
@@ -222,7 +227,7 @@ class TwoFactorAuthMachine extends React.Component{
             ref={(ref) => this.stateNavigator = ref}
             renderScene={this.renderScene}
             initialRoute={
-            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length},title: this.props.title}
+            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex},title: this.props.title}
             //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
             }
             configureScene={(route) => {
@@ -259,7 +264,7 @@ class TwoFactorAuthMachine extends React.Component{
     if(obj.hasNextChallenge()){
       // Show Next challenge screen
       var currentChlng = obj.getCurrentChallenge();
-      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length},title: obj.props.title});
+      obj.stateNavigator.push({id: currentChlng.chlng_name, url: {"chlngJson": currentChlng, "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex},title: obj.props.title});
     } else {
       // Call checkChallenge
       obj.callCheckChallenge();
