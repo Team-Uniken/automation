@@ -176,6 +176,9 @@ class DevName extends React.Component{
 	placeholderTextColor={'rgba(255,255,255,0.5)'}
 	style={styles.input}
 	value={this.props.url.chlngJson.chlng_resp[0].response}
+  ref='deviceName'
+  value={this.state.deviceName}
+  onChange={this.onDeviceNameChange.bind(this)}
 />
 
 <Text style={styles.div}> </Text>
