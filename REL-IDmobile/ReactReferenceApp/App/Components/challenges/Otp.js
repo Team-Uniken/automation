@@ -128,9 +128,32 @@ var styles = StyleSheet.create({
 
 class Activation extends React.Component{
 
-		componentDidMount() {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      accessCode : ''
+      
+    };
+  }
+  componentDidMount() {
+    
 		}
+  
+  checkAccessCode(){
+    var AcCode = this.state.accessCode;
+    if(AcCode.length>0){
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = AcCode;
+      Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter Access Code');
+    }
+  }
+  onAccessCodeChange(event){
+    this.setState({accessCode: event.nativeEvent.text});
+  }
 
 btnText(){
 	if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
@@ -163,6 +186,8 @@ btnText(){
 	placeholder={'Enter Access Code'}
  	placeholderTextColor={'rgba(255,255,255,0.5)'}
  	style={styles.input}
+            ref='accessCode'
+            onChange={this.onAccessCodeChange.bind(this)}
  />
 
  <Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
@@ -171,9 +196,10 @@ btnText(){
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-	 }}
+            onPress={this.checkAccessCode.bind(this)}
+//	 onPress={()=>{
+//	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
+//	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >

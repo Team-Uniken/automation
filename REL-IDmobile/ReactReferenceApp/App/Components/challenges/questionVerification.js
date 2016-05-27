@@ -120,6 +120,30 @@ class Activation extends React.Component{
 		}else{
 			return "Continue";
 		}}
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      sAnswer : ''
+      
+    };
+  }
+  
+  checkAnswer(){
+    var scAns = this.state.sAnswer;
+    if(scAns.length>0){
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = scAns;
+      Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter Secret Answer');
+    }
+  }
+  onAnswerChange(event){
+    this.setState({sAnswer: event.nativeEvent.text});
+  }
+
 	render() {
 		return (
 			<View style={styles.Container}>
@@ -143,14 +167,17 @@ class Activation extends React.Component{
 	placeholder={'Enter your secret answer'}
 	placeholderTextColor={'rgba(255,255,255,0.5)'}
 	style={styles.input}
+            ref='sAnswer'
+            onChange={this.onAnswerChange.bind(this)}
 />
 
 <Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-			 }}
+             onPress={this.checkAnswer.bind(this)}
+//	 onPress={()=>{
+//	 	Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
+//			 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >
