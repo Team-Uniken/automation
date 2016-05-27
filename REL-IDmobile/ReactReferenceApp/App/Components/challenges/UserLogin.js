@@ -44,6 +44,7 @@ var {
 	Dimensions,
 	Platform,
 	AsyncStorage,
+	ScrollView,
 } = React;
 
 
@@ -288,6 +289,7 @@ class UserLogin extends React.Component{
 			</Animated.View>
 
 
+			<ScrollView >
 
 			<Animated.View style={[logStyle.image_center,{opacity: this.state.logWrapOpac}]}>
 
@@ -327,6 +329,8 @@ class UserLogin extends React.Component{
 				</TouchableHighlight>
 					</View>
 			</Animated.View>
+			</ScrollView >
+
 		</View>
 
 		);
@@ -472,8 +476,8 @@ var styles = StyleSheet.create({
 	},
 	rid_center: {
 		alignItems: 'center',
-		top : 100,
 		width: 160,
+		marginTop:SCREEN_HEIGHT/8,
 		//height:130,
 		// backgroundColor: 'rgba(0,50,200,0.2)',
 	},

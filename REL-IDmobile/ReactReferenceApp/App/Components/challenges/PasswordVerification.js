@@ -43,7 +43,7 @@ var {
 	TouchableOpacity,
 	TouchableHighlight,
 	InteractionManager,
-//	ProgressViewIOS,
+ScrollView,
 	Platform,
   AsyncStorage,
 	Dimensions,
@@ -208,7 +208,6 @@ class PasswordVerification extends React.Component{
 
 			<View style={styles.container}>
 			<ToolBar navigator={this.props.navigator} title="Login"/>
-<View>
             <Animated.View style={[progStyle.wrap,{opacity: this.state.progWrapOpac}]}>
             <Text style={[progStyle.warning]}>
             Loading...
@@ -220,6 +219,10 @@ class PasswordVerification extends React.Component{
             progress={this.state.progress}
             />
             </Animated.View>
+
+						<ScrollView >
+
+
 						<Animated.View style={[styles.image_center,{opacity: this.state.passWrapOpac}]}>
 
 
@@ -259,12 +262,13 @@ onPress={this.checkPassword.bind(this)}
 
 </View>
 </Animated.View>
+</ScrollView>
+
 
 
 </View>
 
 
-			</View>
 
 		);
 	}
@@ -422,7 +426,7 @@ var styles = StyleSheet.create({
 	rid_center: {
 		alignItems: 'center',
 		width: 160,
-		top : 100,
+		marginTop:SCREEN_HEIGHT/8,
 
 		//height:130,
 		// backgroundColor: 'rgba(0,50,200,0.2)',
