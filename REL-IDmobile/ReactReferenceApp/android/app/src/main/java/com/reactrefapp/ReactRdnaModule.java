@@ -186,12 +186,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             @Override
             public int onGetRegistredDeviceDetails(String s) {
                 Logger.d(TAG, "--------- device details "+s);
-                WritableMap params = Arguments.createMap();
-                params.putString("response", s);
+                //WritableMap params = Arguments.createMap();
+                //params.putString("response", s);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onGetRegistredDeviceDetails", params);
+                //context
+                  //      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    //    .emit("onGetRegistredDeviceDetails", params);
                 return 0;
             }
 

@@ -142,7 +142,7 @@ class TwoFactorAuthMachine extends React.Component{
         subscriptions.remove();
         Events.rm('showNextChallenge', 'showNextChallenge');
         if(res.pArgs.response.ResponseData){
-        var chlngJson = JSON.parse(res.pArgs.response.ResponseData);
+        var chlngJson = res.pArgs.response.ResponseData;
         var nextChlngName = chlngJson.chlng[0].chlng_name
 
         //this.props.navigator.pop();

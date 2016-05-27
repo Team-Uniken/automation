@@ -75,7 +75,7 @@ class Load extends React.Component{
                                    responseJson = JSON.parse(e.response);
                                    if(responseJson.errCode == 0){
                                    initCount = initSuccess;
-                                   chlngJson = JSON.parse(responseJson.pArgs.response.ResponseData);
+                                   chlngJson = responseJson.pArgs.response.ResponseData;
                                    nextChlngName = chlngJson.chlng[0].chlng_name
                                    Obj.onInitCompleted();
                                    console.log('--------- onInitializeCompleted initCount '+ initCount);
