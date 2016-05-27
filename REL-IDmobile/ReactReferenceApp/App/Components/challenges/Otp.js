@@ -137,7 +137,7 @@ class Activation extends React.Component{
 
 			<ScrollView >
 
-      <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>{this.props.url.chlngJson.chlng_idx}</Text></Text>
+      <Text style={styles.step}>{this.props.url.chlngJson.chlng_idx}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Set Access</Text>
 <Text style={styles.div}> </Text>
 <Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
@@ -155,7 +155,7 @@ class Activation extends React.Component{
  	style={styles.input}
  />
 
- <Text style={styles.step}>{this.props.url.chlngJson.chlng_idx} Attempts Left</Text>
+ <Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
  <Text style={styles.div}> </Text>
 
 

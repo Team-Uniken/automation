@@ -114,7 +114,7 @@ var Appointment = React.createClass({
 			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-      <Text style={styles.step}>Step 5/<Text style={{color:MIDBLUE}}>6</Text></Text>
+      <Text style={styles.step}>{this.props.url.chlngJson.chlng_idx}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Question and Answer</Text>
 <Text style={styles.div}> </Text>
 
@@ -148,7 +148,7 @@ var Appointment = React.createClass({
  <TouchableHighlight
  style={styles.roundcorner}
 	 onPress={()=>{
-    Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
+    Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
 	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}

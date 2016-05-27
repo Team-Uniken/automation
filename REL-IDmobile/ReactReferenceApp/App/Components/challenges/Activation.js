@@ -6,7 +6,7 @@ var MIDBLUE = '#2579A2';
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
 var Events = require('react-native-simple-events');
-
+var Events = require('react-native-simple-events');
 var {
 	View,
 	Text,
@@ -55,7 +55,8 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontSize: 20,
-		width:Dimensions.get('window').width,
+		marginLeft:Dimensions.get('window').width/2-120,
+		width:240,
 	},
 	Varificationkey:{
 		 textAlign: "center",
@@ -114,39 +115,64 @@ var styles = StyleSheet.create({
 
 
 class Activation extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      activatonCode : ''
+
+    };
+  }
+
+  checkActivationCode(){
+    var vkey = this.state.activatonCode;
+    if(vkey.length>0){
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = vkey;
+      Events.trigger('showNextChallenge', {response: responseJson});
+    }
+    else{
+      alert('Please enter Verification Key');
+    }
+  }
+  onActivationCodeChange(event){
+    this.setState({activatonCode: event.nativeEvent.text});
+  }
+
 	render() {
 		return (
 			<View style={styles.Container}>
 			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-      <Text style={styles.step}>Step 1/<Text style={{color:MIDBLUE}}>1</Text></Text>
+			<Text style={styles.step}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
          <Text style={styles.Varification}>Verify and Activate</Text>
 <Text style={styles.div}> </Text>
-<Text style={styles.Varificationkey}>95nekc</Text>
-<Text style={styles.Varification}>Verification Key</Text>
-<Text style={styles.match}>Match varificatin key and{"\n"}enter activation code send to you</Text>
+<Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
+<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+<Text style={styles.match}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
+
 <Text style={styles.div}> </Text>
-<Text style={styles.Varification}>Activation Code</Text>
+<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 
 
 
 <TextInput
 	autoCorrect={false}
+  ref='activatonCode'
 	placeholder={'Enter Activation Code'}
 	placeholderTextColor={'rgba(255,255,255,0.5)'}
 	style={styles.input}
+  onChange={this.onActivationCodeChange.bind(this)}
 />
-
-
-<Text style={styles.step}>3 Attempts Left</Text>
+<Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
 
 
  <TouchableHighlight
  style={styles.roundcorner}
-	 onPress={()=>{
-		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson}); 
-	 }}
+//	 onPress={()=>{
+            onPress={this.checkActivationCode.bind(this)}
+//		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
+//	 }}
 	 underlayColor={'#082340'}
 	 activeOpacity={0.6}
  >

@@ -145,8 +145,12 @@ class PasswordVerification extends React.Component{
 //    alert(Main.dnaUserName);
 		var pw = this.state.inputPassword;
     if(pw.length>0){
-		Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-		}else{
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = pw;
+      Events.trigger('showNextChallenge', {response: responseJson});
+      // this.updateProgress();
+    }
+    else{
         alert('Please enter password');
       }
 	}
