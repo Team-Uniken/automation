@@ -11,17 +11,24 @@ var PixelRatio = require('PixelRatio');
 // var NavigationBar = require('react-native-navbar');
 
 var Main = require('./App/Components/Main');
+var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
 var Menu = require('./App/Components/Menu');
 var QBank = require('./App/Components/Qbank');
 var ComingSoon = require('./App/Components/ComingSoon');
-var UserLogin = require('./App/Components/UserLogin');
-var PasswordVerification = require('./App/Components/PasswordVerification');
-var Progress = require('./App/Components/Progress');
+var UserLogin = require('./App/Components/challenges/UserLogin');
+var PasswordVerification = require('./App/Components/challenges/PasswordVerification');
 var Appointment = require('./App/Components/Appointment');
 var AddAppointment = require('./App/Components/AddAppointment');
 var SecureChat = require('./App/Components/secure_chat/Navigation');
+var Demo = require('./App/Components/demo');
+var Activation = require('./App/Components/challenges/Activation');
+var Password = require('./App/Components/challenges/Password');
+var Otp = require('./App/Components/challenges/Otp');
+var SetQue = require('./App/Components/challenges/SetQue');
+var QuestionVerification = require('./App/Components/challenges/questionVerification');
+var Machine = require('./App/Components/TwoFactorAuthMachine');
 
 
 
@@ -46,6 +53,50 @@ var LIGHT_COL = '#50ADDC';
 var DARK_COL = '#10253F';
 var Spd = 1;
 var LoadSpd = 0.1;
+
+var tempJSon = {
+      "chlng_idx": 2,
+      "sub_challenge_index": 0,
+      "chlng_name": "secqa",
+      "chlng_type": 2,
+      "challengeOperation": 1,
+      "chlng_prompt": [
+        [
+          "what is your petname",
+          "what is the name of your mother",
+          "what is the name of your father",
+          "what is the name of your sister",
+          "what is the name of your brother"
+        ]
+      ],
+      "chlng_info": [
+        {
+          "key": "Prompt label",
+          "value": "Secret Question"
+        },
+        {
+          "key": "Response label",
+          "value": "Secret Answer"
+        },
+        {
+          "key": "Description",
+          "value": "Choose your secret question and then provide answer"
+        },
+        {
+          "key": "Reading",
+          "value": "Set secret question and answer"
+        }
+      ],
+      "chlng_resp": [
+        {
+          "challenge": "",
+          "response": ""
+        }
+      ],
+      "challenge_response_policy": [],
+      "chlng_response_validation": false,
+      "attempts_left": 3
+    };
 
 
 
@@ -133,7 +184,7 @@ class DemoApp1 extends React.Component{
 
   renderScene(route,nav) {
     var id = route.id;
-
+    //console.log('----------- renderScene index file id = ' + id);
     if(id == "Main"){
       return (<Main navigator={nav}/>);
     }else if (id == "Load"){
@@ -148,14 +199,28 @@ class DemoApp1 extends React.Component{
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "QBank"){
       return (<QBank navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }else if (id == "Progress"){
-      return (<Progress navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "Appointment"){
         return (<Appointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
     }else if (id == "AddAppointment"){
           return (<AddAppointment navigator={nav} url={route.url} title={route.title}/>);//rdna={route.DnaObject}/>);
     }else if (id == "SecureChat"){
       return (<SecureChat navigator={nav}/>);
+    }else if (id == "Activation"){
+      return (<Activation navigator={nav}/>);
+    }else if (id == "Password"){
+      return (<Password navigator={nav}/>);
+    }else if (id == "Otp"){
+      return (<Otp navigator={nav}/>);
+    }else if (id == "SetQue"){
+      return (<SetQue navigator={nav} url={route.url} title={route.title}/>);
+    }else if (id == "QuestionVerification"){
+      return (<QuestionVerification navigator={nav}/>);
+    }else if (id == "Demo"){
+      return (<Demo navigator={nav}/>);
+    }else if (id == "Machine"){
+      return (<Machine navigator={nav} url={route.url} title={route.title}/>);
+    }else if (id == "Device"){
+      return (<Device navigator={nav} url={route.url} title={route.title}/>);
     }
   }
 
@@ -165,7 +230,7 @@ class DemoApp1 extends React.Component{
         style={styles.navigator}
         renderScene={this.renderScene}
         initialRoute={
-          {id: "Load"}
+          {id: "Load", url: {"chlngJson": tempJSon, "chlngsCount":5, "currentIndex": 1}, title: "Test"}
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {

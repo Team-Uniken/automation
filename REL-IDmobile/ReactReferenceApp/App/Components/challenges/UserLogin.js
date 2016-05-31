@@ -1,10 +1,13 @@
 'use strict';
 
 var React = require('react-native');
-var Menu = require('./Menu');
-var Main = require('./Main');
-var Web = require('./Web');
+var Menu = require('../Menu');
+var Main = require('../Main');
+var Web = require('../Web');
 var PasswordVerification = require('./PasswordVerification');
+var Activation = require('./Activation');
+
+var ToolBar = require('../ToolBarWithoutCross');
 
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -40,12 +43,14 @@ var {
 	ProgressViewIOS,
 	Dimensions,
 	Platform,
+	AsyncStorage,
+	ScrollView,
 } = React;
 
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
+var Events = require('react-native-simple-events');
 
 var ProgressBar = require('react-native-progress-bar');
-
 
 var {DeviceEventEmitter} = require('react-native');
 //var DeviceEventEmitter = require('DeviceEventEmitter');
@@ -80,7 +85,7 @@ class UserLogin extends React.Component{
 			login_button_text: 'Login',
 			loginAttempts: 5,
 			passAttempts: 5,
-			Challenge:this.props.url,
+			Challenge:this.props.url.chlngJson,
 			failureMessage : ''
 
 		};
@@ -109,7 +114,7 @@ class UserLogin extends React.Component{
 	componentDidMount() {
 
 		obj = this;
-    subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this))
+    //subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this))
 
 		Animated.sequence([
 			Animated.parallel([
@@ -140,6 +145,11 @@ class UserLogin extends React.Component{
 			this.refs.inputUsername.focus();
 		});
 	}
+
+	componentWillMount(){
+		console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+	}
+
 	updateProgress() {
 
 		setTimeout((function() {
@@ -164,48 +174,26 @@ class UserLogin extends React.Component{
 	}
 
 	checkUsername(){
-					this.state.progress = 0;
+		this.state.progress = 0;
 		var un = this.state.inputUsername;
-    Main.dnaUserName = un;
-		var count = this.state.loginAttempts;
-		responseJson = this.props.url;
-		responseJson = responseJson.chlng;
-		responseJson[0].chlng_resp[0].response = un;
-		var temp = {'chlng':responseJson};
-	    var userRespo = JSON.stringify(temp);
-		// this.updateProgress();
-		 ReactRdna.checkChallenges(userRespo,un,(response) => {
-		     if (response[0].error==0) {
-		        console.log('immediate response is'+response[0].error);
-		        // alert(response[0].error);
-						Animated.sequence([
-							Animated.timing(this.state.logWrapOpac, {
-								toValue: 0,
-								duration: 100 * Spd,
-								delay: 100 * Spd
-								}
-							),
-						Animated.timing(this.state.progWrapOpac, {
-							toValue: 1,
-							duration: 500 * Spd,
-							delay: 0 * Spd
-						})
-						]).start();
-						this.state.progress = 0;
-							this.updateProgress();
-		      }else{
-		        console.log('immediate response is'+response[0].error);
-		         alert(response[0].error);
-		      }
 
-		    })
+    if(un.length>0){
+    	AsyncStorage.setItem("userId", un);
+    	Main.dnaUserName = un;
+		responseJson = this.props.url.chlngJson;
+		responseJson.chlng_resp[0].response = un;
+		Events.trigger('showNextChallenge', {response: responseJson});
+		// this.updateProgress();
+	}else{
+		 	alert('Please enter User ID');
+		 }
 	}
 
 	checkUsernameSuccess(){
-    subscriptions.remove();
+    //subscriptions.remove();
 		InteractionManager.runAfterInteractions(() => {
 				this.props.navigator.push(
-					{id: "PasswordVerification",title:nextChlngName,url:chlngJson}
+					{id: "Activation",title:nextChlngName,url:chlngJson}
 				);
 			});
 	}
@@ -285,6 +273,7 @@ class UserLogin extends React.Component{
 	render() {
 		return (
 			<View style={styles.container}>
+			<ToolBar navigator={this.props.navigator} title="Login"/>
 
 
 			<Animated.View style={[progStyle.wrap,{opacity: this.state.progWrapOpac}]}>
@@ -300,6 +289,7 @@ class UserLogin extends React.Component{
 			</Animated.View>
 
 
+			<ScrollView >
 
 			<Animated.View style={[logStyle.image_center,{opacity: this.state.logWrapOpac}]}>
 
@@ -326,18 +316,21 @@ class UserLogin extends React.Component{
 					onSubmitEditing={this.checkUsername.bind(this)}
 					onChange={this.onUsernameChange.bind(this)}
 				/>
+
+
 				<TouchableHighlight
-					style={logStyle.buttonWrap}
-					underlayColor='#C7C7C7'
-					activeOpacity={1}
-					onPress={this.checkUsername.bind(this)}
+				style={logStyle.roundcorner}
+				onPress={this.checkUsername.bind(this)}
+
+					underlayColor={'#082340'}
+					activeOpacity={0.6}
 				>
-					<Text style={logStyle.button}>
-						{this.state.login_button_text}
-					</Text>
+				<Text style={logStyle.button}>{this.state.login_button_text}</Text>
 				</TouchableHighlight>
 					</View>
 			</Animated.View>
+			</ScrollView >
+
 		</View>
 
 		);
@@ -384,14 +377,28 @@ var logStyle = StyleSheet.create({
 	image_center: {
 		alignItems: 'center',
 	},
-	button: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'transparent',
-		height: 55,
-		fontSize: 22,
-		marginTop: 13,
-		color: MIDBLUE,
-	},
+
+		button: {
+				fontFamily: 'Century Gothic',
+			backgroundColor:'transparent',
+		flex:1,
+		fontSize: 16,
+		margin:1,
+		textAlign:'center',
+		textAlignVertical:'center',
+		color: '#FFF',
+		marginTop:16,
+		},
+
+		roundcorner: {
+			height: 56,
+			width: 280,
+		marginTop:16,
+		borderWidth: 1,
+		borderColor: "#fff",
+		backgroundColor:'rgba(255,255,255,0.1)',
+		borderRadius: 30,
+		},
 	buttonWrap: {
 		top: 15,
 		width: 280,
@@ -405,6 +412,7 @@ var logStyle = StyleSheet.create({
 		fontSize: 22,
 		width: 280,
 		color: 'rgba(255,255,255,1)',
+		textAlign:'center',
 		alignItems: 'center',
 	},
 	warning: {
@@ -412,7 +420,7 @@ var logStyle = StyleSheet.create({
 		color: 'rgba(255,255,255,0.8)',
 		fontSize: 22,
 		textAlign: 'center',
-		height: 35,
+		width: 280,
 	}
 });
 
@@ -468,8 +476,8 @@ var styles = StyleSheet.create({
 	},
 	rid_center: {
 		alignItems: 'center',
-		top : 100,
 		width: 160,
+		marginTop:SCREEN_HEIGHT/8,
 		//height:130,
 		// backgroundColor: 'rgba(0,50,200,0.2)',
 	},

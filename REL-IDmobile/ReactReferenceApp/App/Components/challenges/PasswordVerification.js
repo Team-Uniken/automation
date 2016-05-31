@@ -2,10 +2,12 @@
 
 import Spinner from 'react-native-loading-spinner-overlay';
 var React = require('react-native');
-var Menu = require('./Menu');
-var Main = require('./Main');
-var Web = require('./Web');
+var Menu = require('../Menu');
+var Main = require('../Main');
+var Web = require('../Web');
 var total=0.3;
+var ToolBar = require('../ToolBarWithoutCross');
+var Events = require('react-native-simple-events');
 
 
 var Platform = require("react-native").Platform;
@@ -41,7 +43,7 @@ var {
 	TouchableOpacity,
 	TouchableHighlight,
 	InteractionManager,
-//	ProgressViewIOS,
+ScrollView,
 	Platform,
   AsyncStorage,
 	Dimensions,
@@ -61,6 +63,12 @@ var statusMessage;
 var ProgressBar = require('react-native-progress-bar');
 
 class PasswordVerification extends React.Component{
+	btnText(){
+		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
+			return "Submit";
+		}else{
+			return "Continue";
+		}}
 	constructor(props){
 		super(props);
 		this.state = {
@@ -82,7 +90,7 @@ class PasswordVerification extends React.Component{
 			login_button_text: 'Login',
 			loginAttempts: 5,
 			passAttempts: 5,
-			Challenge:this.props.url,
+			Challenge:this.props.url.chlngJson,
 			failureMessage : ''
 
 		};
@@ -142,21 +150,15 @@ class PasswordVerification extends React.Component{
 	checkPassword(){
 //    alert(Main.dnaUserName);
 		var pw = this.state.inputPassword;
-		var count = this.state.passAttempts;
-    var pw = this.state.inputPassword;
-    responseJson = this.props.url;
-    var temp = JSON.parse(responseJson);
-    temp.chlng[0].chlng_resp[0].response = pw;
-    var userRespo = JSON.stringify(temp);
-      ReactRdna.checkChallenges(userRespo,Main.dnaUserName,(response) => {
-                                if (response) {
-                                console.log('immediate response is'+response[0].error);
-                                // alert(response[0].error);
-                                }else{
-                                console.log('immediate response is'+response[0].error);
-                                // alert(response[0].error);
-                                }
-                                })
+    if(pw.length>0){
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = pw;
+      Events.trigger('showNextChallenge', {response: responseJson});
+      // this.updateProgress();
+    }
+    else{
+        alert('Please enter password');
+      }
 	}
 
 	checkPasswordSuccess(){
@@ -205,6 +207,7 @@ class PasswordVerification extends React.Component{
 		return (
 
 			<View style={styles.container}>
+			<ToolBar navigator={this.props.navigator} title="Login"/>
             <Animated.View style={[progStyle.wrap,{opacity: this.state.progWrapOpac}]}>
             <Text style={[progStyle.warning]}>
             Loading...
@@ -216,6 +219,10 @@ class PasswordVerification extends React.Component{
             progress={this.state.progress}
             />
             </Animated.View>
+
+						<ScrollView >
+
+
 						<Animated.View style={[styles.image_center,{opacity: this.state.passWrapOpac}]}>
 
 
@@ -242,23 +249,26 @@ onSubmitEditing={this.checkPassword.bind(this)}
 onChange={this.onPasswordChange.bind(this)}
 />
 
+
 <TouchableHighlight
-style={logStyle.buttonWrap}
-underlayColor='#C7C7C7'
-activeOpacity={1}
+style={logStyle.roundcorner}
 onPress={this.checkPassword.bind(this)}
+
+	underlayColor={'#082340'}
+	activeOpacity={0.6}
 >
-<Text style={logStyle.button}>
-	{this.state.login_button_text}
-</Text>
+<Text style={logStyle.button}>{this.btnText()}</Text>
 </TouchableHighlight>
+
 </View>
 </Animated.View>
+</ScrollView>
 
 
 
+</View>
 
-			</View>
+
 
 		);
 	}
@@ -315,12 +325,25 @@ var logStyle = StyleSheet.create({
 		backgroundColor: 'transparent'
 	},
 	button: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'transparent',
-		height: 55,
-		fontSize: 22,
-		marginTop: 16,
-		color: MIDBLUE,
+			fontFamily: 'Century Gothic',
+		backgroundColor:'transparent',
+	flex:1,
+	fontSize: 16,
+	margin:1,
+	textAlign:'center',
+	textAlignVertical:'center',
+	color: '#FFF',
+	marginTop:16,
+	},
+
+	roundcorner: {
+		height: 56,
+		width: 280,
+	marginTop:16,
+	borderWidth: 1,
+	borderColor: "#fff",
+	backgroundColor:'rgba(255,255,255,0.1)',
+	borderRadius: 30,
 	},
 	buttonWrap: {
 		top: 15,
@@ -334,6 +357,7 @@ var logStyle = StyleSheet.create({
 		height: 55,
 		fontSize: 22,
 		width: 280,
+		textAlign:'center',
 		color: 'rgba(255,255,255,1)',
 		alignItems: 'center',
 	},
@@ -402,7 +426,7 @@ var styles = StyleSheet.create({
 	rid_center: {
 		alignItems: 'center',
 		width: 160,
-		top : 100,
+		marginTop:SCREEN_HEIGHT/8,
 
 		//height:130,
 		// backgroundColor: 'rgba(0,50,200,0.2)',

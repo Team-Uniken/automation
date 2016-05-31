@@ -1,31 +1,28 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6e416058-ee1f-40bc-b3a3-9c790494852a++365",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "6e416058-ee1f-40bc-b3a3-9c790494852a++365" : {
-
-    },
     "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : {
       "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "branches\/mobdev\/iOS\/branches",
       "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "branches\/mobdev\/iOS\/tags"
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "6e416058-ee1f-40bc-b3a3-9c790494852a++365" : 0,
-    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : 0
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : 0,
+    "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "22597F7A-23AD-469A-A11A-F838F9279C57",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "6e416058-ee1f-40bc-b3a3-9c790494852a++365" : "RMilestone\/",
-    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : ""
+    "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : "ReactNativeSRA\/",
+    "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F" : "GIT_Repo\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "ReactRefApp",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ReactRefereneApp\/ios\/ReactRefApp.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "REL-IDmobile\/ReactReferenceApp\/ios\/ReactRefApp.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/relidapisdk",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6e416058-ee1f-40bc-b3a3-9c790494852a++365"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Team-Uniken\/REL-ID_internal.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/engdev",

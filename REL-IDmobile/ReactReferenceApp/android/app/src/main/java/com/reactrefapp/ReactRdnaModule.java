@@ -67,6 +67,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onInitializeCompleted(String rdnaStatusInit) {
+
+                Logger.d(TAG, "------- "+rdnaStatusInit);
                 WritableMap params = Arguments.createMap();
                 params.putString("response", rdnaStatusInit);
 
@@ -183,12 +185,13 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onGetRegistredDeviceDetails(String s) {
-                WritableMap params = Arguments.createMap();
-                params.putString("response", s);
+                Logger.d(TAG, "--------- device details "+s);
+                //WritableMap params = Arguments.createMap();
+                //params.putString("response", s);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onGetRegistredDeviceDetails", params);
+                //context
+                  //      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    //    .emit("onGetRegistredDeviceDetails", params);
                 return 0;
             }
 
@@ -218,6 +221,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void checkChallenges(String challengeRequestArray, String userID, Callback callback){
+        Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
+        Logger.d(TAG , "----- userID " + userID);
         int error = rdnaObj.checkChallenges(challengeRequestArray, userID);
 
         WritableMap errorMap = Arguments.createMap();
