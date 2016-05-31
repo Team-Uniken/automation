@@ -8,6 +8,68 @@ class RDNAPrivacyStream;
 
 #define MIN_PORT_VALUE 0
 
+#define STR_CHLNG                      "chlng"
+#define STR_SUB_CHLNG_COUNT            "sub_chlng_count"
+#define STR_CHLNGS_PER_BATCH           "chlngs_per_batch"
+#define STR_CHLNG_RESP                 "chlng_resp"
+#define STR_CHLNG_PROMPT               "chlng_prompt"
+#define STR_CHLNG_IDX                  "chlng_idx"
+#define STR_CHLNG_TYPE                 "chlng_type"
+#define STR_CHLNG_NAME                 "chlng_name"
+#define STR_ATTEMPTS_LEFT              "attempts_left"
+#define STR_TOTAL_CHLNGS               "total_no_of_chlngs"
+#define STR_SUB_CHLNG_IDX              "sub_challenge_index"
+#define STR_CHLNG_OP_MODE              "challengeOperation"
+#define STR_CHLNG_INFO                 "chlng_info"
+#define STR_CHLNG_RESP_VALIDATION      "chlng_response_validation"
+#define STR_CHLNG_RESP_POLICY          "challenge_response_policy"
+#define STR_CHLNG_USER_ID              "user_id"
+#define STR_CHLNG_CHLNG                "challenge"
+#define STR_CHLNG_RESPONSE             "response"
+#define STR_ERR_CODE                   "errCode"
+#define STR_STATUS_CODE                "status_code"
+#define STR_STATUS_MSG                 "status_msg"
+#define STR_METHOD_ID                  "eMethId"
+#define STR_DEVICE_DETAILS             "device_details"
+#define STR_PROXY_DETAILS              "pxyDetails"
+#define STR_P_ARGS                     "pArgs"
+#define STR_CONFIG                     "Config"
+#define STR_URL                        "url"
+
+#define STR_SERVICES                   "Services"
+#define STR_SERVICES_COUNT             "Services_Count"
+#define STR_SERVICE_NAME               "serviceName"
+#define STR_TARGET_HNIP                "targetHNIP"
+#define STR_APP_UUID                   "app_uuid"
+#define STR_ACCESS_SERVER_NAME         "accessServerName"
+#define STR_SPN                        "spn"
+#define STR_REALM                      "realm"
+#define STR_TCKT_FETCHER_URL           "ticketFetcherURL"
+#define STR_TARGET_PORT                "targetPort"
+#define STR_IS_AUTO_STARTED            "isAutoStartedPort"
+#define STR_IS_LOCAL_HOST_ONLY         "isLocalhostOnly"
+#define STR_IS_STARTED                 "isStarted"
+#define STR_IS_PRIVACY_ENABLED         "isPrivacyEnabled"
+#define STR_PORT_TYPE                  "portType"
+#define STR_PORT                       "port"
+#define STR_PORT_INFO                  "portInfo"
+#define STR_SERVICE_NAME               "serviceName"
+#define STR_RESPONSE_DATA              "ResponseData"
+#define STR_RESPONSE_DATA_LEN          "ResponseDataLen"
+#define STR_SERVICE_DETAILS            "service_details"
+#define STR_PXY_HOST                   "pxyHost"
+#define STR_PXY_PORT                   "pxyPort"
+#define STR_PXY_PSWD                   "pxyPass"
+#define STR_PXY_USER                   "pxyUser"
+
+
+
+#define STR_RDNA_PRIV_SCOPE_SSN        "RDNA_PRIVACY_SCOPE_SESSION"
+#define STR_RDNA_PRIV_SCOPE_DEVICE     "RDNA_PRIVACY_SCOPE_DEVICE"
+#define STR_RDNA_PRIV_SCOPE_USER       "RDNA_PRIVACY_SCOPE_USER"
+#define STR_RDNA_PRIV_SCOPE_AGENT      "RDNA_PRIVACY_SCOPE_AGENT"
+
+
 typedef enum {
   RDNA_METH_NONE = 0,                /* Not a specific method ID */
   RDNA_METH_INITIALIZE,              /* Initialize runtime */
@@ -20,6 +82,9 @@ typedef enum {
   RDNA_METH_GET_ALL_CHALLENGES,      /* Get All challenges of user call back method*/
   RDNA_METH_LOGOFF,                  /* Log Off user call back method*/
   RDNA_METH_FORGOT_PASSWORD,         /* Forgot password call back method*/
+  RDNA_METH_GET_POST_LOGIN_CHALLENGES,         /* Get Post login challenge callback method*/
+  RDNA_METH_GET_DEVICE_DETAILS,                /* Get all registred devices for the user*/
+  RDNA_METH_UPDATE_DEVICE_DETAILS,              /* Update device details of the user*/
   RDNA_METH_GET_CREDS_CB,
 } RDNAMethodID;
 
@@ -34,6 +99,15 @@ typedef enum{
   RDNA_IWA_AUTH_CANCELLED = 1,
   RDNA_IWA_AUTH_DEFERRED  = 2
 } RDNAIWAAuthStatus;
+
+/*
+@brief enum RDNAChallengeOpMode - These flags specifies the operation on the challenges whether the challenges received are to set new challenge
+or the received challenges are to be verified by the user.
+*/
+typedef enum{
+  RDNA_CHALLENGE_OP_VERIFY = 0,
+  RDNA_CHALLENGE_OP_SET
+} RDNAChallengeOpMode;
 
 /*
 @brief Enum RDNAErrorID - This enum specifies all the error codes which RDNA returns back to the client.
@@ -101,7 +175,7 @@ typedef enum {
   RDNA_ERR_FAILED_TO_DO_FORGOT_PASSWORD,           /* If failed to update forgot pass operation            */
   RDNA_ERR_FAILED_TO_SEND_DEV_DETAILS,             /* If failed to send device details to server           */
   RDNA_ERR_FAILED_TO_SET_DNS_SERVER,               /* If failed to set DNS server                          */
-
+  RDNA_ERR_INVALID_CHALLENGE_CONFIG,               /* If there is any mistake in challenge configuration   */
   RDNA_ERR_USERID_EMPTY,                           /* If empty user id is provided to the api              */
   RDNA_ERR_CHALLENGE_EMPTY,                        /* If empty challenge is provided to the api            */
   RDNA_ERR_FAILED_TO_SERIALIZE_JSON,               /* If failed to serialize json                          */
@@ -111,6 +185,7 @@ typedef enum {
   RDNA_ERR_DEVICE_DETAILS_EMPTY,
   RDNA_ERR_401_URL_EMPTY,
   RDNA_ERR_PASSWORD_EMPTY,
+  RDNA_ERR_INVALID_CHALLENGE_JSON,
 } RDNAErrorID;
 
 /*
@@ -128,7 +203,10 @@ typedef enum{
   RDNA_CHLNG_STATUS_DEVICE_VALIDATION_FAILED,              /* Device validation failed                           */
   RDNA_CHLNG_STATUS_INVALID_CHALLENGE_LIST,                /* Invalid challenge list sent for the state          */
   RDNA_CHLNG_STATUS_INTERNAL_SERVER_ERROR,                 /* Internal server error occured                      */
-  RDNA_CHLNG_STATUS_UNKNOWN_ERROR                          /* Unknown error occured while updating / validaating challenes*/
+  RDNA_CHLNG_STATUS_UNKNOWN_ERROR,                          /* Unknown error occured while updating / validaating challenes*/
+  RDNA_CHLNG_STATUS_FAILED_UPDATE_DEVICE_DETAILS,
+  RDNA_CHLNG_STATUS_NO_SUCH_USE_CASE_EXISTS,
+
 } RDNAChallengeStatusCode;
 
 /*

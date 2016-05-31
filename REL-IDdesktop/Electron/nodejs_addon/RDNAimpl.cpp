@@ -19,12 +19,9 @@ using namespace RDNAUtil;
 Nan::Persistent<v8::Function> RDNA::constructor;
 
 //Utility methods
-void generateDeviceSignature(RDNAContext* wctx, std::string &deviceSignature)
+void generateDeviceSignature(RDNAContext* wctx, std::string appName, std::string appVersion, std::string &deviceSignature)
 {
   struct json_object *jsonDataObj = NULL, *jstring = NULL;
-
-  std::string appName = "ElectronApp"; //wctx->app_callbacks->getAppName();
-  std::string appVersion = "22.1.92"; //wctx->app_callbacks->getAppVersion();
 
   char *deviceFP = NULL;
   deviceFP = getDeviceSignature();
@@ -54,10 +51,10 @@ proxy_settings_t* unpack_proxy_settings(Isolate* isolate, const Handle<Object> p
 {
   proxy_settings_t* pxy = NULL;
 
-  Handle<Value> pxyhost_Value = proxy_obj->Get(String::NewFromUtf8(isolate, "pxyHost"));
-  Handle<Value> pxyport_Value = proxy_obj->Get(String::NewFromUtf8(isolate, "pxyPort"));
-  Handle<Value> pxypass_Value = proxy_obj->Get(String::NewFromUtf8(isolate, "pxyPass"));
-  Handle<Value> pxyuser_Value = proxy_obj->Get(String::NewFromUtf8(isolate, "pxyUser"));
+  Handle<Value> pxyhost_Value = proxy_obj->Get(String::NewFromUtf8(isolate, STR_PXY_HOST));
+  Handle<Value> pxyport_Value = proxy_obj->Get(String::NewFromUtf8(isolate, STR_PXY_PORT));
+  Handle<Value> pxypass_Value = proxy_obj->Get(String::NewFromUtf8(isolate, STR_PXY_PSWD));
+  Handle<Value> pxyuser_Value = proxy_obj->Get(String::NewFromUtf8(isolate, STR_PXY_USER));
   std::string host(*v8::String::Utf8Value(pxyhost_Value));
   std::string username(*v8::String::Utf8Value(pxyuser_Value));
   std::string pswd(*v8::String::Utf8Value(pxypass_Value));
@@ -77,12 +74,12 @@ proxy_settings_t* unpack_proxy_settings(Isolate* isolate, const Handle<Object> p
 int unpack_service_object(Isolate* isolate, const Handle<Object> svc_obj, core_service_t** pSvc)
 {
   int nRet = RDNA_ERR_NONE;
-  Handle<Value> svcName_Value = svc_obj->Get(String::NewFromUtf8(isolate, "serviceName"));
-  Handle<Value> svcTargetHNIP_Value = svc_obj->Get(String::NewFromUtf8(isolate, "targetHNIP"));
-  Handle<Value> svcTargetPort_Value = svc_obj->Get(String::NewFromUtf8(isolate, "targetPort"));
+  Handle<Value> svcName_Value = svc_obj->Get(String::NewFromUtf8(isolate, STR_SERVICE_NAME));
+  Handle<Value> svcTargetHNIP_Value = svc_obj->Get(String::NewFromUtf8(isolate, STR_TARGET_HNIP));
+  Handle<Value> svcTargetPort_Value = svc_obj->Get(String::NewFromUtf8(isolate, STR_TARGET_PORT));
 
-  Handle<Object> svcPortInfo_obj = Handle<Object>::Cast(svc_obj->Get(String::NewFromUtf8(isolate, "portInfo")));
-  Handle<Value> svcPortInfoPort_Value = svcPortInfo_obj->Get(String::NewFromUtf8(isolate, "port"));
+  Handle<Object> svcPortInfo_obj = Handle<Object>::Cast(svc_obj->Get(String::NewFromUtf8(isolate, STR_PORT_INFO)));
+  Handle<Value> svcPortInfoPort_Value = svcPortInfo_obj->Get(String::NewFromUtf8(isolate, STR_PORT));
 
   std::string name(*v8::String::Utf8Value(svcName_Value));
   std::string targetHNIP(*v8::String::Utf8Value(svcTargetHNIP_Value));
@@ -195,6 +192,24 @@ static void WorkAsyncComplete(uv_work_t *req, int status)
       Local<Function>::New(isolate, work->asyncCallbacks->getCredentials)->Call(isolate->GetCurrentContext()->Global(), 2, argv);
       break;
     }
+    case RDNAMethodID::RDNA_METH_GET_DEVICE_DETAILS:
+    {
+      Handle<Value> argv[] = { String::NewFromUtf8(isolate, work->serializedCoreStatus), Number::New(isolate, work->errCode) };
+      Local<Function>::New(isolate, work->asyncCallbacks->onGetRegisteredDeviceDetails)->Call(isolate->GetCurrentContext()->Global(), 2, argv);
+      break;
+    }
+    case RDNAMethodID::RDNA_METH_UPDATE_DEVICE_DETAILS:
+    {
+      Handle<Value> argv[] = { String::NewFromUtf8(isolate, work->serializedCoreStatus), Number::New(isolate, work->errCode) };
+      Local<Function>::New(isolate, work->asyncCallbacks->onUpdateDeviceDetails)->Call(isolate->GetCurrentContext()->Global(), 2, argv);
+      break;
+    }
+    case RDNAMethodID::RDNA_METH_GET_POST_LOGIN_CHALLENGES:
+    {
+      Handle<Value> argv[] = { String::NewFromUtf8(isolate, work->serializedCoreStatus), Number::New(isolate, work->errCode) };
+      Local<Function>::New(isolate, work->asyncCallbacks->onGetPostLoginChlngs)->Call(isolate->GetCurrentContext()->Global(), 2, argv);
+      break;
+    }
     case RDNAMethodID::RDNA_METH_NONE:
     default:
     {
@@ -231,8 +246,7 @@ int onDeviceFPRequested_cb(char** deviceFp, void* appCtx)
   int iRet = 0;
   std::string devFP = "";
   RDNAContext* wctx = (RDNAContext*)appCtx;
-  generateDeviceSignature(wctx, devFP);
-
+  generateDeviceSignature(wctx, wctx->rdnaObj->getApplicationName(), wctx->rdnaObj->getApplicationVersion(), devFP);
   if (!devFP.empty())
   {
     if (!*deviceFp)
@@ -327,6 +341,24 @@ int onDnaStatusUpdate_cb(core_status_t* pStatus)
       serializeForgotPswdStatusStructure(pStatus, &work->serializedCoreStatus);
       break;
     }
+
+    case RDNAMethodID::RDNA_METH_GET_POST_LOGIN_CHALLENGES:
+    {
+      serializePostLoginChallengesStatusStructure(pStatus, &work->serializedCoreStatus);
+      break;
+    }
+
+    case RDNAMethodID::RDNA_METH_GET_DEVICE_DETAILS:
+    {
+      serializeGetDeviceDetailsStatusStructure(pStatus, &work->serializedCoreStatus);
+      break;
+    }
+
+    case RDNAMethodID::RDNA_METH_UPDATE_DEVICE_DETAILS:
+    {
+      serializeUpdateDeviceDetailsStatusStructure(pStatus, &work->serializedCoreStatus);
+      break;
+    }
   }
 
   request->data = work;
@@ -401,19 +433,21 @@ void getCredentials_cb(void* pvAppCtx, char* psUrl, char** psUserName,
   }
 }
 
-RDNA::RDNA() : coreCtx_(NULL) {
+RDNA::RDNA() : coreCtx_(NULL), appName_(""), appVersion_("")
+{
 }
 
-RDNA::~RDNA() {
+RDNA::~RDNA()
+{
 }
 
-void RDNA::Init(v8::Local<v8::Object> exports) {
-
+void RDNA::Init(v8::Local<v8::Object> exports)
+{
   Nan::HandleScope scope;
   //Constructor template
   v8::Local<v8::FunctionTemplate> funcTemplate = Nan::New<v8::FunctionTemplate>(New);
   funcTemplate->SetClassName(Nan::New("RDNA").ToLocalChecked());
-  funcTemplate->InstanceTemplate()->SetInternalFieldCount(1);
+  funcTemplate->InstanceTemplate()->SetInternalFieldCount(3);
 
   //Set api prototypes
   Nan::SetPrototypeMethod(funcTemplate, "initialize"                   , initialize);
@@ -443,7 +477,22 @@ void RDNA::Init(v8::Local<v8::Object> exports) {
   Nan::SetPrototypeMethod(funcTemplate, "decryptDataPacket"            , decryptDataPacket);
   Nan::SetPrototypeMethod(funcTemplate, "encryptHttpRequest"           , encryptHttpRequest);
   Nan::SetPrototypeMethod(funcTemplate, "decryptHttpResponse"          , decryptHttpResponse);
-  Nan::SetPrototypeMethod(funcTemplate, "createPrivacyStream"          , createPrivacyStream);
+
+  Nan::SetPrototypeMethod(funcTemplate, "getConfig"                    , getConfig);
+  Nan::SetPrototypeMethod(funcTemplate, "getAllChallenges"             , getAllChallenges);
+  Nan::SetPrototypeMethod(funcTemplate, "checkChallengeResponse"       , checkChallengeResponse);
+  Nan::SetPrototypeMethod(funcTemplate, "updateChallenges"             , updateChallenges);
+  Nan::SetPrototypeMethod(funcTemplate, "logOff"                       , logOff);
+  Nan::SetPrototypeMethod(funcTemplate, "resetChallenge"               , resetChallenge);
+  Nan::SetPrototypeMethod(funcTemplate, "forgotPassword"               , forgotPassword);
+  Nan::SetPrototypeMethod(funcTemplate, "getPostLoginChallenges"       , getPostLoginChallenges);
+  Nan::SetPrototypeMethod(funcTemplate, "getRegistredDeviceDetails"    , getRegistredDeviceDetails);
+  Nan::SetPrototypeMethod(funcTemplate, "updateDeviceDetails"          , updateDeviceDetails);
+  Nan::SetPrototypeMethod(funcTemplate, "setIWACredentials"            , setIWACredentials);
+
+  Nan::SetPrototypeMethod(funcTemplate, "createPrivacyStream", createPrivacyStream);
+
+  Nan::SetPrototypeMethod(funcTemplate, "getErroInfo", getErroInfo);
 
   constructor.Reset(funcTemplate->GetFunction());
   exports->Set(Nan::New("RDNA").ToLocalChecked(), funcTemplate->GetFunction());
@@ -580,11 +629,11 @@ void RDNA::initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
   char* cipherSalt = NULL;
   char* appContext = NULL;
   std::string errorMsg = "", hnip = "", agentInfo = "", cipherSaltStr = "";
-  std::string strCbAppNameVal = "", cipherSpecStr = "", strAppCtx = "";
+  std::string strCbAppNameVal = "", strCbAppVersionVal = "", cipherSpecStr = "", strAppCtx = "";
   proxy_settings_t* pxySettings = NULL;
   RDNAContext* appCtx = NULL;
   core_callbacks_t* wrapper_cbs = NULL;
-  if (info.Length() < 20)
+  if (info.Length() < 23)
   {
     error = RDNA_ERR_WRONG_NUMBER_OF_ARGUMENTS;
     errorMsg = "Wrong number of arguments";
@@ -626,11 +675,14 @@ void RDNA::initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
   v8::Local<v8::Function> onChkChlngRespStatus = Local<Function>::Cast(info[12]);
   v8::Local<v8::Function> onGetAllChlngs       = Local<Function>::Cast(info[13]);
   v8::Local<v8::Function> onUpdateChlngs       = Local<Function>::Cast(info[14]);
-  v8::Local<v8::Function> onFogotPswd_cb       = Local<Function>::Cast(info[15]);
+  v8::Local<v8::Function> onForgotPswd_cb       = Local<Function>::Cast(info[15]);
   v8::Local<v8::Function> onLogOff_cb          = Local<Function>::Cast(info[16]);
   v8::Local<v8::Function> getCreds_cb          = Local<Function>::Cast(info[17]);
   v8::Local<v8::Function> getAppName_cb        = Local<Function>::Cast(info[18]);
   v8::Local<v8::Function> getAppVersion_cb     = Local<Function>::Cast(info[19]);
+  v8::Local<v8::Function> ongetRegisteredDeviceDetails_cb = Local<Function>::Cast(info[20]);
+  v8::Local<v8::Function> onUpdateDeviceDetails_cb        = Local<Function>::Cast(info[21]);
+  v8::Local<v8::Function> ongetPostLoginChlngs_cb = Local<Function>::Cast(info[22]);
 
   appCtx = new RDNAContext();
   appCtx->callbacks = new  ApplicationCallbacks();
@@ -642,24 +694,35 @@ void RDNA::initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
   appCtx->callbacks->onCheckChallengeResponseStatus.Reset(isolate, onChkChlngRespStatus);
   appCtx->callbacks->onGetAllChallengeStatus.Reset(isolate, onGetAllChlngs);
   appCtx->callbacks->onUpdateChallengeStatus.Reset(isolate, onUpdateChlngs);
-  appCtx->callbacks->onForgotPasswordStatus.Reset(isolate, onFogotPswd_cb);
+  appCtx->callbacks->onForgotPasswordStatus.Reset(isolate, onForgotPswd_cb);
   appCtx->callbacks->onLogOff.Reset(isolate, onLogOff_cb);
   appCtx->callbacks->getCredentials.Reset(isolate, getCreds_cb);
   appCtx->callbacks->getApplicationName.Reset(isolate, getAppName_cb);
   appCtx->callbacks->getApplicationVersion.Reset(isolate, getAppVersion_cb);
+  appCtx->callbacks->onGetRegisteredDeviceDetails.Reset(isolate, ongetRegisteredDeviceDetails_cb);
+  appCtx->callbacks->onUpdateDeviceDetails.Reset(isolate, onUpdateDeviceDetails_cb);
+  appCtx->callbacks->onGetPostLoginChlngs.Reset(isolate, ongetPostLoginChlngs_cb);
 
   appCtx->isolate = isolate;
   appCtx->loop    = uv_default_loop();
   appCtx->rdnaObj = obj;
 
   //Callback to get APP name and version
-  printf("firing sync callback from sync init...!\n");
-  Local<Value> argv[] = { Null(), Nan::New("hello").ToLocalChecked() };
-  v8::Local<v8::Function> x = Local<Function>::New(isolate, getAppName_cb);
-  v8::Local<v8::Value> val = x->Call(isolate->GetCurrentContext()->Global(), 1, argv);
-  strCbAppNameVal = std::string(*v8::String::Utf8Value(val));
-  printf("value from callback is %s\n", strCbAppNameVal.c_str());
-  printf("firing sync callback from sync init...!\n");
+  Local<Value> argv[] = { Null(), Nan::New("errorCode : 0, response : \"\"").ToLocalChecked(), Number::New(isolate, 0) };
+  v8::Local<v8::Value> nameVal = getAppName_cb->Call(isolate->GetCurrentContext()->Global(), 2, argv);
+  if (!nameVal->IsNull())
+  {
+    strCbAppNameVal = std::string(*v8::String::Utf8Value(nameVal));
+    obj->appName_ = strCbAppNameVal;
+  }
+
+
+  v8::Local<v8::Value> versionVal = getAppVersion_cb->Call(isolate->GetCurrentContext()->Global(), 2, argv);
+  if (!versionVal->IsNull())
+  {
+    strCbAppVersionVal = std::string(*v8::String::Utf8Value(versionVal));
+    obj->appVersion_ = strCbAppVersionVal;
+  }
   //Callback to get get Dns servers
 
   wrapper_cbs                          = (core_callbacks_t*)malloc(sizeof(core_callbacks_t));
@@ -765,7 +828,7 @@ void RDNA::resumeRuntime(const Nan::FunctionCallbackInfo<v8::Value>& info)
   char *appContext = NULL, *strCoreState = NULL;
   std::string strCbAppNameVal = "", strAppCtx = "", savedState = "";
 
-  if (info.Length() != 16)
+  if (info.Length() != 19)
   {
     errID = RDNA_ERR_WRONG_NUMBER_OF_ARGUMENTS;
     goto RETURN;
@@ -798,6 +861,9 @@ void RDNA::resumeRuntime(const Nan::FunctionCallbackInfo<v8::Value>& info)
   v8::Local<v8::Function> getCreds_cb = Local<Function>::Cast(info[13]);
   v8::Local<v8::Function> getAppName_cb = Local<Function>::Cast(info[14]);
   v8::Local<v8::Function> getAppVersion_cb = Local<Function>::Cast(info[15]);
+  v8::Local<v8::Function> ongetRegisteredDeviceDetails_cb = Local<Function>::Cast(info[16]);
+  v8::Local<v8::Function> onUpdateDeviceDetails_cb = Local<Function>::Cast(info[17]);
+  v8::Local<v8::Function> ongetPostLoginChlngs_cb = Local<Function>::Cast(info[18]);
 
   appCtx = new RDNAContext();
   appCtx->callbacks = new  ApplicationCallbacks();
@@ -814,6 +880,9 @@ void RDNA::resumeRuntime(const Nan::FunctionCallbackInfo<v8::Value>& info)
   appCtx->callbacks->getCredentials.Reset(isolate, getCreds_cb);
   appCtx->callbacks->getApplicationName.Reset(isolate, getAppName_cb);
   appCtx->callbacks->getApplicationVersion.Reset(isolate, getAppVersion_cb);
+  appCtx->callbacks->onGetRegisteredDeviceDetails.Reset(isolate, ongetRegisteredDeviceDetails_cb);
+  appCtx->callbacks->onUpdateDeviceDetails.Reset(isolate, onUpdateDeviceDetails_cb);
+  appCtx->callbacks->onGetPostLoginChlngs.Reset(isolate, ongetPostLoginChlngs_cb);
 
   appCtx->isolate = isolate;
   appCtx->loop = uv_default_loop();
@@ -967,10 +1036,8 @@ void RDNA::getDefaultCipherSalt(const Nan::FunctionCallbackInfo<v8::Value>& info
   errID = coreGetDefaultCipherSalt(obj->coreCtx_, &cipherSaltRdna);
   if (0 == errID)
   {
-    printf("no error\n");
     if (cipherSaltRdna)
     {
-      printf("rcvd salt\n");
       strResponse = std::string(cipherSaltRdna);
       free(cipherSaltRdna);
     }
@@ -1135,7 +1202,6 @@ void RDNA::decryptDataPacket(const Nan::FunctionCallbackInfo<v8::Value>& info)
 
   errID = coreDecryptDataPacket(obj->coreCtx_, privacyScope, (char*)strSpec.c_str(),
           (char*)strSalt.c_str(), (void*)cipherText, cipherTextLen, &opPlainText, &opPlainTextLen);
-  printf("%s\n", opPlainText);
   if (RDNA_ERR_NONE == errID)
   {
     char* pcText = (char*)m_malloc(opPlainTextLen + 1);
@@ -1292,16 +1358,14 @@ void RDNA::checkChallengeResponse(const Nan::FunctionCallbackInfo<v8::Value>& in
   Isolate* isolate = info.GetIsolate();
   int errID = RDNA_ERR_NONE;
   std::string strResponse = "", strUserID = "", strChlngResp = "";
-
+  char* finalChlngResp = NULL;
   if (info.Length() != 2)
   {
     errID = RDNA_ERR_WRONG_NUMBER_OF_ARGUMENTS;
     goto RETURN;
   }
-
   strUserID = trim(std::string(*v8::String::Utf8Value(info[0])));
   strChlngResp = trim(std::string(*v8::String::Utf8Value(info[1])));
-
   if (strUserID.empty())
   {
     errID = RDNA_ERR_USERID_EMPTY;
@@ -1312,9 +1376,12 @@ void RDNA::checkChallengeResponse(const Nan::FunctionCallbackInfo<v8::Value>& in
   }
   else
   {
-    errID = coreCheckChallenge(obj->coreCtx_, (char*)strUserID.c_str(), strUserID.length(), (char*)strChlngResp.c_str());
+    errID = marshalChlngResp(strChlngResp, &finalChlngResp);
+    if (errID == RDNA_ERR_NONE)
+    {
+      errID = coreCheckChallenge(obj->coreCtx_, (char*)strUserID.c_str(), strUserID.length(), (char*)finalChlngResp);
+    }
   }
-
 RETURN:
   v8::Local<v8::Object> result = v8::Object::New(isolate);
   result->Set(v8::String::NewFromUtf8(isolate, "errorCode"), v8::Number::New(isolate, errID));
@@ -1328,7 +1395,7 @@ void RDNA::updateChallenges(const Nan::FunctionCallbackInfo<v8::Value>& info)
   Isolate* isolate = info.GetIsolate();
   int errID = RDNA_ERR_NONE;
   std::string strResponse = "", strUserID = "", strChlngArray = "";
-
+  char* finalChlngResp = NULL;
   if (info.Length() != 2)
   {
     errID = RDNA_ERR_WRONG_NUMBER_OF_ARGUMENTS;
@@ -1337,7 +1404,6 @@ void RDNA::updateChallenges(const Nan::FunctionCallbackInfo<v8::Value>& info)
 
   strUserID = trim(std::string(*v8::String::Utf8Value(info[0])));
   strChlngArray = trim(std::string(*v8::String::Utf8Value(info[1])));
-
   if (strUserID.empty())
   {
     errID = RDNA_ERR_USERID_EMPTY;
@@ -1348,7 +1414,17 @@ void RDNA::updateChallenges(const Nan::FunctionCallbackInfo<v8::Value>& info)
   }
   else
   {
-    errID = coreUpdateChallenge(obj->coreCtx_, (char*)strUserID.c_str(), strUserID.length(), (char*)strChlngArray.c_str());
+    struct json_object *inChlngJsonDataObj1 = NULL;
+    struct json_object *inChlngChlngArr1 = NULL;
+    int inChlngArraLen = 0;
+    inChlngJsonDataObj1 = json_tokener_parse(strChlngArray.c_str());
+    json_object_object_get_ex(inChlngJsonDataObj1, STR_CHLNG, &inChlngChlngArr1);
+    inChlngArraLen = json_object_array_length(inChlngChlngArr1);
+    errID = marshalChlngResp(strChlngArray, &finalChlngResp);
+    if (errID == RDNA_ERR_NONE)
+    {
+      errID = coreUpdateChallenge(obj->coreCtx_, (char*)strUserID.c_str(), strUserID.length(), finalChlngResp);
+    }
   }
 
 RETURN:
@@ -1507,16 +1583,13 @@ void RDNA::updateDeviceDetails(const Nan::FunctionCallbackInfo<v8::Value>& info)
   Isolate* isolate = info.GetIsolate();
   int errID = RDNA_ERR_NONE;
   std::string strResponse = "", strUserID = "", strDevDetails = "";
-
   if (info.Length() != 2)
   {
     errID = RDNA_ERR_WRONG_NUMBER_OF_ARGUMENTS;
     goto RETURN;
   }
-
   strUserID = trim(std::string(*v8::String::Utf8Value(info[0])));
   strDevDetails = trim(std::string(*v8::String::Utf8Value(info[1])));
-
   if (strUserID.empty())
   {
     errID = RDNA_ERR_USERID_EMPTY;
@@ -1529,7 +1602,6 @@ void RDNA::updateDeviceDetails(const Nan::FunctionCallbackInfo<v8::Value>& info)
   {
     errID = coreUpdateDeviceDetails(obj->coreCtx_, (char*)strUserID.c_str(), (char*)strDevDetails.c_str());
   }
-
 RETURN:
   v8::Local<v8::Object> result = v8::Object::New(isolate);
   result->Set(v8::String::NewFromUtf8(isolate, "errorCode"), v8::Number::New(isolate, errID));
@@ -1556,21 +1628,21 @@ void RDNA::setIWACredentials(const Nan::FunctionCallbackInfo<v8::Value>& info)
   strPswd = trim(std::string(*v8::String::Utf8Value(info[2])));
   authStatus = info[3]->NumberValue();
 
-  if (strUserID.empty())
-  {
-    errID = RDNA_ERR_USERID_EMPTY;
-  }
-  else if (strUrl.empty())
+  if (strUrl.empty())
   {
     errID = RDNA_ERR_401_URL_EMPTY;
   }
-  else if (strPswd.empty())
+  else if (authStatus == 0 && strUserID.empty())
+  {
+    errID = RDNA_ERR_USERID_EMPTY;
+  }
+  else if (authStatus == 0 && strPswd.empty())
   {
     errID = RDNA_ERR_PASSWORD_EMPTY;
   }
   else
   {
-    //errID = coreSetIWACredentials(obj->coreCtx_, (char*)strUrl.c_str(), (char*)strUserID.c_str(), (char*)strPswd.c_str());
+    errID = coreSetIWACredentials(obj->coreCtx_, (char*)strUrl.c_str(), (char*)strUserID.c_str(), (char*)strPswd.c_str(), (e_core_iwa_auth_status)authStatus);
   }
 
 RETURN:
@@ -1580,6 +1652,42 @@ RETURN:
   info.GetReturnValue().Set(result);
 }
 
+void RDNA::getErroInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+  RDNA* obj = Nan::ObjectWrap::Unwrap<RDNA>(info.Holder());
+  Isolate* isolate = info.GetIsolate();
+  int retCode = RDNA_ERR_NONE;
+  int errCode = 0;
+  std::string strResponse = "";
+
+  if (info.Length() != 1)
+  {
+    retCode = RDNA_ERR_WRONG_NUMBER_OF_ARGUMENTS;
+    goto RETURN;
+  }
+
+  errCode = info[0]->NumberValue();
+
+  e_core_error_t coreErrID = coreGetErrorInfo(errCode);
+
+  retCode = coreErrID;
+
+RETURN:
+  v8::Local<v8::Object> result = v8::Object::New(isolate);
+  result->Set(v8::String::NewFromUtf8(isolate, "errorCode"), v8::Number::New(isolate, retCode));
+  result->Set(v8::String::NewFromUtf8(isolate, "response"), Nan::New(strResponse).ToLocalChecked());
+  info.GetReturnValue().Set(result);
+}
+
+std::string RDNA::getApplicationName()
+{
+  return appName_;
+}
+
+std::string RDNA::getApplicationVersion()
+{
+  return appVersion_;
+}
 //To be done.
 void RDNA::createPrivacyStream(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {

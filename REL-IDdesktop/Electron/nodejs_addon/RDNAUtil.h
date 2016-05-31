@@ -20,6 +20,10 @@ namespace RDNAUtil
   void serializeIWARequest(char* url, char **coreStatusJson);
   int getCorePrivacyScope(std::string privacyScope);
   void setGlobalProxy(std::string host, int port);
+  int marshalChlngResp(std::string chlngJson, char** serializedChallenges);
+  void serializePostLoginChallengesStatusStructure(void* ptrPstatus, char **coreStatusJson);
+  void serializeGetDeviceDetailsStatusStructure(void* ptrPstatus, char **coreStatusJson);
+  void serializeUpdateDeviceDetailsStatusStructure(void* ptrPstatus, char **coreStatusJson);
 }
 
 #endif

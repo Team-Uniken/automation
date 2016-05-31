@@ -44,6 +44,9 @@ typedef struct Callbacks_t
   v8::Persistent<Function> getCredentials;
   v8::Persistent<Function> getApplicationName;
   v8::Persistent<Function> getApplicationVersion;
+  v8::Persistent<Function> onGetRegisteredDeviceDetails;
+  v8::Persistent<Function> onUpdateDeviceDetails;
+  v8::Persistent<Function> onGetPostLoginChlngs;
 }ApplicationCallbacks;
 
 typedef struct CallbacksPrivStream_t
@@ -107,6 +110,8 @@ private:
   explicit RDNA();
   ~RDNA();
   void* coreCtx_;
+  std::string appName_;
+  std::string appVersion_;
   static Nan::Persistent<v8::Function> constructor;
 
   METHOD_EXPORT(New);
@@ -132,7 +137,9 @@ private:
   METHOD_EXPORT(decryptDataPacket);
   METHOD_EXPORT(encryptHttpRequest);
   METHOD_EXPORT(decryptHttpResponse);
+  METHOD_EXPORT(getErroInfo);
   METHOD_EXPORT(createPrivacyStream);
+
 
   METHOD_EXPORT(getConfig);
   METHOD_EXPORT(getAllChallenges);
@@ -146,5 +153,9 @@ private:
   METHOD_EXPORT(getRegistredDeviceDetails);
   METHOD_EXPORT(updateDeviceDetails);
   METHOD_EXPORT(setIWACredentials);
+
+public:
+  std::string getApplicationName();
+  std::string getApplicationVersion();
 };
 #endif
