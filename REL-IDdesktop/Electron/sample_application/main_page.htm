@@ -6,18 +6,27 @@
     <link rel='stylesheet  prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style_home.css">
+    <link rel="stylesheet" href="css/grid12.css">
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="RDNA.js"></script>
+    <script src="./js/RDNA.js"></script>
     <script>
       document.onreadystatechange = function ()
       {
         if (document.readyState === "interactive")
         {
           setVersion();
-          importDefaultConnProfiles();
+          loadDefaultSettings();
         }
       }
+      
+    $(".editableBox").change
+    (
+      function()
+      {
+        $(".questionTextBox").val($(".editableBox option:selected").html());
+      }
+    );
     </script>
   </head>
   <body>
@@ -35,13 +44,177 @@
         </div>
         <div class="form">
           <form id="initFrm">
-            <input id="btnInit" class="btn" type="button" value="Initialize" onclick="displayProgress();rdnaInitialize();">
+            <input class="btn" type="button" value="Initialize" onclick="displayProgress();rdnaInitialize();">
           </form>
           <form id="loginFrm" style="display: none;">
-            <h2>Login to your account</h2>
-            <input type="text" placeholder="Username"/>
-            <input type="password" placeholder="Password"/>
-            <input class="btn" type="button" value="Login" onclick="displayProgress()">
+            <h2 id="loginHeader">Login to your account</h2>
+            <input id="userIDField" type="text" placeholder="Username" onkeydown="if (event.keyCode == 13){btnSubmitClicked();}"/>
+            <input id="pswdField" type="password" placeholder="Password"/>
+            <div id="sForgotPswd" style="float : right;" class="ctaex">
+              <a id="forgotPswdLink" onclick="initiateforgotPassword()" style="display: block">Forgot your password?</a><br>
+            </div>
+            <input id="confirmpswdField" type="password" placeholder="Confirm Password"/>
+            <span id="pswdAttemptsLeft" style="float : right;"></span>
+            <br>
+            <span id="userfrmDescription" style="float : left;"></span>
+            <input id="loginFrmSubmitBtn" class="btn" type="button" value="Login" onclick="btnSubmitClicked();">
+            <div id = "updatePwdBtns" class="row" style="display : none">
+              <div class="col-sm-6"><input id="updatePwdFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();"></div>
+              <div class="col-sm-6"><input id="updatePwdFrmCancelBtn" class="btn" type="button" value="Cancel" onclick="btnCancelClicked('loginFrm');"></div>
+            </div>
+          </form>
+          <form id="activationFrm" style="display: none;">
+            <h2>Activate your account</h2>
+            <span id="promptLabel"></span><input id="verificationKey" type="text" placeholder="Verification key" disabled />
+            <span id="respLabel"></span><input id="activationCode" type="text" placeholder="Enter Activation Code Here"/>
+            <span id="attemptsLeft" style="float : right;"></span>
+            <br>
+            <span id="description"></span>
+            <input id="activationFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();">
+          </form>
+          <form id="secQAFrm" style="display: none;">
+            <h2 id="secQAHeader">Secret Question</h2>
+            <div class="wrapper">
+              <span id="secQA"></span>
+              <select id="questionList" class="editableBox" onchange="selectionChanged()">        
+              </select>
+              <input id="txtQuestions" class="questionTextBox" placeholder="type or select secret question" name="questionbox"/>
+              <span id="secAns"></span><input id="secretAns" type="password" placeholder="Enter Secret Answer Here"/>
+              <span id="secqaAttemptsLeft" style="float : right;"></span>
+            </div>
+            <span id="description"></span>
+            <input id="secQAFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();">
+            <div id = "updateQuesBtns" class="row" style="display : none">
+              <div class="col-sm-6"><input id="updateSecQAFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();"></div>
+              <div class="col-sm-6"><input id="updateSecQAFrmCancelBtn" class="btn" type="button" value="Cancel" onclick="btnCancelClicked('secQAFrm');"></div>
+            </div>
+          </form>
+          <form id="devBindFrm" style="display: none;">
+            <h2>Device Binding</h2>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="devBinding" checked>
+              <label class="onoffswitch-label" for="devBinding">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+            <span id="description">Select to make device permanent.</span><br>
+            <input id="devBindFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();">
+          </form>
+          <form id="devNameFrm" style="display: none;">
+            <h2>Device Information</h2>
+            <span id="updateDevNameLbl"></span>
+            <span id="description"></span>
+            <input id="deviceNameTxtBox" type="text" value=""/>
+            <input id="devNameFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();">
+          </form>
+          <form id="otpFrm" style="display: none;">
+            <h2>One time Password (OTP)</h2>
+            <span id="otpPromptlabel"></span><input id="otpKey" type="text" placeholder="" disabled />
+            <span id="otpRespLabel"></span><input id="otpCode" type="text" placeholder="Enter one time password here"/>
+            <span id="otpAttemptsLeft" style="float : right;"></span>
+            <br>
+            <span id="otpDescription"></span>
+            <input id="otpFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();">
+          </form>
+          <form id="selfDevMgmtFrm" style="display: none;">
+            <h2>Device Management</h2>
+            <div id="devmgmt">
+              <label id="permanentdevices"> Permanent device list :</label>
+              <div class="row">
+                <div class="col-sm-8">
+                  <select id="selectPermanentList" style="width : 100%"></select>
+                </div>
+                <div class="col-sm-3">
+                  <div class="row">
+                    <div class="col-sm-6"><img src="img/edit.png" onclick="showPermDevDetailsModal();"></div>
+                    <div class="col-sm-6"><img src="img/delete.png" onclick="delDeviceDetails('selectPermanentList');"></div>			
+                  </div>
+                </div>			
+              </div>
+              <label id="tempdevices"> Temporary device list :</label>
+              <div class="row">
+                <div class="col-sm-8">
+                  <select id="selectTempList" style="width : 100%"></select>
+                </div>
+                <div class="col-sm-3">
+                  <div class="row">
+                    <div class="col-sm-6"><img src="img/edit.png" onclick="showTempDevDetailsModal();"></div>
+                    <div class="col-sm-6"><img src="img/delete.png" onclick="delDeviceDetails('selectTempList');"></div>
+                  </div>
+                </div>
+              </div>
+              <div id = "devMgmtBtns" class="row">
+                <div class="col-sm-6"><input id="submitDevDetailsbtn" class="btn" type="button" value="Submit" onclick="submitDevDetails();"></div>
+                <div class="col-sm-6"><input id="devMgmtCancelBtn" class="btn" type="button" value="Cancel" onclick="btnCancelClicked('selfDevMgmtFrm');"></div>
+              </div>
+            </div>
+            <div id="devDetailsModal" class="modal" style="display : none">            <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <span class="close">x</span>
+                  <div class="col-sm-12">
+                    <label id="authRequired">
+                      <h2>DevDetails</h2>
+                    </label>
+                  </div>					
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <input id="devDetailsTxtBox" type="text" value="" style="padding-top: 5px; padding-bottom: 5px;"/>
+                    </div>
+                    <div class="col-sm-2"><img src="img/save.png" onclick="saveDevDetails();"></div>				
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5"><span id="deviceTypeLbl"></span> : </div>
+                    <div class="col-sm-7"><span id="deviceTypeValLbl"></span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5"><span id="statusKeyLbl"></span> : </div>
+                    <div class="col-sm-7"><span id="statusValLbl"></span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5"><span id="createdTsKeyLbl"></span> : </div>
+                    <div class="col-sm-7"><span id="createdTsValLbl"></span></div>
+                  </div>
+                  <div class="row">					
+                    <div class="col-sm-5"><span id="lastAccessedTsKeyLbl"></span> : </div>
+                    <div class="col-sm-7"><span id="lastAccessedTsValLbl"></span></div>
+                  </div>
+                  <div class="row">					
+                    <div class="col-sm-5"><span id="lastLoginStatusKeyLbl"></span> : </div>
+                    <div class="col-sm-7"><span id="lastLoginStatusValLbl"></span></div>
+                  </div>
+                </div>				
+              </div>
+            </div>
+          </form>
+          <form id="iwaCreds" style="display: none;">
+            <div id="authModal" class="modal">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <span class="close">x</span>
+                  <div class="col-sm-12"><label id="authRequired"><h2>Authentication Required!</h2></label></div>
+                  <div class="col-sm-12"><label id="hostName"></label></div>
+                </div>
+                <div class="modal-body">
+                  <div class="row">					
+                  <div class="col-sm-3"><label>Username:</label></div>
+                  <div class="col-sm-9"><input type="text" name="userName" id="userName" value="uniken"></div>
+                  </div>
+
+                  <div class="row">
+                  <div class="col-sm-3"><label >Password:</label></div>
+                  <div class="col-sm-9"><input type="password" name="password" id="password" value="lmao"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6"><input type="button" class="btn" onclick="submitAuthDetails(0)" value="Submit" ></div>
+                    <div class="col-sm-6"><input type="button" class="btn" onclick="submitAuthDetails(1)" value="Cancel"></div>						
+                  </div>
+                </div>				
+              </div>
+            </div>
           </form>
         </div>
         <div class="form">                                                                   <!-- Settings form -->
@@ -66,19 +239,16 @@
           <div id="frmConnection">                                                             <!-- Connection Tab -->
             <section class="centered">
                 <input type="file" id="fileChooser" style="display: block" onchange='importProfiles(event)'>
-                <!--<input class="btn" type="button" value="Import profiles from file" onclick="importProfiles()">-->
               <br>
               <div id="connProWrapper" class="connListWrapper" style="display: none">
                 <ul id="connList" class="connProfiles">
                 </ul>
               </div>
-              <br>
-              <!--<input class="btn" type="button" value="Save" onclick="saveConnSettings()">-->
             </section>
           </div>
         </div>
         <div class="cta" >
-          <a id="forgotPswdLink" onclick="myFunctionForgotPassword()" style="display: none">Forgot your password?</a>
+          <a id="switchUserLink" onclick="switchUser()" style="display: none"><strong>Sign in as different user</strong></a>
         </div>
       </div>
       <div id="fountainG" style="display: none;margin-top: -170px">
@@ -94,45 +264,58 @@
         <div style="margin-left: 70px;font-size: 18px;">Initializing</div>
       </div>
       <div id="Login" style="display: none;margin-top: -250px">
-      <div id="fountainG_1" class="fountainG"></div>
-      <div id="fountainG_2" class="fountainG"></div>
-      <div id="fountainG_3" class="fountainG"></div>
-      <div id="fountainG_4" class="fountainG"></div>
-      <div id="fountainG_5" class="fountainG"></div>
-      <div id="fountainG_6" class="fountainG"></div>
-      <div id="fountainG_7" class="fountainG"></div>
-      <div id="fountainG_8" class="fountainG"></div>
-      <br><br><br>
-      <div style="margin-left: 70px;font-size: 18px;">Logging in</div>
-    </div>
-    </div>
-    <div id="landingPage" style="display: none">
-      <section class="container" id="rdnaPostLogin">
-        <a onclick="rdnaInitialize()" class="button blue">Initialize</a>
-        <a onclick="rdnaPause()" class="button blue">Pause</a>
-        <a onclick="rdnaResume()" class="button blue">Resume</a>
-        <a onclick="rdnaTerminate()" class="button blue">Terminate</a>
-        <a onclick="rdnaGetSDKVersion()" class="button blue">GetSDKVersion</a>
-        <a onclick="rdnaGetSessionID()" class="button blue">GetSessionID</a>
-        <a onclick="rdnaGetAgentID()" class="button blue">GetAgentID</a>
-        <a onclick="rdnaGetDefaultCipherSpec()" class="button blue">GetDefaultCipherSpec</a>
-        <a onclick="rdnaGetDefaultCipherSalt()" class="button blue">GetDefaultCipherSalt</a>
-        <a onclick="rdnaGetDeviceID()" class="button blue">GetDeviceID</a>
-        <a onclick="rdnaGetServiceByName()" class="button blue">GetServiceByName</a>
-        <a onclick="rdnaGetServiceBytargetCoordinate()" class="button blue">GetServiceByTargetCoordinate</a>
-        <a onclick="rdnaGetAllServices()" class="button blue">GetAllServices</a>
-        <a onclick="rdnaStartService()" class="button blue">StartService</a>
-        <a onclick="rdnaStopService()" class="button blue">StopService</a>
-        <a onclick="rdnaStartAllServices()" class="button blue">StartAllServices</a>
-        <a onclick="rdnaStopAllServices()" class="button blue">StopAllServices</a>
-        <a onclick="rdnaEncryptDataPacket()" class="button blue">EncryptDataPkt</a>
-        <a onclick="rdnaDecryptDataPacket()" class="button blue">DecryptDataPkt</a>
-        <a onclick="rdnaEncryptHTTPReq()" class="button blue">EncryptHTTPReq</a>
-        <a onclick="rdnaDecryptHTTPResp()" class="button blue">DecryptHTTPResp</a>
-      </section>
-      <textarea rows="6" cols="50" id="txtField1"></textarea><textarea rows="6" cols="50" id="txtField2"></textarea><br><br>
-      ----------------------------------------------------------------------------------<br><br>
-      <textarea rows="10" cols="100" id="t1"></textarea>
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+        <br><br>
+        <div id="loginPGB" style="margin-left: 70px;font-size: 18px;white-space: nowrap;">Logging in</div>
+      </div>
+      <div id="landingPage" style="display: none">
+        <section class="container" id="initLandingContainer">
+          <a onclick="rdnaInitialize()" class="button blue">Initialize</a>
+          <a onclick="rdnaPause()" class="button blue">Pause</a>
+          <a onclick="rdnaResume()" class="button blue">Resume</a>
+          <a onclick="rdnaTerminate()" class="button blue">Terminate</a>
+          <a onclick="rdnaGetSDKVersion()" class="button blue">GetSDKVersion</a>
+          <a onclick="rdnaGetSessionID()" class="button blue">GetSessionID</a>
+          <a onclick="rdnaGetAgentID()" class="button blue">GetAgentID</a>
+          <a onclick="rdnaGetDefaultCipherSpec()" class="button blue">GetDefaultCipherSpec</a>
+          <a onclick="rdnaGetDefaultCipherSalt()" class="button blue">GetDefaultCipherSalt</a>
+          <a onclick="rdnaGetDeviceID()" class="button blue">GetDeviceID</a>
+          <a onclick="rdnaGetServiceByName()" class="button blue">GetServiceByName</a>
+          <a onclick="rdnaGetServiceBytargetCoordinate()" class="button blue">GetServiceByTargetCoordinate</a>
+          <a onclick="rdnaGetAllServices()" class="button blue">GetAllServices</a>
+          <a onclick="rdnaStartService()" class="button blue">StartService</a>
+          <a onclick="rdnaStopService()" class="button blue">StopService</a>
+          <a onclick="rdnaStartAllServices()" class="button blue">StartAllServices</a>
+          <a onclick="rdnaStopAllServices()" class="button blue">StopAllServices</a>
+          <a onclick="rdnaEncryptDataPacket()" class="button blue">EncryptDataPkt</a>
+          <a onclick="rdnaDecryptDataPacket()" class="button blue">DecryptDataPkt</a>
+          <a onclick="rdnaEncryptHTTPReq()" class="button blue">EncryptHTTPReq</a>
+          <a onclick="rdnaDecryptHTTPResp()" class="button blue">DecryptHTTPResp</a>
+          
+          <a onclick="showInitialiChlngFrame()" class="button blue">Login to your account</a>
+          <a onclick="forgotPasswordHandler()" class="button blue">Forgot password</a>
+          <a onclick="ResetState()" class="button blue">Reset challenge</a>
+        </section>
+        <textarea rows="6" cols="50" id="txtField1"></textarea><textarea rows="6" cols="50" id="txtField2"></textarea><br><br>
+        ----------------------------------------------------------------------------------<br><br>
+        <textarea rows="10" cols="100" id="t1"></textarea>
+      </div>
+      <div id="homePage" style="display: none">
+        <section class="container" id="homePageContainer">
+          <a onclick="doLogOff()" class="button blue">LogOff</a>
+          <a onclick="handleChangeRequest('Change SecQA')" class="button blue">Change Secret Question & Answers</a>
+          <a onclick="handleChangeRequest('Change Pin')" class="button blue">Change Pin</a>
+          <a onclick="handleDeviceMgmt()" class="button blue">Manage Devices</a>
+          <a onclick="handlePostLoginChlng()" class="button blue">PostLogin Challenges</a>
+        </section>
+      </div>
     </div>
     <script src="js/index.js"></script>
   </body>

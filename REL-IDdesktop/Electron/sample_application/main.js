@@ -3,6 +3,9 @@
 const electron = require('electron');
 // Module to control application life.
 const app = electron.app;
+
+global.sharedObj = {appName: app.getName(), appVersion: app.getVersion()};
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
@@ -19,7 +22,6 @@ console.log(__dirname);
 //mainWindow.loadURL('http://electron.atom.io/#get-started');
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
-
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {  console.log('wclosedd');
     // Dereference the window object, usually you would store windows
