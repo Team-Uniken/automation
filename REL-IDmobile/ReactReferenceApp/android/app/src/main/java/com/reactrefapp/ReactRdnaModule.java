@@ -184,25 +184,40 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onGetRegistredDeviceDetails(String s) {
-                Logger.d(TAG, "--------- device details "+s);
-                //WritableMap params = Arguments.createMap();
-                //params.putString("response", s);
+            public int onGetRegistredDeviceDetails(final String s) {
+                Logger.d(TAG, "--------- device details " + s);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
 
-                //context
-                  //      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    //    .emit("onGetRegistredDeviceDetails", params);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onGetRegistredDeviceDetails", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
+
                 return 0;
             }
 
             @Override
-            public int onUpdateDeviceDetails(String s) {
-                WritableMap params = Arguments.createMap();
-                params.putString("response", s);
+            public int onUpdateDeviceDetails(final String s) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onUpdateDeviceDetails", params);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onUpdateDeviceDetails", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
                 return 0;
             }
         };
