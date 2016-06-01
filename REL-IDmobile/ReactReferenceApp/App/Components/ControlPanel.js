@@ -1,7 +1,29 @@
+
+/*
+  ALWAYS NEED
+*/
+'use strict';
+
 var React = require('react-native');
+var Skin = require('./MainStyleSheet');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 
+/*
+  CALLED
+*/
+var styles = Skin.loadStyle;
+var Main = require('./Main');
+var Menu = require('./Menu');
+var UserLogin = require('./challenges/UserLogin');
+//var Web = require('./Web');
+var {DeviceEventEmitter} = require('react-native');
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
+
+/* 
+  INSTANCES
+*/
 var {
   View,
   Text,
@@ -9,43 +31,10 @@ var {
   StyleSheet,
   TouchableHighlight,
 } = React;
+var styles = Skin.controlStyle;
 
-var styles = StyleSheet.create({
-  container:{
-    backgroundColor: '#1c1c1c',
-    flex: 1,
-    //color: '#ffffff',
-  },
-  shadow:{
-    width: 300,
-    height: 300,
-    shadowOffset:{width: 10, height: 10}
-  },
-  menuItem:{
-    color: '#ffffff',
-    fontFamily: 'Century Gothic',
-    paddingTop: 15,
-    paddingBottom: 15,
-  },
-  menuBorder:{
-    borderStyle: 'solid',
-    borderWidth: 0.5,
-    borderColor: '#222222',
-    marginLeft:20,
-  },
-  touch:{
-    paddingLeft: 20
-  },
-  controlHeader:{
-    color: '#ffffff',
-    fontFamily: 'Century Gothic',
-    paddingTop: 30,
-    fontSize: 30,
-    paddingBottom: 50,
-    width: SCREEN_WIDTH-90,
-    textAlign: 'center',
-  }
-});
+
+
 
 class ControlPanel extends React.Component{
   constructor(props){

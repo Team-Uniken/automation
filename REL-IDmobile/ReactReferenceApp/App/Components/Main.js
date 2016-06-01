@@ -4,16 +4,12 @@ var React = require('react-native');
 var Drawer = require('react-native-drawer');
 //var NavigationBar = require('react-native-navbar');
 var Menu = require('./Menu');
+var Skin = require('./MainStyleSheet');
+var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
 
-var MIDBLUE = '#2579A2';
-var CORE_FONT = 'Century Gothic';
-var NAV_BAR_TINT = '#FFFFFF'
-var NAV_SHADOW_BOOL = true;
-var MENU_TXT_COLOR = '#2579A2';
-var ICON_COLOR = '#FFFFFF';
-var ICON_FAMILY = 'icomoon';
+
 
 var {
   View,
@@ -30,8 +26,14 @@ var {
   BackAndroid,
 } = React;
 
+
+
 var dnaProxyPort;
 var dnaUserName;
+
+
+
+/*
 var styles = StyleSheet.create({
   hamburger: {
     width: 24,
@@ -45,7 +47,7 @@ var styles = StyleSheet.create({
 
   },
   bar:{
-    backgroundColor: MIDBLUE,
+    backgroundColor: '#FFFFFf',
     width: 20,
     height:3,
     marginTop:3,
@@ -91,7 +93,7 @@ var styles = StyleSheet.create({
     fontSize: 20,
   }
 });
-
+*/
 class Main extends React.Component{
 
   constructor(props){
