@@ -1,11 +1,20 @@
+
+/*
+  ALWAYS NEED
+*/
+'use strict';
+
 var React = require('react-native');
+var Skin = require('./Skin');
+var SCREEN_WIDTH = require('Dimensions').get('window').width;
+var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 
+/*
+  CALLED
+*/
 var Drawer = require('react-native-drawer');
-
 var DrawerQbank = require('./DrawerQbank');
 var QbankOptions = require('./QbankOptions');
-
-var MainStyleSheet = require('./MainStyleSheet');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
 
@@ -50,13 +59,6 @@ var SampleRow = React.createClass({
   }
 });
 
-
-
-var {
-  styles,
-  logStyle,
-  progStyle,
-} = MainStyleSheet;
 
 var {
 Dimensions,

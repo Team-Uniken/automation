@@ -137,6 +137,8 @@ class ReactRefApp extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
 
+    var id = "UserLogin";
+    
     if(id == "Main"){
       return (<Main navigator={nav}/>);
     }else if (id == "Load"){

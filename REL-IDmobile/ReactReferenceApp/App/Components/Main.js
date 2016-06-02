@@ -4,7 +4,7 @@ var React = require('react-native');
 var Drawer = require('react-native-drawer');
 //var NavigationBar = require('react-native-navbar');
 var Menu = require('./Menu');
-var Skin = require('./MainStyleSheet');
+var Skin = require('./Skin');
 var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
@@ -123,20 +123,20 @@ class Main extends React.Component{
         styles={{main: {shadowColor: "#000000", shadowOpacity: 1, shadowRadius: 20}}}
         tweenHandler={Drawer.tweenPresets.parallax}
       >
-      <View style={styles.toolbarrow}>
-      <TouchableHighlight
-             onPress={this.toggleControlPanel.bind(this)}
-        underlayColor={'#FFFFFF'}
-        activeOpacity={0.6}
-      >
-<Image source={require('image!ic_navigation')} style={styles.hamburger} />
-      </TouchableHighlight>
-
-      <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-120,}}
-      >Menu</Text>
-
-      </View>
+        <View style={styles.toolbarrow}>
+          <TouchableHighlight
+            onPress={this.toggleControlPanel.bind(this)}
+            underlayColor={'#FFFFFF'}
+            activeOpacity={0.6}
+          >
+            <Image source={require('image!ic_navigation')} style={styles.hamburger} />
+          </TouchableHighlight>
+          <Text
+            style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-120,}}
+          >
+            Menu
+          </Text>
+        </View>
         <Menu navigator={this.props.navigator}/>
       </Drawer>
     )

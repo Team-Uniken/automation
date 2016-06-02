@@ -5,7 +5,7 @@
 'use strict';
 
 var React = require('react-native');
-var Skin = require('../MainStyleSheet');
+var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 
@@ -36,6 +36,7 @@ var statusMessage;
 var subscriptions;
 var {
 	AppRegistry,
+	Button,
 	Component,
 	Easing,
 	Image,
@@ -86,7 +87,7 @@ class UserLogin extends React.Component{
 			login_button_text: 'Login',
 			loginAttempts: 5,
 			passAttempts: 5,
-			Challenge:this.props.url.chlngJson,
+//			Challenge:this.props.url.chlngJson,
 			failureMessage : ''
 
 		};
@@ -148,7 +149,7 @@ class UserLogin extends React.Component{
 	}
 
 	componentWillMount(){
-		console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+//		console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 	}
 
 	updateProgress() {
@@ -271,45 +272,58 @@ class UserLogin extends React.Component{
 	// 		this.setState({passAttempts: count-1});
 	// }
 
+//            	<View style={Skin.loadStyle.bgcolorizer}></View>
+
 
 	render() {
 		return (
-			<View>
-				<View style={Skin.statusBarStyle.default}>
+			<View style={Skin.coreStyle.container}>
+	            <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
+            	<View style={Skin.statusBarStyle.default}>
 			    	<StatusBar
             			barStyle='light-content'
             		/>
             	</View>
-            	<View style={Skin.loadStyle.bgcolorizer}></View>
-            	<View style={Skin.loadStyle.loadwrap}>
-            		<Animated.View style={[Skin.loadStyle.rid_wrap, {top: SCREEN_HEIGHT/4}]}>
-						<View style={Skin.loadStyle.rid_center}>
-							<Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_r]}>g</Text>
-							<Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_i]}>h</Text>
-							<Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_d]}>i</Text>
-						</View>
-					</Animated.View>
-				</View>
-            	<View style={[Skin.logStyle.wrap, {top: SCREEN_HEIGHT/2}]}>
-            		<View style={Skin.logStyle.preicon_wrap}>
-            			<Text style={Skin.logStyle.preicon_text}>
-            				[]
-            			</Text>
+            	<View style={Skin.logStyle.wrap}>
+            		<View style={Skin.logStyle.top_wrap}>
+		            		<Animated.View style={Skin.coreStyle.rid_wrap}>
+								<View style={Skin.coreStyle.rid_center}>
+									<Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_r]}>g</Text>
+									<Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_i]}>h</Text>
+									<Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_d]}>i</Text>
+								</View>
+							</Animated.View>
             		</View>
-            		<View style={Skin.logStyle.textinput_wrap}>
-		            	<TextInput
-							ref='inputUsername'
-							returnKeyType={'next'}
-							autoCorrect={false}
-							keyboardType={'email-address'}
-							placeholder={'Enter Username'}
-							placeholderTextColor={'rgba(255,255,255,0.5)'}
-							style={Skin.logStyle.input}
-							value={this.state.inputUsername}
-							onSubmitEditing={this.checkUsername.bind(this)}
-							onChange={this.onUsernameChange.bind(this)}
-						/>
-					</View>
+            		<View style={Skin.logStyle.mid_wrap}>
+            			<View style={Skin.logStyle.input_wrap}>
+	            			<View style={Skin.logStyle.textinput_wrap}>
+	            				<TextInput
+									ref='inputUsername'
+									returnKeyType={'next'}
+									autoCorrect={false}
+									keyboardType={'email-address'}
+									placeholder={'Username'}
+									placeholderTextColor={'rgba(255,255,255,0.5)'}
+									style={Skin.logStyle.textinput}
+									value={this.state.inputUsername}
+									onSubmitEditing={this.checkUsername.bind(this)}
+									onChange={this.onUsernameChange.bind(this)}
+								/>
+							</View>
+            			</View>
+            			<View style={Skin.logStyle.input_wrap}>
+							<TouchableHighlight
+								style={Skin.logStyle.button}
+								onPress={this.checkUsername.bind(this)}
+								underlayColor={'#082340'}
+								activeOpacity={0.6}
+							>
+								<Text style={Skin.logStyle.button_text}>LOGIN</Text>
+							</TouchableHighlight>
+            			</View>
+            		</View>
+            		<View style={Skin.logStyle.bot_wrap}>
+            		</View>
 				</View>
 			</View>
 		);
@@ -317,7 +331,7 @@ class UserLogin extends React.Component{
 
 /*
 
-
+{this.state.login_button_text}
 
             	<Animated.View style={[Skin.progStyle.wrap, {opacity: this.state.progWrapOpac}]}>
 					<Text style={[Skin.progStyle.warning]}>
@@ -357,14 +371,7 @@ class UserLogin extends React.Component{
 								onSubmitEditing={this.checkUsername.bind(this)}
 								onChange={this.onUsernameChange.bind(this)}
 							/>
-							<TouchableHighlight
-								style={Skin.logStyle.roundcorner}
-								onPress={this.checkUsername.bind(this)}
-								underlayColor={'#082340'}
-								activeOpacity={0.6}
-							>
-								<Text style={Skin.logStyle.button}>{this.state.login_button_text}</Text>
-							</TouchableHighlight>
+
 						</View>
 					</Animated.View>
 				</View >
