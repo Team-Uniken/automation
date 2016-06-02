@@ -1,8 +1,7 @@
 
 
 var React = require('react-native');
-var TEXT_COLOR = '#FFFFFF';
-var MIDBLUE = '#2579A2';
+var {customeStyle, styles} = require("./MainStyleSheet");
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
 var Events = require('react-native-simple-events');
@@ -21,115 +20,6 @@ var {
 	Image,
 	Animated,
 } = React;
-
-var styles = StyleSheet.create({
-	Container: {
-	    flex: 1,
-      backgroundColor: 'rgba(8,26,60,0.9)'
-	},
-  toolbarrow: {
-            flexDirection:'row',
-            backgroundColor: '#fff',
-            width:Dimensions.get('window').width,
-  },
-  step:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 16,
-    width:Dimensions.get('window').width,
-
-  },
-  Varification:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 20,
-    width:Dimensions.get('window').width,
-  },
-	match:{
-		 textAlign: "center",
-		marginTop:16,
-		color: '#cdcdc1',
-		justifyContent: 'center',
-		alignItems: 'center',
-		fontSize: 20,
-		width:Dimensions.get('window').width,
-	},
-	remember:{
-		margin:16,
-		color: TEXT_COLOR,
-		fontSize: 16,
-		width:Dimensions.get('window').width-80,
-	},
-  div:{
-    marginTop:16,
-    width:Dimensions.get('window').width,
-    backgroundColor: '#fff',
-    height:1,
-  },
-
-	button: {
-			fontFamily: 'Century Gothic',
-		backgroundColor:'transparent',
-	flex:1,
-	fontSize: 16,
-	margin:1,
-	textAlign:'center',
-	textAlignVertical:'center',
-	color: '#FFF',
-	marginTop:16,
-	},
-
-	roundcorner: {
-		height: 56,
-		width: 280,
-	marginTop:16,
-	marginLeft:Dimensions.get('window').width/2-140,
-	borderWidth: 1,
-	borderColor: "#fff",
-	backgroundColor: 'rgba(255,255,255,0.1)',
-	borderRadius: 30,
-	},
-
-
-	input: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'rgba(255,255,255,0.1)',
-		height: 56,
-		fontSize:16,
-		width: 280,
-		marginTop:16,
-		color: 'rgba(255,255,255,1)',
-		marginLeft:Dimensions.get('window').width/2-140,
-		textAlign:'center',
-		alignItems: 'center',
-	},
-	images: {
-		width: 24,
-		height: 24,
-		margin:12,
-	},
-	row: {
-						flexDirection:'row',
-						width:Dimensions.get('window').width,
-	},
-	wrap: {
-		position: 'absolute',
-		top: 10,
-		bottom: 0,
-		left: 0,
-		right: 0,
-		width: 50,
-		height: 50,
-	},
-});
-
-
 
 class DeviceBinding extends React.Component{
 	btnText(){
@@ -185,7 +75,7 @@ class DeviceBinding extends React.Component{
       	flag = "true";
       else
       	flag = "false";
-      
+
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = flag;
       Events.trigger('showNextChallenge', {response: responseJson});
@@ -193,22 +83,26 @@ class DeviceBinding extends React.Component{
 
 	render() {
 		return (
-			<View style={styles.Container}>
-			<ToolBar navigator={this.props.navigator} title="DeviceBinding"/>
+			<View   style={{flex:1,backgroundColor:'#fff'}}>
+		         <StatusBar
+		         backgroundColor='#1976d2'
+		         barStyle='light-content'
+		         />
+						 			<ToolBar navigator={this.props.navigator} title="DeviceBinding"/>
 			<ScrollView >
 
-<Text style={styles.Varification}>Remember Device</Text>
-<Text style={styles.div}> </Text>
-<View style={styles.row}>
-<Text style={styles.remember}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
+<Text style={customeStyle.text2}>Remember Device</Text>
+<Text style={customeStyle.div}> </Text>
+<View style={customeStyle.row}>
+<Text style={customeStyle.remember}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 
 <View>
-<Animated.View style={[styles.wrap,{opacity:1}]}>
+<Animated.View style={[customeStyle.wrap,{opacity:1}]}>
 <TouchableHighlight
 underlayColor={'transparent'}
 
 >
-<Image source={require('image!ic_unch1')} style={styles.images} />
+<Image source={require('image!uncheck')} style={styles.images} />
 </TouchableHighlight>
 </Animated.View>
 
@@ -218,7 +112,7 @@ underlayColor={'transparent'}
 onPress={this.check.bind(this)}
 
 >
-<Image source={require('image!ic_ch1')} style={styles.images} />
+<Image source={require('image!check')} style={styles.images} />
 </TouchableHighlight>
 </Animated.View>
 </View>
@@ -227,22 +121,18 @@ onPress={this.check.bind(this)}
 </View>
 
 
-<Text style={styles.Varification}>{this.state.type}</Text>
+<Text style={customeStyle.text2}>{this.state.type}</Text>
 
-<Text style={styles.div}> </Text>
+<Text style={customeStyle.div}> </Text>
 
- <TouchableHighlight
- style={styles.roundcorner}
-	 onPress={this.setDeviceBinding.bind(this)}
-
-	 underlayColor={'#082340'}
-	 activeOpacity={0.6}
- >
- <Text style={styles.button}>{this.btnText()}</Text>
- </TouchableHighlight>
-
-
-
+<TouchableHighlight
+		style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
+		onPress={this.setDeviceBinding.bind(this)}
+		 underlayColor={'#1976d2'}
+		 activeOpacity={0.6}
+		>
+		<Text style={customeStyle.button}>{this.btnText()}</Text>
+		</TouchableHighlight>
 </ScrollView >
 			</View>
 		);

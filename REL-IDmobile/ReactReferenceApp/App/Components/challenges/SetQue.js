@@ -1,6 +1,7 @@
 var React = require('react-native');
 var ToolBar = require('../ToolBar');
 var Events = require('react-native-simple-events');
+var {customeStyle, styles} = require("../MainStyleSheet");
 
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
@@ -145,22 +146,33 @@ var SetQue = React.createClass({
 
 
     return (
-			<View style={styles.Container}>
-			<ToolBar navigator={this.props.navigator} title="Activation"/>
+      <View   style={{flex:1,backgroundColor:'#fff'}}>
+                <StatusBar
+                backgroundColor='#1976d2'
+                barStyle='light-content'
+                />
+                			<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-      <Text style={styles.step}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-         <Text style={styles.Varification}>Question and Answer</Text>
-<Text style={styles.div}> </Text>
+      <Text style={customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+         <Text style={customeStyle.text2}>Question and Answer</Text>
+<Text style={customeStyle.div}> </Text>
 
-<TextInput
- ref={component => this._textInput = component}
- autoCorrect={false}
- placeholder={'Type/Select question'}
- placeholderTextColor={'rgba(255,255,255,0.5)'}
- onChange={this.onQuestionChange.bind(this)}
- style={styles.input}
-/>
+
+<View
+               style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
+                activeOpacity={0.6}
+               >
+               <TextInput
+               ref={component => this._textInput = component}
+               autoCorrect={false}
+               placeholder={'Type/Select question'}
+               	placeholderTextColor={'#8F8F8F'}
+               	style={customeStyle.input}
+                onChange={this.onQuestionChange.bind(this)}
+               />
+               </View>
+
 
  <View style={styles.que}>
  <ListView
@@ -170,34 +182,33 @@ var SetQue = React.createClass({
    renderRow={this.renderRow}
  />
  </View>
-<Text style={styles.div}> </Text>
+ <View
+      style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
+       activeOpacity={0.6}
+      >
+      <TextInput
+        autoCorrect={false}
+        placeholder={'Enter your secret answer'}
+        placeholderTextColor={'#8F8F8F'}
+        style={customeStyle.input}
+        onChange={this.onAnswerChange.bind(this)}
+      />
+      </View>
 
 
-<TextInput
- autoCorrect={false}
- placeholder={'Enter your secret answer'}
- placeholderTextColor={'rgba(255,255,255,0.5)'}
- style={styles.input}
- onChange={this.onAnswerChange.bind(this)}
-/>
-
- <Text style={styles.div}> </Text>
+ <Text style={customeStyle.div}> </Text>
 
  <TouchableHighlight
- style={styles.roundcorner}
-	 onPress={this.setSecrets.bind(this)}
-	 underlayColor={'#082340'}
-	 activeOpacity={0.6}
- >
- <Text style={styles.button}>{this.btnText()}</Text>
- </TouchableHighlight>
+      style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
+      onPress={this.setSecrets.bind(this)}
+     	 underlayColor={'#1976d2'}
+     	 activeOpacity={0.6}
+      >
+      <Text style={customeStyle.button}>{this.btnText()}</Text>
+      </TouchableHighlight>
 </ScrollView >
 			</View>
 		);
-
-
-
-
   },
 });
 
@@ -209,126 +220,21 @@ var styles = {
       height:150,
       backgroundColor:'#183F5B',
 
-  },
-  Container: {
-      flex: 1,
-      backgroundColor: 'rgba(8,26,60,0.9)'
-  },
-
-
-  toolbarrow: {
-            flexDirection:'row',
-            backgroundColor: '#fff',
-            width:Dimensions.get('window').width,
-  },
-  step:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 16,
-    width:Dimensions.get('window').width,
-
-  },
-  Varification:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 20,
-    width:Dimensions.get('window').width,
-  },
-  match:{
-     textAlign: "center",
-    marginTop:16,
-    color: '#cdcdc1',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 20,
-    width:Dimensions.get('window').width,
-  },
-  Varificationkey:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 24,
-    width:Dimensions.get('window').width,
-  },
-  div:{
-    marginTop:16,
-    width:Dimensions.get('window').width,
-    backgroundColor: '#fff',
-    height:1,
-  },
-
-  button: {
-      fontFamily: 'Century Gothic',
-    backgroundColor:'transparent',
-  flex:1,
-  fontSize: 16,
-  margin:1,
-  textAlign:'center',
-  textAlignVertical:'center',
-  color: '#FFF',
-  marginTop:16,
-  },
-	roundcorneredittext: {
-		height: 56,
-		width: 280,
-	marginTop:16,
-	marginLeft:Dimensions.get('window').width/2-140,
-	backgroundColor:'#fff',
-	borderRadius: 10,
-	},
-	formInput: {
-		height: 56,
-		width: 280,
-	fontSize: 16,
-	textAlign:'center',
-	color: "#555555",
-	backgroundColor:'transparent'
-	},
-  roundcorner: {
-    height: 56,
-    width: 280,
-  marginTop:16,
-  marginBottom:16,
-  marginLeft:Dimensions.get('window').width/2-140,
-  borderWidth: 1,
-  borderColor: "#fff",
-  backgroundColor: 'rgba(255,255,255,0.1)',
-  borderRadius: 30,
-  },
-  input: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'rgba(255,255,255,0.1)',
-		height: 56,
-		fontSize:16,
-		width: 280,
-		marginTop:16,
-		color: 'rgba(255,255,255,1)',
-		marginLeft:Dimensions.get('window').width/2-140,
-		textAlign:'center',
-		alignItems: 'center',
-	},
-		customerow: {
+      },
+	customerow: {
 			backgroundColor:'#122941',
 			marginTop:2,
 			width:Dimensions.get('window').width,
-		},
-			questyle:{
-					fontSize: 16,
-					color : MSG,
-					height:40,
-					marginTop:6,
-					width:Dimensions.get('window').width,
-					textAlign:'center',
-					textAlignVertical:'center',
-					 },
+		  },
+	questyle:{
+			fontSize: 16,
+			color : MSG,
+      height:40,
+			marginTop:6,
+			width:Dimensions.get('window').width,
+			textAlign:'center',
+			textAlignVertical:'center',
+			},
 
 };
 module.exports = SetQue;

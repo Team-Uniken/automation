@@ -9,6 +9,9 @@ var {StyleSheet} = React;
 
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+var TEXT_COLOR = '#000';
+var BUTTON_TEXT_COLOR = '#fff';
+
 var LIGHTBLUE = '#50ADDC';
 var MIDBLUE = '#2579A2';
 var DARKBLUE = '#10253F';
@@ -17,8 +20,123 @@ var ICON_FAMILY = 'icomoon';
 var CORE_FONT = 'Century Gothic';
 var Spd = 0.8;
 var LoadSpd = 0.3;
-
 var leftrid = 23;
+
+
+var customeStyle = StyleSheet.create({
+	remember:{
+    				color:TEXT_COLOR,
+  					fontSize: 16,
+    				opacity:0.7,
+						margin:16,
+						width:SCREEN_WIDTH-80,
+					},
+	images: {
+						width: 24,
+						height: 24,
+						margin:12,
+    				opacity:0.7,
+					},
+	row: {
+				flexDirection:'row',
+				width:SCREEN_WIDTH,
+	},
+	wrap: {
+				position: 'absolute',
+				top: 10,
+				bottom: 0,
+				left: 0,
+				right: 0,
+				width: 50,
+				height: 50,
+	},
+  input: {
+					textAlign:'center',
+    			fontFamily: 'Century Gothic',
+    			fontSize:16,
+    			height:56,
+    			color: '#000',
+    			textAlignVertical:'top',
+    			alignItems: 'center',
+    			opacity:0.7,
+  			},
+  roundcorner: {
+    						height: 48,
+    						width: 280,
+  							marginTop:12,
+  							marginBottom:16,
+  							marginLeft:SCREEN_WIDTH/2-140,
+  							borderWidth: 1,
+  							borderColor: "#fff",
+  							backgroundColor: '#fff',
+  							borderRadius: 30,
+  					},
+  note:{
+				textAlign:'center',
+     		marginTop:16,
+     		color:TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 16,
+     		opacity:0.4,
+     		width:SCREEN_WIDTH,
+  		},
+  text1:{
+				textAlign:'center',
+     		marginTop:16,
+     		color: TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 16,
+     		opacity:0.7,
+     		width:SCREEN_WIDTH,
+  		},
+  text2:{
+     		marginTop:16,
+     		color: TEXT_COLOR,
+     		justifyContent: 'center',
+		 		textAlign:'center',
+     		fontSize: 20,
+     		opacity:0.75,
+     		width:SCREEN_WIDTH,
+  		},
+  text3:{
+				textAlign:'center',
+				marginTop:16,
+     		color: TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 24,
+     		opacity:0.9,
+     		width:SCREEN_WIDTH,
+  		},
+  text4:{
+				textAlign:'center',
+     		marginTop:16,
+     		color: TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 34,
+     		width:SCREEN_WIDTH,
+  			},
+  button:{
+					textAlign:'center',
+     			marginTop:12,
+     			height:48,
+     			color: BUTTON_TEXT_COLOR,
+     			justifyContent: 'center',
+     			alignItems: 'center',
+     			fontSize: 16,
+  			},
+  div:{
+    		marginTop:16,
+    		width:SCREEN_WIDTH,
+    		backgroundColor: '#000',
+    		height:1,
+    		opacity:0.6,
+  },
+});
+
 var styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -191,10 +309,9 @@ var logStyle = StyleSheet.create({
 		height: 35,
 	}
 });
-
-
 module.exports = {
-  styles : styles,
-  logStyle : logStyle,
-  progStyle : progStyle
+  customeStyle : customeStyle,
+	styles : styles,
+	logStyle : logStyle,
+	progStyle : progStyle
 }

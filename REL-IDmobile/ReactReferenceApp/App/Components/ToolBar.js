@@ -28,11 +28,11 @@ style={styles.touchable}
         underlayColor={'#FFF'}
         activeOpacity={0.6}
       >
-        <Image source={require('image!back')} style={styles.images} />
+        <Image source={require('image!ic_back')} style={styles.images} />
 
       </TouchableHighlight>
       <Text
-        style={{fontSize:24,color: '#2579a2',marginTop:8,fontWeight: 'bold', width:Dimensions.get('window').width-96,textAlign:'center',	textAlignVertical:'center'}}
+        style={{fontSize:24,color: '#fff',marginTop:8,fontWeight: 'bold', width:Dimensions.get('window').width-96,textAlign:'center',	textAlignVertical:'center'}}
       >{this.props.title}</Text>
 
       </View>
@@ -47,7 +47,7 @@ style={styles.touchable}
 var styles = {
   toolbarrow: {
             flexDirection:'row',
-            backgroundColor: '#fff',
+            backgroundColor: '#2196F3',
             height:56,
             width:Dimensions.get('window').width,
   },
