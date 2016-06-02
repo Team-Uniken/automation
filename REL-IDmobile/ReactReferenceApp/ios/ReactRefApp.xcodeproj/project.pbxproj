@@ -125,6 +125,7 @@
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ReactRefApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		1AA5D4C21D0085590070C14A /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		1AEB89A81CFE2CDD00A5FD5B /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapi-sdk.a"; path = "api-sdk/libs/libapi-sdk.a"; sourceTree = "<group>"; };
 		654F815F1CC9129C009E6168 /* ReactRdnaModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactRdnaModule.h; sourceTree = "<group>"; };
 		654F81601CC9129C009E6168 /* ReactRdnaModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactRdnaModule.m; sourceTree = "<group>"; };
@@ -266,6 +267,7 @@
 		656228031CB50BEA00AD7F6C /* NativeModules */ = {
 			isa = PBXGroup;
 			children = (
+				1AA5D4C21D0085590070C14A /* RDNA.h */,
 				654F815F1CC9129C009E6168 /* ReactRdnaModule.h */,
 				654F81601CC9129C009E6168 /* ReactRdnaModule.m */,
 				656228041CB50BEA00AD7F6C /* RDNARequestUtility.h */,
