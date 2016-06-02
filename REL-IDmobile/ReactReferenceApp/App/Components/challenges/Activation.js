@@ -52,7 +52,7 @@ class Activation extends React.Component{
 
 	render() {
 		return (
-			<View   style={{flex:1,backgroundColor:'#fff'}}>
+			<View style={customeStyle.maincontainer}>
 		       <StatusBar
 		       backgroundColor='#1976d2'
 		       barStyle='light-content'

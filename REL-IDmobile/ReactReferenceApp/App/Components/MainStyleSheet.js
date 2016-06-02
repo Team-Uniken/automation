@@ -6,11 +6,11 @@
 var React = require('react-native');
 
 var {StyleSheet} = React;
+var mycolor = require("./color");
+
 
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-var TEXT_COLOR = '#000';
-var BUTTON_TEXT_COLOR = '#fff';
 
 var LIGHTBLUE = '#50ADDC';
 var MIDBLUE = '#2579A2';
@@ -24,8 +24,12 @@ var leftrid = 23;
 
 
 var customeStyle = StyleSheet.create({
+	maincontainer:{
+								flex:1,
+								backgroundColor:mycolor.BACKGROUND_COLOR,
+							},
 	remember:{
-    				color:TEXT_COLOR,
+    				color:mycolor.TEXT_COLOR,
   					fontSize: 16,
     				opacity:0.7,
 						margin:16,
@@ -74,7 +78,7 @@ var customeStyle = StyleSheet.create({
   note:{
 				textAlign:'center',
      		marginTop:16,
-     		color:TEXT_COLOR,
+     		color:mycolor.TEXT_COLOR,
      		justifyContent: 'center',
      		alignItems: 'center',
      		fontSize: 16,
@@ -84,7 +88,7 @@ var customeStyle = StyleSheet.create({
   text1:{
 				textAlign:'center',
      		marginTop:16,
-     		color: TEXT_COLOR,
+     		color: mycolor.TEXT_COLOR,
      		justifyContent: 'center',
      		alignItems: 'center',
      		fontSize: 16,
@@ -93,7 +97,7 @@ var customeStyle = StyleSheet.create({
   		},
   text2:{
      		marginTop:16,
-     		color: TEXT_COLOR,
+     		color: mycolor.TEXT_COLOR,
      		justifyContent: 'center',
 		 		textAlign:'center',
      		fontSize: 20,
@@ -103,7 +107,7 @@ var customeStyle = StyleSheet.create({
   text3:{
 				textAlign:'center',
 				marginTop:16,
-     		color: TEXT_COLOR,
+     		color: mycolor.TEXT_COLOR,
      		justifyContent: 'center',
      		alignItems: 'center',
      		fontSize: 24,
@@ -113,7 +117,7 @@ var customeStyle = StyleSheet.create({
   text4:{
 				textAlign:'center',
      		marginTop:16,
-     		color: TEXT_COLOR,
+     		color: mycolor.TEXT_COLOR,
      		justifyContent: 'center',
      		alignItems: 'center',
      		fontSize: 34,
@@ -123,7 +127,7 @@ var customeStyle = StyleSheet.create({
 					textAlign:'center',
      			marginTop:12,
      			height:48,
-     			color: BUTTON_TEXT_COLOR,
+     			color: mycolor.BUTTON_TEXT_COLOR,
      			justifyContent: 'center',
      			alignItems: 'center',
      			fontSize: 16,
