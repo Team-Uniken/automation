@@ -41,22 +41,39 @@ var ICON_FONT = 'icomoon';
 var NAV_SHADOW_BOOL = true;
 
 //Speeds
-var SPEED = 0; //0.8
-var LOADSPEED = 0; //0.3
+var SPEED = 0.4; //0.8
+var LOADSPEED = 0.3; //0.3
 
+
+//Titles
+var text = {
+	PASSWORD_BUTTON_TEXT : 'SUBMIT',
+	USERNAME_BUTTON_TEXT : 'LOGIN',
+	LINK_1_TEXT : 'Branches',
+	LINK_1_ICON : 'W',
+	LINK_1_LINK : '',
+	LINK_2_TEXT : 'Help',
+	LINK_2_ICON : 'W',
+	LINK_2_LINK : '',
+	LINK_3_TEXT : 'Website',
+	LINK_3_ICON : 'W',
+	LINK_3_LINK : '',
+}
 
 var colors = {
-	DARK_PRIMARY : '#2579A2',
-	PRIMARY : '#4FADD8',
-	LIGHT_PRIMARY : '#BCE0F2',
-	TEXT_COLOR : '#FFFFFF',
-	ACCENT : '#f18F01',
-	PRIMARY_TEXT : '#212121',
-	SECONDARY_TEXT : '#727272',
-	DIVIDER_COLOR : '#b6b6b6',
-	NAV_BAR_TINT : '#FFFFFF',
-	MENU_TXT_COLOR : '#2579A2',
-	ICON_COLOR : '#FFFFFF',
+	DARK_PRIMARY : DARK_PRIMARY,
+	DARK_PRIMARY_RGB : DARK_PRIMARY_RGB,
+	PRIMARY : PRIMARY,
+	PRIMARY_RGB : PRIMARY_RGB,
+	LIGHT_PRIMARY : LIGHT_PRIMARY,
+	TEXT_COLOR : TEXT_COLOR,
+	ACCENT : ACCENT,
+	PRIMARY_TEXT : PRIMARY_TEXT,
+	SECONDARY_TEXT : SECONDARY_TEXT,
+	DIVIDER_COLOR : DIVIDER_COLOR,
+	NAV_BAR_TINT : NAV_BAR_TINT,
+	MENU_TXT_COLOR : MENU_TXT_COLOR,
+	ICON_COLOR : ICON_COLOR,
 }
 
 
@@ -222,8 +239,8 @@ var logStyle = StyleSheet.create({
 	},
 	bot_wrap:{
 		flex: 1,
-		backgroundColor: 'green',
 		position: 'relative',
+		alignItems: 'center',
 	},
 	input_wrap:{
 		width:270,
@@ -239,7 +256,7 @@ var logStyle = StyleSheet.create({
 		height: 50,
 		fontSize: 22,
 		paddingLeft: 10,
-		color: DARK_PRIMARY,
+		color: TEXT_COLOR,
 		textAlign: 'center',
 		backgroundColor: 'rgba('+DARK_PRIMARY_RGB+',0.54)',
 	},
@@ -255,7 +272,6 @@ var logStyle = StyleSheet.create({
 		textAlign: 'center',
 		color: PRIMARY,
 		fontWeight: 'bold',
-//		fontFamily: CORE_FONT,
 	},
 	buttonWrap: {
 		top: 15,
@@ -271,6 +287,26 @@ var logStyle = StyleSheet.create({
 		fontSize: 22,
 		textAlign: 'center',
 		height: 35,
+	},
+	openlink_wrap:{
+		backgroundColor: DARK_PRIMARY,
+		width: 80,
+		height: 80,
+		flexDirection: 'column',
+	},
+	openlink_text:{
+		color: TEXT_COLOR,
+		textAlign: 'center',
+		fontSize: 14,
+		flex: 1,
+	},
+	openlink_icon:{
+		color: TEXT_COLOR,
+		flex: 2,
+		textAlign: 'center',
+		justifyContent: 'center',
+		paddingTop:20,
+		fontSize: 14,
 	}
 });
 
@@ -281,6 +317,7 @@ var loadStyle = StyleSheet.create({
     container: {
         flex: 1,
     },
+    /*
     setfooter: {
         flex: 1,
         alignItems: 'center',
@@ -293,6 +330,7 @@ var loadStyle = StyleSheet.create({
         bottom: 0,
         height: 32
     },
+    */
     bgimage: {
         position: 'absolute',
         top: 0,
@@ -308,7 +346,7 @@ var loadStyle = StyleSheet.create({
         bottom: 0,
         right: 0,
         left: 0,
-        backgroundColor: PRIMARY,
+        backgroundColor: 'rgba('+PRIMARY_RGB+',0.85)',
         height: SCREEN_HEIGHT,
         width: SCREEN_WIDTH,
     },
@@ -369,7 +407,7 @@ var loadStyle = StyleSheet.create({
     logo_relid: {
         fontFamily: 'icomoon',
         fontSize: 21,
-        marginLeft: 22,
+        marginLeft: 47,
         width: 160,
         color: '#FFFFFF',
         backgroundColor: 'transparent',
@@ -511,5 +549,6 @@ module.exports = {
   loadspd: LOADSPEED,
   controlStyle: controlStyle,
   colors: colors,
-  statusBarStyle: statusBarStyle
+  statusBarStyle: statusBarStyle,
+  text : text,
 }

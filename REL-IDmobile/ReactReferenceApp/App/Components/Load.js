@@ -160,6 +160,13 @@ class Load extends React.Component{
                                                           duration: 500 * Skin.spd,
                                                           delay:1500 * Skin.spd,
                                                           }),
+                                          ]),
+                       Animated.parallel([
+                                          Animated.timing(this.state.relid_text_opac, {
+                                                          toValue: 1,
+                                                          duration: 500 * Skin.spd,
+                                                          delay:1500 * Skin.spd,
+                                                          }),
                                           ])
                        ]).start();
     
@@ -204,51 +211,44 @@ class Load extends React.Component{
        }*/
       this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
   }
-
-  
-  render() {
     // StatusBarIOS.setStyle(1);
+    //<View style={Skin.loadStyle.setfooter}>
+    /*
+
+
+  */
+
+  render() {
+    
     return (
-            <View style={Skin.loadStyle.container}>
-            <View style={Skin.loadStyle.setfooter}>
-            
-            <StatusBar
-            backgroundColor='#082340'
+      <View style={Skin.loadStyle.container}>
+        <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
+        <View style={Skin.statusBarStyle.default}>
+          <StatusBar
             barStyle='light-content'
             />
-            <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
-            <View style={Skin.loadStyle.bgcolorizer}></View>
-            
-            <View style={Skin.loadStyle.loadwrap}>
-            <Animated.View style={[Skin.loadStyle.rid_wrap, {top: this.state.rid_top}]}>
-            <View style={Skin.loadStyle.rid_center}>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r,{opacity: this.state.r_opac_val}]}>g</Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i,{opacity: this.state.i_opac_val}]}>h</Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d,{opacity: this.state.d_opac_val}]}>i</Animated.Text>
-            </View>
+        </View>
+        <View style={Skin.loadStyle.bgcolorizer}></View>
+        <View style={Skin.loadStyle.loadwrap}>
+          <Animated.View style={[Skin.loadStyle.rid_wrap, {top: this.state.rid_top}]}>
+              <View style={Skin.loadStyle.rid_center}>
+                <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r,{opacity: this.state.r_opac_val}]}>g</Animated.Text>
+                <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i,{opacity: this.state.i_opac_val}]}>h</Animated.Text>
+                <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d,{opacity: this.state.d_opac_val}]}>i</Animated.Text>
+              </View>
             </Animated.View>
-            
-            <View style={Skin.loadStyle.logo_relid_wrap}>
+          <View style={Skin.loadStyle.logo_relid_wrap}>
             <Animated.Text style={[Skin.loadStyle.logo_relid,{opacity: this.state.relid_opac_val}]}>W</Animated.Text>
-            </View>
-            
-            <View style={Skin.loadStyle.load_text_wrap}>
+          </View>
+          <View style={Skin.loadStyle.load_text_wrap}>
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.r_text_opac}]}>Initializing Authentication</Animated.Text>
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.i_text_opac}]}>Authenticating Device</Animated.Text>
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.d_text_opac}]}>Securing Connection</Animated.Text>
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.relid_text_opac}]}>Secure Access Established</Animated.Text>
-            </View>
-            
-            </View>
-            </View>
-            <View style={Skin.loadStyle.footerrow}>
-            <Text
-            style={{fontSize:16,color: '#2579a2',margin:4,fontWeight: 'bold'}}
-            >Version : 1.0.0.1</Text>
-            </View>
-            </View>
-            
-            );
+          </View>
+        </View>
+      </View>     
+    );
   }
   
 };

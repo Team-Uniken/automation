@@ -1,20 +1,17 @@
 
 
 var React = require('react-native');
-var Drawer = require('react-native-drawer');
 //var NavigationBar = require('react-native-navbar');
 var Menu = require('./Menu');
 var Skin = require('./Skin');
 var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
-
-
+import Drawer from 'react-native-drawer'
 
 var {
   View,
   Dimensions,
-
   Text,
   Image,
   Navigator,
@@ -33,7 +30,7 @@ var dnaUserName;
 
 
 
-/*
+
 var styles = StyleSheet.create({
   hamburger: {
     width: 24,
@@ -72,9 +69,6 @@ var styles = StyleSheet.create({
     //textAlign: 'left',
     //fontFamily: CORE_FONT,
   },
-  navButtonIcon:{
-    fontFamily: CORE_FONT,
-  },
   navRight:{
     //textAlign: 'right'
    // right: 0,
@@ -87,13 +81,14 @@ var styles = StyleSheet.create({
   },
   navTitle:{
     flex:2,
-    fontFamily: CORE_FONT,
     textAlign: 'center',
-    color: MIDBLUE,
+    color: 'black',
     fontSize: 20,
   }
 });
-*/
+
+
+
 class Main extends React.Component{
 
   constructor(props){
