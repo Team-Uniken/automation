@@ -17,6 +17,7 @@
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1AA5D5361D01ABC20070C14A /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA5D5351D01ABC20070C14A /* libapi-sdk.a */; settings = {ASSET_TAGS = (); }; };
+		1AA5D5621D01CB720070C14A /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AA5D5611D01CB720070C14A /* icomoon.ttf */; settings = {ASSET_TAGS = (); }; };
 		654F81611CC9129C009E6168 /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
 		654F81CF1CC9FAD5009E6168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		654F81D01CC9FAD5009E6168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
@@ -26,7 +27,6 @@
 		654F81DA1CC9FAE3009E6168 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 654F81D81CC9FAE3009E6168 /* Info.plist */; };
 		654F81DC1CC9FB26009E6168 /* ReactRefAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81DB1CC9FB26009E6168 /* ReactRefAppTests.m */; };
 		656227ED1CB50B2300AD7F6C /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
-		656227EE1CB50B2300AD7F6C /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 656227EC1CB50B2300AD7F6C /* icomoon.ttf */; };
 		6562280B1CB50BEA00AD7F6C /* RDNARequestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */; };
 		6562280C1CB50BEA00AD7F6C /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
 		6567FBCB1CC1122F00AC6A04 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
@@ -127,6 +127,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1AA5D52A1D01ABB90070C14A /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		1AA5D5351D01ABC20070C14A /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapi-sdk.a"; path = "api-sdk/libs/libapi-sdk.a"; sourceTree = "<group>"; };
+		1AA5D5611D01CB720070C14A /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		654F815F1CC9129C009E6168 /* ReactRdnaModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactRdnaModule.h; sourceTree = "<group>"; };
 		654F81601CC9129C009E6168 /* ReactRdnaModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactRdnaModule.m; sourceTree = "<group>"; };
 		654F81C51CC9FAD5009E6168 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -138,7 +139,6 @@
 		654F81D81CC9FAE3009E6168 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		654F81DB1CC9FB26009E6168 /* ReactRefAppTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactRefAppTests.m; sourceTree = "<group>"; };
 		656227EB1CB50B2300AD7F6C /* gothic_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothic_0.TTF; sourceTree = "<group>"; };
-		656227EC1CB50B2300AD7F6C /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		656228041CB50BEA00AD7F6C /* RDNARequestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNARequestUtility.h; sourceTree = "<group>"; };
 		656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDNARequestUtility.m; sourceTree = "<group>"; };
 		656228061CB50BEA00AD7F6C /* RelIDRequestInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelIDRequestInterceptor.h; sourceTree = "<group>"; };
@@ -314,9 +314,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1AA5D5611D01CB720070C14A /* icomoon.ttf */,
 				1AA5D5351D01ABC20070C14A /* libapi-sdk.a */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
-				656227EC1CB50B2300AD7F6C /* icomoon.ttf */,
 				6567FBCC1CC1127B00AC6A04 /* index.ios.js */,
 				6567FBCA1CC1122F00AC6A04 /* App */,
 				656228031CB50BEA00AD7F6C /* NativeModules */,
@@ -543,11 +543,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				654F81D01CC9FAD5009E6168 /* LaunchScreen.xib in Resources */,
+				1AA5D5621D01CB720070C14A /* icomoon.ttf in Resources */,
 				6567FBCB1CC1122F00AC6A04 /* App in Resources */,
 				656227ED1CB50B2300AD7F6C /* gothic_0.TTF in Resources */,
 				654F81D11CC9FAD5009E6168 /* Images.xcassets in Resources */,
 				6567FBCD1CC1127B00AC6A04 /* index.ios.js in Resources */,
-				656227EE1CB50B2300AD7F6C /* icomoon.ttf in Resources */,
 				654F81D21CC9FAD5009E6168 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
