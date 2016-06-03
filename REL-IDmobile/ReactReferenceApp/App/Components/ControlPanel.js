@@ -14,7 +14,6 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 */
 var styles = Skin.loadStyle;
 var Main = require('./Main');
-var Menu = require('./Menu');
 var UserLogin = require('./challenges/UserLogin');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');

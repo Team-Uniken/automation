@@ -2,11 +2,12 @@
 
 var React = require('react-native');
 //var NavigationBar = require('react-native-navbar');
-var Menu = require('./Menu');
+var Accounts = require('./Accounts');
 var Skin = require('./Skin');
 var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
+var NavigationBar = require('react-native-navbar');
 import Drawer from 'react-native-drawer'
 
 var {
@@ -118,6 +119,24 @@ class Main extends React.Component{
         styles={{main: {shadowColor: "#000000", shadowOpacity: 1, shadowRadius: 20}}}
         tweenHandler={Drawer.tweenPresets.parallax}
       >
+        <View style={{ flex: 1, }}>
+          <NavigationBar
+            title={{title:'Accounts',tintColor:Skin.colors.TEXT_COLOR}}
+            tintColor={Skin.colors.PRIMARY}
+            statusBar={{tintColor:Skin.colors.DARK_PRIMARY,style:'light-content'}}
+            leftButton={{
+              style: Skin.nav.icon,
+              tintColor: Skin.colors.TEXT_COLOR,
+              title: "\ue20e",
+            }} />
+        </View>
+
+
+      </Drawer>
+    )
+  }
+};
+        /*
         <View style={styles.toolbarrow}>
           <TouchableHighlight
             onPress={this.toggleControlPanel.bind(this)}
@@ -132,10 +151,7 @@ class Main extends React.Component{
             Menu
           </Text>
         </View>
-        <Menu navigator={this.props.navigator}/>
-      </Drawer>
-    )
-  }
-};
+        <Accounts navigator={this.props.navigator}/>*/
 
 module.exports = Main;
+  

@@ -13,7 +13,7 @@ var Main = require('./App/Components/Main');
 var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
-var Menu = require('./App/Components/Menu');
+var Accounts = require('./App/Components/Accounts');
 var QBank = require('./App/Components/Qbank');
 var ComingSoon = require('./App/Components/ComingSoon');
 var UserLogin = require('./App/Components/challenges/UserLogin');
@@ -161,7 +161,8 @@ class ReactRefApp extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
 
-    
+    id = 'Main';
+
     if(id == "Main"){
       return (<Main navigator={nav}/>);
     }else if (id == "Load"){

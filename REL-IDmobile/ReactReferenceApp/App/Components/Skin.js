@@ -547,6 +547,13 @@ var statusBarStyle = StyleSheet.create({
 	}
 });
 
+var nav = StyleSheet.create({
+	icon: {
+		fontFamily: ICON_FONT,
+	}
+
+});
+
 
 module.exports = {
   coreStyle : coreStyle,
@@ -554,6 +561,7 @@ module.exports = {
   progStyle : progStyle,
   loadStyle : loadStyle,
   transforms : transforms,
+  nav: nav,
   spd : SPEED,
   loadspd: LOADSPEED,
   controlStyle: controlStyle,

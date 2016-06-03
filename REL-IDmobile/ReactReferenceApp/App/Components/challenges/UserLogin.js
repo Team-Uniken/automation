@@ -13,7 +13,6 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
   CALLED
 */
 var Main = require('../Main');
-var Menu = require('../Menu');
 var Web = require('../Web');
 var PasswordVerification = require('./PasswordVerification');
 var Activation = require('./Activation');
