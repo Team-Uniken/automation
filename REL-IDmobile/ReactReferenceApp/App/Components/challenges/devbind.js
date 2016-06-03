@@ -19,6 +19,7 @@ var {
 	ScrollView,
 	Image,
 	Animated,
+	StatusBar,
 } = React;
 
 class DeviceBinding extends React.Component{
