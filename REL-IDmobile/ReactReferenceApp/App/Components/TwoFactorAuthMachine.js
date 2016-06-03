@@ -1,11 +1,18 @@
 
-var React = require('react-native');
-var challengeJson;
-var challengeJsonArr;
-var currentIndex;
-var totalChallengesCount;
-var screenId;
+/*
+  ALWAYS NEED
+*/
+'use strict';
 
+var React = require('react-native');
+var Skin = require('./Skin');
+var SCREEN_WIDTH = require('Dimensions').get('window').width;
+var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+
+
+/*
+  CALLED
+*/
 var buildStyleInterpolator = require('buildStyleInterpolator');
 var Activation = require('./challenges/Activation');
 var Main = require('./Main');
@@ -22,13 +29,20 @@ var EventEmitter = require('EventEmitter');
 var Constants = require('./Constants');
 var Events = require('react-native-simple-events');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
+
+/* 
+  Instantiaions
+*/
+var challengeJson;
+var challengeJsonArr;
+var currentIndex;
+var totalChallengesCount;
+var screenId;
 var subscriptions;
 var obj;
 var stateNavigator;
-
 var {
   Component,
   Text,
@@ -37,72 +51,9 @@ var {
   PixelRatio,
   Animated,
   AsyncStorage,
+  DeviceEventEmitter
 } = React;
 
-var {DeviceEventEmitter} = require('react-native');
-
-var FromTheRight = {
-opacity: {
-value: 1.0,
-type: 'constant',
-},
-
-transformTranslate: {
-from: {x: Dimensions.get('window').width, y: 0, z: 0},
-to: {x: 0, y: 0, z: 0},
-min: 0,
-max: 1,
-type: 'linear',
-extrapolate: true,
-round: PixelRatio.get(),
-},
-
-translateX: {
-from: Dimensions.get('window').width,
-to: 0,
-min: 0,
-max: 1,
-type: 'linear',
-extrapolate: true,
-round: PixelRatio.get(),
-},
-
-scaleX: {
-value: 1,
-type: 'constant',
-},
-scaleY: {
-value: 1,
-type: 'constant',
-},
-};
-
-
-var ToTheLeft = {
-transformTranslate: {
-from: {x: 0, y: 0, z: 0},
-to: {x: -Dimensions.get('window').width, y: 0, z: 0},
-min: 0,
-max: 1,
-type: 'linear',
-extrapolate: true,
-round: PixelRatio.get(),
-},
-opacity: {
-value: 1.0,
-type: 'constant',
-},
-
-translateX: {
-from: 0,
-to: -Dimensions.get('window').width,
-min: 0,
-max: 1,
-type: 'linear',
-extrapolate: true,
-round: PixelRatio.get(),
-},
-};
 
 class TwoFactorAuthMachine extends React.Component{
   constructor(props){
@@ -220,34 +171,37 @@ class TwoFactorAuthMachine extends React.Component{
 
   render() {
     return (
-            <Navigator
-            ref={(ref) => this.stateNavigator = ref}
-            renderScene={this.renderScene}
-            initialRoute={
-            {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex+1},title: this.props.title}
-            //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
-            }
-            configureScene={(route) => {
+      <Navigator
+        ref = {
+          (ref) => this.stateNavigator = ref
+        }
+        renderScene={this.renderScene}
+        initialRoute = {
+          {id: this.props.url.screenId,url: {"chlngJson":this.getCurrentChallenge(), "chlngsCount":challengeJsonArr.length, "currentIndex": currentIndex+1},title: this.props.title}
+        }
+
+        configureScene={
+          (route) => {
             var config = Navigator.SceneConfigs.FloatFromRight;
-            config ={
+            config = {
+              // Rebound spring parameters when transitioning FROM this scene
+              springFriction: 26,
+              springTension: 200,
 
-            // Rebound spring parameters when transitioning FROM this scene
-            springFriction: 26,
-            springTension: 200,
+              // Velocity to start at when transitioning without gesture
+              defaultTransitionVelocity: 1.5,
 
-            // Velocity to start at when transitioning without gesture
-            defaultTransitionVelocity: 1.5,
-
-            // Animation interpolators for horizontal transitioning:
-            animationInterpolators: {
-            into: buildStyleInterpolator(FromTheRight),
-            out: buildStyleInterpolator(ToTheLeft),
-            }
+              // Animation interpolators for horizontal transitioning:
+              animationInterpolators: {
+                into: buildStyleInterpolator(Skin.transforms.FromTheRight),
+                out: buildStyleInterpolator(Skin.transforms.ToTheLeft),
+              }
             }
             return config;
-            }}
-            />
-            );
+          }
+        }
+      />
+    );
   }
 
   showNextChallenge(args){

@@ -99,6 +99,30 @@ var FromTheRight = {
 };
 
 
+var FadeIn = {
+  opacity: {
+    from: 0,
+    to: 1,
+    min: 0,//0.5,
+    max: 1,
+    type: 'linear',
+    extrapolate: true,
+    round: 1000,
+  },
+};
+
+var FadeOut = {
+  opacity: {
+    from: 1,
+    to: 0,
+    min: 0,
+    max: 1,//0.5,
+    type: 'linear',
+    extrapolate: true,
+    round: 1000,
+  },
+};
+
 var ToTheLeft = {
   transformTranslate: {
     from: {x: 0, y: 0, z: 0},
@@ -137,6 +161,7 @@ class ReactRefApp extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
 
+    
     if(id == "Main"){
       return (<Main navigator={nav}/>);
     }else if (id == "Load"){
@@ -177,21 +202,22 @@ class ReactRefApp extends React.Component{
           //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {
-          var config = Navigator.SceneConfigs.FloatFromRight;
+          var config = Navigator.SceneConfigs.FadeAndroid;
+          //var config = Navigator.SceneConfigs.FloatFromRight;
           config ={
 
-              // Rebound spring parameters when transitioning FROM this scene
-              springFriction: 26,
-              springTension: 200,
+            // Rebound spring parameters when transitioning FROM this scene
+            springFriction: 26,
+            springTension: 200,
 
-              // Velocity to start at when transitioning without gesture
-              defaultTransitionVelocity: 1.5,
+            // Velocity to start at when transitioning without gesture
+            defaultTransitionVelocity: 3.5,
 
-              // Animation interpolators for horizontal transitioning:
-              animationInterpolators: {
-                into: buildStyleInterpolator(FromTheRight),
-                out: buildStyleInterpolator(ToTheLeft),
-              }
+            gestures: null,
+            animationInterpolators: {
+              into: buildStyleInterpolator(FadeIn),
+              out: buildStyleInterpolator(FadeOut),
+            },
           }
           return config;
         }}

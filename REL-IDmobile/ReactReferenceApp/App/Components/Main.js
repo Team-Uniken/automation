@@ -1,24 +1,17 @@
 
 
 var React = require('react-native');
-var Drawer = require('react-native-drawer');
 //var NavigationBar = require('react-native-navbar');
 var Menu = require('./Menu');
+var Skin = require('./Skin');
+var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
-
-var MIDBLUE = '#2579A2';
-var CORE_FONT = 'Century Gothic';
-var NAV_BAR_TINT = '#FFFFFF'
-var NAV_SHADOW_BOOL = true;
-var MENU_TXT_COLOR = '#2579A2';
-var ICON_COLOR = '#FFFFFF';
-var ICON_FAMILY = 'icomoon';
+import Drawer from 'react-native-drawer'
 
 var {
   View,
   Dimensions,
-
   Text,
   Image,
   Navigator,
@@ -30,8 +23,14 @@ var {
   BackAndroid,
 } = React;
 
+
+
 var dnaProxyPort;
 var dnaUserName;
+
+
+
+
 var styles = StyleSheet.create({
   hamburger: {
     width: 24,
@@ -45,7 +44,7 @@ var styles = StyleSheet.create({
 
   },
   bar:{
-    backgroundColor: MIDBLUE,
+    backgroundColor: '#FFFFFf',
     width: 20,
     height:3,
     marginTop:3,
@@ -70,9 +69,6 @@ var styles = StyleSheet.create({
     //textAlign: 'left',
     //fontFamily: CORE_FONT,
   },
-  navButtonIcon:{
-    fontFamily: CORE_FONT,
-  },
   navRight:{
     //textAlign: 'right'
    // right: 0,
@@ -85,12 +81,13 @@ var styles = StyleSheet.create({
   },
   navTitle:{
     flex:2,
-    fontFamily: CORE_FONT,
     textAlign: 'center',
-    color: MIDBLUE,
+    color: 'black',
     fontSize: 20,
   }
 });
+
+
 
 class Main extends React.Component{
 
@@ -121,20 +118,20 @@ class Main extends React.Component{
         styles={{main: {shadowColor: "#000000", shadowOpacity: 1, shadowRadius: 20}}}
         tweenHandler={Drawer.tweenPresets.parallax}
       >
-      <View style={styles.toolbarrow}>
-      <TouchableHighlight
-             onPress={this.toggleControlPanel.bind(this)}
-        underlayColor={'#FFFFFF'}
-        activeOpacity={0.6}
-      >
-<Image source={require('image!ic_navigation')} style={styles.hamburger} />
-      </TouchableHighlight>
-
-      <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-120,}}
-      >Menu</Text>
-
-      </View>
+        <View style={styles.toolbarrow}>
+          <TouchableHighlight
+            onPress={this.toggleControlPanel.bind(this)}
+            underlayColor={'#FFFFFF'}
+            activeOpacity={0.6}
+          >
+            <Image source={require('image!ic_navigation')} style={styles.hamburger} />
+          </TouchableHighlight>
+          <Text
+            style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-120,}}
+          >
+            Menu
+          </Text>
+        </View>
         <Menu navigator={this.props.navigator}/>
       </Drawer>
     )
