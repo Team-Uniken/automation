@@ -17,6 +17,7 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 var Main = require('../Main');
 var Menu = require('../Menu');
 var Web = require('../Web');
+var OpenLinks = require('../OpenLinks')
 var ToolBar = require('../ToolBarWithoutCross');
 var Events = require('react-native-simple-events');
 var Platform = require("react-native").Platform;
