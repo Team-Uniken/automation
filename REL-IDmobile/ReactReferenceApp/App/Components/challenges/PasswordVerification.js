@@ -200,12 +200,14 @@ class PasswordVerification extends React.Component{
 	render() {
 		return (
 			<View style={Skin.coreStyle.container}>
+			    <View style={Skin.loadStyle.bgbase}></View>
 	            <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
             	<View style={Skin.statusBarStyle.default}>
 			    	<StatusBar
             			barStyle='light-content'
             		/>
             	</View>
+            	<View style={Skin.loadStyle.bgcolorizer}></View>
             	<View style={Skin.logStyle.wrap}>
             		<View style={Skin.logStyle.top_wrap}>
 		            		<Animated.View style={Skin.coreStyle.rid_wrap}>

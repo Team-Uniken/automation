@@ -50,13 +50,13 @@ var text = {
 	PASSWORD_BUTTON_TEXT : 'SUBMIT',
 	USERNAME_BUTTON_TEXT : 'LOGIN',
 	LINK_1_TEXT : 'Branches',
-	LINK_1_ICON : 'W',
+	LINK_1_ICON : 't',
 	LINK_1_LINK : '',
 	LINK_2_TEXT : 'Help',
-	LINK_2_ICON : 'W',
+	LINK_2_ICON : '\ue050',
 	LINK_2_LINK : '',
 	LINK_3_TEXT : 'Website',
-	LINK_3_ICON : 'W',
+	LINK_3_ICON : '\ue2b1',
 	LINK_3_LINK : '',
 }
 
@@ -216,7 +216,6 @@ var progStyle = StyleSheet.create({
 
 var logStyle = StyleSheet.create({
 	wrap: {
-		backgroundColor: 'rgba('+PRIMARY_RGB+',0.85)',
 		flexDirection: 'column',
 		flex: 1,
 		position: 'relative'
@@ -297,16 +296,17 @@ var logStyle = StyleSheet.create({
 	openlink_text:{
 		color: TEXT_COLOR,
 		textAlign: 'center',
-		fontSize: 14,
+		fontSize: 13,
 		flex: 1,
 	},
 	openlink_icon:{
 		color: TEXT_COLOR,
+		fontFamily: 'icomoon',
 		flex: 2,
 		textAlign: 'center',
 		justifyContent: 'center',
-		paddingTop:20,
-		fontSize: 14,
+		paddingTop:10,
+		fontSize: 33,
 	}
 });
 
@@ -350,7 +350,16 @@ var loadStyle = StyleSheet.create({
         height: SCREEN_HEIGHT,
         width: SCREEN_WIDTH,
     },
-
+    bgbase: {
+        position: 'absolute',
+        top: 20,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        backgroundColor: 'rgba('+PRIMARY_RGB+',1)',
+        height: SCREEN_HEIGHT,
+        width: SCREEN_WIDTH,
+    },
 
     loadwrap: {
         position: 'absolute',

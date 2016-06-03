@@ -222,6 +222,7 @@ class Load extends React.Component{
     
     return (
       <View style={Skin.loadStyle.container}>
+        <View style={Skin.loadStyle.bgbase}></View>
         <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
         <View style={Skin.statusBarStyle.default}>
           <StatusBar
