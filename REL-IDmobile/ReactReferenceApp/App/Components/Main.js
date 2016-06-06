@@ -7,7 +7,7 @@ var Skin = require('./Skin');
 var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
-var NavigationBar = require('react-native-navbar');
+
 import Drawer from 'react-native-drawer'
 
 var {
@@ -18,10 +18,12 @@ var {
   Navigator,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   ActivityIndicatorIOS,
   StyleSheet,
   StatusBarIOS,
   BackAndroid,
+  PropTypes,
 } = React;
 
 
@@ -30,112 +32,89 @@ var dnaProxyPort;
 var dnaUserName;
 
 
-
-
-var styles = StyleSheet.create({
-  hamburger: {
-    width: 24,
-    height: 24,
-    margin:16,
-  },
-  toolbarrow: {
-            flexDirection:'row',
-            backgroundColor: '#fff',
-
-
-  },
-  bar:{
-    backgroundColor: '#FFFFFf',
-    width: 20,
-    height:3,
-    marginTop:3,
-  },
-  navbar:{
-    backgroundColor: '#ffffff',
-    height: 65,
-    flexDirection: 'row',
-    margin: 10,
-    marginTop:30
-  },
-  navButton:{
-    //backgroundColor:'#dddddd',
-    backgroundColor: 'transparent',
-    width: 100,
-    height: 20,
-
-    flex:1,
-
-  },
-  navButtonText:{
-    //textAlign: 'left',
-    //fontFamily: CORE_FONT,
-  },
-  navRight:{
-    //textAlign: 'right'
-   // right: 0,
-   // position: 'absolute'
-  },
-  navLeft:{
-    //left: 0,
-   // position: 'absolute',
-    //flex:1
-  },
-  navTitle:{
-    flex:2,
-    textAlign: 'center',
-    color: 'black',
-    fontSize: 20,
-  }
-});
-
-
-
 class Main extends React.Component{
-
   constructor(props){
     super(props);
-    this.state = {
-      controlPanelOpen:false
+    this.state={
+      drawerOpen: false,
+      drawerDisabled: false,
+    };
+  }
+
+  toggleDrawer(){
+    console.log(this);
+    if(this.state.drawerOpen){
+      this.drawer.close();
+    }else{
+      this.drawer.open();
     }
   }
 
-  toggleControlPanel(){
-    if(this.state.controlPanelOpen){
-      this.refs.drawer.close();
-      this.setState({controlPanelOpen:false});
-    }else{
-      this.refs.drawer.open();
-      this.setState({controlPanelOpen:true});
-    }
-  }
+
   render() {
-  //  StatusBarIOS.setStyle(0);
     return (
       <Drawer
-        ref="drawer"
+        ref={c => this.drawer = c}
         type="static"
-        content={<ControlPanel navigator={this.props.navigator} toggle={this.toggleControlPanel.bind(this)}/>}
-        openDrawerOffset={50}
-        styles={{main: {shadowColor: "#000000", shadowOpacity: 1, shadowRadius: 20}}}
-        tweenHandler={Drawer.tweenPresets.parallax}
-      >
-        <View style={{ flex: 1, }}>
+        content={
+          <ControlPanel closeDrawer={this.closeDrawer} />
+        }
+        acceptDoubleTap
+        styles={{main: {shadowColor: '#000000', shadowOpacity: 0.3, shadowRadius: 15}}}
+        onOpen={() => {
+          console.log('onopen')
+          this.setState({drawerOpen: true})
+        }}
+        onClose={() => {
+          console.log('onclose')
+          this.setState({drawerOpen: false})
+        }}
+        captureGestures={false}
+        tweenDuration={100}
+        panThreshold={0.0}
+        disabled={this.state.drawerDisabled}
+        openDrawerOffset={(viewport) => {
+          return 70
+        }}
+        closedDrawerOffset={() => 0}
+        panOpenMask={0.2}
+        negotiatePan
+        >
+          <Accounts navigator={this.props.navigator} toggle={this.toggleDrawer.bind(this)}/>
+      </Drawer>
+    )
+  }
+
+};
+
+
+
+var drawerStyles = {
+    drawer: { shadowColor: '#000000'}
+    //, shadowOpacity: 0.8, shadowRadius: 3},
+    //main: {paddingLeft: 3},
+};
+
+
+
+
+
+
+
+/*
+    <View style={{ flex: 1, }}>
           <NavigationBar
             title={{title:'Accounts',tintColor:Skin.colors.TEXT_COLOR}}
             tintColor={Skin.colors.PRIMARY}
             statusBar={{tintColor:Skin.colors.DARK_PRIMARY,style:'light-content'}}
             leftButton={{
-              style: Skin.nav.icon,
               tintColor: Skin.colors.TEXT_COLOR,
+              textStyle: Skin.nav.icon,
               title: "\ue20e",
-            }} />
-        </View>
+            }} 
+            
+            />*/
 
-
-      </Drawer>
-    )
-  }
-};
         /*
         <View style={styles.toolbarrow}>
           <TouchableHighlight
@@ -152,6 +131,8 @@ class Main extends React.Component{
           </Text>
         </View>
         <Accounts navigator={this.props.navigator}/>*/
+
+
 
 module.exports = Main;
   

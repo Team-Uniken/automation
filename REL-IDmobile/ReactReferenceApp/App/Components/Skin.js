@@ -547,12 +547,14 @@ var statusBarStyle = StyleSheet.create({
 	}
 });
 
-var nav = StyleSheet.create({
+var nav = {
 	icon: {
 		fontFamily: ICON_FONT,
+		fontSize: 30,
+		color: TEXT_COLOR
 	}
 
-});
+};
 
 
 module.exports = {
