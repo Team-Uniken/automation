@@ -8,7 +8,7 @@ var selectedProfile = "";
 var proxyObj = new Object();
 
 proxyObj.pxyHost = "";
-proxyObj.pxyPort = "";
+proxyObj.pxyPort = 0;
 proxyObj.pxyPass = "";
 proxyObj.pxyUser = "";
 
@@ -197,12 +197,16 @@ function onInitFailed(error)
 function saveProxySettings()
 {
   var host = document.getElementById("pxyHost").value;
-  var port = document.getElementById("pxyPort").value;
+  var port = parseInt(document.getElementById("pxyPort").value.trim());
+  if(isNaN(port))
+  {
+    port = 0;
+  }  
   var name = document.getElementById("pxyUsrNm").value;
   var pswd = document.getElementById("pxyPswd").value;
 
   proxyObj.pxyHost = host.trim();
-  proxyObj.pxyPort = port.trim();
+  proxyObj.pxyPort = port;
   proxyObj.pxyPass = pswd.trim();
   proxyObj.pxyUser = name.trim();
   setKeyValueToIniFile("ProxySettings", proxyObj);
@@ -388,27 +392,35 @@ function loadConfigFile(data)
     if(typeof jObj.ProxySettings == "undefined")
     {
       document.getElementById("pxyHost").value = "";
-      document.getElementById("pxyPort").value = "";
+      document.getElementById("pxyPort").value = 0;
       document.getElementById("pxyUsrNm").value = "";
       document.getElementById("pxyPswd").value = "";
+      proxyObj.pxyHost = "";
+      proxyObj.pxyPort = 0;
+      proxyObj.pxyPass = "";
+      proxyObj.pxyUser = "";
     }
     else
     {
       if(typeof(jObj.ProxySettings.pxyHost) !== "undefined" && jObj.ProxySettings.pxyHost !== "")
       {
        document.getElementById("pxyHost").value = jObj.ProxySettings.pxyHost;
+       proxyObj.pxyHost = jObj.ProxySettings.pxyHost;
       }
       if(typeof(jObj.ProxySettings.pxyPort) !== "undefined" && jObj.ProxySettings.pxyPort !== "")
       {
        document.getElementById("pxyPort").value = jObj.ProxySettings.pxyPort;
+       proxyObj.pxyPort = jObj.ProxySettings.pxyPort;
       }
       if(typeof(jObj.ProxySettings.pxyUsrNm) !== "undefined" && jObj.ProxySettings.pxyUsrNm !== "")
       {
        document.getElementById("pxyUsrNm").value = jObj.ProxySettings.pxyUsrNm;
+       proxyObj.pxyUser = ProxySettings.pxyUsrNm;
       }
       if(typeof(jObj.ProxySettings.pxyPswd) !== "undefined" && jObj.ProxySettings.pxyPswd !== "")
       {
        document.getElementById("pxyPswd").value = jObj.ProxySettings.pxyPswd;
+       proxyObj.pxyPass = jObj.ProxySettings.pxyPswd
       }
     }
   }
@@ -553,6 +565,7 @@ function displaySecQAFrame()
        var opt = $("<option></option>").attr("value", (updateChlngJsonObj[updateChlngIdx].chlng_prompt[0])[i]).html((updateChlngJsonObj[updateChlngIdx].chlng_prompt[0])[i]);
        $("#questionList").append(opt);
      }
+     $("#questionList").prop("selectedIndex", -1);
      document.getElementById("txtQuestions").disabled = false;
      document.getElementById("txtQuestions").focus();
     }
@@ -596,6 +609,7 @@ function displaySecQAFrame()
        var opt = $("<option></option>").attr("value", (intermediateChlngJsonObj[currentChlngIdx].chlng_prompt[0])[i]).html((intermediateChlngJsonObj[currentChlngIdx].chlng_prompt[0])[i]);
        $("#questionList").append(opt);
      }
+     $("#questionList").prop("selectedIndex", -1);
      document.getElementById("txtQuestions").disabled = false;
      document.getElementById("txtQuestions").focus();
     }
@@ -651,7 +665,7 @@ function displayPswdFrame()
     document.getElementById("sForgotPswd").style.display = "none";
     document.getElementById("pswdAttemptsLeft").innerHTML = "";
     document.getElementById('loginHeader').innerHTML = "Change Pin"
-    document.getElementById("loginFrmSubmitBtn").style.display = "none";
+    document.getElementById("loginFrmBtns").style.display = "none";
     document.getElementById("updatePwdBtns").style.display = "block";
     
     for(var i = 0; i < updateChlngJsonObj[updateChlngIdx].chlng_info.length; i++)
@@ -695,6 +709,8 @@ function displayPswdFrame()
     document.getElementById("updatePwdBtns").style.display = "none";
     document.getElementById("confirmpswdField").placeholder = "Confirm Password";
     document.getElementById("pswdField").placeholder = "Enter Password"
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("loginFrmBtns").style.display = "block";
     
     for(var i = 0; i < intermediateChlngJsonObj[currentChlngIdx].chlng_info.length; i++)
     {
@@ -734,7 +750,7 @@ function displayPswdFrame()
       document.getElementById("sForgotPswd").style.display = "block";
     }
     document.getElementById("pswdField").focus();
-   }  
+   }
 }
 
 function displayUserIDPswdFrame(label)
@@ -1374,6 +1390,29 @@ function btnCancelClicked(formId)
   document.getElementById(formId).reset();
   updateOP = "";
   displayHomePage();
+}
+
+function loginFrmbtnCancelClicked()
+{
+  document.getElementById('switchUserLink').style.display = "none";
+  hideLoginfrm();
+  if(validation_type == 2)
+  {
+    var ret = confirm("Are you sure you want to go back?");
+    if (ret == true)
+    {
+      displayHomePage();
+    }
+    else
+    {
+      displayPswdFrame();
+    }
+    validation_type = 1;
+  }
+  else
+  {
+     onInitialized();
+  }
 }
 
 function doLogOff()

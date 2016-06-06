@@ -247,7 +247,23 @@ function pause_callback(msg, errCode)
 function resume_callback(msg, errCode)
 {
   console.log("callback function - " + msg);
-  console.log("callback function - " + errCode);
+
+  if(errCode != 0)
+  {
+    console.log("resume failed with error : " + errCode);
+  }
+  else
+  {
+    var jobj = JSON.parse(msg);
+    if(jobj.errCode == 0)
+    {
+      console.log("Application resumed");
+    }
+    else
+    {
+      console.log("Failed to Resume, Error code : " + jobj.errorCode);
+    }
+  }
 }
 function getconfig_callback(msg, errCode)
 {
@@ -471,6 +487,24 @@ function get_post_login_challenges_callback(msg, errCode)
   hideLoginProgressBar();
 }
 
+var RDNACallbacks = new Object();
+RDNACallbacks.onInitializeCompleted = init_callback;
+RDNACallbacks.onPauseRuntime = pause_callback;
+RDNACallbacks.onResumeRuntime = resume_callback;
+RDNACallbacks.onTerminate = terminate_callback;
+RDNACallbacks.onLogOff = logoff_callback;
+RDNACallbacks.onCheckChallengeResponseStatus = chk_chlng_callback;
+RDNACallbacks.onGetAllChallengeStatus = get_all_chlng_callback;
+RDNACallbacks.onUpdateChallengeStatus = update_chlng_callback;
+RDNACallbacks.onGetPostLoginChallenges = get_post_login_challenges_callback;
+RDNACallbacks.onConfigRecieved = getconfig_callback;
+RDNACallbacks.onForgotPasswordStatus = forgot_pswd_callback;
+RDNACallbacks.getApplicationName = getAppname;
+RDNACallbacks.getApplicationVersion = getAppversion;
+RDNACallbacks.getIWACredentials = get_creds_callback;
+RDNACallbacks.onGetRegistredDeviceDetails = get_registered_device_callback;
+RDNACallbacks.onUpdateDeviceDetails = on_update_device_details_callback;
+
 //core API's
 function rdnaInitialize()
 {
@@ -487,8 +521,7 @@ function rdnaInitialize()
     
     var gwHost = profileObj.Host;
     var gwPort = profileObj.Port;
-    res = obj.initialize(agentID, gwHost, gwPort, "", "", proxyObj, "First_Electron_APP", init_callback, terminate_callback,                     pause_callback, resume_callback, getconfig_callback, chk_chlng_callback, get_all_chlng_callback,                     update_chlng_callback, forgot_pswd_callback, logoff_callback, get_creds_callback, getAppname,
-                         getAppversion, get_registered_device_callback, on_update_device_details_callback, get_post_login_challenges_callback);
+    res = obj.initialize(agentID, RDNACallbacks, gwHost, gwPort, "", "", proxyObj, "ReferenceDesktopApp_Ctx");
     error = res.errorCode;
     if(0 != error)
     {
@@ -507,11 +540,11 @@ function rdnaPause()
 function rdnaResume()
 {
   var strCtx = document.getElementById('txtField2').value;
-  var res = obj.resume(strCtx, proxy, "First_Electron_APP", init_callback, terminate_callback, pause_callback, resume_callback,
-                       getconfig_callback, chk_chlng_callback, get_all_chlng_callback,update_chlng_callback, forgot_pswd_callback,
-                       logoff_callback, get_creds_callback, getAppname, getAppversion, get_registered_device_callback,
-                       on_update_device_details_callback, get_post_login_challenges_callback);
-  document.getElementById('t1').value = res.response+"\n"+res.errorCode;
+  var res = obj.resume(strCtx, RDNACallbacks, proxyObj, "ReferenceDesktopApp_Ctx_Resumed");
+  if(res.errorCode != 0)
+  {
+    alert("Failed to resume runtime. Error Code - " + res.errorCode);
+  }
 }
 
 function rdnaTerminate()
@@ -559,14 +592,14 @@ function rdnaGetAgentID()
 function rdnaGetServiceBytargetCoordinate()
 {
   var res;
-  res = obj.getServiceByTargetCoordinates("www.httpsnow.org", 443)
+  res = obj.getServiceByTargetCoordinates("www.ietf.org", 443)
   document.getElementById('t1').value = res.response+"\n"+res.errorCode;
 }
 
 function rdnaGetServiceByName()
 {
   var res;
-  res = obj.getServiceByName("httpsnow")
+  res = obj.getServiceByName("itef123_proxy")
   document.getElementById('t1').value = res.response+"\n"+res.errorCode;
 }
 
@@ -594,14 +627,18 @@ function rdnaGetDefaultCipherSalt()
 function rdnaStopService()
 {
   var res;
-  res = obj.serviceAccessStop();
+  var svcObj = new Object();
+  svcObj.serviceName = "itef123_proxy";
+  res = obj.serviceAccessStop(svcObj);
   document.getElementById('t1').value = res.response+"\n"+res.errorCode;
 }
 
 function rdnaStartService()
 {
   var res;
-  res = obj.serviceAccessStart();
+  var svcObj = new Object();
+  svcObj.serviceName = "itef123_proxy";
+  res = obj.serviceAccessStart(svcObj);
   document.getElementById('t1').value = res.response+"\n"+res.errorCode;
 }
 

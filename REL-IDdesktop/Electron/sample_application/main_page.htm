@@ -57,7 +57,10 @@
             <span id="pswdAttemptsLeft" style="float : right;"></span>
             <br>
             <span id="userfrmDescription" style="float : left;"></span>
-            <input id="loginFrmSubmitBtn" class="btn" type="button" value="Login" onclick="btnSubmitClicked();">
+            <div id = "loginFrmBtns" class="row">
+              <div class="col-sm-6"><input id="loginFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();"></div>
+              <div class="col-sm-6"><input id="loginFrmCancelBtn" class="btn" type="button" value="Cancel" onclick="loginFrmbtnCancelClicked();"></div>
+            </div>
             <div id = "updatePwdBtns" class="row" style="display : none">
               <div class="col-sm-6"><input id="updatePwdFrmSubmitBtn" class="btn" type="button" value="Submit" onclick="btnSubmitClicked();"></div>
               <div class="col-sm-6"><input id="updatePwdFrmCancelBtn" class="btn" type="button" value="Cancel" onclick="btnCancelClicked('loginFrm');"></div>
