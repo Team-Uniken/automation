@@ -12,7 +12,6 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
   CALLED
 */
 var Main = require('./Main');
-var Menu = require('./Menu');
 var UserLogin = require('./challenges/UserLogin');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
@@ -222,6 +221,7 @@ class Load extends React.Component{
     
     return (
       <View style={Skin.loadStyle.container}>
+        <View style={Skin.loadStyle.bgbase}></View>
         <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
         <View style={Skin.statusBarStyle.default}>
           <StatusBar

@@ -13,7 +13,7 @@ Dimensions,
   Dimensions,
 } = React;
 
-var Appointment = React.createClass({
+var Navbar = React.createClass({
 
 
   render() {
@@ -62,4 +62,4 @@ var styles = {
     marginTop:4,
   },
 };
-module.exports = Appointment;
+module.exports = Navbar;
