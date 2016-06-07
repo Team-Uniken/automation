@@ -161,7 +161,7 @@ class ReactRefApp extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
 
-    id = 'Main';
+//    id = 'Main';
 
     if(id == "Main"){
       return (<Main navigator={nav}/>);
