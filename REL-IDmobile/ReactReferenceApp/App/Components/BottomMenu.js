@@ -1,5 +1,5 @@
 var React = require('react-native');
-var Skin = require('./Skin');
+var Skin = require('../Skin');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var NavigationBar = require('react-native-navbar');
 

@@ -3,7 +3,6 @@
 var React = require('react-native');
 //var NavigationBar = require('react-native-navbar');
 var Accounts = require('./Accounts');
-var Skin = require('./Skin');
 var styles = Skin.styles;
 var Load = require('./Load');
 var ControlPanel = require('./ControlPanel');
