@@ -9,11 +9,12 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var PixelRatio = require('PixelRatio');
 
+var AccountsScene = require('./App/Scenes/Accounts');
+var PayBillsScene = require('./App/Scenes/PayBills');
 var Main = require('./App/Components/Main');
 var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
-var Accounts = require('./App/Components/Accounts');
 var QBank = require('./App/Components/Qbank');
 var ComingSoon = require('./App/Components/ComingSoon');
 var UserLogin = require('./App/Components/challenges/UserLogin');
@@ -161,10 +162,16 @@ class ReactRefApp extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
 
-    id = 'Main';
+    if (id =='Load'){
+     id = 'Accounts';
+    }
 
     if(id == "Main"){
       return (<Main navigator={nav}/>);
+    }else if (id == "Accounts"){
+      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+    }else if (id == "PayBills"){
+      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     }else if (id == "Load"){
       return (<Load navigator={nav}/>);      
     }else if (id == "Web"){
@@ -208,11 +215,11 @@ class ReactRefApp extends React.Component{
           config ={
 
             // Rebound spring parameters when transitioning FROM this scene
-            springFriction: 26,
-            springTension: 200,
+            springFriction: 1,//26,
+            springTension: 1,//200,
 
             // Velocity to start at when transitioning without gesture
-            defaultTransitionVelocity: 3.5,
+            defaultTransitionVelocity: 1,//3.5,
 
             gestures: null,
             animationInterpolators: {
