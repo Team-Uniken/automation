@@ -57,7 +57,7 @@ class Main extends React.Component{
         ref={c => this.drawer = c}
         type="static"
         content={
-          <ControlPanel closeDrawer={this.closeDrawer} />
+            <ControlPanel closeDrawer={this.closeDrawer} navigator={this.props.navigator}/>
         }
         acceptDoubleTap
         styles={{main: {shadowColor: '#000000', shadowOpacity: 0.3, shadowRadius: 15}}}
