@@ -34,8 +34,15 @@ var {
 class AppointmentsScene extends React.Component{
 	constructor(props){
 		super(props);
+		this.state={
+			pop: ()=>{
+				console.log(this);
+				this.props.navigator.pop();
+			}
+		}
 	}
 	render() {
+		console.log(this.props);
 		return (
 			<Main 
 				drawerState={{
@@ -45,16 +52,26 @@ class AppointmentsScene extends React.Component{
 				navBar={{
         			title: 'Appointments',
         			visible: true,
-        			backIcon: true,
-        			exitIcon: false,
-        			leftText: 'Back',
-        			rightText: '',
+        			tint: Skin.colors.TEXT_COLOR,
+        			left:{
+        				text: 'Back',
+        				icon: 'x',
+        				iconStyle: {},
+        				textStyle:{},
+        			},
+        			right:{
+        				text: '',
+        				icon: '',
+        				iconStyle: {},
+        				textStyle:{},
+        				handler:()=>{return('')},
+        			}
         		}}
       			bottomMenu={{
         			visible: true,
         			active: 5,
       			}}
-      			navigator={this.props.navigator}
+      			navigator={this.props.navigator} 
 			>	
 				<View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
 					<Text>This is my Accounts content</Text>
@@ -65,6 +82,3 @@ class AppointmentsScene extends React.Component{
 }
 
 module.exports = AppointmentsScene;
-/*
-
-			*/

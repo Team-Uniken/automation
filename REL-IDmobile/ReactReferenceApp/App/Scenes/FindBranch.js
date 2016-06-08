@@ -21,36 +21,36 @@ var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtilit
   Instantiaions
 */
 var {
-	View,
-	Text,
-	Navigator,
-	TextInput,
-	TouchableHighlight,
-	ActivityIndicatorIOS,
-	StyleSheet
+    View,
+    Text,
+    Navigator,
+    TextInput,
+    TouchableHighlight,
+    ActivityIndicatorIOS,
+    StyleSheet
 } = React;
 
 
-class DepositsScene extends React.Component{
-	constructor(props){
-		super(props);
-		this.state={
-			pop: ()=>{
-				console.log(this);
-				this.props.navigator.pop();
-			}
-		}
-	}
-	render() {
-		console.log(this.props);
-		return (
+class FindBranchScene extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            pop: ()=>{
+                console.log(this);
+                this.props.navigator.pop();
+            }
+        }
+    }
+    render() {
+        console.log(this.props);
+        return (
             <Main
                 drawerState={{
                     open: false, 
                     disabled: false
                 }}
                 navBar={{
-                    title: 'Deposits',
+                    title: 'Find Branch',
                     visible: true,
                     tint: Skin.colors.TEXT_COLOR,
                     left:{
@@ -65,16 +65,16 @@ class DepositsScene extends React.Component{
                 }}
                 bottomMenu={{
                     visible: true,
-                    active: 3,
+                    active: 4,
                 }}
                 navigator={this.props.navigator}
             >  
-				<View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
-					<Text>This is my Deposits content</Text>
-				</View>
-			</Main>
-		);
-	}
+                <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
+                    <Text>This is my Find Branch content</Text>
+                </View>
+            </Main>
+        );
+    }
 }
 
-module.exports = DepositsScene;
+module.exports = FindBranchScene;

@@ -18,6 +18,7 @@ var ControlPanel = require('./ControlPanel');
 var NavigationBar = require('react-native-navbar');
 var BottomMenu = require('./BottomMenu');
 var Content = require('./Content');
+import NavButton from './NavButton'
 import Drawer from 'react-native-drawer'
 
 
@@ -47,38 +48,52 @@ var {
 class Main extends React.Component{
   constructor(props){
     super(props);
-    this.state={
-      drawerState:{
+    this.state={};
+    this.state.drawerState={
         open: this.props.drawerState.open || false,
         disabled: this.props.drawerState.disabled,
-      },
-      navBar: {
-        title: this.props.navBar.title,
-        visible: this.props.navBar.visible,
-        leftText: ()=> {(this.props.navBar.backIcon) 
-            ? (<Text><Text style={Skin.nav.icon}>{'x'}</Text><Text style={Skin.nav.sidetext}>{' '+this.props.navBar.leftText}</Text></Text>) 
-            : (this.props.navBar.leftText == "") 
-              ? <Text style={Skin.nav.icon}>{'\ue20e'}</Text> 
-              : <Text style={Skin.nav.sidetext}>{this.props.navBar.leftText}</Text>},
-        rightText: this.props.navBar.rightText,
-        backIcon: this.props.navBar.backIcon,
-        exitIcon: this.props.navBar.exitIcon,
-      },
-      bottomMenu:{
+      };
+    this.toggleDrawer = this.toggleDrawer.bind(this)
+    this.state.navBar                 = {};
+    
+    this.state.navBar.title           = this.props.navBar.title || '';
+    this.state.navBar.visible         = this.props.navBar.visible || true;
+    this.state.navBar.tint            = this.props.navBar.tint || '#000000';
+    
+    this.state.navBar.left            = {};
+    this.state.navBar.left            = {};
+    this.state.navBar.left.text       = this.props.navBar.left.text || '';
+    this.state.navBar.left.icon       = this.props.navBar.left.icon || '';
+    this.state.navBar.left.iconStyle  = this.props.navBar.left.iconStyle || {};
+    this.state.navBar.left.textStyle  = this.props.navBar.left.textStyle || {};
+    this.state.navBar.left.handler    = this.props.navBar.left.handler || this.toggleDrawer;
+ 
+    this.state.navBar.right           = {};
+    this.props.navBar.right           = {};
+    this.state.navBar.right.text      = this.props.navBar.right.text || '';
+    this.state.navBar.right.icon      = this.props.navBar.right.icon || '';
+    this.state.navBar.right.iconStyle = this.props.navBar.right.iconStyle || {};
+    this.state.navBar.right.textStyle = this.props.navBar.right.textStyle || {};
+    this.state.navBar.right.handler   = this.props.navBar.right.handler || this.toggleDrawer;
+
+    this.state.bottomMenu={
         visible: this.props.bottomMenu.visible,
         active: this.props.bottomMenu.active,
-      }
     };
-    this.toggleDrawer = this.toggleDrawer.bind(this)
+    
   }
 
+/*
+
+      
+
+ */
 
   /**
    * Toggles the drawer open and closed. Is passed down the chain to navbar.
    * @return {null}
    */
   toggleDrawer(){
-    console.log(this);
     if(this.state.drawerState.open){
       this.drawer.close();
     }else{
@@ -98,7 +113,8 @@ class Main extends React.Component{
    * @return {JSX}
    */
   render() {
-    console.log(this.props.navBar);
+    console.log('main')
+    console.log(this)
     return (
       <Drawer
         ref={c => this.drawer = c}
@@ -128,14 +144,33 @@ class Main extends React.Component{
         negotiatePan
         >
           <NavigationBar
-            title={{title:this.state.navBar.title,tintColor:Skin.colors.TEXT_COLOR}}
+            title={{title:this.props.navBar.title,tintColor:Skin.colors.TEXT_COLOR}}
             tintColor={Skin.colors.PRIMARY}
             statusBar={{tintColor:Skin.colors.DARK_PRIMARY,style:'light-content'}}
-            leftButton={{
-              tintColor: Skin.colors.TEXT_COLOR,
-              title: {this.state.navBar.leftText},
-              handler: this.toggleDrawer,
-            }} 
+            rightButton={
+                <NavButton
+                  left={false}
+                  icon={this.state.navBar.right.icon}
+                  title={this.state.navBar.right.text}
+                  tint={this.state.navBar.tint}
+                  iconStyle={this.state.navBar.right.iconStyle}
+                  textStyle={this.state.navBar.right.iconStyle}
+                  handler={this.state.navBar.right.handler}
+                  toggleDrawer = {this.toggleDrawer}
+                />
+            }
+            leftButton={
+                <NavButton
+                  left={true}
+                  icon={this.state.navBar.left.icon}
+                  title={this.state.navBar.left.text}
+                  tint={this.state.navBar.tint}
+                  iconStyle={this.state.navBar.left.iconStyle}
+                  textStyle={this.state.navBar.left.iconStyle}
+                  handler={this.state.navBar.left.handler}
+                  toggleDrawer = {this.toggleDrawer}
+                />
+            }
           />
           {this.props.children}
           <BottomMenu navigator={this.props.navigator} bottomMenu={this.props.bottomMenu}/>
@@ -143,6 +178,14 @@ class Main extends React.Component{
     )
   }
 /**
+ * 
+leftButton={
+  <NavButton
+    title={this.state.navBar.leftText}
+    icon={this.state.navBar.leftIcon}
+    handler={this.toggleDrawer}
+  />
+}
  *            leftButton={{
               tintColor: Skin.colors.TEXT_COLOR,
               title: this.state.navBar.leftText,
@@ -159,6 +202,7 @@ Main.propTypes = {
    drawerState: React.PropTypes.object,
    navBar: React.PropTypes.object,
    bottomMenu: React.PropTypes.object,
+   toggleDrawer: React.PropTypes.func,
 };
 
 Main.defaultProps = {
@@ -167,17 +211,28 @@ Main.defaultProps = {
           disabled: false
         },
         navBar:{
-              title: 'Accounts',
-              visible: true,
-              leftText: '',
-              rightText: '',
-              backIcon: false,
-              exitIcon: false,
+          title: '',
+          visible: true,
+          left:{
+            text: '',
+            icon: '',
+            iconStyle: '',
+            textStyle: '',
+            handler: ()=>{},
+          },
+          right:{
+            text: '',
+            icon: '',
+            iconStyle: '',
+            textStyle: '',
+            handler: ()=>{},
+          },
         },
         bottomMenu:{
           visible: true,
           active: 1,
         },
+        toggleDrawer: this.toggleDrawer
 };
 
 

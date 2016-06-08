@@ -59,7 +59,7 @@ class AccountsScene extends React.Component{
 
     render() {
         return (
-            <Main 
+            <Main
                 drawerState={{
                     open: false, 
                     disabled: false
@@ -67,8 +67,16 @@ class AccountsScene extends React.Component{
                 navBar={{
                     title: 'Accounts',
                     visible: true,
-                    leftText: '',
-                    rightText: '',
+                    tint: Skin.colors.TEXT_COLOR,
+                    left:{
+                        text: '',
+                        icon: '\ue20e',
+                        iconStyle: {
+                            fontSize:30,
+                            marginLeft:8,
+                        },
+                        textStyle:{},
+                    }
                 }}
                 bottomMenu={{
                     visible: true,
