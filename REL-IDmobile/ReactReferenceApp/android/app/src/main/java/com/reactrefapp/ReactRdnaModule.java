@@ -1,6 +1,7 @@
 package com.reactrefapp;
 
 import android.os.Handler;
+import android.telecom.Call;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -168,7 +169,13 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
 
             @Override
-            public int onLogOff(RDNA.RDNAStatusLogOff rdnaStatusLogOff) {
+            public int onLogOff(String status) {
+                WritableMap params = Arguments.createMap();
+                params.putString("response", status);
+
+                context
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit("onLogOff", params);
                 return 0;
             }
 
@@ -336,6 +343,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 e.printStackTrace();
             }
 
+        } else {
+            errorMap.putInt("error", 1);
+        }
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void logOff(String userId, Callback callback){
+        WritableMap errorMap = Arguments.createMap();
+
+        if(rdnaObj != null) {
+            int error = rdnaObj.logOff(userId);
+            errorMap.putInt("error", error);
         } else {
             errorMap.putInt("error", 1);
         }
