@@ -164,14 +164,12 @@ class ReactRefApp extends React.Component{
 
   renderScene(route,nav) {
     var id = route.id;
-
+/*
     if (id =='Load'){
      id = 'Appointments';
     }
-
-    if(id == "Main"){
-      return (<Main navigator={nav}/>);
-    }else if (id == "Accounts"){
+*/
+    if(id == "Main" || id == "Accounts"){
       return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     }else if (id == "PayBills"){
       return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
@@ -223,11 +221,11 @@ class ReactRefApp extends React.Component{
             config ={
 
               // Rebound spring parameters when transitioning FROM this scene
-              springFriction: 1,//26,
-              springTension: 1,//200,
+              springFriction: 26,//26,
+              springTension: 200,//200,
 
               // Velocity to start at when transitioning without gesture
-              defaultTransitionVelocity: 1,//3.5,
+              defaultTransitionVelocity: 3.5,//3.5,
 
               gestures: null,
               animationInterpolators: {
