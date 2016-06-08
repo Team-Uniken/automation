@@ -9,11 +9,14 @@ var React = require('react-native');
 var Dimensions = require('Dimensions');
 var PixelRatio = require('PixelRatio');
 
+var AccountsScene = require('./App/Scenes/Accounts');
+var PayBillsScene = require('./App/Scenes/PayBills');
+var ContactScene = require('./App/Scenes/Contact');
+var AppointmentsScene = require('./App/Scenes/Appointments');
 var Main = require('./App/Components/Main');
 var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
-var Accounts = require('./App/Components/Accounts');
 var QBank = require('./App/Components/Qbank');
 var ComingSoon = require('./App/Components/ComingSoon');
 var UserLogin = require('./App/Components/challenges/UserLogin');
@@ -34,6 +37,7 @@ var SCREEN_WIDTH = Dimensions.get('window').width;
 var SCREEN_HEIGHT = Dimensions.get('window').height;
 
 var {DeviceEventEmitter} = require('react-native');
+import { FormattedWrapper } from 'react-native-globalize';
 var responseJson;
 var chlngJson;
 var nextChlngName;
@@ -161,10 +165,20 @@ class ReactRefApp extends React.Component{
   renderScene(route,nav) {
     var id = route.id;
 
-    id = 'Main';
+    if (id =='Load'){
+     id = 'Appointments';
+    }
 
     if(id == "Main"){
       return (<Main navigator={nav}/>);
+    }else if (id == "Accounts"){
+      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+    }else if (id == "PayBills"){
+      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+    }else if (id == "Contact"){
+      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);  
+    }else if (id == "Appointments"){
+      return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);  
     }else if (id == "Load"){
       return (<Load navigator={nav}/>);      
     }else if (id == "Web"){
@@ -195,34 +209,36 @@ class ReactRefApp extends React.Component{
 
 
     return (
-      <Navigator
-        style={styles.navigator}
-        renderScene={this.renderScene}
-        initialRoute={
-          {id: "Load"}
-          //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
-        }
-        configureScene={(route) => {
-          var config = Navigator.SceneConfigs.FadeAndroid;
-          //var config = Navigator.SceneConfigs.FloatFromRight;
-          config ={
-
-            // Rebound spring parameters when transitioning FROM this scene
-            springFriction: 26,
-            springTension: 200,
-
-            // Velocity to start at when transitioning without gesture
-            defaultTransitionVelocity: 3.5,
-
-            gestures: null,
-            animationInterpolators: {
-              into: buildStyleInterpolator(FadeIn),
-              out: buildStyleInterpolator(FadeOut),
-            },
+      <FormattedWrapper locale="en" currency="USD">
+        <Navigator
+          style={styles.navigator}
+          renderScene={this.renderScene}
+          initialRoute={
+            {id: "Load"}
+            //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
           }
-          return config;
-        }}
-      />
+          configureScene={(route) => {
+            var config = Navigator.SceneConfigs.FadeAndroid;
+            //var config = Navigator.SceneConfigs.FloatFromRight;
+            config ={
+
+              // Rebound spring parameters when transitioning FROM this scene
+              springFriction: 1,//26,
+              springTension: 1,//200,
+
+              // Velocity to start at when transitioning without gesture
+              defaultTransitionVelocity: 1,//3.5,
+
+              gestures: null,
+              animationInterpolators: {
+                into: buildStyleInterpolator(FadeIn),
+                out: buildStyleInterpolator(FadeOut),
+              },
+            }
+            return config;
+          }}
+        />
+      </FormattedWrapper>
     );
   }
 }
