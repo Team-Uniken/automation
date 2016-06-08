@@ -48,11 +48,19 @@ class ContactScene extends React.Component{
 					disabled: false
 				}}
 				navBar={{
-        			title: 'Pay Bills',
-        			visible: true,
-        			leftText: '',
-        			rightText: '',
-        		}}
+                    title: 'Contact',
+                    visible: true,
+                    tint: Skin.colors.TEXT_COLOR,
+                    left:{
+                        text: '',
+                        icon: '\ue20e',
+                        iconStyle: {
+                            fontSize:30,
+                            marginLeft:8,
+                        },
+                        textStyle:{},
+                    }
+                }}
       			bottomMenu={{
         			visible: true,
         			active: 5,
