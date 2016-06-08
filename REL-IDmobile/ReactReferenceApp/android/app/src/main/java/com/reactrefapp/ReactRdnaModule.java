@@ -13,6 +13,9 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.uniken.rdna.RDNA;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,12 +97,24 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onPauseRuntime(RDNA.RDNAStatusPause rdnaStatusPause) {
+            public int onPauseRuntime(String rdnaStatusPause) {
+                WritableMap params = Arguments.createMap();
+                params.putString("response", rdnaStatusPause);
+
+                context
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit("onPauseCompleted", params);
                 return 0;
             }
 
             @Override
-            public int onResumeRuntime(String s) {
+            public int onResumeRuntime(String status) {
+                WritableMap params = Arguments.createMap();
+                params.putString("response", status);
+
+                context
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit("onResumeCompleted", params);
                 return 0;
             }
 
@@ -281,6 +296,49 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void pauseRuntime(Callback callback){
+
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj != null) {
+            String state = rdnaObj.pauseRuntime();
+            errorMap.putInt("error", 0);
+            errorMap.putString("response", state);
+        } else {
+            errorMap.putInt("error", 1);
+            errorMap.putString("response", "");
+        }
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void resumeRuntime(String state, String proxySettings, Callback callback){
+        WritableMap errorMap = Arguments.createMap();
+
+        if(rdnaObj != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(state);
+                RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, context);
+                rdnaObj = rdnaStatus.result;
+                errorMap.putInt("error", rdnaStatus.errorCode);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            errorMap.putInt("error", 1);
+        }
 
         WritableArray writableArray = Arguments.createArray();
         writableArray.pushMap(errorMap);
