@@ -1,0 +1,15 @@
+Following are the missing items from the UI wire frames:
+1. Initialize screen - this is necessary as we need to setup the primary channel in order to use the secure functionality provoded by the sdk. Either this can be done on a flash screen or on request by the user as rest of the screens.
+2. Settings frame - proxy.
+3. Settings frame - connection profiles.
+4. OTP frame for validation(while in temporary device login flow).
+5. OTP frame for generation(As per new feature, where in user can request to generate OTP for himself with expiry period according to him).
+6. Device binding frame - where the user can select to choose to make the device permanent or temporary.
+7. Device alais frame - where the user can choose to name the device as per his prefference.
+8. Secret question and answer setup frame.
+9. Password setup frame.
+10. Switch user link.
+11. Place holder for currently logged in/verified user(apart from settings - manage account field which will be populated after user has logged in.)
+12. Popup - for prompting the user to enter the credentials for an authenticated website/portal.
+13. Popup - for notifying the user about general messages.
+
