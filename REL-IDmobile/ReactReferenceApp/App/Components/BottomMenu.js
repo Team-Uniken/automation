@@ -34,7 +34,7 @@ class BottomMenu extends React.Component{
 
 	constructor(props){
 		super(props);
-		console.log(props);
+		//console.log(props);
 		this.state = {
 			active: props.bottomMenu.active,
 		};
@@ -53,7 +53,7 @@ class BottomMenu extends React.Component{
 		for (let i=1; i < 6; i++) {
 			//console.log(i)
 			if(active == i){
-				console.log('filled '+i)
+				//console.log('filled '+i)
 				//console.log(typeof(i))
 				//console.log(typeof(active))
 				buildout.push(
@@ -71,7 +71,7 @@ class BottomMenu extends React.Component{
 				//console.log(box);
 				//buildout.push(box(i));
 	 		}else{
-	 			console.log('empty '+i)
+	 			//console.log('empty '+i)
 	 			buildout.push(
 					<View key={'menu_'+i} style={Skin.botmenu.boxwrap}>
 						<View style={Skin.botmenu.hoverbar_empty}>
@@ -99,7 +99,8 @@ class BottomMenu extends React.Component{
   		this.props.navigator.immediatelyResetRouteStack(routeStack);
     	//this.props.navigator.push({id:this.props.list[i].link});
   	}
-};
+ };
+
 
 BottomMenu.propTypes = {
     list: React.PropTypes.object,
@@ -108,7 +109,7 @@ BottomMenu.propTypes = {
 BottomMenu.defaultProps = {
     list: {
 		1:{
-			icon:'%',
+			icon:'\ue266',
 			title:'ACCOUNTS',
 			link: 'Accounts',
 		},
@@ -118,7 +119,7 @@ BottomMenu.defaultProps = {
 			link: 'PayBills',
 		},
 		3:{
-			icon:'\ue21a',
+			icon:'\ue145',
 			title:'DEPOSITS',				
 			link: 'Deposits',
 		},
@@ -151,12 +152,12 @@ Skin.botmenu = StyleSheet.create({
 	},
 	boxwrap:{
 		flexDirection:'column',
-		marginTop:-20,
+		marginTop:-10,
 		flex:1,
 	},
 	boxwraphover:{
 		flexDirection:'column',
-		marginTop:-20,
+		marginTop:-10,
 		flex:1,
 	},
 	box:{
@@ -169,7 +170,7 @@ Skin.botmenu = StyleSheet.create({
 	},
 	wrap:{
 		flexDirection:'row',
-		height: 70
+		height: 80
 	},
 	icon:{
 		fontFamily: 'icomoon',

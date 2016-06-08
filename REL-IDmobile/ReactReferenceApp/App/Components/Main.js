@@ -44,7 +44,6 @@ var {
 
 
 
-
 class Main extends React.Component{
   constructor(props){
     super(props);
@@ -56,8 +55,14 @@ class Main extends React.Component{
       navBar: {
         title: this.props.navBar.title,
         visible: this.props.navBar.visible,
-        leftText: this.props.navBar.leftText,
+        leftText: ()=> {(this.props.navBar.backIcon) 
+            ? (<Text><Text style={Skin.nav.icon}>{'x'}</Text><Text style={Skin.nav.sidetext}>{' '+this.props.navBar.leftText}</Text></Text>) 
+            : (this.props.navBar.leftText == "") 
+              ? <Text style={Skin.nav.icon}>{'\ue20e'}</Text> 
+              : <Text style={Skin.nav.sidetext}>{this.props.navBar.leftText}</Text>},
         rightText: this.props.navBar.rightText,
+        backIcon: this.props.navBar.backIcon,
+        exitIcon: this.props.navBar.exitIcon,
       },
       bottomMenu:{
         visible: this.props.bottomMenu.visible,
@@ -93,6 +98,7 @@ class Main extends React.Component{
    * @return {JSX}
    */
   render() {
+    console.log(this.props.navBar);
     return (
       <Drawer
         ref={c => this.drawer = c}
@@ -127,8 +133,7 @@ class Main extends React.Component{
             statusBar={{tintColor:Skin.colors.DARK_PRIMARY,style:'light-content'}}
             leftButton={{
               tintColor: Skin.colors.TEXT_COLOR,
-              textStyle: Skin.nav.icon,
-              title: "\ue20e",
+              title: {this.state.navBar.leftText},
               handler: this.toggleDrawer,
             }} 
           />
@@ -137,6 +142,16 @@ class Main extends React.Component{
       </Drawer>
     )
   }
+/**
+ *            leftButton={{
+              tintColor: Skin.colors.TEXT_COLOR,
+              title: this.state.navBar.leftText,
+              handler: this.toggleDrawer,
+            }} 
+ *
+ * 
+ */
+
 
 };
 
@@ -156,6 +171,8 @@ Main.defaultProps = {
               visible: true,
               leftText: '',
               rightText: '',
+              backIcon: false,
+              exitIcon: false,
         },
         bottomMenu:{
           visible: true,
