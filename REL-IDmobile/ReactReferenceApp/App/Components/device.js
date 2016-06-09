@@ -670,7 +670,7 @@ console.log("------ renderBook");
 
   onEditPressed(book) {
 
-    var title = book.volumeInfo.title;
+    var title = book.devName;
 
     alert('Edit button of '+title);
 
@@ -679,7 +679,7 @@ console.log("------ renderBook");
 
   onDeletePressed(book) {
 
-    var title = book.volumeInfo.title;
+    var title = book.devName;
 
     alert('Delete button of '+title);
 

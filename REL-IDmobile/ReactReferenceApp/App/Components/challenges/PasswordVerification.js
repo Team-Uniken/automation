@@ -89,22 +89,6 @@ class PasswordVerification extends React.Component{
 	componentDidMount() {
 
 		obj = this;
-		DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', function (e) {
-		      var res = JSON.parse(e.response);
-          var statusCode= res.pArgs.response.StatusCode;
-		      if (statusCode==100) {
-             var pPort = res.pArgs.pxyDetails.port;
-             Main.dnaProxyPort = pPort;
-             if(pPort>0){
-             RDNARequestUtility.setHttpProxyHost('127.0.0.1',pPort,(response) => {});
-           }
-		      	obj.checkPasswordSuccess();
-		      }else{
-		      	statusMessage = res.pArgs.response.StatusMsg;
-		      	obj.checkPasswordFailure();
-		      };
-
-		   });
 /*		Animated.sequence([
 			Animated.timing(this.state.passWrapOpac, {
 				toValue: 1,
