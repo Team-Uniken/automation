@@ -15,7 +15,7 @@ var Main = require('../Components/Main');
 var BottomMenu = require('../Components/BottomMenu');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var NavigationBar = require('react-native-navbar');
-var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+//var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
 /* 
   Instantiaions
@@ -50,7 +50,7 @@ class FindBranchScene extends React.Component{
                     disabled: false
                 }}
                 navBar={{
-                    title: 'Find Branch',
+                    title: 'Deposits',
                     visible: true,
                     tint: Skin.colors.TEXT_COLOR,
                     left:{
@@ -65,12 +65,12 @@ class FindBranchScene extends React.Component{
                 }}
                 bottomMenu={{
                     visible: true,
-                    active: 4,
+                    active: 3,
                 }}
                 navigator={this.props.navigator}
             >  
                 <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
-                    <Text>This is my Find Branch content</Text>
+                    <Text>This is my Deposits content</Text>
                 </View>
             </Main>
         );

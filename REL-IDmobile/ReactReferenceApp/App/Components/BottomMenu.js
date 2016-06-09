@@ -94,9 +94,12 @@ class BottomMenu extends React.Component{
 		//console.log(this);
 		//console.log(i);
 		//console.log({id:this.props.list[i].link});
+		this.props.navigator.push({id:this.props.list[i].link});
+  		/* 
   		var routeStack = this.props.navigator.state.routeStack;
   		routeStack.push({id:this.props.list[i].link});
   		this.props.navigator.immediatelyResetRouteStack(routeStack);
+    	/* */
     	//this.props.navigator.push({id:this.props.list[i].link});
   	}
  };

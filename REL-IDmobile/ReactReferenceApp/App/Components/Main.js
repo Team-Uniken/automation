@@ -49,28 +49,6 @@ class Main extends React.Component{
   constructor(props){
     super(props);
     this.state={};
-    this.state.drawerState={
-        open: this.props.drawerState.open || false,
-        disabled: this.props.drawerState.disabled,
-<<<<<<< HEAD
-      },
-      navBar: {
-        title: this.props.navBar.title,
-        visible: this.props.navBar.visible,
-        leftText: this.props.navBar.leftText,
-       /* leftText: ()=> {(this.props.navBar.backIcon) 
-            ? (<Text><Text style={Skin.nav.icon}>{'x'}</Text><Text style={Skin.nav.sidetext}>{' '+this.props.navBar.leftText}</Text></Text>) 
-            : (this.props.navBar.leftText == "") 
-              ? <Text style={Skin.nav.icon}>{'\ue20e'}</Text> 
-              : <Text style={Skin.nav.sidetext}>{this.props.navBar.leftText}</Text>},
-        */
-        rightText: this.props.navBar.rightText,
-        backIcon: this.props.navBar.backIcon,
-        exitIcon: this.props.navBar.exitIcon,
-      },
-      bottomMenu:{
-=======
-      };
     this.toggleDrawer = this.toggleDrawer.bind(this)
     this.state.navBar                 = {};
     
@@ -95,18 +73,15 @@ class Main extends React.Component{
     this.state.navBar.right.handler   = this.props.navBar.right.handler || this.toggleDrawer;
 
     this.state.bottomMenu={
->>>>>>> feature/Navbar_fix
         visible: this.props.bottomMenu.visible,
         active: this.props.bottomMenu.active,
     };
+    this.state.drawerState={
+      open: false,
+      disabled: false,
+    }
     
   }
-
-/*
-
-      
-
- */
 
   /**
    * Toggles the drawer open and closed. Is passed down the chain to navbar.
@@ -166,13 +141,6 @@ class Main extends React.Component{
             title={{title:this.props.navBar.title,tintColor:Skin.colors.TEXT_COLOR}}
             tintColor={Skin.colors.PRIMARY}
             statusBar={{tintColor:Skin.colors.DARK_PRIMARY,style:'light-content'}}
-<<<<<<< HEAD
-            leftButton={{
-              tintColor: Skin.colors.TEXT_COLOR,
-              title: this.state.navBar.leftText,
-              handler: this.toggleDrawer,
-            }} 
-=======
             rightButton={
                 <NavButton
                   left={false}
@@ -197,7 +165,6 @@ class Main extends React.Component{
                   toggleDrawer = {this.toggleDrawer}
                 />
             }
->>>>>>> feature/Navbar_fix
           />
           {this.props.children}
           <BottomMenu navigator={this.props.navigator} bottomMenu={this.props.bottomMenu}/>

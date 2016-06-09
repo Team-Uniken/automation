@@ -167,12 +167,11 @@ class ReactRefApp extends React.Component{
 
   renderScene(route,nav) {
     var id = route.id;
-/*
     
     if (id =='Load'){
-     id = 'Accounts';
+     id = 'FindBranch';
     }
-*/
+
 
     if(id == "Main" || id == "Accounts"){
       return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
