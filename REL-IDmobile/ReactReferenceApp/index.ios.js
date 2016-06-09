@@ -3,114 +3,46 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-//test
 
-var React = require('react-native');
-var Dimensions = require('Dimensions');
-var PixelRatio = require('PixelRatio');
+import React from 'react-native';
 
-var AccountsScene = require('./App/Scenes/Accounts');
-var PayBillsScene = require('./App/Scenes/PayBills');
-var ContactScene = require('./App/Scenes/Contact');
-var DepositsScene = require('./App/Scenes/Deposits');
-var FindBranchScene = require('./App/Scenes/FindBranch');
+// Main Scenes
+import AccountsScene from './App/Scenes/Accounts';
+import PayBillsScene from './App/Scenes/PayBills';
+import ContactScene from './App/Scenes/Contact';
+import DepositsScene from './App/Scenes/Deposits';
+import FindBranchScene from './App/Scenes/FindBranch';
+import AppointmentsScene from './App/Scenes/Appointments';
 
-var AppointmentsScene = require('./App/Scenes/Appointments');
-var Main = require('./App/Components/Main');
-var Device = require('./App/Components/device');
-var Load = require('./App/Components/Load');
-var Web = require('./App/Components/Web');
-var QBank = require('./App/Components/Qbank');
-var ComingSoon = require('./App/Components/ComingSoon');
-var UserLogin = require('./App/Components/challenges/UserLogin');
-var PasswordVerification = require('./App/Components/challenges/PasswordVerification');
-var Appointment = require('./App/Components/Appointment');
-var AddAppointment = require('./App/Components/AddAppointment');
-var SecureChat = require('./App/Components/secure_chat/Navigation');
-var Demo = require('./App/Components/demo');
-var Activation = require('./App/Components/challenges/Activation');
-var Password = require('./App/Components/challenges/Password');
-var Otp = require('./App/Components/challenges/Otp');
-var SetQue = require('./App/Components/challenges/SetQue');
-var Machine = require('./App/Components/TwoFactorAuthMachine');
+// SECURITY SCENES
+import ActivationScene from './App/Components/challenges/Activation';
 
-var buildStyleInterpolator = require('buildStyleInterpolator');
-
-var SCREEN_WIDTH = Dimensions.get('window').width;
-var SCREEN_HEIGHT = Dimensions.get('window').height;
-
-var {DeviceEventEmitter} = require('react-native');
+// COMPONENTS
+import Device from './App/Components/device';
+import Load from './App/Components/Load';
+import Web from './App/Components/Web';
+import QBank from './App/Components/Qbank';
+import ComingSoon from './App/Components/ComingSoon';
+import UserLogin from './App/Components/challenges/UserLogin';
+import PasswordVerification from './App/Components/challenges/PasswordVerification';
+import Appointment from './App/Components/Appointment';
+import AddAppointment from './App/Components/AddAppointment';
+import SecureChat from './App/Components/secure_chat/Navigation';
+import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
-var responseJson;
-var chlngJson;
-var nextChlngName;
 
-var CORE_FONT = 'Century Gothic';
-var NAV_BAR_TINT = '#FFFFFF'
-var NAV_SHADOW_BOOL = true;
-var MENU_TXT_COLOR = '#2579A2';
-var ICON_COLOR = '#FFFFFF';
-var ICON_FAMILY = 'icomoon';
-var MID_COL = '#2579A2';
-var LIGHT_COL = '#50ADDC';
-var DARK_COL = '#10253F';
-var Spd = 1;
-var LoadSpd = 0.1;
-
-
-
-
-var {
+const buildStyleInterpolator = require('buildStyleInterpolator');
+const {
   AppRegistry,
-  StyleSheet,
-  Text,
   Navigator,
-  View,
 } = React;
 
 
-var FromTheRight = {
-  opacity: {
-    value: 1.0,
-    type: 'constant',
-  },
-
-  transformTranslate: {
-    from: {x: Dimensions.get('window').width, y: 0, z: 0},
-    to: {x: 0, y: 0, z: 0},
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-
-  translateX: {
-    from: Dimensions.get('window').width,
-    to: 0,
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-
-  scaleX: {
-    value: 1,
-    type: 'constant',
-  },
-  scaleY: {
-    value: 1,
-    type: 'constant',
-  },
-};
-
-
-var FadeIn = {
+const FadeIn = {
   opacity: {
     from: 0,
     to: 1,
-    min: 0,//0.5,
+    min: 0, // 0.5,
     max: 1,
     type: 'linear',
     extrapolate: true,
@@ -118,130 +50,103 @@ var FadeIn = {
   },
 };
 
-var FadeOut = {
+const FadeOut = {
   opacity: {
     from: 1,
     to: 0,
     min: 0,
-    max: 1,//0.5,
+    max: 1, // 0.5,
     type: 'linear',
     extrapolate: true,
     round: 1000,
   },
 };
 
-var ToTheLeft = {
-  transformTranslate: {
-    from: {x: 0, y: 0, z: 0},
-    to: {x: -Dimensions.get('window').width, y: 0, z: 0},
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-  opacity: {
-    value: 1.0,
-    type: 'constant',
-  },
 
-  translateX: {
-    from: 0,
-    to: -Dimensions.get('window').width,
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-};
+class ReactRefApp extends React.Component {
 
 
+  renderScene(route, nav) {
+    let id = route.id;
 
-
-class ReactRefApp extends React.Component{
-
-  constructor(props){
-    super(props);
-  }
-
-  renderScene(route,nav) {
-    var id = route.id;
-/*
-    
-    if (id =='Load'){
-     id = 'Accounts';
+    if (id === 'Load') {
+      id = 'Activation';
+      // id = 'Accounts'
     }
-*/
 
-    if(id == "Main" || id == "Accounts"){
-      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
-    }else if (id == "PayBills"){
-      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
-    }else if (id == "Contact"){
-      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);  
-    }else if (id == "Deposits"){
-      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);  
-    }else if (id == "FindBranch"){
-      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);  
-    }else if (id == "Appointments"){
-      return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);  
-    }else if (id == "Load"){
-      return (<Load navigator={nav}/>);      
-    }else if (id == "Web"){
-      return (<Web navigator={nav} url={route.url} title={route.title}/>);      
-    }else if (id == "ComingSoon"){
-      return (<ComingSoon navigator={nav} title={route.title}/>);      
-    }else if (id == "UserLogin"){
-      return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);     
-    }else if (id == "PasswordVerification"){
-      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);     
-    }else if (id == "QBank"){
+    // MAIN SCENES
+    if (id === 'Main' || id === 'Accounts') {
+      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'PayBills') {
+      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Contact') {
+      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Deposits') {
+      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'FindBranch') {
+      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Appointments') {
+      return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+
+    // LOAD SCENES
+    } else if (id === 'Load') {
+      return (<Load navigator={nav} />);
+
+    // SECONDARY SCENES
+    } else if (id === 'Activation') {
+      return (<ActivationScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Web') {
+      return (<Web navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'ComingSoon') {
+      return (<ComingSoon navigator={nav} title={route.title} />);
+    } else if (id === 'QBank') {
       return (<QBank navigator={nav} url={route.url} title={route.title} />);
-    }else if (id == "SecureChat"){
-      return (<SecureChat navigator={nav}/>);
-    }else if (id == "Appointment"){
-      return (<Appointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }else if (id == "AddAppointment"){
-      return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }else if (id == "Machine"){
-      return (<Machine navigator={nav} url={route.url} title={route.title}/>);
-    }else if (id == "Device"){
-      return (<Device navigator={nav} url={route.url} title={route.title}/>);
-    } 
+    } else if (id === 'SecureChat') {
+      return (<SecureChat navigator={nav} />);
+    } else if (id === 'Appointment') {
+      return (<Appointment navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'AddAppointment') {
+      return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);
 
+    // SECURITY SCENES
+    } else if (id === 'UserLogin') {
+      return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'PasswordVerification') {
+      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Machine') {
+      return (<Machine navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'Device') {
+      return (<Device navigator={nav} url={route.url} title={route.title} />);
+    }
+    return (<Text>Error</Text>);
   }
 
   render() {
-
-
     return (
       <FormattedWrapper locale="en" currency="USD">
         <Navigator
-          style={styles.navigator}
           renderScene={this.renderScene}
           initialRoute={
-            {id: "Load"}
-            //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
+            { id: 'Load' }
           }
-          configureScene={(route) => {
-            var config = Navigator.SceneConfigs.FadeAndroid;
-            //var config = Navigator.SceneConfigs.FloatFromRight;
-            config ={
+          configureScene={() => {
+            let config = Navigator.SceneConfigs.FadeAndroid;
+            // var config = Navigator.SceneConfigs.FloatFromRight
+            config = {
 
               // Rebound spring parameters when transitioning FROM this scene
-              springFriction: 26,//26,
-              springTension: 200,//200,
+              springFriction: 26,
+              springTension: 200,
 
               // Velocity to start at when transitioning without gesture
-              defaultTransitionVelocity: 3.5,//3.5,
+              defaultTransitionVelocity: 3.5,
 
               gestures: null,
               animationInterpolators: {
                 into: buildStyleInterpolator(FadeIn),
                 out: buildStyleInterpolator(FadeOut),
               },
-            }
+            };
             return config;
           }}
         />
@@ -249,79 +154,5 @@ class ReactRefApp extends React.Component{
     );
   }
 }
-
-
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111111',
-    fontFamily: CORE_FONT
-  },
-  bar:{
-    backgroundColor: MID_COL,
-    width: 20,
-    height:3,
-    marginTop:3,
-  },
-  navbar:{
-    backgroundColor: '#ffffff',
-    height: 65,
-    flexDirection: 'row',
-    padding: 10,
-    paddingTop:30
-  },
-  navButton:{
-    //backgroundColor:'#dddddd',
-    backgroundColor: 'transparent',
-    width: 100,
-    height: 20,
-
-    flex:1,
-
-  },
-  navButtonText:{
-    //textAlign: 'left',
-    //fontFamily: CORE_FONT,
-  },
-  navButtonIcon:{
-    fontFamily: CORE_FONT,
-  },
-  navRight:{
-    //textAlign: 'right'
-   // right: 0,
-   // position: 'absolute'
-  },
-  navLeft:{
-    //left: 0,
-   // position: 'absolute',
-    //flex:1
-  },
-  navTitle:{
-    flex:2,
-    fontFamily: CORE_FONT,
-    textAlign: 'center',
-    color: MID_COL,
-    fontSize: 20,
-  }
-});
-
-
-/*
-navigationBar: <NavigationBar
-             title="Menu"
-             titleColor={MID_COL}
-             backgroundStyle={{backgroundColor:'#ffffff'}}
-             customTitle={
-                <Text 
-                  style={{
-                    fontFamily:CORE_FONT,
-                    color: MID_COL,
-                    fontSize: 20
-                  }}
-                >Menu</Text>}
-              
-          />
-          */
 
 AppRegistry.registerComponent('ReactRefApp', () => ReactRefApp);

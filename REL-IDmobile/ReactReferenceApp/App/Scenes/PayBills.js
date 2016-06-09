@@ -1,37 +1,25 @@
-/*
-  ALWAYS NEED
-*/
 'use strict';
-
-var React = require('react-native');
-var Skin = require('../Skin');
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+/*
+    NEED
+ */
+import React from 'react-native';
+import Skin from '../Skin';
 
 /*
   CALLED
 */
-var Main = require('../Components/Main');
-var BottomMenu = require('../Components/BottomMenu');
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-var NavigationBar = require('react-native-navbar');
-var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+import Main from '../Components/Main';
 
-/* 
+/*
   Instantiaions
 */
-var {
+const {
 	View,
 	Text,
-	Navigator,
-	TextInput,
-	TouchableHighlight,
-	ActivityIndicatorIOS,
-	StyleSheet
 } = React;
 
 
-class PayBillsScene extends React.Component{
+export default class PayBillsScene extends React.Component{
 	constructor(props){
 		super(props);
 	}
@@ -69,8 +57,3 @@ class PayBillsScene extends React.Component{
 		);
 	}
 }
-
-module.exports = PayBillsScene;
-/*
-
-			*/
