@@ -1,10 +1,11 @@
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 var React = require('react-native');
 var ToolBar = require('../ToolBar');
 var SetQue = require('./SetQue');
 var Events = require('react-native-simple-events');
-var {customeStyle, styles} = require("../MainStyleSheet");
+var Skin = require('../../Skin');
 
 
 var {
@@ -15,7 +16,6 @@ var {
 	TouchableHighlight,
 	ActivityIndicatorIOS,
 	StyleSheet,
-  Dimensions,
 	ScrollView,
 	StatusBar,
 } = React;
@@ -66,59 +66,65 @@ class Password extends React.Component{
 
 	render() {
 		return (
-			<View style={customeStyle.maincontainer}>
+			<View style={Skin.customeStyle.maincontainer}>
 		      <StatusBar
-		      backgroundColor='#1976d2'
+					backgroundColor={Skin.colors.STATUS_BAR_COLOR}
 		      barStyle='light-content'
 		      />
 								<ToolBar navigator={this.props.navigator} title="Activation"/>
 			<ScrollView >
 
-			<Text style={customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-         <Text style={customeStyle.text2}>Set Access</Text>
-<Text style={customeStyle.div}> </Text>
-<Text style={customeStyle.text2}>Set Account Password</Text>
+			<Text style={Skin.customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+         <Text style={Skin.customeStyle.text2}>Set Access</Text>
+<Text style={Skin.customeStyle.div}> </Text>
+<Text style={Skin.customeStyle.text2}>Set Account Password</Text>
 <View
-		style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
+		style={[Skin.customeStyle.roundcornerinput]}
 		 activeOpacity={0.6}
 		>
+		<KeyboardAwareScrollView>
 		<TextInput
 			autoCorrect={false}
 			ref='password'
 			placeholder={'Enter Password'}
-			placeholderTextColor={'#8F8F8F'}
-			style={customeStyle.input}
+			placeholderTextColor={Skin.colors.HINT_COLOR}
+			style={Skin.customeStyle.input}
 			secureTextEntry={true}
 			onChange={this.onPasswordChange.bind(this)}
 		/>
+		</KeyboardAwareScrollView>
+
 		</View>
 
- <Text style={customeStyle.div}> </Text>
+ <Text style={Skin.customeStyle.div}> </Text>
 
  <View
-	 style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
+	 style={[Skin.customeStyle.roundcornerinput]}
 		activeOpacity={0.6}
 	 >
+	 <KeyboardAwareScrollView>
 	 <TextInput
 		 autoCorrect={false}
 		 ref='cPassowrd'
 		 placeholder={'Confirm Password'}
-		 placeholderTextColor={'#8F8F8F'}
-		 style={customeStyle.input}
+		 placeholderTextColor={Skin.colors.HINT_COLOR}
+		 style={Skin.customeStyle.input}
 		 secureTextEntry={true}
 		 onChange={this.onConfirmPasswordChange.bind(this)}
 	 />
+	 </KeyboardAwareScrollView>
+
 	 </View>
-	<Text style={customeStyle.note}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
-<Text style={customeStyle.div}> </Text>
+	<Text style={[Skin.customeStyle.note,{width:200,marginLeft:Skin.SCREEN_WIDTH/2-100}]}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
+<Text style={Skin.customeStyle.div}> </Text>
 
 <TouchableHighlight
-		style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
+		style={[Skin.customeStyle.roundcornerbutton]}
 		onPress={this.setPassword.bind(this)}
-		 underlayColor={'#1976d2'}
+		underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
 		 activeOpacity={0.6}
 		>
-		<Text style={customeStyle.button}>{this.btnText()}</Text>
+		<Text style={Skin.customeStyle.button}>{this.btnText()}</Text>
 		</TouchableHighlight>
 </ScrollView >
 			</View>

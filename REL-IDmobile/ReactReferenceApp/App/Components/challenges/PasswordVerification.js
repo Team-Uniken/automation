@@ -1,6 +1,4 @@
 'use strict';
-
-
 /*
   ALWAYS NEED
 */
@@ -26,7 +24,7 @@ var {DeviceEventEmitter} = require('react-native');
 var ProgressBar = require('react-native-progress-bar');
 import Spinner from 'react-native-loading-spinner-overlay';
 
-/* 
+/*
 	INSTANCES
 */
 var total=0.3;

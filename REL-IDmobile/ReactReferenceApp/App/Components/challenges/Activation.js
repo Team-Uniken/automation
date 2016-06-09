@@ -1,10 +1,11 @@
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 var React = require('react-native');
-var {customeStyle, styles} = require("../MainStyleSheet");
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
 var Events = require('react-native-simple-events');
+var Skin = require('../../Skin');
 
 
 var {
@@ -15,7 +16,6 @@ var {
 	TouchableHighlight,
 	ActivityIndicatorIOS,
 	StyleSheet,
-  Dimensions,
 	StatusBar,
 	ScrollView,
 } = React;
@@ -52,39 +52,42 @@ class Activation extends React.Component{
 
 	render() {
 		return (
-			<View style={customeStyle.maincontainer}>
+			<View style={Skin.customeStyle.maincontainer}>
 		       <StatusBar
-		       backgroundColor='#1976d2'
+					 backgroundColor={Skin.colors.STATUS_BAR_COLOR}
 		       barStyle='light-content'
 		       />
 					 <ToolBar navigator={this.props.navigator} title="Activation"/>
 					 <ScrollView >
-					 		<Text style={customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-         			<Text style={customeStyle.text2}>Verify and Activate</Text>
-							<Text style={customeStyle.div}> </Text>
-							<Text style={customeStyle.text3}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-							<Text style={customeStyle.text2}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
-							<Text style={customeStyle.note}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
-							<Text style={customeStyle.div}> </Text>
-							<Text style={customeStyle.text2}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
-							<View style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]} activeOpacity={0.6}>
+					 		<Text style={Skin.customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+         			<Text style={Skin.customeStyle.text2}>Verify and Activate</Text>
+							<Text style={Skin.customeStyle.div}> </Text>
+							<Text style={Skin.customeStyle.text3}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
+							<Text style={Skin.customeStyle.text2}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+							<Text style={[Skin.customeStyle.note,{width:200,marginLeft:Skin.SCREEN_WIDTH/2-100}]}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
+							<Text style={Skin.customeStyle.div}> </Text>
+							<Text style={Skin.customeStyle.text2}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
+							<View style={[Skin.customeStyle.roundcornerinput]} activeOpacity={0.6}>
+							<KeyboardAwareScrollView>
 		 					<TextInput
 			 					autoCorrect={false}
 			 					ref='activatonCode'
 			 					placeholder={'Enter Activation Code'}
-			 					placeholderTextColor={'#8F8F8F'}
-			 					style={customeStyle.input}
+			 					placeholderTextColor={Skin.colors.HINT_COLOR}
+			 					style={Skin.customeStyle.input}
 			 					secureTextEntry={true}
 			 					onChange={this.onActivationCodeChange.bind(this)}
 		 					/>
+							</KeyboardAwareScrollView>
+
 		 				</View>
-						<Text style={customeStyle.text1}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
+						<Text style={Skin.customeStyle.text1}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
 						<TouchableHighlight
-		 					style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
+		 					style={[Skin.customeStyle.roundcornerbutton]}
 		 					onPress={this.checkActivationCode.bind(this)}
-							underlayColor={'#1976d2'}
+							underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
 							activeOpacity={0.6}>
-		 						<Text style={customeStyle.button}>{this.btnText()}</Text>
+		 						<Text style={Skin.customeStyle.button}>{this.btnText()}</Text>
 		 					</TouchableHighlight>
 						</ScrollView >
 			</View>
