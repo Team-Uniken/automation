@@ -1,12 +1,19 @@
+'use strict';
 
+/*
+  NEEDED
+*/
+import React from 'react-native';
+import Skin from '../../Skin';
 
-var React = require('react-native');
-var TEXT_COLOR = '#FFFFFF';
-var MIDBLUE = '#2579A2';
+/*
+  CALLED
+*/
+import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
+
 var ToolBar = require('../ToolBar');
 var Password = require('./Password');
 var Events = require('react-native-simple-events');
-var {customeStyle, styles} = require("../MainStyleSheet");
 
 
 var {
@@ -16,9 +23,9 @@ var {
 	TextInput,
 	TouchableHighlight,
 	ActivityIndicatorIOS,
-	StyleSheet,
-  Dimensions,
+	StatusBar,
 	ScrollView,
+	StatusBar,
 } = React;
 
 
@@ -67,38 +74,42 @@ class DevName extends React.Component{
 
 	render() {
 		return (
-			<View style={customeStyle.maincontainer}>
-						<StatusBar backgroundColor='#1976d2' barStyle='light-content'/>
+			<View style={Skin.customeStyle.maincontainer}>
+						<StatusBar  backgroundColor={Skin.colors.STATUS_BAR_COLOR} barStyle='light-content'/>
 						<ToolBar navigator={this.props.navigator} title="Login"/>
 						<ScrollView >
-						<Text style={customeStyle.text2}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
-						<Text style={customeStyle.note}>Please give a name for this device</Text>
-						<Text style={customeStyle.div}> </Text>
+						<Text style={Skin.customeStyle.text2}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+						<Text style={Skin.customeStyle.note}>Please give a name for this device</Text>
+						<Text style={Skin.customeStyle.div}> </Text>
 
 						<View
-					       style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
+					       style={[Skin.customeStyle.roundcornerinput]}
 					        activeOpacity={0.6}
 					       >
+								 <KeyboardAwareScrollView>
+
 					       <TextInput
 					         autoCorrect={false}
 					         ref='activatonCode'
 					         placeholder={'Enter name of the device'}
 					         placeholderTextColor={'#8F8F8F'}
-					         style={customeStyle.input}
+					         style={Skin.customeStyle.input}
 									 ref='deviceName'
 									 value={this.state.deviceName}
 									 onChange={this.onDeviceNameChange.bind(this)}
 					       />
+								 </KeyboardAwareScrollView>
+
 					       </View>
 
-      <Text style={customeStyle.div}> </Text>
+      <Text style={Skin.customeStyle.div}> </Text>
 
 			<TouchableHighlight
 			onPress={this.setDeviceName.bind(this)}
-       style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
-      	 underlayColor={'#f00'}
+       style={[Skin.customeStyle.roundcornerbutton]}
+			 underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
       	 activeOpacity={0.6}>
-       			<Text style={customeStyle.button}>{this.btnText()}</Text>
+       			<Text style={Skin.customeStyle.button}>{this.btnText()}</Text>
        </TouchableHighlight>
 			 </ScrollView >
 		</View>

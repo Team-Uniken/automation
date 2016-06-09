@@ -1,23 +1,18 @@
 var React = require('react-native');
+var Skin = require('../Skin');
 
 
 
 var {
-Dimensions,
     StyleSheet,
     View,
     Text,
     Image,
-	TouchableHighlight,
-	Dimensions,
-  Dimensions,
-} = React;
+	   TouchableHighlight,
+    } = React;
 
-var Navbar = React.createClass({
-
-
+var Appointment = React.createClass({
   render() {
-
     return (
       <View style={styles.toolbarrow}>
       <TouchableHighlight
@@ -25,14 +20,12 @@ style={styles.touchable}
         onPress={()=>{
                 this.props.navigator.pop();
         }}
-        underlayColor={'#FFF'}
+        underlayColor={Skin.colors.STATUS_BAR_COLOR}
         activeOpacity={0.6}
       >
-        <Image source={require('image!ic_back')} style={styles.images} />
-
+      <Image source={require('image!ic_back')} style={styles.images} />
       </TouchableHighlight>
-      <Text
-        style={{fontSize:24,color: '#fff',marginTop:8,fontWeight: 'bold', width:Dimensions.get('window').width-96,textAlign:'center',	textAlignVertical:'center'}}
+      <Text style={Skin.customeStyle.title}
       >{this.props.title}</Text>
 
       </View>
@@ -47,9 +40,9 @@ style={styles.touchable}
 var styles = {
   toolbarrow: {
             flexDirection:'row',
-            backgroundColor: '#2196F3',
+            backgroundColor: Skin.colors.TOOL_BAR_COLOR,
             height:56,
-            width:Dimensions.get('window').width,
+            width:Skin.SCREEN_WIDTH,
   },
   images: {
     width: 24,
@@ -62,4 +55,4 @@ var styles = {
     marginTop:4,
   },
 };
-module.exports = Navbar;
+module.exports = Appointment;

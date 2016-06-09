@@ -3,6 +3,8 @@ import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-simple-modal';
 import PickerAndroid from 'react-native-picker-android';
 var ToolBar = require('./ToolBar');
+var Skin = require('../Skin');
+
 
 var React = require('react-native');
 var Dimensions = require('Dimensions');
@@ -40,7 +42,6 @@ var {
   TextInput,
   TouchableHighlight,
   ActivityIndicatorIOS,
-  StyleSheet,
   Image,
   Dimensions,
   TextInput,
@@ -50,6 +51,7 @@ var {
   PickerIOS,
   Dimensions,
   TouchableOpacity,
+  StatusBar,
 } = React;
 
 let Picker = Platform.OS === 'ios' ? PickerIOS : PickerAndroid;
@@ -79,146 +81,9 @@ name: 'Surat',
 },
 };
 
-const DropDown = require('react-native-dropdown');
-const {
-  Select,
-  Option,
-  OptionList,
-} = DropDown;
-var MENU_HVR_COLOR = 'rgba(13, 23, 38, 1.0)';
 
 var message;
 
-var styles = StyleSheet.create({
-                               container: {
-                               flex: 1,
-                               alignItems: 'center',
-                               backgroundColor: 'rgba(8,26,60,0.9)'
-                               },
-
-                               toolbarrow: {
-                               flexDirection:'row',
-                               backgroundColor: '#fff',
-                               width:Dimensions.get('window').width,
-                               },
-                               row: {
-                               backgroundColor:'#122941',
-                               justifyContent: 'center',
-                               alignItems: 'center',
-                               flexDirection:'row',
-                               marginTop: 16,
-                               height:48,
-                               },
-                               msgrow: {
-                               backgroundColor:'#122941',
-                               justifyContent: 'center',
-                               flexDirection:'row',
-                               marginTop: 16,
-                               height:172,
-                               },
-
-                               col: {
-                               width:Dimensions.get('window').width,
-                               marginTop: 16,
-                               flexDirection:'column'
-                               },
-                               textstyle:{
-                               color: TEXT_COLOR,
-                               justifyContent: 'center',
-                               alignItems: 'center',
-                               fontSize: 16,
-                               width:100,
-                               },
-                               msgtextstyle:{
-                               color: TEXT_COLOR,
-                               justifyContent: 'center',
-                               alignItems: 'center',
-                               fontSize: 16,
-                               marginTop:16,
-                               width:100,
-
-
-                               },
-                               edittextstyle:{
-                               color: TEXT_COLOR,
-                               justifyContent: 'center',
-                               alignItems: 'center',
-                               fontSize: 16,
-                               width:Dimensions.get('window').width-100,
-
-                               },
-                               input:{
-                               color: TEXT_COLOR,
-                               height:140,
-                               fontSize: 16,
-                               marginTop:0,
-                               marginRight:8,
-                               width:Dimensions.get('window').width-132,
-                               textAlignVertical: 'top',
-                               backgroundColor:'#122941',
-                               },
-                               border:{
-                               borderWidth: 1,
-                               marginTop:8,
-                               marginRight:16,
-                               borderColor: '#fff',
-                               },
-
-                               dropdown:{
-                               fontSize: 16,
-                               marginRight:16,
-                               width:Dimensions.get('window').width-116,
-                               textAlignVertical: 'top',
-
-                               },
-
-                               button: {
-                               fontFamily: 'Century Gothic',
-                               backgroundColor: 'transparent',
-                               height: 48,
-                               fontSize: 16,
-                               marginTop: 12,
-                               color: MIDBLUE,
-                               },
-                               buttonWrap: {
-                               height:48,
-                               margin:8,
-                               width:100,
-                               marginTop:16,
-                               marginBottom:16,
-                               marginLeft:Dimensions.get('window').width/2-50,
-                               backgroundColor: 'rgba(255,255,255,1)',
-                               alignItems: 'center',
-                               },
-                               datestyle: {
-                               position: 'absolute',
-                               top: 12,
-                               bottom: 0,
-                               left: 100,
-                               right: 0,
-                               width: Dimensions.get('window').width,
-                               height: Dimensions.get('window').height,
-                               },
-                               branchstyle: {
-                               backgroundColor: '#fff',
-
-                               position: 'absolute',
-                               top: 0,
-                               bottom: 0,
-                               left: 0,
-                               right: 0,
-                               width: Dimensions.get('window').width,
-                               height: Dimensions.get('window').height,
-                               },
-
-                               selecteditemstyle: {
-                               color: '#f00',
-                               fontSize: 20,
-                               width:Dimensions.get('window').width-116,
-                               },
-
-
-                               });
 
 
 
@@ -256,42 +121,17 @@ class AddAppointment extends React.Component{
 
     return (
 
-            <View style={styles.container}>
-            <View style={styles.navbar}>
-            <TouchableHighlight
-            style={[styles.navButton,styles.navLeft]}
-            underlayColor={'#FFFFFF'}
-            activeOpacity={0.6}
-            >
-            <View style={styles.navButtonText}>
-            </View>
-            </TouchableHighlight>
-            
-            <Text style={styles.navTitle}>{this.props.title}</Text>
-            
-            <TouchableHighlight
-            style={[styles.navButton,styles.navRight]}
-            onPress={()=>{
-            this.props.navigator.pop();
-            }}
-            underlayColor={'#FFFFFF'}
-            activeOpacity={0.6}
-            >
-            <Text
-            style={[styles.navButtonText,{textAlign: 'right',fontSize:22}]}
-            >X</Text>
-            </TouchableHighlight>
-            </View>
-            <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
-
+            <View style={Skin.customeStyle.maincontainer}>
+            <StatusBar
+                 backgroundColor={Skin.colors.STATUS_BAR_COLOR}
+                 barStyle='light-content'/>
+            <ToolBar navigator={this.props.navigator} title={this.props.title}/>
             <ScrollView >
-            <View style={styles.row}>
-            <Text style={styles.textstyle}> Date : </Text>
-            <View
-            style={styles.dropdown} >
-            <Text style={styles.edittextstyle}>{this.state.date}</Text>
-            </View>
-            <Animated.View style={[styles.datestyle,{opacity:0}]}>
+
+            <View style={Skin.addappointment.row}>
+            <Text style={Skin.addappointment.textstyle}> Date : </Text>
+            <Text style={Skin.addappointment.edittextstyle}>{this.props.url.date}</Text>
+            <Animated.View style={[Skin.addappointment.datestyle,{opacity:0}]}>
             <DatePicker
             style={{width: 200}}
             date={this.state.date}
@@ -305,10 +145,10 @@ class AddAppointment extends React.Component{
             </Animated.View>
             </View>
 
-            <View style={styles.row}>
-            <Text style={styles.textstyle}> Time : </Text>
-            <Text style={styles.edittextstyle}>{this.state.time}</Text>
-            <Animated.View style={[styles.datestyle,{opacity:0}]}>
+            <View style={Skin.addappointment.row}>
+            <Text style={Skin.addappointment.textstyle}> Time : </Text>
+            <Text style={Skin.addappointment.edittextstyle}>{this.props.url.time}</Text>
+            <Animated.View style={[Skin.addappointment.datestyle,{opacity:0}]}>
             <DatePicker
             style={{width: 200}}
             date={this.state.time}
@@ -319,25 +159,22 @@ class AddAppointment extends React.Component{
 
             </Animated.View>
             </View>
-            <View style={styles.row}>
-            <Text style={styles.textstyle}> Location : </Text>
-            <View
-            style={styles.dropdown} >
+            <View style={Skin.addappointment.row}>
+            <Text style={Skin.addappointment.textstyle}> Location : </Text>
             <TouchableOpacity onPress={() => this.open()}>
-            <Text style={styles.edittextstyle}>{make.name}</Text>
+            <Text style={Skin.addappointment.edittextstyle}>{make.name}</Text>
             </TouchableOpacity>
             </View>
-            </View>
 
 
-            <View style={styles.msgrow}>
-            <Text style={styles.msgtextstyle}> Message : </Text>
-            <View style={styles.border}>
+            <View style={Skin.addappointment.msgrow}>
+            <Text style={Skin.addappointment.msgtextstyle}> Message : </Text>
+            <View style={Skin.addappointment.border}>
             <TextInput
             returnKeyType={'next'}
             placeholder={'Enter Message'}
-            placeholderTextColor={'#dbdbdb'}
-            style={styles.input}
+            placeholderTextColor={Skin.colors.HINT_COLOR}
+            style={Skin.addappointment.input}
             multiline ={true}
             >
             </TextInput>
@@ -346,24 +183,18 @@ class AddAppointment extends React.Component{
             </View>
 
 
-            <View style={{flexDirection:'row',}}>
             <TouchableHighlight
-            style={styles.buttonWrap}
-            underlayColor='#C7C7C7'
-            activeOpacity={1}
-            onPress={()=>{
-            }}
-            >
-            <Text style={styles.button}>
-            {this.props.url.buttontext}</Text>
-            </TouchableHighlight>
+              style={[Skin.customeStyle.roundcornerbutton]}
+              underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
+              activeOpacity={0.6}>
+                <Text style={Skin.customeStyle.button}>{this.props.url.buttontext}</Text>
+              </TouchableHighlight>
 
-            </View>
 
 
             </ScrollView >
             <Modal
-            style={styles.branchstyle}
+            style={Skin.addappointment.branchstyle}
             offset={this.state.offset}
             open={this.state.open}
             modalDidOpen={() => console.log('modal did open')}

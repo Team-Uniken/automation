@@ -38,6 +38,15 @@ var NAV_BAR_TINT = '#FFFFFF'
 var MENU_TXT_COLOR = '#2579A2';
 var ICON_COLOR = '#FFFFFF';
 
+var BACKGROUND_COLOR = '#fff';
+var BUTTON_BACKGROUND_COLOR = PRIMARY;
+var BORDER_COLOR = PRIMARY;
+var TITLE_COLOR = '#fff';
+var BLACK_TEXT_COLOR='#000';
+var ERROR_TEXT_COLOR = '#CC0000';
+var BUTTON_TEXT_COLOR = '#fff';
+
+
 //Fonts
 var CORE_FONT = 'Century Gothic';
 var ICON_FONT = 'icomoon';
@@ -46,6 +55,7 @@ var NAV_SHADOW_BOOL = true;
 //Speeds
 var SPEED = 0.4; //0.8
 var LOADSPEED = 0.3; //0.3
+
 
 
 //Titles
@@ -64,6 +74,16 @@ var text = {
 }
 
 var colors = {
+	STATUS_BAR_COLOR:DARK_PRIMARY,
+	TOOL_BAR_COLOR:PRIMARY,
+	BUTTON_UNDERLAY_COLOR : DARK_PRIMARY,
+	REPPLE_COLOR:'#E0E0E0',
+	HINT_COLOR :'#8F8F8F',
+
+	BLACK_TEXT_COLOR:BLACK_TEXT_COLOR,
+
+
+
 	DARK_PRIMARY : DARK_PRIMARY,
 	DARK_PRIMARY_RGB : DARK_PRIMARY_RGB,
 	BACK_GRAY: BACK_GRAY,
@@ -84,6 +104,442 @@ var colors = {
 }
 
 
+var customeStyle = StyleSheet.create({
+	maincontainer:{
+								flex:1,
+								backgroundColor:BACKGROUND_COLOR,
+							},
+					title:{
+								fontSize:22,
+								color:TITLE_COLOR,
+								marginTop:12,
+								fontWeight: 'bold',
+								width:SCREEN_WIDTH-96,
+								textAlign:'center',
+								textAlignVertical:'center',
+								},
+					title1:{
+									fontSize:22,
+									color:TITLE_COLOR,
+									marginTop:12,
+									fontWeight: 'bold',
+									width:SCREEN_WIDTH,
+									textAlign:'center',
+									textAlignVertical:'center',
+								},
+	remember:{
+    				color:BLACK_TEXT_COLOR,
+  					fontSize: 16,
+    				opacity:0.7,
+						margin:16,
+						width:SCREEN_WIDTH-80,
+					},
+	images: {
+						width: 24,
+						height: 24,
+						margin:12,
+    				opacity:0.7,
+					},
+	row: {
+				flexDirection:'row',
+				width:SCREEN_WIDTH,
+	},
+	wrap: {
+				position: 'absolute',
+				top: 10,
+				bottom: 0,
+				left: 0,
+				right: 0,
+				width: 50,
+				height: 50,
+	},
+
+  input: {
+					textAlign:'center',
+    			fontFamily: 'Century Gothic',
+    			fontSize:16,
+    			height:56,
+    			color: '#000',
+    			textAlignVertical:'top',
+    			alignItems: 'center',
+    			opacity:0.7,
+  			},
+  roundcorner: {
+    						height: 48,
+    						width: 280,
+  							marginTop:12,
+  							marginBottom:16,
+  							marginLeft:SCREEN_WIDTH/2-140,
+  							borderWidth: 1,
+  							borderColor: "#fff",
+  							backgroundColor: '#fff',
+  							borderRadius: 30,
+  					},
+	roundcornerbutton: {
+								height: 48,
+								width: 280,
+								marginTop:12,
+								marginBottom:16,
+								marginLeft:SCREEN_WIDTH/2-140,
+								borderWidth: 1,
+								borderColor: "#fff",
+								borderRadius: 30,
+								backgroundColor:BUTTON_BACKGROUND_COLOR,
+								},
+	roundcornerinput: {
+					    	height: 48,
+					    	width: 280,
+					  		marginTop:12,
+					  		marginBottom:16,
+					  		marginLeft:SCREEN_WIDTH/2-140,
+					  		borderWidth: 1,
+					  		borderColor:BORDER_COLOR,
+					  		backgroundColor: '#fff',
+					  		borderRadius: 30,
+					  		},
+  note:{
+				textAlign:'center',
+     		marginTop:16,
+     		color:BLACK_TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 16,
+     		opacity:0.4,
+     		width:SCREEN_WIDTH,
+  		},
+		errortext:{
+							textAlign:'center',
+							marginTop:16,
+							color: ERROR_TEXT_COLOR,
+							justifyContent: 'center',
+							alignItems: 'center',
+							fontSize: 14,
+							opacity:0.7,
+							width:SCREEN_WIDTH,
+							height:16,
+							},
+  text1:{
+				textAlign:'center',
+     		marginTop:16,
+     		color: BLACK_TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 16,
+     		opacity:0.7,
+     		width:SCREEN_WIDTH,
+  		},
+  text2:{
+     		marginTop:16,
+     		color: BLACK_TEXT_COLOR,
+     		justifyContent: 'center',
+		 		textAlign:'center',
+     		fontSize: 20,
+     		opacity:0.75,
+     		width:SCREEN_WIDTH,
+  		},
+  text3:{
+				textAlign:'center',
+				marginTop:16,
+     		color: BLACK_TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 24,
+     		opacity:0.9,
+     		width:SCREEN_WIDTH,
+  		},
+  text4:{
+				textAlign:'center',
+     		marginTop:16,
+     		color: BLACK_TEXT_COLOR,
+     		justifyContent: 'center',
+     		alignItems: 'center',
+     		fontSize: 34,
+     		width:SCREEN_WIDTH,
+  			},
+  button:{
+					textAlign:'center',
+     			marginTop:12,
+     			height:48,
+     			color:BUTTON_TEXT_COLOR,
+     			justifyContent: 'center',
+     			alignItems: 'center',
+     			fontSize: 16,
+  			},
+  div:{
+    		marginTop:16,
+    		width:SCREEN_WIDTH,
+    		backgroundColor: '#000',
+    		height:1,
+    		opacity:0.6,
+  },
+	div1:{
+				width:SCREEN_WIDTH,
+				backgroundColor: '#000',
+				height:1,
+				opacity:0.6,
+	},
+});
+
+var appointmentrow = StyleSheet.create({
+	customerow: {
+								backgroundColor:'#fff',
+								width:SCREEN_WIDTH,
+	},
+	row: {
+				margin:4,
+				flexDirection:'row',
+	},
+	col: {
+				marginRight:20,
+				flexDirection:'column'
+	},
+	floatbutton: {
+								width: 56,
+								height: 56,
+								borderRadius: 30,
+								backgroundColor:PRIMARY,
+								position: 'absolute',
+								bottom: 24,
+								right: 24,
+								},
+					plus: {
+								width: 24,
+								height: 24,
+								margin:16,
+								},
+					date: {
+								fontSize: 20,
+								color : BLACK_TEXT_COLOR,
+								width:SCREEN_WIDTH/2,
+								textAlign:'left',
+								opacity:0.7,
+								},
+				time: {
+							fontSize: 20,
+							color :BLACK_TEXT_COLOR,
+							width:SCREEN_WIDTH/2-16,
+							textAlign:'right',
+							marginRight:16,
+							opacity:0.7,
+							},
+		locatontext: {
+									fontSize: 16,
+									color : BLACK_TEXT_COLOR,
+									width:SCREEN_WIDTH,
+									opacity:0.5,
+									},
+		locationimage: {
+								width: 18,
+								height: 18,
+								marginTop:4,
+								opacity:0.5,
+							},
+
+		msg:{
+				color:BLACK_TEXT_COLOR,
+				justifyContent: 'center',
+				alignItems: 'center',
+				fontSize: 16,
+				opacity:0.4,
+				width:SCREEN_WIDTH,
+				marginLeft:24,
+			},
+	div1:{
+				width:SCREEN_WIDTH,
+				backgroundColor: '#000',
+				height:1,
+				opacity:0.6,
+	},
+});
+
+
+
+var questionrow = StyleSheet.create({
+	que: {
+			flex: 1,
+			marginTop:16,
+			width:SCREEN_WIDTH,
+			height:150,
+			backgroundColor:'#dbdbdb',
+			},
+	customerow: {
+			backgroundColor:'#fff',
+			marginTop:2,
+			width:SCREEN_WIDTH,
+			},
+	questyle:{
+			fontSize: 16,
+			color :BLACK_TEXT_COLOR,
+			opacity : 0.7,
+			height:40,
+			marginTop:6,
+			width:SCREEN_WIDTH,
+			textAlign:'center',
+			textAlignVertical:'center',
+			},
+                        });
+
+
+
+
+var appointmentrow = StyleSheet.create({
+	customerow: {
+								backgroundColor:'#fff',
+								width:SCREEN_WIDTH,
+	},
+	row: {
+				margin:4,
+				flexDirection:'row',
+	},
+	col: {
+				marginRight:20,
+				flexDirection:'column'
+	},
+	floatbutton: {
+								width: 56,
+								height: 56,
+								borderRadius: 30,
+								backgroundColor:PRIMARY,
+								position: 'absolute',
+								bottom: 24,
+								right: 24,
+								},
+					plus: {
+								width: 24,
+								height: 24,
+								margin:16,
+								},
+					date: {
+								fontSize: 20,
+								color : BLACK_TEXT_COLOR,
+								width:SCREEN_WIDTH/2,
+								textAlign:'left',
+								opacity:0.7,
+								},
+				time: {
+							fontSize: 20,
+							color :BLACK_TEXT_COLOR,
+							width:SCREEN_WIDTH/2-16,
+							textAlign:'right',
+							marginRight:16,
+							opacity:0.7,
+							},
+		locatontext: {
+									fontSize: 16,
+									color : BLACK_TEXT_COLOR,
+									width:SCREEN_WIDTH,
+									opacity:0.5,
+									},
+		locationimage: {
+								width: 18,
+								height: 18,
+								marginTop:4,
+								opacity:0.5,
+							},
+
+		msg:{
+				color:BLACK_TEXT_COLOR,
+				justifyContent: 'center',
+				alignItems: 'center',
+				fontSize: 16,
+				opacity:0.4,
+				width:SCREEN_WIDTH,
+				marginLeft:24,
+			},
+	div1:{
+				width:SCREEN_WIDTH,
+				backgroundColor: '#000',
+				height:1,
+				opacity:0.6,
+	},
+});
+
+
+
+var addappointment = StyleSheet.create({
+                               row: {
+                               backgroundColor:'transparent',
+                               justifyContent: 'center',
+                               alignItems: 'center',
+                               flexDirection:'row',
+                               marginTop: 16,
+                               height:48,
+                               },
+                               msgrow: {
+                               backgroundColor:'transparent',
+                               justifyContent: 'center',
+                               flexDirection:'row',
+                               marginTop: 16,
+                               height:172,
+                               },
+                               col: {
+                               width:SCREEN_WIDTH,
+                               marginTop: 16,
+                               flexDirection:'column'
+                               },
+                               textstyle:{
+                               color: BLACK_TEXT_COLOR,
+                               justifyContent: 'center',
+                               alignItems: 'center',
+                               fontSize: 16,
+                               width:100,
+                               opacity:0.6,
+                               },
+                               msgtextstyle:{
+                               color: BLACK_TEXT_COLOR,
+                               justifyContent: 'center',
+                               alignItems: 'center',
+                               fontSize: 16,
+                               marginTop:16,
+                               width:100,
+                               opacity:0.6,
+                               },
+                               edittextstyle:{
+                               color: BLACK_TEXT_COLOR,
+                               justifyContent: 'center',
+                               alignItems: 'center',
+                               fontSize: 16,
+                               width:SCREEN_WIDTH-100,
+                               opacity:0.6,
+                               },
+                               input:{
+                               color:BLACK_TEXT_COLOR,
+                               height:140,
+                               fontSize: 16,
+                               marginTop:0,
+                               marginRight:8,
+                               width:SCREEN_WIDTH-132,
+                               textAlignVertical: 'top',
+                               backgroundColor:'transparent',
+                               opacity:0.6,
+
+                               },
+                               border:{
+                               borderWidth: 1,
+                               marginTop:8,
+                               marginRight:16,
+                               borderColor: PRIMARY,
+                               },
+                               datestyle: {
+                               position: 'absolute',
+                               top: 12,
+                               bottom: 0,
+                               left: 100,
+                               right: 0,
+                               width: SCREEN_WIDTH,
+                               height: SCREEN_HEIGHT,
+                               },
+                               branchstyle: {
+                               backgroundColor: '#fff',
+                               position: 'absolute',
+                               top: 0,
+                               bottom: 0,
+                               left: 0,
+                               right: 0,
+                               width:SCREEN_WIDTH,
+                               height:SCREEN_HEIGHT,
+                               },
+                        });
 
 //Positions
 var leftrid = 23;
@@ -565,6 +1021,16 @@ var nav = {
 
 
 module.exports = {
+	SCREEN_WIDTH : SCREEN_WIDTH,
+	SCREEN_HEIGHT : SCREEN_HEIGHT,
+
+	customeStyle:customeStyle,
+	appointmentrow:appointmentrow,
+	addappointment:addappointment,
+	questionrow:questionrow,
+
+
+
   coreStyle : coreStyle,
   logStyle : logStyle,
   progStyle : progStyle,
