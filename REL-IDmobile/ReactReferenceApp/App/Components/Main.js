@@ -107,8 +107,8 @@ class Main extends React.Component{
    * @return {JSX}
    */
   render() {
-    console.log('main')
-    console.log(this)
+    //console.log('main')
+    //console.log(this)
     return (
       <Drawer
         ref={c => this.drawer = c}

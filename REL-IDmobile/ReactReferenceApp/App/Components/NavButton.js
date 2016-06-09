@@ -13,8 +13,8 @@ const {
 export default class NavButton extends Component {
   render() {
     const { icon, title, tint, iconStyle, textStyle, handler, left} = this.props;
-    console.log('navbutton')
-    console.log(handler);
+    //console.log('navbutton')
+    //console.log(handler);
     if (left){
       return (
         <TouchableOpacity style={styles.navBarButton} onPress={handler}>
