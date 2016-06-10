@@ -21,8 +21,9 @@ var ToolBar = require('../ToolBarWithoutCross');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var Events = require('react-native-simple-events');
 var ProgressBar = require('react-native-progress-bar');
+var ConnectionProfile = require('../ConnectionProfile');
 
-/* 
+/*
 	INSTANCES
 */
 var responseJson;
@@ -214,6 +215,7 @@ class UserLogin extends React.Component{
 	render() {
 		return (
 			<View style={Skin.coreStyle.container}>
+
 			    <View style={Skin.loadStyle.bgbase}></View>
 	            <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
             	<View style={Skin.statusBarStyle.default}>
@@ -264,6 +266,13 @@ class UserLogin extends React.Component{
             			<OpenLinks/>
             		</View>
 				</View>
+				<TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
+					onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}>
+			<View>
+			<Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />
+			</View>
+			</TouchableHighlight>
+
 			</View>
 		);
 	}

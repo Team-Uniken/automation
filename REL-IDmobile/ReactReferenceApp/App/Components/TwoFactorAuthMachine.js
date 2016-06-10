@@ -30,9 +30,11 @@ var Constants = require('./Constants');
 var Events = require('react-native-simple-events');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+var ConnectionProfile = require('./ConnectionProfile');
+var Load = require('./Load');
 
 
-/* 
+/*
   Instantiaions
 */
 var challengeJson;
@@ -166,7 +168,9 @@ class TwoFactorAuthMachine extends React.Component{
     }
     else if (id == "devbind"){
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title}/>);
-    }
+  }else if (id == "ConnectionProfile"){
+   return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title}/>);
+  }
   }
 
   render() {

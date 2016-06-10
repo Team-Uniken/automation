@@ -42,8 +42,8 @@ class DeviceBinding extends React.Component{
 	check(){
 		if(check==false){
 			check=true;
-      this.setState({type: 'Parmanent'});
-			type='Parmanent';
+      this.setState({type: 'Permanent'});
+			type='Permanent';
 			Animated.sequence([
 				Animated.timing(this.state.opa, {
 					toValue: 1,

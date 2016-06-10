@@ -16,9 +16,9 @@ var UserLogin = require('./challenges/UserLogin');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+var erelid = require('../../erelid.json');
 
-
-/* 
+/*
   Instantiaions
 */
 var initSuc = false, isRunAfterInteractions = false;
@@ -45,7 +45,7 @@ var {
   InteractionManager,
   Dimensions,
   StatusBar,
-  // ProgressViewIOS,
+  AsyncStorage,
 } = React;
 
 
@@ -73,9 +73,9 @@ class Load extends React.Component{
     this.props.navigator.push(route)
   }
   componentDidMount() {
-    
+
     Obj = this;
-    
+
     DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
         console.log('immediate response is' + e.response);
         responseJson = JSON.parse(e.response);
@@ -93,9 +93,65 @@ class Load extends React.Component{
         }
     });
 
-    
-    this.doInitialize();
-    
+    AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
+
+         profiles = JSON.parse(profiles);
+
+         if ((profiles == null) || (profiles.length == 0)) {
+           console.log("NOT FOUND !!!!!!!!, hence import connection profiles now");
+
+           var profileArray = erelid.Profiles;
+           var relidArray = erelid.RelIds;
+
+           for (let i = 0; i < profileArray.length; i++) {
+               var RelIdName = profileArray[i].RelId;
+
+               for(let j = 0; j < relidArray.length; j++) {
+                 if (RelIdName === relidArray[j].Name) {
+                   profileArray[i].RelId = relidArray[j].RelId;
+
+                 }
+               }
+           }
+
+           AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profileArray), () => {
+
+             AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
+               importedProfiles = JSON.parse(importedProfiles);
+
+               AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
+                 this.doInitialize();
+
+               });
+             });
+           });
+
+         }
+         else {
+
+           AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+              currentProfile = JSON.parse(currentProfile);
+              if (currentProfile != null || currentProfile.length>0) {
+                this.doInitialize();
+              } else {
+
+                AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
+                  importedProfiles = JSON.parse(importedProfiles);
+
+                  AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
+                    this.doInitialize();
+
+                  });
+                });
+              }
+          });
+
+         }
+
+       });
+
+    // this.doInitialize();
+
     Animated.sequence([
                        Animated.parallel([
                                           Animated.timing(this.state.r_opac_val, {
@@ -168,30 +224,41 @@ class Load extends React.Component{
                                                           }),
                                           ])
                        ]).start();
-    
-    
+
+
     InteractionManager.runAfterInteractions(() => {
       isRunAfterInteractions = true;
       Obj.onInitCompleted();
     });
-    
-  }
-  
 
-  
+  }
+
+
+
   doInitialize() {
       console.log('Initialize RDNA');
       var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
       var jsonProxySettings = JSON.stringify(proxySettings);
-      ReactRdna.initialize(ReactRdna.agentInfo, ReactRdna.GatewayHost, ReactRdna.GatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
-          if (response) {
-              console.log('immediate response is' + response[0].error);
-              // alert(response[0].error);
-          } else {
-              console.log('immediate response is' + response[0].error);
-              // alert(response[0].error);
-          }
-      })
+    AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+
+                         currentProfile = JSON.parse(currentProfile);
+
+                         let currentAgentInfo = currentProfile.RelId;
+                         let currentGatewayHost = currentProfile.Host;
+                         let currentGatewayPort = currentProfile.Port;
+
+                         ReactRdna.initialize(currentAgentInfo,currentGatewayHost,parseInt(currentGatewayPort),ReactRdna.RdnaCipherSpecs,ReactRdna.RdnaCipherSalt,jsonProxySettings,(response) => {
+                                              if (response) {
+                                              console.log('immediate response is'+response[0].error);
+                                              // alert(response[0].error);
+                                              }else{
+                                              console.log('immediate response is'+response[0].error);
+                                              // alert(response[0].error);
+                                              }
+                                              })
+
+
+                         });
   }
 
   onInitCompleted(){
@@ -203,7 +270,7 @@ class Load extends React.Component{
         alert(initErrorMsg);
     }
   }
-  
+
   doNavigation() {
       /*while (!initSuc) {
        //console.log('DNA initializing');
@@ -218,7 +285,7 @@ class Load extends React.Component{
   */
 
   render() {
-    
+
     return (
       <View style={Skin.loadStyle.container}>
         <View style={Skin.loadStyle.bgbase}></View>
@@ -247,10 +314,10 @@ class Load extends React.Component{
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.relid_text_opac}]}>Secure Access Established</Animated.Text>
           </View>
         </View>
-      </View>     
+      </View>
     );
   }
-  
+
 };
 
 
