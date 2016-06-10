@@ -13,9 +13,9 @@ import NavButton from './NavButton';
 import Drawer from 'react-native-drawer';
 
 
-import styles from Skin.styles;
+//import styles from Skin.styles;
 import Load from './Load';
-import Accounts from './Accounts';
+import Accounts from '../Scenes/Accounts';
 
 var {
   View,

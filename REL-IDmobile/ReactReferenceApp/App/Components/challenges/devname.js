@@ -50,7 +50,7 @@ class DevName extends React.Component{
   }
 
   componentDidMount(){
-    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
+//    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
     this.setState({deviceName: this.props.url.chlngJson.chlng_resp[0].response});
   }
 
@@ -92,7 +92,6 @@ class DevName extends React.Component{
 
 					       <TextInput
 					         autoCorrect={false}
-					         ref='activatonCode'
 					         placeholder={'Enter name of the device'}
 					         placeholderTextColor={'#8F8F8F'}
 					         style={Skin.customeStyle.input}

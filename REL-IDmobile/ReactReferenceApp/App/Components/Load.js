@@ -272,7 +272,7 @@ class Load extends React.Component{
                          let currentGatewayHost = currentProfile.Host;
                          let currentGatewayPort = currentProfile.Port;
 
-                         ReactRdna.initialize(currentAgentInfo,currentGatewayHost,parseInt(currentGatewayPort),ReactRdna.RdnaCipherSpecs,ReactRdna.RdnaCipherSalt,jsonProxySettings,(response) => {
+                         ReactRdna.initialize(currentAgentInfo,currentGatewayHost,currentGatewayPort,ReactRdna.RdnaCipherSpecs,ReactRdna.RdnaCipherSalt,jsonProxySettings,(response) => {
                                               if (response) {
                                               console.log('immediate response is'+response[0].error);
                                               // alert(response[0].error);

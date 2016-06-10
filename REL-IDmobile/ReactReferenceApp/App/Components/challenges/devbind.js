@@ -31,6 +31,7 @@ var {
 	StatusBar,
 } = React;
 
+var responseJson;
 class DeviceBinding extends React.Component{
 	btnText(){
 		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
@@ -51,7 +52,7 @@ class DeviceBinding extends React.Component{
 		if(check==false){
 			check=true;
       this.setState({type: 'Permanent'});
-			type='Permanent';
+//			type='Permanent';
 			Animated.sequence([
 				Animated.timing(this.state.opa, {
 					toValue: 1,
@@ -63,7 +64,7 @@ class DeviceBinding extends React.Component{
 		}else{
 			check=false;
       this.setState({type: 'Temporary'});
-			type='Temporary';
+//			type='Temporary';
 
 			Animated.sequence([
 				Animated.timing(this.state.opa, {

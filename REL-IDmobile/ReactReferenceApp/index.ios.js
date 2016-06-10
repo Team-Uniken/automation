@@ -33,8 +33,8 @@ import { FormattedWrapper } from 'react-native-globalize';
 
 import Dimensions from 'Dimensions';
 import PixelRatio from 'PixelRatio';
-import Accounts from './App/Components/Accounts';
-import Demo from './App/Components/Demo';
+import Accounts from './App/Scenes/Accounts';
+import Demo from './App/Components/demo';
 
 
 import Activation from './App/Components/challenges/Activation';
@@ -45,8 +45,6 @@ import ActivateNewDevice from './App/Components/ActivateNewDevice';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from './App/Components/ConnectionProfile';
 
-const buildStyleInterpolator = require('buildStyleInterpolator');
-const {
 
 var SCREEN_WIDTH = Dimensions.get('window').width;
 var SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -106,7 +104,7 @@ class ReactRefApp extends React.Component {
     let id = route.id;
 
     if (id === 'Load') {
-      id = 'Activation';
+//      id = 'Activation';
       // id = 'Accounts'
     }
 
