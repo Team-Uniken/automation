@@ -15,7 +15,6 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 */
 var buildStyleInterpolator = require('buildStyleInterpolator');
 var Main = require('./Main');
-var Password = require('./challenges/Password');
 var Otp = require('./challenges/Otp');
 var SetQue = require('./challenges/SetQue');
 var UserLogin = require('./challenges/UserLogin');
@@ -28,6 +27,7 @@ var Events = require('react-native-simple-events');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
+import PasswordSet from './challenges/PasswordSet';
 import Activation from './challenges/Activation';
 
 
@@ -149,7 +149,7 @@ class TwoFactorAuthMachine extends React.Component{
       if(challengeOperation == Constants.CHLNG_VERIFICATION_MODE)
         return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
       else
-        return (<Password navigator={nav} url={route.url} title={route.title}/>);
+        return (<PasswordSet navigator={nav} url={route.url} title={route.title}/>);
     }
     else if (id == "otp"){
       return (<Otp navigator={nav} url={route.url} title={route.title}/>);

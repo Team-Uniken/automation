@@ -24,6 +24,7 @@ import Web from './App/Components/Web';
 import QBank from './App/Components/Qbank';
 import ComingSoon from './App/Components/ComingSoon';
 import UserLogin from './App/Components/challenges/UserLogin';
+import PasswordSet from './App/Components/challenges/PasswordSet';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
@@ -70,8 +71,10 @@ class ReactRefApp extends React.Component {
     let id = route.id;
 
     if (id === 'Load') {
-      id = 'Activation';
+      // id = 'PasswordSet';
       // id = 'Accounts'
+      // id = 'UserLogin';
+      // id = 'Activation';
     }
 
     // MAIN SCENES
@@ -109,6 +112,8 @@ class ReactRefApp extends React.Component {
     // SECURITY SCENES
     } else if (id === 'Activation') {
       return (<Activation navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'PasswordSet') {
+      return (<PasswordSet navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'UserLogin') {
       return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'PasswordVerification') {

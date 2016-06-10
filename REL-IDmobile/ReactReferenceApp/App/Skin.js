@@ -10,6 +10,18 @@ var React = require('react-native');
 //var styles = Skin.styles;
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+var MAX_WIDTH = 300;
+var MAX_HEIGHT = 600;
+let max = {
+  width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
+  height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
+}
+
+// Open Links
+const open = {
+	BRANCH_SEARCH_LINK: 'https://www.google.com/maps/search/atms/@40.6913134,-74.0725296,13z/data=!3m1!4b1',
+	WEBSITE_LINK: 'http://www.uniken.com',
+}
 
 //Called
 var {
@@ -121,7 +133,7 @@ var coreStyle = StyleSheet.create({
 	},
 	rid_wrap: {
 		alignItems: 'center',
-		flex: 1,
+		
 		justifyContent: 'center',
 		flexDirection: 'column',
 		backgroundColor: 'rgba(50,250,250,0)',
@@ -269,7 +281,7 @@ var logStyle = StyleSheet.create({
 		backgroundColor: 'rgba('+DARK_PRIMARY_RGB+',0.54)',
 	},
 	button:{
-		height: 50,
+		height: 60,
 		backgroundColor: TEXT_COLOR,
 		flex: 1,
 	},
@@ -566,6 +578,88 @@ var nav = {
 };
 
 
+let activationStyle = StyleSheet.create({
+  maincontainer: {
+    flex: 1,
+  },
+  centering_wrap: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  wrap: {
+    flexDirection: 'column',
+    width: max.width,
+    height: max.height,
+    justifyContent: 'flex-start',
+  },
+  counter: {
+    fontSize: 14,
+    color: TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 20,
+    color: TEXT_COLOR,
+  },
+  info: {
+    fontSize: 16,
+    color: TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 20,
+  },
+
+
+
+  input_wrap: {
+    flexDirection: 'row',
+    marginTop: 20,
+    backgroundColor: 'transparent',
+  },
+  textinput_wrap: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+    backgroundColor: 'rgba('+DARK_PRIMARY_RGB+',0.54)',
+  },
+  textinput: {
+    flex: 1,
+    fontSize: 22,
+    color: TEXT_COLOR,
+    textAlign: 'center',
+  },
+  textinput_lead: {
+    flex: 1,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    fontSize: 24,
+  },
+
+
+
+  button: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 60,
+    backgroundColor: TEXT_COLOR,
+  },
+  buttontext:{
+    flex: 1,
+    fontSize: 22,
+    color: PRIMARY,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
+
 
 
 module.exports = {
@@ -575,9 +669,11 @@ module.exports = {
   loadStyle : loadStyle,
   transforms : transforms,
   nav: nav,
+  open: open,
   spd : SPEED,
   loadspd: LOADSPEED,
   controlStyle: controlStyle,
+  activationStyle: activationStyle,
   colors: colors,
   statusBarStyle: statusBarStyle,
   text : text,

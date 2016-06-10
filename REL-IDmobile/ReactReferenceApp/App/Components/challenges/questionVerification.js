@@ -2,7 +2,6 @@ var React = require('react-native');
 var TEXT_COLOR = '#FFFFFF';
 var MIDBLUE = '#2579A2';
 var ToolBar = require('../ToolBar');
-var Password = require('./Password');
 var Events = require('react-native-simple-events');
 var {customeStyle, styles} = require("../MainStyleSheet");
 

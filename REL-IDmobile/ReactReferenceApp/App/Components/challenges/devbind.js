@@ -3,7 +3,6 @@
 var React = require('react-native');
 var {customeStyle, styles} = require("../MainStyleSheet");
 var ToolBar = require('../ToolBar');
-var Password = require('./Password');
 var Events = require('react-native-simple-events');
 
 var check=false;

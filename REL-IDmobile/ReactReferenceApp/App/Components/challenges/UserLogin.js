@@ -13,8 +13,10 @@ import Skin from '../../Skin';
   CALLED
 */
 import Main from '../Main';
+import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
+import dismissKeyboard from 'dismissKeyboard';
 
 /*
 var Web = require('../Web');
@@ -51,6 +53,7 @@ var {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
+  TouchableWithoutFeedback,
 /*  StatusBarIOS,
   TouchableOpacity,
   ProgressViewIOS,
@@ -214,63 +217,57 @@ class UserLogin extends React.Component{
       this.refs[fieldName].setNativeProps({ text: '' });
   }
 
+  dismiss() {
+        dismissKeyboard();
+  }
 
   render() {
     return (
-      <View style={Skin.coreStyle.container}>
-          <View style={Skin.loadStyle.bgbase}></View>
-              <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
-              <View style={Skin.statusBarStyle.default}>
-            <StatusBar
-                  barStyle='light-content'
-                />
-              </View>
-              <View style={Skin.loadStyle.bgcolorizer}></View>
-              <View style={Skin.logStyle.wrap}>
-                <View style={Skin.logStyle.top_wrap}>
-                    <Animated.View style={Skin.coreStyle.rid_wrap}>
-                <View style={Skin.coreStyle.rid_center}>
-                  <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_r]}>g</Text>
-                  <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_i]}>h</Text>
-                  <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_d]}>i</Text>
-                </View>
-              </Animated.View>
-                </View>
-                <View style={Skin.logStyle.mid_wrap}>
-                  <View style={Skin.logStyle.input_wrap}>
-                    <View style={Skin.logStyle.textinput_wrap}>
-                      <TextInput
-                  ref='inputUsername'
-                  returnKeyType={'next'}
-                  autoCorrect={false}
-                  keyboardType={'email-address'}
-                  placeholder={'Username'}
-                  placeholderTextColor={'rgba(255,255,255,0.7)'}
-                  style={Skin.logStyle.textinput}
-                  value={this.state.inputUsername}
-                  onSubmitEditing={this.checkUsername.bind(this)}
-                  onChange={this.onUsernameChange.bind(this)}
-                />
-              </View>
-                  </View>
-                  <View style={Skin.logStyle.input_wrap}>
-              <TouchableHighlight
-                style={Skin.logStyle.button}
-                onPress={this.checkUsername.bind(this)}
-                underlayColor={'#082340'}
-                activeOpacity={0.6}
-              >
-                <Text style={Skin.logStyle.button_text}>LOGIN</Text>
-              </TouchableHighlight>
-                  </View>
-                </View>
-                <View style={Skin.logStyle.bot_wrap}>
-                  <OpenLinks/>
-                </View>
+      <MainActivation>
+        <Animated.View style={[Skin.coreStyle.rid_wrap,{marginTop:70}]}>
+          <View style={Skin.coreStyle.rid_center}>
+            <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_r]}>g</Text>
+            <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_i]}>h</Text>
+            <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_d]}>i</Text>
+          </View>
+        </Animated.View>
+
+        <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
+          <View style={Skin.activationStyle.textinput_wrap}>
+            <TextInput
+              ref='inputUsername'
+              returnKeyType={'next'}
+              autoCorrect={false}
+              autoCapitalize={'none'}
+              keyboardType={'email-address'}
+              placeholder={'Username'}
+              placeholderTextColor={'rgba(255,255,255,0.7)'}
+              style={Skin.activationStyle.textinput}
+              value={this.state.inputUsername}
+              onSubmitEditing={this.checkUsername.bind(this)}
+              onChange={this.onUsernameChange.bind(this)}
+            />
+          </View>
         </View>
-      </View>
+
+        <View style={Skin.activationStyle.input_wrap}>
+          <TouchableHighlight
+            style={Skin.activationStyle.button}
+            onPress={this.checkUsername.bind(this)}
+            underlayColor={'#082340'}
+            activeOpacity={0.6}
+          >
+            <Text style={Skin.activationStyle.buttontext}>
+              LOGIN
+            </Text>
+          </TouchableHighlight>
+        </View>
+
+        <OpenLinks />
+
+      </MainActivation>
     );
   }
-};
+}
 
 module.exports = UserLogin;
