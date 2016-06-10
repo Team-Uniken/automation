@@ -15,7 +15,7 @@ import FindBranchScene from './App/Scenes/FindBranch';
 import AppointmentsScene from './App/Scenes/Appointments';
 
 // SECURITY SCENES
-import ActivationScene from './App/Components/challenges/Activation';
+import Activation from './App/Components/challenges/Activation';
 
 // COMPONENTS
 import Device from './App/Components/device';
@@ -70,7 +70,7 @@ class ReactRefApp extends React.Component {
     let id = route.id;
 
     if (id === 'Load') {
-      //id = 'Activation';
+      id = 'Activation';
       // id = 'Accounts'
     }
 
@@ -93,8 +93,6 @@ class ReactRefApp extends React.Component {
       return (<Load navigator={nav} />);
 
     // SECONDARY SCENES
-    } else if (id === 'Activation') {
-      return (<ActivationScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Web') {
       return (<Web navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ComingSoon') {
@@ -109,6 +107,8 @@ class ReactRefApp extends React.Component {
       return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);
 
     // SECURITY SCENES
+    } else if (id === 'Activation') {
+      return (<Activation navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'UserLogin') {
       return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'PasswordVerification') {

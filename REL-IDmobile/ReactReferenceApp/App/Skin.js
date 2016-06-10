@@ -256,9 +256,11 @@ var logStyle = StyleSheet.create({
 	},
 	textinput_wrap:{
 		flex:1,
+		flexDirection: 'row',
 	},
 	textinput: {
 		//fontFamily: CORE_FONT,
+		flex: 1,
 		height: 50,
 		fontSize: 22,
 		paddingLeft: 10,
@@ -562,6 +564,8 @@ var nav = {
 	}
 
 };
+
+
 
 
 module.exports = {

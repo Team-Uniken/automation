@@ -14,22 +14,21 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
   CALLED
 */
 var buildStyleInterpolator = require('buildStyleInterpolator');
-var Activation = require('./challenges/Activation');
 var Main = require('./Main');
 var Password = require('./challenges/Password');
 var Otp = require('./challenges/Otp');
 var SetQue = require('./challenges/SetQue');
-var Machine = require('./TwoFactorAuthMachine');
 var UserLogin = require('./challenges/UserLogin');
 var PasswordVerification = require('./challenges/PasswordVerification');
 var QuestionVerification = require('./challenges/questionVerification');
 var DeviceBinding = require('./challenges/devbind');
 var DeviceName = require('./challenges/devname');
-var EventEmitter = require('EventEmitter');
 var Constants = require('./Constants');
 var Events = require('react-native-simple-events');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
+import Activation from './challenges/Activation';
 
 
 /* 
@@ -144,7 +143,7 @@ class TwoFactorAuthMachine extends React.Component{
       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
     }
     else if (id == "actcode"){
-      return (<Activation navigator={nav} url={route.url} title={route.title}/>);
+      return (<Activation navigator={nav} url={route.url} title={route.title} />);
     }
     else if (id == "pass"){
       if(challengeOperation == Constants.CHLNG_VERIFICATION_MODE)
