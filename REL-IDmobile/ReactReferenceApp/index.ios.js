@@ -70,7 +70,7 @@ class ReactRefApp extends React.Component {
     let id = route.id;
 
     if (id === 'Load') {
-      id = 'Activation';
+      //id = 'Activation';
       // id = 'Accounts'
     }
 
