@@ -667,7 +667,7 @@ var customeStyle = StyleSheet.create({
     //backgroundColor:BACKGROUND_COLOR,
   },
   remember:{
-    color:mycolor.TEXT_COLOR,
+    color: TEXT_COLOR,
     fontSize: 16,
     opacity:0.7,
     margin:16,
@@ -716,7 +716,7 @@ var customeStyle = StyleSheet.create({
   note:{
     textAlign:'center',
     marginTop:16,
-    color:mycolor.TEXT_COLOR,
+    color: TEXT_COLOR,
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 16,
@@ -726,7 +726,7 @@ var customeStyle = StyleSheet.create({
   text1:{
     textAlign:'center',
     marginTop:16,
-    color: mycolor.TEXT_COLOR,
+    color: TEXT_COLOR,
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 16,
@@ -735,7 +735,7 @@ var customeStyle = StyleSheet.create({
   },
   text2:{
     marginTop:16,
-    color: mycolor.TEXT_COLOR,
+    color: TEXT_COLOR,
     justifyContent: 'center',
     textAlign:'center',
     fontSize: 20,
