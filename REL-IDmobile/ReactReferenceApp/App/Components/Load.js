@@ -258,6 +258,33 @@ class Load extends React.Component{
 
   }
 
+  _handleAppStateChange(currentAppState) {
+    
+    if(currentAppState=='background'){
+      ReactRdna.pauseRuntime((response) => {
+                             if (response) {
+                             if(response[0].error == 0){
+                             AsyncStorage.setItem("savedContext", response[0].response);
+                             }
+                             console.log('immediate response is'+response[0].error);
+                             }else{
+                             console.log('immediate response is'+response[0].error);
+                             }
+                             })
+    }else if(currentAppState=='active'){
+      var proxySettings ;
+      var jsonProxySettings = JSON.stringify(proxySettings);
+      AsyncStorage.getItem("savedContext").then((value) => {
+                                                ReactRdna.resumeRuntime(value,jsonProxySettings,(response) => {
+                                                                        if (response) {
+                                                                        console.log('immediate response is'+response[0].error);
+                                                                        }else{
+                                                                        console.log('immediate response is'+response[0].error);
+                                                                        }
+                                                                        })
+                                                }).done();
+    }
+  }
 
 
   doInitialize() {

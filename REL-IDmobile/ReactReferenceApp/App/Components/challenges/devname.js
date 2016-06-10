@@ -30,7 +30,7 @@ var {
 	StatusBar,
 } = React;
 
-
+var responseJson;
 class DevName extends React.Component{
 	btnText(){
 		console.log('------ devname ' + this.props.url.chlngJson.chlng_idx+  this.props.url.chlngsCount );
@@ -88,18 +88,17 @@ class DevName extends React.Component{
 					       style={[Skin.customeStyle.roundcornerinput]}
 					        activeOpacity={0.6}
 					       >
-								 <KeyboardAwareScrollView>
 
 					       <TextInput
-					         autoCorrect={false}
-					         placeholder={'Enter name of the device'}
-					         placeholderTextColor={'#8F8F8F'}
-					         style={Skin.customeStyle.input}
-									 ref='deviceName'
-									 value={this.state.deviceName}
-									 onChange={this.onDeviceNameChange.bind(this)}
+                  autoCorrect={false}
+                  placeholder={'Enter name of the device'}
+                  placeholderTextColor={'#8F8F8F'}
+                  style={Skin.customeStyle.input}
+                  ref='deviceName'
+                  value={this.state.deviceName}
+                  onChange={this.onDeviceNameChange.bind(this)}
 					       />
-								 </KeyboardAwareScrollView>
+
 
 					       </View>
 

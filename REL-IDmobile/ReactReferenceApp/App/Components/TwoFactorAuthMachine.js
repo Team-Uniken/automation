@@ -112,7 +112,7 @@ class TwoFactorAuthMachine extends React.Component{
             RDNARequestUtility.setHttpProxyHost('127.0.0.1',pPort,(response) => {});
           }
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1,1));
-          this.props.navigator.push({id: "Device", title:'DashBoard', url:''});
+          this.props.navigator.push({id: "Main", title:'DashBoard', url:''});
         }
 
       }else{
