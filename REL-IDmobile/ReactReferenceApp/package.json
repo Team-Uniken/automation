@@ -17,6 +17,7 @@
     "react-native-drawer": "^2.0.0",
     "react-native-dropdown": "0.0.6",
     "react-native-extra-dimensions-android": "^0.17.0",
+    "react-native-floating-label-text-input": "0.0.9",
     "react-native-gifted-messenger": "*",
     "react-native-globalize": "^0.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.1.0",

@@ -12,16 +12,15 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
  CALLED
  */
 var Main = require('./Main');
-//var Menu = require('./Menu');
 var UserLogin = require('./challenges/UserLogin');
-//var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
+var erelid = require('../../erelid.json');
 
 /*
- Instantiaions
- */
+  Instantiaions
+*/
+
 var initSuc = false, isRunAfterInteractions = false;
 var initCount = 0;
 var initSuccess = 2, initError = 3;
@@ -49,7 +48,6 @@ var {
   AppState,
   AsyncStorage,
   Navigator,
-  // ProgressViewIOS,
 } = React;
 
 
@@ -77,27 +75,10 @@ class Load extends React.Component{
     this.props.navigator.push(route)
   }
   componentDidMount() {
-    
+
     Obj = this;
     
     AppState.addEventListener('change', this._handleAppStateChange);
-    
-    DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
-                                   console.log('immediate response is' + e.response);
-                                   responseJson = JSON.parse(e.response);
-                                   if (responseJson.errCode == 0) {
-                                   initCount = initSuccess;
-                                   chlngJson = responseJson.pArgs.response.ResponseData;
-                                   nextChlngName = chlngJson.chlng[0].chlng_name
-                                   Obj.onInitCompleted();
-                                   console.log('--------- onInitializeCompleted initCount ' + initCount);
-                                   } else {
-                                   initCount = initError;
-                                   initErrorMsg = ' Error code ' + responseJson.errCode + '. Please restart application.';
-                                   console.log('--------- onInitializeCompleted initCount ' + initCount);
-                                   Obj.onInitCompleted();
-                                   }
-                                   });
     
     DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
                                    console.log('immediate response is'+e.response);
@@ -122,8 +103,79 @@ class Load extends React.Component{
                                    }
                                    });
     
-    
-    this.doInitialize();
+    DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
+        console.log('immediate response is' + e.response);
+        responseJson = JSON.parse(e.response);
+        if (responseJson.errCode == 0) {
+            initCount = initSuccess;
+            chlngJson = responseJson.pArgs.response.ResponseData;
+            nextChlngName = chlngJson.chlng[0].chlng_name
+            Obj.onInitCompleted();
+            console.log('--------- onInitializeCompleted initCount ' + initCount);
+        } else {
+            initCount = initError;
+            initErrorMsg = ' Error code ' + responseJson.errCode + '. Please restart application.';
+            console.log('--------- onInitializeCompleted initCount ' + initCount);
+            Obj.onInitCompleted();
+        }
+    });
+
+    AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
+
+         profiles = JSON.parse(profiles);
+
+         if ((profiles == null) || (profiles.length == 0)) {
+           console.log("NOT FOUND !!!!!!!!, hence import connection profiles now");
+
+           var profileArray = erelid.Profiles;
+           var relidArray = erelid.RelIds;
+
+           for (let i = 0; i < profileArray.length; i++) {
+               var RelIdName = profileArray[i].RelId;
+
+               for(let j = 0; j < relidArray.length; j++) {
+                 if (RelIdName === relidArray[j].Name) {
+                   profileArray[i].RelId = relidArray[j].RelId;
+
+                 }
+               }
+           }
+
+           AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profileArray), () => {
+
+             AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
+               importedProfiles = JSON.parse(importedProfiles);
+
+               AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
+                 this.doInitialize();
+
+               });
+             });
+           });
+
+         }
+         else {
+
+           AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+              currentProfile = JSON.parse(currentProfile);
+              if (currentProfile != null || currentProfile.length>0) {
+                this.doInitialize();
+              } else {
+
+                AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
+                  importedProfiles = JSON.parse(importedProfiles);
+
+                  AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
+                    this.doInitialize();
+
+                  });
+                });
+              }
+          });
+
+         }
+
+       });
     
     Animated.sequence([
                        Animated.parallel([
@@ -197,61 +249,42 @@ class Load extends React.Component{
                                                           }),
                                           ])
                        ]).start();
-    
-    
+
+
     InteractionManager.runAfterInteractions(() => {
-                                            isRunAfterInteractions = true;
-                                            Obj.onInitCompleted();
-                                            });
-    
+      isRunAfterInteractions = true;
+      Obj.onInitCompleted();
+    });
+
   }
-  
-  _handleAppStateChange(currentAppState) {
-    
-    if(currentAppState=='background'){
-      ReactRdna.pauseRuntime((response) => {
-                             if (response) {
-                             if(response[0].error == 0){
-                             AsyncStorage.setItem("savedContext", response[0].response);
-                             }
-                             console.log('immediate response is'+response[0].error);
-                             }else{
-                             console.log('immediate response is'+response[0].error);
-                             }
-                             })
-    }else if(currentAppState=='active'){
-      var proxySettings ;
-      var jsonProxySettings = JSON.stringify(proxySettings);
-      AsyncStorage.getItem("savedContext").then((value) => {
-                                                ReactRdna.resumeRuntime(value,jsonProxySettings,(response) => {
-                                                                        if (response) {
-                                                                        console.log('immediate response is'+response[0].error);
-                                                                        }else{
-                                                                        console.log('immediate response is'+response[0].error);
-                                                                        }
-                                                                        })
-                                                }).done();
-    }
-  }
-  
-  
-  
+
+
+
   doInitialize() {
-    initSuc = false;
-    isRunAfterInteractions = false;
-    initCount = 0;
-    console.log('Initialize RDNA');
-    var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
-    var jsonProxySettings = JSON.stringify(proxySettings);
-    ReactRdna.initialize(ReactRdna.agentInfo, ReactRdna.GatewayHost, ReactRdna.GatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
-                         if (response) {
-                         console.log('immediate response is' + response[0].error);
-                         // alert(response[0].error);
-                         } else {
-                         console.log('immediate response is' + response[0].error);
-                         // alert(response[0].error);
-                         }
-                         })
+      console.log('Initialize RDNA');
+      var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
+      var jsonProxySettings = JSON.stringify(proxySettings);
+    AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+
+                         currentProfile = JSON.parse(currentProfile);
+
+                         let currentAgentInfo = currentProfile.RelId;
+                         let currentGatewayHost = currentProfile.Host;
+                         let currentGatewayPort = currentProfile.Port;
+
+                         ReactRdna.initialize(currentAgentInfo,currentGatewayHost,parseInt(currentGatewayPort),ReactRdna.RdnaCipherSpecs,ReactRdna.RdnaCipherSalt,jsonProxySettings,(response) => {
+                                              if (response) {
+                                              console.log('immediate response is'+response[0].error);
+                                              // alert(response[0].error);
+                                              }else{
+                                              console.log('immediate response is'+response[0].error);
+                                              // alert(response[0].error);
+                                              }
+                                              })
+
+
+                         });
+//>>>>>>> feature/activation
   }
   
   onInitCompleted(){
@@ -263,7 +296,7 @@ class Load extends React.Component{
         alert(initErrorMsg);
     }
   }
-  
+
   doNavigation() {
     /*while (!initSuc) {
      //console.log('DNA initializing');
@@ -278,7 +311,7 @@ class Load extends React.Component{
    */
   
   render() {
-    
+
     return (
             <View style={Skin.loadStyle.container}>
             <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
@@ -304,12 +337,12 @@ class Load extends React.Component{
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.i_text_opac}]}>Authenticating Device</Animated.Text>
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.d_text_opac}]}>Securing Connection</Animated.Text>
             <Animated.Text style={[Skin.loadStyle.load_text,{opacity:this.state.relid_text_opac}]}>Secure Access Established</Animated.Text>
-            </View>
-            </View>
-            </View>     
-            );
+          </View>
+        </View>
+      </View>
+    );
   }
-  
+
 };
 
 
