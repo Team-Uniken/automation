@@ -24,6 +24,8 @@ var {
 	TouchableHighlight,
 	ActivityIndicatorIOS,
 	StatusBar,
+	StyleSheet,
+  Dimensions,
 	ScrollView,
 	StatusBar,
 } = React;

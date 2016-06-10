@@ -31,8 +31,44 @@ import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 
+import Dimensions from 'Dimensions';
+import PixelRatio from 'PixelRatio';
+import Accounts from './App/Components/Accounts';
+import Demo from './App/Components/Demo';
+
+
+import Activation from './App/Components/challenges/Activation';
+import Password from './App/Components/challenges/Password';
+import Otp from './App/Components/challenges/Otp';
+import SetQue from './App/Components/challenges/SetQue';
+import ActivateNewDevice from './App/Components/ActivateNewDevice';
+import buildStyleInterpolator from 'buildStyleInterpolator';
+import ConnectionProfile from './App/Components/ConnectionProfile';
+
 const buildStyleInterpolator = require('buildStyleInterpolator');
 const {
+
+var SCREEN_WIDTH = Dimensions.get('window').width;
+var SCREEN_HEIGHT = Dimensions.get('window').height;
+
+var {DeviceEventEmitter} = require('react-native');
+var responseJson;
+var chlngJson;
+var nextChlngName;
+
+var CORE_FONT = 'Century Gothic';
+var NAV_BAR_TINT = '#FFFFFF'
+var NAV_SHADOW_BOOL = true;
+var MENU_TXT_COLOR = '#2579A2';
+var ICON_COLOR = '#FFFFFF';
+var ICON_FAMILY = 'icomoon';
+var MID_COL = '#2579A2';
+var LIGHT_COL = '#50ADDC';
+var DARK_COL = '#10253F';
+var Spd = 1;
+var LoadSpd = 0.1;
+
+var {
   AppRegistry,
   Navigator,
 } = React;
@@ -117,6 +153,10 @@ class ReactRefApp extends React.Component {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'Device') {
       return (<Device navigator={nav} url={route.url} title={route.title} />);
+    }else if (id == 'ActivateNewDevice'){
+      return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title}/>);
+    }else if (id == 'ConnectionProfile'){
+      return (<ConnectionProfile navigator={nav} url={route.url} title={route.title}/>);
     }
     return (<Text>Error</Text>);
   }

@@ -30,6 +30,8 @@ var SetQue = require('./App/Components/challenges/SetQue');
 var QuestionVerification = require('./App/Components/challenges/questionVerification');
 var Machine = require('./App/Components/TwoFactorAuthMachine');
 var ConnectionProfile = require('./App/Components/ConnectionProfile');
+var ActivateNewDevice = require('./App/Components/ActivateNewDevice');
+
 
 
 var buildStyleInterpolator = require('buildStyleInterpolator');
@@ -224,6 +226,9 @@ class DemoApp1 extends React.Component{
     }else if (id == "ConnectionProfile"){
      return (<ConnectionProfile navigator={nav} url={route.url} title={route.title}/>);
    }
+    }else if (id == "ActivateNewDevice"){
+      return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title}/>);
+    }
   }
 
   render() {

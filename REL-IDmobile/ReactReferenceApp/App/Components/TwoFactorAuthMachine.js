@@ -28,6 +28,8 @@ var DeviceName = require('./challenges/devname');
 var EventEmitter = require('EventEmitter');
 var Constants = require('./Constants');
 var Events = require('react-native-simple-events');
+var Device = require('./device');
+var ActivateNewDevice = require('./ActivateNewDevice');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var ConnectionProfile = require('./ConnectionProfile');
@@ -110,7 +112,7 @@ class TwoFactorAuthMachine extends React.Component{
             RDNARequestUtility.setHttpProxyHost('127.0.0.1',pPort,(response) => {});
           }
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1,1));
-          this.props.navigator.push({id: "Main", title:'DashBoard', url:''});
+          this.props.navigator.push({id: "Device", title:'DashBoard', url:''});
         }
 
       }else{
