@@ -29,6 +29,7 @@ var Otp = require('./App/Components/challenges/Otp');
 var SetQue = require('./App/Components/challenges/SetQue');
 var QuestionVerification = require('./App/Components/challenges/questionVerification');
 var Machine = require('./App/Components/TwoFactorAuthMachine');
+var ActivateNewDevice = require('./App/Components/ActivateNewDevice');
 
 
 
@@ -221,7 +222,9 @@ class DemoApp1 extends React.Component{
       return (<Machine navigator={nav} url={route.url} title={route.title}/>);
     }else if (id == "Device"){
       return (<Device navigator={nav} url={route.url} title={route.title}/>);
-    }
+    }else if (id == "ActivateNewDevice"){
+      return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title}/>);
+    } 
   }
 
   render() {

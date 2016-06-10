@@ -24,6 +24,7 @@ var {
   StatusBarIOS,
   BackAndroid,
   PropTypes,
+  StatusBar,
 } = React;
 
 
