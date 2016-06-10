@@ -14,8 +14,16 @@ import DepositsScene from './App/Scenes/Deposits';
 import FindBranchScene from './App/Scenes/FindBranch';
 import AppointmentsScene from './App/Scenes/Appointments';
 
+
 // SECURITY SCENES
 import Activation from './App/Components/challenges/Activation';
+import PasswordSet from './App/Components/challenges/PasswordSet';
+import Otp from './App/Components/challenges/Otp';
+import SetQue from './App/Components/challenges/SetQue';
+import ActivateNewDevice from './App/Components/ActivateNewDevice';
+import UserLogin from './App/Components/challenges/UserLogin';
+import PasswordVerification from './App/Components/challenges/PasswordVerification';
+
 
 // COMPONENTS
 import Device from './App/Components/device';
@@ -23,16 +31,14 @@ import Load from './App/Components/Load';
 import Web from './App/Components/Web';
 import QBank from './App/Components/Qbank';
 import ComingSoon from './App/Components/ComingSoon';
-import UserLogin from './App/Components/challenges/UserLogin';
-import PasswordSet from './App/Components/challenges/PasswordSet';
-import PasswordVerification from './App/Components/challenges/PasswordVerification';
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
 import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
+import buildStyleInterpolator from 'buildStyleInterpolator';
+import ConnectionProfile from './App/Components/ConnectionProfile';
 
-const buildStyleInterpolator = require('buildStyleInterpolator');
 const {
   AppRegistry,
   Navigator,
@@ -71,7 +77,6 @@ class ReactRefApp extends React.Component {
     let id = route.id;
 
     if (id === 'Load') {
-      // id = 'PasswordSet';
       // id = 'Accounts'
       // id = 'UserLogin';
       // id = 'Activation';
@@ -122,6 +127,10 @@ class ReactRefApp extends React.Component {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'Device') {
       return (<Device navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'ActivateNewDevice') {
+      return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'ConnectionProfile') {
+      return (<ConnectionProfile navigator={nav} url={route.url} title={route.title} />);
     }
     return (<Text>Error</Text>);
   }
