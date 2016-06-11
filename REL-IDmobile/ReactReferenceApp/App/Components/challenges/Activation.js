@@ -1,30 +1,23 @@
+'use strict';
 
+/*
+  ALWAYS NEED
+*/
 import React from 'react-native';
 import Skin from '../../Skin';
+
+/*
+  CALLED
+*/
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
 
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-var MAX_WIDTH = 300;
-var MAX_HEIGHT = 600;
-Skin.max = {
-  width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
-  height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
-}
-
-var {
+const {
   View,
   Text,
-  Image,
   TextInput,
   TouchableHighlight,
-  StyleSheet,
-  StatusBar,
-  ScrollView,
 } = React;
-
-
 
 
 export default class Activation extends React.Component {
@@ -46,9 +39,9 @@ export default class Activation extends React.Component {
     return 'NEXT';
   }
   checkActivationCode() {
-    var vkey = this.state.activatonCode;
+    const vkey = this.state.activatonCode;
     if (vkey.length > 0) {
-      responseJson = this.props.url.chlngJson;
+      const responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     }
@@ -57,7 +50,7 @@ export default class Activation extends React.Component {
     }
   }
   render() {
-
+    /*
     this._props = {
       url: {
         chlngJson: {
@@ -97,7 +90,7 @@ export default class Activation extends React.Component {
         currentIndex: 1,
       },
     };
-
+  */
     return (
       <MainActivation>
         <View style={{marginTop:38}}>
