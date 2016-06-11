@@ -40,15 +40,15 @@ class UserLogin extends React.Component{
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.dismiss}>
-        <View style={Skin.coreStyle.container}>
-          <View style={Skin.loadStyle.bgbase} />
-          <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
+        <View style={Skin.activationStyle.container}>
+          <View style={Skin.activationStyle.bgbase} />
+          <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
           <View style={Skin.statusBarStyle.default}>
             <StatusBar
               barStyle="light-content"
             />
           </View>
-          <View style={Skin.loadStyle.bgcolorizer} />
+          <View style={Skin.activationStyle.bgcolorizer} />
           <View style={Skin.activationStyle.centering_wrap}>
             <View style={Skin.activationStyle.wrap}>
               {this.props.children}

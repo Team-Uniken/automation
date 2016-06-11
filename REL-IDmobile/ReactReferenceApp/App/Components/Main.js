@@ -12,6 +12,33 @@ import BottomMenu from './BottomMenu';
 import NavButton from './NavButton';
 import Drawer from 'react-native-drawer';
 
+
+//import styles from Skin.styles;
+import Load from './Load';
+import Accounts from '../Scenes/Accounts';
+
+var {
+  View,
+  Dimensions,
+  Text,
+  Image,
+  Navigator,
+  TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+  ActivityIndicatorIOS,
+  StyleSheet,
+  StatusBarIOS,
+  BackAndroid,
+  PropTypes,
+  StatusBar,
+} = React;
+
+
+
+var dnaProxyPort;
+var dnaUserName;
+
 /*
   Instantiaions
 */
