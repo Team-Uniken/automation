@@ -51,38 +51,40 @@ export default class Main extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {};
-    this.state.drawerState = {
-      open: this.props.drawerState.open || false,
-      disabled: this.props.drawerState.disabled,
-    };
-    this.toggleDrawer = this.toggleDrawer.bind(this);
-    this.state.navBar = {};
 
-    this.state.navBar.title = this.props.navBar.title || '';
-    this.state.navBar.visible = this.props.navBar.visible || true;
-    this.state.navBar.tint = this.props.navBar.tint || '#000000';
-
-    this.state.navBar.left = {};
-    this.state.navBar.left = {};
-    this.state.navBar.left.text = this.props.navBar.left.text || '';
-    this.state.navBar.left.icon = this.props.navBar.left.icon || '';
-    this.state.navBar.left.iconStyle = this.props.navBar.left.iconStyle || {};
-    this.state.navBar.left.textStyle = this.props.navBar.left.textStyle || {};
-    this.state.navBar.left.handler = this.props.navBar.left.handler || this.toggleDrawer;
-
-    this.state.navBar.right = {};
-    this.props.navBar.right = {};
-    this.state.navBar.right.text = this.props.navBar.right.text || '';
-    this.state.navBar.right.icon = this.props.navBar.right.icon || '';
+    this.state={};
+    this.toggleDrawer = this.toggleDrawer.bind(this)
+    this.state.navBar                 = {};
+    
+    this.state.navBar.title           = this.props.navBar.title || '';
+    this.state.navBar.visible         = this.props.navBar.visible || true;
+    this.state.navBar.tint            = this.props.navBar.tint || '#000000';
+    
+    this.state.navBar.left            = {};
+    this.state.navBar.left            = {};
+    this.state.navBar.left.text       = this.props.navBar.left.text || '';
+    this.state.navBar.left.icon       = this.props.navBar.left.icon || '';
+    this.state.navBar.left.iconStyle  = this.props.navBar.left.iconStyle || {};
+    this.state.navBar.left.textStyle  = this.props.navBar.left.textStyle || {};
+    this.state.navBar.left.handler    = this.props.navBar.left.handler || this.toggleDrawer;
+ 
+    this.state.navBar.right           = {};
+    this.props.navBar.right           = {};
+    this.state.navBar.right.text      = this.props.navBar.right.text || '';
+    this.state.navBar.right.icon      = this.props.navBar.right.icon || '';
     this.state.navBar.right.iconStyle = this.props.navBar.right.iconStyle || {};
     this.state.navBar.right.textStyle = this.props.navBar.right.textStyle || {};
     this.state.navBar.right.handler = this.props.navBar.right.handler || this.toggleDrawer;
 
-    this.state.bottomMenu = {
-      visible: this.props.bottomMenu.visible,
-      active: this.props.bottomMenu.active,
+    this.state.bottomMenu={
+        visible: this.props.bottomMenu.visible,
+        active: this.props.bottomMenu.active,
     };
+    this.state.drawerState={
+      open: false,
+      disabled: false,
+    }
+    
   }
 
   /**
@@ -136,7 +138,6 @@ export default class Main extends React.Component {
         openDrawerOffset={() => 70}
         closedDrawerOffset={() => 0}
         panOpenMask={0.2}
-        negotiatePan
       >
         <NavigationBar
           title={{ title: this.props.navBar.title, tintColor: Skin.colors.TEXT_COLOR }}

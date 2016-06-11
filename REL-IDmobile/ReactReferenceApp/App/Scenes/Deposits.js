@@ -15,7 +15,7 @@ var Main = require('../Components/Main');
 var BottomMenu = require('../Components/BottomMenu');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var NavigationBar = require('react-native-navbar');
-var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+//var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
 /* 
   Instantiaions

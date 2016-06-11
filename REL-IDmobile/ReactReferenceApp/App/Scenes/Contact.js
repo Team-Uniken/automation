@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+  ALWAYS NEED
+*/
 import React from 'react-native';
 import Skin from '../Skin';
 
@@ -13,7 +16,6 @@ import Communications from 'react-native-communications';
   Instantiaions
 */
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
-
 const {
   View,
   Text,
