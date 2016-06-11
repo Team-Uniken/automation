@@ -1,13 +1,18 @@
-var React = require('react-native');
+'use strict';
+
+/*
+  NEEDED
+*/
+import React from 'react-native';
+import Skin from '../../Skin';
+
+/*
+  CALLED
+*/
+import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
+
 var ToolBar = require('../ToolBar');
 var Events = require('react-native-simple-events');
-var {customeStyle, styles} = require("../MainStyleSheet");
-
-var TEXT_COLOR = '#FFFFFF';
-var MIDBLUE = '#2579A2';
-var MSG = '#A9A9A9';
-
-var selectedque='nikhil';
 var obj;
 
   function compare(a,b) {
@@ -24,18 +29,15 @@ var SampleRow = React.createClass({
 
     return (
 			<TouchableHighlight
-      style={styles.customerow}
-
+      style={Skin.questionrow.customerow}
         onPress={()=>{
           obj._textInput.setNativeProps({text: this.props.msg});
           obj.setState({secQA: this.props.msg});
         }}
-
-        underlayColor={'#163651'}
+        underlayColor={Skin.colors.REPPLE_COLOR}
         activeOpacity={0.6}
       >
-      <Text style={styles.questyle}>{this.props.msg}</Text>
-
+      <Text style={Skin.questionrow.questyle}>{this.props.msg}</Text>
       </TouchableHighlight>
 
     );
@@ -44,21 +46,14 @@ var SampleRow = React.createClass({
 
 
 var {
-Dimensions,
-    StyleSheet,
     View,
     Text,
     TouchableHighlight,
     StatusBar,
     ListView,
-    Image,
 	Navigator,
 	TextInput,
-	TouchableHighlight,
-	Dimensions,
   TextInput,
-  ActivityIndicatorIOS,
-  Dimensions,
   ScrollView,
 } = React;
 
@@ -139,102 +134,74 @@ var SetQue = React.createClass({
   },
 
   renderRow(rowData) {
-    return <SampleRow {...rowData} style={styles.row} />
+    return <SampleRow {...rowData} style={Skin.questionrow.row} />
   },
 
   render() {
 
 
     return (
-      <View style={customeStyle.maincontainer}>
+      <View style={Skin.customeStyle.maincontainer}>
                 <StatusBar
-                backgroundColor='#1976d2'
+                backgroundColor={Skin.colors.STATUS_BAR_COLOR}
                 barStyle='light-content'
                 />
-                			<ToolBar navigator={this.props.navigator} title="Activation"/>
-			<ScrollView >
-
-      <Text style={customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-         <Text style={customeStyle.text2}>Question and Answer</Text>
-<Text style={customeStyle.div}> </Text>
-
-
-<View
-               style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
-                activeOpacity={0.6}
-               >
+                <ToolBar navigator={this.props.navigator} title="Activation"/>
+	              <ScrollView >
+                <Text style={Skin.customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+                <Text style={Skin.customeStyle.text2}>Question and Answer</Text>
+                <Text style={Skin.customeStyle.div}> </Text>
+                <View
+               style={[Skin.customeStyle.roundcornerinput]}
+                activeOpacity={0.6}>
+                <KeyboardAwareScrollView>
                <TextInput
                ref={component => this._textInput = component}
                autoCorrect={false}
                placeholder={'Type/Select question'}
-               	placeholderTextColor={'#8F8F8F'}
-               	style={customeStyle.input}
-                onChange={this.onQuestionChange.bind(this)}
+               	placeholderTextColor={Skin.colors.HINT_COLOR}
+               	style={Skin.customeStyle.input}
+                onChange={this.onQuestionChange}
+               />
+               </KeyboardAwareScrollView>
+
+               </View>
+               <View style={Skin.questionrow.que}>
+               <ListView
+               ref="listView"
+               automaticallyAdjustContentInsets={false}
+               dataSource={this.state.dataSource}
+               renderRow={this.renderRow}
                />
                </View>
-
-
- <View style={styles.que}>
- <ListView
-   ref="listView"
-   automaticallyAdjustContentInsets={false}
-   dataSource={this.state.dataSource}
-   renderRow={this.renderRow}
- />
- </View>
- <View
-      style={[customeStyle.roundcorner,{backgroundColor:'#fff',borderColor:'#2196F3'}]}
+               <View
+      style={[Skin.customeStyle.roundcornerinput]}
        activeOpacity={0.6}
       >
+      <KeyboardAwareScrollView>
       <TextInput
         autoCorrect={false}
         placeholder={'Enter your secret answer'}
-        placeholderTextColor={'#8F8F8F'}
-        style={customeStyle.input}
-        onChange={this.onAnswerChange.bind(this)}
+        placeholderTextColor={Skin.colors.HINT_COLOR}
+        style={Skin.customeStyle.input}
+        onChange={this.onAnswerChange}
       />
+      </KeyboardAwareScrollView>
+
       </View>
-
-
- <Text style={customeStyle.div}> </Text>
-
- <TouchableHighlight
-      style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
-      onPress={this.setSecrets.bind(this)}
-     	 underlayColor={'#1976d2'}
+      <Text style={Skin.customeStyle.div}> </Text>
+      <TouchableHighlight
+      style={[Skin.customeStyle.roundcornerbutton]}
+      onPress={this.setSecrets}
+     	 underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
      	 activeOpacity={0.6}
       >
-      <Text style={customeStyle.button}>{this.btnText()}</Text>
+      <Text style={Skin.customeStyle.button}>{this.btnText()}</Text>
       </TouchableHighlight>
-</ScrollView >
+      </ScrollView >
 			</View>
 		);
   },
 });
 
-var styles = {
-  que: {
-      flex: 1,
-      marginTop:16,
-      width:Dimensions.get('window').width,
-      height:150,
-      backgroundColor:'#183F5B',
-
-      },
-	customerow: {
-			backgroundColor:'#122941',
-			marginTop:2,
-			width:Dimensions.get('window').width,
-		  },
-	questyle:{
-			fontSize: 16,
-			color : MSG,
-      height:40,
-			marginTop:6,
-			width:Dimensions.get('window').width,
-			textAlign:'center',
-			textAlignVertical:'center',
-			},
-
-};
 module.exports = SetQue;

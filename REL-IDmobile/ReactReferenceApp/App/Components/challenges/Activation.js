@@ -1,62 +1,151 @@
 'use strict';
 
 /*
-  NEEDED
+  ALWAYS NEED
 */
-import React  from 'react-native'
-import Skin   from '../../Skin'
+import React from 'react-native';
+import Skin from '../../Skin';
+
 /*
   CALLED
 */
-import Main   from '../Main'
+import Events from 'react-native-simple-events';
+import MainActivation from '../MainActivation';
 
-
-/* 
-  Instantiaions
-*/
-var {
+const {
   View,
   Text,
-  Navigator,
-} = React
+  TextInput,
+  TouchableHighlight,
+} = React;
 
-export default class ActivationScene extends React.Component {
-  constructor (props) {
-    super(props)
+
+export default class Activation extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activatonCode: '',
+    };
   }
-  render () {
+
+  onActivationCodeChange(event) {
+    this.setState({ activatonCode: event.nativeEvent.text });
+  }
+  btnText() {
+    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
+      return 'SUBMIT';
+    }
+    return 'NEXT';
+  }
+  checkActivationCode() {
+    const vkey = this.state.activatonCode;
+    if (vkey.length > 0) {
+      const responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = vkey;
+      Events.trigger('showNextChallenge', { response: responseJson });
+    }
+    else {
+      alert('Please enter Verification Key');
+    }
+  }
+  render() {
+    /*
+    this._props = {
+      url: {
+        chlngJson: {
+          chlng_idx: 1,
+          sub_challenge_index: 0,
+          chlng_name: 'actcode',
+          chlng_type: 2,
+          challengeOperation: 0,
+          chlng_prompt: [
+            ['2sm88b4'],
+          ],
+          chlng_info: [
+            {
+              key: 'Prompt label',
+              value: 'Verification Key',
+            }, {
+              key: 'Response label',
+              value: 'Activation Code',
+            }, {
+              key: 'Description',
+              value: 'Match verification key and enter activation code',
+            }, {
+              key: 'Reading',
+              value: 'Activation verification challenge',
+            },
+          ],
+          chlng_resp: [
+            {
+              challenge: '2sm88b4',
+            },
+          ],
+          challenge_response_policy: [],
+          chlng_response_validation: false,
+          attempts_left: 3,
+        },
+        chlngsCount: 1,
+        currentIndex: 1,
+      },
+    };
+  */
     return (
-      <Main 
-        drawerState={{
-          open: false, 
-          disabled: false
-        }}
-        navBar={{
-                    title: 'Contact',
-                    visible: true,
-                    tint: Skin.colors.TEXT_COLOR,
-                    left:{
-                        text: '',
-                        icon: '\ue20e',
-                        iconStyle: {
-                            fontSize:30,
-                            marginLeft:8,
-                        },
-                        textStyle:{},
-                    }
-                }}
-            bottomMenu={{
-              visible: true,
-              active: 5,
-            }}
-            navigator={this.props.navigator}
-      >
-        <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
-          <Text>This is my challenges content</Text>
+      <MainActivation>
+        <View style={{marginTop:38}}>
+          <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+          <Text style={Skin.activationStyle.title}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+          <Text style={Skin.activationStyle.info}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
         </View>
-      </Main>
+
+        <View style={Skin.activationStyle.input_wrap}>
+          <View style={Skin.activationStyle.textinput_wrap}>
+            <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
+              Verify:
+            </Text>
+            <Text style={[Skin.activationStyle.textinput]}>
+              {this.props.url.chlngJson.chlng_resp[0].challenge}
+            </Text>
+          </View>
+        </View>
+
+        <View style={Skin.activationStyle.input_wrap}>
+          <View style={Skin.activationStyle.textinput_wrap}>
+            <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
+              Activate:
+            </Text>
+            <TextInput
+              returnKeyType={'next'}
+              autoCorrect={false}
+              secureTextEntry={true}
+              keyboardType={'default'}
+              placeholder={'Username'}
+              placeholderTextColor={'rgba(255,255,255,0.7)'}
+              style={Skin.activationStyle.textinput}
+              value={this.state.inputUsername}
+              autoCorrect={false}
+              ref='activatonCode'
+              placeholder={'Code'}
+              onChange={this.onActivationCodeChange.bind(this)}
+            />
+          </View>
+        </View>
+
+        <View style={Skin.activationStyle.input_wrap}>
+          <TouchableHighlight
+            style={Skin.activationStyle.button}
+            underlayColor={'#082340'}
+            onPress={this.checkActivationCode.bind(this)}
+            activeOpacity={0.6}
+          >
+            <Text style={Skin.activationStyle.buttontext}>
+              {this.btnText()}
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </MainActivation>
     );
   }
 }
 
-//module.exports = ActivationScene;

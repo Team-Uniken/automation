@@ -1,9 +1,17 @@
+'use strict';
 
+/*
+  NEEDED
+*/
+import React from 'react-native';
+import Skin from '../../Skin';
 
-var React = require('react-native');
-var {customeStyle, styles} = require("../MainStyleSheet");
+/*
+  CALLED
+*/
+import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
+
 var ToolBar = require('../ToolBar');
-var Password = require('./Password');
 var Events = require('react-native-simple-events');
 
 var check=false;
@@ -22,6 +30,7 @@ var {
 	StatusBar,
 } = React;
 
+var responseJson;
 class DeviceBinding extends React.Component{
 	btnText(){
 		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
@@ -41,8 +50,8 @@ class DeviceBinding extends React.Component{
 	check(){
 		if(check==false){
 			check=true;
-      this.setState({type: 'Parmanent'});
-			type='Parmanent';
+      this.setState({type: 'Permanent'});
+//			type='Permanent';
 			Animated.sequence([
 				Animated.timing(this.state.opa, {
 					toValue: 1,
@@ -54,7 +63,7 @@ class DeviceBinding extends React.Component{
 		}else{
 			check=false;
       this.setState({type: 'Temporary'});
-			type='Temporary';
+//			type='Temporary';
 
 			Animated.sequence([
 				Animated.timing(this.state.opa, {
@@ -84,36 +93,36 @@ class DeviceBinding extends React.Component{
 
 	render() {
 		return (
-			<View style={customeStyle.maincontainer}>
+			<View style={Skin.customeStyle.maincontainer}>
 		         <StatusBar
-		         backgroundColor='#1976d2'
+						 backgroundColor={Skin.colors.STATUS_BAR_COLOR}
 		         barStyle='light-content'
 		         />
 						 			<ToolBar navigator={this.props.navigator} title="DeviceBinding"/>
 			<ScrollView >
 
-<Text style={customeStyle.text2}>Remember Device</Text>
-<Text style={customeStyle.div}> </Text>
-<View style={customeStyle.row}>
-<Text style={customeStyle.remember}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
+<Text style={Skin.customeStyle.text2}>Remember Device</Text>
+<Text style={Skin.customeStyle.div}> </Text>
+<View style={Skin.customeStyle.row}>
+<Text style={Skin.customeStyle.remember}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
 
 <View>
-<Animated.View style={[customeStyle.wrap,{opacity:1}]}>
+<Animated.View style={[Skin.customeStyle.wrap,{opacity:1}]}>
 <TouchableHighlight
 underlayColor={'transparent'}
 
 >
-<Image source={require('image!uncheck')} style={styles.images} />
+<Image source={require('image!uncheck')} style={Skin.customeStyle.images} />
 </TouchableHighlight>
 </Animated.View>
 
-<Animated.View style={[styles.wrap,{opacity: this.state.opa}]}>
+<Animated.View style={[Skin.customeStyle.wrap,{opacity: this.state.opa}]}>
 <TouchableHighlight
 underlayColor={'transparent'}
 onPress={this.check.bind(this)}
 
 >
-<Image source={require('image!check')} style={styles.images} />
+<Image source={require('image!check')} style={Skin.customeStyle.images} />
 </TouchableHighlight>
 </Animated.View>
 </View>
@@ -122,17 +131,17 @@ onPress={this.check.bind(this)}
 </View>
 
 
-<Text style={customeStyle.text2}>{this.state.type}</Text>
+<Text style={Skin.customeStyle.text2}>{this.state.type}</Text>
 
-<Text style={customeStyle.div}> </Text>
+<Text style={Skin.customeStyle.div}> </Text>
 
 <TouchableHighlight
-		style={[customeStyle.roundcorner,{backgroundColor:'#2196F3'}]}
+		style={[Skin.customeStyle.roundcornerbutton]}
 		onPress={this.setDeviceBinding.bind(this)}
-		 underlayColor={'#1976d2'}
+		underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
 		 activeOpacity={0.6}
 		>
-		<Text style={customeStyle.button}>{this.btnText()}</Text>
+		<Text style={Skin.customeStyle.button}>{this.btnText()}</Text>
 		</TouchableHighlight>
 </ScrollView >
 			</View>

@@ -29,6 +29,8 @@ var Otp = require('./App/Components/challenges/Otp');
 var SetQue = require('./App/Components/challenges/SetQue');
 var QuestionVerification = require('./App/Components/challenges/questionVerification');
 var Machine = require('./App/Components/TwoFactorAuthMachine');
+var ConnectionProfile = require('./App/Components/ConnectionProfile');
+var ActivateNewDevice = require('./App/Components/ActivateNewDevice');
 
 
 
@@ -184,7 +186,7 @@ class DemoApp1 extends React.Component{
 
   renderScene(route,nav) {
     var id = route.id;
-    //console.log('----------- renderScene index file id = ' + id);
+    console.log('----------- renderScene index file id = ' + id);
     if(id == "Main"){
       return (<Main navigator={nav}/>);
     }else if (id == "Load"){
@@ -221,6 +223,11 @@ class DemoApp1 extends React.Component{
       return (<Machine navigator={nav} url={route.url} title={route.title}/>);
     }else if (id == "Device"){
       return (<Device navigator={nav} url={route.url} title={route.title}/>);
+    }else if (id == "ConnectionProfile"){
+     return (<ConnectionProfile navigator={nav} url={route.url} title={route.title}/>);
+   }
+    }else if (id == "ActivateNewDevice"){
+      return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title}/>);
     }
   }
 
@@ -231,7 +238,6 @@ class DemoApp1 extends React.Component{
         renderScene={this.renderScene}
         initialRoute={
           {id: "Load", url: {"chlngJson": tempJSon, "chlngsCount":5, "currentIndex": 1}, title: "Test"}
-          //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
         }
         configureScene={(route) => {
           var config = Navigator.SceneConfigs.FloatFromRight;
