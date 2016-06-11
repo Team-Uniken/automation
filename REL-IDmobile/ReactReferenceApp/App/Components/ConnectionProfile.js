@@ -138,7 +138,9 @@ class ConnectionProfile extends Component {
             <TouchableHighlight style={[Skin.appointmentrow.floatbutton]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
               onPress={() => this.onImportPressed()}>
           <View>
-          <Image source={require('image!floatimage')} style={Skin.appointmentrow.plus} />
+          {/* BUG
+          <Image source={require('./floatimage')} style={Skin.appointmentrow.plus} />
+          */}
           </View>
         </TouchableHighlight>
 
@@ -192,7 +194,9 @@ class ConnectionProfile extends Component {
           <TouchableHighlight onPress={() => this.onDeletePressed(connectionprofile1) } style={Skin.ConnectionProfile.button}
           underlayColor={Skin.colors.REPPLE_COLOR}
           >
-          <Image source={require('image!del')} style={Skin.ConnectionProfile.images} />
+          {/* BUG
+          <Image source={require('./del')} style={Skin.ConnectionProfile.images} />
+          */}
           </TouchableHighlight>
       </View>
       <Text style={Skin.customeStyle.div1}> </Text>

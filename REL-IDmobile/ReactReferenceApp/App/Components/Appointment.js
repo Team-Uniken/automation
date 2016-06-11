@@ -36,7 +36,9 @@ var SampleRow = React.createClass({
 							<Text style={Skin.appointmentrow.time}>{this.props.time}</Text>
 						</View>
 						<View style={Skin.appointmentrow.row }>
-						<Image source={require('image!ic_location')} style={Skin.appointmentrow.locationimage} />
+            {/* BUG
+						<Image source={require('./location')} style={Skin.appointmentrow.locationimage} />
+            */}
 						<Text style={Skin.appointmentrow.locatontext}>{this.props.location}</Text>
 						</View>
 						<Text style={Skin.appointmentrow.msg}>{this.props.msg}</Text>
@@ -111,7 +113,9 @@ var Appointment = React.createClass({
 		 onPress={()=>{obj.props.navigator.push({id: "AddAppointment", title:"Add Appointment",url:{'date':'2016-05-06','time':'20:00','location':'Select Location','msg':'','buttontext':'Save'}});}}
 		 >
 			 <View>
+       BUG {/* BUG
 			 <Image source={require('image!floatimage')} style={Skin.appointmentrow.plus} />
+        */}
 			 </View>
 		 </TouchableHighlight>
       </View>

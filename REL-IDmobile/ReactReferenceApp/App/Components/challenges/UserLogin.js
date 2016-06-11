@@ -187,11 +187,11 @@ class UserLogin extends React.Component{
   render() {
     return (
       <MainActivation>
-        <Animated.View style={[Skin.coreStyle.rid_wrap,{marginTop:70}]}>
-          <View style={Skin.coreStyle.rid_center}>
-            <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_r]}>g</Text>
-            <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_i]}>h</Text>
-            <Text style={[Skin.coreStyle.logo_rid, Skin.coreStyle.logo_d]}>i</Text>
+        <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+          <View style={Skin.loadStyle.rid_center}>
+            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
+            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
+            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
           </View>
         </Animated.View>
 
@@ -232,7 +232,9 @@ class UserLogin extends React.Component{
           onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}
         >
           <View>
+            <Text>BUG</Text>{/*
             <Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />
+            */}
           </View>
         </TouchableHighlight>
 

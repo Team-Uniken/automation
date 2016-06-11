@@ -16,8 +16,7 @@ const {
   Text,
 } = React;
 
-
-class AppointmentsScene extends React.Component {
+export default class AppointmentsScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

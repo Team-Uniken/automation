@@ -17,6 +17,7 @@ import erelid from '../../erelid.json';
 /*
   Instantiaions
 */
+let initSuc = false;
 let isRunAfterInteractions = false;
 let initCount = 0;
 let initSuccess = 2;
@@ -277,7 +278,7 @@ class Load extends React.Component {
         }
     }
 
-
+/*
   doInitialize() {
     console.log('Initialize RDNA');
     var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
@@ -302,7 +303,25 @@ class Load extends React.Component {
       })
     });
   }
-
+*/
+  doInitialize() {
+    initSuc = false;
+    isRunAfterInteractions = false;
+    initCount = 0;
+    console.log('Initialize RDNA');
+    var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
+    var jsonProxySettings = JSON.stringify(proxySettings);
+    ReactRdna.initialize(ReactRdna.agentInfo, ReactRdna.GatewayHost, ReactRdna.GatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
+                         if (response) {
+                         console.log('immediate response is' + response[0].error);
+                         // alert(response[0].error);
+                         } else {
+                         console.log('immediate response is' + response[0].error);
+                         // alert(response[0].error);
+                         }
+                         })
+  }
+  
 
   onInitCompleted() {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
