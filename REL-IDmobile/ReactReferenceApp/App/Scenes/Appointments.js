@@ -1,8 +1,5 @@
 'use strict';
 
-/*
-  ALWAYS NEED
-*/
 import React from 'react-native';
 import Skin from '../Skin';
 
@@ -19,7 +16,8 @@ const {
   Text,
 } = React;
 
-export default class AppointmentsScene extends React.Component {
+
+class AppointmentsScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
