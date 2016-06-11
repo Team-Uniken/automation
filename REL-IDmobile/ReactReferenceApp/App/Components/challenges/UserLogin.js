@@ -1,13 +1,11 @@
+'use strict';
 
 /*
   ALWAYS NEED
 */
-'use strict';
-
 import React from 'react-native';
 import Skin from '../../Skin';
-//var SCREEN_WIDTH = require('Dimensions').get('window').width;
-//var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+
 
 /*
   CALLED
@@ -18,54 +16,25 @@ import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 
-/*
-var Web = require('../Web');
-var PasswordVerification = require('./PasswordVerification');
-var Activation = require('./Activation');
-var ToolBar = require('../ToolBarWithoutCross');
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-var ProgressBar = require('react-native-progress-bar');
-*/
 
-/* 
-  INSTANCES
+/*
+	INSTANCES
 */
-var responseJson;
-var chlngJson;
-var nextChlngName;
-//var InvalideUsername;
-var obj;
-var statusMessage;
-//var subscriptions;
-var {
-/*  AppRegistry,
-  Button,
-  Component,
-  Easing,
-*/  Image,
-/*  ListView,
-  StyleSheet,
-*/  Text,
+let responseJson;
+let chlngJson;
+let nextChlngName;
+let obj;
+let statusMessage;
+const {
+  Text,
   TextInput,
-  StatusBar,
   View,
   Animated,
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
-  TouchableWithoutFeedback,
-/*  StatusBarIOS,
-  TouchableOpacity,
-  ProgressViewIOS,
-  Dimensions,
-  Platform,
-  ScrollView,
-  DeviceEventEmitter,
-*/
 } = React;
-
-
-
+const ConnectionProfile = require('../ConnectionProfile');
 
 
 class UserLogin extends React.Component{
@@ -91,14 +60,13 @@ class UserLogin extends React.Component{
       loginAttempts: 5,
       passAttempts: 5,
       Challenge:this.props.url.chlngJson,
-      failureMessage : ''
-
+      failureMessage: '',
     };
   }
 
 
-  openRoute(route){
-    this.props.navigator.push(route)
+  openRoute(route) {
+    this.props.navigator.push(route);
   }
 
 
