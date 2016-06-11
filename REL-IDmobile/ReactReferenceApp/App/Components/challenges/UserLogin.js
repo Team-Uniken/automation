@@ -169,7 +169,6 @@ class UserLogin extends React.Component{
 
 
   checkUsernameSuccess(){
-    //subscriptions.remove();
     InteractionManager.runAfterInteractions(() => {
         this.props.navigator.push(
           {id: "Activation",title:nextChlngName,url:chlngJson}
@@ -217,10 +216,6 @@ class UserLogin extends React.Component{
       this.refs[fieldName].setNativeProps({ text: '' });
   }
 
-  dismiss() {
-        dismissKeyboard();
-  }
-
   render() {
     return (
       <MainActivation>
@@ -264,6 +259,14 @@ class UserLogin extends React.Component{
         </View>
 
         <OpenLinks />
+        
+        <TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
+          onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}
+        >
+          <View>
+            <Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />
+          </View>
+        </TouchableHighlight>
 
       </MainActivation>
     );
