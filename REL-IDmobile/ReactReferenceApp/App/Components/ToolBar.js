@@ -23,7 +23,7 @@ style={styles.touchable}
         underlayColor={Skin.colors.STATUS_BAR_COLOR}
         activeOpacity={0.6}
       >
-      <Image source={require('image!ic_back')} style={styles.images} />
+      {/*<Image source={require('image!ic_back')} style={styles.images} />*/}
       </TouchableHighlight>
       <Text style={Skin.customeStyle.title}
       >{this.props.title}</Text>
