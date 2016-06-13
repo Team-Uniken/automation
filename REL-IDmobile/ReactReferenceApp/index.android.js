@@ -233,7 +233,7 @@ class DemoApp1 extends React.Component{
         style={styles.navigator}
         renderScene={this.renderScene}
         initialRoute={
-          {id: "SetQue", url: {"chlngJson": tempJSon, "chlngsCount":5, "currentIndex": 1}, title: "Test"}
+          {id: "Load", url: {"chlngJson": tempJSon, "chlngsCount":5, "currentIndex": 1}, title: "Test"}
         }
         configureScene={(route) => {
           var config = Navigator.SceneConfigs.FloatFromRight;

@@ -9,7 +9,7 @@ import Skin from '../../Skin';
 /*
   CALLED
 */
-import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 var ToolBar = require('../ToolBar');
 var Events = require('react-native-simple-events');
@@ -39,7 +39,6 @@ var SampleRow = React.createClass({
       >
       <Text style={Skin.questionrow.questyle}>{this.props.msg}</Text>
       </TouchableHighlight>
-
     );
   }
 });
@@ -122,6 +121,7 @@ var SetQue = React.createClass({
   setSecrets(){
     var kSecQ = this.state.secQA;
     var vSecA = this.state.secAnswer;
+    var responseJson;
     if(kSecQ.length>0 && vSecA.length>0){
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].challenge = kSecQ;
