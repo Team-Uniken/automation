@@ -231,11 +231,9 @@ class UserLogin extends React.Component{
         <TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
           onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}
         >
-          <View>
-            <Text>BUG</Text>{/*
-            <Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />
-            */}
-          </View>
+          <Text>
+            BUG{/*<Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />*/}
+          </Text>
         </TouchableHighlight>
 
       </MainActivation>
