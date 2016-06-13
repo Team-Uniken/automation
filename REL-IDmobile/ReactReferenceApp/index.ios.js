@@ -80,6 +80,9 @@ class ReactRefApp extends React.Component {
       // id = 'Accounts'
       // id = 'UserLogin';
       // id = 'Activation';
+      //id = "PasswordSet";
+      //id = 'PasswordVerification';
+      id = 'FindBranch';
     }
 
     // MAIN SCENES

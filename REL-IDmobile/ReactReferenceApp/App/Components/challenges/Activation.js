@@ -17,6 +17,7 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
+  InteractionManager,
 } = React;
 
 
@@ -31,6 +32,7 @@ export default class Activation extends React.Component {
 
   onActivationCodeChange(event) {
     this.setState({ activatonCode: event.nativeEvent.text });
+    console.log(event.nativeEvent.text);
   }
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
@@ -39,9 +41,10 @@ export default class Activation extends React.Component {
     return 'NEXT';
   }
   checkActivationCode() {
-    const vkey = this.state.activatonCode;
+    console.log(this);
+    let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
-      const responseJson = this.props.url.chlngJson;
+      let responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     }
@@ -49,6 +52,14 @@ export default class Activation extends React.Component {
       alert('Please enter Verification Key');
     }
   }
+
+  componentDidMount() {
+
+      InteractionManager.runAfterInteractions(() => {
+          this.refs.activatonCode.focus();
+      });
+  }
+
   render() {
     /*
     this._props = {
@@ -120,14 +131,14 @@ export default class Activation extends React.Component {
               autoCorrect={false}
               secureTextEntry={true}
               keyboardType={'default'}
-              placeholder={'Username'}
               placeholderTextColor={'rgba(255,255,255,0.7)'}
               style={Skin.activationStyle.textinput}
               value={this.state.inputUsername}
               autoCorrect={false}
-              ref='activatonCode'
+              ref={'activatonCode'}
               placeholder={'Code'}
               onChange={this.onActivationCodeChange.bind(this)}
+              onSubmitEditing={this.checkActivationCode.bind(this)}
             />
           </View>
         </View>

@@ -1,8 +1,9 @@
 
 import React from 'react-native';
 import Skin from '../../Skin';
-import Events from 'react-native-simple-events';
 
+import Events from 'react-native-simple-events';
+import MainActivation from '../MainActivation';
 
 
 var {
@@ -14,6 +15,7 @@ var {
   StyleSheet,
   StatusBar,
   ScrollView,
+  InteractionManager,
 } = React;
 
 
@@ -71,8 +73,8 @@ export default class PasswordSet extends React.Component {
   }
 
   render() {
-/*
-    this.props = {
+
+    this._props = {
       url: {
         chlngJson: {
           chlng_idx: 1,
@@ -104,22 +106,10 @@ export default class PasswordSet extends React.Component {
         currentIndex: 1,
       },
     };
-*/
+
     return (
-      <View style={Skin.coreStyle.container}>
-        <View style={Skin.loadStyle.bgbase} />
-        <Image style={Skin.loadStyle.bgimage} source={require('image!bg')} />
-        <View style={Skin.statusBarStyle.default}>
-          <StatusBar
-            barStyle="light-content"
-          />
-        </View>
-        <View style={Skin.loadStyle.bgcolorizer} />
 
-        <View style={Skin.activationStyle.centering_wrap}>
-          <View style={Skin.activationStyle.wrap}>
-
-
+      <MainActivation>
               <View>
                 <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
                 <Text style={Skin.activationStyle.title}>Set Password</Text>
@@ -132,13 +122,14 @@ export default class PasswordSet extends React.Component {
                     autoCorrect={false}
                     returnKeyType={'next'}
                     keyboardType={'default'}
-                    ref='password'
+                    ref={'password'}
                     placeholder={'Enter Password'}
                     placeholderTextColor={'rgba(255,255,255,0.7)'}
                     style={Skin.activationStyle.textinput}
                     secureTextEntry={true}
+                    blurOnSubmit={false}
                     onChange={this.onPasswordChange.bind(this)}
-                    onSubmitEditing={this.refs.cPassword.focus()}
+                    onSubmitEditing={()=>{this.refs.cPassword.focus()}}
                   />
                 </View>
               </View>
@@ -147,7 +138,7 @@ export default class PasswordSet extends React.Component {
                 <View style={Skin.activationStyle.textinput_wrap}>
                   <TextInput
                     autoCorrect={false}
-                    ref='cPassowrd'
+                    ref={'cPassword'}
                     returnKeyType={'next'}
                     keyboardType={'default'}
                     placeholder={'Confirm Password'}
@@ -155,7 +146,7 @@ export default class PasswordSet extends React.Component {
                     style={Skin.activationStyle.textinput}
                     secureTextEntry={true}
                     onChange={this.onConfirmPasswordChange.bind(this)}
-                    onSubmitEditing={this.setPassword}
+                    onSubmitEditing={this.setPassword.bind(this)}
                   />
                 </View>
               </View>
@@ -171,13 +162,7 @@ export default class PasswordSet extends React.Component {
                   </Text>
                 </TouchableHighlight>
               </View>
-
-
-          </View>
-        </View>
-
-
-      </View>
+            </MainActivation>
     );
   }
 }
