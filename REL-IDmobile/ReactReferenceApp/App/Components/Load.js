@@ -321,7 +321,7 @@ class Load extends React.Component {
                          }
                          })
   }
-  
+
 
   onInitCompleted() {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
