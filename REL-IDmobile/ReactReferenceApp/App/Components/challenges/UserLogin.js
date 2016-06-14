@@ -33,6 +33,7 @@ const {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
+  Image,
 } = React;
 const ConnectionProfile = require('../ConnectionProfile');
 
@@ -227,13 +228,11 @@ class UserLogin extends React.Component{
         </View>
 
         <OpenLinks />
-        
+
         <TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
           onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}
         >
-          <Text>
-            BUG{/*<Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />*/}
-          </Text>
+        <Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage}/>
         </TouchableHighlight>
 
       </MainActivation>
