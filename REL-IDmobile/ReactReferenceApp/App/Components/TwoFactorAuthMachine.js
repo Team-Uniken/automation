@@ -15,6 +15,8 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 */
 var buildStyleInterpolator = require('buildStyleInterpolator');
 var Main = require('./Main');
+var MainAndroid = require('./MainAndroid');
+
 var Otp = require('./challenges/Otp');
 var SetQue = require('./challenges/SetQue');
 var UserLogin = require('./challenges/UserLogin');
@@ -55,6 +57,7 @@ var {
   Animated,
   AsyncStorage,
   DeviceEventEmitter,
+  Platform,
 } = React;
 
 
@@ -111,7 +114,12 @@ class TwoFactorAuthMachine extends React.Component {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
           }
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          if(Platform === 'ios')
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+            else {
+              this.props.navigator.push({ id: 'MainAndroid', title: 'DashBoard', url: '' });
+
+            }
         }
 
       } else {

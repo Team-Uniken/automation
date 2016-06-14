@@ -11,6 +11,7 @@ var PixelRatio = require('PixelRatio');
 // var NavigationBar = require('react-native-navbar');
 
 var Main = require('./App/Components/Main');
+var MainAndroid = require('./App/Components/MainAndroid');
 var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
@@ -224,6 +225,8 @@ class DemoApp1 extends React.Component{
      return (<ConnectionProfile navigator={nav} url={route.url} title={route.title}/>);
     }else if (id == "ActivateNewDevice"){
       return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title}/>);
+    }else if(id == 'MainAndroid'){
+      return (<MainAndroid navigator={nav} url={route.url} title={route.title}/>);
     }
   }
 
