@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Connect secure Returns</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
   </head>
@@ -33,16 +34,24 @@
       </div>
       <div id="dashboard_content">
         <div class="dashboard_tab_content dashboard_tab_vpsi tab_selected">
-          <h1>main login page</h1>
+          <div id="centreScreen" class="loginstyle">
+            <img class="loginimg" src="./img/AppIcon_150x150.png"/>
+          </div>
+          <div id="greetings" class="welcomenote">Welcome to REL-ID</div>
+          <div id="desc" class="description">New Device Registration Required</div>
+          <input type="text" class="form-control usertxtbx" id="name" placeholder="Enter Name">
+          <button type = "submit" class = "btn btn-default frmbtn">Submit</button>
+          <div id="attempts" class="atmpts">Attempts Left : <span id="count">3</span></div>
         </div>
+        <div id="helpspprtwrapper" class="helpandsupport"><a href="#" id="help_support"><span>Help & Support</span></a></div>
         <div class="dashboard_tab_content dashboard_tab_remote_desktop">
            <h1>remote services page</h1>
         </div>
         <div class="dashboard_tab_content dashboard_tab_portal">
-           <h1>portal page</h1>
+           <webview id="wv1" src="http://www.uniken.com/" class="webviewstyle" ></webview>
         </div>
         <div class="dashboard_tab_content dashboard_tab_crm">
-          <h1>CRM page</h1>
+          <webview id="wv2" src="https://www.google.com/" class="webviewstyle" ></webview>
         </div>
         <div class="dashboard_tab_content dashboard_tab_email">
           <h1>EMAIL page</h1>
@@ -57,7 +66,13 @@
           <h1>device management page</h1>
         </div>
         <div class="dashboard_tab_content dashboard_sub_tab_proxysettings">
-          <h1>proxy settings page</h1>
+          <div>
+          <input id="pxyHost" type="text" class="form-control distance" placeholder="Host"/>
+          <input id="pxyPort" type="number" class="form-control distance" placeholder="Port"/>
+          <input id="pxyUsrNm" type="text" class="form-control distance" placeholder="Username"/>
+          <input id="pxyPswd" type="password" class="form-control distance" placeholder="Password"/>
+          <input class="btn btn-default" type="button" value="Save" onclick="saveProxySettings()">
+          </div>
         </div>
         <div class="dashboard_tab_content dashboard_sub_tab_connections">
           <h1>connection profile page</h1>
@@ -70,6 +85,7 @@
         </div>
       </div>
     </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="js/index.js"></script>
   </body>
 </html>

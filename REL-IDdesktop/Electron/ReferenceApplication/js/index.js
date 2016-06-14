@@ -23,9 +23,18 @@
         else
         {
           $("#dashboard_sub_nav").hide();
-          $("#dashboard_content").css("background-color","rgb(84,150,231)");
+          $("#dashboard_content").css("background-color","rgb(80, 173, 220)");
           $("#dashboard_content").css("margin-left","210px");
         }
+        
+          if(btnNav == "dashboard_tab_vpsi")
+          {
+            document.getElementById("helpspprtwrapper").style.display = "block";
+          }
+          else
+          {
+            document.getElementById("helpspprtwrapper").style.display = "none";
+          }
       });
       
       $("#dashboard_sub_nav ul li > a").click(function() {
