@@ -643,6 +643,45 @@ var coreStyle = StyleSheet.create({
 
 
 });
+
+var ConnectionProfile = StyleSheet.create({
+  branchstyle: {
+  backgroundColor: '#fff',
+  position: 'absolute',
+  top:SCREEN_HEIGHT/2-350/2,
+  left:SCREEN_WIDTH/2-300/2,
+  width:270,
+  height:170
+  },
+
+   DeviceListView: {
+   height: SCREEN_HEIGHT-100,
+   justifyContent: 'center',
+   backgroundColor: 'transparent',
+
+   },
+      button: {
+   height: 48,
+   width: 48,
+   opacity:0.6,
+   justifyContent: "center",
+   marginTop:4,
+   },
+
+   images: {
+     width: 18,
+     height: 18,
+     margin:16,
+   },
+   customerow: {
+    flexDirection:'row',
+    height:56,
+    backgroundColor:'transparent',
+      },
+});
+
+
+
 // ======================================================================================
 var progStyle = StyleSheet.create({
   wrap: {
@@ -1092,7 +1131,7 @@ module.exports = {
 	appointmentrow:appointmentrow,
 	addappointment:addappointment,
 	questionrow:questionrow,
-	ConnectionProfile:ConnectionProfile,
+	ConnectionProfile: ConnectionProfile,
   nav: nav,
   open: open,
   spd: SPEED,

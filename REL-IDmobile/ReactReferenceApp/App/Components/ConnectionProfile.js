@@ -28,7 +28,7 @@ const {
 let CONNECTION_PROFILES_DATA = [];
 let obj;
 
-class ConnectionProfile extends Component {
+class ConnectionProfile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -124,7 +124,7 @@ class ConnectionProfile extends Component {
     this.setState({ inputURL: event.nativeEvent.text });
   }
 
-renderConnectionProfile(connectionprofile1) {
+  renderConnectionProfile(connectionprofile1) {
     var cpName = connectionprofile1.Name;
     return (
       <View>
@@ -153,8 +153,6 @@ renderConnectionProfile(connectionprofile1) {
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'OK', onPress: () => {
           AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {this.props.navigator.replace({id: "Load"})});
-
-
       }},
       ]
     )
@@ -295,39 +293,6 @@ renderConnectionProfile(connectionprofile1) {
           </View>
         </Modal>
       </Main>
-    );
-  }
-
-  renderConnectionProfile(connectionprofile1) {
-    var cpName = connectionprofile1.Name;
-    return (
-      <View>
-      <View style={Skin.ConnectionProfile.customerow}>
-          <TouchableHighlight onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
-            underlayColor={Skin.colors.REPPLE_COLOR}>
-        	<Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16}]}>{cpName}</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.onDeletePressed(connectionprofile1) } style={Skin.ConnectionProfile.button}
-          underlayColor={Skin.colors.REPPLE_COLOR}
-          >
-          {/* BUG
-          <Image source={require('./del')} style={Skin.ConnectionProfile.images} />
-          */}
-          </TouchableHighlight>
-      </View>
-      <Text style={Skin.customeStyle.div1}> </Text>
-      </View>
-    );
-  }
-
-  onConnectionProfilePressed(connectionprofile1) {
-    Alert.alert(
-      'Message',
-      'Select Profile ' + connectionprofile1.Name + ' ?',
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => {
-          AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {this.props.navigator.push({id: "Load"}  )}
     );
   }
 }
