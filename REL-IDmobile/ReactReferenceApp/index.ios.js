@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react-native';
+console.disableYellowBox = true;
 
 // Main Scenes
 import AccountsScene from './App/Scenes/Accounts';
@@ -12,6 +13,9 @@ import PayBillsScene from './App/Scenes/PayBills';
 import ContactScene from './App/Scenes/Contact';
 import DepositsScene from './App/Scenes/Deposits';
 import FindBranchScene from './App/Scenes/FindBranch';
+
+// Secondary Scenes
+import DeviceMgmtScene from './App/Scenes/DeviceMgmt';
 import AppointmentsScene from './App/Scenes/Appointments';
 
 
@@ -26,7 +30,6 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 
 // COMPONENTS
-import Device from './App/Components/device';
 import Load from './App/Components/Load';
 import Web from './App/Components/Web';
 import QBank from './App/Components/Qbank';
@@ -80,9 +83,12 @@ class ReactRefApp extends React.Component {
       // id = 'Accounts'
       // id = 'UserLogin';
       // id = 'Activation';
-      //id = "PasswordSet";
-      //id = 'PasswordVerification';
-      //id = 'FindBranch';
+      // id = "PasswordSet";
+      // id = 'PasswordVerification';
+      // id = 'FindBranch';
+      // id = 'ConnectionProfile';
+      // id = 'Device';
+      id = 'PayBills';
     }
 
     // MAIN SCENES
@@ -129,7 +135,7 @@ class ReactRefApp extends React.Component {
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'Device') {
-      return (<Device navigator={nav} url={route.url} title={route.title} />);
+      return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'ActivateNewDevice') {
       return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {

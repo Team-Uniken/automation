@@ -33,22 +33,28 @@ var {
 
 
 //Colors
-var DARK_PRIMARY = '#2579A2';
-var DARK_PRIMARY_RGB = '37,121,162';
+var DARK_PRIMARY = '#2579A2';//'#0277BD'; //
 var BACK_GRAY = '#f2f2f2';
-var PRIMARY = '#4FADD8';
-var PRIMARY_RGB = '79,173,216';
-var LIGHT_PRIMARY = '#BCE0F2';
+var PRIMARY = '#4FADD8';//'#03A9F4';//03A9F4
+
+var LIGHT_PRIMARY = '#BCE0F2';//'#B3e5FC';//
 var TEXT_COLOR = '#FFFFFF';
 var ACCENT = '#f18F01';
 var POSITIVE_ACCENT = '#92D050';
 var PRIMARY_TEXT = '#212121';
-var PRIMARY_TEXT_RGB = '33,33,33';
+
 var SECONDARY_TEXT = '#727272';
 var DIVIDER_COLOR = '#b6b6b6';
 var NAV_BAR_TINT = '#FFFFFF'
 var MENU_TXT_COLOR = '#2579A2';
 var ICON_COLOR = '#FFFFFF';
+
+
+var PRIMARY_RGB       = hexToRgb(PRIMARY).r       +','+ hexToRgb(PRIMARY).g        +','+ hexToRgb(PRIMARY).b;
+var DARK_PRIMARY_RGB  = hexToRgb(DARK_PRIMARY).r  +','+ hexToRgb(DARK_PRIMARY).g   +','+ hexToRgb(DARK_PRIMARY).b;
+var LIGHT_PRIMARY_RGB  = hexToRgb(LIGHT_PRIMARY).r  +','+ hexToRgb(LIGHT_PRIMARY).g   +','+ hexToRgb(LIGHT_PRIMARY).b;
+var PRIMARY_TEXT_RGB  = hexToRgb(PRIMARY_TEXT).r  +','+ hexToRgb(PRIMARY_TEXT).g   +','+ hexToRgb(PRIMARY_TEXT).b;
+
 
 var BACKGROUND_COLOR = '#fff';
 var BUTTON_BACKGROUND_COLOR = PRIMARY;
@@ -111,6 +117,16 @@ var colors = {
 	BLACK_TEXT_COLOR:BLACK_TEXT_COLOR,
 
 }
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 
 
 var customeStyle = StyleSheet.create({
@@ -300,42 +316,6 @@ var customeStyle = StyleSheet.create({
 														margin:12,
 													},
 });
-var ConnectionProfile = StyleSheet.create({
-  branchstyle: {
-  backgroundColor: '#fff',
-  position: 'absolute',
-  top:SCREEN_HEIGHT/2-350/2,
-  left:SCREEN_WIDTH/2-300/2,
-  width:270,
-  height:170
-  },
-
-   DeviceListView: {
-   height: SCREEN_HEIGHT-100,
-   justifyContent: 'center',
-   backgroundColor: 'transparent',
-
-   },
-      button: {
-   height: 48,
-   width: 48,
-   opacity:0.6,
-   justifyContent: "center",
-   marginTop:4,
-   },
-
-   images: {
-     width: 18,
-     height: 18,
-     margin:16,
-   },
-   customerow: {
-    flexDirection:'row',
-    height:56,
-    backgroundColor:'transparent',
-      },
-});
-
 
 var appointmentrow = StyleSheet.create({
 	customerow: {
@@ -601,27 +581,6 @@ var addappointment = StyleSheet.create({
 //Positions
 var leftrid = 23;
 var coreStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  bgimage: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-  },
-  bgcolorizer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    backgroundColor: 'rgba(8,26,60,0.9)'
-  },
-
 
   logo_rid: {
     fontFamily: 'icomoon',
@@ -1088,7 +1047,7 @@ let activationStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
-    backgroundColor: 'rgba('+DARK_PRIMARY_RGB+',0.54)',
+    backgroundColor: 'rgba('+DARK_PRIMARY_RGB+',0.7)',
   },
   textinput: {
     flex: 1,
@@ -1120,126 +1079,6 @@ let activationStyle = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-
-var customeStyle = StyleSheet.create({
-  maincontainer:{
-    flex:1,
-    //backgroundColor:BACKGROUND_COLOR,
-  },
-  remember:{
-    color: TEXT_COLOR,
-    fontSize: 16,
-    opacity:0.7,
-    margin:16,
-  //  width:SCREEN_WIDTH-80,
-  },
-  images: {
-    width: 24,
-    height: 24,
-    margin:12,
-    opacity:0.7,
-  },
-  row: {
-    flexDirection:'row',
-  //  width:SCREEN_WIDTH,
-  },
-  wrap: {
-    position: 'absolute',
-    top: 10,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    width: 50,
-    height: 50,
-  },
-  input: {
-    textAlign:'center',
-    fontFamily: 'Century Gothic',
-    fontSize:16,
-    height:56,
-    color: '#000',
-    textAlignVertical:'top',
-    alignItems: 'center',
-    opacity:0.7,
-  },
-  roundcorner: {
-    height: 48,
-    width: 280,
-    marginTop:12,
-    marginBottom:16,
-  //  marginLeft:SCREEN_WIDTH/2-140,
-    borderWidth: 1,
-    borderColor: "#fff",
-    backgroundColor: '#fff',
-    borderRadius: 30,
-  },
-  note:{
-    textAlign:'center',
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 16,
-    opacity:0.4,
-  //  width:SCREEN_WIDTH,
-  },
-  text1:{
-    textAlign:'center',
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 16,
-    opacity:0.7,
-  //  width:SCREEN_WIDTH,
-  },
-  text2:{
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    textAlign:'center',
-    fontSize: 20,
-    opacity:0.75,
-  //  width:SCREEN_WIDTH,
-  },
-  text3:{
-    textAlign:'center',
-    marginTop:16,
-  //  color: mycolor.TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 24,
-    opacity:0.9,
-  //  width:SCREEN_WIDTH,
-  },
-  text4:{
-    textAlign:'center',
-    marginTop:16,
-  //  color: mycolor.TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 34,
-  //  width:SCREEN_WIDTH,
-  },
-  button:{
-    textAlign:'center',
-    marginTop:12,
-    height:48,
-  //  color: mycolor.BUTTON_TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 16,
-  },
-  div:{
-    marginTop:16,
-  //  width:SCREEN_WIDTH,
-    backgroundColor: '#000',
-    height:1,
-    opacity:0.6,
-  },
-});
-
 
 module.exports = {
   coreStyle: coreStyle,

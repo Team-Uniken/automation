@@ -341,7 +341,7 @@ class Load extends React.Component {
 
   render() {
     return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <Animated.View style={[Skin.loadStyle.rid_wrap, { top: this.state.rid_top }]}>
           <View style={Skin.loadStyle.rid_center}>
             <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r, { opacity: this.state.r_opac_val }]}>g

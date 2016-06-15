@@ -51,8 +51,7 @@ export default class Main extends React.Component {
    */
   constructor(props) {
     super(props);
-
-    this.state={};
+    this.state = {};
     this.toggleDrawer = this.toggleDrawer.bind(this)
     this.state.navBar                 = {};
     
@@ -74,17 +73,16 @@ export default class Main extends React.Component {
     this.state.navBar.right.icon      = this.props.navBar.right.icon || '';
     this.state.navBar.right.iconStyle = this.props.navBar.right.iconStyle || {};
     this.state.navBar.right.textStyle = this.props.navBar.right.textStyle || {};
-    this.state.navBar.right.handler = this.props.navBar.right.handler || this.toggleDrawer;
+    this.state.navBar.right.handler   = this.props.navBar.right.handler || this.toggleDrawer;
 
-    this.state.bottomMenu={
-        visible: this.props.bottomMenu.visible,
-        active: this.props.bottomMenu.active,
+    this.state.bottomMenu = {
+      visible: this.props.bottomMenu.visible,
+      active: this.props.bottomMenu.active,
     };
-    this.state.drawerState={
-      open: false,
-      disabled: false,
-    }
-    
+    this.state.drawerState = {
+      open: this.props.drawerState.open || false,
+      disabled: this.props.drawerState.disabled || false,
+    };
   }
 
   /**
@@ -134,7 +132,7 @@ export default class Main extends React.Component {
         captureGestures={false}
         tweenDuration={100}
         panThreshold={0.0}
-        disabled={this.state.drawerDisabled}
+        disabled={this.state.drawerState.disabled}
         openDrawerOffset={() => 70}
         closedDrawerOffset={() => 0}
         panOpenMask={0.2}
@@ -202,16 +200,14 @@ Main.defaultProps = {
       icon: '',
       iconStyle: '',
       textStyle: '',
-      handler: () => {
-      },
+      handler: () => {},
     },
     right: {
       text: '',
       icon: '',
       iconStyle: '',
       textStyle: '',
-      handler: () => {
-      },
+      handler: () => {},
     },
   },
   bottomMenu: {
