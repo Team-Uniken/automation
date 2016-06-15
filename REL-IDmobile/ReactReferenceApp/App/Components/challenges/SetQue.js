@@ -12,7 +12,7 @@ import MainActivation from '../MainActivation';
 */
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-var ToolBar = require('../ToolBar');
+var ToolBar = require('./ChallengeToolBar');
 var Events = require('react-native-simple-events');
 var obj;
 

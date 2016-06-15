@@ -1,5 +1,9 @@
 var React = require('react-native');
 var constant = require('./Constants');
+import Modal from 'react-native-simple-modal';
+import TextField from 'react-native-md-textinput';
+var Skin = require('../Skin');
+var ToolBar = require('./ToolBar');
 
 var {
     Image,
@@ -12,8 +16,10 @@ var {
     TextInput,
     TouchableHighlight,
     Dimensions,
+    TouchableOpacity,
     AsyncStorage,
     Alert,
+    StatusBar,
 } = React;
 
 
@@ -41,7 +47,7 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var onGetDevice, onDeviceUp;
 var obj;
 var devicesList;
-var deviceHolderList; 
+var deviceHolderList;
 
 var {
     DeviceEventEmitter
@@ -80,8 +86,6 @@ var FAKE_BOOK_DATA = [
             "createdTs": "2016-06-09T15:02:22IST",
             "devBind": 0
           }];
-
-FAKE_BOOK_DATA = [];
 
 var {
     height,
@@ -319,6 +323,7 @@ class Device extends Component {
         obj = this;
 
         this.state = {
+          open: false,
 
             dataSource: new ListView.DataSource({
 
@@ -347,11 +352,11 @@ class Device extends Component {
 
         });
 
-        AsyncStorage.getItem("userId").then((value) => {
-
-            ReactRdna.getRegisteredDeviceDetails(value, (response) => {});
-
-        }).done();
+        // AsyncStorage.getItem("userId").then((value) => {
+        //
+        //     ReactRdna.getRegisteredDeviceDetails(value, (response) => {});
+        //
+        // }).done();
 
 
 
@@ -433,99 +438,16 @@ class Device extends Component {
 
         return (
 
+
             <
             View style = {
                 styles.maincontainer
             } >
 
-
-
-            <
-            View style = {
-                styles.navbar
-            } >
-
-            <
-            TouchableHighlight
-
-            style = {
-                [styles.navButton, styles.navLeft]
-            }
-
-            underlayColor = {
-                '#FFFFFF'
-            }
-
-            activeOpacity = {
-                0.6
-            }
-
-            >
-
-            <
-            View style = {
-                styles.navButtonText
-            } >
-
-            <
-            /View>
-
-            <
-            /TouchableHighlight>
-
-
-
-            <
-            Text style = {
-                styles.navTitle
-            } > Device < /Text>
-
-
-
-            <
-            TouchableHighlight
-
-            style = {
-                [styles.navButton, styles.navRight]
-            }
-
-            onPress = {
-                () => {
-
-                    this.props.navigator.pop();
-
-                }
-            }
-
-            underlayColor = {
-                '#FFFFFF'
-            }
-
-            activeOpacity = {
-                0.6
-            }
-
-            >
-
-            <
-            Text
-
-            style = {
-                [styles.navButtonText, {
-                    textAlign: 'right',
-                    fontSize: 22
-                }]
-            }
-
-            >
-            X < /Text>
-
-            <
-            /TouchableHighlight>
-
-            <
-            /View>
-
+            <StatusBar
+            backgroundColor={Skin.colors.STATUS_BAR_COLOR}
+            barStyle='light-content'/>
+            <ToolBar navigator={this.props.navigator} title="Device"/>
 
 
 
@@ -579,7 +501,37 @@ class Device extends Component {
 
             <
             /TouchableHighlight>
-
+            <Modal
+            style={Skin.ConnectionProfile.branchstyle}
+            offset={this.state.offset}
+            open={this.state.open}
+            modalDidOpen={() => console.log('modal did open')}
+            modalDidClose={() => this.setState({open: false})}
+            >
+              <Text style={[Skin.customeStyle.text3,{textAlign:'left',marginTop:0,marginLeft:4}]}>Device</Text>
+              <TextField
+              autoCorrect={false}
+                label={'Enter device name'}
+                labelColor={Skin.colors.HINT_COLOR}
+                highlightColor={'transparent'}
+                style={{height:40,textAlignVertical:'top'}}
+              />
+            <View style={Skin.ConnectionProfile.customerow}>
+            <TouchableHighlight
+            onPress={() => this.setState({open: false})}
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={{height:48,width:70,marginLeft:100}}
+            >
+            <Text style={[Skin.customeStyle.text1,{width:70,opacity:1}]}>CANCEL</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+            onPress={() => this.setState({open: false})}
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={{height:48,width:70}}>
+            <Text style={[Skin.customeStyle.text1,{width:70,color:'#007ECE',opacity:1}]}>OK</Text>
+            </TouchableHighlight>
+            </View>
+            </Modal>
             <
             /View>
 
@@ -842,8 +794,8 @@ class Device extends Component {
     onEditPressed(device) {
 
         var title = device.devName;
-
-        alert('Edit button of ' + title);
+        this.setState({open: true})
+        // alert('Edit button of ' + title);
 
     }
 

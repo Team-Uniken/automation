@@ -56,6 +56,7 @@ var {
   PixelRatio,
   Animated,
   AsyncStorage,
+  Alert,
   DeviceEventEmitter,
   Platform,
 } = React;
@@ -71,6 +72,7 @@ class TwoFactorAuthMachine extends React.Component {
     screenId = 'UserLogin';// this.props.screenId;
 
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
 	                    }
 
   componentWillMount() {
@@ -86,6 +88,22 @@ class TwoFactorAuthMachine extends React.Component {
 
   componentWillUnmount() {
     console.log('----- TwoFactorAuthMachine unmounted');
+  }
+
+  onErrorOccured(response){
+    console.log("-------- Error occurred ");
+    if (response.ResponseData) {
+      var chlngJson = response.ResponseData;
+      console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
+      var nextChlngName = chlngJson.chlng[0].chlng_name;
+
+    // this.props.navigator.pop();
+    // this.props.navigator.replace();
+      if (chlngJson != null) {
+        obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+        obj.props.navigator.push({ id: 'Machine', title: nextChlngName, url: { 'chlngJson': chlngJson, 'screenId': nextChlngName } });
+      }
+    }
   }
 
   onCheckChallengeResponseStatus(e) {
@@ -118,15 +136,22 @@ class TwoFactorAuthMachine extends React.Component {
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
             else {
               this.props.navigator.push({ id: 'MainAndroid', title: 'DashBoard', url: '' });
-
             }
         }
 
       } else {
-        alert(res.pArgs.response.StatusMsg);
+        Alert.alert(
+                    'Error',
+                    res.pArgs.response.StatusMsg,
+                    [
+                      {text: 'OK',onPress: () => obj.onErrorOccured(res.pArgs.response), style: 'cancel'},
+                    ]
+                  )
+
+
       }
     } else {
-      alert();
+      alert('Internal system error occurred.');
     }
   }
 
@@ -244,7 +269,10 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   showPreviousChallenge() {
-
+      if(currentIndex > 0){
+        currentIndex --;
+        this.props.navigator.pop();
+      }
   }
 
   showCurrentChallenge() {
