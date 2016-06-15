@@ -36,16 +36,20 @@ class BottomMenu extends React.Component{
 		super(props);
 		//console.log(props);
 		this.state = {
-			active: props.bottomMenu.active,
+			visible: this.props.bottomMenu.visible,
+			active: this.props.bottomMenu.active,
 		};
 	}
 
 	render() {
-		return (
-			<View style={Skin.botmenu.wrap}>
-				{this.buildboxes(this.state.active)}
-			</View>
-		);
+		if(this.state.visible){
+			return (
+				<View style={Skin.botmenu.wrap}>
+					{this.buildboxes(this.state.active)}
+				</View>
+			);
+		}
+		return null;
 	}
 
 	buildboxes(active){

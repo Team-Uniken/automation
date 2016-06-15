@@ -1,32 +1,34 @@
 'use strict';
+
+import React from 'react-native';
+import Modal from 'react-native-simple-modal';
+import Skin from '../Skin';
+import Load from './Load';
+import Main from './Main';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import TextField from 'react-native-md-textinput';
 
-var React = require('react-native');
-var ToolBar = require('./ToolBar');
-import Modal from 'react-native-simple-modal';
-var Skin = require('../Skin');
-var Load = require('./Load');
 
-var {
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+var SCREEN_WIDTH = require('Dimensions').get('window').width;
+var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+const {
   Text,
   View,
   ListView,
-  TextInput,
   TouchableHighlight,
-  Dimensions,
   Component,
   AsyncStorage,
+  TextInput,
   Alert,
   Image,
-  StatusBar,
+  StyleSheet,
 } = React;
 
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-var CONNECTION_PROFILES_DATA = [];
-var obj;
+let CONNECTION_PROFILES_DATA = [];
+let obj;
 
-class ConnectionProfile extends Component {
+class ConnectionProfile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -39,8 +41,9 @@ class ConnectionProfile extends Component {
       }),
     };
   }
-  open(){
-    this.setState({open: true})
+
+  open() {
+    this.setState({open: true});
   }
 
   componentDidMount() {
@@ -50,37 +53,36 @@ class ConnectionProfile extends Component {
           dataSource: this.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA)
         });
     }).done();
-
   }
+
   onImportPressed() {
     this.open();
   }
 
   checkURL() {
-    var url = this.state.inputURL;
+    const url = this.state.inputURL;
     if (url.length>0) {
       fetch(url)
       .then((response) => response.text())
-      .then((responseText) => {
-        console.log(responseText);
-        responseText = JSON.parse(responseText);
+      .then((text) => {
+        const responseText = JSON.parse(text);
         if (responseText != null || responseText.length > 0) {
-          var profileArray = responseText.Profiles;
-          var relidArray = responseText.RelIds;
+          const profileArray = responseText.Profiles;
+          const relidArray = responseText.RelIds;
           for (let i = 0; i < profileArray.length; i++) {
-              var RelIdName = profileArray[i].RelId;
-              for(let j = 0; j < relidArray.length; j++) {
-                if (RelIdName === relidArray[j].Name) {
-                  profileArray[i].RelId = relidArray[j].RelId;
-                }
+            const RelIdName = profileArray[i].RelId;
+            for (let j = 0; j < relidArray.length; j++) {
+              if (RelIdName === relidArray[j].Name) {
+                profileArray[i].RelId = relidArray[j].RelId;
               }
+            }
           }
-          AsyncStorage.getItem('ConnectionProfiles', (err, oldProfiles) => {
-            oldProfiles = JSON.parse(oldProfiles);
+          AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
+            let oldProfiles = JSON.parse(profiles);
             if (oldProfiles != null || oldProfiles > 0) {
-              for(var i = 0; i < oldProfiles.length; i++) {
-                for(var j = 0; j < profileArray.length; j++) {
-                  if (oldProfiles[i].Name == profileArray[j].Name) {
+              for (let i = 0; i < oldProfiles.length; i++) {
+                for (let j = 0; j < profileArray.length; j++) {
+                  if (oldProfiles[i].Name === profileArray[j].Name) {
                     oldProfiles[i] = profileArray[j];
                     profileArray.splice(j, 1);
                     break;
@@ -107,79 +109,19 @@ class ConnectionProfile extends Component {
         }
       })
       .catch((error) => {
-        // console.warn(error);
+        console.warn(error);
         alert('Invalid connection profile, contact admin');
         this.setState({
           open: false,
         });
       });
     } else {
-        alert('Please enter url');
-      }
+      alert('Please enter url');
+    }
   }
 
-  onURLChange(event){
-		this.setState({inputURL: event.nativeEvent.text});
-	}
-
-
-  render() {
-    return (
-      <View style={Skin.customeStyle.maincontainer}>
-           <StatusBar
-           backgroundColor={Skin.colors.STATUS_BAR_COLOR}
-           barStyle='light-content'/>
-           <ToolBar navigator={this.props.navigator} title="Connection Profile"/>
-           <View style={Skin.ConnectionProfile.DeviceListView}>
-          <ListView
-             dataSource={this.state.dataSource}
-             renderRow={this.renderConnectionProfile.bind(this)} />
-            </View>
-            <TouchableHighlight style={[Skin.appointmentrow.floatbutton]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
-              onPress={() => this.onImportPressed()}>
-          <View>
-          {/* BUG
-          <Image source={require('./floatimage')} style={Skin.appointmentrow.plus} />
-          */}
-          </View>
-        </TouchableHighlight>
-
-       <Modal
-       style={Skin.ConnectionProfile.branchstyle}
-       offset={this.state.offset}
-       open={this.state.open}
-       modalDidOpen={() => console.log('modal did open')}
-       modalDidClose={() => this.setState({open: false})}
-       >
-         <Text style={[Skin.customeStyle.text3,{textAlign:'left',marginTop:0,marginLeft:4}]}>Import file</Text>
-         <TextField
-         autoCorrect={false}
-         ref='inputURL'
-           label={'Enter URL'}
-           labelColor={Skin.colors.HINT_COLOR}
-           highlightColor={'transparent'}
-           style={{height:40,textAlignVertical:'top'}}
-           onSubmitEditing={this.checkURL.bind(this)}
-           onChange={this.onURLChange.bind(this)}
-         />
-       <View style={Skin.ConnectionProfile.customerow}>
-       <TouchableHighlight
-       onPress={() => this.setState({open: false})}
-       underlayColor={Skin.colors.REPPLE_COLOR}
-       style={{height:48,width:70,marginLeft:100}}
-       >
-       <Text style={[Skin.customeStyle.text1,{width:70,opacity:1}]}>CANCEL</Text>
-       </TouchableHighlight>
-       <TouchableHighlight
-       onPress={this.checkURL.bind(this)}
-       underlayColor={Skin.colors.REPPLE_COLOR}
-       style={{height:48,width:70}}>
-       <Text style={[Skin.customeStyle.text1,{width:70,color:'#007ECE',opacity:1}]}>IMPORT</Text>
-       </TouchableHighlight>
-</View>
-       </Modal>
-    </View>
-  );
+  onURLChange(event) {
+    this.setState({ inputURL: event.nativeEvent.text });
   }
 
   renderConnectionProfile(connectionprofile1) {
@@ -189,14 +131,12 @@ class ConnectionProfile extends Component {
       <View style={Skin.ConnectionProfile.customerow}>
           <TouchableHighlight onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
             underlayColor={Skin.colors.REPPLE_COLOR}>
-        	<Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16}]}>{cpName}</Text>
+          <Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16}]}>{cpName}</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.onDeletePressed(connectionprofile1) } style={Skin.ConnectionProfile.button}
           underlayColor={Skin.colors.REPPLE_COLOR}
           >
-          {/* BUG
-          <Image source={require('./del')} style={Skin.ConnectionProfile.images} />
-          */}
+          <Image source={require('image!del')} style={Skin.ConnectionProfile.images} />
           </TouchableHighlight>
       </View>
       <Text style={Skin.customeStyle.div1}> </Text>
@@ -212,9 +152,7 @@ class ConnectionProfile extends Component {
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'OK', onPress: () => {
-          AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {this.props.navigator.push({id: "Load"})});
-
-
+          AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {this.props.navigator.replace({id: "Load"})});
       }},
       ]
     )
@@ -225,33 +163,200 @@ class ConnectionProfile extends Component {
       'Message',
       'Delete Profile ' + connectionprofile1.Name + ' ?',
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => {AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
-          profiles = JSON.parse(profiles);
-          if ((profiles != null) || (profiles.length > 0)) {
-            for (var i = 0; i < profiles.length; i++) {
-              if (connectionprofile1.Name === profiles[i].Name) {
-                profiles.splice(i, 1);
-                AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
-                  currentProfile = JSON.parse(currentProfile);
-                  if (connectionprofile1.Name == currentProfile.Name) {
-                    AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {});
-                  }
-                });
-                CONNECTION_PROFILES_DATA = profiles;
-                AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {});
-                obj.setState({
-                  dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA)
-                });
-
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'OK', onPress: () => {
+          AsyncStorage.getItem('ConnectionProfiles', (err, _profiles) => {
+            const profiles = JSON.parse(_profiles);
+            if ((profiles != null) || (profiles.length > 0)) {
+              for (let i = 0; i < profiles.length; i++) {
+                if (connectionprofile1.Name === profiles[i].Name) {
+                  profiles.splice(i, 1);
+                  AsyncStorage.getItem('CurrentConnectionProfile', (err, _currentProfile) => {
+                    const currentProfile = JSON.parse(_currentProfile);
+                    if (connectionprofile1.Name === currentProfile.Name) {
+                      AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {});
+                    }
+                  });
+                  CONNECTION_PROFILES_DATA = profiles;
+                  AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {});
+                  obj.setState({
+                    dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
+                  });
+                }
               }
             }
-          }
-        });
-      }},
+          });
+        } },
       ]
-    )
+    );
+  }
+
+  render() {
+    return (
+      <Main
+        drawerState={{
+          open: false,
+          disabled: true,
+        }}
+        navBar={{
+          title: 'Appointments',
+          visible: true,
+          tint: Skin.colors.TEXT_COLOR,
+          left: {
+            text: 'Back',
+            icon: 'x',
+            iconStyle: {},
+            textStyle: {},
+            handler: () => { console.log('inside'); this.props.navigator.resetTo({ id:'Load' }); },
+          },
+        }}
+        bottomMenu={{
+          visible: false,
+        }}
+        navigator={this.props.navigator}
+      >
+        <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY }}>
+          <View style={Skin.ConnectionProfile.DeviceListView}>
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this.renderConnectionProfile.bind(this)} />
+          </View>
+          <TouchableHighlight 
+            style={{
+              backgroundColor:Skin.colors.PRIMARY,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              position: 'absolute',
+              bottom: 70,
+              right: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            activeOpacity={0.8} 
+            underlayColor={Skin.colors.DARK_PRIMARY}
+            onPress={() => this.onImportPressed()}>
+            <Text
+              style={{
+                color:Skin.colors.TEXT_COLOR,
+                backgroundColor: 'transparent',
+                fontSize:30,
+                fontWeight: 'bold',
+                marginLeft: 0,
+                marginTop: -2,
+                fontFamily:Skin.font.ICON_FONT,
+              }}
+            >{'\ue069'}</Text>
+          </TouchableHighlight>
+        </View>
+        <Modal
+          style={styles.modalwrap}
+          overlayOpacity={0.75}
+          offset={100}
+          open={this.state.open}
+          modalDidOpen={() => console.log('modal did open')}
+          modalDidClose={() => this.setState({open: false})}
+        >
+          <View style={styles.modalTitleWrap}>
+            <Text style={styles.modalTitle}>
+              Import file
+            </Text>
+          </View>
+          <TextInput
+            autoCorrect={false}
+            ref='inputURL'
+            label={'Enter URL'}
+            style={styles.modalInput}
+            onSubmitEditing={this.checkURL.bind(this)}
+            onChange={this.onURLChange.bind(this)}
+          />
+          <View style={styles.border}></View>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <TouchableHighlight
+              onPress={() => this.setState({ open: false })}
+              underlayColor={Skin.colors.REPPLE_COLOR}
+              style={styles.modalButton}
+            >
+              <Text style={styles.modalButtonText}>
+                CANCEL
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={this.checkURL.bind(this)}
+              underlayColor={Skin.colors.REPPLE_COLOR}
+              style={styles.modalButton}
+            >
+              <Text style={styles.modalButtonText}>
+                IMPORT
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
+      </Main>
+    );
   }
 }
+
+
+const styles = StyleSheet.create({
+  modalwrap: {
+    height: 130,
+    flexDirection: 'column',
+    borderRadius: 15,
+  },
+  modalTitleWrap:{
+    justifyContent: 'center',
+    flex:1,
+  },
+  modalTitle:{
+    color: Skin.colors.PRIMARY_TEXT,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  modalButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  modalButtonText: {
+    textAlign: 'center',
+  },
+  modalInput:{
+    textAlign: 'left',
+    color: Skin.colors.PRIMARY_TEXT,
+    height: 30,
+  },
+  border:{
+    height: 1,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+    marginBottom: 10,
+  },
+  DeviceListView: {
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  button: {
+    height: 48,
+    width: 48,
+    opacity: 0.6,
+    justifyContent: "center",
+    marginTop: 4,
+  },
+  images: {
+    width: 18,
+    height: 18,
+    margin: 16,
+  },
+  customerow: {
+    flexDirection: 'row',
+    height: 56,
+    backgroundColor: 'transparent',
+  },
+});
+
 
 module.exports = ConnectionProfile;

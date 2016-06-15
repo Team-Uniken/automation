@@ -31,6 +31,7 @@ const {
   View,
   Animated,
   TouchableHighlight,
+  TouchableOpacity,
   InteractionManager,
   AsyncStorage,
 } = React;
@@ -88,7 +89,6 @@ class UserLogin extends React.Component{
 
 
   componentDidMount() {
-
       InteractionManager.runAfterInteractions(() => {
           this.refs.inputUsername.focus();
       });
@@ -131,7 +131,10 @@ class UserLogin extends React.Component{
           Events.trigger('showNextChallenge', { response: responseJson });
           // this.updateProgress();
       } else {
-          alert('Please enter a Username');
+          dismissKeyboard();
+          InteractionManager.runAfterInteractions(() => {
+            alert('Please enter a Username');
+          });
       }
   }
 
@@ -173,7 +176,6 @@ class UserLogin extends React.Component{
   }
 
 
-
   getProgress(offset) {
       var progress = this.state.progress + offset;
       return progress;
@@ -186,7 +188,7 @@ class UserLogin extends React.Component{
 
   render() {
     return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
           <View style={Skin.loadStyle.rid_center}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
@@ -214,27 +216,19 @@ class UserLogin extends React.Component{
         </View>
 
         <View style={Skin.activationStyle.input_wrap}>
-          <TouchableHighlight
+          <TouchableOpacity
             style={Skin.activationStyle.button}
             onPress={this.checkUsername.bind(this)}
             underlayColor={'#082340'}
-            activeOpacity={0.6}
+            activeOpacity={0.8}
           >
             <Text style={Skin.activationStyle.buttontext}>
               LOGIN
             </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
 
         <OpenLinks />
-        
-        <TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
-          onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}
-        >
-          <Text>
-            BUG{/*<Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />*/}
-          </Text>
-        </TouchableHighlight>
 
       </MainActivation>
     );

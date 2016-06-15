@@ -11,10 +11,9 @@ const {
 } = React;
 
 export default class NavButton extends Component {
+
   render() {
     const { icon, title, tint, iconStyle, textStyle, handler, left} = this.props;
-    //console.log('navbutton')
-    //console.log(handler);
     if (left){
       return (
         <TouchableOpacity style={styles.navBarButton} onPress={handler}>
@@ -71,6 +70,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   navBarButtonText: {
     fontSize: 16,
@@ -81,7 +81,6 @@ var styles = StyleSheet.create({
     fontWeight: '200',
     width: 33,
     letterSpacing: 0.2,
-
     fontFamily: Skin.font.ICON_FONT,
   },
   navBarTitleContainer: {

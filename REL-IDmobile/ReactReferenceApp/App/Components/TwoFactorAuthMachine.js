@@ -24,7 +24,6 @@ var DeviceBinding = require('./challenges/devbind');
 var DeviceName = require('./challenges/devname');
 var Constants = require('./Constants');
 var Events = require('react-native-simple-events');
-var Device = require('./device');
 var ActivateNewDevice = require('./ActivateNewDevice');
 var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
