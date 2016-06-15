@@ -23,10 +23,9 @@ import SetQue from './App/Components/challenges/SetQue';
 import ActivateNewDevice from './App/Components/ActivateNewDevice';
 import UserLogin from './App/Components/challenges/UserLogin';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
-
+import Device from './App/Components/device';
 
 // COMPONENTS
-import Device from './App/Components/device';
 import Load from './App/Components/Load';
 import Web from './App/Components/Web';
 import QBank from './App/Components/Qbank';
@@ -42,6 +41,7 @@ import ConnectionProfile from './App/Components/ConnectionProfile';
 const {
   AppRegistry,
   Navigator,
+  Text,
 } = React;
 
 
@@ -128,11 +128,12 @@ class ReactRefApp extends React.Component {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'Device') {
+    } else if (id === 'device') {
       return (<Device navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ActivateNewDevice') {
       return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'ConnectionProfile') {
+    }
+    else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={nav} url={route.url} title={route.title} />);
     }
     return (<Text>Error</Text>);

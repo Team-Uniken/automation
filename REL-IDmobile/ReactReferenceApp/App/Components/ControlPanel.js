@@ -103,7 +103,9 @@ class ControlPanel extends React.Component{
             </TouchableHighlight><View style={styles.menuBorder}></View>
             <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Profile & Settings"});}} style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Activate New Device"});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
+            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: "ActivateNewDevice", title:"Activate New Device"});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
+            </TouchableHighlight><View style={styles.menuBorder}></View>
+            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: "device", title:"Self Device Managment"});}}  style={styles.touch}><Text style={styles.menuItem}>Self Device Managment</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Change Secret Question"});}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>

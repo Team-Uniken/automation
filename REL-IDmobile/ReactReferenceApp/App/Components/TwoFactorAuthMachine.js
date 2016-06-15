@@ -108,8 +108,9 @@ class TwoFactorAuthMachine extends React.Component {
 
   onCheckChallengeResponseStatus(e) {
     var res = JSON.parse(e.response);
-    var statusCode = res.pArgs.response.StatusCode;
+
     if (res.errCode == 0) {
+      var statusCode = res.pArgs.response.StatusCode;
       if (statusCode == 100) {
 
         // Unregister All Events
@@ -132,9 +133,9 @@ class TwoFactorAuthMachine extends React.Component {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
           }
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          if(Platform === 'ios')
-          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-            else {
+          if(Platform.OS === 'ios') {
+              this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          } else {
               this.props.navigator.push({ id: 'MainAndroid', title: 'DashBoard', url: '' });
             }
         }
