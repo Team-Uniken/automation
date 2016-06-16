@@ -9,13 +9,14 @@ import Skin from '../../Skin';
 /*
   CALLED
 */
-import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 /*
   Instantiaions
 */
-var ToolBar = require('../ToolBar');
+var ToolBar = require('./ChallengeToolBar');
 var Events = require('react-native-simple-events');
+var responseJson;
 
 var {
 	View,

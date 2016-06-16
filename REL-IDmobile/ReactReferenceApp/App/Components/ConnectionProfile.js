@@ -131,7 +131,8 @@ class ConnectionProfile extends React.Component {
       <View style={Skin.ConnectionProfile.customerow}>
           <TouchableHighlight onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
             underlayColor={Skin.colors.REPPLE_COLOR}>
-          <Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16}]}>{cpName}</Text>
+        	<Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16,opacity:1}]}>{cpName}</Text>
+
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.onDeletePressed(connectionprofile1) } style={Skin.ConnectionProfile.button}
           underlayColor={Skin.colors.REPPLE_COLOR}
@@ -221,7 +222,7 @@ class ConnectionProfile extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderConnectionProfile.bind(this)} />
           </View>
-          <TouchableHighlight 
+          <TouchableHighlight
             style={{
               backgroundColor:Skin.colors.PRIMARY,
               width: 50,
@@ -233,7 +234,7 @@ class ConnectionProfile extends React.Component {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            activeOpacity={0.8} 
+            activeOpacity={0.8}
             underlayColor={Skin.colors.DARK_PRIMARY}
             onPress={() => this.onImportPressed()}>
             <Text

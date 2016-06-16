@@ -28,12 +28,14 @@ let statusMessage;
 const {
   Text,
   TextInput,
+  ScrollView,
   View,
   Animated,
   TouchableHighlight,
   TouchableOpacity,
   InteractionManager,
   AsyncStorage,
+  Image,
 } = React;
 const ConnectionProfile = require('../ConnectionProfile');
 

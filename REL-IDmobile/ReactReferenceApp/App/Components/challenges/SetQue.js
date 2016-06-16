@@ -5,13 +5,14 @@
 */
 import React from 'react-native';
 import Skin from '../../Skin';
+import MainActivation from '../MainActivation';
 
 /*
   CALLED
 */
-import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-var ToolBar = require('../ToolBar');
+var ToolBar = require('./ChallengeToolBar');
 var Events = require('react-native-simple-events');
 var obj;
 
@@ -39,7 +40,6 @@ var SampleRow = React.createClass({
       >
       <Text style={Skin.questionrow.questyle}>{this.props.msg}</Text>
       </TouchableHighlight>
-
     );
   }
 });
@@ -122,6 +122,7 @@ var SetQue = React.createClass({
   setSecrets(){
     var kSecQ = this.state.secQA;
     var vSecA = this.state.secAnswer;
+    var responseJson;
     if(kSecQ.length>0 && vSecA.length>0){
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].challenge = kSecQ;
@@ -141,65 +142,61 @@ var SetQue = React.createClass({
 
 
     return (
-      <View style={Skin.customeStyle.maincontainer}>
-                <StatusBar
-                backgroundColor={Skin.colors.STATUS_BAR_COLOR}
-                barStyle='light-content'
-                />
-                <ToolBar navigator={this.props.navigator} title="Activation"/>
-	              <ScrollView >
-                <Text style={Skin.customeStyle.text1}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-                <Text style={Skin.customeStyle.text2}>Question and Answer</Text>
-                <Text style={Skin.customeStyle.div}> </Text>
-                <View
-               style={[Skin.customeStyle.roundcornerinput]}
-                activeOpacity={0.6}>
-                <KeyboardAwareScrollView>
-               <TextInput
-               ref={component => this._textInput = component}
-               autoCorrect={false}
-               placeholder={'Type/Select question'}
-               	placeholderTextColor={Skin.colors.HINT_COLOR}
-               	style={Skin.customeStyle.input}
-                onChange={this.onQuestionChange}
-               />
-               </KeyboardAwareScrollView>
+      <MainActivation>
+      <ScrollView>
+        <View style={{marginTop:38}}>
+          <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+          <Text style={Skin.activationStyle.title}>Question and Answer</Text>
+        </View>
 
-               </View>
-               <View style={Skin.questionrow.que}>
-               <ListView
+        <View style={[Skin.activationStyle.input_wrap]}>
+          <View style={Skin.activationStyle.textinput_wrap}>
+          <TextInput
+           ref={component => this._textInput = component}
+           autoCorrect={false}
+           placeholder={'Type/Select question'}
+           placeholderTextColor={'rgba(255,255,255,0.7)'}
+           style={Skin.activationStyle.textinput}
+           onChange={this.onQuestionChange}
+          />
+          </View>
+        </View>
+            <View style={Skin.questionrow.que}>
+              <ListView
                ref="listView"
                automaticallyAdjustContentInsets={false}
                dataSource={this.state.dataSource}
                renderRow={this.renderRow}
-               />
-               </View>
-               <View
-      style={[Skin.customeStyle.roundcornerinput]}
-       activeOpacity={0.6}
-      >
-      <KeyboardAwareScrollView>
-      <TextInput
-        autoCorrect={false}
-        placeholder={'Enter your secret answer'}
-        placeholderTextColor={Skin.colors.HINT_COLOR}
-        style={Skin.customeStyle.input}
-        onChange={this.onAnswerChange}
-      />
-      </KeyboardAwareScrollView>
+              />
+            </View>
 
-      </View>
-      <Text style={Skin.customeStyle.div}> </Text>
-      <TouchableHighlight
-      style={[Skin.customeStyle.roundcornerbutton]}
-      onPress={this.setSecrets}
-     	 underlayColor={Skin.colors.BUTTON_UNDERLAY_COLOR}
-     	 activeOpacity={0.6}
-      >
-      <Text style={Skin.customeStyle.button}>{this.btnText()}</Text>
-      </TouchableHighlight>
-      </ScrollView >
-			</View>
+            <View style={[Skin.activationStyle.input_wrap]}>
+              <View style={Skin.activationStyle.textinput_wrap}>
+                <TextInput
+                  autoCorrect={false}
+                  placeholder={'Enter your secret answer'}
+                  placeholderTextColor={'rgba(255,255,255,0.7)'}
+                  style={Skin.activationStyle.textinput}
+                  onChange={this.onAnswerChange}
+                />
+
+              </View>
+            </View>
+            <View style={Skin.activationStyle.input_wrap}>
+              <TouchableHighlight
+                style={Skin.activationStyle.button}
+                onPress={this.setSecrets}
+                underlayColor={'#082340'}
+                activeOpacity={0.6}
+              >
+                <Text style={Skin.activationStyle.buttontext}>
+                  {this.btnText()}
+                </Text>
+              </TouchableHighlight>
+            </View>
+            </ScrollView>
+
+			  </MainActivation>
 		);
   },
 });

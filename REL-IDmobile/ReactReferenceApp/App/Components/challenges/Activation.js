@@ -128,7 +128,6 @@ export default class Activation extends React.Component {
             </Text>
             <TextInput
               returnKeyType={'next'}
-              autoCorrect={false}
               secureTextEntry={true}
               keyboardType={'default'}
               placeholderTextColor={'rgba(255,255,255,0.7)'}

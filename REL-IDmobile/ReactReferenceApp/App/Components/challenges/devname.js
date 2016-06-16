@@ -11,7 +11,7 @@ import Skin from '../../Skin';
 */
 import { KeyboardAwareScrollView } from 'react-native-smart-scroll-view';
 
-var ToolBar = require('../ToolBar');
+var ToolBar = require('./ChallengeToolBar');
 var Events = require('react-native-simple-events');
 
 

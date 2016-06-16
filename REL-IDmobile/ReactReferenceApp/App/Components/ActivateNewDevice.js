@@ -193,17 +193,26 @@ class ActivateNewDevice extends React.Component{
 
   }
 
-  
+
 
   componentDidMount(){
 
     this.setState({ isLoading: true });
 
-    
+
 
     AsyncStorage.getItem("userId").then((value) => {
 
-                                        var baseUrl = "http://10.0.14.88:8080/GM/generateOTP.htm?userId=";
+                                        AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+
+																				currentProfile = JSON.parse(currentProfile);
+
+
+
+                                        var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
+                                                             
+                                        
+                                                             
 
                                         var url = baseUrl.concat(value);
 
@@ -245,19 +254,21 @@ class ActivateNewDevice extends React.Component{
 
                                         }).done();
 
+
+																			});
   }
 
-  
+
 
   render() {
 
-  
+
 
 		return (
 
 			<View style={styles.Container}>
 
-            
+
 
             <View style={styles.navbar}>
 
@@ -305,7 +316,7 @@ class ActivateNewDevice extends React.Component{
 
             <View style={{borderColor:"#D0D0D0",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>
 
-            
+
 
            <ScrollView >
 
@@ -329,7 +340,7 @@ class ActivateNewDevice extends React.Component{
 
             </ScrollView >
 
-            
+
 
 
 			</View>
@@ -346,7 +357,7 @@ module.exports = ActivateNewDevice;
 
 class MyComponent extends React.Component {
 
-  
+
 
   constructor(props) {
 
@@ -360,7 +371,7 @@ class MyComponent extends React.Component {
 
   }
 
-  
+
 
   render() {
 
@@ -377,6 +388,3 @@ class MyComponent extends React.Component {
   }
 
 }
-
-
-
