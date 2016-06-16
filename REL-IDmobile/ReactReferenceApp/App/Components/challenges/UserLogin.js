@@ -28,6 +28,7 @@ let statusMessage;
 const {
   Text,
   TextInput,
+  ScrollView,
   View,
   Animated,
   TouchableHighlight,
@@ -187,6 +188,8 @@ class UserLogin extends React.Component{
 
   render() {
     return (
+      <ScrollView >
+
       <MainActivation>
         <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
           <View style={Skin.loadStyle.rid_center}>
@@ -230,12 +233,13 @@ class UserLogin extends React.Component{
         <OpenLinks />
 
         <TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
-          onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}
-        >
-        <Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage}/>
+          onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}>
+          <Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage}/>
         </TouchableHighlight>
 
       </MainActivation>
+      </ScrollView >
+
     );
   }
 }

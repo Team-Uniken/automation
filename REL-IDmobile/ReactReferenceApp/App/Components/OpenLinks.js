@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 80,
-    marginTop: 100,
+    marginTop:50,
+    marginBottom:50,
   },
   openlink_wrap: {
     backgroundColor: Skin.colors.DARK_PRIMARY,
