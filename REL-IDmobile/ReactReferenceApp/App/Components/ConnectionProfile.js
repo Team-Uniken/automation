@@ -121,7 +121,9 @@ class ConnectionProfile extends React.Component {
   }
 
   onURLChange(event) {
-    this.setState({ inputURL: event.nativeEvent.text });
+    newstate = this.state;
+    newstate.inputURL = event.nativeEvent.text;
+    this.setState(newstate);
   }
 
   renderConnectionProfile(connectionprofile1) {
@@ -153,7 +155,7 @@ class ConnectionProfile extends React.Component {
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'OK', onPress: () => {
           AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {this.props.navigator.replace({id: "Load"})});
-      }},
+        }},
       ]
     )
   }

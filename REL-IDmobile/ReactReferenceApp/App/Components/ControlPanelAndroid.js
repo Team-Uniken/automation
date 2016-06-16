@@ -19,7 +19,8 @@ var UserLogin = require('./challenges/UserLogin');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
+var ActivateNewDevice=require('./ActivateNewDevice');
+var onLogOffListener;
 
 /*
  INSTANCES
@@ -43,9 +44,9 @@ class ControlPanel extends React.Component{
   constructor(props){
     super(props);
   }
-  
+
   showLogOffAlert(){
-    
+
     Alert.alert(
                 '',
                 'Do you want to log-off',
@@ -63,7 +64,7 @@ class ControlPanel extends React.Component{
                  ]
                 )
   }
-  
+
   doLogOff(){
     AsyncStorage.getItem("userId").then((value) => {
                                         ReactRdna.logOff(value,(response) => {
@@ -75,10 +76,11 @@ class ControlPanel extends React.Component{
                                                          })
                                         }).done();
   }
-  
+
   componentDidMount(){
     Obj = this;
-    DeviceEventEmitter.addListener('onLogOff', function (e) {
+    onLogOffListener = DeviceEventEmitter.addListener('onLogOff', function (e) {
+      onLogOffListener.remove();
                                    console.log('immediate response is'+e.response);
                                    var responseJson = JSON.parse(e.response);
                                    if(responseJson.errCode == 0){
@@ -93,7 +95,7 @@ class ControlPanel extends React.Component{
   popToLoadView(){
     this.props.navigator.replace({id: "Load"});
   }
-  
+
   render(){
     return (
             <View style={styles.container}>
@@ -103,9 +105,7 @@ class ControlPanel extends React.Component{
             </TouchableHighlight><View style={styles.menuBorder}></View>
             <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Profile & Settings"});}} style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: "ActivateNewDevice", title:"Activate New Device"});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: "device", title:"Self Device Managment"});}}  style={styles.touch}><Text style={styles.menuItem}>Self Device Managment</Text>
+            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ActivateNewDevice", title:"Activate New Device"});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Change Secret Question"});}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>

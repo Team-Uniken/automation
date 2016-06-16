@@ -98,24 +98,38 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onPauseRuntime(String rdnaStatusPause) {
-                WritableMap params = Arguments.createMap();
-                params.putString("response", rdnaStatusPause);
+            public int onPauseRuntime(final String rdnaStatusPause) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", rdnaStatusPause);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onPauseCompleted", params);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onPauseCompleted", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
                 return 0;
             }
 
             @Override
-            public int onResumeRuntime(String status) {
-                WritableMap params = Arguments.createMap();
-                params.putString("response", status);
+            public int onResumeRuntime(final String status) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", status);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onResumeCompleted", params);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onResumeCompleted", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
                 return 0;
             }
 
@@ -169,13 +183,20 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
 
             @Override
-            public int onLogOff(String status) {
-                WritableMap params = Arguments.createMap();
-                params.putString("response", status);
+            public int onLogOff(final String status) {
+              Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                  WritableMap params = Arguments.createMap();
+                  params.putString("response", status);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onLogOff", params);
+                  context
+                          .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                          .emit("onLogOff", params);
+                }
+              };
+
+              callOnMainThread(runnable);
                 return 0;
             }
 

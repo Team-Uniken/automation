@@ -5,7 +5,7 @@
 */
 import React from 'react-native';
 import Skin from '../Skin';
-
+var ConnectionProfile = require('./ConnectionProfile');
 /*
   CALLED
 */
@@ -27,6 +27,10 @@ let responseJson;
 let chlngJson;
 let nextChlngName;
 let initErrorMsg;
+let onInitCompletedListener;
+let onPauseCompletedListener;
+let onResumeCompletedListener;
+
 const {
     Text,
     View,
@@ -34,6 +38,10 @@ const {
     InteractionManager,
     AppState,
     AsyncStorage,
+    TouchableHighlight,
+    Image,
+    Alert,
+    Platform,
 } = React;
 
 
@@ -57,7 +65,7 @@ class Load extends React.Component {
         };
     }
     openRoute(route) {
-        this.props.navigator.push(route)
+        this.props.navigator.push(route);
     }
     componentDidMount() {
 
@@ -65,7 +73,16 @@ class Load extends React.Component {
 
         AppState.addEventListener('change', this._handleAppStateChange);
 
-        DeviceEventEmitter.addListener('onPauseCompleted', function(e) {
+        if(onPauseCompletedListener !== undefined){
+          console.log("--------------- removing onPauseCompleted");
+          onPauseCompletedListener.remove();
+        }
+
+        if(onResumeCompletedListener !== undefined){
+          onResumeCompletedListener.remove();
+        }
+
+        onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function(e) {
             console.log('On Pause Completed:');
             console.log('immediate response is' + e.response);
             responseJson = JSON.parse(e.response);
@@ -76,7 +93,7 @@ class Load extends React.Component {
             }
         });
 
-        DeviceEventEmitter.addListener('onResumeCompleted', function(e) {
+        onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function(e) {
             console.log('On Resume Completed:');
             console.log('immediate response is' + e.response);
             responseJson = JSON.parse(e.response);
@@ -90,7 +107,8 @@ class Load extends React.Component {
             }
         });
 
-        DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
+        onInitCompletedListener = DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
+            onInitCompletedListener.remove();
             console.log('On Initialize Completed:');
             console.log('immediate response is' + e.response);
             responseJson = JSON.parse(e.response);
@@ -278,9 +296,12 @@ class Load extends React.Component {
         }
     }
 
-/*
+
   doInitialize() {
-    console.log('Initialize RDNA');
+    initSuc = false;
+    isRunAfterInteractions = false;
+    initCount = 0;
+    console.log('------------Initialize RDNA');
     var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
     var jsonProxySettings = JSON.stringify(proxySettings);
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
@@ -290,7 +311,12 @@ class Load extends React.Component {
 
       let currentAgentInfo = currentProfile.RelId;
       let currentGatewayHost = currentProfile.Host;
-      let currentGatewayPort = currentProfile.Port;
+      var currentGatewayPort;
+      if(Platform.OS === 'ios'){
+        currentGatewayPort = currentProfile.Port;
+      }else{
+        currentGatewayPort = parseInt(currentProfile.Port);
+      }
 
       ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
           if (response) {
@@ -303,25 +329,25 @@ class Load extends React.Component {
       })
     });
   }
-*/
-  doInitialize() {
-    initSuc = false;
-    isRunAfterInteractions = false;
-    initCount = 0;
-    console.log('Initialize RDNA');
-    var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
-    var jsonProxySettings = JSON.stringify(proxySettings);
-    ReactRdna.initialize(ReactRdna.agentInfo, ReactRdna.GatewayHost, ReactRdna.GatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
-                         if (response) {
-                         console.log('immediate response is' + response[0].error);
-                         // alert(response[0].error);
-                         } else {
-                         console.log('immediate response is' + response[0].error);
-                         // alert(response[0].error);
-                         }
-                         })
-  }
-  
+
+  // doInitialize() {
+  //   initSuc = false;
+  //   isRunAfterInteractions = false;
+  //   initCount = 0;
+  //   console.log('Initialize RDNA');
+  //   var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
+  //   var jsonProxySettings = JSON.stringify(proxySettings);
+  //   ReactRdna.initialize(ReactRdna.agentInfo, ReactRdna.GatewayHost, ReactRdna.GatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
+  //                        if (response) {
+  //                        console.log('immediate response is' + response[0].error);
+  //                        // alert(response[0].error);
+  //                        } else {
+  //                        console.log('immediate response is' + response[0].error);
+  //                        // alert(response[0].error);
+  //                        }
+  //                        })
+  // }
+
 
   onInitCompleted() {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
@@ -329,8 +355,15 @@ class Load extends React.Component {
       if (initCount === initSuccess) {
         Obj.doNavigation();
       } else if (initCount === initError) {
-        alert(initErrorMsg);
-      }
+        Alert.alert(
+                    'Error',
+                    initErrorMsg,
+                    [
+                      {text: 'CANCEL',onPress: () => console.log('CHANGE Pressed'), style: 'cancel'},
+                      {text: 'CHANGE', onPress: () => this.props.navigator.push({id: "ConnectionProfile"})},
+                    ]
+                  )
+              }
     }
   }
 

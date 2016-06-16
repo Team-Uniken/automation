@@ -34,6 +34,7 @@ const {
   TouchableOpacity,
   InteractionManager,
   AsyncStorage,
+  Image,
 } = React;
 const ConnectionProfile = require('../ConnectionProfile');
 

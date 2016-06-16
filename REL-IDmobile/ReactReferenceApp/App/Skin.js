@@ -411,7 +411,7 @@ var questionrow = StyleSheet.create({
 			height:40,
 			marginTop:6,
 			width:SCREEN_WIDTH,
-			textAlign:'center',
+			textAlign:'left',
 			textAlignVertical:'center',
 			},
                         });

@@ -11,7 +11,7 @@ var {
 	   TouchableHighlight,
     } = React;
 
-var Appointment = React.createClass({
+var Toolbar = React.createClass({
   render() {
     return (
       <View style={styles.toolbarrow}>
@@ -55,4 +55,4 @@ var styles = {
     marginTop:4,
   },
 };
-module.exports = Appointment;
+module.exports = Toolbar;

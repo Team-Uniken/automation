@@ -11,6 +11,7 @@ var PixelRatio = require('PixelRatio');
 // var NavigationBar = require('react-native-navbar');
 
 var Main = require('./App/Components/Main');
+var MainAndroid = require('./App/Components/MainAndroid');
 var Device = require('./App/Components/device');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
@@ -24,7 +25,6 @@ var AddAppointment = require('./App/Components/AddAppointment');
 var SecureChat = require('./App/Components/secure_chat/Navigation');
 var Demo = require('./App/Components/demo');
 var Activation = require('./App/Components/challenges/Activation');
-var Password = require('./App/Components/challenges/Password');
 var Otp = require('./App/Components/challenges/Otp');
 var SetQue = require('./App/Components/challenges/SetQue');
 var QuestionVerification = require('./App/Components/challenges/questionVerification');
@@ -209,8 +209,6 @@ class DemoApp1 extends React.Component{
       return (<SecureChat navigator={nav}/>);
     }else if (id == "Activation"){
       return (<Activation navigator={nav}/>);
-    }else if (id == "Password"){
-      return (<Password navigator={nav}/>);
     }else if (id == "Otp"){
       return (<Otp navigator={nav}/>);
     }else if (id == "SetQue"){
@@ -225,9 +223,10 @@ class DemoApp1 extends React.Component{
       return (<Device navigator={nav} url={route.url} title={route.title}/>);
     }else if (id == "ConnectionProfile"){
      return (<ConnectionProfile navigator={nav} url={route.url} title={route.title}/>);
-   }
     }else if (id == "ActivateNewDevice"){
       return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title}/>);
+    }else if(id == 'MainAndroid'){
+      return (<MainAndroid navigator={nav} url={route.url} title={route.title}/>);
     }
   }
 

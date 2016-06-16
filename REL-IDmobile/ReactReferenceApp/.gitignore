@@ -29,4 +29,6 @@ xcuserdata/
 
 api-sdk/libs/libapi-sdk.a
 NativeModules/RDNA.h
+gradle.properties~
+*.gradle~
 

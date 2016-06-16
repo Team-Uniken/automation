@@ -28,7 +28,6 @@ import ActivateNewDevice from './App/Components/ActivateNewDevice';
 import UserLogin from './App/Components/challenges/UserLogin';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
 
-
 // COMPONENTS
 import Load from './App/Components/Load';
 import Web from './App/Components/Web';
@@ -45,6 +44,7 @@ import ConnectionProfile from './App/Components/ConnectionProfile';
 const {
   AppRegistry,
   Navigator,
+  Text,
 } = React;
 
 
@@ -88,7 +88,7 @@ class ReactRefApp extends React.Component {
       // id = 'FindBranch';
       // id = 'ConnectionProfile';
       // id = 'Device';
-      id = 'PayBills';
+      //id = 'PayBills';
     }
 
     // MAIN SCENES
