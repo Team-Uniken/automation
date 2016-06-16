@@ -12,7 +12,7 @@ import Skin from '../Skin';
 */
 import dismissKeyboard from 'dismissKeyboard';
 
-/* 
+/*
   INSTANCES
 */
 const {
@@ -36,18 +36,15 @@ class UserLogin extends React.Component{
   dismiss() {
         dismissKeyboard();
   }
-
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.dismiss}>
         <View style={Skin.activationStyle.container}>
+        <StatusBar
+        backgroundColor={Skin.colors.STATUS_BAR_COLOR}
+        barStyle='light-content'/>
           <View style={Skin.activationStyle.bgbase} />
           <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
-          <View style={Skin.statusBarStyle.default}>
-            <StatusBar
-              barStyle="light-content"
-            />
-          </View>
           <View style={Skin.activationStyle.bgcolorizer} />
           <View style={Skin.activationStyle.centering_wrap}>
             <View style={Skin.activationStyle.wrap}>
@@ -61,4 +58,3 @@ class UserLogin extends React.Component{
 };
 
 module.exports = UserLogin;
-
