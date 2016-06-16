@@ -133,7 +133,8 @@ class ConnectionProfile extends React.Component {
       <View style={Skin.ConnectionProfile.customerow}>
           <TouchableHighlight onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
             underlayColor={Skin.colors.REPPLE_COLOR}>
-          <Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16}]}>{cpName}</Text>
+        	<Text style={[Skin.customeStyle.text1,{width:Skin.SCREEN_WIDTH-72,textAlign:'left',marginLeft:16,opacity:1}]}>{cpName}</Text>
+
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.onDeletePressed(connectionprofile1) } style={Skin.ConnectionProfile.button}
           underlayColor={Skin.colors.REPPLE_COLOR}

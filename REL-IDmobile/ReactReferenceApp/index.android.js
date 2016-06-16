@@ -12,7 +12,7 @@ var PixelRatio = require('PixelRatio');
 
 var Main = require('./App/Components/Main');
 var MainAndroid = require('./App/Components/MainAndroid');
-var Device = require('./App/Components/device');
+var Device = require('./App/Scenes/DeviceMgmt');
 var Load = require('./App/Components/Load');
 var Web = require('./App/Components/Web');
 //var Menu = require('./App/Components/Menu');

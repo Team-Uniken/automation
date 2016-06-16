@@ -400,14 +400,14 @@ var questionrow = StyleSheet.create({
 			backgroundColor:'#dbdbdb',
 			},
 	customerow: {
-			backgroundColor:'#fff',
+			backgroundColor:PRIMARY,
 			marginTop:2,
 			width:SCREEN_WIDTH,
 			},
 	questyle:{
 			fontSize: 16,
-			color :BLACK_TEXT_COLOR,
-			opacity : 0.7,
+			color :'#fff',
+			opacity :1,
 			height:40,
 			marginTop:6,
 			width:SCREEN_WIDTH,
@@ -1029,7 +1029,6 @@ let activationStyle = StyleSheet.create({
   },
   bgbase: {
       position: 'absolute',
-      top: 20,
       bottom: 0,
       right: 0,
       left: 0,

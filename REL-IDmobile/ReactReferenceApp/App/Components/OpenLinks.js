@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 80,
-    marginTop: 100,
+    marginTop:50,
+    marginBottom:50,
   },
   openlink_wrap: {
     backgroundColor: Skin.colors.DARK_PRIMARY,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     flex: 2,
     textAlign: 'center',
     justifyContent: 'center',
-    paddingTop: 10,
+    marginTop: 10,
     fontSize: 33,
   },
 });
@@ -106,5 +107,3 @@ export default class OpenLinks extends React.Component {
 }
 
 module.exports = OpenLinks;
-
-

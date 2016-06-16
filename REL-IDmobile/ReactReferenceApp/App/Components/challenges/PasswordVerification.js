@@ -27,6 +27,7 @@ let obj;
 let statusMessage;
 const {
   Text,
+  ScrollView,
   TextInput,
   View,
   Animated,
@@ -175,6 +176,7 @@ class PasswordVerification extends React.Component{
 
   render() {
     return (
+      <ScrollView>
       <MainActivation>
         <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
           <View style={Skin.loadStyle.rid_center}>
@@ -219,6 +221,7 @@ class PasswordVerification extends React.Component{
         <OpenLinks />
 
       </MainActivation>
+      </ScrollView>
     );
   }
 

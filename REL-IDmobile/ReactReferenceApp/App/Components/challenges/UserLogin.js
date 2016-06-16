@@ -28,6 +28,7 @@ let statusMessage;
 const {
   Text,
   TextInput,
+  ScrollView,
   View,
   Animated,
   TouchableHighlight,
