@@ -88,6 +88,8 @@ var FAKE_BOOK_DATA = [
             "devBind": 0
           }];
 
+FAKE_BOOK_DATA = [];
+
 var {
     height,
     width
@@ -219,10 +221,11 @@ class Device extends Component {
 
     componentWillMount() {
         onGetDevice = DeviceEventEmitter.addListener('onGetRegistredDeviceDetails', this.onGetRegistredDeviceDetails.bind(this));
-        onGetDevice = DeviceEventEmitter.addListener('onUpdateDeviceDetails', this.onUpdateDeviceDetails.bind(this));
+        onDeviceUp = DeviceEventEmitter.addListener('onUpdateDeviceDetails', this.onUpdateDeviceDetails.bind(this));
     }
 
     onGetRegistredDeviceDetails(e) {
+        onGetDevice.remove();
         var res = JSON.parse(e.response);
         var statusCode = res.pArgs.response.StatusCode
         if (res.errCode == 0) {
@@ -241,6 +244,7 @@ class Device extends Component {
     }
 
     onUpdateDeviceDetails(e) {
+      onDeviceUp.remove();
         var res = JSON.parse(e.response);
         var statusCode = res.pArgs.response.StatusCode
         if (res.errCode == 0) {

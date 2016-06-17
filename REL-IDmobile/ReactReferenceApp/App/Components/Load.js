@@ -405,12 +405,6 @@ class Load extends React.Component {
               </Animated.Text>
             </View>
         </View>
-        <TouchableHighlight style={[Skin.customeStyle.connectionprofile]} activeOpacity={1.0} underlayColor={Skin.colors.STATUS_BAR_COLOR}
-					onPress={() =>this.props.navigator.push({id: "ConnectionProfile"})}>
-			<View>
-			<Image source={require('image!setting')} style={Skin.customeStyle.connectionprofileimage} />
-			</View>
-			</TouchableHighlight>
       </MainActivation>
     );
   }

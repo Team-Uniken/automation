@@ -268,10 +268,11 @@ class ConnectionProfile extends React.Component {
             ref='inputURL'
             label={'Enter URL'}
             style={styles.modalInput}
+            placeholder={'Enter url'}
+            placeholderTextColor={Skin.colors.HINT_COLOR}
             onSubmitEditing={this.checkURL.bind(this)}
             onChange={this.onURLChange.bind(this)}
           />
-          <View style={styles.border}></View>
           <View style={{ flex: 1, flexDirection: 'row' }}>
             <TouchableHighlight
               onPress={() => this.setState({ open: false })}
@@ -329,7 +330,8 @@ const styles = StyleSheet.create({
   modalInput:{
     textAlign: 'left',
     color: Skin.colors.PRIMARY_TEXT,
-    height: 30,
+    height: 48,
+    fontSize:16,
   },
   border:{
     height: 1,
