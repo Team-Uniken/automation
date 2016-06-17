@@ -14,7 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 var ToolBar = require('../ToolBar');
 var Events = require('react-native-simple-events');
 var responseJson;
-
+ //
 var {
 	View,
 	Text,
