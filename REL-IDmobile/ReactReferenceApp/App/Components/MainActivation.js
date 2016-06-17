@@ -27,22 +27,19 @@ const {
 } = React;
 
 
-
-
-
-class UserLogin extends React.Component{
-  constructor(props){
+class MainActivation extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
   dismiss() {
-        dismissKeyboard();
+    dismissKeyboard();
   }
 
   render() {
-    console.log('nav look');
-    console.log(this);
+//    console.log('nav look');
+//    console.log(this);
     return (
       <TouchableWithoutFeedback onPress={this.dismiss}>
         <View style={Skin.activationStyle.container}>
@@ -70,7 +67,7 @@ class UserLogin extends React.Component{
               borderTopRightRadius:20,
             }}
             underlayColor={Skin.colors.DARK_PRIMARY}
-            onPress={()=>this.props.navigator.push({id: "ConnectionProfile"})}>
+            onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}>
             <View>
               <Text
                 style={{
@@ -86,5 +83,5 @@ class UserLogin extends React.Component{
   }
 };
 
-module.exports = UserLogin;
+module.exports = MainActivation;
 

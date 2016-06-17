@@ -1,64 +1,55 @@
+'use strict';
 
 /*
   ALWAYS NEED
 */
-'use strict';
-
-var React = require('react-native');
-var Skin = require('../Skin');
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
+import React from 'react-native';
+import Skin from '../Skin';
 
 
 /*
   CALLED
 */
-var buildStyleInterpolator = require('buildStyleInterpolator');
-var Main = require('./Main');
-var MainAndroid = require('./MainAndroid');
+import Main from './Main';
 
-var Otp = require('./challenges/Otp');
-var SetQue = require('./challenges/SetQue');
-var UserLogin = require('./challenges/UserLogin');
-var PasswordVerification = require('./challenges/PasswordVerification');
-var QuestionVerification = require('./challenges/questionVerification');
-var DeviceBinding = require('./challenges/devbind');
-var DeviceName = require('./challenges/devname');
-var Constants = require('./Constants');
-var Events = require('react-native-simple-events');
-var ActivateNewDevice = require('./ActivateNewDevice');
-var RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-var ConnectionProfile = require('./ConnectionProfile');
-var Load = require('./Load');
+// Secondary Scenes
 
-import PasswordSet from './challenges/PasswordSet';
+// SECURITY SCENES
 import Activation from './challenges/Activation';
+import PasswordSet from './challenges/PasswordSet';
+import Otp from './challenges/Otp';
+import QuestionSet from './challenges/QuestionSet';
+import QuestionVerification from './challenges/QuestionVerification';
+import UserLogin from './challenges/UserLogin';
+import DeviceBinding from './challenges/DeviceBinding';
+import PasswordVerification from './challenges/PasswordVerification';
+
+// COMPONENTS
+import buildStyleInterpolator from 'buildStyleInterpolator';
+import ConnectionProfile from './ConnectionProfile';
+import Events from 'react-native-simple-events';
+import Constants from './Constants';
+import DeviceName from './challenges/DeviceName';
 
 
 /*
   Instantiaions
 */
-var challengeJson;
-var challengeJsonArr;
-var currentIndex;
-var totalChallengesCount;
-var screenId;
-var subscriptions;
-var obj;
-var stateNavigator;
-var {
-  Component,
-  Text,
+let challengeJson;
+let challengeJsonArr;
+let currentIndex;
+let subscriptions;
+let obj;
+let screenId;
+const {
   Navigator,
-  Dimensions,
-  PixelRatio,
-  Animated,
   AsyncStorage,
   Alert,
   DeviceEventEmitter,
   Platform,
 } = React;
+const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
 class TwoFactorAuthMachine extends React.Component {
@@ -66,13 +57,6 @@ class TwoFactorAuthMachine extends React.Component {
     super(props);
     console.log('---------- Machine param ');
   }
-
-  componentDidMount() {
-    screenId = 'UserLogin';// this.props.screenId;
-
-    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
-	                    }
 
   componentWillMount() {
     obj = this;
@@ -82,7 +66,16 @@ class TwoFactorAuthMachine extends React.Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
-    subscriptions = DeviceEventEmitter.addListener('onCheckChallengeResponseStatus', this.onCheckChallengeResponseStatus.bind(this));
+    subscriptions = DeviceEventEmitter.addListener(
+      'onCheckChallengeResponseStatus',
+      this.onCheckChallengeResponseStatus.bind(this)
+    );
+  }
+
+  componentDidMount() {
+    screenId = 'UserLogin';// this.props.screenId;
+    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
 
   componentWillUnmount() {
@@ -92,65 +85,73 @@ class TwoFactorAuthMachine extends React.Component {
   onErrorOccured(response){
     console.log("-------- Error occurred ");
     if (response.ResponseData) {
-      var chlngJson = response.ResponseData;
+      let chlngJson = response.ResponseData;
       console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
-      var nextChlngName = chlngJson.chlng[0].chlng_name;
-
-    // this.props.navigator.pop();
-    // this.props.navigator.replace();
+      let nextChlngName = chlngJson.chlng[0].chlng_name;
       if (chlngJson != null) {
-        obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-        obj.props.navigator.push({ id: 'Machine', title: nextChlngName, url: { 'chlngJson': chlngJson, 'screenId': nextChlngName } });
+        console.log('TwoFactorAuthMachine - onErrorOccured - chlngJson != null');
+        //obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+        obj.props.navigator.push({
+          id: 'Machine',
+          title: nextChlngName,
+          url: {
+            chlngJson,
+            screenId: nextChlngName,
+          },
+        });
       }
     }
   }
 
   onCheckChallengeResponseStatus(e) {
-    var res = JSON.parse(e.response);
-
-    if (res.errCode == 0) {
-      var statusCode = res.pArgs.response.StatusCode;
-      if (statusCode == 100) {
-
+    const res = JSON.parse(e.response);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
         // Unregister All Events
         // We can also unregister in componentWillUnmount
         subscriptions.remove();
         Events.rm('showNextChallenge', 'showNextChallenge');
         if (res.pArgs.response.ResponseData) {
-          var chlngJson = res.pArgs.response.ResponseData;
-          var nextChlngName = chlngJson.chlng[0].chlng_name;
-
-        // this.props.navigator.pop();
-        // this.props.navigator.replace();
+          const chlngJson = res.pArgs.response.ResponseData;
+          const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
-            this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-            this.props.navigator.push({ id: 'Machine', title: nextChlngName, url: { 'chlngJson': chlngJson, 'screenId': nextChlngName } });
+            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+            this.props.navigator.push({
+              id: 'Machine',
+              title: nextChlngName,
+              url: {
+                chlngJson,
+                screenId: nextChlngName,
+              },
+            });
           }
         } else {
-          var pPort = res.pArgs.pxyDetails.port;
+          const pPort = res.pArgs.pxyDetails.port;
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
           }
-          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          if(Platform.OS === 'ios') {
-              this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          if (Platform.OS === 'ios') {
+            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - Platform.OS === ios');
+            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
           } else {
-              this.props.navigator.push({ id: 'MainAndroid', title: 'DashBoard', url: '' });
-            }
+            this.props.navigator.push({ id: 'MainAndroid', title: 'DashBoard', url: '' });
+          }
         }
-
       } else {
         Alert.alert(
-                    'Error',
-                    res.pArgs.response.StatusMsg,
-                    [
-                      {text: 'OK',onPress: () => obj.onErrorOccured(res.pArgs.response), style: 'cancel'},
-                    ]
-                  )
-
-
+          'Error',
+          res.pArgs.response.StatusMsg, [{
+            text: 'OK',
+            onPress: () => obj.onErrorOccured(res.pArgs.response),
+            style: 'cancel',
+          }]
+        );
       }
     } else {
+      console.log(e);
       alert('Internal system error occurred.');
     }
   }
@@ -167,60 +168,84 @@ class TwoFactorAuthMachine extends React.Component {
    public static final String CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
    **/
 
+
+  showNextChallenge(args) {
+    console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
+    // alert(JSON.stringify(args));
+
+    const i = challengeJsonArr.indexOf(currentIndex);
+    challengeJsonArr[i] = args.response;
+    currentIndex ++;
+    if (obj.hasNextChallenge()) {
+      // Show Next challenge screen
+      const currentChlng = obj.getCurrentChallenge();
+      obj.stateNavigator.push({
+        id: currentChlng.chlng_name,
+        url: {
+          chlngJson: currentChlng,
+          chlngsCount: challengeJsonArr.length,
+          currentIndex: currentIndex + 1,
+        },
+        title: obj.props.title,
+      });
+    } else {
+      // Call checkChallenge
+      obj.callCheckChallenge();
+    }
+  }
+
   renderScene(route, nav) {
-    var id = route.id;
+    const id = route.id;
     console.log('---------- renderScene ' + id + ' url ' + route.url);
 
-    var challengeOperation;
-    if (route.url != undefined) {
+    let challengeOperation;
+    if (route.url !== undefined) {
       challengeOperation = route.url.chlngJson.challengeOperation;
     }
 
-    if (id == 'checkuser') {
+    if (id === 'checkuser') {
       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
-    }
-    else if (id == 'actcode') {
+    } else if (id === 'actcode') {
       return (<Activation navigator={nav} url={route.url} title={route.title} />);
-    }
-    else if (id == 'pass') {
-      if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE)
+    } else if (id === 'pass') {
+      if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
-      else
-        return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
-    }
-    else if (id == 'otp') {
+      }
+      return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'otp') {
       return (<Otp navigator={nav} url={route.url} title={route.title} />);
-    }
-    else if (id == 'secqa' || id == 'secondarySecqa') {
-      if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE)
+    } else if (id === 'secqa' || id == 'secondarySecqa') {
+      if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
-      else
-        return (<SetQue navigator={nav} url={route.url} title={route.title} />);
-    }
-    else if (id == 'devname') {
+      }
+      return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'devname') {
       return (<DeviceName navigator={nav} url={route.url} title={route.title} />);
-    }
-    else if (id == 'devbind') {
+    } else if (id === 'devbind') {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
-    } else if (id == 'ConnectionProfile') {
+    } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
     }
+    return (<Text>Error</Text>);
   }
 
   render() {
     return (
       <Navigator
-        ref={
-          (ref) => this.stateNavigator = ref
-        }
+        ref={(ref) => { this.stateNavigator = ref; return ref; }}
         renderScene={this.renderScene}
-        initialRoute={
-          { id: this.props.url.screenId, url: { 'chlngJson': this.getCurrentChallenge(), 'chlngsCount': challengeJsonArr.length, 'currentIndex': currentIndex + 1 }, title: this.props.title }
-        }
-
+        initialRoute={{
+          id: this.props.url.screenId,
+          url: {
+            chlngJson: this.getCurrentChallenge(),
+            chlngsCount: challengeJsonArr.length,
+            currentIndex: currentIndex + 1,
+          },
+          title: this.props.title,
+        }}
         configureScene={
           (route) => {
-            var config = Navigator.SceneConfigs.FloatFromRight;
+            let config = Navigator.SceneConfigs.FloatFromRight;
             config = {
               // Rebound spring parameters when transitioning FROM this scene
               springFriction: 26,
@@ -242,37 +267,19 @@ class TwoFactorAuthMachine extends React.Component {
     );
   }
 
-  showNextChallenge(args) {
-    console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
-    // alert(JSON.stringify(args));
-
-    var i = challengeJsonArr.indexOf(currentIndex);
-    challengeJsonArr[i] = args.response;
-
-    currentIndex ++;
-    if (obj.hasNextChallenge()) {
-      // Show Next challenge screen
-      var currentChlng = obj.getCurrentChallenge();
-      obj.stateNavigator.push({ id: currentChlng.chlng_name, url: { 'chlngJson': currentChlng, 'chlngsCount': challengeJsonArr.length, 'currentIndex': currentIndex + 1 }, title: obj.props.title });
-    } else {
-      // Call checkChallenge
-      obj.callCheckChallenge();
-    }
-  }
-
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
 
   hasPreviousChallenge() {
-
+    return null;
   }
 
   showPreviousChallenge() {
-      if(currentIndex > 0){
-        currentIndex --;
-        this.props.navigator.pop();
-      }
+    if (currentIndex > 0) {
+      currentIndex --;
+      this.props.navigator.pop();
+    }
   }
 
   showCurrentChallenge() {
@@ -297,24 +304,19 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   callCheckChallenge() {
-
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
-
       ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
-        if (response[0].error == 0) {
+        if (response[0].error === 0) {
           console.log('immediate response is' + response[0].error);
-                                  // alert(response[0].error);
         } else {
           console.log('immediate response is' + response[0].error);
           alert(response[0].error);
         }
-
       });
     }).done();
   }
 }
-
 
 
 module.exports = TwoFactorAuthMachine;

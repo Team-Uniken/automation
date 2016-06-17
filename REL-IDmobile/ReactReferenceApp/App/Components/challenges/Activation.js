@@ -28,39 +28,6 @@ export default class Activation extends React.Component {
     this.state = {
       activatonCode: '',
     };
-  }
-
-  onActivationCodeChange(event) {
-    this.setState({ activatonCode: event.nativeEvent.text });
-    console.log(event.nativeEvent.text);
-  }
-  btnText() {
-    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
-      return 'SUBMIT';
-    }
-    return 'NEXT';
-  }
-  checkActivationCode() {
-    console.log(this);
-    let vkey = this.state.activatonCode;
-    if (vkey.length > 0) {
-      let responseJson = this.props.url.chlngJson;
-      responseJson.chlng_resp[0].response = vkey;
-      Events.trigger('showNextChallenge', { response: responseJson });
-    }
-    else {
-      alert('Please enter Verification Key');
-    }
-  }
-
-  componentDidMount() {
-
-      InteractionManager.runAfterInteractions(() => {
-          this.refs.activatonCode.focus();
-      });
-  }
-
-  render() {
     /*
     this._props = {
       url: {
@@ -102,6 +69,40 @@ export default class Activation extends React.Component {
       },
     };
   */
+  }
+
+  onActivationCodeChange(event) {
+    this.setState({ activatonCode: event.nativeEvent.text });
+    //console.log(event.nativeEvent.text);
+  }
+  btnText() {
+    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
+      return 'SUBMIT';
+    }
+    return 'NEXT';
+  }
+  checkActivationCode() {
+    //console.log(this);
+    let vkey = this.state.activatonCode;
+    if (vkey.length > 0) {
+      let responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = vkey;
+      Events.trigger('showNextChallenge', { response: responseJson });
+    }
+    else {
+      alert('Please enter Verification Key');
+    }
+  }
+
+  componentDidMount() {
+
+      InteractionManager.runAfterInteractions(() => {
+          this.refs.activatonCode.focus();
+      });
+  }
+
+  render() {
+   
     return (
       <MainActivation>
         <View style={{marginTop:38}}>

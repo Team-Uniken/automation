@@ -1,79 +1,37 @@
+'use strict';
 
+/*
+  ALWAYS NEED
+*/
 import React from 'react-native';
 import Skin from '../../Skin';
 
+/*
+  CALLED
+*/
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
 
-
-var {
+/*
+  Instantiaions
+*/
+const {
   View,
   Text,
-  Image,
   TextInput,
   TouchableHighlight,
-  StyleSheet,
-  StatusBar,
-  ScrollView,
   InteractionManager,
 } = React;
 
 
-
-
 export default class PasswordSet extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      password : '',
-      cPassword : '',
+      password: '',
+      cPassword: '',
     };
-  }
-
-  componentDidMount() {
-      InteractionManager.runAfterInteractions(() => {
-          this.refs.password.focus();
-      });
-  }
-
-  setPassword(){
-    var pw = this.state.password;
-    var cpw = this.state.cPassword;
-
-    if(pw.length>0){
-      if(cpw.length>0){
-        if(pw == cpw){
-        responseJson = this.props.url.chlngJson;
-        responseJson.chlng_resp[0].response = pw;
-          Events.trigger('showNextChallenge', {response: responseJson});
-        }
-        else{
-          alert('Password and Confirm Password do not match');
-        }}else{alert('Please enter confirm password ');}
-    }
-    else{
-      alert('Please enter password ');
-    }
-  }
-
-  onPasswordChange(event){
-    this.setState({password: event.nativeEvent.text});
-  }
-
-  onConfirmPasswordChange(event){
-    this.setState({cPassword: event.nativeEvent.text});
-  }
-
-  btnText() {
-    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
-      return 'SUBMIT';
-    }
-    return 'NEXT';
-  }
-
-  render() {
-
+    /*
     this._props = {
       url: {
         chlngJson: {
@@ -106,67 +64,112 @@ export default class PasswordSet extends React.Component {
         currentIndex: 1,
       },
     };
+    */
+  }
 
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.refs.password.focus();
+    });
+  }
+
+
+  onPasswordChange(event) {
+    this.setState({ password: event.nativeEvent.text });
+  }
+
+  onConfirmPasswordChange(event) {
+    this.setState({ cPassword: event.nativeEvent.text });
+  }
+
+  setPassword(){
+    const pw = this.state.password;
+    const cpw = this.state.cPassword;
+
+    if (pw.length > 0) {
+      if (cpw.length > 0) {
+        if (pw === cpw) {
+          let responseJson = this.props.url.chlngJson;
+          responseJson.chlng_resp[0].response = pw;
+          Events.trigger('showNextChallenge', {response: responseJson});
+        } else {
+          alert('Password and Confirm Password do not match');
+        }
+      } else {
+        alert('Please enter confirm password ');
+      }
+    } else {
+      alert('Please enter password ');
+    }
+  }
+
+  btnText() {
+    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
+      return 'SUBMIT';
+    }
+    return 'NEXT';
+  }
+
+  render() {
     return (
-
       <MainActivation>
-              <View>
-                <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-                <Text style={Skin.activationStyle.title}>Set Password</Text>
-                <Text style={Skin.activationStyle.info}>Enter password of length 8-10 characters</Text>
-              </View>
+        <View>
+          <Text style={Skin.activationStyle.counter}>
+            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
+          </Text>
+          <Text style={Skin.activationStyle.title}>Set Password</Text>
+          <Text style={Skin.activationStyle.info}>Enter password of length 8-10 characters</Text>
+        </View>
 
-              <View style={Skin.activationStyle.input_wrap}>
-                <View style={Skin.activationStyle.textinput_wrap}>
-                  <TextInput
-                    autoCorrect={false}
-                    returnKeyType={'next'}
-                    keyboardType={'default'}
-                    ref={'password'}
-                    placeholder={'Enter Password'}
-                    placeholderTextColor={'rgba(255,255,255,0.7)'}
-                    style={Skin.activationStyle.textinput}
-                    secureTextEntry={true}
-                    blurOnSubmit={false}
-                    onChange={this.onPasswordChange.bind(this)}
-                    onSubmitEditing={()=>{this.refs.cPassword.focus()}}
-                  />
-                </View>
-              </View>
+        <View style={Skin.activationStyle.input_wrap}>
+          <View style={Skin.activationStyle.textinput_wrap}>
+            <TextInput
+              autoCorrect={false}
+              returnKeyType={'next'}
+              keyboardType={'default'}
+              ref={'password'}
+              placeholder={'Enter Password'}
+              placeholderTextColor={'rgba(255,255,255,0.7)'}
+              style={Skin.activationStyle.textinput}
+              secureTextEntry={true}
+              blurOnSubmit={false}
+              onChange={this.onPasswordChange.bind(this)}
+              onSubmitEditing={() => { this.refs.cPassword.focus(); }}
+            />
+          </View>
+        </View>
 
-              <View style={Skin.activationStyle.input_wrap}>
-                <View style={Skin.activationStyle.textinput_wrap}>
-                  <TextInput
-                    autoCorrect={false}
-                    ref={'cPassword'}
-                    returnKeyType={'next'}
-                    keyboardType={'default'}
-                    placeholder={'Confirm Password'}
-                    placeholderTextColor={'rgba(255,255,255,0.7)'}
-                    style={Skin.activationStyle.textinput}
-                    secureTextEntry={true}
-                    onChange={this.onConfirmPasswordChange.bind(this)}
-                    onSubmitEditing={this.setPassword.bind(this)}
-                  />
-                </View>
-              </View>
-              <View style={Skin.activationStyle.input_wrap}>
-                <TouchableHighlight
-                  style={Skin.activationStyle.button}
-                  underlayColor={'#082340'}
-                  onPress={this.setPassword.bind(this)}
-                  activeOpacity={0.6}
-                >
-                  <Text style={Skin.activationStyle.buttontext}>
-                    {this.btnText()}
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </MainActivation>
+        <View style={Skin.activationStyle.input_wrap}>
+          <View style={Skin.activationStyle.textinput_wrap}>
+            <TextInput
+              autoCorrect={false}
+              ref={'cPassword'}
+              returnKeyType={'next'}
+              keyboardType={'default'}
+              placeholder={'Confirm Password'}
+              placeholderTextColor={'rgba(255,255,255,0.7)'}
+              style={Skin.activationStyle.textinput}
+              secureTextEntry={true}
+              onChange={this.onConfirmPasswordChange.bind(this)}
+              onSubmitEditing={this.setPassword.bind(this)}
+            />
+          </View>
+        </View>
+        <View style={Skin.activationStyle.input_wrap}>
+          <TouchableHighlight
+            style={Skin.activationStyle.button}
+            underlayColor={'#082340'}
+            onPress={this.setPassword.bind(this)}
+            activeOpacity={0.6}
+          >
+            <Text style={Skin.activationStyle.buttontext}>
+              {this.btnText()}
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </MainActivation>
     );
   }
 }
 
 module.exports = PasswordSet;
-
-

@@ -10,21 +10,15 @@ import Skin from '../../Skin';
 /*
   CALLED
 */
-import Main from '../Main';
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
-import dismissKeyboard from 'dismissKeyboard';
-
 
 /*
   INSTANCES
 */
 let responseJson;
-let chlngJson;
-let nextChlngName;
 let obj;
-let statusMessage;
 const {
   Text,
   ScrollView,
@@ -33,21 +27,10 @@ const {
   Animated,
   TouchableHighlight,
   InteractionManager,
-  AsyncStorage,
 } = React;
-const ConnectionProfile = require('../ConnectionProfile');
 
 
-
-class PasswordVerification extends React.Component{
-  btnText(){
-    if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
-      return "Submit";
-    }else{
-      return "Continue";
-    }
-  }
-
+class PasswordVerification extends React.Component {
   constructor(props) {
     super(props);
 /*
@@ -95,90 +78,75 @@ class PasswordVerification extends React.Component{
       login_button_text: 'Login',
       loginAttempts: 5,
       passAttempts: 5,
-      Challenge:this.props.url.chlngJson,
-      failureMessage : '',
+      Challenge: this.props.url.chlngJson,
+      failureMessage: '',
     };
-
   }
-  componentDidMount() {
 
+  componentDidMount() {
     obj = this;
     InteractionManager.runAfterInteractions(() => {
       this.refs.inputPassword.focus();
     });
   }
 
-  onPasswordChange(event){
-    this.setState({inputPassword: event.nativeEvent.text});
+  onPasswordChange(event) {
+    this.setState({ inputPassword: event.nativeEvent.text });
   }
 
-    updateProgress() {
-      setTimeout((function() {
-          this.setState({ progress: this.state.progress + (0.4*Skin.loadspd)});
-          if(this.state.progress < 1){
-              this.updateProgress();
-              }else{
-                console.log('complete');
-                this.props.navigator.push(
-                     {id: "Main"}
-                );
-              }
-          }).bind(this), 5);
+  btnText() {
+    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
+      return 'Submit';
     }
+    return 'Continue';
+  }
+  updateProgress() {
+    setTimeout((function(){
+      this.setState({ progress: this.state.progress + (0.4 * Skin.loadspd) });
+      if (this.state.progress < 1) {
+        this.updateProgress();
+      } else {
+        //console.log('complete');
+        this.props.navigator.push({
+          id: 'Main',
+        });
+      }
+    }).bind(this), 5);
+  }
 
-  checkPassword(){
-    var pw = this.state.inputPassword;
-    if(pw.length>0){
+  checkPassword() {
+    const pw = this.state.inputPassword;
+    if (pw.length > 0) {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
-      Events.trigger('showNextChallenge', {response: responseJson});
-      // this.updateProgress();
-    }
-    else{
-        alert('Please enter password');
+      Events.trigger('showNextChallenge', { response: responseJson });
+    } else {
+      alert('Please enter password');
     }
   }
 
-  checkPasswordSuccess(){
+  checkPasswordSuccess() {
     this.refs.inputPassword.blur();
-    /*
-      Animated.sequence([
-        Animated.timing(this.state.passWrapOpac, {
-          toValue: 0,
-          duration: 100 * Spd,
-          delay: 0 * Spd
-          }
-        ),
-      Animated.timing(this.state.progWrapOpac, {
-        toValue: 1,
-        duration: 500 * Spd,
-        delay: 0 * Spd
-      })
-      ]).start(); */
     this.state.progress = 0;
-      this.updateProgress();
-
+    this.updateProgress();
   }
 
-  checkPasswordFailure(){
+  checkPasswordFailure() {
     this.clearText('inputPassword');
-    this.setState({failureMessage: 'Invalid Password'});
+    this.setState({ failureMessage: 'Invalid Password' });
     InteractionManager.runAfterInteractions(() => {
       this.refs.inputPassword.focus();
     });
-    //this.setState({login_button_text: "Login ("+count+" attempts)"});
-    //this.setState({passAttempts: count-1});
   }
 
   clearText(fieldName) {
-    this.refs[fieldName].setNativeProps({text: ''});
+    this.refs[fieldName].setNativeProps({ text: '' });
   }
 
   render() {
     return (
-      <ScrollView>
       <MainActivation>
-        <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+        <Animated.View style={[Skin.loadStyle.rid_wrap, { marginTop: 70 }]}>
           <View style={Skin.loadStyle.rid_center}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
@@ -186,12 +154,12 @@ class PasswordVerification extends React.Component{
           </View>
         </Animated.View>
 
-        <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
+        <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
           <View style={Skin.activationStyle.textinput_wrap}>
             <TextInput
               ref='inputPassword'
               returnKeyType={'next'}
-              secureTextEntry={true}
+              secureTextEntry
               autoCorrect={false}
               autoCapitalize={'none'}
               placeholder={'Password'}
@@ -217,15 +185,10 @@ class PasswordVerification extends React.Component{
             </Text>
           </TouchableHighlight>
         </View>
-
         <OpenLinks />
-
       </MainActivation>
-      </ScrollView>
     );
   }
-
-};
-
+}
 
 module.exports = PasswordVerification;

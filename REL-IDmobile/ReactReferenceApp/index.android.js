@@ -26,8 +26,8 @@ var SecureChat = require('./App/Components/secure_chat/Navigation');
 var Demo = require('./App/Components/demo');
 var Activation = require('./App/Components/challenges/Activation');
 var Otp = require('./App/Components/challenges/Otp');
-var SetQue = require('./App/Components/challenges/SetQue');
-var QuestionVerification = require('./App/Components/challenges/questionVerification');
+var QuestionSet = require('./App/Components/challenges/QuestionSet');
+var QuestionVerification = require('./App/Components/challenges/QuestionVerification');
 var Machine = require('./App/Components/TwoFactorAuthMachine');
 var ConnectionProfile = require('./App/Components/ConnectionProfile');
 var ActivateNewDevice = require('./App/Components/ActivateNewDevice');
@@ -211,8 +211,8 @@ class DemoApp1 extends React.Component{
       return (<Activation navigator={nav}/>);
     }else if (id == "Otp"){
       return (<Otp navigator={nav}/>);
-    }else if (id == "SetQue"){
-      return (<SetQue navigator={nav} url={route.url} title={route.title}/>);
+    }else if (id == "QuestionSet"){
+      return (<QuestionSet navigator={nav} url={route.url} title={route.title}/>);
     }else if (id == "QuestionVerification"){
       return (<QuestionVerification navigator={nav}/>);
     }else if (id == "Demo"){

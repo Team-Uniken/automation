@@ -23,9 +23,10 @@ import AppointmentsScene from './App/Scenes/Appointments';
 import Activation from './App/Components/challenges/Activation';
 import PasswordSet from './App/Components/challenges/PasswordSet';
 import Otp from './App/Components/challenges/Otp';
-import SetQue from './App/Components/challenges/SetQue';
+import QuestionSet from './App/Components/challenges/QuestionSet';
 import ActivateNewDevice from './App/Components/ActivateNewDevice';
 import UserLogin from './App/Components/challenges/UserLogin';
+import DeviceBinding from './App/Components/challenges/DeviceBinding';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
 
 // COMPONENTS
@@ -88,8 +89,9 @@ class ReactRefApp extends React.Component {
       // id = 'FindBranch';
       // id = 'ConnectionProfile';
       // id = 'Device';
-      //id = 'PayBills';
-      //id = 'SetQue';
+      // id = 'PayBills';
+      // id = 'QuestionSet';
+      // id = 'DevBind';
     }
 
     // MAIN SCENES
@@ -141,8 +143,10 @@ class ReactRefApp extends React.Component {
       return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'SetQue') {
-      return (<SetQue navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'QuestionSet') {
+      return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'DevBind') {
+      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);      
     }
     return (<Text>Error</Text>);
   }

@@ -1003,6 +1003,10 @@ var nav = {
 
 };
 
+let icon ={
+  temporary:'\ue924',
+  permanent:'\ue06b',
+};
 
 let activationStyle = StyleSheet.create({
   container: {
@@ -1099,9 +1103,6 @@ let activationStyle = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
   },
-
-
-
   button: {
     flex: 1,
     flexDirection: 'row',
@@ -1143,5 +1144,6 @@ module.exports = {
   font: {
     ICON_FONT: ICON_FONT,
     CORE_FONT:CORE_FONT
-  }
-}
+  },
+  icon: icon,
+};
