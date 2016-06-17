@@ -225,12 +225,12 @@ class ConnectionProfile extends React.Component {
           <TouchableHighlight
             style={{
               backgroundColor:Skin.colors.PRIMARY,
-              width: 50,
-              height: 50,
-              borderRadius: 25,
+              width: 56,
+              height: 56,
+              borderRadius:30,
               position: 'absolute',
-              bottom: 70,
-              right: 20,
+              bottom:25,
+              right: 25,
               alignItems: 'center',
               justifyContent: 'center',
             }}
