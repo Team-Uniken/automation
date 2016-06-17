@@ -22,6 +22,7 @@ import QuestionSet from './challenges/QuestionSet';
 import QuestionVerification from './challenges/QuestionVerification';
 import UserLogin from './challenges/UserLogin';
 import DeviceBinding from './challenges/DeviceBinding';
+import DeviceName from './challenges/DeviceName';
 import PasswordVerification from './challenges/PasswordVerification';
 
 // COMPONENTS
@@ -29,7 +30,7 @@ import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from './ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from './Constants';
-import DeviceName from './challenges/DeviceName';
+
 
 
 /*
@@ -105,13 +106,15 @@ class TwoFactorAuthMachine extends React.Component {
 
   onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
-    if (res.errCode === 0) {
-      const statusCode = res.pArgs.response.StatusCode;
-      if (statusCode === 100) {
-        // Unregister All Events
-        // We can also unregister in componentWillUnmount
-        subscriptions.remove();
-        Events.rm('showNextChallenge', 'showNextChallenge');
+    // Unregister All Events
+    // We can also unregister in componentWillUnmount
+    subscriptions.remove();
+    Events.rm('showNextChallenge', 'showNextChallenge');
+    Events.rm('showPreviousChallenge', 'showPreviousChallenge');
+
+    if (res.errCode == 0) {
+      var statusCode = res.pArgs.response.StatusCode;
+      if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
           const chlngJson = res.pArgs.response.ResponseData;
           const nextChlngName = chlngJson.chlng[0].chlng_name;
@@ -276,9 +279,10 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   showPreviousChallenge() {
+    console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
       currentIndex --;
-      this.props.navigator.pop();
+      obj.stateNavigator.pop();
     }
   }
 

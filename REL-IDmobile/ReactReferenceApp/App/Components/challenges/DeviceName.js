@@ -21,7 +21,7 @@ const {
 
 let responseJson;
 
-export default class DevName extends React.Component {
+export default class DeviceName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,4 +109,4 @@ export default class DevName extends React.Component {
   }
 }
 
-module.exports = DevName;
+module.exports = DeviceName;

@@ -1,5 +1,7 @@
 var React = require('react-native');
 import Skin from '../../Skin';
+var ToolBar = require('./ChallengeToolBar');
+
 /*
   CALLED
 */
@@ -21,8 +23,7 @@ var Appointment = React.createClass({
       <TouchableHighlight
 style={styles.touchable}
         onPress={()=>{
-          //Events.trigger('', { response: responseJson });
-
+          Events.trigger('showPreviousChallenge', '');
         }}
         underlayColor={Skin.colors.STATUS_BAR_COLOR}
         activeOpacity={0.6}

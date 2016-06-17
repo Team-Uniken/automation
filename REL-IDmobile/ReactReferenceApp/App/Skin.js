@@ -1006,6 +1006,7 @@ var nav = {
 let icon ={
   temporary:'\ue924',
   permanent:'\ue06b',
+  hamburger:'\ue2cb',
 };
 
 let activationStyle = StyleSheet.create({

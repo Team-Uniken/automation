@@ -25,7 +25,7 @@ const {
 } = React;
 
 
-class DeviceBinding extends React.Component {
+export default class DeviceBinding extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -160,4 +160,3 @@ export default class Activation extends React.Component {
     );
   }
 }
-

@@ -24,12 +24,12 @@ const {
   InteractionManager,
 } = React;
 
-export default class SetQue extends React.Component {
+export default class QuestionSet extends React.Component {
 
   constructor(props) {
     super(props);
     obj = this;
-    let ds = new ListView.DataSource({
+    const ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
       rowHasChanged: (r1, r2) => r1 !== r2,
     });
@@ -238,7 +238,7 @@ export default class SetQue extends React.Component {
   }
 }
 
-module.exports = SetQue;
+module.exports = QuestionSet;
 
 const styles = StyleSheet.create({
   listViewWrap:{
