@@ -61,6 +61,7 @@ btnText(){
 
 
 	render() {
+
 		return (
       <MainActivation>
         <View style={{marginTop:38}}>

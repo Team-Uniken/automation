@@ -5,12 +5,14 @@
 */
 import React from 'react-native';
 import Skin from '../../Skin';
-import MainActivation from '../MainActivation';
 
 /*
   CALLED
 */
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import dismissKeyboard from 'dismissKeyboard';
+import MainActivation from '../MainActivation';
+
 
 var ToolBar = require('../ToolBar');
 var Events = require('react-native-simple-events');
@@ -25,26 +27,6 @@ var obj;
   return 0;
 }
 
-var SampleRow = React.createClass({
-  render() {
-
-    return (
-			<TouchableHighlight
-      style={Skin.questionrow.customerow}
-        onPress={()=>{
-          obj._textInput.setNativeProps({text: this.props.msg});
-          obj.setState({secQA: this.props.msg});
-        }}
-        underlayColor={Skin.colors.REPPLE_COLOR}
-        activeOpacity={0.6}
-      >
-      <Text style={Skin.questionrow.questyle}>{this.props.msg}</Text>
-      </TouchableHighlight>
-    );
-  }
-});
-
-
 var {
     View,
     Text,
@@ -54,151 +36,257 @@ var {
 	Navigator,
 	TextInput,
   TextInput,
+  StyleSheet,
   ScrollView,
+  InteractionManager,
 } = React;
 
-var SetQue = React.createClass({
+export default class SetQue extends React.Component {
 
-  btnText(){
-  	if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
-  		return "Submit";
-  	}else{
-  		return "Continue";
-  	}},
-
-  getInitialState: function() {
+  constructor(props){
+    super(props);
     obj=this;
     var ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-
-   	//var {data, sectionIds} = this.renderListViewData(que.sort(compare));
-
-    return {
+    this.state = {
       dataSource: ds,
-      secQA: '',
+      secQue: '',
       secAnswer: '',
     };
-  },
 
-  componentWillMount() {
-  },
+    this._props = {
+      url: {
+        chlng_idx: 1,
+        sub_challenge_index: 0,
+        chlng_name: "secqa",
+        chlng_type: 2,
+        challengeOperation: 1,
+        chlng_prompt: [[
+          "what is your petname",
+          "what is the name of your mother and where does she live?",
+          "what is the name of your father",
+          "what is the name of your sister",
+          "what is the name of your brother",
+        ]],
+        chlng_info:[
+          {
+            key:"Prompt label",
+            value:"Secret Question",
+          }, {
+            key: "Response label",
+            value: "Secret Answer",
+          }, {
+            key: "Description",
+            value: "Choose your secret question and then provide answer",
+          }, {
+            key: "Reading",
+            value: "Set secret question and answer",
+          },
+        ],
+        chlng_resp: [
+          {
+            challenge: '',
+            response: '',
+          },
+        ],
+        challenge_response_policy: [],
+        chlng_response_validation: false,
+        attempts_left: 3,
+        currentIndex: 1,
+      },
+    };
+  }
 
   componentDidMount() {
-    var listViewScrollView = this.refs.listView.getScrollResponder();
-
-    var {data, sectionIds} = obj.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
-
-    obj.setState({
-                  dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
+    console.log(this);
+    const { data, sectionIds } = obj.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+    this.setState({
+      dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
     });
-  },
+  }
 
-  renderListViewData(users) {
-    var data = {};
-    var sectionIds = [];
+  onQuestionChange(event) {
 
-    users.map((user) => {
-      var qData = {"msg":user};
-      var section = qData.msg.charAt(0);
+    this.setState({ secQue: event.nativeEvent.text });
+    console.log(this.state.secQue);
+  }
+
+  onAnswerChange(event) {
+    this.setState({ secAnswer: event.nativeEvent.text });
+    console.log(this.state.secAnswer);
+  }
+
+  setSecrets() {
+    console.log(this);
+    const kSecQ = this.state.secQue;
+    const vSecA = this.state.secAnswer;
+    let responseJson;
+    if (kSecQ.length > 0 && vSecA.length > 0) {
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].challenge = kSecQ;
+      responseJson.chlng_resp[0].response = vSecA;
+      Events.trigger('showNextChallenge', {response: responseJson});
+    } else {
+      dismissKeyboard();
+      InteractionManager.runAfterInteractions(() => {
+        alert('Please enter a Question & Answer');
+      });
+    }
+  }
+
+  btnText() {
+    if (this.props.url.chlng_idx === this.props.url.chlngsCount) {
+      return 'Submit';
+    }
+    return 'Continue';
+  }
+
+  renderListViewData(questionData) {
+    const data = {};
+    const sectionIds = [];
+    questionData.map((question) => {
+      const qData = { msg: question };
+      const section = qData.msg.charAt(0);
       if (sectionIds.indexOf(section) === -1) {
         sectionIds.push(section);
         data[section] = [];
       }
       data[section].push(qData);
+      return null;
     });
-    return {data, sectionIds};
-  },
-
-  onQuestionChange(event){
-    this.setState({secQA: event.nativeEvent.text});
-  },
-
-  onAnswerChange(event){
-    this.setState({secAnswer: event.nativeEvent.text});
-  },
-
-  setSecrets(){
-    var kSecQ = this.state.secQA;
-    var vSecA = this.state.secAnswer;
-    var responseJson;
-    if(kSecQ.length>0 && vSecA.length>0){
-      responseJson = this.props.url.chlngJson;
-      responseJson.chlng_resp[0].challenge = kSecQ;
-      responseJson.chlng_resp[0].response = vSecA;
-      Events.trigger('showNextChallenge', {response: responseJson});
-    }
-    else{
-      alert('Please enter valid data');
-    }
-  },
+    return { data, sectionIds };
+  }
 
   renderRow(rowData) {
-    return <SampleRow {...rowData} style={Skin.questionrow.row} />
-  },
+    return (
+      <TouchableHighlight
+        style={styles.row}
+        onPress={() => {
+          this.setState({secQue:rowData.msg});
+          this.quesInput.setNativeProps({ text: rowData.msg });
+          //this.quesInput.on;
+        }}
+        underlayColor={Skin.colors.REPPLE_COLOR}
+        activeOpacity={0.6}
+      >
+        <Text style={styles.rowtext} numberOfLines={2}>{rowData.msg}</Text>
+      </TouchableHighlight>
+    );
+  }
+
+  renderSeperator() {
+    return (
+      <View style={styles.divider}/>
+    );
+  }
 
   render() {
 
+    /**
+     * SCROLL VIEW ADDED HERE IN LIEU OF MAINACTIVATION
+     * When react-native-keyboard-scroll-view is updated and bug patch is rolled into React Native we can swop to that.
+     <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+     */
 
     return (
       <MainActivation>
-      <ScrollView>
-        <View style={{marginTop:38}}>
-          <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+        <View style={{ marginTop: 38 }}>
           <Text style={Skin.activationStyle.title}>Question and Answer</Text>
         </View>
 
         <View style={[Skin.activationStyle.input_wrap]}>
           <View style={Skin.activationStyle.textinput_wrap}>
-          <TextInput
-           ref={component => this._textInput = component}
-           autoCorrect={false}
-           placeholder={'Type/Select question'}
-           placeholderTextColor={'rgba(255,255,255,0.7)'}
-           style={Skin.activationStyle.textinput}
-           onChange={this.onQuestionChange}
-          />
+            <TextInput
+              ref={(component) => {this.quesInput = component; return this.quesInput;}}
+              autoCorrect={false}
+              placeholder={'Type/Select question'}
+              placeholderTextColor={'rgba(255,255,255,0.7)'}
+              style={[Skin.activationStyle.textinput, {
+                textAlign: 'left',
+                paddingLeft: 5,
+                fontSize: 15,
+              }]}
+              onChange={this.onQuestionChange.bind(this)}
+              multiline
+            />
           </View>
         </View>
-            <View style={Skin.questionrow.que}>
-              <ListView
-               ref="listView"
-               automaticallyAdjustContentInsets={false}
-               dataSource={this.state.dataSource}
-               renderRow={this.renderRow}
+          <View style={styles.listViewWrap}>
+            <ListView
+              ref="listView"
+              automaticallyAdjustContentInsets={false}
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow.bind(this)}
+              renderSeperator={this.renderSeperator.bind(this)}
+              style={styles.listView}
+              showsVerticalScrollIndicator 
+            />
+          </View>
+          <View style={[Skin.activationStyle.input_wrap]}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                autoCorrect={false}
+                placeholder={'Enter your secret answer'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={[Skin.activationStyle.textinput, {
+                  textAlign: 'left',
+                  paddingLeft:5,
+                  justifyContent:'center',
+                }]}
+                onChange={this.onAnswerChange.bind(this)}
               />
-            </View>
 
-            <View style={[Skin.activationStyle.input_wrap]}>
-              <View style={Skin.activationStyle.textinput_wrap}>
-                <TextInput
-                  autoCorrect={false}
-                  placeholder={'Enter your secret answer'}
-                  placeholderTextColor={'rgba(255,255,255,0.7)'}
-                  style={Skin.activationStyle.textinput}
-                  onChange={this.onAnswerChange}
-                />
-
-              </View>
             </View>
-            <View style={Skin.activationStyle.input_wrap}>
-              <TouchableHighlight
-                style={Skin.activationStyle.button}
-                onPress={this.setSecrets}
-                underlayColor={'#082340'}
-                activeOpacity={0.6}
-              >
-                <Text style={Skin.activationStyle.buttontext}>
-                  {this.btnText()}
-                </Text>
-              </TouchableHighlight>
-            </View>
-            </ScrollView>
-
-			  </MainActivation>
+          </View>
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+              style={Skin.activationStyle.button}
+              onPress={this.setSecrets.bind(this)}
+              underlayColor={'#082340'}
+              activeOpacity={0.6}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </MainActivation>
 		);
-  },
-});
+  }
+};
 
 module.exports = SetQue;
+
+const styles = StyleSheet.create({
+  listViewWrap:{
+    backgroundColor:'white',
+    height: 105,
+  },
+  row:{
+    backgroundColor: Skin.colors.TEXT_COLOR,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 48,
+    borderTopColor: Skin.colors.TEXT_COLOR,
+    borderLeftColor: Skin.colors.TEXT_COLOR,
+    borderRightColor: Skin.colors.TEXT_COLOR,
+    borderBottomColor: Skin.colors.DIVIDER_COLOR,
+    borderWidth: 1,
+  },
+  rowtext:{
+    color: Skin.colors.PRIMARY_COLOR,
+    textAlign: 'left',
+    flex: 1,
+    //backgroundColor: 'pink',
+    fontSize: 15,
+    padding: 5,
+  },
+  divider:{
+    height:5, 
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+  }
+
+});

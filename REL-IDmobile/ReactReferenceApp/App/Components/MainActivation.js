@@ -20,6 +20,7 @@ const {
   View,
   Image,
   Text,
+  ScrollView,
   TouchableHighlight,
   TouchableWithoutFeedback,
 
@@ -53,11 +54,11 @@ class UserLogin extends React.Component{
             />
           </View>
           <View style={Skin.activationStyle.bgcolorizer} />
-          <View style={Skin.activationStyle.centering_wrap}>
-            <View style={Skin.activationStyle.wrap}>
-              {this.props.children}
+            <View style={Skin.activationStyle.centering_wrap}>
+              <View style={Skin.activationStyle.wrap}>
+                {this.props.children}
+              </View>
             </View>
-          </View>
           <TouchableHighlight
             activeOpacity={1.0}
             style={{
