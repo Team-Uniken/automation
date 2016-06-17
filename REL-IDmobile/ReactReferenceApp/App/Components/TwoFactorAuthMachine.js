@@ -108,14 +108,16 @@ class TwoFactorAuthMachine extends React.Component {
   onCheckChallengeResponseStatus(e) {
     var res = JSON.parse(e.response);
 
+    // Unregister All Events
+    // We can also unregister in componentWillUnmount
+    subscriptions.remove();
+    Events.rm('showNextChallenge', 'showNextChallenge');
+    Events.rm('showPreviousChallenge', 'showPreviousChallenge');
+
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
       if (statusCode == 100) {
 
-        // Unregister All Events
-        // We can also unregister in componentWillUnmount
-        subscriptions.remove();
-        Events.rm('showNextChallenge', 'showNextChallenge');
         if (res.pArgs.response.ResponseData) {
           var chlngJson = res.pArgs.response.ResponseData;
           var nextChlngName = chlngJson.chlng[0].chlng_name;
@@ -269,9 +271,10 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   showPreviousChallenge() {
+    console.log("---------- showPreviousChallenge " + currentIndex);
       if(currentIndex > 0){
         currentIndex --;
-        this.props.navigator.pop();
+        obj.stateNavigator.pop();
       }
   }
 

@@ -6,7 +6,6 @@
 
 import React from 'react-native';
 import Skin from '../Skin';
-
 /*
   CALLED
 */
@@ -47,6 +46,7 @@ class UserLogin extends React.Component{
         <StatusBar
         backgroundColor={Skin.colors.STATUS_BAR_COLOR}
         barStyle='light-content'/>
+
           <View style={Skin.activationStyle.bgbase} />
           <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
           <View style={Skin.activationStyle.bgcolorizer} />
