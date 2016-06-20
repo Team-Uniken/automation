@@ -19,7 +19,7 @@ const {
 } = React;
 
 
-export default class PayBillsScene extends React.Component{
+export default class DepositsScene extends React.Component{
     constructor(props){
         super(props);
     }
@@ -50,10 +50,32 @@ export default class PayBillsScene extends React.Component{
                 }}
                 navigator={this.props.navigator}
             >   
-                <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
-                    <Text>This is my Deposits content</Text>
+                <View 
+                    style={{
+                        flex:1,
+                        backgroundColor:Skin.colors.TEXT_COLOR,
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Text
+                        style={{
+                            textAlign: 'center',
+                            alignSelf: 'center',
+                            //backgroundColor: 'red',
+                            fontSize: 30,
+                            color: Skin.colors.PRIMARY,
+                            fontWeight: 'bold',
+                            alignItems: 'center',
+                        }}
+                    >
+                        Photo Deposit Feature Coming Soon!
+                    </Text>
                 </View>
             </Main>
         );
     }
 }
+
+module.exports = DepositsScene;

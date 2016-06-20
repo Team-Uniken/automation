@@ -31,9 +31,9 @@ export default class ContactScene extends React.Component {
     // console.log(this);
     // console.log(i);
     // console.log({id:this.props.list[i].link});
-    const routeStack = this.props.navigator.state.routeStack;
-    routeStack.push(route);
-    this.props.navigator.immediatelyResetRouteStack(routeStack);
+    //const routeStack = this.props.navigator.state.routeStack;
+    this.props.navigator.push(route);
+    //this.props.navigator.immediatelyResetRouteStack(routeStack);
       // this.props.navigator.push({id:this.props.list[i].link});
   }
 
