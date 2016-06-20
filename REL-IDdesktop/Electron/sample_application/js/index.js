@@ -1607,3 +1607,32 @@ function hideSecQAForm()
   document.getElementById("secQAFrm").reset();
   clearQuestions();
 }
+
+function navigateTo() 
+{
+  var url = document.getElementById("urlTObeLoad").value;
+  document.querySelector('webview').src = url;
+}
+
+function setProxy()
+{
+  var webview = document.querySelector('webview');
+  var webContents = webview.getWebContents();
+  webContents.session.setProxy('http=127.0.0.1:28000;https=127.0.0.1:28000' , function() {
+    console.log('127.0.0.1:28000 Proxy set to Webview Successfully');
+   });
+}
+
+function loadWebview()
+{
+  document.getElementById("landingPage").style.display = "none";
+  document.getElementById("myDIV").style.display = "none";
+  document.getElementById("browserWindow").style.display = "block";
+  setProxy();
+}
+
+function displayLandingPage()
+{
+  document.getElementById("browserWindow").style.display = "none";
+  document.getElementById("landingPage").style.display = "block";
+}

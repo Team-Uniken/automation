@@ -19,7 +19,7 @@
           loadDefaultSettings();
         }
       }
-      
+
     $(".editableBox").change
     (
       function()
@@ -79,7 +79,7 @@
             <h2 id="secQAHeader">Secret Question</h2>
             <div class="wrapper">
               <span id="secQA"></span>
-              <select id="questionList" class="editableBox" onchange="selectionChanged()">        
+              <select id="questionList" class="editableBox" onchange="selectionChanged()">
               </select>
               <input id="txtQuestions" class="questionTextBox" placeholder="type or select secret question" name="questionbox"/>
               <span id="secAns"></span><input id="secretAns" type="password" placeholder="Enter Secret Answer Here"/>
@@ -131,9 +131,9 @@
                 <div class="col-sm-3">
                   <div class="row">
                     <div class="col-sm-6"><img src="img/edit.png" onclick="showPermDevDetailsModal();"></div>
-                    <div class="col-sm-6"><img src="img/delete.png" onclick="delDeviceDetails('selectPermanentList');"></div>			
+                    <div class="col-sm-6"><img src="img/delete.png" onclick="delDeviceDetails('selectPermanentList');"></div>
                   </div>
-                </div>			
+                </div>
               </div>
               <label id="tempdevices"> Temporary device list :</label>
               <div class="row">
@@ -160,14 +160,14 @@
                     <label id="authRequired">
                       <h2>DevDetails</h2>
                     </label>
-                  </div>					
+                  </div>
                 </div>
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-sm-10">
                       <input id="devDetailsTxtBox" type="text" value="" style="padding-top: 5px; padding-bottom: 5px;"/>
                     </div>
-                    <div class="col-sm-2"><img src="img/save.png" onclick="saveDevDetails();"></div>				
+                    <div class="col-sm-2"><img src="img/save.png" onclick="saveDevDetails();"></div>
                   </div>
                   <div class="row">
                     <div class="col-sm-5"><span id="deviceTypeLbl"></span> : </div>
@@ -181,15 +181,15 @@
                     <div class="col-sm-5"><span id="createdTsKeyLbl"></span> : </div>
                     <div class="col-sm-7"><span id="createdTsValLbl"></span></div>
                   </div>
-                  <div class="row">					
+                  <div class="row">
                     <div class="col-sm-5"><span id="lastAccessedTsKeyLbl"></span> : </div>
                     <div class="col-sm-7"><span id="lastAccessedTsValLbl"></span></div>
                   </div>
-                  <div class="row">					
+                  <div class="row">
                     <div class="col-sm-5"><span id="lastLoginStatusKeyLbl"></span> : </div>
                     <div class="col-sm-7"><span id="lastLoginStatusValLbl"></span></div>
                   </div>
-                </div>				
+                </div>
               </div>
             </div>
           </form>
@@ -202,7 +202,7 @@
                   <div class="col-sm-12"><label id="hostName"></label></div>
                 </div>
                 <div class="modal-body">
-                  <div class="row">					
+                  <div class="row">
                   <div class="col-sm-3"><label>Username:</label></div>
                   <div class="col-sm-9"><input type="text" name="userName" id="userName" value="uniken"></div>
                   </div>
@@ -213,9 +213,9 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-6"><input type="button" class="btn" onclick="submitAuthDetails(0)" value="Submit" ></div>
-                    <div class="col-sm-6"><input type="button" class="btn" onclick="submitAuthDetails(1)" value="Cancel"></div>						
+                    <div class="col-sm-6"><input type="button" class="btn" onclick="submitAuthDetails(1)" value="Cancel"></div>
                   </div>
-                </div>				
+                </div>
               </div>
             </div>
           </form>
@@ -301,10 +301,11 @@
           <a onclick="rdnaDecryptDataPacket()" class="button blue">DecryptDataPkt</a>
           <a onclick="rdnaEncryptHTTPReq()" class="button blue">EncryptHTTPReq</a>
           <a onclick="rdnaDecryptHTTPResp()" class="button blue">DecryptHTTPResp</a>
-          
+
           <a onclick="showInitialiChlngFrame()" class="button blue">Login to your account</a>
           <a onclick="forgotPasswordHandler()" class="button blue">Forgot password</a>
           <a onclick="ResetState()" class="button blue">Reset challenge</a>
+          <a onclick="loadWebview()" class="button blue">Load WebView</a>
         </section>
         <textarea rows="6" cols="50" id="txtField1"></textarea><textarea rows="6" cols="50" id="txtField2"></textarea><br><br>
         ----------------------------------------------------------------------------------<br><br>
@@ -318,6 +319,14 @@
           <a onclick="handleDeviceMgmt()" class="button blue">Manage Devices</a>
           <a onclick="handlePostLoginChlng()" class="button blue">PostLogin Challenges</a>
         </section>
+      </div>
+      <div style="display:none;" id="browserWindow" class="browserWindow">
+        <div id="browserToolBar" class="brwToolBar">
+          <input id="urlTObeLoad" type="text" style="height:30px; width:300px"/>
+          <a onclick="navigateTo()" class="button blue">Go</a>
+          <a onclick="displayLandingPage()" class="button red brwClose">x</a>
+        </div>
+        <webview src="https://www.google.com/" style="width:800px !important; height:400px !important; "></webview>
       </div>
     </div>
     <script src="js/index.js"></script>
