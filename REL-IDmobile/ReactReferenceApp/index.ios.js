@@ -137,7 +137,7 @@ class ReactRefApp extends React.Component {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'Device') {
+    } else if (id === 'DeviceMgmt') {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'ActivateNewDevice') {
       return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title} />);
