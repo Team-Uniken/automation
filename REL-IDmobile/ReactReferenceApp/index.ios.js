@@ -21,7 +21,8 @@ import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
 import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
 import LoadScene from './App/Scenes/Load';
-import SecureWebView from './App/Components/SecureWebView';
+import Web from './App/Scenes/Web';
+
 
 // SECURITY SCENES
 import Activation from './App/Components/challenges/Activation';
@@ -34,8 +35,6 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 // COMPONENTS
 
-import Web from './App/Components/Web';
-import QBank from './App/Components/Qbank';
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
@@ -118,8 +117,6 @@ class ReactRefApp extends React.Component {
       return (<LoadScene navigator={nav} />);
 
     // SECONDARY SCENES
-    } else if (id === 'Web') {
-      return (<Web navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ComingSoon') {
       return (<ComingSoonScene navigator={nav} title={route.title} />);
     } else if (id === 'QBank') {
@@ -135,7 +132,9 @@ class ReactRefApp extends React.Component {
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'SecureWebView') {
-      return (<SecureWebView navigator={nav} url={route.url} title={route.title} />);
+      return (<Web navigator={nav} url={route.url} title={route.title} secure navigate scale />);
+    } else if (id === 'WebView') {
+      return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
      
     // SECURITY SCENES
     } else if (id === 'Activation') {
@@ -153,7 +152,7 @@ class ReactRefApp extends React.Component {
     } else if (id === 'QuestionSet') {
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'DevBind') {
-      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);      
+      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     }
 
     return (<Text>Error</Text>);
@@ -164,9 +163,10 @@ class ReactRefApp extends React.Component {
       <FormattedWrapper locale="en" currency="USD">
         <Navigator
           renderScene={this.renderScene}
-          initialRoute={
-            { id: 'Load' }
-          }
+          initialRoute={{
+            id: 'Load',
+            title: 'REL-IDmobile'
+          }}
           configureScene={(route) => {
             if (route.sceneConfig){
               return route.sceneConfig;

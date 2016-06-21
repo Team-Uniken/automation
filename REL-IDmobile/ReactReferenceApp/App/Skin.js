@@ -50,10 +50,11 @@ var MENU_TXT_COLOR = '#2579A2';
 var ICON_COLOR = '#FFFFFF';
 
 
-var PRIMARY_RGB       = hexToRgb(PRIMARY).r       +','+ hexToRgb(PRIMARY).g        +','+ hexToRgb(PRIMARY).b;
-var DARK_PRIMARY_RGB  = hexToRgb(DARK_PRIMARY).r  +','+ hexToRgb(DARK_PRIMARY).g   +','+ hexToRgb(DARK_PRIMARY).b;
-var LIGHT_PRIMARY_RGB  = hexToRgb(LIGHT_PRIMARY).r  +','+ hexToRgb(LIGHT_PRIMARY).g   +','+ hexToRgb(LIGHT_PRIMARY).b;
-var PRIMARY_TEXT_RGB  = hexToRgb(PRIMARY_TEXT).r  +','+ hexToRgb(PRIMARY_TEXT).g   +','+ hexToRgb(PRIMARY_TEXT).b;
+var PRIMARY_RGB         = hexToRgb(PRIMARY).r       +','+ hexToRgb(PRIMARY).g         +','+ hexToRgb(PRIMARY).b;
+var DARK_PRIMARY_RGB    = hexToRgb(DARK_PRIMARY).r  +','+ hexToRgb(DARK_PRIMARY).g    +','+ hexToRgb(DARK_PRIMARY).b;
+var LIGHT_PRIMARY_RGB   = hexToRgb(LIGHT_PRIMARY).r +','+ hexToRgb(LIGHT_PRIMARY).g   +','+ hexToRgb(LIGHT_PRIMARY).b;
+var PRIMARY_TEXT_RGB    = hexToRgb(PRIMARY_TEXT).r  +','+ hexToRgb(PRIMARY_TEXT).g    +','+ hexToRgb(PRIMARY_TEXT).b;
+var TEXT_COLOR_RGB      = hexToRgb(TEXT_COLOR).r    +','+ hexToRgb(TEXT_COLOR).g      +','+ hexToRgb(TEXT_COLOR).b;
 
 
 var BACKGROUND_COLOR = '#fff';
@@ -99,6 +100,7 @@ var colors = {
   PRIMARY_RGB : PRIMARY_RGB,
   LIGHT_PRIMARY : LIGHT_PRIMARY,
   TEXT_COLOR : TEXT_COLOR,
+  TEXT_COLOR_RGB: TEXT_COLOR_RGB,
   ACCENT : ACCENT,
   POSITIVE_ACCENT: POSITIVE_ACCENT,
   PRIMARY_TEXT : PRIMARY_TEXT,

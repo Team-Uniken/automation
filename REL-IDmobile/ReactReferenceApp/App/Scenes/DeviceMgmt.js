@@ -34,7 +34,6 @@ let devicseList;
 let deviceHolderList;
 
 
-
 const FAKE_BOOK_DATA = [];
 /*
 var {
@@ -85,8 +84,7 @@ export default class DeviceMgmtScene extends React.Component {
     this.state = {
       open: false,
       inputDeviceName: '',
-      selectedDeviceIndex : -1,
-
+      selectedDeviceIndex: -1,
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
       }),
@@ -171,11 +169,11 @@ export default class DeviceMgmtScene extends React.Component {
   }
 
   onEditPressed(rowData) {
-      this.setState({
-          inputDeviceName: rowData.device.devName,
-          selectedDeviceIndex: rowData.index,
-          open: true
-      });
+    this.setState({
+      inputDeviceName: rowData.device.devName,
+      selectedDeviceIndex: rowData.index,
+      open: true,
+    });
   }
 
 
@@ -193,14 +191,13 @@ export default class DeviceMgmtScene extends React.Component {
     // }]);
 
     Alert.alert(
-            '',
-            'Do you want to change status to '+ status + ' ?',
-            [
-             {text: 'Cancel', onPress: () => console.log("----- Cancel pressed") },
-             {text: 'OK', onPress: () => this.deleteDevice(deviceHolder) },
-             ]
-            )
-
+      '',
+      'Do you want to change status to ' + status + ' ?',
+      [
+        {text: 'Cancel', onPress: () => console.log("----- Cancel pressed") },
+        {text: 'OK', onPress: () => this.deleteDevice(deviceHolder) },
+      ]
+    );
   }
 
   onTextChange(text) {
