@@ -17,30 +17,32 @@ import FindBranchScene from './App/Scenes/FindBranch';
 // Secondary Scenes
 import DeviceMgmtScene from './App/Scenes/DeviceMgmt';
 import AppointmentsScene from './App/Scenes/Appointments';
-
+import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
+import ComingSoonScene from './App/Scenes/ComingSoon';
+import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
+import LoadScene from './App/Scenes/Load';
+import SecureWebView from './App/Components/SecureWebView';
 
 // SECURITY SCENES
 import Activation from './App/Components/challenges/Activation';
 import PasswordSet from './App/Components/challenges/PasswordSet';
 import Otp from './App/Components/challenges/Otp';
 import QuestionSet from './App/Components/challenges/QuestionSet';
-import ActivateNewDevice from './App/Components/ActivateNewDevice';
 import UserLogin from './App/Components/challenges/UserLogin';
 import DeviceBinding from './App/Components/challenges/DeviceBinding';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
 
 // COMPONENTS
-import Load from './App/Components/Load';
+
 import Web from './App/Components/Web';
 import QBank from './App/Components/Qbank';
-import ComingSoon from './App/Components/ComingSoon';
+
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
 import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
-import ConnectionProfile from './App/Components/ConnectionProfile';
 
 const {
   AppRegistry,
@@ -92,6 +94,9 @@ class ReactRefApp extends React.Component {
       // id = 'PayBills';
       // id = 'QuestionSet';
       // id = 'DevBind';
+      //id = 'Deposits';
+      //id = 'ActivateNewDevice';
+      id = 'SecureWebView';
     }
 
     // MAIN SCENES
@@ -110,13 +115,13 @@ class ReactRefApp extends React.Component {
 
     // LOAD SCENES
     } else if (id === 'Load') {
-      return (<Load navigator={nav} />);
+      return (<LoadScene navigator={nav} />);
 
     // SECONDARY SCENES
     } else if (id === 'Web') {
       return (<Web navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ComingSoon') {
-      return (<ComingSoon navigator={nav} title={route.title} />);
+      return (<ComingSoonScene navigator={nav} title={route.title} />);
     } else if (id === 'QBank') {
       return (<QBank navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'SecureChat') {
@@ -125,7 +130,13 @@ class ReactRefApp extends React.Component {
       return (<Appointment navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'AddAppointment') {
       return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);
-
+    } else if (id === 'ActivateNewDevice') {
+      return (<ActivateNewDeviceScene navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'ConnectionProfile') {
+      return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'SecureWebView') {
+      return (<SecureWebView navigator={nav} url={route.url} title={route.title} />);
+     
     // SECURITY SCENES
     } else if (id === 'Activation') {
       return (<Activation navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
@@ -137,17 +148,14 @@ class ReactRefApp extends React.Component {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'Device') {
+    } else if (id === 'DeviceMgmt') {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
-    } else if (id === 'ActivateNewDevice') {
-      return (<ActivateNewDevice navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'ConnectionProfile') {
-      return (<ConnectionProfile navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'QuestionSet') {
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'DevBind') {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);      
     }
+
     return (<Text>Error</Text>);
   }
 
@@ -159,26 +167,29 @@ class ReactRefApp extends React.Component {
           initialRoute={
             { id: 'Load' }
           }
-          configureScene={() => {
-            let config = Navigator.SceneConfigs.FadeAndroid;
-            // var config = Navigator.SceneConfigs.FloatFromRight
-            config = {
+          configureScene={(route) => {
+            if (route.sceneConfig){
+              return route.sceneConfig;
+            } else {
+              let config = Navigator.SceneConfigs.FadeAndroid;
+              // var config = Navigator.SceneConfigs.FloatFromRight
+              config = {
 
-              // Rebound spring parameters when transitioning FROM this scene
-              springFriction: 26,
-              springTension: 200,
+                // Rebound spring parameters when transitioning FROM this scene
+                springFriction: 26,
+                springTension: 200,
 
-              // Velocity to start at when transitioning without gesture
-              defaultTransitionVelocity: 3.5,
+                // Velocity to start at when transitioning without gesture
+                defaultTransitionVelocity: 3.5,
 
-              gestures: null,
-              animationInterpolators: {
-                into: buildStyleInterpolator(FadeIn),
-                out: buildStyleInterpolator(FadeOut),
-              },
+                gestures: null,
+                animationInterpolators: {
+                  into: buildStyleInterpolator(FadeIn),
+                  out: buildStyleInterpolator(FadeOut),
+                },
             };
-            return config;
-          }}
+              return config;
+          }}}
         />
       </FormattedWrapper>
     );

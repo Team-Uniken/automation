@@ -27,7 +27,7 @@ import PasswordVerification from './challenges/PasswordVerification';
 
 // COMPONENTS
 import buildStyleInterpolator from 'buildStyleInterpolator';
-import ConnectionProfile from './ConnectionProfile';
+import ConnectionProfile from '../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from './Constants';
 

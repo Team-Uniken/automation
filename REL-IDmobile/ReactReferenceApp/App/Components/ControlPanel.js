@@ -34,14 +34,12 @@ var {
   Alert,
 } = React;
 var styles = Skin.controlStyle;
-
-
-
 var Obj;
 
 class ControlPanel extends React.Component{
   constructor(props){
     super(props);
+    console.log(props);
   }
   
   showLogOffAlert(){
@@ -51,7 +49,7 @@ class ControlPanel extends React.Component{
                 'Do you want to log-off',
                 [
                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
-                 {text: 'OK', onPress: () =>  AsyncStorage.getItem("userId").then((value) => {
+                 {text: 'OK', onPress: () =>  AsyncStorage.getItem('userId').then((value) => {
                                                                                   ReactRdna.logOff(value,(response) => {
                                                                                                    if (response) {
                                                                                                    console.log('immediate response is'+response[0].error);
@@ -65,7 +63,7 @@ class ControlPanel extends React.Component{
   }
   
   doLogOff(){
-    AsyncStorage.getItem("userId").then((value) => {
+    AsyncStorage.getItem('userId').then((value) => {
                                         ReactRdna.logOff(value,(response) => {
                                                          if (response) {
                                                          console.log('immediate response is'+response[0].error);
@@ -91,38 +89,60 @@ class ControlPanel extends React.Component{
   }
 
   popToLoadView(){
-    this.props.navigator.replace({id: "Load"});
+    this.props.navigator.replace({id: 'Load'});
   }
   
   render(){
     return (
-            <View style={styles.container}>
-            <Text style={styles.controlHeader}>UNIKEN</Text>
-            <View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Alerts"});}} style={styles.touch}><Text style={styles.menuItem}>Alerts</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Profile & Settings"});}} style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: "ActivateNewDevice", title:"Activate New Device"});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: "device", title:"Self Device Managment"});}}  style={styles.touch}><Text style={styles.menuItem}>Self Device Managment</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Change Secret Question"});}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Help & Support"});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Contact Us"});}}  style={styles.touch}><Text style={styles.menuItem}>Contact Us</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Send App Feedback"});}}  style={styles.touch}><Text style={styles.menuItem}>Send App Feedback</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={()=>{this.props.toggle();this.props.navigator.push({id: "ComingSoon", title:"Legal Info"});}}  style={styles.touch}><Text style={styles.menuItem}>Legal Info</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            <Text style={styles.menuItem}>   </Text>
-            <View style={styles.menuBorder}></View>
-            <TouchableHighlight onPress={this.showLogOffAlert.bind(this)}  style={styles.touch}><Text style={styles.menuItem}>Logout</Text>
-            </TouchableHighlight>
-            </View>
-            )
+      <View style={styles.container}>
+        <Text style={styles.controlHeader}>UNIKEN</Text>
+        <View style={styles.menuBorder}></View>
+        <TouchableHighlight 
+          onPress={()=>{
+            this.props.toggleDrawer();
+            this.props.navigator.push({
+              id: 'ComingSoon',
+              title:'Alerts',
+              sceneConfig:Navigator.SceneConfigs.PushFromRight,
+            });
+          }}
+          style={styles.touch}
+        >
+          <Text style={styles.menuItem}>Alerts</Text>
+        </TouchableHighlight>
+      <View style={styles.menuBorder}></View>
+
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Profile & Settings',sceneConfig:Navigator.SceneConfigs.PushFromRight});}} style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+      
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ActivateNewDevice', title:'Activate New Device',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+      
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'DeviceMgmt', title:'Self Device Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Device Managment</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+      
+      <TouchableHighlight onPress={()=>{this.props.navigator.push({id: 'ComingSoon', title:'Change Secret Question',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Help & Support',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'Portal', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'wiki.uniken.com'});}}  style={styles.touch}><Text style={styles.menuItem}>Contact Us</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Send App Feedback',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Send App Feedback</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+
+      <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Legal Info',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Legal Info</Text>
+      </TouchableHighlight><View style={styles.menuBorder}></View>
+
+      <Text style={styles.menuItem}></Text>
+      <View style={styles.menuBorder}></View>
+      
+      <TouchableHighlight onPress={this.showLogOffAlert.bind(this)}  style={styles.touch}><Text style={styles.menuItem}>Logout</Text>
+      </TouchableHighlight>
+      </View>
+      )
   }
 };
 

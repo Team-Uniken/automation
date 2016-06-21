@@ -3,21 +3,16 @@
 import React from 'react-native';
 import Modal from 'react-native-simple-modal';
 import Skin from '../Skin';
-import Load from './Load';
-import Main from './Main';
+import Main from '../Components/Main';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import TextField from 'react-native-md-textinput';
 
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const {
   Text,
   View,
   ListView,
   TouchableHighlight,
-  Component,
   AsyncStorage,
   TextInput,
   Alert,
@@ -28,7 +23,7 @@ const {
 let CONNECTION_PROFILES_DATA = [];
 let obj;
 
-class ConnectionProfile extends React.Component {
+class ConnectionProfileScene extends React.Component {
 
   constructor(props) {
     super(props);
@@ -365,4 +360,4 @@ const styles = StyleSheet.create({
 });
 
 
-module.exports = ConnectionProfile;
+module.exports = ConnectionProfileScene;

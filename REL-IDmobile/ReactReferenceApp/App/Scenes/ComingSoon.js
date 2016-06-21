@@ -18,34 +18,32 @@ const {
     Text,
 } = React;
 
-
-export default class DepositsScene extends React.Component{
+export default class ComingSoonScene extends React.Component{
     constructor(props){
         super(props);
+        console.log(this.props);
     }
     render() {
         return (
             <Main
                 drawerState={{
-                    open: false, 
-                    disabled: false
+                    open: false,
+                    disabled: true,
                 }}
                 navBar={{
-                    title: 'Deposits',
-                    visible: true,
-                    tint: Skin.colors.TEXT_COLOR,
-                    left:{
-                        text: '',
-                        icon: '\ue20e',
-                        iconStyle: {
-                            fontSize:30,
-                            marginLeft:8,
-                        },
-                        textStyle:{},
-                    }
+                  title: this.props.title || 'Coming Soon',
+                  visible: true,
+                  tint: Skin.colors.TEXT_COLOR,
+                  left: {
+                    text: 'Back',
+                    icon: 'x',
+                    iconStyle: {},
+                    textStyle: {},
+                    handler: this.props.navigator.pop
+                  },
                 }}
                 bottomMenu={{
-                    visible: true,
+                    visible: false,
                     active: 3,
                 }}
                 navigator={this.props.navigator}
@@ -57,20 +55,20 @@ export default class DepositsScene extends React.Component{
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        padding:15,
                     }}
                 >
                     <Text
                         style={{
                             textAlign: 'center',
                             alignSelf: 'center',
-                            //backgroundColor: 'red',
                             fontSize: 30,
                             color: Skin.colors.PRIMARY,
                             fontWeight: 'bold',
                             alignItems: 'center',
                         }}
                     >
-                        Photo Deposit Feature Coming Soon!
+                        {this.props.title} Feature Coming Soon!
                     </Text>
                 </View>
             </Main>
@@ -78,4 +76,4 @@ export default class DepositsScene extends React.Component{
     }
 }
 
-module.exports = DepositsScene;
+module.exports = ComingSoonScene;

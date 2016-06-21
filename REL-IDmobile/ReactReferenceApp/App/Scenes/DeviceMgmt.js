@@ -57,6 +57,7 @@ var {
 } = require('react-native');
 
 */
+/*
 const FAKE_BOOK_DATA = [{
   devUUID: '2WKVOLK4GH0Z5KI9JN3MZXO1IMVQNRB1H9V5FFMRSS8ONZTJB7',
   devName: 'test41_Android_Nexus 6_060916145904',
@@ -86,9 +87,10 @@ const FAKE_BOOK_DATA = [{
   createdTs: '2016-06-09T15:02:22IST',
   devBind: 0,
 }];
+*/
 
+const FAKE_BOOK_DATA = [];
 /*
-FAKE_BOOK_DATA = [];
 var {
   height,
   width,
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class DeviceMgmtScene extends Component {
+export default class DeviceMgmtScene extends React.Component {
   constructor(props) {
     super(props);
     obj = this;
