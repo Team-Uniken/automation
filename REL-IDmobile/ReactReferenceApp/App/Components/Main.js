@@ -190,3 +190,5 @@ Main.defaultProps = {
   },
   toggleDrawer: this.toggleDrawer,
 };
+
+module.exports = Main;

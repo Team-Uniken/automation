@@ -38,7 +38,7 @@ export default class QuestionSet extends React.Component {
       secQue: '',
       secAnswer: '',
     };
-    /*
+    
     this._props = {
       url: {
         chlng_idx: 1,
@@ -80,11 +80,12 @@ export default class QuestionSet extends React.Component {
         currentIndex: 1,
       },
     };
-    */
   }
 
   componentDidMount() {
-    const { data, sectionIds } = obj.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+    // console.log('----- QuestionSet - componentDidMount');
+    // console.log(this.props);
+    const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
     this.setState({
       dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
     });
@@ -171,67 +172,66 @@ export default class QuestionSet extends React.Component {
 
     return (
       <MainActivation>
-        <View style={{ marginTop: 38 }}>
+        <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.title}>Question and Answer</Text>
-        </View>
-
-        <View style={[Skin.activationStyle.input_wrap]}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-              ref={(component) => { this.quesInput = component; return this.quesInput; }}
-              autoCorrect={false}
-              placeholder={'Type/Select question'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={[
-                Skin.activationStyle.textinput,
-                {
+          <View style={[Skin.activationStyle.input_wrap]}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                ref={(component) => { this.quesInput = component; return this.quesInput; }}
+                autoCorrect={false}
+                placeholder={'Type/Select question'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={[
+                  Skin.activationStyle.textinput,
+                  {
+                    textAlign: 'left',
+                    paddingLeft: 5,
+                    fontSize: 15,
+                  },
+                ]}
+                onChange={this.onQuestionChange.bind(this)}
+                multiline
+              />
+            </View>
+          </View>
+          <View style={styles.listViewWrap}>
+            <ListView
+              ref="listView"
+              automaticallyAdjustContentInsets={false}
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow.bind(this)}
+              renderSeperator={this.renderSeperator.bind(this)}
+              style={styles.listView}
+              showsVerticalScrollIndicator
+            />
+          </View>
+          <View style={[Skin.activationStyle.input_wrap]}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                autoCorrect={false}
+                placeholder={'Enter your secret answer'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={[Skin.activationStyle.textinput, {
                   textAlign: 'left',
-                  paddingLeft: 5,
-                  fontSize: 15,
-                },
-              ]}
-              onChange={this.onQuestionChange.bind(this)}
-              multiline
-            />
+                  paddingLeft:5,
+                  justifyContent:'center',
+                }]}
+                onChange={this.onAnswerChange.bind(this)}
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.listViewWrap}>
-          <ListView
-            ref="listView"
-            automaticallyAdjustContentInsets={false}
-            dataSource={this.state.dataSource}
-            renderRow={this.renderRow.bind(this)}
-            renderSeperator={this.renderSeperator.bind(this)}
-            style={styles.listView}
-            showsVerticalScrollIndicator
-          />
-        </View>
-        <View style={[Skin.activationStyle.input_wrap]}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-              autoCorrect={false}
-              placeholder={'Enter your secret answer'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={[Skin.activationStyle.textinput, {
-                textAlign: 'left',
-                paddingLeft:5,
-                justifyContent:'center',
-              }]}
-              onChange={this.onAnswerChange.bind(this)}
-            />
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+              style={Skin.activationStyle.button}
+              onPress={this.setSecrets.bind(this)}
+              underlayColor={'#082340'}
+              activeOpacity={0.6}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
+              </Text>
+            </TouchableHighlight>
           </View>
-        </View>
-        <View style={Skin.activationStyle.input_wrap}>
-          <TouchableHighlight
-            style={Skin.activationStyle.button}
-            onPress={this.setSecrets.bind(this)}
-            underlayColor={'#082340'}
-            activeOpacity={0.6}
-          >
-            <Text style={Skin.activationStyle.buttontext}>
-              {this.btnText()}
-            </Text>
-          </TouchableHighlight>
         </View>
       </MainActivation>
 		);

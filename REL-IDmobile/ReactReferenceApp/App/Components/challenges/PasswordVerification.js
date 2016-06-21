@@ -146,44 +146,46 @@ class PasswordVerification extends React.Component {
   render() {
     return (
       <MainActivation>
-        <Animated.View style={[Skin.loadStyle.rid_wrap, { marginTop: 70 }]}>
-          <View style={Skin.loadStyle.rid_center}>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
+        <View style={Skin.activationStyle.topGroup}>
+          <Animated.View style={[Skin.loadStyle.rid_wrap]}>
+            <View style={Skin.loadStyle.rid_center}>
+              <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
+              <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
+              <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
+            </View>
+          </Animated.View>
+
+          <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                ref='inputPassword'
+                returnKeyType={'next'}
+                secureTextEntry
+                autoCorrect={false}
+                autoCapitalize={'none'}
+                placeholder={'Password'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                value={this.state.inputPassword}
+                onSubmitEditing={this.checkPassword.bind(this)}
+                onChange={this.onPasswordChange.bind(this)}
+              />
+
+            </View>
           </View>
-        </Animated.View>
 
-        <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-              ref='inputPassword'
-              returnKeyType={'next'}
-              secureTextEntry
-              autoCorrect={false}
-              autoCapitalize={'none'}
-              placeholder={'Password'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={Skin.activationStyle.textinput}
-              value={this.state.inputPassword}
-              onSubmitEditing={this.checkPassword.bind(this)}
-              onChange={this.onPasswordChange.bind(this)}
-            />
-
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+              style={Skin.activationStyle.button}
+              onPress={this.checkPassword.bind(this)}
+              underlayColor={'#082340'}
+              activeOpacity={0.6}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                SUBMIT
+              </Text>
+            </TouchableHighlight>
           </View>
-        </View>
-
-        <View style={Skin.activationStyle.input_wrap}>
-          <TouchableHighlight
-            style={Skin.activationStyle.button}
-            onPress={this.checkPassword.bind(this)}
-            underlayColor={'#082340'}
-            activeOpacity={0.6}
-          >
-            <Text style={Skin.activationStyle.buttontext}>
-              SUBMIT
-            </Text>
-          </TouchableHighlight>
         </View>
         <OpenLinks />
       </MainActivation>

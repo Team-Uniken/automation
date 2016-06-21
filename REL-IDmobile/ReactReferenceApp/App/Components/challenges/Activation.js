@@ -105,56 +105,56 @@ export default class Activation extends React.Component {
    
     return (
       <MainActivation>
-        <View style={{marginTop:38}}>
+        <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
           <Text style={Skin.activationStyle.title}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
           <Text style={Skin.activationStyle.info}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
-        </View>
-
-        <View style={Skin.activationStyle.input_wrap}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
-              Verify:
-            </Text>
-            <Text style={[Skin.activationStyle.textinput]}>
-              {this.props.url.chlngJson.chlng_resp[0].challenge}
-            </Text>
+          
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
+                Verify:
+              </Text>
+              <Text style={[Skin.activationStyle.textinput]}>
+                {this.props.url.chlngJson.chlng_resp[0].challenge}
+              </Text>
+            </View>
           </View>
-        </View>
 
-        <View style={Skin.activationStyle.input_wrap}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
-              Activate:
-            </Text>
-            <TextInput
-              returnKeyType={'next'}
-              autoCorrect={false}
-              secureTextEntry={true}
-              keyboardType={'default'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={Skin.activationStyle.textinput}
-              value={this.state.inputUsername}
-              autoCorrect={false}
-              ref={'activatonCode'}
-              placeholder={'Code'}
-              onChange={this.onActivationCodeChange.bind(this)}
-              onSubmitEditing={this.checkActivationCode.bind(this)}
-            />
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
+                Activate:
+              </Text>
+              <TextInput
+                returnKeyType={'next'}
+                autoCorrect={false}
+                secureTextEntry={true}
+                keyboardType={'default'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                value={this.state.inputUsername}
+                autoCorrect={false}
+                ref={'activatonCode'}
+                placeholder={'Code'}
+                onChange={this.onActivationCodeChange.bind(this)}
+                onSubmitEditing={this.checkActivationCode.bind(this)}
+              />
+            </View>
           </View>
-        </View>
 
-        <View style={Skin.activationStyle.input_wrap}>
-          <TouchableHighlight
-            style={Skin.activationStyle.button}
-            underlayColor={'#082340'}
-            onPress={this.checkActivationCode.bind(this)}
-            activeOpacity={0.6}
-          >
-            <Text style={Skin.activationStyle.buttontext}>
-              {this.btnText()}
-            </Text>
-          </TouchableHighlight>
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+              style={Skin.activationStyle.button}
+              underlayColor={'#082340'}
+              onPress={this.checkActivationCode.bind(this)}
+              activeOpacity={0.6}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
+              </Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </MainActivation>
     );

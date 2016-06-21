@@ -113,59 +113,58 @@ export default class PasswordSet extends React.Component {
   render() {
     return (
       <MainActivation>
-        <View>
+        <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.counter}>
             {this.props.url.currentIndex}/{this.props.url.chlngsCount}
           </Text>
           <Text style={Skin.activationStyle.title}>Set Password</Text>
           <Text style={Skin.activationStyle.info}>Enter password of length 8-10 characters</Text>
-        </View>
-
-        <View style={Skin.activationStyle.input_wrap}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-              autoCorrect={false}
-              returnKeyType={'next'}
-              keyboardType={'default'}
-              ref={'password'}
-              placeholder={'Enter Password'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={Skin.activationStyle.textinput}
-              secureTextEntry={true}
-              blurOnSubmit={false}
-              onChange={this.onPasswordChange.bind(this)}
-              onSubmitEditing={() => { this.refs.cPassword.focus(); }}
-            />
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                autoCorrect={false}
+                returnKeyType={'next'}
+                keyboardType={'default'}
+                ref={'password'}
+                placeholder={'Enter Password'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                secureTextEntry={true}
+                blurOnSubmit={false}
+                onChange={this.onPasswordChange.bind(this)}
+                onSubmitEditing={() => { this.refs.cPassword.focus(); }}
+              />
+            </View>
           </View>
-        </View>
 
-        <View style={Skin.activationStyle.input_wrap}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-              autoCorrect={false}
-              ref={'cPassword'}
-              returnKeyType={'next'}
-              keyboardType={'default'}
-              placeholder={'Confirm Password'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={Skin.activationStyle.textinput}
-              secureTextEntry={true}
-              onChange={this.onConfirmPasswordChange.bind(this)}
-              onSubmitEditing={this.setPassword.bind(this)}
-            />
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                autoCorrect={false}
+                ref={'cPassword'}
+                returnKeyType={'next'}
+                keyboardType={'default'}
+                placeholder={'Confirm Password'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                secureTextEntry={true}
+                onChange={this.onConfirmPasswordChange.bind(this)}
+                onSubmitEditing={this.setPassword.bind(this)}
+              />
+            </View>
           </View>
-        </View>
-        <View style={Skin.activationStyle.input_wrap}>
-          <TouchableHighlight
-            style={Skin.activationStyle.button}
-            underlayColor={'#082340'}
-            onPress={this.setPassword.bind(this)}
-            activeOpacity={0.6}
-          >
-            <Text style={Skin.activationStyle.buttontext}>
-              {this.btnText()}
-            </Text>
-          </TouchableHighlight>
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+              style={Skin.activationStyle.button}
+              underlayColor={'#082340'}
+              onPress={this.setPassword.bind(this)}
+              activeOpacity={0.6}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
+              </Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </MainActivation>
     );

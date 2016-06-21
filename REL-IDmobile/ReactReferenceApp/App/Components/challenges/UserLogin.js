@@ -187,47 +187,47 @@ class UserLogin extends React.Component{
   render() {
     return (
       <MainActivation navigator={this.props.navigator}>
-        <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
-          <View style={Skin.loadStyle.rid_center}>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
-          </View>
-        </Animated.View>
+        <View style={Skin.activationStyle.topGroup}>
+          <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+            <View style={Skin.loadStyle.rid_center}>
+              <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
+              <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
+              <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
+            </View>
+          </Animated.View>
 
-        <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
-          <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-              ref='inputUsername'
-              returnKeyType={'next'}
-              autoCorrect={false}
-              autoCapitalize={'none'}
-              keyboardType={'email-address'}
-              placeholder={'Username'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
-              style={Skin.activationStyle.textinput}
-              value={this.state.inputUsername}
-              onSubmitEditing={this.checkUsername.bind(this)}
-              onChange={this.onUsernameChange.bind(this)}
-            />
+          <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                ref='inputUsername'
+                returnKeyType={'next'}
+                autoCorrect={false}
+                autoCapitalize={'none'}
+                keyboardType={'email-address'}
+                placeholder={'Username'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                value={this.state.inputUsername}
+                onSubmitEditing={this.checkUsername.bind(this)}
+                onChange={this.onUsernameChange.bind(this)}
+              />
+            </View>
+          </View>
+
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableOpacity
+              style={Skin.activationStyle.button}
+              onPress={this.checkUsername.bind(this)}
+              underlayColor={'#082340'}
+              activeOpacity={0.8}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                LOGIN
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
-
-        <View style={Skin.activationStyle.input_wrap}>
-          <TouchableOpacity
-            style={Skin.activationStyle.button}
-            onPress={this.checkUsername.bind(this)}
-            underlayColor={'#082340'}
-            activeOpacity={0.8}
-          >
-            <Text style={Skin.activationStyle.buttontext}>
-              LOGIN
-            </Text>
-          </TouchableOpacity>
-        </View>
-
         <OpenLinks />
-
       </MainActivation>
     );
   }

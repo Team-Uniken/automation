@@ -80,7 +80,7 @@ class MainActivation extends React.Component {
                   fontSize: 30,
                 }}
               >
-               {Skin.icon.hamburger}
+               {Skin.icon.settings}
               </Text>
             </View>
           </TouchableHighlight>

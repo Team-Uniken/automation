@@ -29,6 +29,7 @@ import Activation from './App/Components/challenges/Activation';
 import PasswordSet from './App/Components/challenges/PasswordSet';
 import Otp from './App/Components/challenges/Otp';
 import QuestionSet from './App/Components/challenges/QuestionSet';
+import QuestionVerification from './App/Components/challenges/QuestionVerification';
 import UserLogin from './App/Components/challenges/UserLogin';
 import DeviceBinding from './App/Components/challenges/DeviceBinding';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
@@ -93,9 +94,11 @@ class ReactRefApp extends React.Component {
       // id = 'PayBills';
       // id = 'QuestionSet';
       // id = 'DevBind';
-      //id = 'Deposits';
-      //id = 'ActivateNewDevice';
-      //id = 'SecureWebView';
+      // id = 'Deposits';
+      // id = 'ActivateNewDevice';
+      // id = 'SecureWebView';
+      // id = 'QuestionSet';
+      // id = 'QuestionVerification';
     }
 
     // MAIN SCENES
@@ -119,10 +122,12 @@ class ReactRefApp extends React.Component {
     // SECONDARY SCENES
     } else if (id === 'ComingSoon') {
       return (<ComingSoonScene navigator={nav} title={route.title} />);
+    /*
     } else if (id === 'QBank') {
       return (<QBank navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'SecureChat') {
       return (<SecureChat navigator={nav} />);
+    */
     } else if (id === 'Appointment') {
       return (<Appointment navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'AddAppointment') {
@@ -151,6 +156,8 @@ class ReactRefApp extends React.Component {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'QuestionSet') {
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'QuestionVerification') {
+      return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'DevBind') {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     }
