@@ -1,0 +1,1200 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"alig",
+				"alignItems"
+			],
+			[
+				"Devi",
+				"DeviceName"
+			],
+			[
+				"acti",
+				"activeOpacity"
+			],
+			[
+				"font",
+				"fontSize"
+			],
+			[
+				"ques",
+				"quesInput"
+			],
+			[
+				"question",
+				"question"
+			],
+			[
+				"quest",
+				"questionData"
+			],
+			[
+				"render",
+				"renderSeperator"
+			],
+			[
+				"Pay",
+				"PayBillsScene"
+			],
+			[
+				"PayBil",
+				"PayBills"
+			],
+			[
+				"devB",
+				"devBind"
+			],
+			[
+				"crea",
+				"createdTs"
+			],
+			[
+				"righ",
+				"rightLabels"
+			],
+			[
+				"left",
+				"leftLabels"
+			],
+			[
+				"lef",
+				"leftLabels"
+			],
+			[
+				"new",
+				"newstate"
+			],
+			[
+				"Device",
+				"DeviceEventEmitter"
+			],
+			[
+				"hex",
+				"hexToRgb"
+			],
+			[
+				"Touch",
+				"TouchableOpacity"
+			],
+			[
+				"modalT",
+				"modalTitleWrap"
+			],
+			[
+				"componen",
+				"componentDidMount"
+			],
+			[
+				"js",
+				"jsonProxySettings"
+			],
+			[
+				"curr",
+				"currentGatewayPort"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"Pss",
+				"PasswordVerification"
+			],
+			[
+				"int",
+				"InteractionManager"
+			],
+			[
+				"Passwor",
+				"PasswordSet"
+			],
+			[
+				"ini",
+				"initSuccess"
+			],
+			[
+				"Conne",
+				"ConnectionProfiles"
+			],
+			[
+				"flex",
+				"flex-start"
+			],
+			[
+				"M",
+				"MainActivation"
+			],
+			[
+				"Main",
+				"MainActivation"
+			],
+			[
+				"button",
+				"buttontext"
+			],
+			[
+				"activation",
+				"activationStyle"
+			],
+			[
+				"MAX",
+				"MAX_HEIGHT"
+			],
+			[
+				"activat",
+				"activationStyle"
+			],
+			[
+				"activ",
+				"activationStyle"
+			],
+			[
+				"ACtiv",
+				"ActivationScene"
+			],
+			[
+				"icon",
+				"iconStyle"
+			],
+			[
+				"nav",
+				"navBar"
+			],
+			[
+				"total",
+				"totalcolor"
+			],
+			[
+				"PRIM",
+				"PRIMARY_TEXT_RGB"
+			],
+			[
+				"List",
+				"ListSectionHeader"
+			],
+			[
+				"SCREN",
+				"SCREEN_WIDTH"
+			],
+			[
+				"daa",
+				"dataSource"
+			],
+			[
+				"_",
+				"_getAccountDetails"
+			],
+			[
+				"Data",
+				"dataSource"
+			],
+			[
+				"com",
+				"componentWillMount	Life Cycle Method"
+			],
+			[
+				"secton",
+				"sectionIds"
+			],
+			[
+				"data",
+				"dataSource"
+			],
+			[
+				"getAccoun",
+				"getAccountDetails"
+			],
+			[
+				"prop",
+				"propTypes	Prop Validation"
+			],
+			[
+				"Dra",
+				"drawerState"
+			],
+			[
+				"draw",
+				"drawerState"
+			],
+			[
+				"di",
+				"disabled"
+			],
+			[
+				"T",
+				"TEXT_COLOR"
+			],
+			[
+				"bot",
+				"bottomMenu"
+			],
+			[
+				"account",
+				"accountData"
+			],
+			[
+				"getAcc",
+				"getAccountDeta"
+			],
+			[
+				"comp",
+				"componentDidMount	Life Cycle Method"
+			],
+			[
+				"buil",
+				"buildout"
+			],
+			[
+				"build",
+				"buildboxes"
+			],
+			[
+				"open",
+				"openDrawer"
+			],
+			[
+				"close",
+				"closeDrawer"
+			],
+			[
+				"dr",
+				"drawerOpen"
+			],
+			[
+				"toggle",
+				"toggleDrawer"
+			],
+			[
+				"dra",
+				"drawerStyles"
+			],
+			[
+				"IC",
+				"ICON_FONT"
+			],
+			[
+				"padd",
+				"paddingTop"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"PRIMAR",
+				"PRIMARY_TEXT"
+			],
+			[
+				"te",
+				"textAlign"
+			],
+			[
+				"Da",
+				"DARK_PRIMARY"
+			],
+			[
+				"configure",
+				"configure-once"
+			],
+			[
+				"confi",
+				"configure-once"
+			],
+			[
+				"add",
+				"address_file"
+			],
+			[
+				"remov",
+				"remove_html_tags"
+			],
+			[
+				"set",
+				"set_list"
+			],
+			[
+				"get",
+				"get_text"
+			],
+			[
+				"tf",
+				"tfidf_vector"
+			],
+			[
+				"text",
+				"text_clf"
+			],
+			[
+				"fit",
+				"fit_transform"
+			],
+			[
+				"mat",
+				"matfooter"
+			],
+			[
+				"QUE",
+				"QuestionTransformer"
+			],
+			[
+				"tr",
+				"transformer"
+			],
+			[
+				"lesson",
+				"lesson_array"
+			],
+			[
+				"Question",
+				"QuestionTransformer"
+			],
+			[
+				"reo",
+				"resourceKey"
+			],
+			[
+				"resou",
+				"resourceKey"
+			],
+			[
+				"les",
+				"lessonId"
+			],
+			[
+				"find",
+				"findOrFail"
+			],
+			[
+				"Lesson",
+				"LessonTransformer"
+			],
+			[
+				"Lesso",
+				"LessonTransformer"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"retu",
+				"returnable"
+			],
+			[
+				"existing",
+				"existing_lesson"
+			],
+			[
+				"short",
+				"shortAnswers"
+			],
+			[
+				"n",
+				"nrat2"
+			],
+			[
+				"nrat",
+				"nrat1"
+			],
+			[
+				"St",
+				"StatusBarIOS"
+			],
+			[
+				"SCREEN",
+				"SCREEN_WIDTH"
+			],
+			[
+				"border",
+				"borderColor"
+			],
+			[
+				"back",
+				"backgroundColor"
+			],
+			[
+				"Toucable",
+				"TouchableOpacity"
+			],
+			[
+				"We",
+				"WebView"
+			],
+			[
+				"Load",
+				"LoadSpd"
+			],
+			[
+				"navi",
+				"navigator"
+			],
+			[
+				"navig",
+				"navigationBarHidden"
+			],
+			[
+				"ICON_",
+				"ICON_FAMILY"
+			],
+			[
+				"fle",
+				"flexDirection"
+			],
+			[
+				"login",
+				"login_attempts"
+			],
+			[
+				"Scre",
+				"SCREEN_WIDTH"
+			],
+			[
+				"SCREE",
+				"SCREEN_WIDTH"
+			],
+			[
+				"SCR",
+				"SCREEN_WIDTH"
+			],
+			[
+				"load_",
+				"load_text_opac"
+			],
+			[
+				"load",
+				"load_text"
+			],
+			[
+				"lod",
+				"loadwrap"
+			],
+			[
+				"S",
+				"SCREEN_WIDTH"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"g",
+				"generationNumber"
+			],
+			[
+				"roster",
+				"rosterid"
+			],
+			[
+				"p",
+				"pointer"
+			],
+			[
+				"store",
+				"store_list"
+			],
+			[
+				"store_",
+				"store_counts"
+			],
+			[
+				"f",
+				"fname"
+			],
+			[
+				"Score",
+				"store_score"
+			],
+			[
+				"gen",
+				"gen_count"
+			],
+			[
+				"pro",
+				"prototype"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "var React = require('react-native');\nvar ToolBar = require('./ToolBar');\nimport Spinner from 'react-native-loading-spinner-overlay';\nvar Dimensions = require('Dimensions');\nvar CORE_FONT = 'Century Gothic';\nvar MID_COL = '#2579A2';\nvar TEXT_COLOR = '#FFFFFF';\nvar SCREEN_WIDTH = Dimensions.get('window').width;\nvar SCREEN_HEIGHT = Dimensions.get('window').height;\nvar {\n	View,\n	Text,\n	Navigator,\n	TouchableHighlight,\n	StyleSheet,\n  Dimensions,\n	ScrollView,\n  AsyncStorage,\n} = React;\nvar styles = StyleSheet.create({\n	Container: {\n	    flex: 1,\n      backgroundColor: 'rgba(8,26,60,0.9)'\n	},\n   bar:{\n   backgroundColor: MID_COL,\n   width: 20,\n   height:3,\n   marginTop:3,\n   },\n   navbar:{\n   backgroundColor: '#ffffff',\n   height: 65,\n   flexDirection: 'row',\n   padding: 10,\n   paddingTop:30\n   },\n   navButton:{\n   backgroundColor: 'transparent',\n   },\n   navButtonIcon:{\n   fontFamily: CORE_FONT,\n   },\n   navTitle:{\n   flex:2,\n   fontFamily: CORE_FONT,\n   textAlign: 'center',\n   fontSize: 20,\n   },\n  GenerateAccessCodeText:{\n     textAlign: \"center\",\n    marginTop:16,\n    color: TEXT_COLOR,\n    justifyContent: 'center',\n    alignItems: 'center',\n    fontSize: 18,\n    width:Dimensions.get('window').width,\n  },\n   AccessCodeTextStyle:{\n   textAlign: \"center\",\n   marginTop:16,\n   color: TEXT_COLOR,\n   justifyContent: 'center',\n   alignItems: 'center',\n   fontSize: 17,\n   width:Dimensions.get('window').width,\n   },\n   AccessCodeValueStyle:{\n   textAlign: \"center\",\n   marginTop:16,\n   color: TEXT_COLOR,\n   justifyContent: 'center',\n   alignItems: 'center',\n   fontSize: 22,\n   width:Dimensions.get('window').width,\n   },\n  div:{\n    marginTop:16,\n    width:Dimensions.get('window').width,\n    backgroundColor: '#fff',\n    height:1,\n  },\n});\nclass ActivateNewDevice extends React.Component{\n  constructor(props){\n    super(props);\n    this.state = {\n    username:'',\n    accCode:'-----',\n    accValue:'-----',\n    expiryMsg:'Your access code expires on ',\n    isLoading:false\n    };\n  }\n  componentDidMount(){\n    this.setState({ isLoading: true });\n    AsyncStorage.getItem(\"userId\").then((value) => {\n                                        AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {\n																				currentProfile = JSON.parse(currentProfile);\n                                        var baseUrl = \"http://\" + currentProfile.Host + \":8080\" + \"/GM/generateOTP.htm?userId=\";\n                                                             \n                                        \n                                                             \n                                        var url = baseUrl.concat(value);\n                                        fetch(url, {\n                                              method: 'POST',\n                                              })\n                                        .then((response) => response.text())\n                                        .then((responseText) => {\n                                              console.log(responseText);\n                                              var res = JSON.parse(responseText);\n                                              this.state.accCode =res.otpId;\n                                              this.state.accValue=res.otpValue;\n                                              var Msg=res.expiryTs;\n                                              this.state.expiryMsg = 'Your access code expires on '.concat(Msg);\n                                              this.setState({ isLoading:false});\n                                              })\n                                        .catch((error) => {\n                                               console.warn(error);\n                                               this.state.expiryMsg=\"Failed to generate access code. Please try again\";\n                                               this.setState({ isLoading:false});\n                                               });\n                                        }).done();\n																			});\n  }\n  render() {\n		return (\n		);\n  }\n};\nmodule.exports = ActivateNewDevice;\nclass MyComponent extends React.Component {\n  constructor(props) {\n    super();\n    this.state = {\n    visible: true\n    };\n  }\n  render() {\n    return (\n            <View style={{ flex: 1 }}>\n            <Spinner visible={this.state.visible} />\n            </View>\n            );\n  }\n}\n\n\n\n/*\n\n      <View style={styles.Container}>\n            <View style={styles.navbar}>\n            <TouchableHighlight\n            style={[styles.navButton]}\n            underlayColor={'#FFFFFF'}\n            activeOpacity={0.6}\n            >\n            <View></View>\n            </TouchableHighlight>\n            <Text style={styles.navTitle}>{\"Activate New Device\"}</Text>\n            <TouchableHighlight\n            style={[styles.navButton]}\n            onPress={()=>{\n            this.props.navigator.pop();\n            }}\n            underlayColor={'#FFFFFF'}\n            activeOpacity={0.6}\n            >\n            <Text\n            style={[{textAlign: 'right',fontSize:22}]}\n            >X</Text>\n            </TouchableHighlight>\n            </View>\n            <View style={{borderColor:\"#D0D0D0\",borderStyle:'solid',borderWidth:0.5,width:SCREEN_WIDTH}}></View>\n           <ScrollView >\n              <Text style={styles.GenerateAccessCodeText}>Activate your new device using the below access code and access value</Text>\n                <Text style={styles.div}> </Text>\n                <Text style={styles.AccessCodeValueStyle}>{this.state.accCode}</Text>\n                <Text style={styles.AccessCodeTextStyle}> Access Code</Text>\n                <Text style={styles.div}> </Text>\n                <Text style={styles.AccessCodeValueStyle}>{this.state.accValue}</Text>\n                <Text style={styles.AccessCodeTextStyle}> Access Value</Text>\n                <Text style={styles.div}> </Text>\n                <Text style={styles.AccessCodeTextStyle}> {this.state.expiryMsg}</Text>\n            </ScrollView >\n      </View>\n */",
+			"file": "REL-IDmobile/ReactReferenceApp/App/Components/ActivateNewDevice.js",
+			"file_size": 6038,
+			"file_write_time": 131109309250000000,
+			"settings":
+			{
+				"buffer_size": 6054,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "base.sublime-project",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 162.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"di",
+				"Package Control: Disable Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"standard",
+				"Standard Format: Format current file"
+			],
+			[
+				"standar",
+				"Standard Format: Format current file"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"lint",
+				"SublimeLinter: Lint This View"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"pack",
+				"Package Control: Disable Package"
+			],
+			[
+				"ana",
+				"Anaconda: Vagrant Init"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 704.0
+	},
+	"console":
+	{
+		"height": 417.0,
+		"history":
+		[
+			"standard",
+			"/Users/james/.nvm/versions/node/v6.2.0/bin/standard",
+			"- standard format",
+			"standard format",
+			"exit;",
+			"exit",
+			"clear;",
+			"clear",
+			"which standard",
+			"which eslint",
+			"exit",
+			"which standard",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/ControlPanel.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/Contact.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/Appointments.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/PayBills.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/index.ios.js",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/ESLint-Formatter/ESLint-Formatter.sublime-settings",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/User/ESLint-Formatter.sublime-settings",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/CustomComponents/Navigator/Navigator.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/ComingSoon.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/Deposits.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/webpack.config.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/package.json",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/less/fonts.less",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/main.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/javascripts/entry.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/javascripts/skin.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/.eslintrc",
+		"/Users/james/Sites/mtc-api/vendor/fzaninotto/faker/src/Faker/Provider/cs_CZ/Person.php",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/DeviceMgmt.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/DeviceName.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/QuestionVerification.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/TwoFactorAuthMachine.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/DeviceBinding.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/MainActivation.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/index.android.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/QuestionSet.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/ios/ReactRefApp.xcodeproj/project.xcworkspace/xcuserdata/sudarshan.xcuserdatad/UserInterfaceState.xcuserstate",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/Activation.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/Otp.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/PasswordSet.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/BottomMenu.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/UserLogin.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/PasswordVerification.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/package.json",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/SetQue.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/scrollview.patch",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/React/Modules/RCTUIManager.m",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/React/Views/RCTShadowView.m",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/React/Views/RCTShadowView.h",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/ConnectionProfile.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/NavButton.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Main.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Load.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/erelid.json",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/webpack.production.config.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/src/main_old.js",
+		"/Users/james/Sites/Uniken/REL-IDdesktop/.git/MERGE_MSG",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/ios/NativeModules/ReactRdnaModule.m",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/.gitignore",
+		"/Users/james/Sites/Uniken/REL-IDmobile/src/.gitignore",
+		"/Users/james/Sites/Uniken/REL-IDmobile/.gitignore",
+		"/Users/james/Sites/electrontest/.eslintrc",
+		"/Users/james/Sites/electrontest/electron-quick-start/package.json",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/ReactNative/ReactNativeReconcileTransaction.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/ios/ReactRefApp/Base.lproj/LaunchScreen.xib",
+		"/Users/james/Downloads/icomoon (10)/fonts/icomoon.ttf",
+		"/Users/james/Desktop/ReactReferenceApp_broken/App/Skin.js",
+		"/Users/james/Desktop/svg_rid_relid_tm.svg",
+		"/Users/james/Desktop/svg_rid_relid.svg",
+		"/Users/james/Desktop/svg_rid_flat.svg",
+		"/Users/james/Uniken Shared Drive/Marketing/Design & Brand/App UI PSDs/svg_rid.svg",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/onlyChild.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/ReactNative/ReactNativeTextComponent.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/Password.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/android/app/src/main/java/com/reactrefapp/ReactRdnaModule.java",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Skin.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/MainStyleSheet.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/color.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/questionVerification.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/OpenLinks.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/Password_old.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/devname.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/devbind.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/ReactChildReconciler.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/Interaction/TaskQueue.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/ReactMultiChild.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/ReactNative/ReactNativeBaseComponent.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/Accounts.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/.eslintrc",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/test.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/npm-debug.log",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/User/StandardFormat.sublime-settings",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/StandardFormat/StandardFormat.sublime-settings",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/StandardFormat/Default (OSX).sublime-keymap",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/james/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/ReactCompositeComponent.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/instantiateReactComponent.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Activation.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/challenges/UserLogin.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/challenges/PasswordVerification.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/device.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/challenges/Activation_old.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/FindBranch.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Scenes/FindBranch_old.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/ReactReconciler.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native-navbar/index.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native-navbar/NavbarButton.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/react-native-navbar/NavbarButton.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/ListItem.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/ReactPerf.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/ListSectionHeader.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Qbank.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Content.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/EventPluginUtils.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/packager/react-packager/src/Resolver/polyfills/require.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Skin.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/Components/Touchable/Touchable.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/ToolBar.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native-navbar/styles.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react/lib/traverseAllChildren.js",
+		"/Users/james/.bash_profile",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components/Menu.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-native/Libraries/vendor/emitter/EventEmitter.js",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules/react-hot-api/README.md",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/iOS/IOS_NATIVE_INTEGRATION.md",
+		"/Users/james/Downloads/api-sdk (1)/libapi-sdk.a",
+		"/Users/james/Sites/Uniken/REL-ID_internal/.gitignore",
+		"/Users/james/Sites/Uniken/IoT_needs.md",
+		"/Users/james/Sites/Uniken/REL-ID_internal/TEAMS.md",
+		"/Users/james/Sites/Uniken/NEEDS",
+		"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/MOBILE_ROADMAP.md",
+		"/Users/james/Desktop/4-12-Tasks.md",
+		"/Users/james/Sites/Uniken/video notes",
+		"/Users/james/Sites/Uniken/REL-ID_internal/roadmap/BUSINESS_FEATURES.md"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 94.0,
+		"where_history":
+		[
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/node_modules",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/App/Components",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp",
+			"/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/",
+			"/Users/james/Sites/relid/App/Components",
+			"/Users/james/Sites/AwesomeProject/node_modules",
+			"/Users/james/Sites/Drunkly",
+			"/Users/james/Sites/tpp_signup",
+			"//Users/james/Sites/wordpress/wp-content/plugins/revslider",
+			"/Users/james/Sites/wordpress",
+			"/Users/james/Sites/tpp_signup"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"^\\n",
+			"\\n",
+			";",
+			"ICON_",
+			"internal system error",
+			"questionVerification",
+			"SetQue",
+			"questionVerification",
+			"this._props.",
+			"this.props.",
+			"thi.props.",
+			":'",
+			"\"",
+			"'../Components/",
+			"'./App/",
+			"\n}",
+			"console.log(",
+			"navigator",
+			"this._props.",
+			"dismiss",
+			"didmiss",
+			"setSec",
+			"msg",
+			"this.props.",
+			"\":",
+			"RCTUIManager.m",
+			"RCTUIManager",
+			"connection",
+			"Device",
+			"Created On",
+			"failure",
+			"RCTWebViewBridge",
+			"push",
+			"this._props.",
+			"\"response:",
+			"\"challenge:",
+			"\"value:",
+			"\"key:",
+			"\":",
+			"    \"",
+			"this._props.",
+			"this.props.",
+			"Main.dna",
+			"libs",
+			"/libs",
+			"libs",
+			"checkChallenges",
+			"libs",
+			"/REL-IDmobile/REactReferenceApp/",
+			"agentinfo",
+			"agent",
+			"ic_back",
+			"this._props.",
+			"this.props.",
+			"this._props.",
+			"this.props.",
+			"isRunAfter",
+			"onInitializeCompleted",
+			"rid_top",
+			"rid_ce",
+			"relid_ce",
+			"rid_cent",
+			"loadSt",
+			"this.props.",
+			"MainStyle",
+			"this._props.",
+			"this.props.",
+			"Skin.logStyle",
+			"this._props",
+			"this.props",
+			"password",
+			"_props",
+			"edit-1",
+			"customeStyle",
+			".props.",
+			"\"",
+			"---- renderScene",
+			" console.log(",
+			"console.log(",
+			"const",
+			"var",
+			"const",
+			"path",
+			"){",
+			"}/>);",
+			"}else",
+			" == ",
+			"\"",
+			"');",
+			"= require(",
+			"var",
+			"Main",
+			"this.props.url",
+			"consol",
+			"icon",
+			"icon_font",
+			"margin",
+			"menu",
+			"hot-",
+			"hot",
+			"main",
+			"/media/",
+			"sign",
+			"email",
+			"\\s\\s",
+			"[^a-zA-Z0-9]",
+			"/[^a-z\\d ]/i",
+			".*?(^[A-Za-z0-9]).*?",
+			"^[A-Za-z0-9]+$",
+			"/^[A-Za-z0-9]+$/",
+			"^[A-Za-z0-9]+$",
+			".*(^[A-Za-z0-9])+$",
+			".*(^[A-Za-z0-9]).*",
+			".*(^[A-Za-z0-9])",
+			"*(^[A-Za-z0-9])",
+			"(^[A-Za-z0-9])",
+			"^[A-Za-z0-9]",
+			"\\n",
+			"request",
+			"target",
+			"background-color",
+			"jquery",
+			"dd(",
+			"dd",
+			"relation",
+			"inject",
+			"isRe",
+			"inject"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			",",
+			"",
+			"QuestionVerification",
+			"QuestionSet",
+			"this.props.",
+			"this._props.",
+			": '",
+			"'",
+			"'./",
+			"'../",
+			"'../'",
+			"this.props.",
+			"this._props.",
+			":",
+			"this.props.",
+			"response:",
+			"challenge:",
+			"value:",
+			"key:",
+			":",
+			"  ",
+			"this._props.",
+			"/src/",
+			"this.props.",
+			"this._props.",
+			"this.props.",
+			"this._props.",
+			"this.props.",
+			"this._props.",
+			"styles",
+			"this.props",
+			"this._props",
+			"props",
+			"activationStyle",
+			"._props.",
+			"'",
+			"",
+			"let",
+			"const",
+			") {",
+			"} />)",
+			"} else",
+			" === ",
+			"'",
+			"from ",
+			"import",
+			"this._props.url",
+			"/assets/",
+			" ",
+			"",
+			" ",
+			"question",
+			"ShortAnswer",
+			"shortanswer",
+			"lesson",
+			"activeOpacity={0.8}",
+			"log",
+			"pass",
+			"Drunkly",
+			"undrafted",
+			"runner.innerHTML",
+			"<br>",
+			"exp_c",
+			"30,30,30",
+			"q2",
+			"s3",
+			"${abbr}"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "REL-IDmobile/ReactReferenceApp/App/Components/ActivateNewDevice.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6054,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								6054
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/itg.dark (SL).tmTheme",
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "base.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 98.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.markdown":
+	{
+		"height": 98.0
+	},
+	"output.xdebug":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "base.sublime-project",
+	"replace":
+	{
+		"height": 68.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"ReactReferenceApp/App/Components/challenges/UserLogin.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 400.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 515.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"xdebug":
+		{
+			"hide_conflict": false
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 199.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
