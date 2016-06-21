@@ -5,11 +5,10 @@
 */
 import React from 'react-native';
 import Skin from '../Skin';
-var ConnectionProfile = require('./ConnectionProfile');
 /*
   CALLED
 */
-import MainActivation from './MainActivation';
+import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import erelid from '../../erelid.json';
@@ -38,8 +37,6 @@ const {
     InteractionManager,
     AppState,
     AsyncStorage,
-    TouchableHighlight,
-    Image,
     Alert,
     Platform,
 } = React;

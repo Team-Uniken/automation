@@ -30,13 +30,10 @@ const {
   TextInput,
   View,
   Animated,
-  TouchableHighlight,
   TouchableOpacity,
   InteractionManager,
   AsyncStorage,
-  Image,
 } = React;
-const ConnectionProfile = require('../ConnectionProfile');
 
 
 class UserLogin extends React.Component{
