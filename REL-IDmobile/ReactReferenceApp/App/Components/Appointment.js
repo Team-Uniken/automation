@@ -1,9 +1,25 @@
-var React = require('react-native');
-var AddAppointment = require('./AddAppointment');
-var ToolBar = require('./ToolBar');
-var Skin = require('../Skin');
-var obj;
-var appointmentData = [{
+'use strict';
+
+import React from 'react-native';
+import Skin from '../Skin';
+
+/*
+  CALLED
+*/
+
+
+/*
+  Instantiaions
+*/
+const {
+  View,
+  Text,
+  TouchableHighlight,
+  ListView,
+} = React;
+
+let obj;
+const appointmentData = [{
   "date": "2016-05-06",
   "time": "20:00",
   "location": "Nagpur",
@@ -50,18 +66,18 @@ var SampleRow = React.createClass({
           activeOpacity={1.0}
           underlayColor={Skin.colors.REPPLE_COLOR}
           onPress={() => {
-                     obj.props.navigator.push({
-                       id: "AddAppointment",
-                       title: "Add Appointment",
-                       url: {
-                         'date': this.props.date,
-                         'time': this.props.time,
-                         'location': this.props.location,
-                         'msg': this.props.msg,
-                         'buttontext': 'Update'
-                       }
-                     });
-                   }}>
+           obj.props.navigator.push({
+             id: "AddAppointment",
+             title: "Add Appointment",
+             url: {
+               'date': this.props.date,
+               'time': this.props.time,
+               'location': this.props.location,
+               'msg': this.props.msg,
+               'buttontext': 'Update'
+             }
+           });
+         }}>
           <View style={Skin.appointmentrow.col}>
             <View style={Skin.appointmentrow.row}>
               <Text style={Skin.appointmentrow.date}>
@@ -91,25 +107,22 @@ var SampleRow = React.createClass({
   }
 });
 
-var {View, Text, TouchableHighlight, StatusBar, ListView, Image, Navigator, TextInput, TouchableHighlight, } = React;
 
-var Appointment = React.createClass({
+export default class Appointment extends React.Component {
 
-
-  getInitialState: function() {
+  constructor(props) {
+    super(props);
     obj = this;
     var ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     var {data, sectionIds} = this.renderListViewData(appointmentData.sort(compare));
-    return {
+    this.state ={
       dataSource: ds.cloneWithRowsAndSections(data, sectionIds)
-    };
-  },
-  componentDidMount() {
-    const listViewScrollView = this.refs.listView.getScrollResponder();
-  },
+    } 
+  }
+
   renderListViewData(users) {
     const data = {};
     const sectionIds = [];
@@ -125,7 +138,8 @@ var Appointment = React.createClass({
       data,
       sectionIds,
     };
-  },
+  }
+
   renderRow(rowData) {
     return (
       <SampleRow
@@ -133,21 +147,17 @@ var Appointment = React.createClass({
         style={Skin.appointmentrow.row}
       />
     );
-  },
+  }
+
   render() {
     return (
-      <View style={Skin.customeStyle.maincontainer}>
-        <StatusBar
-          backgroundColor={Skin.colors.STATUS_BAR_COLOR}
-          barStyle={'light-content'}/>
-        <ToolBar
-          navigator={this.props.navigator}
-          title={this.props.title}/>
+      <Main>
         <ListView
           ref={'listView'}
           automaticallyAdjustContentInsets={false}
           dataSource={this.state.dataSource}
-          renderRow={this.renderRow} />
+          renderRow={this.renderRow}
+        />
         <TouchableHighlight
           style={[Skin.appointmentrow.floatbutton]}
           activeOpacity={1.0}
@@ -170,9 +180,9 @@ var Appointment = React.createClass({
             BUG
           </View>
         </TouchableHighlight>
-      </View>
+      </Main>
     );
-  },
-});
+  }
+}
 
 module.exports = Appointment;

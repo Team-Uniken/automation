@@ -38,7 +38,7 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
-import SecureChat from './App/Components/secure_chat/Navigation';
+//import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
