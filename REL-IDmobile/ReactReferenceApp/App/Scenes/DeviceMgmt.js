@@ -2,6 +2,8 @@
 
 import React from 'react-native';
 import Skin from '../Skin';
+import Modal from 'react-native-simple-modal';
+import TextField from 'react-native-md-textinput';
 
 /*
   CALLED
@@ -22,72 +24,16 @@ const {
   DeviceEventEmitter,
   TouchableHighlight,
   View,
+  Alert,
 } = React;
 
 let obj;
 let onUpdateDevice;
 let onGetDevice;
 let devicseList;
-/*
-var TEXTCOLOR = '#A9A9A9';
-var HEADER = '#3b5998';
-var BGWASH = 'rgba(255,255,255,0.8)';
-var DISABLED_WASH = 'rgba(255,255,255,0.25)';
-var CORE_FONT = 'Century Gothic';
-var NAV_BAR_TINT = '#FFFFFF';
-var NAV_SHADOW_BOOL = true;
-var MENU_TXT_COLOR = '#2579A2';
-var ICON_COLOR = '#FFFFFF';
-var ICON_FAMILY = 'icomoon';
-var MID_COL = '#2579A2';
-var LIGHT_COL = '#50ADDC';
-var DARK_COL = '#10253F';
-var Spd = 0.1;
-var LoadSpd = 0.2;
-var SCREEN_WIDTH = Dimensions.get('window').width;
-var SCREEN_HEIGHT = Dimensions.get('window').height;
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-var onGetDevice, onDeviceUp;
+let deviceHolderList;
 
-var devicesList;
-var deviceHolderList;
-var {
-  DeviceEventEmitter,
-} = require('react-native');
 
-*/
-/*
-const FAKE_BOOK_DATA = [{
-  devUUID: '2WKVOLK4GH0Z5KI9JN3MZXO1IMVQNRB1H9V5FFMRSS8ONZTJB7',
-  devName: 'test41_Android_Nexus 6_060916145904',
-  status: 'Active',
-  lastAccessedTs: '2016-06-09T15:02:22IST',
-  createdTs: '2016-06-09T15:02:22IST',
-  devBind: 0,
-}, {
-  devUUID: '2WKVOLK4GH0Z5KI9JN3MZXO1IMVQNRB1H9V5FFMRSS8ONZTJB7',
-  devName: 'test41_Android_Nexus 6_060916145904',
-  status: 'Active',
-  lastAccessedTs: '2016-06-09T15:02:22IST',
-  createdTs: '2016-06-09T15:02:22IST',
-  devBind: 0,
-}, {
-  devUUID: '2WKVOLK4GH0Z5KI9JN3MZXO1IMVQNRB1H9V5FFMRSS8ONZTJB7',
-  devName: 'test41_Android_Nexus 6_060916145904',
-  status: 'Active',
-  lastAccessedTs: '2016-06-09T15:02:22IST',
-  createdTs: '2016-06-09T15:02:22IST',
-  devBind: 0,
-}, {
-  devUUID: '2WKVOLK4GH0Z5KI9JN3MZXO1IMVQNRB1H9V5FFMRSS8ONZTJB7',
-  devName: 'test41_Android_Nexus 6_060916145904',
-  status: 'Active',
-  lastAccessedTs: '2016-06-09T15:02:22IST',
-  createdTs: '2016-06-09T15:02:22IST',
-  devBind: 0,
-}];
-*/
 
 const FAKE_BOOK_DATA = [];
 /*
@@ -101,33 +47,35 @@ var status;
 
 const styles = StyleSheet.create({
   listViewWrap: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     backgroundColor: Skin.colors.BACK_GRAY,
+    width: Skin.SCREEN_WIDTH,
+    height: Skin.SCREEN_HEIGHT,
   },
-  itemWrap:{
-    padding:10,
+  itemWrap: {
+    padding: 10,
     backgroundColor: 'white',
     flexDirection: 'column',
   },
-  itemTitle:{
+  itemTitle: {
     color: Skin.colors.PRIMARY_TEXT,
     fontWeight: 'bold',
-    flex:1,
-    paddingBottom:5,
+    flex: 1,
+    paddingBottom: 5,
   },
-  itemRow:{
+  itemRow: {
     flex: 1,
     flexDirection: 'row',
   },
-  leftLabels:{
+  leftLabels: {
     flex: 1,
-    textAlign:'left',
+    textAlign: 'left',
     fontStyle: 'italic',
   },
-  rightLabels:{
+  rightLabels: {
     flex: 2.3,
-  }
+  },
 });
 
 export default class DeviceMgmtScene extends React.Component {
@@ -135,6 +83,10 @@ export default class DeviceMgmtScene extends React.Component {
     super(props);
     obj = this;
     this.state = {
+      open: false,
+      inputDeviceName: '',
+      selectedDeviceIndex : -1,
+
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
       }),
@@ -167,16 +119,16 @@ export default class DeviceMgmtScene extends React.Component {
    * @return {null}
    */
   componentDidMount() {
-    const deviceHolderList = this.renderListViewData(FAKE_BOOK_DATA);
+    deviceHolderList = this.renderListViewData(FAKE_BOOK_DATA);
     let newstate = this.state;
     newstate.dataSource = this.state.dataSource.cloneWithRows(deviceHolderList);
     this.setState(newstate);
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.getRegisteredDeviceDetails(value, (response) => {
-        console.log('Get Device response: ')
-        console.log(response);
-      });
-    }).done();
+    // AsyncStorage.getItem('userId').then((value) => {
+    //   ReactRdna.getRegisteredDeviceDetails(value, (response) => {
+    //     console.log('Get Device response: ')
+    //     console.log(response);
+    //   });
+    // }).done();
   }
 
 
@@ -219,23 +171,36 @@ export default class DeviceMgmtScene extends React.Component {
   }
 
   onEditPressed(rowData) {
-    const title = rowData.devName;
-    alert("Edit button of " + title);
+      this.setState({
+          inputDeviceName: rowData.device.devName,
+          selectedDeviceIndex: rowData.index,
+          open: true
+      });
   }
+
 
   onDeletePressed(deviceHolder) {
     const device = deviceHolder.device;
     let status;
     if (this.isDeviceDeleted(device)) status = Constants.DEVICE_ACTIVE;
     else status = Constants.DEVICE_DELETE;
-    // alert('Delete button of ' + title);
-    alert('', 'Do you want to change status to ${status}?', [{
-      text: 'Cancel',
-      onPress: () => console.log('----- Cancel pressed'),
-    }, {
-      text: 'OK',
-      onPress: () => this.deleteDevice(deviceHolder),
-    }]);
+    // alert('', 'Do you want to change status to ${status}?', [{
+    //   text: 'Cancel',
+    //   onPress: () => console.log('----- Cancel pressed'),
+    // }, {
+    //   text: 'OK',
+    //   onPress: () => this.deleteDevice(deviceHolder),
+    // }]);
+
+    Alert.alert(
+            '',
+            'Do you want to change status to '+ status + ' ?',
+            [
+             {text: 'Cancel', onPress: () => console.log("----- Cancel pressed") },
+             {text: 'OK', onPress: () => this.deleteDevice(deviceHolder) },
+             ]
+            )
+
   }
 
   onTextChange(text) {
@@ -288,7 +253,7 @@ export default class DeviceMgmtScene extends React.Component {
       dev.status = Constants.DEVICE_DELETE;
     }
   }
-/*
+
   renderDeviceHolderData(devicesHolder) {
     var data = [];
     var index = -1;
@@ -301,7 +266,7 @@ export default class DeviceMgmtScene extends React.Component {
     });
     return data;
   }
-*/
+
   submitButtonClick() {
     // alert('button clicked');
     AsyncStorage.getItem('userId').then((value) => {
@@ -334,13 +299,13 @@ export default class DeviceMgmtScene extends React.Component {
       {
         text: 'Edit',
         color: 'white',
-        onPress: () => {console.log(device); this.onEditPressed(device)}
+        onPress: () => {console.log(device); this.onEditPressed(rowData)}
       },
       {
         text: 'Delete',
         backgroundColor: 'red',
         color: 'white',
-        onPress: () => {console.log(device); this.onDeletePressed(device)}
+        onPress: () => {console.log(device); this.onDeletePressed(rowData)}
       },
     ];
     return (
@@ -387,6 +352,27 @@ export default class DeviceMgmtScene extends React.Component {
     );
   }
 
+  onChangeDeviceName(event){
+    this.setState({inputDeviceName: event.nativeEvent.text});
+  console.log('device name '+event.nativeEvent.text);
+  }
+
+  onOkPressed(){
+    this.setState({open: false});
+    console.log('OK '+this.state.selectedDeviceIndex);
+
+    var deviceHolder = deviceHolderList[this.state.selectedDeviceIndex];
+    deviceHolder.device.devName = this.state.inputDeviceName;
+    deviceHolder.isDeviceUpdated = true;
+    deviceHolder.device.status = Constants.DEVICE_UPDATE;
+    console.log(" -------- deviceHolderList " + deviceHolderList[this.state.selectedDeviceIndex].device.devName);
+    deviceHolderList = obj.renderDeviceHolderData(deviceHolderList);
+    this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(deviceHolderList)
+    });
+
+  }
+
   render() {
     console.log('in render');
     return (
@@ -418,6 +404,39 @@ export default class DeviceMgmtScene extends React.Component {
             renderRow={this.renderRow.bind(this)}
           />
         </View>
+
+                      <Modal
+                      style={Skin.ConnectionProfile.branchstyle}
+                      overlayOpacity={0.75}
+                      offset={100}
+                      open={this.state.open}
+                      modalDidOpen={() => console.log('modal did open')}
+                      modalDidClose={() => this.setState({open: false})}
+                      >
+                        <Text style={[Skin.customeStyle.text3,{textAlign:'left',marginTop:0,marginLeft:4}]}>Device</Text>
+                        <TextField
+                        autoCorrect={false}
+                        label={'Enter device name'}
+                        labelColor={Skin.colors.HINT_COLOR}
+                        highlightColor={'transparent'}
+                        value={this.state.inputDeviceName}
+                        onChange={this.onChangeDeviceName.bind(this)}
+                        style={{height:40,textAlignVertical:'top'}}/>
+                        <View style={Skin.ConnectionProfile.customerow}>
+                          <TouchableHighlight
+                          onPress={() => this.setState({open: false})}
+                          underlayColor={Skin.colors.REPPLE_COLOR}
+                          style={{height:48,width:70,marginLeft:100}}>
+                            <Text style={[Skin.customeStyle.text1,{width:70,opacity:1}]}>CANCEL</Text>
+                          </TouchableHighlight>
+                          <TouchableHighlight
+                          onPress={this.onOkPressed.bind(this)}
+                          underlayColor={Skin.colors.REPPLE_COLOR}
+                          style={{height:48,width:70}}>
+                            <Text style={[Skin.customeStyle.text1,{width:70,color:'#007ECE',opacity:1}]}>OK</Text>
+                          </TouchableHighlight>
+                        </View>
+                    </Modal>
       </Main>
     );
   }

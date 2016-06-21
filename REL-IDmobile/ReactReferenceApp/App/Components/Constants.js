@@ -3,4 +3,5 @@ module.exports = {
   DEVICE_DELETE : "Delete",
   DEVICE_QUEUED_DELETE : "Queued for deleting...",
   DEVICE_ACTIVE : "Active",
+  DEVICE_UPDATE : "Update",
 };

@@ -96,7 +96,7 @@ class ReactRefApp extends React.Component {
       // id = 'DevBind';
       //id = 'Deposits';
       //id = 'ActivateNewDevice';
-      id = 'SecureWebView';
+      //id = 'SecureWebView';
     }
 
     // MAIN SCENES

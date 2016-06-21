@@ -140,7 +140,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onCheckChallengeResponseStatus(final String rdnaStatusCheckChallengeResponse) {
-                Log.d(TAG, "-------- onCheckChallengeResponseStatus " + rdnaStatusCheckChallengeResponse);
+                Logger.d(TAG, "-------- onCheckChallengeResponseStatus " + rdnaStatusCheckChallengeResponse);
                Runnable runnable = new Runnable() {
                    @Override
                    public void run() {

@@ -38,7 +38,6 @@ const iconcolor = {
   2: Skin.colors.POSITIVE_ACCENT,
 };
 
-
 export default class PayBillsScene extends React.Component {
 
   constructor(props) {
@@ -238,7 +237,6 @@ export default class PayBillsScene extends React.Component {
       </Main>
     );
   }
-
 }
 
 module.exports = PayBillsScene;

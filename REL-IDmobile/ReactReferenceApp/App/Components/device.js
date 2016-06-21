@@ -182,6 +182,7 @@ class Device extends Component {
         this.state = {
           open: false,
           inputDeviceName: '',
+          selectedDeviceIndex : -1,
             dataSource: new ListView.DataSource({
 
                 rowHasChanged: (r1, r2) => r1 !== r2
@@ -265,7 +266,7 @@ class Device extends Component {
 
       devices.map((device) => {
         index++;
-        data.push({"device":device, "index":index});
+        data.push({"device":device, "index":index, "isDeviceUpdated":false});
       });
 
       return data;
@@ -277,7 +278,7 @@ class Device extends Component {
 
       devicesHolder.map((deviceHolder) => {
         index++;
-        data.push({"device":deviceHolder.device, "index":index});
+        data.push({"device":deviceHolder.device, "index":index, "isDeviceUpdated":deviceHolder.isDeviceUpdated});
       });
 
       return data;
@@ -292,6 +293,7 @@ class Device extends Component {
         }).done()
 
     }
+
     onChangeDeviceName(event){
       this.setState({inputDeviceName: event.nativeEvent.text});
     console.log('device name '+event.nativeEvent.text);
@@ -330,8 +332,6 @@ class Device extends Component {
                 value={this.state.inputDeviceName}
                 onChange={this.onChangeDeviceName.bind(this)}
                 style={{height:40,textAlignVertical:'top'}}/>
-
-
                 <View style={Skin.ConnectionProfile.customerow}>
                   <TouchableHighlight
                   onPress={() => this.setState({open: false})}
@@ -340,7 +340,7 @@ class Device extends Component {
                     <Text style={[Skin.customeStyle.text1,{width:70,opacity:1}]}>CANCEL</Text>
                   </TouchableHighlight>
                   <TouchableHighlight
-                  onPress={() => this.setState({open: false})}
+                  onPress={this.onOkPressed.bind(this)}
                   underlayColor={Skin.colors.REPPLE_COLOR}
                   style={{height:48,width:70}}>
                     <Text style={[Skin.customeStyle.text1,{width:70,color:'#007ECE',opacity:1}]}>OK</Text>
@@ -352,10 +352,17 @@ class Device extends Component {
 
     }
 
-    onDeviceNameChange(event) {
-        this.setState({
-            secQA: event.nativeEvent.text
-        });
+    onOkPressed(){
+      this.setState({open: false});
+      var deviceHolder = deviceHolderList[this.state.selectedDeviceIndex];
+      deviceHolder.device.devName = this.state.inputDeviceName;
+      deviceHolder.isDeviceUpdated = true;
+      deviceHolder.device.status = constant.DEVICE_UPDATE;
+      //console.log(" -------- deviceHolderList " + deviceHolderList[this.state.selectedDeviceIndex].device.devName);
+      deviceHolderList = obj.renderDeviceHolderData(deviceHolderList);
+      this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(deviceHolderList)
+      });
     }
 
     getDeviceStatus(device){
@@ -365,9 +372,14 @@ class Device extends Component {
           return device.status;
     }
 
-    toggleDeviceStatus(device){
-      if(this.isDeviceDeleted(device))
-        device.status = constant.DEVICE_ACTIVE;
+    toggleDeviceStatus(deviceHolder){
+      var device = deviceHolder.device;
+      if(this.isDeviceDeleted(device)){
+        if(deviceHolder.isDeviceUpdated)
+          device.status = constant.DEVICE_UPDATE;
+        else
+          device.status = constant.DEVICE_ACTIVE;
+      }
       else
         device.status = constant.DEVICE_DELETE;
     }
@@ -393,7 +405,7 @@ class Device extends Component {
           <View>
             <View style = {styles.container}>
               <Text style = {styles.input}>{devicename}</Text>
-              <TouchableHighlight onPress = {() => this.onEditPressed(devicename)} style = {styles.button}>
+              <TouchableHighlight onPress = {() => this.onEditPressed(deviceHolder)} style = {styles.button}>
                 <Image source = {require('image!edt')} style = {styles.images}/>
               </TouchableHighlight>
               <TouchableHighlight onPress = {() => this.onDeletePressed(deviceHolder)} style = {styles.button} >
@@ -427,11 +439,11 @@ class Device extends Component {
 
     }
 
-    onEditPressed(device) {
-        var title = device.devName;
-        this.setState({open: true})
+    onEditPressed(deviceHolder) {
         this.setState({
-            inputDeviceName: device
+            inputDeviceName: deviceHolder.device.devName,
+            selectedDeviceIndex: deviceHolder.index,
+            open: true
         });
     }
 
@@ -466,7 +478,7 @@ class Device extends Component {
 
     deleteDevice(deviceHolder){
       var device = deviceHolder.device;
-      this.toggleDeviceStatus(device);
+      this.toggleDeviceStatus(deviceHolder);
       //deviceHolderList.splice(deviceHolder.index, 1, {"device":device, "index":deviceHolder.index});
       console.log("------- old " + deviceHolderList[deviceHolder.index].device.status + " new " + device.status);
       deviceHolderList = obj.renderDeviceHolderData(deviceHolderList);

@@ -54,7 +54,7 @@ class FindBranchScene extends React.Component{
                 lat:position.coords.latitude,
                 lon:position.coords.longitude,
               });
-              
+
               fetch(
                   'https://maps.googleapis.com/maps/api/place/textsearch/json?location='+lat+','+lon+'&radius=5000&query=ATMs&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
                   //'https://maps.googleapis.com/maps/api/directions/json?origin=41.13694,-73.359778&destination=41.13546,-73.35997&mode=driver&sensor=true&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
@@ -93,7 +93,7 @@ class FindBranchScene extends React.Component{
         return (
             <Main
                 drawerState={{
-                    open: false, 
+                    open: false,
                     disabled: false
                 }}
                 navBar={{
@@ -115,9 +115,9 @@ class FindBranchScene extends React.Component{
                     active: 4,
                 }}
                 navigator={this.props.navigator}
-            >  
+            >
                 <MapView
-                    style={{flex:1}}
+                    style={{flex:1,width:Skin.SCREEN_WIDTH}}
                     showsUserLocation={true}
                     followUserLocation={true}
                 />
