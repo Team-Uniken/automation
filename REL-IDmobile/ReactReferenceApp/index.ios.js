@@ -21,7 +21,8 @@ import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
 import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
 import LoadScene from './App/Scenes/Load';
-import SecureWebView from './App/Components/SecureWebView';
+import Web from './App/Scenes/Web';
+
 
 // SECURITY SCENES
 import Activation from './App/Components/challenges/Activation';
@@ -34,8 +35,6 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 // COMPONENTS
 
-import Web from './App/Scenes/Web';
-import QBank from './App/Components/Qbank';
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';

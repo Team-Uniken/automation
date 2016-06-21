@@ -9,6 +9,7 @@ import Skin from '../Skin';
 import Main from '../Components/Main';
 
 const {
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
