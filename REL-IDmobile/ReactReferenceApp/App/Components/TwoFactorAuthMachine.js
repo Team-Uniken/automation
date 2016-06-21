@@ -114,8 +114,10 @@ class TwoFactorAuthMachine extends React.Component {
 
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
+      console.log('TwoFactorAuthMachine -statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
+          console.log('TwoFactorAuthMachine - ResponseData ' + res.pArgs.response.ResponseData);
           const chlngJson = res.pArgs.response.ResponseData;
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
@@ -131,17 +133,13 @@ class TwoFactorAuthMachine extends React.Component {
             });
           }
         } else {
+          console.log('TwoFactorAuthMachine - else ResponseData ' + res.pArgs.response.ResponseData);
           const pPort = res.pArgs.pxyDetails.port;
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
           }
           //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          if (Platform.OS === 'ios') {
-            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - Platform.OS === ios');
-            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-          } else {
-            this.props.navigator.push({ id: 'MainAndroid', title: 'DashBoard', url: '' });
-          }
+          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
       } else {
         Alert.alert(

@@ -72,6 +72,7 @@ export default class ContactScene extends React.Component {
             alignItems: 'center',
             justifyContent: 'space-around',
             padding: 25,
+            width:Skin.SCREEN_WIDTH,
           }}
         >
           <TouchableOpacity

@@ -231,7 +231,7 @@ export default class AccountsScene extends React.Component {
         }}
         navigator={this.props.navigator}
       >
-        <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY }}>
+        <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY ,width:Skin.SCREEN_WIDTH}}>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}

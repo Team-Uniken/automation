@@ -27,7 +27,7 @@ export default class PayBillsScene extends React.Component{
 		return (
             <Main
                 drawerState={{
-                    open: false, 
+                    open: false,
                     disabled: false
                 }}
                 navBar={{
@@ -49,8 +49,8 @@ export default class PayBillsScene extends React.Component{
                     active: 2,
                 }}
                 navigator={this.props.navigator}
-            >  	
-                <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
+            >
+                <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY,width:Skin.SCREEN_WIDTH}}>
 					<Text>This is my Pay Bills content</Text>
 				</View>
 			</Main>

@@ -224,7 +224,7 @@ class ConnectionProfile extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderConnectionProfile.bind(this)} />
           </View>
-          <TouchableHighlight 
+          <TouchableHighlight
             style={{
               backgroundColor:Skin.colors.PRIMARY,
               width: 50,
@@ -236,7 +236,7 @@ class ConnectionProfile extends React.Component {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            activeOpacity={0.8} 
+            activeOpacity={0.8}
             underlayColor={Skin.colors.DARK_PRIMARY}
             onPress={() => this.onImportPressed()}>
             <Text
