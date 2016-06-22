@@ -92,7 +92,7 @@ const FAKE_BOOK_DATA = [{
   devBind: 0,
 }];
 
-//FAKE_BOOK_DATA = [];
+FAKE_BOOK_DATA = [];
 
 const styles = StyleSheet.create({
   listViewWrap: {
@@ -172,12 +172,12 @@ class DeviceMgmtScene extends Component {
     let newstate = this.state;
     newstate.dataSource = this.state.dataSource.cloneWithRows(deviceHolderList);
     this.setState(newstate);
-    // AsyncStorage.getItem('userId').then((value) => {
-    //   ReactRdna.getRegisteredDeviceDetails(value, (response) => {
-    //     console.log('Get Device response: ')
-    //     console.log(response);
-    //   });
-    // }).done();
+    AsyncStorage.getItem('userId').then((value) => {
+      ReactRdna.getRegisteredDeviceDetails(value, (response) => {
+        console.log('Get Device response: ')
+        console.log(response);
+      });
+    }).done();
   }
 
 
