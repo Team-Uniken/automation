@@ -54,11 +54,11 @@ export default class Main extends React.Component {
     this.state = {};
     this.toggleDrawer = this.toggleDrawer.bind(this)
     this.state.navBar                 = {};
-    
+
     this.state.navBar.title           = this.props.navBar.title || '';
     this.state.navBar.visible         = this.props.navBar.visible || true;
     this.state.navBar.tint            = this.props.navBar.tint || '#000000';
-    
+
     this.state.navBar.left            = {};
     this.state.navBar.left            = {};
     this.state.navBar.left.text       = this.props.navBar.left.text || '';
@@ -66,7 +66,7 @@ export default class Main extends React.Component {
     this.state.navBar.left.iconStyle  = this.props.navBar.left.iconStyle || {};
     this.state.navBar.left.textStyle  = this.props.navBar.left.textStyle || {};
     this.state.navBar.left.handler    = this.props.navBar.left.handler || this.toggleDrawer;
- 
+
     this.state.navBar.right           = {};
     this.props.navBar.right           = {};
     this.state.navBar.right.text      = this.props.navBar.right.text || '';

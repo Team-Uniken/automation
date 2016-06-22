@@ -30,8 +30,9 @@ const {
 let obj;
 let onUpdateDevice;
 let onGetDevice;
-let devicseList;
+let devicesList;
 var deviceHolderList;
+var devicesResponse;
 
 /*
 var TEXTCOLOR = '#A9A9A9';
@@ -168,18 +169,47 @@ class DeviceMgmtScene extends Component {
    * @return {null}
    */
   componentDidMount() {
+    //devicesList = FAKE_BOOK_DATA;
     deviceHolderList = this.renderListViewData(FAKE_BOOK_DATA);
     let newstate = this.state;
     newstate.dataSource = this.state.dataSource.cloneWithRows(deviceHolderList);
     this.setState(newstate);
+    this.getRegisteredDeviceDetails();
+  }
+
+  getRegisteredDeviceDetails(){
     AsyncStorage.getItem('userId').then((value) => {
       ReactRdna.getRegisteredDeviceDetails(value, (response) => {
         console.log('Get Device response: ')
         console.log(response);
+
+        if(response[0].error != 0){
+          if(devicesResponse !== undefined){
+            //If error occurred reload last response
+            this.onGetRegistredDeviceDetails(devicesResponse);
+          }
+        }
       });
     }).done();
   }
 
+  updateDeviceDetails(){
+    AsyncStorage.getItem('userId').then((value) => {
+      ReactRdna.updateDeviceDetails(
+        value,
+        JSON.stringify(devicesList),
+        (response) => {
+          console.log('----- submitButtonClick: ReactRdna.updateDeviceDetails.response')
+          console.log(response);
+
+          if(response[0].error != 0){
+            alert("Something went wrong");
+            //If error occurred reload last response
+            this.onGetRegistredDeviceDetails(devicesResponse);
+          }
+        });
+    }).done();
+  }
 
   /**
    * Parses the Device list when received from the async event in ComponentWIllMount
@@ -187,10 +217,11 @@ class DeviceMgmtScene extends Component {
    * @return {null}
    */
   onGetRegistredDeviceDetails(e) {
+    devicesResponse = e;
     const res = JSON.parse(e.response);
     if (res.errCode === 0) {
-      const devicesList = res.pArgs.response.ResponseData;
-      const deviceHolderList = this.renderListViewData(devicesList.device);
+      devicesList = res.pArgs.response.ResponseData;
+      deviceHolderList = this.renderListViewData(devicesList.device);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(deviceHolderList),
       });
@@ -204,12 +235,17 @@ class DeviceMgmtScene extends Component {
     const statusCode = res.pArgs.response.StatusCode;
     if (res.errCode === 0) {
       if (statusCode === 100) {
-        this.props.navigator.pop();
+        //this.props.navigator.pop();
+        this.getRegisteredDeviceDetails();
       } else {
         alert(res.pArgs.response.StatusMsg);
+        // If error occurred reload devices list with previous response
+        this.onGetRegistredDeviceDetails(devicesResponse);
       }
     } else {
       alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+      this.onGetRegistredDeviceDetails(devicesResponse);
     }
   }
 
@@ -274,6 +310,8 @@ class DeviceMgmtScene extends Component {
       dataSource: this.state.dataSource.cloneWithRows(
         deviceHolderList),
     });
+
+    this.updateDeviceDetails();
   }
 
   isDeviceDeleted(device) {
@@ -304,29 +342,16 @@ class DeviceMgmtScene extends Component {
   }
 
   renderDeviceHolderData(devicesHolder) {
-    var data = [];
-    var index = -1;
-    devicesHolder.map((deviceHolder) => {
-      index++;
-      data.push({
-        'device': deviceHolder.device,
-        'index': index
-      });
-    });
-    return data;
-  }
-
-  submitButtonClick() {
-    // alert('button clicked');
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.updateDeviceDetails(
-        value,
-        JSON.stringify(devicesList),
-        (response) => {
-          console.log('----- submitButtonClick: ReactRdna.updateDeviceDetails.response')
-          console.log(response);
-        });
-    }).done();
+    // var data = [];
+    // var index = -1;
+    // devicesHolder.map((deviceHolder) => {
+    //   index++;
+    //   data.push({
+    //     'device': deviceHolder.device,
+    //     'index': index
+    //   });
+    // });
+    return devicesHolder;
   }
 
 
@@ -411,14 +436,20 @@ class DeviceMgmtScene extends Component {
     console.log('OK '+this.state.selectedDeviceIndex);
 
     var deviceHolder = deviceHolderList[this.state.selectedDeviceIndex];
-    deviceHolder.device.devName = this.state.inputDeviceName;
-    deviceHolder.isDeviceUpdated = true;
-    deviceHolder.device.status = Constants.DEVICE_UPDATE;
-    console.log(" -------- deviceHolderList " + deviceHolderList[this.state.selectedDeviceIndex].device.devName);
-    deviceHolderList = obj.renderDeviceHolderData(deviceHolderList);
-    this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(deviceHolderList)
-    });
+    console.log("-------- deviceHolder " + JSON.stringify(deviceHolder));
+    if(deviceHolder.device.devName != this.state.inputDeviceName){
+      deviceHolder.device.devName = this.state.inputDeviceName;
+      deviceHolder.isDeviceUpdated = true;
+      deviceHolder.device.status = Constants.DEVICE_UPDATE;
+
+      console.log(" -------- deviceHolderList " + deviceHolderList[this.state.selectedDeviceIndex].device.devName);
+      deviceHolderList = obj.renderDeviceHolderData(deviceHolderList);
+      this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(deviceHolderList)
+      });
+
+      this.updateDeviceDetails();
+    }
 
   }
 

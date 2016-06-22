@@ -43,9 +43,9 @@ class ControlPanel extends React.Component{
   constructor(props){
     super(props);
   }
-  
+
   showLogOffAlert(){
-    
+
     Alert.alert(
                 '',
                 'Do you want to log-off',
@@ -63,7 +63,7 @@ class ControlPanel extends React.Component{
                  ]
                 )
   }
-  
+
   doLogOff(){
     AsyncStorage.getItem("userId").then((value) => {
                                         ReactRdna.logOff(value,(response) => {
@@ -75,7 +75,7 @@ class ControlPanel extends React.Component{
                                                          })
                                         }).done();
   }
-  
+
   componentDidMount(){
     Obj = this;
     DeviceEventEmitter.addListener('onLogOff', function (e) {
@@ -93,7 +93,7 @@ class ControlPanel extends React.Component{
   popToLoadView(){
     this.props.navigator.replace({id: "Load"});
   }
-  
+
   render(){
     return (
             <View style={styles.container}>
