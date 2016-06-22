@@ -7,6 +7,7 @@ import Skin from '../Skin';
   CALLED
 */
 import Main from '../Components/Main';
+import Communications from 'react-native-communications';
 
 const {
   Platform,
@@ -66,7 +67,9 @@ export default class Web extends React.Component {
   }
 
   getWebView() {
-    if (Platform.OS === 'ios') {
+    if(!this.props.secure){
+      Communications.web(this.props.url)
+    } else if (Platform.OS === 'ios') {
       return (
         <WebView
           ref={WEBVIEW_REF}
