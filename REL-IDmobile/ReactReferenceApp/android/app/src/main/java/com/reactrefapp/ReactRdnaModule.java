@@ -320,7 +320,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void updateDeviceDetails(String userID, String devices, Callback callback){
-        int error = rdnaObj.updateDeviceDetails(userID, devices);
+        int error = 0;
+        if(rdnaObj != null)
+            error = rdnaObj.updateDeviceDetails(userID, devices);
 
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
