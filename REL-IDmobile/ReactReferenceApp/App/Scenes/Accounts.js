@@ -91,10 +91,10 @@ export default class AccountsScene extends React.Component {
               '{"accountList":[ \
                   {"accountID":"2144","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":15565.32,"accountType":1}, \
                   {"accountID":"3146","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":3039.00,"accountType":2}, \
-                  {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-4074.52,"accountType":3}, \
+                  {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":-4074.52,"accountType":3}, \
                   {"accountID":"1445","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":243.22,"accountType":2}, \
-                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":3039.00,"accountType":2}, \
-                  {"accountID":"9447","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-4074.52,"accountType":3}], \
+                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":1357.98,"accountType":2}, \
+                  {"accountID":"9447","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-403.12,"accountType":3}], \
               "error":"", \
               "status":"success" \
             }',

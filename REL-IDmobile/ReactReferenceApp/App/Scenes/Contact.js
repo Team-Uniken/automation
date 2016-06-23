@@ -75,6 +75,17 @@ export default class ContactScene extends React.Component {
           }}
         >
           <TouchableOpacity
+            onPress={() => this.handleClick({ id: 'Appointments' })}
+            style={[styles.buttonwrap, { backgroundColor: '#666666' }]}
+          >
+            <View style={styles.titlewrap}>
+              <Text style={styles.title}>Chat with Us</Text>
+            </View>
+            <View style={styles.iconwrap}>
+              <Text style={[styles.icon, { color: '#666666' }]}>{'\ue21a'}</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => Communications.email(['info@uniken.com'], null, null, 'I\'m interested in REL-IDmobile!',
               'Hello, <br> I\'m interested in REL-IDmobile.  Please send me more details! <br><br> Sincerely,<br>--{Put your name}')}
             style={[styles.buttonwrap, { backgroundColor: Skin.colors.POSITIVE_ACCENT }]}
@@ -118,7 +129,7 @@ const styles = StyleSheet.create({
   buttonwrap: {
     flex: 1,
     width: SCREEN_WIDTH * 4 / 5,
-    margin: 25,
+    margin: 10,
     flexDirection: 'row',
   },
   titlewrap: {

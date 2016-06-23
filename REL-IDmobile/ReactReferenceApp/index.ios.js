@@ -99,6 +99,7 @@ class ReactRefApp extends React.Component {
       // id = 'SecureWebView';
       // id = 'QuestionSet';
       // id = 'QuestionVerification';
+     // id = 'Contact';
     }
 
     // MAIN SCENES
@@ -139,7 +140,7 @@ class ReactRefApp extends React.Component {
     } else if (id === 'SecureWebView') {
       return (<Web navigator={nav} url={route.url} title={route.title} secure navigate scale />);
     } else if (id === 'WebView') {
-      return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
+      return (<Web navigator={nav} url={route.url} title={route.title} navigate scale />);
      
     // SECURITY SCENES
     } else if (id === 'Activation') {
