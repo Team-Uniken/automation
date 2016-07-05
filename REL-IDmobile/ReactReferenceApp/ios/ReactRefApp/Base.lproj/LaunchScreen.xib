@@ -11,18 +11,16 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="load" translatesAutoresizingMaskIntoConstraints="NO" id="X8D-jS-chP">
-                    <rect key="frame" x="11" y="20" width="458" height="439"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="load" translatesAutoresizingMaskIntoConstraints="NO" id="X8D-jS-chP">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="X8D-jS-chP" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Bpg-t3-1Hr"/>
-                <constraint firstAttribute="trailing" secondItem="X8D-jS-chP" secondAttribute="trailing" id="FUg-YM-s8H"/>
-                <constraint firstItem="X8D-jS-chP" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JEa-GZ-qyN"/>
-                <constraint firstItem="X8D-jS-chP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="M05-qN-3UI"/>
-                <constraint firstItem="X8D-jS-chP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bIG-YQ-fgF"/>
-                <constraint firstAttribute="bottom" secondItem="X8D-jS-chP" secondAttribute="bottom" id="ngb-n1-S2B"/>
+                <constraint firstAttribute="trailing" secondItem="X8D-jS-chP" secondAttribute="trailing" id="IgP-IL-pnG"/>
+                <constraint firstAttribute="bottom" secondItem="X8D-jS-chP" secondAttribute="bottom" id="Se9-OD-Sn0"/>
+                <constraint firstItem="X8D-jS-chP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bbh-rH-22Y"/>
+                <constraint firstItem="X8D-jS-chP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gEq-nQ-O08"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

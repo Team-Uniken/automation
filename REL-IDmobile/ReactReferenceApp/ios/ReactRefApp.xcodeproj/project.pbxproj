@@ -32,7 +32,7 @@
 		6567FBCB1CC1122F00AC6A04 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		6567FBCD1CC1127B00AC6A04 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		BFA043C21D1012A30065F33E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA043C11D1012A30065F33E /* libapi-sdk.a */; };
+		BF0989141D1D17E400EF8000 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF0989121D1D17E400EF8000 /* libapi-sdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,8 +148,8 @@
 		6567FBCC1CC1127B00AC6A04 /* index.ios.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		BFA043BF1D1012A30065F33E /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		BFA043C11D1012A30065F33E /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		BF0989121D1D17E400EF8000 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		BF0989131D1D17E400EF8000 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +167,7 @@
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
-				BFA043C21D1012A30065F33E /* libapi-sdk.a in Frameworks */,
+				BF0989141D1D17E400EF8000 /* libapi-sdk.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				1AA5D5361D01ABC20070C14A /* libapi-sdk.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
@@ -318,7 +318,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				BFA043BD1D1012A30065F33E /* api-sdk */,
+				BF0989111D1D17E400EF8000 /* api-sdk */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				1AA5D5351D01ABC20070C14A /* libapi-sdk.a */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
@@ -343,29 +343,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BFA043BD1D1012A30065F33E /* api-sdk */ = {
+		BF0989111D1D17E400EF8000 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
-				BFA043BE1D1012A30065F33E /* include */,
-				BFA043C01D1012A30065F33E /* libs */,
+				BF0989121D1D17E400EF8000 /* libapi-sdk.a */,
+				BF0989131D1D17E400EF8000 /* RDNA.h */,
 			);
 			path = "api-sdk";
-			sourceTree = "<group>";
-		};
-		BFA043BE1D1012A30065F33E /* include */ = {
-			isa = PBXGroup;
-			children = (
-				BFA043BF1D1012A30065F33E /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		BFA043C01D1012A30065F33E /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				BFA043C11D1012A30065F33E /* libapi-sdk.a */,
-			);
-			path = libs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,7 +405,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 82H5969YQQ;
+						DevelopmentTeam = 2S999FKG5P;
 					};
 				};
 			};
@@ -686,8 +670,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
 				DEAD_CODE_STRIPPING = NO;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -701,15 +685,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.sdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.referenceapp;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f9526da5-0b61-4b43-a959-427fe7f5bde6";
 			};
 			name = Debug;
 		};
@@ -718,8 +703,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -732,15 +717,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.sdk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.referenceapp;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f9526da5-0b61-4b43-a959-427fe7f5bde6";
 			};
 			name = Release;
 		};
