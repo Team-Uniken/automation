@@ -111,13 +111,14 @@ class TwoFactorAuthMachine extends React.Component {
     subscriptions.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
+    console.log(res);
 
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
-      console.log('TwoFactorAuthMachine -statusCode ' + statusCode);
+      console.log('TwoFactorAuthMachine - statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
-          console.log('TwoFactorAuthMachine - ResponseData ' + res.pArgs.response.ResponseData);
+          console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
@@ -133,7 +134,7 @@ class TwoFactorAuthMachine extends React.Component {
             });
           }
         } else {
-          console.log('TwoFactorAuthMachine - else ResponseData ' + res.pArgs.response.ResponseData);
+          console.log('TwoFactorAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const pPort = res.pArgs.pxyDetails.port;
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});

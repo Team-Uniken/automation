@@ -112,7 +112,7 @@ export default class PasswordSet extends React.Component {
 
   render() {
     return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.counter}>
             {this.props.url.currentIndex}/{this.props.url.chlngsCount}

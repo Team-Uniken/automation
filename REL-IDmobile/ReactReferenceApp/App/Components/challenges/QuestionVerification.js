@@ -74,7 +74,7 @@ export default class QuestionVerification extends React.Component {
   checkAnswer() {
     const scAns = this.state.sAnswer;
     if (scAns.length > 0) {
-      responseJson = this._props.url.chlngJson;
+      responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = scAns;
       Events.trigger('showNextChallenge', {
         response: responseJson,
@@ -85,7 +85,7 @@ export default class QuestionVerification extends React.Component {
   }
 
   btnText() {
-    if (this._props.url.chlngJson.chlng_idx === this._props.url.chlngsCount) {
+    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'Submit';
     }
     return 'Continue';
@@ -93,21 +93,21 @@ export default class QuestionVerification extends React.Component {
 
   render() {
     return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <View
           style={Skin.activationStyle.topGroup}
         >
           <Text style={Skin.activationStyle.counter}>
-            {this._props.url.currentIndex}/{this._props.url.chlngsCount}
+            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
           </Text>
           <Text style={Skin.activationStyle.title}>
             Secret Question
           </Text>
           <Text style={Skin.activationStyle.info}>
-            {this._props.url.chlngJson.attempts_left} Attempts Left
+            {this.props.url.chlngJson.attempts_left} Attempts Left
           </Text>
           <Text style={Skin.activationStyle.info}>
-            {this._props.url.chlngJson.chlng_resp[0].challenge}
+            {this.props.url.chlngJson.chlng_resp[0].challenge}
           </Text>
 
           <View style={Skin.activationStyle.input_wrap}>
@@ -116,7 +116,6 @@ export default class QuestionVerification extends React.Component {
                 autoCorrect={false}
                 ref={'answer'}
                 placeholder={'Enter Secret Answer'}
-                placeholderTextColor={'#8F8F8F'}
                 onChange={this.onAnswerChange.bind(this)}
                 returnKeyType={'next'}
                 secureTextEntry={true}

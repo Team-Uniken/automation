@@ -8,8 +8,10 @@
  */
 
 #import "AppDelegate.h"
-
 #import "RCTRootView.h"
+#
+
+//#include "TargetConditionals.h"
 
 @implementation AppDelegate
 
@@ -31,7 +33,7 @@
    * on the same Wi-Fi network.
    */
 
-//  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
 //  jsCodeLoca?tion = [NSURL URLWithString:@"http://10.0.1.85:8081/index.ios.bundle?platform=ios&dev=true"];
   
   /**
@@ -43,13 +45,25 @@
    */
 
   // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-  
+/*
+=======
+  /*
+>>>>>>> Stashed changes
   if(RCT_DEBUG == 1) {
     jsCodeLocation = [NSURL URLWithString:@"http:localhost:8081/index.ios.bundle?platform=ios&dev=true"];
   } else {
+ // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+ 
+
+  if (!TARGET_OS_SIMULATOR) {
+    NSLog(@"in MAIN ");
     jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  } else {
+    NSLog(@"in localhost");
+    jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
   }
-  
+<<<<<<< Updated upstream
+*/
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"ReactRefApp"
@@ -62,7 +76,7 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
-  
+
   /*
     ADDED TO REMOVE LAUNCH WHITE SCREEN FLASH
    */
@@ -71,8 +85,8 @@
   rootView.loadingView = launchScreenView;
   
   
-  
   return YES;
 }
+
 
 @end

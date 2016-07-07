@@ -138,9 +138,9 @@ class ReactRefApp extends React.Component {
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'SecureWebView') {
-      return (<Web navigator={nav} url={route.url} title={route.title} secure navigate scale />);
+      return (<Web navigator={nav} url={route.url} title={route.title} secure navigate />);
     } else if (id === 'WebView') {
-      return (<Web navigator={nav} url={route.url} title={route.title} navigate scale />);
+      return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
      
     // SECURITY SCENES
     } else if (id === 'Activation') {
@@ -158,7 +158,7 @@ class ReactRefApp extends React.Component {
     } else if (id === 'QuestionSet') {
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'QuestionVerification') {
-      return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
+      return (<QuestionVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'DevBind') {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     }

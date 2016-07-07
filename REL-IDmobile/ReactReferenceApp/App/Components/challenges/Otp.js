@@ -94,7 +94,6 @@ btnText(){
               placeholderTextColor={'rgba(255,255,255,0.7)'}
               style={Skin.activationStyle.textinput}
               value={this.state.inputUsername}
-              autoCorrect={false}
               ref={'accessCode'}
               placeholder={'Code'}
               onChange={this.onAccessCodeChange.bind(this)}

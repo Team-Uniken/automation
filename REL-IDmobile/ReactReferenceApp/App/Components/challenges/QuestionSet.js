@@ -47,11 +47,11 @@ export default class QuestionSet extends React.Component {
         chlng_type: 2,
         challengeOperation: 1,
         chlng_prompt: [[
-          "what is your petname",
-          "what is the name of your mother and where does she live?",
-          "what is the name of your father",
-          "what is the name of your sister",
-          "what is the name of your brother",
+          "What is the last name of your third grade teacher?",
+          "What was the name of the boy/girl you had your second kiss with?",
+          "What was the name of your second dog/cat/goldfish/etc?",
+          "Where were you when you had your first alcoholic drink (or cigarette)?",
+          "When you were young, what did you want to be when you grew up?",
         ]],
         chlng_info:[
           {
@@ -85,7 +85,15 @@ export default class QuestionSet extends React.Component {
   componentDidMount() {
     // console.log('----- QuestionSet - componentDidMount');
     // console.log(this.props);
-    const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+    const prompts = [
+      'What is the last name of your third grade teacher?',
+      'What was the name of the boy/girl you had your second kiss with?',
+      'What was the name of your second dog/cat/goldfish/etc?',
+      'Where were you when you had your first alcoholic drink (or cigarette)?',
+      'When you were young, what did you want to be when you grew up?',
+    ];
+    //const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+    const { data, sectionIds } = this.renderListViewData(prompts);
     this.setState({
       dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
     });
@@ -171,7 +179,7 @@ export default class QuestionSet extends React.Component {
      */
 
     return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.title}>Question and Answer</Text>
           <View style={[Skin.activationStyle.input_wrap]}>

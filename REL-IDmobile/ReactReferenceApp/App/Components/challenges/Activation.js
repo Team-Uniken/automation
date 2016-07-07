@@ -134,7 +134,6 @@ export default class Activation extends React.Component {
                 placeholderTextColor={'rgba(255,255,255,0.7)'}
                 style={Skin.activationStyle.textinput}
                 value={this.state.inputUsername}
-                autoCorrect={false}
                 ref={'activatonCode'}
                 placeholder={'Code'}
                 onChange={this.onActivationCodeChange.bind(this)}

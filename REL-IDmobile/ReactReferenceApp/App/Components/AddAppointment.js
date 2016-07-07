@@ -115,12 +115,11 @@ class AddAppointment extends React.Component {
         </TouchableHighlight>
       </ScrollView>
       <Modal
-        style={Skin.addappointment.branchstyle}
+        style={[Skin.addappointment.branchstyle,{alignItems: 'center'}]}
         offset={this.state.offset}
         open={this.state.open}
         modalDidOpen={() => console.log('modal did open')}
         modalDidClose={() => this.setState({open: false})}
-        style={{alignItems: 'center'}}
       >
         <Picker
           selectedValue={this.state.SelectedBranch}

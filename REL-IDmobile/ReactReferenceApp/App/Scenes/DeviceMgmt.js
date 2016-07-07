@@ -139,6 +139,7 @@ export default class DeviceMgmtScene extends React.Component {
       }),
       username: '',
       status: 'created',
+      deviceCount: 0,
     };
   }
 
@@ -215,12 +216,14 @@ export default class DeviceMgmtScene extends React.Component {
     console.log('----- onGetRegistredDeviceDetails');
     devicesResponse = e;
     const res = JSON.parse(e.response);
+    console.log(res);
     if (res.errCode === 0) {
       devicesList = res.pArgs.response.ResponseData;
       deviceHolderList = this.renderListViewData(devicesList.device);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(deviceHolderList),
       });
+      this.setState({deviceCount: devicesList.length });
     } else {
       alert('Something went wrong');
     }
@@ -262,21 +265,26 @@ export default class DeviceMgmtScene extends React.Component {
 
 
   onDeletePressed(deviceHolder) {
+    console.log(deviceHolder);
     const device = deviceHolder.device;
     let status;
-    if (this.isDeviceDeleted(device)) {
-      status = Constants.DEVICE_ACTIVE;
+    if (this.state.deviceCount <= 1) {
+      alert('You cannot delete the last permanent device for this account.');
     } else {
-      status = Constants.DEVICE_DELETE;
+      if (this.isDeviceDeleted(device)) {
+        status = Constants.DEVICE_ACTIVE;
+      } else {
+        status = Constants.DEVICE_DELETE;
+      }
+      Alert.alert(
+        '',
+        'Do you want to change status to ' + status + ' ?',
+        [
+          {text: 'Cancel', onPress: () => console.log("----- Cancel pressed") },
+          {text: 'OK', onPress: () => this.deleteDevice(deviceHolder) },
+        ]
+      );
     }
-    Alert.alert(
-      '',
-      'Do you want to change status to ' + status + ' ?',
-      [
-        {text: 'Cancel', onPress: () => console.log("----- Cancel pressed") },
-        {text: 'OK', onPress: () => this.deleteDevice(deviceHolder) },
-      ]
-    );
   }
 
   onTextChange(text) {
@@ -383,6 +391,7 @@ export default class DeviceMgmtScene extends React.Component {
         dataSource: this.state.dataSource.cloneWithRows(deviceHolderList),
       });
       console.log("----- ----- this.state.dataSource has been updated.");
+      console.log(this.state.dataSource);
       this.updateDeviceDetails();
     }
 
