@@ -126,7 +126,7 @@ class Load extends React.Component {
         AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
             console.log('get Item, Connection Profiles:');
             profiles = JSON.parse(profiles);
-
+            console.log(profiles);
             if ((profiles == null) || (profiles.length == 0)) {
                 console.log("NOT FOUND !!!!!!!!, hence import connection profiles now");
 
@@ -160,6 +160,7 @@ class Load extends React.Component {
 
                 AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
                     currentProfile = JSON.parse(currentProfile);
+                    console.log(currentProfile);
                     if (currentProfile != null || currentProfile.length > 0) {
                         this.doInitialize();
                     } else {
@@ -261,6 +262,7 @@ class Load extends React.Component {
     }
     _handleAppStateChange(currentAppState) {
         console.log('_handleAppStateChange');
+        console.log(currentAppState);
 
         if (currentAppState == 'background') {
             console.log('App State Change background:');
@@ -270,26 +272,28 @@ class Load extends React.Component {
                     if (response[0].error == 0) {
                         AsyncStorage.setItem("savedContext", response[0].response);
                     }
-                    console.log('immediate response is' + response[0].error);
+                    console.log('Immediate response is ' + response[0].error);
                 } else {
-                    console.log('immediate response is' + response[0].error);
+                    console.log('No response.');
                 }
             })
         } else if (currentAppState == 'active') {
             console.log('App State Change active:');
 
-
-            var proxySettings;
-            var jsonProxySettings = JSON.stringify(proxySettings);
+            //var proxySettings;
+            //console.log(proxySettings);
+            //var jsonProxySettings = JSON.stringify(proxySettings);
             AsyncStorage.getItem("savedContext").then((value) => {
-                ReactRdna.resumeRuntime(value, jsonProxySettings, (response) => {
+                ReactRdna.resumeRuntime(value, null, (response) => {
                     if (response) {
-                        console.log('immediate response is' + response[0].error);
+                        console.log('Immediate response is ' + response[0].error);
                     } else {
-                        console.log('immediate response is' + response[0].error);
+                        console.log('No response.');
                     }
                 })
             }).done();
+        } else if (currentAppState === 'inactive') {
+          console.log('App State Change Inactive');
         }
     }
 
@@ -370,6 +374,8 @@ class Load extends React.Component {
   }
 
   render() {
+    console.log('************ Load Render');
+    console.log(this.props.navigator.state);
     return (
       <MainActivation navigator={this.props.navigator}>
         <Animated.View style={[Skin.loadStyle.rid_wrap, { top: this.state.rid_top }]}>
