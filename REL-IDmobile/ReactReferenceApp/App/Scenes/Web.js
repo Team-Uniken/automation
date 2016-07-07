@@ -38,6 +38,10 @@ export default class Web extends React.Component {
     };
   }
 
+  componentWillMount(){
+    console.log('************ Component Will Mount');
+  }
+
   /**
    * Returns the back and forward button of the toolbar if navigation is allowed
    * @return {[type]} [description]
@@ -67,9 +71,7 @@ export default class Web extends React.Component {
   }
 
   getWebView() {
-    if(!this.props.secure){
-      Communications.web(this.props.url)
-    } else if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios') {
       return (
         <WebView
           ref={WEBVIEW_REF}
@@ -106,7 +108,6 @@ export default class Web extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <Main
         drawerState={{
@@ -134,9 +135,11 @@ export default class Web extends React.Component {
           {this.getWebView()}
           {this.renderBottomBar()}
         </View>
-      </Main>
+      </Main>           
     );
   }
+
+
 
   goBack() {
     this.refs[WEBVIEW_REF].goBack();
@@ -164,6 +167,10 @@ export default class Web extends React.Component {
       loading: navState.loading,
       scalesPageToFit: this.state.scalesPageToFit,
     });
+    if(!this.props.secure){
+      this.props.navigator.pop();
+      Communications.web(this.props.url);
+    }
   }
 
 }
@@ -176,8 +183,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Skin.colors.PRIMARY,
   },
-  webView:{
-    backgroundColor: 'red',
+  webView: {
+    backgroundColor: Skin.colors.BACK_GRAY,
   },
   navButton: {
     width: 50,
@@ -195,12 +202,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: 'transparent',
   },
-  navButtonText:{
+  navButtonText: {
     fontSize: 20,
     color: Skin.colors.TEXT_COLOR,
     fontWeight: 'bold',
   },
-  disabledButtonText:{
+  disabledButtonText: {
     fontSize: 20,
     color: 'rgba(' + Skin.colors.TEXT_COLOR_RGB + ', 0.3)',
     fontWeight: 'bold',
