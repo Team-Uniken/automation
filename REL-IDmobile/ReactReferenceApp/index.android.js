@@ -48,6 +48,7 @@ const {
   AppRegistry,
   Navigator,
   Text,
+  BackAndroid,
 } = React;
 
 
@@ -75,6 +76,11 @@ const FadeOut = {
   },
 };
 
+
+BackAndroid.addEventListener('hardwareBackPress', function() {
+   
+     return true;
+});
 
 class ReactRefApp extends React.Component {
 
