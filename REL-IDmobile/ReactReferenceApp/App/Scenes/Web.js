@@ -99,7 +99,7 @@ export default class Web extends React.Component {
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onLoad={()=>{console.log('loaded')}}
           scalesPageToFit={this.state.scalesPageToFit}
-          source={this.props.source}
+//          source={this.props.source}
           proxy={this.props.proxy}
           javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
         />
@@ -135,7 +135,7 @@ export default class Web extends React.Component {
           {this.getWebView()}
           {this.renderBottomBar()}
         </View>
-      </Main>           
+      </Main>
     );
   }
 

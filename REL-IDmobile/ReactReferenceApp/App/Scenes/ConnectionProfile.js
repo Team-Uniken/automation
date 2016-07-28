@@ -46,9 +46,16 @@ class ConnectionProfileScene extends React.Component {
     this.open();
   }
 
+  validateURL(textval) {
+    var urlregex = /^(http|https):\/\/(([a-zA-Z0-9$\-_.+!*'(),;:&=]|%[0-9a-fA-F]{2})+@)?(((25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])){3})|localhost|([a-zA-Z0-9\-\u00C0-\u017F]+\.)+([a-zA-Z]{2,}))(:[0-9]+)?(\/(([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*(\/([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*)*)?(\?([a-zA-Z0-9$\-_.+!*'(),;:@&=\/?]|%[0-9a-fA-F]{2})*)?(\#([a-zA-Z0-9$\-_.+!*'(),;:@&=\/?]|%[0-9a-fA-F]{2})*)?)?$/;
+    return urlregex.test(textval);
+}
+
   checkURL() {
     const url = this.state.inputURL;
     if (url.length > 0) {
+        if(this.validateURL(url)){
+
       fetch(url)
         .then((response) => response.text())
         .then((text) => {
@@ -76,7 +83,6 @@ class ConnectionProfileScene extends React.Component {
                     }
                   }
                 }
-
                 oldProfiles = oldProfiles.concat(profileArray);
                 CONNECTION_PROFILES_DATA = oldProfiles;
                 AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(oldProfiles), () => {
@@ -102,13 +108,16 @@ class ConnectionProfileScene extends React.Component {
             open: false,
           });
         });
+    }else{
+          alert('Invalid connection profile, contact admin');
+    }
     } else {
       alert('Please enter url');
     }
   }
 
   onURLChange(event) {
-    newstate = this.state;
+    var newstate = this.state;
     newstate.inputURL = event.nativeEvent.text;
     this.setState(newstate);
   }
