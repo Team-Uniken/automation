@@ -224,6 +224,7 @@ export default class QuestionSet extends React.Component {
                   paddingLeft:5,
                   justifyContent:'center',
                 }]}
+                onSubmitEditing={this.setSecrets.bind(this)}
                 onChange={this.onAnswerChange.bind(this)}
               />
             </View>

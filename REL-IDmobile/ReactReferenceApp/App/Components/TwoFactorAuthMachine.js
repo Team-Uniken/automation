@@ -36,6 +36,7 @@ import Constants from './Constants';
 /*
   Instantiaions
 */
+let saveChallengeJson;
 let challengeJson;
 let challengeJsonArr;
 let currentIndex;
@@ -63,6 +64,7 @@ class TwoFactorAuthMachine extends React.Component {
     obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
+    saveChallengeJson=this.props.url.chlngJson;
     challengeJsonArr = challengeJson.chlng;
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
@@ -104,8 +106,12 @@ class TwoFactorAuthMachine extends React.Component {
     }
   }
 
+ 
+
   onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
+
+
     // Unregister All Events
     // We can also unregister in componentWillUnmount
     subscriptions.remove();
@@ -147,7 +153,25 @@ class TwoFactorAuthMachine extends React.Component {
           'Error',
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
-            onPress: () => obj.onErrorOccured(res.pArgs.response),
+              onPress: () => {
+
+          const chlngJson = saveChallengeJson;
+          const nextChlngName = chlngJson.chlng[0].chlng_name;
+          if (chlngJson != null) {
+            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+            this.props.navigator.push({
+              id: 'Machine',
+              title: nextChlngName,
+              url: {
+                chlngJson,
+                screenId: nextChlngName,
+              },
+            });
+          }
+
+
+              },
             style: 'cancel',
           }]
         );

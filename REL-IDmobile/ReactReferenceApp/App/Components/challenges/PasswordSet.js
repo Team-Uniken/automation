@@ -107,7 +107,7 @@ export default class PasswordSet extends React.Component {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
-    return 'NEXT';
+    return 'Continue';
   }
 
   render() {
@@ -118,7 +118,6 @@ export default class PasswordSet extends React.Component {
             {this.props.url.currentIndex}/{this.props.url.chlngsCount}
           </Text>
           <Text style={Skin.activationStyle.title}>Set Password</Text>
-          <Text style={Skin.activationStyle.info}>Enter password of length 8-10 characters</Text>
           <View style={Skin.activationStyle.input_wrap}>
             <View style={Skin.activationStyle.textinput_wrap}>
               <TextInput
