@@ -67,7 +67,7 @@ class Load extends React.Component {
     componentDidMount() {
 
         Obj = this;
-
+        AppState.removeEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('change', this._handleAppStateChange);
 
         if(onPauseCompletedListener !== undefined){
