@@ -44,6 +44,11 @@ import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
+
+import dismissKeyboard from 'react-native-dismiss-keyboard';
+var {DeviceEventEmitter} = require('react-native')
+DeviceEventEmitter.addListener('keyboardDidHide', dismissKeyboard)
+
 const {
   AppRegistry,
   Navigator,

@@ -12,8 +12,6 @@ import Skin from '../Skin';
 */
 
 import dismissKeyboard from 'react-native-dismiss-keyboard';
-var {DeviceEventEmitter} = require('react-native')
-DeviceEventEmitter.addListener('keyboardDidHide', dismissKeyboard)
 /* 
   INSTANCES
 */
