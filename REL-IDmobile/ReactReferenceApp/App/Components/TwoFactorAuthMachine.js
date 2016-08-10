@@ -64,7 +64,13 @@ class TwoFactorAuthMachine extends React.Component {
     obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
-    saveChallengeJson=this.props.url.chlngJson;
+    // if(saveChallengeJson==null){
+    // saveChallengeJson=this.props.url.chlngJson;
+    // }
+    // if(challengeJson.length==0)
+    // {
+    //   challengeJson=saveChallengeJson;
+    // }
     challengeJsonArr = challengeJson.chlng;
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
@@ -154,8 +160,13 @@ class TwoFactorAuthMachine extends React.Component {
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
               onPress: () => {
+                        var chlngJson;
+          if(res.pArgs.response.ResponseData==null){
+          chlngJson = saveChallengeJson;
+          }else{
+          chlngJson = res.pArgs.response.ResponseData;
+          }
 
-          const chlngJson = saveChallengeJson;
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
             console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
