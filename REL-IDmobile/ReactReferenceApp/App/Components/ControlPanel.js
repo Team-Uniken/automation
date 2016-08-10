@@ -19,8 +19,9 @@ var UserLogin = require('./challenges/UserLogin');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
-
+let chlngJson;
+let nextChlngName;
+var eventLogOff;
 /*
  INSTANCES
  */
@@ -77,20 +78,35 @@ class ControlPanel extends React.Component{
 
   componentDidMount(){
     Obj = this;
-    DeviceEventEmitter.addListener('onLogOff', function (e) {
-                                   console.log('immediate response is'+e.response);
-                                   var responseJson = JSON.parse(e.response);
-                                   if(responseJson.errCode == 0){
-                                   console.log('LogOff Successfull');
-                                   Obj.popToLoadView();
-                                   }else{
-                                   alert('Failed to Log-Off with Error '+responseJson.errCode);
-                                   }
-                                   });
+    if(eventLogOff){
+     eventLogOff.remove();
+    }
+   eventLogOff = DeviceEventEmitter.addListener('onLogOff', function(e) {
+   eventLogOff.remove();
+      console.log('immediate response is' + e.response);
+      var responseJson = JSON.parse(e.response);
+      if (responseJson.errCode == 0) {
+          console.log('LogOff Successfull');
+        chlngJson = responseJson.pArgs.response.ResponseData;
+        nextChlngName = chlngJson.chlng[0].chlng_name
+        Obj.doNavigation();
+       // Obj.popToLoadView();
+      } else {
+        alert('Failed to Log-Off with Error ' + responseJson.errCode);
+      }
+    });
   }
 
-  popToLoadView(){
-    this.props.navigator.replace({id: 'Load'});
+  doNavigation() {
+    console.log('doNavigation:');
+    this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+  }
+
+  popToLoadView() {
+    this.props.navigator.replace({
+      id: 'Load'
+    });
+
   }
 
   render(){
