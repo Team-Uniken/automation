@@ -64,13 +64,13 @@ class TwoFactorAuthMachine extends React.Component {
     obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
-    // if(saveChallengeJson==null){
-    // saveChallengeJson=this.props.url.chlngJson;
-    // }
-    // if(challengeJson.length==0)
-    // {
-    //   challengeJson=saveChallengeJson;
-    // }
+    if(saveChallengeJson==null){
+    saveChallengeJson=this.props.url.chlngJson;
+    }
+    if(challengeJson.length==0)
+    {
+      challengeJson=saveChallengeJson;
+    }
     challengeJsonArr = challengeJson.chlng;
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
