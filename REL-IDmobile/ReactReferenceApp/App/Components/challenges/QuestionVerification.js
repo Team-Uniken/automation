@@ -125,6 +125,8 @@ export default class QuestionVerification extends React.Component {
                 onSubmitEditing={this.checkAnswer.bind(this)} />
             </View>
           </View>
+          <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+
           <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
               style={Skin.activationStyle.button}

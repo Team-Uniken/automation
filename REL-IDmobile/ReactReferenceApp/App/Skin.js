@@ -162,6 +162,13 @@ const customeStyle = StyleSheet.create({
     margin: 12,
     opacity: 0.7,
   },
+    attempt: {
+    fontSize: 16,
+    color: TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 8,
+  },
   row: {
     flexDirection: 'row',
     width: SCREEN_WIDTH,

@@ -135,6 +135,7 @@ export default class DeviceBinding extends React.Component {
           </TouchableHighlight>
         </Animated.View>
         <Text style={styles.type}>{this.state.type}</Text>
+
         <View style={Skin.activationStyle.input_wrap}>
           <TouchableOpacity
             style={Skin.activationStyle.button}
