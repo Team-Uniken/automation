@@ -263,6 +263,42 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 callOnMainThread(runnable);
                 return 0;
             }
+
+            @Override
+            public String getDeviceToken() {
+                return "deviceToken";
+            }
+
+            @Override
+            public int onGetNotifications(final String s) {
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            WritableMap params = Arguments.createMap();
+                            params.putString("response", s);
+                            context
+                                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                    .emit("onGetNotifications", params);
+                        }
+                    };
+                    callOnMainThread(runnable);
+                    return 0;
+            }
+
+            @Override
+            public int onUpdateNotification(final String s) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onUpdateNotification", params);
+                    }
+                };
+                callOnMainThread(runnable);
+                return 0;            }
         };
 
         RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, context);
@@ -289,6 +325,43 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         WritableArray writableArray = Arguments.createArray();
         writableArray.pushMap(errorMap);
 
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void getNotifications(String recordCount, String startRecord, String enterpriseID, String startDate, String endDate, Callback callback){
+        Logger.d(TAG , "----- getNotification ");
+        Logger.d(TAG , "----- recordCount " + recordCount);
+        Logger.d(TAG , "----- startRecord " + startRecord);
+        Logger.d(TAG , "----- enterpriseID " + enterpriseID);
+        Logger.d(TAG , "----- startDate " + startDate);
+        Logger.d(TAG , "----- endDate " + endDate);
+
+
+        int intRecordCount=Integer.parseInt(recordCount);
+        int intStartRecord=Integer.parseInt(startRecord);
+
+        int error = rdnaObj.getNotifications(intRecordCount,intStartRecord,enterpriseID,startDate,endDate);
+
+        Logger.d(TAG , "----- error " + error);
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+    @ReactMethod
+    public void updateNotification(String notificationID, String response, Callback callback){
+        Logger.d(TAG , "----- updateNotification ");
+        Logger.d(TAG , "----- notificationID " + notificationID);
+        Logger.d(TAG , "----- startReresponsecord " + response);
+
+        int error = rdnaObj.updateNotifications(notificationID,response);
+        Logger.d(TAG , "----- error " + error);
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
         callback.invoke(writableArray);
     }
 
