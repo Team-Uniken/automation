@@ -423,6 +423,80 @@ const appointmentrow = StyleSheet.create({
 });
 
 
+const notification = StyleSheet.create({
+  customerow: {
+    backgroundColor: '#fff',
+    width: SCREEN_WIDTH-32,
+    marginTop:8,
+    marginLeft:16,
+    marginRight:16,
+  },
+  row: {
+    margin: 4,
+    flexDirection: 'row',
+        width: SCREEN_WIDTH-32,
+
+  },
+    text: {
+    margin: 10,
+  },
+  col: {
+    marginRight: 20,
+    flexDirection: 'column'
+  },
+  subject: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: BLACK_TEXT_COLOR,
+    width: SCREEN_WIDTH / 2-16,
+    textAlign: 'left',
+    opacity:1,
+  },
+  time: {
+    fontSize: 16,
+    color: BLACK_TEXT_COLOR,
+    textAlign: 'right',
+    width: SCREEN_WIDTH / 2-32,
+    opacity:0.6,
+  },
+  body: {
+    fontSize: 16,
+    color: BLACK_TEXT_COLOR,
+    width: SCREEN_WIDTH-32,
+    opacity: 0.6,
+  },
+  buttontext: {
+    fontSize: 16,
+    color: '#FFF',
+    textAlign: 'center',
+    opacity:1,
+  },
+   confirmbutton: {
+    width:(SCREEN_WIDTH-32)/3,
+    height:48,
+    backgroundColor:'#37bd27',
+  },
+   denybutton: {
+    width:(SCREEN_WIDTH-32)/3,
+    height:48,
+    backgroundColor:'#c63f48',
+  },
+    fraudbutton: {
+    width:(SCREEN_WIDTH-32)/3,
+    height:48,
+    backgroundColor:'#212121',
+  },
+    approvebutton: {
+    width:(SCREEN_WIDTH-32)/2,
+    height:48,
+    backgroundColor:'#37bd27',
+  },
+    rejectbutton: {
+    width:(SCREEN_WIDTH-32)/2,
+    height:48,
+    backgroundColor:'#c63f48',
+  },
+});
 
 const addappointment = StyleSheet.create({
   row: {
@@ -1078,6 +1152,7 @@ module.exports = {
   SCREEN_HEIGHT,
   customeStyle,
   appointmentrow,
+  notification,
   addappointment,
   questionrow,
   ConnectionProfile,
