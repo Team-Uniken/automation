@@ -12,6 +12,7 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 /*
  CALLED
  */
+import Events from 'react-native-simple-events';
 var styles = Skin.loadStyle;
 var Main = require('./Main');
 //var Menu = require('./Menu');
@@ -22,6 +23,7 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 let chlngJson;
 let nextChlngName;
 var eventLogOff;
+let onGetNotifications;
 /*
  INSTANCES
  */
@@ -42,6 +44,7 @@ class ControlPanel extends React.Component{
   constructor(props){
     super(props);
     console.log(props);
+    //this.getMyNotifications();
   }
   
   showLogOffAlert(){
@@ -95,7 +98,67 @@ class ControlPanel extends React.Component{
                                                  alert('Failed to Log-Off with Error ' + responseJson.errCode);
                                                  }
                                                  });
+    if(onGetNotifications){
+      onGetNotifications.remove();
+    }
+    onGetNotifications = DeviceEventEmitter.addListener(
+                                                        'onGetNotifications',
+                                                        this.onGetNotificationsDetails.bind(this)
+                                                        );
+    
   }
+  
+  
+  onGetNotificationsDetails(e) {
+    console.log('----- onGetNotificationsDetails');
+   // NotificationObtianedResponse = e;
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      if( res.pArgs.response.ResponseData.notifications.length > 0){
+        var allScreens = this.props.navigator.getCurrentRoutes(0);
+        
+        for(var i = 0; i < allScreens.length; i++){
+          var screen = allScreens[i];
+          if(screen.id == 'NotificationMgmt'){
+            var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+            mySelectedRoute.url =  { "data": e};
+            Events.trigger('showNotification',e);
+            this.props.navigator.popToRoute(mySelectedRoute);
+                       return;
+          }
+        }
+     this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
+      }
+    } else {
+      alert('Something went wrong');
+    }
+  }
+
+  
+  getMyNotifications(){
+    
+    var recordCount = "-1";
+    var startIndex = "0";
+    var enterpriseID = "1234";
+    var startDate = "12:08:16";
+    var endDate = "18:08:16";
+    ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
+                               
+                               console.log('----- NotificationMgmt.getMyNotifications.response ');
+                               console.log(response);
+                               
+                               if (response[0].error !== 0) {
+                               console.log('----- ----- response is not 0');
+//                               if (NotificationObtianedResponse !== undefined) {
+//                               // If error occurred reload last response
+//                               
+//                                                              }
+                              }
+                               
+                               });
+  }
+  
   
   doNavigation() {
     console.log('doNavigation:');

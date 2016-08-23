@@ -11,6 +11,7 @@ import Modal from 'react-native-simple-modal';
 import Main from '../Components/Main';
 import Constants from '../Components/Constants';
 import Swipeout from 'react-native-swipeout';
+import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 /*
@@ -27,7 +28,6 @@ const {
   View,
   Alert,
 } = React;
-let obj;
 //let onUpdateDevice;
 //let onGetDevice;
 //let devicesList;
@@ -39,6 +39,7 @@ let notificationList;
 let notificationHolderList;
 let notificationResponse;
 let NotificationObtianedResponse;
+let obj;
 
 const FAKE_BOOK_DATA = [];
 const styles = StyleSheet.create({
@@ -150,21 +151,32 @@ export default class NotificationMgmtScene extends React.Component {
   }
 
   componentWillMount() {
-    onGetNotifications = DeviceEventEmitter.addListener(
-      'onGetNotifications',
-      this.onGetNotificationsDetails.bind(this)
-    );
-    onUpdateNotification = DeviceEventEmitter.addListener(
-      'onUpdateNotification',
-      this.onUpdateNotificationDetails.bind(this)
-    );
+//    onGetNotifications = DeviceEventEmitter.addListener(
+//      'onGetNotifications',
+//      this.onGetNotificationsDetails.bind(this)
+//    );
+//    onUpdateNotification = DeviceEventEmitter.addListener(
+//      'onUpdateNotification',
+//      this.onUpdateNotificationDetails.bind(this)
+//    );
+    obj = this;
+
+    Events.on('showNotification', 'showNotification', this.showNotification);
+    if(this.props.url != null){
+    NotificationObtianedResponse = this.props.url.data;
+    this.onGetNotificationsDetails(NotificationObtianedResponse);
+    }else{
+      this.getMyNotifications();
+    }
   }
 
   componentDidMount() {
-    this.getMyNotifications();
+    //this.getMyNotifications();
 //    this.updateNotificationDetails();
   }
-
+  showNotification(args){
+    obj.onGetNotificationsDetails(args);
+  }
   getMyNotifications(){
     
     var recordCount = "-1";
@@ -207,6 +219,9 @@ export default class NotificationMgmtScene extends React.Component {
                                  }
                                  });
   }
+  componentWillUnmount() {
+    Events.rm('showNotification', 'showNotification');
+      }
 
   onGetNotificationsDetails(e) {
     console.log('----- onGetNotificationsDetails');
@@ -215,11 +230,11 @@ export default class NotificationMgmtScene extends React.Component {
     console.log(res);
     if (res.errCode === 0) {
       notificationList = res.pArgs.response.ResponseData;
-      notificationHolderList = this.renderListViewData(notificationList.device);
+      notificationHolderList = this.renderListViewData(notificationList.notifications);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(notificationHolderList),
       });
-      this.setState({deviceCount: notificationList.length });
+      this.setState({deviceCount: notificationList.notifications.length });
     } else {
       alert('Something went wrong');
     }
@@ -373,7 +388,7 @@ export default class NotificationMgmtScene extends React.Component {
 
 
   renderRow(rowData) {
-    // console.log('in renderRow');
+    console.log(rowData);
     const device = rowData.device;
     // console.log('------ renderBook');
     const devicename = device.devName;

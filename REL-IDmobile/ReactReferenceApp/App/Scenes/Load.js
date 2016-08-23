@@ -74,26 +74,47 @@ class Load extends React.Component {
   }
   
   
-  // //Push notification code
+   //Push notification code
   
-  // componentWillMount(){
-  //   PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-  //   PushNotificationIOS.addEventListener('notification', this._onNotification);
-  //   PushNotificationIOS.requestPermissions();
-  // }
+   componentWillMount(){
+     PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+     PushNotificationIOS.addEventListener('notification', this._onNotification);
+     PushNotificationIOS.requestPermissions();
+   }
   
-  // _onNotification(notification) {
-  //   AlertIOS.alert(
-  //                  'Push Notification Received',
-  //                  'Alert message: ' + notification.getMessage(),
-  //                  [{
-  //                   text: 'Dismiss',
-  //                   onPress: null,
-  //                   }]
-  //                  );
-  // }
-  // //Push notification code Ends
+   _onNotification(notification) {
+     AlertIOS.alert(
+                    'Push Notification Received',
+                    'Alert message: ' + notification.getMessage(),
+                    [{
+                     text: 'Dismiss',
+                     onPress: null,
+                     }]
+                    );
+     Obj.getMyNotifications();
+   }
+   //Push notification code Ends
   
+  getMyNotifications(){
+    
+    var recordCount = "-1";
+    var startIndex = "0";
+    var enterpriseID = "1234";
+    var startDate = "12:08:16";
+    var endDate = "18:08:16";
+    ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
+                               
+                               console.log('----- NotificationMgmt.getMyNotifications.response ');
+                               console.log(response);
+                               
+                               if (response[0].error !== 0) {
+                               console.log('----- ----- response is not 0');
+                               
+                               }
+                               
+                               });
+  }
+
   componentDidMount() {
     
     Obj = this;
@@ -313,6 +334,7 @@ class Load extends React.Component {
       //console.log(proxySettings);
       //var jsonProxySettings = JSON.stringify(proxySettings);
       AsyncStorage.getItem("savedContext").then((value) => {
+                                                if(value != null){
                                                 ReactRdna.resumeRuntime(value, null, (response) => {
                                                                         if (response) {
                                                                         console.log('Immediate response is ' + response[0].error);
@@ -320,6 +342,7 @@ class Load extends React.Component {
                                                                         console.log('No response.');
                                                                         }
                                                                         })
+                                                }
                                                 }).done();
     } else if (currentAppState === 'inactive') {
       console.log('App State Change Inactive');

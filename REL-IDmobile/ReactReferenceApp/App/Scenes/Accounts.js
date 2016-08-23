@@ -12,7 +12,7 @@ import Main from '../Components/Main';
 import ListItem from '../Components/ListItem';
 import ListSectionHeader from '../Components/ListSectionHeader';
 import { FormattedCurrency } from 'react-native-globalize';
-
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
   Instantiaions
 */
@@ -54,6 +54,7 @@ export default class AccountsScene extends React.Component {
       dataSource: ds.cloneWithRowsAndSections([]),
     };
     self = this;
+    this.getMyNotifications();
   }
 
     /**
@@ -63,6 +64,32 @@ export default class AccountsScene extends React.Component {
   componentDidMount() {
     this.getAccountDetails();
   }
+  
+  
+  getMyNotifications(){
+    
+    var recordCount = "-1";
+    var startIndex = "0";
+    var enterpriseID = "1234";
+    var startDate = "12:08:16";
+    var endDate = "18:08:16";
+    ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
+                               
+                               console.log('----- NotificationMgmt.getMyNotifications.response ');
+                               console.log(response);
+                               
+                               if (response[0].error !== 0) {
+                               console.log('----- ----- response is not 0');
+                               //                               if (NotificationObtianedResponse !== undefined) {
+                               //                               // If error occurred reload last response
+                               //
+                               //                                                              }
+                               }
+                               
+                               });
+  }
+  
+  
 
   /**
    * Retrieves the account data in a json format
