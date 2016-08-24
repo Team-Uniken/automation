@@ -381,7 +381,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setDevToken(String devToken){
-      Log.d(TAG,"setdevtoken:"+devToken);
+      Log.d(TAG, "setdevtoken:" + devToken);
       String deviceToken=null;
       try {
         JSONObject jobj=new JSONObject(devToken);
@@ -481,9 +481,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void encryptDataPacket(String data,String ciperSpecs,String salt, Callback callback)
+    public void encryptDataPacket(String data,String salt, Callback callback)
     {
-        RDNA.RDNAStatus<byte[]> status=rdnaObj.encryptDataPacket(RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, ciperSpecs, salt.getBytes(), data.getBytes());
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.encryptDataPacket(RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, Constants.CYPHER_SPEC, salt.getBytes(), data.getBytes());
         WritableMap statusMap = Arguments.createMap();
         if(rdnaObj != null) {
             int error = status.errorCode;
@@ -500,13 +500,13 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void decryptDataPacket(String data,String ciperSpecs, String salt,Callback callback){
+    public void decryptDataPacket(String data,String salt,Callback callback){
         byte[] base64decodedData = null;
         if(data!=null && data.length() > 0){
             base64decodedData = Base64.decode(data,Base64.DEFAULT);
         }
 
-        RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, ciperSpecs, salt.getBytes(), base64decodedData);
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, Constants.CYPHER_SPEC, salt.getBytes(), base64decodedData);
         WritableMap statusMap = Arguments.createMap();
         if(rdnaObj != null) {
             int error = status.errorCode;
