@@ -31,6 +31,6 @@ public class RDNAReactPackage implements ReactPackage {
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return  Arrays.<ViewManager>asList(new WebViewBridgeManager());
+        return  Arrays.<ViewManager>asList(new WebViewBridgeManager(),new PatternViewManager());
     }
 }

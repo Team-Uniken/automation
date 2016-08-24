@@ -22,6 +22,7 @@ import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
 import LoadScene from './App/Scenes/Load';
 import Web from './App/Scenes/Web';
+import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
 
 // SECURITY SCENES
@@ -36,6 +37,8 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 // COMPONENTS
 
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
@@ -44,7 +47,7 @@ import Machine from './App/Components/TwoFactorAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
-
+var PushNotification = require('react-native-push-notification');
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 var {DeviceEventEmitter} = require('react-native')
 DeviceEventEmitter.addListener('keyboardDidHide', dismissKeyboard)
@@ -172,9 +175,61 @@ class ReactRefApp extends React.Component {
       return (<QuestionVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'DevBind') {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
+     }else if (id === 'NotificationMgmt') {
+      return (<NotificationMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     }
 
     return (<Text>Error</Text>);
+  }
+
+
+componentDidMount() {
+    console.log('component did mounted.');
+
+    PushNotification.configure({
+
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function(token) {
+        console.log( 'TOKEN:', token );
+        ReactRdna.setDevToken(JSON.stringify(token));
+
+    },
+
+    // (required) Called when a remote or local notification is opened or received
+    onNotification: function(notification) {
+        console.log( 'NOTIFICATION:', notification );
+       /** Notification.create({ 
+          subject:'RelidZeroTesting',
+          message: notification.message }).then(function(notification) {
+        console.log(notification);
+        console.log(notification.message);
+      }); */
+    },
+
+    // ANDROID ONLY: (optional) GCM Sender ID.
+    senderID: "379127486882",
+
+   /**
+    *  // IOS ONLY (optional): default: all - Permissions to register.
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },  
+    */
+
+    // Should the initial notification be popped automatically
+    // default: true
+    popInitialNotification: true,
+
+    /**
+      * (optional) default: true
+      * - Specified if permissions (ios) and token (android and ios) will requested or not,
+      * - if not, you must call PushNotificationsHandler.requestPermissions() later
+      */
+    requestPermissions: true,
+});
+
   }
 
   render() {
