@@ -54,7 +54,6 @@ export default class AccountsScene extends React.Component {
       dataSource: ds.cloneWithRowsAndSections([]),
     };
     self = this;
-    this.getMyNotifications();
   }
 
     /**
@@ -62,6 +61,7 @@ export default class AccountsScene extends React.Component {
      * @return {null}
      */
   componentDidMount() {
+    this.getMyNotifications();
     this.getAccountDetails();
   }
   

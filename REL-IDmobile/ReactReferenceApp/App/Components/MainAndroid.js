@@ -32,6 +32,7 @@ var {
 
 var dnaProxyPort;
 var dnaUserName;
+var dnaPasswd;
 var styles = StyleSheet.create({
   hamburger: {
     width: 24,

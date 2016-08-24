@@ -160,7 +160,7 @@ class UserLogin extends React.Component{
   
   
   checkUsernameSuccess(){
-    AsyncStorage.setItem("userId", savedUserName);
+//    AsyncStorage.setItem("userId", savedUserName);
     Main.dnaUserName = savedUserName;
     InteractionManager.runAfterInteractions(() => {
                                             this.props.navigator.push(

@@ -5,18 +5,21 @@
 */
 import React from 'react-native';
 import Skin from '../../Skin';
-
+import Main from '../Main';
 /*
   CALLED
 */
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
-
+import TouchID from 'react-native-touch-id';
 const {
   View,
   Text,
   TextInput,
   TouchableHighlight,
+  Platform,
+  Alert,
+  AsyncStorage,
 } = React;
 
 let responseJson;
@@ -30,6 +33,7 @@ export default class DeviceName extends React.Component {
   }
 
   componentDidMount() {
+//    this.setDeviceName();
 //    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
   }
 
@@ -47,6 +51,54 @@ export default class DeviceName extends React.Component {
       alert('Please enter Device Name ');
     }
   }
+  
+
+  onVerifyTouchIdSupport(){
+    TouchID.isSupported()
+    .then(supported => {
+          // Success code
+          console.log('TouchID is supported.');
+          this.OnTouchIdAlert();
+          })
+    .catch(error => {
+           // Failure code
+           this.setDeviceName();//normal way
+           console.log('TouchID is not supported.');
+           console.log(error);
+           });
+  }
+  
+  OnTouchIdAlert(){
+      if(Platform.OS === 'ios'){
+        Alert.alert(
+                    'Message',
+                    'Do you want to enable touchId feature?',
+                    [
+                     {
+                     text: 'NO',
+                     onPress: () => {console.log('Cancel Pressed');
+                     AsyncStorage.setItem("userID","empty");
+                     this.setDeviceName();
+                     style: 'cancel'
+                     }
+                     
+                     },
+                     {
+                     text: 'YES',
+                     onPress: () => {
+                     AsyncStorage.setItem("userId", Main.dnaUserName);
+                     AsyncStorage.setItem("passwd", Main.dnaPasswd);
+                     this.setDeviceName();
+
+                     }
+                     },
+                     ]
+                    )
+       }else{
+       
+       //Show alert for pattern.
+       }
+  }
 
   onDeviceNameChangeText(event) {
     this.setState({ deviceName: event.nativeEvent.text });
@@ -62,7 +114,14 @@ export default class DeviceName extends React.Component {
     }
     return 'Continue';
   }
-
+  
+  decidePlatformAndShowAlert(){
+    if(Platform.OS === 'ios'){
+      this.onVerifyTouchIdSupport();
+    }else{
+      this.setDeviceName();
+    }
+  }
 
 
   render() {
@@ -94,7 +153,7 @@ export default class DeviceName extends React.Component {
           </View>
           <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
-              onPress={this.setDeviceName.bind(this)}
+              onPress={this.decidePlatformAndShowAlert.bind(this)}
               style={Skin.activationStyle.button}
               activeOpacity={0.8}
             >

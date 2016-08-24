@@ -98,6 +98,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
   apnsDeviceToken = deviceToken;
+  NSLog(@"\n\n%@\n\n",deviceToken);
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 // Required for the notification event.

@@ -351,9 +351,9 @@ class Load extends React.Component {
   
   
   doInitialize() {
-    AsyncStorage.getItem("userId").then((value) => {
+    AsyncStorage.getItem("passwd").then((value) => {
                                         if(value){
-                                        if(value == "empty"){
+                                        if(value === "empty"){
                                         //PROCEED NORMAL WAY.
                                         this.newDoInitialize();
                                         }else{

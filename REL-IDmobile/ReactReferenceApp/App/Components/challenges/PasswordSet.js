@@ -5,7 +5,7 @@
  */
 import React from 'react-native';
 import Skin from '../../Skin';
-
+import Main from '../Main';
 /*
  CALLED
  */
@@ -90,7 +90,8 @@ export default class PasswordSet extends React.Component {
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
-          AsyncStorage.setItem("passwd", pw);
+//          AsyncStorage.setItem("passwd", pw);
+          Main.dnaPasswd = pw;
           let responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
           Events.trigger('showNextChallenge', {response: responseJson});
