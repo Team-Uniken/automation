@@ -76,23 +76,27 @@ class Load extends React.Component {
   
    //Push notification code
   
-  //  componentWillMount(){
-  //    PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-  //    PushNotificationIOS.addEventListener('notification', this._onNotification);
-  //    PushNotificationIOS.requestPermissions();
-  //  }
+    componentWillMount(){
+      if(Platform.OS === 'ios'){
+      PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+      PushNotificationIOS.addEventListener('notification', this._onNotification);
+      PushNotificationIOS.requestPermissions();
+      }else{
+      //Android push notification listeners to be added here.
+      }
+    }
   
-  //  _onNotification(notification) {
-  //    AlertIOS.alert(
-  //                   'Push Notification Received',
-  //                   'Alert message: ' + notification.getMessage(),
-  //                   [{
-  //                    text: 'Dismiss',
-  //                    onPress: null,
-  //                    }]
-  //                   );
-  //    Obj.getMyNotifications();
-  //  }
+    _onNotification(notification) {
+      AlertIOS.alert(
+                     'Push Notification Received',
+                     'Alert message: ' + notification.getMessage(),
+                     [{
+                      text: 'Dismiss',
+                      onPress: null,
+                      }]
+                     );
+      Obj.getMyNotifications();
+    }
    //Push notification code Ends
   
   getMyNotifications(){
