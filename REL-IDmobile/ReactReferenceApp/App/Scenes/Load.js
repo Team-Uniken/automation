@@ -76,23 +76,27 @@ class Load extends React.Component {
   
    //Push notification code
   
-  //  componentWillMount(){
-  //    PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-  //    PushNotificationIOS.addEventListener('notification', this._onNotification);
-  //    PushNotificationIOS.requestPermissions();
-  //  }
+    componentWillMount(){
+      if(Platform.OS === 'ios'){
+      PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+      PushNotificationIOS.addEventListener('notification', this._onNotification);
+      PushNotificationIOS.requestPermissions();
+      }else{
+      //Android push notification listeners to be added here.
+      }
+    }
   
-  //  _onNotification(notification) {
-  //    AlertIOS.alert(
-  //                   'Push Notification Received',
-  //                   'Alert message: ' + notification.getMessage(),
-  //                   [{
-  //                    text: 'Dismiss',
-  //                    onPress: null,
-  //                    }]
-  //                   );
-  //    Obj.getMyNotifications();
-  //  }
+    _onNotification(notification) {
+      AlertIOS.alert(
+                     'Push Notification Received',
+                     'Alert message: ' + notification.getMessage(),
+                     [{
+                      text: 'Dismiss',
+                      onPress: null,
+                      }]
+                     );
+      Obj.getMyNotifications();
+    }
    //Push notification code Ends
   
   getMyNotifications(){
@@ -351,9 +355,9 @@ class Load extends React.Component {
   
   
   doInitialize() {
-    AsyncStorage.getItem("userId").then((value) => {
+    AsyncStorage.getItem("passwd").then((value) => {
                                         if(value){
-                                        if(value == "empty"){
+                                        if(value === "empty"){
                                         //PROCEED NORMAL WAY.
                                         this.newDoInitialize();
                                         }else{
