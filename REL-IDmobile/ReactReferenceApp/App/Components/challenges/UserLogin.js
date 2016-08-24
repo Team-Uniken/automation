@@ -88,9 +88,28 @@ class UserLogin extends React.Component{
   
   
   componentDidMount() {
-    InteractionManager.runAfterInteractions(() => {
-                                            this.refs.inputUsername.focus();
-                                            });
+    
+    AsyncStorage.getItem("userId").then((value) => {
+                                        if(value){
+                                        if(value == "empty"){
+                                        //PROCEED NORMAL WAY.
+                                        InteractionManager.runAfterInteractions(() => {
+                                                                                this.refs.inputUsername.focus();
+                                                                                });
+                                        }else{
+                                        savedUserName = value;
+                                        this.state.inputUsername = savedUserName;
+                                        this.checkUsername();
+                                        }
+                                        }else{
+                                        InteractionManager.runAfterInteractions(() => {
+                                                                                this.refs.inputUsername.focus();
+                                                                                });
+                                        }
+                                        
+                                        }).done();
+    
+    
   }
   
   

@@ -84,8 +84,8 @@ android {
         applicationId "com.reactrefapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 1004
+        versionName "1.0.0.4"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -135,6 +135,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile(name:'app-sdk-debug', ext:'aar')
+    compile(name:'android-patternview-release', ext:'aar')
     compile project(':ExtraDimensions')
     compile ('com.google.android.gms:play-services-gcm:8.1.0') {
         force = true;

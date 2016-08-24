@@ -359,8 +359,13 @@ class Load extends React.Component {
                                         }else{
                                         savedUserName = value;
                                         //SHOW FINGER PRINT ALERT AND PROCEED
-//                                        this._verifyTouchIdSupport();
-                                                                                this.newDoInitialize();
+                                        if(Platform.OS === 'ios'){
+                                        console.log("ios touch");
+                                        this._verifyTouchIdSupport();
+                                        }else{
+                                        this.newDoInitialize();
+                                        };
+//
                                         }
                                         }else{
                                         this.newDoInitialize();
@@ -382,7 +387,7 @@ class Load extends React.Component {
     let description = 'Verify the existing mobile phone fingerprint using the home key'
     //let title       //fallback button title will be default as 'Enter Password'(localized)
     //let title = ""  //fallback button will be hidden
-    let title = "Verify Password"   //fallback button title will be 'Verify Password'(unlocalized)
+    //fallback button title will be 'Verify Password'(unlocalized)
     TouchId.verify( description, title, (error) => {
                    if (error) {
                    if(error.message == '-3') {
@@ -407,6 +412,8 @@ class Load extends React.Component {
           })
     .catch(error => {
            // Failure code
+           this.newDoInitialize()//normal way
+           console.log('TouchID is not supported.');
            console.log(error);
            });
   }
@@ -414,21 +421,27 @@ class Load extends React.Component {
     TouchID.authenticate(reason)
     .then(success => {
           // Success code
+          console.log('in verify touchId');
           this.newDoInitialize();
           })
-    .catch(fallbackAuth);
+    .catch(error => {
+           console.log(error)
+           var er = error.name;
+           
+           if(er === LAErrorUserFallback){
+           console.log("user clicked password");
+                      fallbackAuth();
+           }else{
+           AlertIOS.alert(error.message);
+           }
+           });
     
   }
   
-  fallbackAuth(reason) {
-    alert('infall');
-    return PasscodeAuth.authenticate(reason)
-    .then(success => {
-          // Success code
-          })
-    .catch(error => {
-           // Failure code
-           });
+  fallbackAuth() {
+    alert("infallback");
+    console.log('in verify touchId fallback');
+    this.newDoInitialize();
   }
   
   
