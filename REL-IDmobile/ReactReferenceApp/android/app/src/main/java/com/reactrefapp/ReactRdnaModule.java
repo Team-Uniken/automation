@@ -267,7 +267,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public String getDeviceToken() {
-                return "deviceToken";
+                return Constants.DEV_TOKEN;
             }
 
             @Override
@@ -377,6 +377,19 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
 
         callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void setDevToken(String devToken){
+      Log.d(TAG,"setdevtoken:"+devToken);
+      String deviceToken=null;
+      try {
+        JSONObject jobj=new JSONObject(devToken);
+        deviceToken= jobj.getString("token");
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      Constants.DEV_TOKEN=deviceToken;
     }
 
     @ReactMethod
