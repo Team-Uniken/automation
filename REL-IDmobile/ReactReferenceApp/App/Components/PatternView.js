@@ -50,6 +50,14 @@ class PatternView extends React.Component {
       [],
     );
   }
+
+  clearPattern(){
+    UIManager.dispatchViewManagerCommand(
+      React.findNodeHandle(this),
+      UIManager.RCTPatternView.Commands.clearPattern,
+      [],
+    );
+  }
 }
 
 PatternView.propTypes = {

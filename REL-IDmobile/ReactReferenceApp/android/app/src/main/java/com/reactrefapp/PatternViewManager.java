@@ -33,6 +33,7 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
     public static final String REACT_CLASS = "RCTPatternView";
     ReactPatternView view;
     public static final int COMMAND_GET_PATTERN = 1;
+    public static final int COMMAND_CLEAR_PATTERN = 2;
 
    // public static final String EVENT_ON_GET_PATTERN = "onGetPattern";
 
@@ -85,8 +86,8 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
     public Map<String,Integer> getCommandsMap() {
         Log.d("React", " View manager getCommandsMap:");
         return MapBuilder.of(
-                "getPatternString",
-                COMMAND_GET_PATTERN);
+                "getPatternString", COMMAND_GET_PATTERN,
+                "clearPattern",COMMAND_CLEAR_PATTERN);
     }
 
     @Override
@@ -99,6 +100,11 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
         switch (commandType) {
             case COMMAND_GET_PATTERN: {
                 view.getPatternString();
+                return;
+            }
+
+            case COMMAND_CLEAR_PATTERN: {
+                view.clearPattern();
                 return;
             }
 
