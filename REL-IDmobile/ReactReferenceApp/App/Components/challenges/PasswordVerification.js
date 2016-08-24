@@ -84,22 +84,29 @@ class PasswordVerification extends React.Component {
     failureMessage: '',
     };
   }
-  componentWillMount(){
-    AsyncStorage.getItem("passwd").then((value) => {
-                                        if(value){
-                                        savedpass = value;
-                                        
-                                        }else{
-                                        
-                                        }
-                                        }).done();
-  }
   
   componentDidMount() {
     obj = this;
-    InteractionManager.runAfterInteractions(() => {
-                                            this.refs.inputPassword.focus();
-                                            });
+    
+    
+    AsyncStorage.getItem("passwd").then((value) => {
+                                        if(value){
+                                        if(value == "empty"){
+                                        //PROCEED NORMAL WAY.
+                                        InteractionManager.runAfterInteractions(() => {
+                                                                                this.refs.inputPassword.focus();
+                                                                                });
+                                        }else{
+                                        this.state.inputPassword = value;
+                                        this.checkPassword();
+                                        }
+                                        }else{
+                                        InteractionManager.runAfterInteractions(() => {
+                                                                                this.refs.inputPassword.focus();
+                                                                                });
+                                        }
+                                        
+                                        }).done();
   }
   
   onPasswordChange(event) {

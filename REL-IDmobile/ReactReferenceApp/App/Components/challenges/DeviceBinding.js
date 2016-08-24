@@ -22,6 +22,7 @@ const {
   Image,
   Animated,
   StyleSheet,
+  AsyncStorage,
 } = React;
 
 
@@ -63,6 +64,22 @@ export default class DeviceBinding extends React.Component {
       },
     };
     */
+  }
+  
+  componentDidMount() {
+//    obj = this;
+    
+    
+    AsyncStorage.getItem("passwd").then((value) => {
+                                        if(value){
+                                        if(value == "empty"){
+                                        
+                                        }else{
+                                            check = true;
+                                            this.setDeviceBinding();
+                                            }
+                                        }
+                                        }).done();
   }
 
   setDeviceBinding() {
