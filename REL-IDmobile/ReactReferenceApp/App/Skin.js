@@ -644,8 +644,16 @@ const coreStyle = StyleSheet.create({
     alignItems: 'center',
   //backgroundColor: 'rgba(100,100,0,0.5)',
   },
+});
 
-
+const PatternLockStyle = StyleSheet.create({
+   patternlockview: {
+     position : 'absolute',
+     top: SCREEN_HEIGHT / 2 - 350/2,
+     left: SCREEN_WIDTH / 2 - 300 / 2,
+     width: 270,
+     height: 270
+   } 
 });
 
 const ConnectionProfile = StyleSheet.create({
