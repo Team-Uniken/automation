@@ -95,7 +95,16 @@ class Load extends React.Component {
                       onPress: null,
                       }]
                      );
-      Obj.getMyNotifications();
+      var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+      
+      for(var i = 0; i < allScreens.length; i++){
+        var screen = allScreens[i];
+        if(screen.id == 'Main'){
+           console.log('-----getMyNotifications called when notication comes-----');
+          Obj.getMyNotifications();
+          break ;
+        }
+      }
     }
    //Push notification code Ends
   

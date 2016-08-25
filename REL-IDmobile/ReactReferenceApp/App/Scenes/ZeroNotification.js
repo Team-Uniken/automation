@@ -60,6 +60,7 @@ var SampleRow = React.createClass({
                                   var data = notification.action[i];
                                   if(data.label == btnLabel){
                                   obj.updateNotificationDetails(notification.notification_uuid,data.action);
+                                  break;
                                   }
                                   
                                   }
