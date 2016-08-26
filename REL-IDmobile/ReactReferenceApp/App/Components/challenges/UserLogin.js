@@ -16,7 +16,10 @@ import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 
-
+import TouchID from 'react-native-touch-id';
+import PasscodeAuth from 'react-native-passcode-auth';
+import TouchId from 'react-native-smart-touch-id'
+const reason = 'Please validate your Touch Id';
 /*
 	INSTANCES
  */
@@ -34,6 +37,8 @@ const {
   TouchableOpacity,
   InteractionManager,
   AsyncStorage,
+  Platform,
+  AlertIOS,
 } = React;
 
 
@@ -88,25 +93,27 @@ class UserLogin extends React.Component{
   
   
   componentDidMount() {
-    
-    AsyncStorage.getItem("userId").then((value) => {
-                                        if(value){
-                                        if(value == "empty"){
-                                        //PROCEED NORMAL WAY.
-                                        InteractionManager.runAfterInteractions(() => {
-                                                                                this.refs.inputUsername.focus();
-                                                                                });
-                                        }else{
-                                        savedUserName = value;
-                                        this.state.inputUsername = savedUserName;
-                                        this.checkUsername();
-                                        }
-                                        }else{
-                                        InteractionManager.runAfterInteractions(() => {
-                                                                                this.refs.inputUsername.focus();
-                                                                                });
-                                        }
+    obj = this;
+    AsyncStorage.getItem("passwd").then((value) => {
+                                          if(value){
+                                            if(value === "empty"){
+                                                console.log("user empty");
+                                            }else{
+                                              AsyncStorage.getItem("userId").then((value) => {savedUserName = value}).done();
+                                                if(Platform.OS === 'ios'){
+                                                  console.log("ios touch");
+                                                  this._verifyTouchIdSupport();
+                                                }else{
+                                                  console.log("show pattern");
+                                                };
+                                            }
+                                          }else{
+                                                  console.log("no value in async storage");
+                                                  InteractionManager.runAfterInteractions(() => {
+                                                                                          this.refs.inputUsername.focus();
+                                                                                          });
                                         
+                                        }
                                         }).done();
     
     
@@ -116,6 +123,50 @@ class UserLogin extends React.Component{
   componentWillMount() {
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
   }
+  
+  
+  
+  _verifyTouchIdSupport(){
+    TouchID.isSupported()
+    .then(supported => {
+          // Success code
+          console.log('TouchID is supported.');
+          obj._verifyTouchId();
+          })
+    .catch(error => {
+           console.log('TouchID is not supported.');
+           console.log(error);
+           });
+  }
+  
+  _verifyTouchId(){
+    TouchID.authenticate(reason)
+    .then(success => {
+          // Success code
+          console.log('in verify touchId');
+          obj.state.inputUsername = savedUserName;
+          obj.checkUsername();
+          })
+    .catch(error => {
+           console.log(error)
+           var er = error.name;
+           
+           if(er === LAErrorUserFallback){
+           console.log("user clicked password");
+           fallbackAuth();
+           }else{
+           AlertIOS.alert(error.message);
+           }
+           });
+    
+  }
+  
+  fallbackAuth() {
+    alert("infallback");
+    console.log('in verify touchId fallback');
+    this.newDoInitialize();
+  }
+
   
   
   updateProgress() {

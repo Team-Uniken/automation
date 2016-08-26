@@ -9,6 +9,8 @@ import Main from '../Main';
 /*
   CALLED
 */
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
 import TouchID from 'react-native-touch-id';
@@ -86,8 +88,28 @@ export default class DeviceName extends React.Component {
                      {
                      text: 'YES',
                      onPress: () => {
-                     AsyncStorage.setItem("userId", Main.dnaUserName);
-                     AsyncStorage.setItem("passwd", Main.dnaPasswd);
+                      AsyncStorage.setItem("userId", Main.dnaUserName);
+//                     ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaUserName, (response) => {
+//                                          if (response) {
+//                                          console.log('immediate response of encrypt data packet is is' + response[0].error);
+//                                          // alert(response[0].error);
+//                                          } else {
+//                                          console.log('immediate response is' + response[0].response);
+//                                          // alert(response[0].error);
+//                                                 AsyncStorage.setItem("userId", response[0].response);
+//                                          }
+//                                          })
+                     ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaPasswd, (response) => {
+                                                 if (response) {
+                                                 console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                 AsyncStorage.setItem("passwd", response[0].response);
+                                                 } else {
+                                                 console.log('immediate response is' + response[0].response);
+                                                 // alert(response[0].error);
+                                                 
+                                                 }
+                                                 })
+                     
                      this.setDeviceName();
 
                      }

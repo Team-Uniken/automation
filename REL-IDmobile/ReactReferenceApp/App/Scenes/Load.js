@@ -364,98 +364,99 @@ class Load extends React.Component {
   
   
   doInitialize() {
-    AsyncStorage.getItem("passwd").then((value) => {
-                                        if(value){
-                                        if(value === "empty"){
-                                        //PROCEED NORMAL WAY.
-                                        this.newDoInitialize();
-                                        }else{
-                                        savedUserName = value;
-                                        //SHOW FINGER PRINT ALERT AND PROCEED
-                                        if(Platform.OS === 'ios'){
-                                        console.log("ios touch");
-                                        this._verifyTouchIdSupport();
-                                        }else{
-                                        this.newDoInitialize();
-                                        };
-//
-                                        }
-                                        }else{
-                                        this.newDoInitialize();
-                                        }
-                                        }).done();
-  }
-  
-  _isSupported = () => {
-    TouchId.isSupported( (error) => {
-                        if (error) {
-                        Alert.alert('TouchId is not supported!')
-                        } else {
-                        this._trggerTouchId();
-                        }
-                        })
-  }
-  
-  _trggerTouchId = () => {
-    let description = 'Verify the existing mobile phone fingerprint using the home key'
-    //let title       //fallback button title will be default as 'Enter Password'(localized)
-    //let title = ""  //fallback button will be hidden
-    //fallback button title will be 'Verify Password'(unlocalized)
-    TouchId.verify( description, title, (error) => {
-                   if (error) {
-                   if(error.message == '-3') {
-                   //fallback button is pressed
-                   Alert.alert('errorCode: ' + error.message + ' verify failed, user wants to ' + title)
-                   }
-                   else {
-                   Alert.alert('errorCode: ' + error.message + ' verify failed')
-                   }
-                   } else {
-                   this.newDoInitialize();
-                   }
-                   })
-  }
-  
-  _verifyTouchIdSupport(){
-    TouchID.isSupported()
-    .then(supported => {
-          // Success code
-          console.log('TouchID is supported.');
-          this._verifyTouchId();
-          })
-    .catch(error => {
-           // Failure code
-           this.newDoInitialize()//normal way
-           console.log('TouchID is not supported.');
-           console.log(error);
-           });
-  }
-  _verifyTouchId(){
-    TouchID.authenticate(reason)
-    .then(success => {
-          // Success code
-          console.log('in verify touchId');
-          this.newDoInitialize();
-          })
-    .catch(error => {
-           console.log(error)
-           var er = error.name;
-           
-           if(er === LAErrorUserFallback){
-           console.log("user clicked password");
-                      fallbackAuth();
-           }else{
-           AlertIOS.alert(error.message);
-           }
-           });
-    
-  }
-  
-  fallbackAuth() {
-    alert("infallback");
-    console.log('in verify touchId fallback');
     this.newDoInitialize();
+//    AsyncStorage.getItem("passwd").then((value) => {
+//                                        if(value){
+//                                        if(value === "empty"){
+//                                        //PROCEED NORMAL WAY.
+//                                        this.newDoInitialize();
+//                                        }else{
+//                                        savedUserName = value;
+//                                        //SHOW FINGER PRINT ALERT AND PROCEED
+//                                        if(Platform.OS === 'ios'){
+//                                        console.log("ios touch");
+//                                        this._verifyTouchIdSupport();
+//                                        }else{
+//                                        this.newDoInitialize();
+//                                        };
+////
+//                                        }
+//                                        }else{
+//                                        this.newDoInitialize();
+//                                        }
+//                                        }).done();
   }
+//  
+//  _isSupported = () => {
+//    TouchId.isSupported( (error) => {
+//                        if (error) {
+//                        Alert.alert('TouchId is not supported!')
+//                        } else {
+//                        this._trggerTouchId();
+//                        }
+//                        })
+//  }
+//  
+//  _trggerTouchId = () => {
+//    let description = 'Verify the existing mobile phone fingerprint using the home key'
+//    //let title       //fallback button title will be default as 'Enter Password'(localized)
+//    //let title = ""  //fallback button will be hidden
+//    //fallback button title will be 'Verify Password'(unlocalized)
+//    TouchId.verify( description, title, (error) => {
+//                   if (error) {
+//                   if(error.message == '-3') {
+//                   //fallback button is pressed
+//                   Alert.alert('errorCode: ' + error.message + ' verify failed, user wants to ' + title)
+//                   }
+//                   else {
+//                   Alert.alert('errorCode: ' + error.message + ' verify failed')
+//                   }
+//                   } else {
+//                   this.newDoInitialize();
+//                   }
+//                   })
+//  }
+//  
+//  _verifyTouchIdSupport(){
+//    TouchID.isSupported()
+//    .then(supported => {
+//          // Success code
+//          console.log('TouchID is supported.');
+//          this._verifyTouchId();
+//          })
+//    .catch(error => {
+//           // Failure code
+//           this.newDoInitialize()//normal way
+//           console.log('TouchID is not supported.');
+//           console.log(error);
+//           });
+//  }
+//  _verifyTouchId(){
+//    TouchID.authenticate(reason)
+//    .then(success => {
+//          // Success code
+//          console.log('in verify touchId');
+//          this.newDoInitialize();
+//          })
+//    .catch(error => {
+//           console.log(error)
+//           var er = error.name;
+//           
+//           if(er === LAErrorUserFallback){
+//           console.log("user clicked password");
+//                      fallbackAuth();
+//           }else{
+//           AlertIOS.alert(error.message);
+//           }
+//           });
+//    
+//  }
+//  
+//  fallbackAuth() {
+//    alert("infallback");
+//    console.log('in verify touchId fallback');
+//    this.newDoInitialize();
+//  }
   
   
   newDoInitialize(){
