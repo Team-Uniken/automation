@@ -130,8 +130,9 @@ class ControlPanel extends React.Component{
               return;
             }
           }
+          this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
         }
-        this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
+        
       } else {
         alert(res.pArgs.response.StatusMsg);
       }
