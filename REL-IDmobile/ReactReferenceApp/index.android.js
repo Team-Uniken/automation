@@ -188,49 +188,7 @@ class ReactRefApp extends React.Component {
 componentDidMount() {
     console.log('component did mounted.');
 
-    PushNotification.configure({
-
-    // (optional) Called when Token is generated (iOS and Android)
-    onRegister: function(token) {
-        console.log( 'TOKEN:', token );
-        ReactRdna.setDevToken(JSON.stringify(token));
-
-    },
-
-    // (required) Called when a remote or local notification is opened or received
-    onNotification: function(notification) {
-        console.log( 'NOTIFICATION:', notification );
-        Notification.create({ 
-          subject:'RelidZeroTesting',
-          message: 'test messg' }).then(function(notification) {
-        console.log(notification);
-        console.log(notification.message);
-      }); 
-    },
-
-    // ANDROID ONLY: (optional) GCM Sender ID.
-    senderID: "379127486882",
-
-   /**
-    *  // IOS ONLY (optional): default: all - Permissions to register.
-    permissions: {
-        alert: true,
-        badge: true,
-        sound: true
-    },  
-    */
-
-    // Should the initial notification be popped automatically
-    // default: true
-    popInitialNotification: true,
-
-    /**
-      * (optional) default: true
-      * - Specified if permissions (ios) and token (android and ios) will requested or not,
-      * - if not, you must call PushNotificationsHandler.requestPermissions() later
-      */
-    requestPermissions: true,
-});
+   
 
   }
 

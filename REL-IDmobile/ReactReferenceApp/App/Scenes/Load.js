@@ -15,6 +15,10 @@ import erelid from '../../erelid.json';
 import TouchID from 'react-native-touch-id';
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
+
+var PushNotification = require('react-native-push-notification');
+import Notification from 'react-native-system-notification';
+
 const reason = 'Please validate your Touch Id';
 /*
  Instantiaions
@@ -77,6 +81,9 @@ class Load extends React.Component {
    //Push notification code
   
     componentWillMount(){
+
+      
+
       if(Platform.OS === 'ios'){
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
@@ -115,28 +122,88 @@ class Load extends React.Component {
   }
   //Push notification code Ends
   
-  getMyNotifications(){
-    
+
+ getMyNotifications(){
+   
     var recordCount = "0";
     var startIndex = "1";
     var enterpriseID = "";
     var startDate = "";
     var endDate = "";
     ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
-                               
+                              
                                console.log('----- NotificationMgmt.getMyNotifications.response ');
                                console.log(response);
-                               
+                              
                                if (response[0].error !== 0) {
                                console.log('----- ----- response is not 0');
-                               
+                               //                               if (NotificationObtianedResponse !== undefined) {
+                               //                               // If error occurred reload last response
+                               //
+                               //                                                              }
                                }
-                               
+                              
                                });
   }
-  componentDidMount() {
+  
+
+
+  componentDidMount() { 
     
     Obj = this;
+
+//push messgage adnorid configure starts
+    
+
+   PushNotification.configure({
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function(token) {
+        console.log( 'TOKEN:', token );
+        ReactRdna.setDevToken(JSON.stringify(token));
+    },
+    // (required) Called when a remote or local notification is opened or received
+    onNotification: function(notification) {
+        console.log( 'NOTIFICATION:', notification );
+
+        Obj.getMyNotifications();
+
+         /**
+          * Notification.create({ 
+          subject:'RelidZeroTesting',
+          message: 'test messg' }).then(function(notification) {
+        console.log(notification);
+        console.log(notification.message);
+      });
+          */
+    },
+
+    // ANDROID ONLY: (optional) GCM Sender ID.
+    senderID: "379127486882",
+
+   /**
+    *  // IOS ONLY (optional): default: all - Permissions to register.
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },  
+    */
+
+    // Should the initial notification be popped automatically
+    // default: true
+    popInitialNotification: true,
+
+    /**
+      * (optional) default: true
+      * - Specified if permissions (ios) and token (android and ios) will requested or not,
+      * - if not, you must call PushNotificationsHandler.requestPermissions() later
+      */
+    requestPermissions: true,
+});
+
+
+//android push message configure Ends
+
     AppState.removeEventListener('change', this._handleAppStateChange);
     AppState.addEventListener('change', this._handleAppStateChange);
     
