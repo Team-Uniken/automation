@@ -48,6 +48,8 @@ import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
 var PushNotification = require('react-native-push-notification');
+import Notification from 'react-native-system-notification';
+
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 var {DeviceEventEmitter} = require('react-native')
 DeviceEventEmitter.addListener('keyboardDidHide', dismissKeyboard)
@@ -198,12 +200,12 @@ componentDidMount() {
     // (required) Called when a remote or local notification is opened or received
     onNotification: function(notification) {
         console.log( 'NOTIFICATION:', notification );
-       /** Notification.create({ 
+        Notification.create({ 
           subject:'RelidZeroTesting',
-          message: notification.message }).then(function(notification) {
+          message: 'test messg' }).then(function(notification) {
         console.log(notification);
         console.log(notification.message);
-      }); */
+      }); 
     },
 
     // ANDROID ONLY: (optional) GCM Sender ID.

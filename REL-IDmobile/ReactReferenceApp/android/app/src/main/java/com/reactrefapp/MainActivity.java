@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
+import io.neson.react.notification.NotificationPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -37,6 +38,12 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage(), new RDNAReactPackage(), new ExtraDimensionsPackage(this),new ReactNativePushNotificationPackage()        );
+            new MainReactPackage(),
+            new RDNAReactPackage(),
+            new ExtraDimensionsPackage(this),
+            new ReactNativePushNotificationPackage(),
+            new NotificationPackage(this)
+
+        );
     }
 }
