@@ -68,11 +68,11 @@ export default class AccountsScene extends React.Component {
   
   getMyNotifications(){
     
-    var recordCount = "-1";
-    var startIndex = "0";
-    var enterpriseID = "1234";
-    var startDate = "12:08:16";
-    var endDate = "18:08:16";
+    var recordCount = "0";
+    var startIndex = "1";
+    var enterpriseID = "";
+    var startDate = "";
+    var endDate = "";
     ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
                                
                                console.log('----- NotificationMgmt.getMyNotifications.response ');
