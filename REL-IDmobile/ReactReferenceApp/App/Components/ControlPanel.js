@@ -111,30 +111,37 @@ class ControlPanel extends React.Component{
   
   onGetNotificationsDetails(e) {
     console.log('----- onGetNotificationsDetails');
-   // NotificationObtianedResponse = e;
+    // NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
     console.log(res);
     if (res.errCode === 0) {
-      if( res.pArgs.response.ResponseData.notifications.length > 0){
-        var allScreens = this.props.navigator.getCurrentRoutes(0);
-        
-        for(var i = 0; i < allScreens.length; i++){
-          var screen = allScreens[i];
-          if(screen.id == 'NotificationMgmt'){
-            var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
-            mySelectedRoute.url =  { "data": e};
-            Events.trigger('showNotification',e);
-            this.props.navigator.popToRoute(mySelectedRoute);
-                       return;
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+        if( res.pArgs.response.ResponseData.notifications.length > 0){
+          var allScreens = this.props.navigator.getCurrentRoutes(0);
+          
+          for(var i = 0; i < allScreens.length; i++){
+            var screen = allScreens[i];
+            if(screen.id == 'NotificationMgmt'){
+              var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+              mySelectedRoute.url =  { "data": e};
+              Events.trigger('showNotification',e);
+              this.props.navigator.popToRoute(mySelectedRoute);
+              return;
+            }
           }
         }
-     this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
+        this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
+      } else {
+        alert(res.pArgs.response.StatusMsg);
       }
-    } else {
+    }else {
       alert('Something went wrong');
+      // If error occurred reload devices list with previous response
     }
   }
-
+  
+  
   
   getMyNotifications(){
     
@@ -150,11 +157,11 @@ class ControlPanel extends React.Component{
                                
                                if (response[0].error !== 0) {
                                console.log('----- ----- response is not 0');
-//                               if (NotificationObtianedResponse !== undefined) {
-//                               // If error occurred reload last response
-//                               
-//                                                              }
-                              }
+                               //                               if (NotificationObtianedResponse !== undefined) {
+                               //                               // If error occurred reload last response
+                               //
+                               //                                                              }
+                               }
                                
                                });
   }
