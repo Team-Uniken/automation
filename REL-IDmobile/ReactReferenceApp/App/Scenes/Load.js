@@ -165,7 +165,7 @@ class Load extends React.Component {
     onNotification: function(notification) {
         console.log( 'NOTIFICATION:', notification );
 
-        Obj.getMyNotifications();
+       // Obj.getMyNotifications();
 
          /**
           * Notification.create({ 
