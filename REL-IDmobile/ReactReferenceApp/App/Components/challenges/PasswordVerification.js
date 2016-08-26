@@ -25,6 +25,7 @@ const {
   ScrollView,
   TextInput,
   View,
+  Platform,
   Animated,
   TouchableHighlight,
   InteractionManager,
@@ -98,20 +99,23 @@ class PasswordVerification extends React.Component {
                                                                                 });
                                         }else{
                                         
-                                        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
-                                                                    if (response) {
-                                                                    console.log('immediate response of encrypt data packet is is' + response[0].error);
-                                                                    this.state.inputPassword = response[0].response;
-                                                                    this.checkPassword();
-                                                                    } else {
-                                                                    console.log('immediate response is' + response[0].response);
-                                                                    // alert(response[0].error);
-                                                                    
-                                                                    }
-                                                                    })
-
-                                        
-                                        
+                                            if(Platform.OS == "ios"){
+                                                ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
+                                                                            if (response) {
+                                                                            console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                                            this.state.inputPassword = response[0].response;
+                                                                            this.checkPassword();
+                                                                            } else {
+                                                                            console.log('immediate response is' + response[0].response);
+                                                                            // alert(response[0].error);
+                                                                            
+                                                                            }
+                                                                            });
+                                            }
+                                            else if(Platform.OS == "android"){
+                                              this.state.inputPassword = value;
+                                              this.checkPassword();
+                                            }
                                         }
                                         }else{
                                         InteractionManager.runAfterInteractions(() => {

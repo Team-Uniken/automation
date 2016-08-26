@@ -648,12 +648,22 @@ const coreStyle = StyleSheet.create({
 
 const PatternLockStyle = StyleSheet.create({
    patternlockview: {
-     position : 'absolute',
-     top: SCREEN_HEIGHT / 2 - 350/2,
-     left: SCREEN_WIDTH / 2 - 300 / 2,
+     marginTop:SCREEN_HEIGHT/2-200,
      width: 270,
-     height: 270
-   } 
+     height: 270,
+   },
+     button: {
+    height: 48,
+    width: 48,
+    marginTop: 16,
+  },
+     attempt: {
+    fontSize: 16,
+    color: TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    margin: 16,
+  },
 });
 
 const ConnectionProfile = StyleSheet.create({
@@ -1164,6 +1174,7 @@ module.exports = {
   addappointment,
   questionrow,
   ConnectionProfile,
+  PatternLockStyle,
   nav,
   open,
   spd: SPEED,

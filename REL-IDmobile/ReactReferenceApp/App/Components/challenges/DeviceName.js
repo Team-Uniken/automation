@@ -32,7 +32,57 @@ export default class DeviceName extends React.Component {
     this.state = {
       deviceName: this.props.url.chlngJson.chlng_resp[0].response,
     };
+
+    this.setDeviceName = this.setDeviceName.bind(this);
+    this.showPattern = this.showPattern.bind(this);
+    this.onSetPattern = this.onSetPattern.bind(this);
   }
+
+  showPattern(chlngRes) {
+    this.props.navigator.push({
+      id: "Pattern",
+      title: "Set Pattern",
+      url: {
+        data: chlngRes,
+      },
+      setPatternCallback: this.onSetPattern,
+      mode: "set"
+    });
+  }
+
+  showSetPatternAlert() {
+  Alert.alert(
+    'Message',
+    'Do you want to enable pattern feature?',
+    [
+      {
+        text: 'NO',
+        onPress: () => {
+          console.log('Cancel Pressed');
+          try {
+            AsyncStorage.setItem("setPattern", "false", () => {
+              alert("NO selected");
+              this.setDeviceName();
+            });
+          }
+          catch (e) { }
+        }
+      },
+      {
+        text: 'YES',
+        onPress: () => {
+          console.log('YES Pressed');
+          try {
+            AsyncStorage.setItem("setPattern", "true", () => {
+              this.setDeviceName();
+            });
+          }
+          catch (e) { }
+        }
+      },
+    ]
+  )
+}
 
   componentDidMount() {
 //    this.setDeviceName();
@@ -48,7 +98,23 @@ export default class DeviceName extends React.Component {
     if (dName.length > 0) {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = dName;
-      Events.trigger('showNextChallenge', { response: responseJson });
+      if (Platform.OS === "android") {
+        try {
+          AsyncStorage.getItem("setPattern").then((value)=> {
+            if (value === "true") {
+              var chlngRes = { response: responseJson };
+              AsyncStorage.setItem("setPattern", "false");
+              this.showPattern(chlngRes);
+            } else {
+               Events.trigger('showNextChallenge', { response: responseJson });
+            }
+          }).done();
+        }
+        catch (e) { }
+      }
+      else {
+        Events.trigger('showNextChallenge', { response: responseJson });
+      }
     } else {
       alert('Please enter Device Name ');
     }
@@ -140,11 +206,15 @@ export default class DeviceName extends React.Component {
   decidePlatformAndShowAlert(){
     if(Platform.OS === 'ios'){
       this.onVerifyTouchIdSupport();
-    }else{
-      this.setDeviceName();
+    } else {
+       this.showSetPatternAlert();
     }
   }
-
+  
+  onSetPattern(data) {
+  //alert("Pattern set success");
+     Events.trigger('showNextChallenge', data);
+  }
 
   render() {
     return (

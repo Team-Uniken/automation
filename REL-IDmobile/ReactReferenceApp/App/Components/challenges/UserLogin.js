@@ -15,6 +15,7 @@ import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
+import PatternLock from '../../Scenes/PatternLock'
 
 import TouchID from 'react-native-touch-id';
 import PasscodeAuth from 'react-native-passcode-auth';
@@ -66,7 +67,13 @@ class UserLogin extends React.Component{
     passAttempts: 5,
     Challenge:this.props.url.chlngJson,
     failureMessage: '',
+    pattern:false,
     };
+
+    this.locked = true;
+
+   // this.verifyPattern = this.verifyPattern.bind(this);
+    this.onUnlock = this.onUnlock.bind(this);
   }
   
   
@@ -90,37 +97,80 @@ class UserLogin extends React.Component{
       obj.checkUsernameFailure();
     };
   }
-  
+
+  componentDidUpdate(){
+    if(Platform.OS == "android" && this.locked == false){
+        AsyncStorage.getItem("passwd").then((value) => {
+                                              if(value){
+                                                if(value === "empty"){
+                                                    console.log("user empty");
+                                                }else{
+                                                  AsyncStorage.getItem("userId").then((value) => {
+                                                    savedUserName = value;
+                                                    obj.state.inputUsername = savedUserName;
+                                                    obj.checkUsername();
+                                                  }).done();
+                                                }
+                                              }else{
+                                                      console.log("no value in async storage");
+                                                      InteractionManager.runAfterInteractions(() => {
+                                                                                              this.refs.inputUsername.focus();
+                                                                                              });                                            
+                                            }
+                                            }).done();
+    }
+  }
   
   componentDidMount() {
     obj = this;
-    AsyncStorage.getItem("passwd").then((value) => {
-                                          if(value){
-                                            if(value === "empty"){
-                                                console.log("user empty");
-                                            }else{
-                                              AsyncStorage.getItem("userId").then((value) => {savedUserName = value}).done();
-                                                if(Platform.OS === 'ios'){
-                                                  console.log("ios touch");
-                                                  this._verifyTouchIdSupport();
+    if(this.locked === false){
+        AsyncStorage.getItem("passwd").then((value) => {
+                                              if(value){
+                                                if(value === "empty"){
+                                                    console.log("user empty");
                                                 }else{
-                                                  console.log("show pattern");
-                                                };
+                                                  AsyncStorage.getItem("userId").then((value) => {
+                                                    savedUserName = value;
+                                                    if(Platform.OS === 'ios'){
+                                                      console.log("ios touch");
+                                                      this._verifyTouchIdSupport();
+                                                    }else if(Platform.OS === "android"){
+                                                      obj.state.inputUsername = savedUserName;
+                                                      obj.checkUsername();
+                                                    };
+                                                  }).done();
+                                                }
+                                              }else{
+                                                      console.log("no value in async storage");
+                                                      InteractionManager.runAfterInteractions(() => {
+                                                                                              this.refs.inputUsername.focus();
+                                                                                              });
+                                            
                                             }
-                                          }else{
-                                                  console.log("no value in async storage");
-                                                  InteractionManager.runAfterInteractions(() => {
-                                                                                          this.refs.inputUsername.focus();
-                                                                                          });
-                                        
-                                        }
-                                        }).done();
+                                            }).done();
     
-    
+    }
   }
   
   
   componentWillMount() {
+      if(Platform.OS == "android"){
+                  try{
+                    AsyncStorage.getItem("userData").then((value)=>{
+                      if(value!=null && value!=undefined){ 
+                      //  var chlngJson = { id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } };  
+                        this.setState({
+                          pattern:true,
+                        });
+                        //this.verifyPattern(chlngJson);
+                      }
+                    }).done();
+                  }
+                  catch(e){}
+       }else{
+         this.locked =false;
+       }
+
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
   }
   
@@ -258,53 +308,83 @@ class UserLogin extends React.Component{
   clearText(fieldName) {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
+
+  // verifyPattern(chlngJson){
+  //   this.props.navigator.push({
+  //     id: "Pattern",
+  //     title: "Verify Pattern",
+  //     url: {
+  //       data: chlngJson,
+  //     },
+  //     unlockCallback: this.onUnlock,
+  //     mode: "verify"
+  //   });
+  // }
+
+  onUnlock(userid,password,data){
+    this.locked =false;
+    var thisRef = this;
+    AsyncStorage.setItem("userId",userid,()=>{
+      AsyncStorage.setItem("passwd",password,()=>{
+          thisRef.setState({
+              pattern:false,
+          });
+      });
+    });
+  }
   
   render() {
-    return (
-            <MainActivation navigator={this.props.navigator}>
-            <View style={Skin.activationStyle.topGroup}>
-            <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
-            <View style={Skin.loadStyle.rid_center}>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
-            </View>
-            </Animated.View>
-            
-            <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-            ref='inputUsername'
-            returnKeyType={'next'}
-            autoCorrect={false}
-            autoCapitalize={'none'}
-            keyboardType={'email-address'}
-            placeholder={'Username'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
-            style={Skin.activationStyle.textinput}
-            value={this.state.inputUsername}
-            onSubmitEditing={this.checkUsername.bind(this)}
-            onChange={this.onUsernameChange.bind(this)}
-            />
-            </View>
-            </View>
-            
-            <View style={Skin.activationStyle.input_wrap}>
-            <TouchableOpacity
-            style={Skin.activationStyle.button}
-            onPress={this.checkUsername.bind(this)}
-            underlayColor={'#082340'}
-            activeOpacity={0.8}
-            >
-            <Text style={Skin.activationStyle.buttontext}>
-            LOGIN
-            </Text>
-            </TouchableOpacity>
-            </View>
-            </View>
-            <OpenLinks />
-            </MainActivation>
-            );
+    if(this.state.pattern === false){
+        return (
+                <MainActivation navigator={this.props.navigator}>
+                <View style={Skin.activationStyle.topGroup}>
+                <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+                <View style={Skin.loadStyle.rid_center}>
+                <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
+                <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
+                <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
+                </View>
+                </Animated.View>
+                
+                <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
+                <View style={Skin.activationStyle.textinput_wrap}>
+                <TextInput
+                ref='inputUsername'
+                returnKeyType={'next'}
+                autoCorrect={false}
+                autoCapitalize={'none'}
+                keyboardType={'email-address'}
+                placeholder={'Username'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                value={this.state.inputUsername}
+                onSubmitEditing={this.checkUsername.bind(this)}
+                onChange={this.onUsernameChange.bind(this)}
+                />
+                </View>
+                </View>
+                
+                <View style={Skin.activationStyle.input_wrap}>
+                <TouchableOpacity
+                style={Skin.activationStyle.button}
+                onPress={this.checkUsername.bind(this)}
+                underlayColor={'#082340'}
+                activeOpacity={0.8}
+                >
+                <Text style={Skin.activationStyle.buttontext}>
+                LOGIN
+                </Text>
+                </TouchableOpacity>
+                </View>
+                </View>
+                <OpenLinks />
+                </MainActivation>
+                );
+    }
+    else{
+      return (<PatternLock navigator={this.props.navigator} title="Verify Pattern"  
+              onUnlock={this.onUnlock} mode="verify" />);
+    }
   }
 }
 

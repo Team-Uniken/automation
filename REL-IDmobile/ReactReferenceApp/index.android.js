@@ -21,6 +21,7 @@ import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
 import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
 import LoadScene from './App/Scenes/Load';
+import PatternLock from './App/Scenes/PatternLock'
 import Web from './App/Scenes/Web';
 import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
@@ -153,6 +154,10 @@ class ReactRefApp extends React.Component {
       return (<ActivateNewDeviceScene navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'Pattern') {
+      return (<PatternLock navigator={nav} url={route.url} title={route.title} 
+              onSetPattern={route.setPatternCallback} data={route.url.data} 
+              onUnlock={route.unlockCallback} mode={route.mode} />);
     } else if (id === 'SecureWebView') {
       return (<Web navigator={nav} url={route.url} title={route.title} secure navigate />);
     } else if (id === 'WebView') {
