@@ -9,6 +9,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    <uses-permission android:name="android.permission.GET_TASKS" />                       <!-- <- Add this line -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>           <!-- <- Add this line -->
+    <uses-permission android:name="android.permission.VIBRATE"/>                          <!-- <- Add this line -->
+
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <permission
         android:name="com.dieam.reactnativepushnotification.permission.C2D_MESSAGE"
@@ -54,7 +59,6 @@
                  android:enabled = "true"
             >
         </service>
-
         <service
             android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
             android:exported="false" >
@@ -62,6 +66,15 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+
+        <receiver android:name="io.neson.react.notification.NotificationEventReceiver" />   <!-- <- Add this line -->
+        <receiver android:name="io.neson.react.notification.NotificationPublisher" />       <!-- <- Add this line -->
+        <receiver android:name="io.neson.react.notification.SystemBootEventReceiver">       <!-- <- Add this line -->
+            <intent-filter>                                                                   <!-- <- Add this line -->
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>           <!-- <- Add this line -->
+            </intent-filter>                                                                  <!-- <- Add this line -->
+        </receiver>
+
     </application>
 
 </manifest>
