@@ -13,7 +13,7 @@ import Skin from '../../Skin';
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
-
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
  INSTANCES
  */
@@ -97,8 +97,21 @@ class PasswordVerification extends React.Component {
                                                                                 this.refs.inputPassword.focus();
                                                                                 });
                                         }else{
-                                        this.state.inputPassword = value;
-                                        this.checkPassword();
+                                        
+                                        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
+                                                                    if (response) {
+                                                                    console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                                    this.state.inputPassword = response[0].response;
+                                                                    this.checkPassword();
+                                                                    } else {
+                                                                    console.log('immediate response is' + response[0].response);
+                                                                    // alert(response[0].error);
+                                                                    
+                                                                    }
+                                                                    })
+
+                                        
+                                        
                                         }
                                         }else{
                                         InteractionManager.runAfterInteractions(() => {

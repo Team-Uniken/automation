@@ -196,11 +196,11 @@ export default class NotificationMgmtScene extends React.Component {
   }
   getMyNotifications(){
     
-    var recordCount = "-1";
-    var startIndex = "0";
-    var enterpriseID = "1234";
-    var startDate = "12:08:16";
-    var endDate = "18:08:16";
+    var recordCount = "0";
+    var startIndex = "1";
+    var enterpriseID = "";
+    var startDate = "";
+    var endDate = "";
     ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
                                
                    console.log('----- NotificationMgmt.getMyNotifications.response ');
@@ -251,10 +251,12 @@ export default class NotificationMgmtScene extends React.Component {
 //      });
 //      this.setState({deviceCount: notificationList.notifications.length });
       var noti = notificationList.notifications;
+      
     this.setState({notification: noti});
+      notification = noti;
       
       this.setState({
-                            dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(noti.sort(compare))),
+                            dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
                           });
     } else {
       alert('Something went wrong');
@@ -265,10 +267,23 @@ export default class NotificationMgmtScene extends React.Component {
   onUpdateNotificationDetails(e) {
     const res = JSON.parse(e.response);
     
+  
+
+    
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
         //this.props.navigator.pop();
+        for(var i = 0; i < notification.length ; i++){
+          var noti = notification[i];
+          if(noti.notification_uuid === res.pArgs.response.ResponseData.notification_uuid){
+            notification.splice(i, 1);
+            break;
+          }
+        }
+        this.setState({
+                      dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+                      });
        
       } else {
         alert(res.pArgs.response.StatusMsg);
