@@ -6,6 +6,9 @@
 import React from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Main';
+
+  // import TouchID from 'react-native-touch-id';
+
 /*
   CALLED
 */
@@ -13,7 +16,7 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
-import TouchID from 'react-native-touch-id';
+
 const {
   View,
   Text,
@@ -61,7 +64,6 @@ export default class DeviceName extends React.Component {
           console.log('Cancel Pressed');
           try {
             AsyncStorage.setItem("setPattern", "false", () => {
-              alert("NO selected");
               this.setDeviceName();
             });
           }

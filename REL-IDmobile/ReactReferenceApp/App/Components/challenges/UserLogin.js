@@ -17,7 +17,8 @@ import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import PatternLock from '../../Scenes/PatternLock'
 
-import TouchID from 'react-native-touch-id';
+    //import TouchID from 'react-native-touch-id';
+
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
@@ -254,7 +255,7 @@ class UserLogin extends React.Component{
       dismissKeyboard();
       AsyncStorage.setItem("empty", savedUserName);
       InteractionManager.runAfterInteractions(() => {
-                                              alert('Please enter a Username');
+                                              alert('Please enter a valid username');
                                               });
     }
   }

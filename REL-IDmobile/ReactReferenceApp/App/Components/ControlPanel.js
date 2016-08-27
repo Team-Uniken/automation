@@ -211,7 +211,7 @@ class ControlPanel extends React.Component{
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'DeviceMgmt', title:'Self Device Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Device Managment</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Notification</Text>
+            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Notifications</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.navigator.push({id: 'ComingSoon', title:'Change Secret Question',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>

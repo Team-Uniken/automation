@@ -97,7 +97,7 @@ var SampleRow = React.createClass({
                                           </View>
                                           </TouchableHighlight>
                                           
-                                          <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[0].label)}>
+                                          <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[1].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[1].label}
@@ -105,7 +105,7 @@ var SampleRow = React.createClass({
                                           </View>
                                           </TouchableHighlight>
                                           
-                                          <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[0].label)}>
+                                          <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[2].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[2].label}
@@ -149,7 +149,7 @@ var SampleRow = React.createClass({
                                           </TouchableHighlight>
                                           
                                           
-                                          <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[0].label)}>
+                                          <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[1].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[1].label}

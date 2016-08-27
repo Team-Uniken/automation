@@ -81,6 +81,7 @@ export default class Activation extends React.Component {
     }
     return 'NEXT';
   }
+
   checkActivationCode() {
     //console.log(this);
     let vkey = this.state.activatonCode;
@@ -90,7 +91,7 @@ export default class Activation extends React.Component {
       Events.trigger('showNextChallenge', { response: responseJson });
     }
     else {
-      alert('Please enter Verification Key');
+      alert('Enter Activation Code');
     }
   }
 
@@ -107,7 +108,7 @@ export default class Activation extends React.Component {
       <MainActivation>
         <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-          <Text style={Skin.activationStyle.title}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
+          <Text style={Skin.activationStyle.title}>Activation</Text>
           <Text style={Skin.activationStyle.info}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
           
           <View style={Skin.activationStyle.input_wrap}>
@@ -142,6 +143,8 @@ export default class Activation extends React.Component {
             </View>
           </View>
           <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+
+          <Text style={Skin.customeStyle.attempt}>You can activate on another device using this secrets</Text>
 
           <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight

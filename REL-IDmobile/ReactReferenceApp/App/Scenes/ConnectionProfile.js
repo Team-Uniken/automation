@@ -95,7 +95,7 @@ class ConnectionProfileScene extends React.Component {
               }
             });
           } else {
-            alert('Invalid connection profile, contact admin');
+            alert('Invalid connection profile.');
             this.setState({
               open: false,
             });
@@ -103,13 +103,13 @@ class ConnectionProfileScene extends React.Component {
         })
         .catch((error) => {
           console.warn(error);
-          alert('Invalid connection profile, contact admin');
+          alert('Invalid connection profile.');
           this.setState({
             open: false,
           });
         });
     }else{
-          alert('Invalid connection profile, contact admin');
+          alert('Invalid connection profile.');
     }
     } else {
       alert('Please enter url');
@@ -229,7 +229,7 @@ class ConnectionProfileScene extends React.Component {
                        disabled: true,
                      }}
         navBar={{
-                  title: 'Appointments',
+                  title: 'Connection Profiles',
                   visible: true,
                   tint: Skin.colors.TEXT_COLOR,
                   left: {

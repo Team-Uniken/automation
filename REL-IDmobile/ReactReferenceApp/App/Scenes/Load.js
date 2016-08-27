@@ -12,9 +12,11 @@ import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import erelid from '../../erelid.json';
-import TouchID from 'react-native-touch-id';
+
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
+if(Platform.OS == "ios")
+   import TouchID from 'react-native-touch-id';
 
 var PushNotification = require('react-native-push-notification');
 import Notification from 'react-native-system-notification';
@@ -52,7 +54,6 @@ const {
   AppStateIOS,
   AlertIOS,
 } = React;
-
 
 /*
  Class Load
