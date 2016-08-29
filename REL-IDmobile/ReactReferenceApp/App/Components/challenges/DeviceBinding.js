@@ -80,6 +80,8 @@ export default class DeviceBinding extends React.Component {
 //                                             }
 //                                         }
 //                                         }).done();
+    check = true;
+    this.setDeviceBinding();
   }
 
   setDeviceBinding() {

@@ -7,7 +7,7 @@ import React from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Main';
 
-  // import TouchID from 'react-native-touch-id';
+import TouchID from 'react-native-touch-id';
 
 /*
   CALLED
@@ -87,9 +87,13 @@ export default class DeviceName extends React.Component {
 }
 
   componentDidMount() {
-//    this.setDeviceName();
-//    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
-  }
+    this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
+
+    if(!(this.state.deviceName) || this.state.deviceName.length <= 0 ){
+      this.state.deviceName = "tempByApplication";
+    }
+   this.setDeviceName();
+    }
 
   onDeviceNameChange(event) {
     this.setState({ deviceName: event.nativeEvent.text });
