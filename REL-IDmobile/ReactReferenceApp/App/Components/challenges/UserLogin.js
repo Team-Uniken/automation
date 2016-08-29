@@ -17,7 +17,7 @@ import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import PatternLock from '../../Scenes/PatternLock'
 
-    //import TouchID from 'react-native-touch-id';
+    import TouchID from 'react-native-touch-id';
 
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
@@ -124,6 +124,7 @@ class UserLogin extends React.Component{
   
   componentDidMount() {
     obj = this;
+     Main.isTouchVerified = "NO";
     if(this.locked === false){
         AsyncStorage.getItem("passwd").then((value) => {
                                               if(value){
@@ -194,6 +195,7 @@ class UserLogin extends React.Component{
     TouchID.authenticate(reason)
     .then(success => {
           // Success code
+          Main.isTouchVerified = "YES";
           console.log('in verify touchId');
           obj.state.inputUsername = savedUserName;
           obj.checkUsername();
@@ -201,10 +203,12 @@ class UserLogin extends React.Component{
     .catch(error => {
            console.log(error)
            var er = error.name;
-           
-           if(er === LAErrorUserFallback){
+           Main.isTouchVerified = "NO";
+           if(er === "LAErrorUserFallback"){
            console.log("user clicked password");
-           fallbackAuth();
+           obj.state.inputUsername = savedUserName;
+           obj.checkUsername();
+//           fallbackAuth();
            }else{
            AlertIOS.alert(error.message);
            }
@@ -215,7 +219,7 @@ class UserLogin extends React.Component{
   fallbackAuth() {
     alert("infallback");
     console.log('in verify touchId fallback');
-    this.newDoInitialize();
+    Main.isTouchVerified = "NO";
   }
 
   

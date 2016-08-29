@@ -5,7 +5,7 @@
  */
 import React from 'react-native';
 import Skin from '../../Skin';
-
+import Main from '../Main';
 
 /*
  CALLED
@@ -100,17 +100,23 @@ class PasswordVerification extends React.Component {
                                         }else{
                                         
                                             if(Platform.OS == "ios"){
-                                                ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
-                                                                            if (response) {
-                                                                            console.log('immediate response of encrypt data packet is is' + response[0].error);
-                                                                            this.state.inputPassword = response[0].response;
-                                                                            this.checkPassword();
-                                                                            } else {
-                                                                            console.log('immediate response is' + response[0].response);
-                                                                            // alert(response[0].error);
-                                                                            
-                                                                            }
-                                                                            });
+                                                if(Main.isTouchVerified === "YES"){
+                                                        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
+                                                                                    if (response) {
+                                                                                    console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                                                    this.state.inputPassword = response[0].response;
+                                                                                    this.checkPassword();
+                                                                                    } else {
+                                                                                    console.log('immediate response is' + response[0].response);
+                                                                                    // alert(response[0].error);
+                                                                                    
+                                                                                    }
+                                                                                    });
+                                                  }else{
+                                                  InteractionManager.runAfterInteractions(() => {
+                                                                                          this.refs.inputPassword.focus();
+                                                                                          });
+                                                  }
                                             }
                                             else if(Platform.OS == "android"){
                                               this.state.inputPassword = value;
