@@ -576,7 +576,6 @@ class Load extends React.Component {
                     'Error',
                     initErrorMsg,
                     [
-                     {text: 'CANCEL',onPress: () => console.log('CHANGE Pressed'), style: 'cancel'},
                      {text: 'CHANGE', onPress: () => this.props.navigator.push({id: "ConnectionProfile"})},
                      ]
                     )

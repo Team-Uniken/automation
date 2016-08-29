@@ -258,11 +258,11 @@ class TwoFactorAuthMachine extends React.Component {
       }
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devname') {
-      return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
-      //return (<DeviceName navigator={nav} url={route.url} title={route.title} />);
+      //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
+      return (<DeviceName navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devbind') {
-      return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
-      //return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
+      //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
+      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
     }
