@@ -65,8 +65,8 @@ export default class PayBillsScene extends React.Component {
    * @return {[type]} [description]
    */
   getAccountDetails() {
-    RDNARequestUtility.doHTTPGetRequest('http://apisdkdev.uniken.com:8080/APIBanking/getAccounts.jsp?userid=10',
-      (response) => {
+//    RDNARequestUtility.doHTTPGetRequest('http://apisdkdev.uniken.com:8080/APIBanking/getAccounts.jsp?userid=10',
+//      (response) => {
         /*
             REAL DATA
          "{
@@ -80,7 +80,7 @@ export default class PayBillsScene extends React.Component {
            "status":"success"
           }
         */
-        response = {
+      var response = {
           0: {
             error: 0,
             response:
@@ -111,8 +111,8 @@ export default class PayBillsScene extends React.Component {
         } else {
           alert(response[0].response);
         }
-      }
-    );
+      //}
+    //);
   }
 
     /**
