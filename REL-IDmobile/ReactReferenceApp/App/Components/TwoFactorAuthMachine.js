@@ -24,6 +24,7 @@ import UserLogin from './challenges/UserLogin';
 import DeviceBinding from './challenges/DeviceBinding';
 import DeviceName from './challenges/DeviceName';
 import PasswordVerification from './challenges/PasswordVerification';
+import ScreenHider from './challenges/ScreenHider';
 
 // COMPONENTS
 import buildStyleInterpolator from 'buildStyleInterpolator';
@@ -257,9 +258,11 @@ class TwoFactorAuthMachine extends React.Component {
       }
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devname') {
-      return (<DeviceName navigator={obj.props.navigator} url={route.url} title={route.title} />);
+      return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
+      //return (<DeviceName navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devbind') {
-      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
+      return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
+      //return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
     }

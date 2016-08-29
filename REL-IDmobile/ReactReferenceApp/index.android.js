@@ -88,16 +88,21 @@ const FadeOut = {
 };
 
 
-BackAndroid.addEventListener('hardwareBackPress', function() {
-   
-     return true;
-});
 
 class ReactRefApp extends React.Component {
 
 
   renderScene(route, nav) {
     let id = route.id;
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (nav.getCurrentRoutes().length <= 1 ) {
+     return false;
+  }
+  return true;
+});
+
+
 
     if (id === 'Load') {
       // id = 'Accounts'

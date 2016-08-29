@@ -51,11 +51,7 @@ class MainActivation extends React.Component {
                 />
                 <View style={Skin.activationStyle.bgbase} />
                 <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
-                <View style={Skin.statusBarStyle.default}>
-                  <StatusBar
-                    barStyle="light-content"
-                  />
-                </View>
+              
                 <View style={Skin.activationStyle.bgcolorizer} />
                 <View style={Skin.activationStyle.centering_wrap}>
                   <View style={Skin.activationStyle.wrap}>

@@ -11,6 +11,8 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, } = React;
 
 let CONNECTION_PROFILES_DATA = [];
+let CURRENT_CONNECTION_PROFILES_DATA = [];
+
 let obj;
 
 class ConnectionProfileScene extends React.Component {
@@ -40,6 +42,13 @@ class ConnectionProfileScene extends React.Component {
         dataSource: this.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA)
       });
     }).done();
+
+  AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+                                              CURRENT_CONNECTION_PROFILES_DATA = JSON.parse(currentProfile);
+                                              console.log(CURRENT_CONNECTION_PROFILES_DATA); 
+                                              });
+
+
   }
 
   onImportPressed() {
@@ -123,7 +132,28 @@ class ConnectionProfileScene extends React.Component {
   }
 
   renderConnectionProfile(connectionprofile1) {
-    var cpName = connectionprofile1.Name;
+var cpName = connectionprofile1.Name;
+    if(CURRENT_CONNECTION_PROFILES_DATA.Name==connectionprofile1.Name){
+    return (
+      <View>
+        <View style={Skin.ConnectionProfile.selectederow}>
+          <TouchableHighlight>
+            <Text style={[Skin.customeStyle.text1, {
+                           width: Skin.SCREEN_WIDTH - 72,
+                           textAlign: 'left',
+                           marginLeft: 16,
+                           opacity: 1
+                         }]}>
+              {cpName}
+            </Text>
+          </TouchableHighlight>
+        </View>
+        <Text style={Skin.customeStyle.div1}>
+        </Text>
+      </View>
+
+      );
+    }else{
     return (
       <View>
         <View style={Skin.ConnectionProfile.customerow}>

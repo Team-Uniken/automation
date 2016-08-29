@@ -427,12 +427,12 @@ const notification = StyleSheet.create({
   customerow: {
     backgroundColor: '#fff',
     width: SCREEN_WIDTH-32,
-    marginTop:8,
+    marginTop:20,
     marginLeft:16,
     marginRight:16,
   },
   row: {
-    margin: 4,
+    marginBottom: 8,
     flexDirection: 'row',
         width: SCREEN_WIDTH-32,
 
@@ -451,6 +451,8 @@ const notification = StyleSheet.create({
     width: SCREEN_WIDTH / 2-16,
     textAlign: 'left',
     opacity:1,
+    marginLeft:8,
+    marginTop:8,
   },
   time: {
     fontSize: 16,
@@ -458,12 +460,15 @@ const notification = StyleSheet.create({
     textAlign: 'right',
     width: SCREEN_WIDTH / 2-32,
     opacity:0.6,
+     marginRight:8,
+    marginTop:8,
   },
   body: {
     fontSize: 16,
     color: BLACK_TEXT_COLOR,
     width: SCREEN_WIDTH-32,
     opacity: 0.6,
+    marginLeft:8,
   },
   buttontext: {
     fontSize: 16,
@@ -699,6 +704,11 @@ const ConnectionProfile = StyleSheet.create({
     flexDirection: 'row',
     height: 56,
     backgroundColor: 'transparent',
+  },
+  selectederow: {
+  flexDirection: 'row',
+  height: 56,
+  backgroundColor: '#dbdbdb',
   },
 });
 

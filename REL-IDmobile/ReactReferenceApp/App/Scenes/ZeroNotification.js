@@ -355,8 +355,7 @@ export default class NotificationMgmtScene extends React.Component {
         }}
         navigator={this.props.navigator}
       >
-           
-            <View style={Skin.customeStyle.maincontainer}>
+            <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY, }}>
             <ListView
             ref="listView"
             automaticallyAdjustContentInsets={false}
