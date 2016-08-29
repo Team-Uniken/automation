@@ -92,13 +92,23 @@ export default class DeviceName extends React.Component {
     if(!(this.state.deviceName) || this.state.deviceName.length <= 0 ){
       this.state.deviceName = "tempByApplication";
     }
-   this.setDeviceName();
+    
+    
+    if(Platform.OS == "ios"){
+      if(Main.isTouchVerified === "NO"){
+        this.decidePlatformAndShowAlert();
+      }else{
+        this.setDeviceName();
+      }
+    }
+   
     }
 
   onDeviceNameChange(event) {
     this.setState({ deviceName: event.nativeEvent.text });
   }
 
+ 
   setDeviceName() {
     const dName = this.state.deviceName;
     if (dName.length > 0) {

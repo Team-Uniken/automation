@@ -11,7 +11,7 @@ import Main from '../Main';
  */
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
-
+import dismissKeyboard from 'dismissKeyboard';
 /*
  Instantiaions
  */
@@ -93,6 +93,7 @@ export default class PasswordSet extends React.Component {
           Main.dnaPasswd = pw;
           let responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
+          dismissKeyboard();
           Events.trigger('showNextChallenge', {response: responseJson});
         } else {
           alert('Password and Confirm Password do not match');
