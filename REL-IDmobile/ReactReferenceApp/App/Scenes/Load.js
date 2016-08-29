@@ -17,7 +17,7 @@ import erelid from '../../erelid.json';
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 
-//var PushNotification = require('react-native-push-notification');
+var PushNotification = require('react-native-push-notification');
 //import Notification from 'react-native-system-notification';
 
 const reason = 'Please validate your Touch Id';
@@ -38,7 +38,7 @@ let onInitCompletedListener;
 let onPauseCompletedListener;
 let onResumeCompletedListener;
 let savedUserName;
-
+let gotNotification=false;
 const {
   Text,
   View,
@@ -164,6 +164,7 @@ class Load extends React.Component {
     // (required) Called when a remote or local notification is opened or received
     onNotification: function(notification) {
         console.log( 'NOTIFICATION:', notification );
+        gotNotification=true;
 
        // Obj.getMyNotifications();
 
@@ -233,6 +234,10 @@ class Load extends React.Component {
                                                                responseJson = JSON.parse(e.response);
                                                                if (responseJson.errCode == 0) {
                                                                console.log('Resume Successfull');
+                                                               if(gotNotification==true){
+                                                                 Obj.getMyNotifications();
+                                                                 gotNotification=false;
+                                                               }
                                                                AsyncStorage.setItem("savedContext", "");
                                                                } else {
                                                                AsyncStorage.setItem("savedContext", "");

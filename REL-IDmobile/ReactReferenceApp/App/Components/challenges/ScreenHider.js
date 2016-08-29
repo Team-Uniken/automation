@@ -59,7 +59,7 @@ class ScreenHider extends Component {
 
   render() {
     return (
-      <View/>  
+            <View style={{ flex: 1, backgroundColor:'#f00' }}/>
       );
   }
 }
