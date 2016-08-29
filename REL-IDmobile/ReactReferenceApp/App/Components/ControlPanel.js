@@ -131,6 +131,15 @@ class ControlPanel extends React.Component{
             }
           }
           this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
+        }else if(this.isNotificationScreenPresent() == 1){
+                   Alert.alert(
+                      '',
+                      'You have no Pending notifications',
+                      [
+                       {text: 'OK', onPress: () => this.props.navigator.pop(0)}
+                                              ]
+                      )
+         
         }
         
       } else {
@@ -143,14 +152,26 @@ class ControlPanel extends React.Component{
   }
   
   
+  isNotificationScreenPresent(){
+    var allScreens = this.props.navigator.getCurrentRoutes(0);
+    var status = 0;
+    for(var i = 0; i < allScreens.length; i++){
+      var screen = allScreens[i];
+      if(screen.id == 'NotificationMgmt'){
+        status = 1;
+        return status;
+      }
+    }
+    return status;
+  }
   
   getMyNotifications(){
     
-    var recordCount = "-1";
-    var startIndex = "0";
-    var enterpriseID = "1234";
-    var startDate = "12:08:16";
-    var endDate = "18:08:16";
+    var recordCount = "0";
+    var startIndex = "1";
+    var enterpriseID = "";
+    var startDate = "";
+    var endDate = "";
     ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
                                
                                console.log('----- NotificationMgmt.getMyNotifications.response ');
