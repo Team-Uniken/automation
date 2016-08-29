@@ -8,7 +8,7 @@ import Skin from '../../Skin';
 import Main from '../Main';
 
 import TouchID from 'react-native-touch-id';
-
+import dismissKeyboard from 'dismissKeyboard';
 /*
   CALLED
 */
@@ -134,6 +134,7 @@ export default class DeviceName extends React.Component {
     } else {
       alert('Please enter Device Name ');
     }
+    dismissKeyboard();
   }
   
 
