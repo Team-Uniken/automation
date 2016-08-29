@@ -38,7 +38,8 @@
     "react-native-system-notification": "^0.1.11",
     "react-native-touch-id": "^2.0.2",
     "react-native-webview-android": "^1.0.13",
-    "react-timer-mixin": "^0.13.3"
+    "react-timer-mixin": "^0.13.3",
+    "react-native-push-notification":"^2.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",

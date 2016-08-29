@@ -8,6 +8,7 @@ import Skin from '../Skin';
 /*
  CALLED
  */
+import TouchID from 'react-native-touch-id';
 import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -15,11 +16,9 @@ import erelid from '../../erelid.json';
 
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
-if(Platform.OS == "ios")
-   import TouchID from 'react-native-touch-id';
 
-var PushNotification = require('react-native-push-notification');
-import Notification from 'react-native-system-notification';
+//var PushNotification = require('react-native-push-notification');
+//import Notification from 'react-native-system-notification';
 
 const reason = 'Please validate your Touch Id';
 /*
@@ -154,7 +153,7 @@ class Load extends React.Component {
     Obj = this;
 
 //push messgage adnorid configure starts
-    
+    if(Platform.OS === 'android'){
 
    PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
@@ -202,7 +201,7 @@ class Load extends React.Component {
     requestPermissions: true,
 });
 
-
+    }
 //android push message configure Ends
 
     AppState.removeEventListener('change', this._handleAppStateChange);
