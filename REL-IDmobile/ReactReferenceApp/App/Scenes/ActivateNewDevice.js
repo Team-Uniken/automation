@@ -58,7 +58,7 @@ class ActivateNewDeviceScene extends React.Component{
                     currentProfile = JSON.parse(currentProfile);
                     //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
                                
-                   var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/generateOTP.htm? ";
+                   var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/generateOTP.htm";
 
                   //  var url = baseUrl.concat(value);
                     // fetch(url, {
@@ -83,7 +83,7 @@ class ActivateNewDeviceScene extends React.Component{
 
 
 
-    var userMap = {'userId':value};
+    var userMap = {"userId":value};
    RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
                                            console.log(response);
                                            if(response[0].error==0){
