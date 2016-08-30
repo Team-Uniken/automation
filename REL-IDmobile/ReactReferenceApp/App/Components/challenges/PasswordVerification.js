@@ -6,7 +6,7 @@
 import React from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Main';
-
+import TouchID from 'react-native-touch-id';
 /*
  CALLED
  */
@@ -30,6 +30,7 @@ const {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
+  Alert,
 } = React;
 
 
@@ -156,6 +157,87 @@ class PasswordVerification extends React.Component {
                 }).bind(this), 5);
   }
   
+  
+  onVerifyTouchIdSupport(){
+    TouchID.isSupported()
+    .then(supported => {
+          // Success code
+          console.log('TouchID is supported.');
+          this.OnTouchIdAlert();
+          })
+    .catch(error => {
+           // Failure code
+           this.checkPassword();//normal way
+           console.log('TouchID is not supported.');
+           console.log(error);
+           });
+  }
+  
+  OnTouchIdAlert(){
+    if(Platform.OS === 'ios'){
+      Alert.alert(
+                  'Message',
+                  'Do you want to enable touchId feature?',
+                  [
+                   {
+                   text: 'NO',
+                   onPress: () => {console.log('Cancel Pressed');
+                              AsyncStorage.setItem("userID","empty");
+                              AsyncStorage.setItem("UseTouchId","NO");
+                              this.checkPassword();
+                              style: 'cancel'
+                   }
+                   
+                   },
+                   {
+                   text: 'YES',
+                   onPress: () => {
+                                    AsyncStorage.setItem("UseTouchId","YES");
+                                    AsyncStorage.setItem("userId", Main.dnaUserName);
+                                    ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", this.state.inputPassword, (response) => {
+                                               if (response) {
+                                                        console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                        AsyncStorage.setItem("passwd", response[0].response);
+                                               } else {
+                                                        console.log('immediate response is' + response[0].response);
+                                                        // alert(response[0].error);
+                                               
+                                               }
+                                               })
+                   
+                        this.checkPassword();
+                   
+                      }
+                    },
+                   ]
+                  )
+    }else{
+      
+      //Show alert for pattern.
+    }
+  }
+  
+  decidePlatformAndShowAlert(){
+    const pw = this.state.inputPassword;
+    if (pw.length > 0) {
+    AsyncStorage.getItem("UseTouchId").then((value) => {
+                                            if(value === "NO"){
+                                              this.checkPassword();
+                                            }else{
+                                                if(Platform.OS === 'ios'){
+                                                  this.onVerifyTouchIdSupport();
+                                                } else {
+                                                //this.showSetPatternAlert();
+                                              }
+                                            }
+ 
+                                        }).done();
+    }else{
+      alert('Please enter password');
+    }
+  }
+  
+  
   checkPassword() {
     const pw = this.state.inputPassword;
     if (pw.length > 0) {
@@ -210,7 +292,7 @@ class PasswordVerification extends React.Component {
             placeholderTextColor={'rgba(255,255,255,0.7)'}
             style={Skin.activationStyle.textinput}
             value={this.state.inputPassword}
-            onSubmitEditing={this.checkPassword.bind(this)}
+            onSubmitEditing={this.decidePlatformAndShowAlert.bind(this)}
             onChange={this.onPasswordChange.bind(this)}
             />
             
@@ -220,7 +302,7 @@ class PasswordVerification extends React.Component {
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}
-            onPress={this.checkPassword.bind(this)}
+            onPress={this.decidePlatformAndShowAlert.bind(this)}
             underlayColor={'#082340'}
             activeOpacity={0.6}
             >
