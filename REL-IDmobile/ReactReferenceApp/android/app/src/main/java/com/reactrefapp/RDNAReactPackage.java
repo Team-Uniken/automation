@@ -19,8 +19,7 @@ public class RDNAReactPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new ReactRdnaModule(reactContext));
-        modules.add(new NetworkOperation(reactContext));
-
+        modules.add(new RDNARequestUtility(reactContext));
         return modules;
     }
 
