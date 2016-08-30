@@ -206,7 +206,6 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
       }
       else {
         response="";
-
       }
     } catch (Exception e) {
       e.printStackTrace();

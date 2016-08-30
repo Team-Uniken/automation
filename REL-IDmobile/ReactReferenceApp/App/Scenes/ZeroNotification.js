@@ -45,11 +45,11 @@ var notification =  [];
 
 
 function compare(a, b) {
-  if (a.notification_uuid < b.notification_uuid)
-    return -1;
-  if (a.notification_uuid > b.notification_uuid)
+  if (a.expiry_timestamp < b.expiry_timestamp)
     return 1;
-  if (a.notification_uuid == b.notification_uuid)
+  if (a.expiry_timestamp > b.expiry_timestamp)
+    return -1;
+  if (a.expiry_timestamp == b.expiry_timestamp)
     return 0;
 }
 

@@ -39,6 +39,8 @@ let onPauseCompletedListener;
 let onResumeCompletedListener;
 let savedUserName;
 let gotNotification=false;
+let appalive=false;
+
 const {
   Text,
   View,
@@ -166,6 +168,10 @@ class Load extends React.Component {
         console.log( 'NOTIFICATION:', notification );
         gotNotification=true;
 
+        if(appalive==true){
+          Obj.getMyNotifications();
+        }
+
        // Obj.getMyNotifications();
 
          /**
@@ -218,6 +224,7 @@ class Load extends React.Component {
     }
     
     onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function(e) {
+      appalive=false;
                                                               console.log('On Pause Completed:');
                                                               console.log('immediate response is' + e.response);
                                                               responseJson = JSON.parse(e.response);
@@ -233,6 +240,7 @@ class Load extends React.Component {
                                                                console.log('immediate response is' + e.response);
                                                                responseJson = JSON.parse(e.response);
                                                                if (responseJson.errCode == 0) {
+                                                                 appalive=true;
                                                                console.log('Resume Successfull');
                                                                if(gotNotification==true){
                                                                  Obj.getMyNotifications();
@@ -252,6 +260,7 @@ class Load extends React.Component {
                                                              console.log('immediate response is' + e.response);
                                                              responseJson = JSON.parse(e.response);
                                                              if (responseJson.errCode == 0) {
+                                                               appalive=true;
                                                              initCount = initSuccess;
                                                              chlngJson = responseJson.pArgs.response.ResponseData;
                                                              nextChlngName = chlngJson.chlng[0].chlng_name

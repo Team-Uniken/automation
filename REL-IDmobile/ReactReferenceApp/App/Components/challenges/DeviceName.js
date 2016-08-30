@@ -94,13 +94,13 @@ export default class DeviceName extends React.Component {
     }
     
     
-    if(Platform.OS == "ios"){
-      if(Main.isTouchVerified === "NO"){
-        this.decidePlatformAndShowAlert();
-      }else{
-        this.setDeviceName();
-      }
-    }
+//    if(Platform.OS == "ios"){
+////      if(Main.isTouchVerified === "NO"){
+//        this.decidePlatformAndShowAlert();
+////      }else{
+////        this.setDeviceName();
+////      }
+//    }
    
     }
 
@@ -222,7 +222,11 @@ export default class DeviceName extends React.Component {
   
   decidePlatformAndShowAlert(){
     if(Platform.OS === 'ios'){
-      this.onVerifyTouchIdSupport();
+      if(Main.isTouchIdSet === "NO"){
+        this.onVerifyTouchIdSupport();
+      }else{
+        this.setDeviceName();
+      }
     } else {
        this.showSetPatternAlert();
     }
