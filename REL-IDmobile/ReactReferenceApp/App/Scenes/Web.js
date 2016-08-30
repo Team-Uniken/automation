@@ -87,8 +87,28 @@ export default class Web extends React.Component {
         />
       );
     } else {
+
+      if(!this.props.secure) {
       return (
-        <WebViewAndroid
+        <WebView
+          ref={WEBVIEW_REF}
+          automaticallyAdjustContentInsets={false}
+          style={styles.webView}
+          source={{ uri: this.state.url }}
+          javaScriptEnable
+          domStorageEnabled
+          decelerationRate="normal"
+          //onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          onLoad={()=>{console.log('loaded')}}
+          scalesPageToFit={this.state.scalesPageToFit}
+          //source={this.props.source}
+          //proxy={this.props.proxy}
+          javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
+        />
+      );
+    }else{
+      return (
+        <WebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
@@ -104,6 +124,7 @@ export default class Web extends React.Component {
           javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
         />
       );
+    }      
     }
   }
 
