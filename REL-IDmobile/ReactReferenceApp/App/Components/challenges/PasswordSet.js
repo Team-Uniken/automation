@@ -69,6 +69,7 @@ export default class PasswordSet extends React.Component {
   }
   
   componentDidMount() {
+    Main.isTouchIdSet = "NO";
     InteractionManager.runAfterInteractions(() => {
                                             this.refs.password.focus();
                                             });
