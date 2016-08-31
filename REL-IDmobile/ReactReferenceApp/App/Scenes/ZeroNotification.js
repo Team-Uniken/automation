@@ -55,6 +55,27 @@ function compare(a, b) {
 
 
 var SampleRow = React.createClass({
+ showalertforReject(notification,btnLabel) {
+  Alert.alert(
+    'Fraud Warning',
+    'You\'ve rejected this transaction, would you like to flag it as fraud?' ,
+    [
+      {
+        text: 'It\'s Fraud',
+        onPress: () => {
+          this.showalert(notification,btnLabel)
+        }
+      },
+      {
+        text: 'No',
+        onPress: () => {
+                 this.showalert(notification,btnLabel)
+        }
+      },
+    ]
+  )
+ },
+
                                   showalert(notification,btnLabel) {
                                   for(var i =0 ; i< notification.action.length;i++){
                                   var data = notification.action[i];
@@ -67,7 +88,11 @@ var SampleRow = React.createClass({
                                   
                                   },
                                   render() {
+                                     var str =this.props.notification.expiry_timestamp;
+                                    var res = str.split("EDT");
+                                    var finalres=res[0].split("T");
                                   if(this.props.notification.action.length==3){
+                                   
                                   return (
                                           <View style={Skin.notification.customerow}>
                                           
@@ -77,7 +102,7 @@ var SampleRow = React.createClass({
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {this.props.notification.expiry_timestamp}
+                                          {finalres[0]} {finalres[1]}
                                           </Text>
                                           </View>
                                           <View style={Skin.notification.row}>
@@ -97,7 +122,7 @@ var SampleRow = React.createClass({
                                           </View>
                                           </TouchableHighlight>
                                           
-                                          <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[1].label)}>
+                                          <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalertforReject(this.props.notification,this.props.notification.action[1].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[1].label}
@@ -129,7 +154,7 @@ var SampleRow = React.createClass({
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {this.props.notification.expiry_timestamp}
+                                          {finalres[0]} {finalres[1]}
                                           </Text>
                                           </View>
                                           <View style={Skin.notification.row}>
@@ -149,7 +174,7 @@ var SampleRow = React.createClass({
                                           </TouchableHighlight>
                                           
                                           
-                                          <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[1].label)}>
+                                          <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification,this.props.notification.action[1].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[1].label}
