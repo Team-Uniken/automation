@@ -241,7 +241,7 @@ class ControlPanel extends React.Component{
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Help & Support',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://apisdkdev.uniken.com/demoapp/relid.html'});}}  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
+            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://52.74.188.241/demoapp/relid.html'});}}  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'WebView', title:'Open Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://google.com'});}}  style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
