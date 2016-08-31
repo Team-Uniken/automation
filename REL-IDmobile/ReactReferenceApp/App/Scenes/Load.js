@@ -98,20 +98,19 @@ class Load extends React.Component {
   _onNotification(notification) {
     
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
-    var isOnUserSession;
     for(var i = 0; i < allScreens.length; i++){
       var screen = allScreens[i];
       if(screen.id == 'Main'){
         console.log('-----getMyNotifications called when notication comes-----');
-        isOnUserSession = 1;
+        gotNotification = true;
         Obj.getMyNotifications();
         break ;
       }else{
-        isOnUserSession = 0;
+        gotNotification = false;
       }
     }
     
-    if(isOnUserSession == 0){
+    if(gotNotification == false){
       AlertIOS.alert(
                      '',
                      notification.getMessage(),
