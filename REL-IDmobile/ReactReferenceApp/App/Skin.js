@@ -438,6 +438,11 @@ const notification = StyleSheet.create({
         width: SCREEN_WIDTH-32,
 
   },
+    amountrow: {
+    flexDirection: 'row',
+        width: SCREEN_WIDTH-32,
+
+  },
     text: {
     margin: 10,
   },
@@ -469,11 +474,25 @@ const notification = StyleSheet.create({
   },
   body: {
     fontSize: 16,
+     width: SCREEN_WIDTH-152,
     color: BLACK_TEXT_COLOR,
-    width: SCREEN_WIDTH-32,
     opacity: 0.6,
+  },
+   bold: {
+    fontSize: 24,
+    color: BLACK_TEXT_COLOR,
+    opacity:1,
+    fontWeight: 'bold', 
     marginLeft:8,
   },
+    htmlstyle: {
+    fontSize: 20,
+    color: BLACK_TEXT_COLOR,
+    width: SCREEN_WIDTH-32,
+    opacity:1,
+    marginLeft:8,
+  },
+  
   buttontext: {
     fontSize: 16,
     color: '#FFF',

@@ -88,6 +88,12 @@ var SampleRow = React.createClass({
                                   
                                   },
                                   render() {
+
+
+                                    var body=this.props.notification.message.body;
+                                    var bodyarray=body.split("\n");
+                                    var amount = bodyarray[3];
+
                                     
                                     var expiry_timestamp =this.props.notification.expiry_timestamp;
                                     var timestamp = expiry_timestamp.split("EDT");
@@ -112,18 +118,35 @@ var SampleRow = React.createClass({
                                           <View style={Skin.notification.customerow}>
                                           
                                           <View style={Skin.notification.col}>
-                                          <View style={Skin.notification.row}>
-                                          <Text style={Skin.notification.subject}>
-                                          {this.props.notification.message.subject}
+                                           <View style={Skin.notification.row}>
+                                            <Text style={Skin.notification.subject}>
+                                              {this.props.notification.message.subject}
+                                            </Text>
+                                            <Text style={Skin.notification.time}>
+                                              {date[0]}/{date[1]}/{date[2]}  {time[0]}:{time[1]}:{time[2]}
+                                            </Text>
+                                          </View>
+                                          
+                                          <View style={Skin.notification.col}>
+                                          <Text style={Skin.notification.body}>
+                                            {bodyarray[0]}
                                           </Text>
-                                          <Text style={Skin.notification.time}>
-                                          {date[0]}/{date[1]}/{date[2]}  {time[0]}:{time[1]}:{time[2]}
+                                        
+
+                                          <View style={Skin.notification.amountrow}>
+                                            <View style={Skin.notification.col}>
+                                            <Text style={Skin.notification.body}>
+                                          {bodyarray[1]}
+                                          </Text> 
+                                          <Text style={Skin.notification.body}>
+                                          {bodyarray[2]}
                                           </Text>
                                           </View>
-                                          <View style={Skin.notification.row}>
-                                          <Text style={Skin.notification.body}>
-                                          {this.props.notification.message.body}
+                                          <Text style={Skin.notification.bold}>
+                                          {amount}
                                           </Text>
+                                          </View>
+                                        
                                           </View>
                                           <View style={Skin.notification.row}>
                                           
