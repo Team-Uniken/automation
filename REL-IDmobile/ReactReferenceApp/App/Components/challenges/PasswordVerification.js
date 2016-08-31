@@ -228,6 +228,7 @@ class PasswordVerification extends React.Component {
                                                   this.onVerifyTouchIdSupport();
                                                 } else {
                                                 //this.showSetPatternAlert();
+                                                  this.checkPassword();
                                               }
                                             }
  

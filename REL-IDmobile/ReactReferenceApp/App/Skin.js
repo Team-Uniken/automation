@@ -60,7 +60,9 @@ const BLACK_TEXT_COLOR = '#000';
 const ERROR_TEXT_COLOR = '#CC0000';
 const BUTTON_TEXT_COLOR = '#fff';
 
-
+const APPROVE_BUTTON_COLOR = '#92D050';
+const REJECT_BUTTON_COLOR = '#800000';
+const FRAUD_BUTTON_COLOR = '#212121';
 // Fonts
 const CORE_FONT = 'Century Gothic';
 const ICON_FONT = 'icomoon';
@@ -432,7 +434,6 @@ const notification = StyleSheet.create({
     marginRight:16,
   },
   row: {
-    marginBottom: 8,
     flexDirection: 'row',
         width: SCREEN_WIDTH-32,
 
@@ -482,27 +483,27 @@ const notification = StyleSheet.create({
    confirmbutton: {
     width:(SCREEN_WIDTH-32)/3,
     height:48,
-    backgroundColor:'#37bd27',
+    backgroundColor:APPROVE_BUTTON_COLOR,
   },
    denybutton: {
     width:(SCREEN_WIDTH-32)/3,
     height:48,
-    backgroundColor:'#c63f48',
+    backgroundColor:REJECT_BUTTON_COLOR,
   },
     fraudbutton: {
     width:(SCREEN_WIDTH-32)/3,
     height:48,
-    backgroundColor:'#212121',
+    backgroundColor:FRAUD_BUTTON_COLOR,
   },
     approvebutton: {
     width:(SCREEN_WIDTH-32)/2,
     height:48,
-    backgroundColor:'#37bd27',
+    backgroundColor:APPROVE_BUTTON_COLOR,
   },
     rejectbutton: {
     width:(SCREEN_WIDTH-32)/2,
     height:48,
-    backgroundColor:'#c63f48',
+    backgroundColor:REJECT_BUTTON_COLOR,
   },
 });
 
