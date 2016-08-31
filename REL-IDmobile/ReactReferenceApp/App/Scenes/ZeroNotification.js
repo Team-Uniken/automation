@@ -88,9 +88,23 @@ var SampleRow = React.createClass({
                                   
                                   },
                                   render() {
-                                     var str =this.props.notification.expiry_timestamp;
-                                    var res = str.split("EDT");
-                                    var finalres=res[0].split("T");
+                                    var expiry_timestamp =this.props.notification.expiry_timestamp;
+                                    var timestamp = expiry_timestamp.split("EDT");
+                                    var finaltimestamp=timestamp[0].split("T");
+                                    var date=finaltimestamp[0].split("-");
+                                    var time=finaltimestamp[1].split(":");
+
+                                      var dateFormat = require('dateformat');//www.npmjs.com/package/dateformat
+                                      var validdate = new Date();
+                                      validdate.setFullYear(parseInt(date[0]));
+                                      validdate.setMonth(parseInt(date[1])-1);  // months indexed as 0-11, substract 1
+                                      validdate.setDate(parseInt(date[2]));
+                                      validdate.setHours(parseInt(time[0]));
+                                      validdate.setMinutes(parseInt(time[1]));
+                                      validdate.setSeconds(parseInt(time[2]));
+
+
+
                                   if(this.props.notification.action.length==3){
                                    
                                   return (
@@ -102,7 +116,7 @@ var SampleRow = React.createClass({
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {finalres[0]} {finalres[1]}
+                                          {date[0]}/{date[1]}/{date[2]}  {time[0]}:{time[1]}:{time[2]}
                                           </Text>
                                           </View>
                                           <View style={Skin.notification.row}>
@@ -137,9 +151,6 @@ var SampleRow = React.createClass({
                                           </Text> 
                                           </View>
                                           </TouchableHighlight>
-                                          
-                                          
-                                          
                                           </View>
                                           </View>
                                           </View>
@@ -154,7 +165,7 @@ var SampleRow = React.createClass({
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {finalres[0]} {finalres[1]}
+                                          {date[0]}/{date[1]}/{date[2]}  {time[0]}:{time[1]}:{time[2]}
                                           </Text>
                                           </View>
                                           <View style={Skin.notification.row}>
