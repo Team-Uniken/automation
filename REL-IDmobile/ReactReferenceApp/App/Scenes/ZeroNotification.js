@@ -123,7 +123,7 @@ var SampleRow = React.createClass({
                                               {this.props.notification.message.subject}
                                             </Text>
                                             <Text style={Skin.notification.time}>
-                                              {date[0]}/{date[1]}/{date[2]}  {time[0]}:{time[1]}:{time[2]}
+                                              {date[0]}/{date[1]}/{date[2]} {time[0]}:{time[1]}:{time[2]}
                                             </Text>
                                           </View>
                                           
@@ -188,11 +188,11 @@ var SampleRow = React.createClass({
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {date[0]}/{date[1]}/{date[2]}  {time[0]}:{time[1]}:{time[2]}
+                                          {date[0]}/{date[1]}/{date[2]} {time[0]}:{time[1]}:{time[2]}
                                           </Text>
                                           </View>
                                           <View style={Skin.notification.row}>
-                                          <Text style={Skin.notification.body}>
+                                          <Text style={Skin.notification.body2}>
                                           {this.props.notification.message.body}
                                           </Text>
                                           </View>
