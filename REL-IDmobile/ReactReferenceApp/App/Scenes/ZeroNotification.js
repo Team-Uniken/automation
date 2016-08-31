@@ -88,6 +88,7 @@ var SampleRow = React.createClass({
                                   
                                   },
                                   render() {
+                                    
                                     var expiry_timestamp =this.props.notification.expiry_timestamp;
                                     var timestamp = expiry_timestamp.split("EDT");
                                     var finaltimestamp=timestamp[0].split("T");
@@ -135,8 +136,7 @@ var SampleRow = React.createClass({
                                           </Text>
                                           </View>
                                           </TouchableHighlight>
-                                          
-                                          <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalertforReject(this.props.notification,this.props.notification.action[1].label)}>
+                                          <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[1].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[1].label}
@@ -144,7 +144,7 @@ var SampleRow = React.createClass({
                                           </View>
                                           </TouchableHighlight>
                                           
-                                          <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[2].label)}>
+                                          <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification,this.props.notification.action[2].label)}>
                                           <View style={Skin.notification.text}>
                                           <Text style={Skin.notification.buttontext}>
                                           {this.props.notification.action[2].label}
