@@ -118,7 +118,7 @@ class TwoFactorAuthMachine extends React.Component {
   onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
 
-
+    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
     subscriptions.remove();
@@ -190,7 +190,7 @@ class TwoFactorAuthMachine extends React.Component {
       }
     } else {
       console.log(e);
-      alert('Internal system error occurred.');
+      alert('Internal system error occurred.'+res.errCode);
     }
   }
 
@@ -208,6 +208,7 @@ class TwoFactorAuthMachine extends React.Component {
 
 
   showNextChallenge(args) {
+    
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
 
@@ -345,6 +346,7 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   callCheckChallenge() {
+    Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
       ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {

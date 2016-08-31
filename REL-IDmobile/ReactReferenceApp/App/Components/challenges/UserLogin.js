@@ -16,9 +16,7 @@ import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import PatternLock from '../../Scenes/PatternLock'
-
-    import TouchID from 'react-native-touch-id';
-
+import TouchID from 'react-native-touch-id';
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
@@ -69,6 +67,8 @@ class UserLogin extends React.Component{
     Challenge:this.props.url.chlngJson,
     failureMessage: '',
     pattern:false,
+    isLoaderVisible:false,
+
     };
 
     this.locked = true;
@@ -246,7 +246,7 @@ class UserLogin extends React.Component{
   checkUsername() {
     this.state.progress = 0;
     var un = this.state.inputUsername;
-    
+//    this.setState({ isLoaderVisible: true});
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
@@ -266,7 +266,6 @@ class UserLogin extends React.Component{
   
   
   checkUsernameSuccess(){
-//    AsyncStorage.setItem("userId", savedUserName);
     Main.dnaUserName = savedUserName;
     InteractionManager.runAfterInteractions(() => {
                                             this.props.navigator.push(
@@ -277,6 +276,8 @@ class UserLogin extends React.Component{
   
   
   checkUsernameFailure() {
+        console.log('\n\nin checkUsernameFailure');
+    this.setState({ isLoaderVisible: false});
     this.state.progress = 0;
     Animated.sequence([
                        Animated.timing(this.state.logWrapOpac, {
@@ -340,8 +341,13 @@ class UserLogin extends React.Component{
   
   render() {
     if(this.state.pattern === false){
+      var fla = this.state.isLoaderVisible;
+      console.log('\n\n\n is Loader == ', fla);
         return (
-                <MainActivation navigator={this.props.navigator}>
+                
+                <MainActivation
+                navigator={this.props.navigator}>
+               
                 <View style={Skin.activationStyle.topGroup}>
                 <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
                 <View style={Skin.loadStyle.rid_center}>

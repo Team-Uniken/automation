@@ -12,6 +12,8 @@ import Skin from '../Skin';
 */
 
 import dismissKeyboard from 'react-native-dismiss-keyboard';
+import Loader from './Loader';
+import Events from 'react-native-simple-events';
 /* 
   INSTANCES
 */
@@ -27,21 +29,54 @@ const {
 
 } = React;
 
-
+let obj;
 class MainActivation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    ColorProp:'rgba(255,255,255,1)',
+    color:'#4fadd8',
+    visible: this.props.visible
+    };
+    console.log('\nMain Activation in constructor');
+    console.log(this.state.visible);
   }
 
   dismiss() {
     dismissKeyboard();
   }
+  
+  componentDidMount() {
+    obj=this;
+    Events.on('hideLoader', 'hideLoader', this.hideLoader);
+    Events.on('showLoader', 'showLoader', this.showLoader);
+  }
+  
+  hideLoader(args){
+  console.log('\n in hideLoader of main activation');
+  obj.hideLoaderView();
+  }
+  
+  showLoader(args){
+    console.log('\n in hideLoader of main activation');
+    obj.showLoaderView();
+  }
+  
+  hideLoaderView(){
+  console.log('\n in hide Loader view of main activation');
+  this.setState({visible: false});
+    console.log(this.state.visible);
+  }
+  showLoaderView(){
+    console.log('\n in show Loader view of main activation');
+    this.setState({visible: true});
+    console.log(this.state.visible);
+  }
+  
 
   render() {
-//    console.log('nav look');
-//    console.log(this);
-    
+    console.log('\n\n\n  Main Activation render called again');
+//    this.state.visible = this.props.visible;
     if(Platform.OS == "android"){
       return (
               <View style={Skin.activationStyle.container}>
@@ -80,6 +115,7 @@ class MainActivation extends React.Component {
                     >
                     {Skin.icon.settings}
                     </Text>
+               <Loader visible={this.state.visible}/>
                   </View>
                 </TouchableHighlight>
               </View>
@@ -129,6 +165,7 @@ class MainActivation extends React.Component {
                   </Text>
                 </View>
               </TouchableHighlight>
+                <Loader visible={this.state.visible}/>
             </View>
           </TouchableWithoutFeedback>
         );
