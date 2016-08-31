@@ -7,8 +7,8 @@ class Loader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    ColorProp:'rgba(255,255,255,1)',
-    color:'#4fadd8'
+    ColorProp:'rgba(79,173,216,1)',
+    color:'#FFF'
       
     };
   }
