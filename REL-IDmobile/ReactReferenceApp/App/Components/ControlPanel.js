@@ -253,8 +253,6 @@ class ControlPanel extends React.Component{
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Legal Info',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Legal Info</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <Text style={styles.menuItem}></Text>
-            <View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={this.showLogOffAlert.bind(this)}  style={styles.touch}><Text style={styles.menuItem}>Logout</Text>
             </TouchableHighlight>

@@ -255,6 +255,7 @@ class Load extends React.Component {
     
     onInitCompletedListener = DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
                                                              onInitCompletedListener.remove();
+                                                             AsyncStorage.setItem("savedContext", "");
                                                              console.log('On Initialize Completed:');
                                                              console.log('immediate response is' + e.response);
                                                              responseJson = JSON.parse(e.response);
