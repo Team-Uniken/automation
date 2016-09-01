@@ -13,7 +13,6 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
  CALLED
  */
 import Events from 'react-native-simple-events';
-var styles = Skin.loadStyle;
 var Main = require('./Main');
 //var Menu = require('./Menu');
 var UserLogin = require('./challenges/UserLogin');

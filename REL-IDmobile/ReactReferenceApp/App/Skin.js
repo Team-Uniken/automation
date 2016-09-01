@@ -433,6 +433,13 @@ const notification = StyleSheet.create({
     marginLeft:16,
     marginRight:16,
   },
+    container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    height:200,
+    width:300
+  },
   row: {
     flexDirection: 'row',
         width: SCREEN_WIDTH-32,
@@ -449,6 +456,11 @@ const notification = StyleSheet.create({
   col: {
     marginRight: 20,
     flexDirection: 'column'
+  },
+   col1: {
+    marginRight: 20,
+     width: SCREEN_WIDTH-167,
+    flexDirection: 'column',
   },
   subject: {
     fontSize: 16,
@@ -474,14 +486,21 @@ const notification = StyleSheet.create({
   },
   body: {
     fontSize: 16,
-     width: SCREEN_WIDTH-152,
+     width: SCREEN_WIDTH-167,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
+  },
+    dot: {
+    fontSize: 16,
+     width:15,
+    color: BLACK_TEXT_COLOR,
+    opacity:0.6,
   },
    body2: {
     fontSize: 16,
     marginLeft:8,
-     width: SCREEN_WIDTH-32,
+    marginRight:8,
+     width: SCREEN_WIDTH-63,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
   },
@@ -1044,8 +1063,8 @@ const controlStyle = StyleSheet.create({
   menuItem: {
     color: '#ffffff',
     fontFamily: CORE_FONT,
-    paddingTop: 15,
-    paddingBottom: 15,
+    marginTop: 15,
+    marginBottom: 15,
   },
   menuBorder: {
     borderStyle: 'solid',

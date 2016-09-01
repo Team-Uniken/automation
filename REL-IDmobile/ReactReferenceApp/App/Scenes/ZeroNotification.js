@@ -25,6 +25,7 @@ const {
   DeviceEventEmitter,
   TouchableHighlight,
   View,
+   WebView,
   Alert,
 } = React;
 //let onUpdateDevice;
@@ -110,6 +111,8 @@ var SampleRow = React.createClass({
                                       validdate.setMinutes(parseInt(time[1]));
                                       validdate.setSeconds(parseInt(time[2]));
 
+                                      
+var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
 
 
                                   if(this.props.notification.action.length==3){
@@ -128,19 +131,28 @@ var SampleRow = React.createClass({
                                           </View>
                                           
                                           <View style={Skin.notification.col}>
+
+                                            <View style={Skin.notification.row}>
+                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
                                           <Text style={Skin.notification.body}>
                                             {bodyarray[0]}
                                           </Text>
-                                        
+                                        </View>
 
                                           <View style={Skin.notification.amountrow}>
-                                            <View style={Skin.notification.col}>
-                                            <Text style={Skin.notification.body}>
-                                          {bodyarray[1]}
-                                          </Text> 
+                                            <View style={Skin.notification.col1}>
+                                             <View style={Skin.notification.row}>
+                                              <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
                                           <Text style={Skin.notification.body}>
-                                          {bodyarray[2]}
+                                            {bodyarray[1]}
                                           </Text>
+                                        </View>
+                                           <View style={Skin.notification.row}>
+                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                          <Text style={Skin.notification.body}>
+                                            {bodyarray[2]}
+                                          </Text>
+                                        </View>
                                           </View>
                                           <Text style={Skin.notification.bold}>
                                           {amount}
@@ -192,11 +204,11 @@ var SampleRow = React.createClass({
                                           </Text>
                                           </View>
                                           <View style={Skin.notification.row}>
+                                          <Text style={Skin.notification.dot}> {"\u2022"}</Text>
                                           <Text style={Skin.notification.body2}>
                                           {this.props.notification.message.body}
                                           </Text>
                                           </View>
-                                          
                                           <View style={Skin.notification.row}>
                                           
                                           <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[0].label)}>

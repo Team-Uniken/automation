@@ -40,6 +40,7 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
+import Demo from './App/Components/demo';
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
@@ -139,7 +140,11 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
 
     // LOAD SCENES
-    } else if (id === 'Load') {
+    }else if (id === 'demo') {
+      return (<Demo navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+
+    // LOAD SCENES
+    }else if (id === 'Load') {
       return (<LoadScene navigator={nav} />);
 
     // SECONDARY SCENES
