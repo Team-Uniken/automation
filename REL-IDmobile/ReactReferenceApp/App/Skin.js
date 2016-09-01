@@ -1148,9 +1148,11 @@ const activationStyle = StyleSheet.create({
   wrap: {
     flexDirection: 'column',
     width: max.width,
-    height: max.height,
     justifyContent: 'flex-start',
-  //backgroundColor: 'red',
+  },
+  fullscreen:{
+    width:max.width,
+    height:SCREEN_HEIGHT-100,
   },
   counter: {
     fontSize: 14,
@@ -1212,8 +1214,8 @@ const activationStyle = StyleSheet.create({
     textAlign: 'center',
   },
   topGroup: {
-     height: 400,
-//     backgroundColor: 'red',
+//     height: 400,
+   //  backgroundColor: 'red',
      justifyContent: 'flex-end',
      flexDirection: 'column',
   },

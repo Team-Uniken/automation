@@ -89,9 +89,13 @@ class MainActivation extends React.Component {
               
                 <View style={Skin.activationStyle.bgcolorizer} />
                 <View style={Skin.activationStyle.centering_wrap}>
+                <ScrollView
+                showsVerticalScrollIndicator={false}>
                   <View style={Skin.activationStyle.wrap}>
                     {this.props.children}
                   </View>
+                </ScrollView>
+                 
                 </View>
                 <TouchableHighlight
                   activeOpacity={1.0}

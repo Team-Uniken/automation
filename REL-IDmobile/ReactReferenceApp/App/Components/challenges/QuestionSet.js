@@ -28,6 +28,7 @@ export default class QuestionSet extends React.Component {
 
   constructor(props) {
     super(props);
+    dismissKeyboard();
     obj = this;
     const ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,

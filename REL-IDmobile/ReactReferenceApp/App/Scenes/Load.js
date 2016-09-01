@@ -607,6 +607,8 @@ class Load extends React.Component {
     console.log(this.props.navigator.state);
     return (
             <MainActivation navigator={this.props.navigator}>
+            <View style={Skin.activationStyle.fullscreen}>
+         
             <Animated.View style={[Skin.loadStyle.rid_wrap, { top: this.state.rid_top }]}>
             <View style={Skin.loadStyle.rid_center}>
             <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r, { opacity: this.state.r_opac_val }]}>g
@@ -637,6 +639,7 @@ class Load extends React.Component {
             </Animated.Text>
             </View>
             </View>
+               </View>
             </MainActivation>
             );
   }
