@@ -451,7 +451,7 @@ const notification = StyleSheet.create({
 
   },
     text: {
-    margin: 10,
+    margin: 14,
   },
   col: {
     marginRight: 20,
