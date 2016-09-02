@@ -498,9 +498,8 @@ const notification = StyleSheet.create({
   },
    body2: {
     fontSize: 16,
-    marginLeft:8,
-    marginRight:8,
-     width: SCREEN_WIDTH-63,
+    marginRight:32,
+     width: SCREEN_WIDTH-71,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
   },
@@ -520,34 +519,34 @@ const notification = StyleSheet.create({
   },
   
   buttontext: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#FFF',
     textAlign: 'center',
     opacity:1,
   },
    confirmbutton: {
     width:(SCREEN_WIDTH-32)/3,
-    height:48,
+    height:56,
     backgroundColor:APPROVE_BUTTON_COLOR,
   },
    denybutton: {
     width:(SCREEN_WIDTH-32)/3,
-    height:48,
+    height:56,
     backgroundColor:REJECT_BUTTON_COLOR,
   },
     fraudbutton: {
     width:(SCREEN_WIDTH-32)/3,
-    height:48,
+    height:56,
     backgroundColor:FRAUD_BUTTON_COLOR,
   },
     approvebutton: {
     width:(SCREEN_WIDTH-32)/2,
-    height:48,
+    height:56,
     backgroundColor:APPROVE_BUTTON_COLOR,
   },
     rejectbutton: {
     width:(SCREEN_WIDTH-32)/2,
-    height:48,
+    height:56,
     backgroundColor:REJECT_BUTTON_COLOR,
   },
 });
@@ -935,8 +934,8 @@ const loadStyle = StyleSheet.create({
   relid: {
     fontFamily: 'icomoon',
     fontSize: 21,
-    marginLeft: 31 + leftrid,
-    //marginLeft: 47,
+   // marginLeft: 31 + leftrid,
+    marginLeft: 47,
     width: 170,
     flex: 1,
     color: '#FFFFFF',

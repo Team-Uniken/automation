@@ -112,9 +112,6 @@ var SampleRow = React.createClass({
                                       validdate.setSeconds(parseInt(time[2]));
 
                                       
-var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
-
-
                                   if(this.props.notification.action.length==3){
                                    
                                   return (
@@ -126,18 +123,18 @@ var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
                                               {this.props.notification.message.subject}
                                             </Text>
                                             <Text style={Skin.notification.time}>
-                                              {date[0]}/{date[1]}/{date[2]} {time[0]}:{time[1]}:{time[2]}
+                                              {date[1]}/{date[2]}/{date[0]}
                                             </Text>
                                           </View>
                                           
-                                          <View style={Skin.notification.col}>
+                                          <View style={[Skin.notification.col,{marginTop:4}]}>
 
                                             <View style={Skin.notification.row}>
                                             <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
-                                          <Text style={Skin.notification.body}>
+                                            <Text style={Skin.notification.body}>
                                             {bodyarray[0]}
-                                          </Text>
-                                        </View>
+                                            </Text>
+                                           </View>
 
                                           <View style={Skin.notification.amountrow}>
                                             <View style={Skin.notification.col1}>
@@ -160,8 +157,7 @@ var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
                                           </View>
                                         
                                           </View>
-                                          <View style={Skin.notification.row}>
-                                          
+                                          <View style={[Skin.notification.row,{marginTop:8}]}>
                                           <TouchableHighlight style={Skin.notification.confirmbutton}
                                           onPress={() => this.showalert(this.props.notification,this.props.notification.action[0].label)}
                                           >
@@ -200,16 +196,31 @@ var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {date[0]}/{date[1]}/{date[2]} {time[0]}:{time[1]}:{time[2]}
+                                          {date[1]}/{date[2]}/{date[0]}
                                           </Text>
                                           </View>
-                                          <View style={Skin.notification.row}>
-                                          <Text style={Skin.notification.dot}> {"\u2022"}</Text>
-                                          <Text style={Skin.notification.body2}>
-                                          {this.props.notification.message.body}
-                                          </Text>
-                                          </View>
-                                          <View style={Skin.notification.row}>
+
+                                         
+                                           <View style={Skin.notification.row}>
+                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.body2}>
+                                            {bodyarray[0]}
+                                            </Text>
+                                           </View>
+                                             <View style={Skin.notification.row}>
+                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.body2}>
+                                            {bodyarray[1]}
+                                            </Text>
+                                           </View>
+                                            <View style={Skin.notification.row}>
+                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.body2}>
+                                            {bodyarray[2]}
+                                            </Text>
+                                           </View>
+
+                                          <View style={[Skin.notification.row,{marginTop:8}]}>
                                           
                                           <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification,this.props.notification.action[0].label)}>
                                           <View style={Skin.notification.text}>
