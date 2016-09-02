@@ -74,8 +74,9 @@ export default class ContactScene extends React.Component {
             padding: 25,
           }}
         >
+            
           <TouchableOpacity
-            onPress={() => this.handleClick({ id: 'Appointments' })}
+            onPress={() => this.handleClick({ id: 'ComingSoon' ,title:'Chat'})}
             style={[styles.buttonwrap, { backgroundColor: '#666666' }]}
           >
             <View style={styles.titlewrap}>
