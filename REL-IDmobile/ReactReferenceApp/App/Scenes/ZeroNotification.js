@@ -102,6 +102,8 @@ var SampleRow = React.createClass({
                                     var date=finaltimestamp[0].split("-");
                                     var time=finaltimestamp[1].split(":");
 
+                                    var year=date[0].substring(2,4);
+
                                       var dateFormat = require('dateformat');//www.npmjs.com/package/dateformat
                                       var validdate = new Date();
                                       validdate.setFullYear(parseInt(date[0]));
@@ -123,7 +125,7 @@ var SampleRow = React.createClass({
                                               {this.props.notification.message.subject}
                                             </Text>
                                             <Text style={Skin.notification.time}>
-                                              {date[1]}/{date[2]}/{date[0]}
+                                              {date[1]}/{date[2]}/{year}
                                             </Text>
                                           </View>
                                           
@@ -196,7 +198,7 @@ var SampleRow = React.createClass({
                                           {this.props.notification.message.subject}
                                           </Text>
                                           <Text style={Skin.notification.time}>
-                                          {date[1]}/{date[2]}/{date[0]}
+                                          {date[1]}/{date[2]}/{year}
                                           </Text>
                                           </View>
 
