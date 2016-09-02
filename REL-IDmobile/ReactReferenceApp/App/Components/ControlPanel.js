@@ -190,6 +190,7 @@ class ControlPanel extends React.Component{
   
   doNavigation() {
     console.log('doNavigation:');
+    this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
     this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
   }
   
