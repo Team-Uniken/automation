@@ -363,6 +363,10 @@ export default class NotificationMgmtScene extends React.Component {
             break;
           }
         }
+        if(notification.length <= 0){
+          this.props.navigator.pop(0);
+        }
+        
         this.setState({
                       dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
                       });
