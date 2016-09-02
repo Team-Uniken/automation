@@ -79,6 +79,7 @@ class MainActivation extends React.Component {
 //    this.state.visible = this.props.visible;
     if(Platform.OS == "android"){
       return (
+         <TouchableWithoutFeedback onPress={this.dismiss}>
               <View style={Skin.activationStyle.container}>
                 <StatusBar
                   backgroundColor={Skin.colors.DARK_PRIMARY}
@@ -86,7 +87,6 @@ class MainActivation extends React.Component {
                 />
                 <View style={Skin.activationStyle.bgbase} />
                 <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
-              
                 <View style={Skin.activationStyle.bgcolorizer} />
                 <View style={Skin.activationStyle.centering_wrap}>
                 <ScrollView
@@ -95,7 +95,6 @@ class MainActivation extends React.Component {
                     {this.props.children}
                   </View>
                 </ScrollView>
-                 
                 </View>
                 <TouchableHighlight
                   activeOpacity={1.0}
@@ -119,10 +118,12 @@ class MainActivation extends React.Component {
                     >
                     {Skin.icon.settings}
                     </Text>
-               <Loader visible={this.state.visible}/>
+               
                   </View>
                 </TouchableHighlight>
+                <Loader visible={this.state.visible}/>
               </View>
+               </TouchableWithoutFeedback>
           );
     }else if(Platform.OS == "ios"){
         return (
