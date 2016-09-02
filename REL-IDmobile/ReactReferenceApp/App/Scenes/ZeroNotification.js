@@ -374,7 +374,15 @@ export default class NotificationMgmtScene extends React.Component {
                       });
        
       } else {
-        alert(res.pArgs.response.StatusMsg);
+       
+        Alert.alert(
+                    'Alert',
+                    res.pArgs.response.StatusMsg,
+                    [
+                     {text: 'OK', onPress: () => this.getMyNotifications()}
+                     ]
+                    )
+
         // If error occurred reload devices list with previous response
        
       }
