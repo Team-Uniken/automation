@@ -330,6 +330,20 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void terminate(Callback callback){
+        Logger.d(TAG , "----- terminate call ");
+        int error = rdnaObj.terminate();
+
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
     public void getNotifications(String recordCount, String startRecord, String enterpriseID, String startDate, String endDate, Callback callback){
         Logger.d(TAG , "----- getNotification ");
         Logger.d(TAG , "----- recordCount " + recordCount);

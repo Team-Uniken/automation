@@ -494,6 +494,7 @@ const notification = StyleSheet.create({
     fontSize: 16,
      width:15,
     color: BLACK_TEXT_COLOR,
+     marginLeft:8,
     opacity:0.6,
   },
    body2: {

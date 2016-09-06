@@ -132,7 +132,7 @@ var SampleRow = React.createClass({
                                           <View style={[Skin.notification.col,{marginTop:4}]}>
 
                                             <View style={Skin.notification.row}>
-                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.dot}>{"\u2022"}</Text> 
                                             <Text style={Skin.notification.body}>
                                             {bodyarray[0]}
                                             </Text>
@@ -141,13 +141,13 @@ var SampleRow = React.createClass({
                                           <View style={Skin.notification.amountrow}>
                                             <View style={Skin.notification.col1}>
                                              <View style={Skin.notification.row}>
-                                              <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                              <Text style={Skin.notification.dot}>{"\u2022"}</Text> 
                                           <Text style={Skin.notification.body}>
                                             {bodyarray[1]}
                                           </Text>
                                         </View>
                                            <View style={Skin.notification.row}>
-                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.dot}>{"\u2022"}</Text> 
                                           <Text style={Skin.notification.body}>
                                             {bodyarray[2]}
                                           </Text>
@@ -204,19 +204,19 @@ var SampleRow = React.createClass({
 
                                          
                                            <View style={Skin.notification.row}>
-                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.dot}>{"\u2022"}</Text> 
                                             <Text style={Skin.notification.body2}>
                                             {bodyarray[0]}
                                             </Text>
                                            </View>
                                              <View style={Skin.notification.row}>
-                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.dot}>{"\u2022"}</Text> 
                                             <Text style={Skin.notification.body2}>
                                             {bodyarray[1]}
                                             </Text>
                                            </View>
                                             <View style={Skin.notification.row}>
-                                            <Text style={Skin.notification.dot}> {"\u2022"}</Text> 
+                                            <Text style={Skin.notification.dot}>{"\u2022"}</Text> 
                                             <Text style={Skin.notification.body2}>
                                             {bodyarray[2]}
                                             </Text>
