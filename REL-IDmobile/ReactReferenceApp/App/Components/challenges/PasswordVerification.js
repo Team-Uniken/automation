@@ -271,7 +271,7 @@ class PasswordVerification extends React.Component {
   
   render() {
     return (
-            <MainActivation>
+            <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
             <Animated.View style={[Skin.loadStyle.rid_wrap]}>
             <View style={Skin.loadStyle.rid_center}>

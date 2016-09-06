@@ -131,6 +131,7 @@ class ControlPanel extends React.Component{
           }
           this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,url: { "data": e}});
         }else if(this.isNotificationScreenPresent() == 1){
+          Events.trigger('showNotification',e);
                    Alert.alert(
                       '',
                       'You have no Pending notifications',

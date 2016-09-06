@@ -248,8 +248,8 @@ class Load extends React.Component {
                                                                AsyncStorage.setItem("savedContext", "");
                                                                } else {
                                                                AsyncStorage.setItem("savedContext", "");
-                                                               alert('Failed to Resume with Error ' + responseJson.errCode);
-                                                               alert(' Please restart application.');
+                                                               alert('Failed to Resume with Error ' + responseJson.errCode +'. Please restart application.');
+                                                          
                                                                }
                                                                });
     
@@ -268,7 +268,7 @@ class Load extends React.Component {
                                                              console.log('--------- onInitializeCompleted initCount ' + initCount);
                                                              } else {
                                                              initCount = initError;
-                                                             initErrorMsg = ' Error code ' + responseJson.errCode + '. Please restart application.';
+                                                             initErrorMsg = 'Unable to connect to server, please check the connection profile. Error code ' + responseJson.errCode;
                                                              console.log('--------- onInitializeCompleted initCount ' + initCount);
                                                              Obj.onInitCompleted();
                                                              }
@@ -590,7 +590,7 @@ class Load extends React.Component {
                     'Error',
                     initErrorMsg,
                     [
-                     {text: 'CHANGE', onPress: () => this.props.navigator.push({id: "ConnectionProfile"})},
+                     {text: 'Connection Profiles', onPress: () => this.props.navigator.push({id: "ConnectionProfile"})},
                      ]
                     )
       }
