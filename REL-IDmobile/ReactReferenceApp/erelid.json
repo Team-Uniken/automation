@@ -19,12 +19,6 @@
 "Host": "52.74.188.241",
 "Port": "443",
 "RelId": "default"
-},
-{
-"Name": "devserver11.25",
-"Host": "10.0.11.25",
-"Port": "443",
-"RelId": "integrationtesting"
 }
 ]
 }

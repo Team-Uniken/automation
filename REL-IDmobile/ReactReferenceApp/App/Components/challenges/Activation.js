@@ -105,7 +105,7 @@ export default class Activation extends React.Component {
   render() {
    
     return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
           <Text style={Skin.activationStyle.title}>Activation</Text>
