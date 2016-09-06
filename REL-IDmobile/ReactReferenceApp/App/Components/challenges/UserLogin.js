@@ -257,7 +257,7 @@ class UserLogin extends React.Component{
       // this.updateProgress();
     } else {
       dismissKeyboard();
-      AsyncStorage.setItem("empty", savedUserName);
+      AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
                                               alert('Please enter a valid username');
                                               });
