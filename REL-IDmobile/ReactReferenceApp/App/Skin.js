@@ -445,12 +445,19 @@ const notification = StyleSheet.create({
         width: SCREEN_WIDTH-32,
 
   },
+  notificationButton:{
+    flexDirection:'row',
+    width: SCREEN_WIDTH-32,
+  },
     amountrow: {
     flexDirection: 'row',
         width: SCREEN_WIDTH-32,
 
   },
     text: {
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
     margin: 14,
   },
   col: {
@@ -459,7 +466,7 @@ const notification = StyleSheet.create({
   },
    col1: {
     marginRight: 20,
-     width: SCREEN_WIDTH-167,
+    flex:7,
     flexDirection: 'column',
   },
   subject: {
@@ -486,7 +493,6 @@ const notification = StyleSheet.create({
   },
   body: {
     fontSize: 16,
-     width: SCREEN_WIDTH-167,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
   },
@@ -503,16 +509,26 @@ const notification = StyleSheet.create({
      width: SCREEN_WIDTH-71,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
+                                      
+      
   },
    bold: {
-    fontSize: 24,
+                              
+    fontSize: 22,
     color: BLACK_TEXT_COLOR,
     opacity:1,
     marginTop:12,
- width: SCREEN_WIDTH-260,
  textAlign:'right',
     fontWeight: 'bold', 
     marginLeft:8,
+    marginRight:8,
+  },
+  amountContainer:{
+    justifyContent:'flex-end',
+   flex:3,
+                                      
+                                       
+                      
   },
     htmlstyle: {
     fontSize: 20,
@@ -523,34 +539,42 @@ const notification = StyleSheet.create({
   },
   
   buttontext: {
-    fontSize: 20,
+    fontSize: SCREEN_WIDTH <= 320 ? 18 : 20,
     color: '#FFF',
     textAlign: 'center',
     opacity:1,
   },
    confirmbutton: {
-    width:(SCREEN_WIDTH-32)/3,
-    height:56,
+   /* width:(SCREEN_WIDTH-32)/3,
+    
+    height:56,*/
+    flex:1,
     backgroundColor:APPROVE_BUTTON_COLOR,
   },
    denybutton: {
-    width:(SCREEN_WIDTH-32)/3,
-    height:56,
+   /* width:(SCREEN_WIDTH-32)/3,
+    
+    height:56,*/
+    flex:1,
     backgroundColor:REJECT_BUTTON_COLOR,
   },
     fraudbutton: {
-    width:(SCREEN_WIDTH-32)/3,
-    height:56,
+   /* width:(SCREEN_WIDTH-32)/3,
+    
+    height:56,*/
+    flex:1,
     backgroundColor:FRAUD_BUTTON_COLOR,
   },
     approvebutton: {
-    width:(SCREEN_WIDTH-32)/2,
-    height:56,
+   /* width:(SCREEN_WIDTH-32)/2,
+    height:56, */
+    flex:1,
     backgroundColor:APPROVE_BUTTON_COLOR,
   },
     rejectbutton: {
-    width:(SCREEN_WIDTH-32)/2,
-    height:56,
+    /*width:(SCREEN_WIDTH-32)/2,
+    height:56, */
+    flex:1,
     backgroundColor:REJECT_BUTTON_COLOR,
   },
 });
@@ -705,21 +729,43 @@ const coreStyle = StyleSheet.create({
 
 const PatternLockStyle = StyleSheet.create({
    patternlockview: {
-     marginTop:SCREEN_HEIGHT/2-200,
+     marginTop:20,
      width: 270,
      height: 270,
    },
-     button: {
-    height: 48,
-    width: 48,
-    marginTop: 16,
+   button: {
+     flexDirection: 'row',
+     alignItems: 'center',
+     backgroundColor: TEXT_COLOR,
+     height:60,
+     width:270,
+     marginTop: 16,
+   },
+   errorMsg: {
+     fontSize: 16,
+     color: TEXT_COLOR,
+     textAlign: 'center',
+     textAlignVertical: 'center',
+     margin: 16,
   },
-     attempt: {
-    fontSize: 16,
-    color: TEXT_COLOR,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    margin: 16,
+  operationMsg:{
+     fontSize: 20,
+     fontWeight:'bold',
+     color: TEXT_COLOR,
+     textAlign: 'center',
+     alignItems:'center',
+     textAlignVertical: 'center',
+     margin: 16,
+  },
+  patternLockParentContainer:{
+    height:SCREEN_HEIGHT - 75,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  patternLockChildContainer:{
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center'
   },
 });
 
