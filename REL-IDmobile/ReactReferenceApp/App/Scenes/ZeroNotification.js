@@ -170,29 +170,25 @@ var SampleRow = React.createClass({
                                           {bodyarray[0]}
                                           </Text>
                                           </View>
-                                          
-                                          <View style={Skin.notification.amountrow}>
-                                          <View style={Skin.notification.col1}>
-                                          <View style={Skin.notification.row}>
+                                            <View style={Skin.notification.row}>
                                           <Text style={Skin.notification.dot}>{"\u2022"}</Text>
                                           <Text style={Skin.notification.body}>
                                           {bodyarray[1]}
                                           </Text>
                                           </View>
-                                          <View style={Skin.notification.row}>
+                                            <View style={Skin.notification.row}>
                                           <Text style={Skin.notification.dot}>{"\u2022"}</Text>
                                           <Text style={Skin.notification.body}>
                                           {bodyarray[2]}
                                           </Text>
                                           </View>
-                                          </View>
-                                          <View style={Skin.notification.amountContainer}>
-                                          <Text style={[Skin.notification.bold,{fontSize:font}]}>
+                                          <View style={Skin.notification.row}>
+                                          <Text style={Skin.notification.bold}>
                                           {amount}
                                           </Text>
                                           </View>
                                           
-                                          </View>
+                                      
                                           
                                           </View>
                                           <View style={[Skin.notification.row,{marginTop:8}]}>

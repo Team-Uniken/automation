@@ -512,13 +512,12 @@ const notification = StyleSheet.create({
                                       
       
   },
-   bold: {
-                              
+   bold: {         
     fontSize: 22,
+    width: SCREEN_WIDTH-48,
     color: BLACK_TEXT_COLOR,
     opacity:1,
-    marginTop:12,
- textAlign:'right',
+     textAlign:'right',
     fontWeight: 'bold', 
     marginLeft:8,
     marginRight:8,
