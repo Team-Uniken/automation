@@ -245,6 +245,18 @@ class Load extends React.Component {
                                                                  Obj.getMyNotifications();
                                                                  gotNotification=false;
                                                                }
+                                                               
+                                                                var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+                                                               for(var i = 0; i < allScreens.length; i++){
+                                                               var screen = allScreens[i];
+                                                               if(screen.id == 'Main'){
+                                                               console.log('-----getMyNotifications called when notication comes-----');
+                                                                  Obj.getMyNotifications();
+                                                               break ;
+                                                               }
+                                                               }
+                                                               
+                                                               
                                                                AsyncStorage.setItem("savedContext", "");
                                                                } else {
                                                                AsyncStorage.setItem("savedContext", "");
