@@ -98,7 +98,10 @@ var SampleRow = React.createClass({
                                   var font=22;
                             
                                   
-                                  if(amount.length>0 && amount.length<=6)
+                                  if(amount.length>0 && amount.length<=5)
+                                  {
+                                  
+                                  }else if(amount.length>5 && amount.length<=6)
                                   {
                                     if(SCREEN_WIDTH <=320){
                                     font=17;
