@@ -12,7 +12,8 @@ import Main from '../Components/Main';
 import Constants from '../Components/Constants';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
+const SCREEN_WIDTH = require('Dimensions').get('window').width;
+const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 /*
  INSTANCED
  */
@@ -94,10 +95,34 @@ var SampleRow = React.createClass({
                                   var body=this.props.notification.message.body;
                                   var bodyarray=body.split("\n");
                                   var amount = bodyarray[3];
-                                  var font=20;
-                                  if(amount.length>5)
+                                  var font=22;
+                            
+                                  
+                                  if(amount.length>0 && amount.length<=6)
                                   {
-                                    font=10;
+                                    if(SCREEN_WIDTH <=320){
+                                    font=17;
+                                      }else{
+                                     font=19;
+                                       }
+                                  }else if(amount.length>=7 && amount.length<=8){
+                                     if(SCREEN_WIDTH <=320){
+                                         font=14;
+                                       }else{
+                                      font=17;
+                                         }
+                                  }else if(amount.length>=8 && amount.length<=10){
+                                      if(SCREEN_WIDTH <=320){
+                                          font=11;
+                                        }else{
+                                         font=13;
+                                          }
+                                  }else{
+                                  if(SCREEN_WIDTH <=320){
+                                  font=9;
+                                  }else{
+                                  font=11;
+                                  }
                                   }
                                   
                                   
