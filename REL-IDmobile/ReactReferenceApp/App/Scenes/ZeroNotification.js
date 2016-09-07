@@ -94,6 +94,11 @@ var SampleRow = React.createClass({
                                   var body=this.props.notification.message.body;
                                   var bodyarray=body.split("\n");
                                   var amount = bodyarray[3];
+                                  var font=20;
+                                  if(amount.length>5)
+                                  {
+                                    font=10;
+                                  }
                                   
                                   
                                   var expiry_timestamp =this.props.notification.expiry_timestamp;
@@ -154,7 +159,7 @@ var SampleRow = React.createClass({
                                           </View>
                                           </View>
                                           <View style={Skin.notification.amountContainer}>
-                                          <Text style={Skin.notification.bold}>
+                                          <Text style={[Skin.notification.bold,{fontSize:font}]}>
                                           {amount}
                                           </Text>
                                           </View>
