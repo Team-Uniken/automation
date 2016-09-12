@@ -13,6 +13,7 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
  CALLED
  */
 import Events from 'react-native-simple-events';
+var styles = Skin.loadStyle;
 var Main = require('./Main');
 //var Menu = require('./Menu');
 var UserLogin = require('./challenges/UserLogin');
@@ -23,6 +24,8 @@ let chlngJson;
 let nextChlngName;
 var eventLogOff;
 let onGetNotifications;
+let onGetAllChallengeEvent;
+let challengeName;
 /*
  INSTANCES
  */
@@ -104,7 +107,70 @@ class ControlPanel extends React.Component{
                                                         'onGetNotifications',
                                                         this.onGetNotificationsDetails.bind(this)
                                                         );
+    if(onGetAllChallengeEvent){
+      onGetAllChallengeEvent.remove();
+    }
+    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+                                                            'onGetAllChallengeStatus',
+                                                            this.onGetAllChallengeStatus.bind(this)
+                                                            );
     
+  }
+  
+  componentWillUnmount() {
+
+  }
+  
+  onGetAllChallengeStatus(e){
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+   
+   
+        
+        chlngJson = res.pArgs.response.ResponseData;
+        
+        //var arrChlng = chlngJson.chlng;
+        var selectedChlng;
+        var status = 0;
+        for(var i = 0; i < chlngJson.chlng.length; i++){
+          var chlng = chlngJson.chlng[i];
+          if(chlng.chlng_name === challengeName){
+            
+          }else{
+            chlngJson.chlng.splice(i, 1);
+            i--;
+          }
+        }
+      
+      
+      
+        nextChlngName = chlngJson.chlng[0].chlng_name
+        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    }else {
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
+    
+  }
+  
+  getChallengesByName(chlngName){
+    challengeName = chlngName;
+    AsyncStorage.getItem('userId').then((value) => {
+                                        ReactRdna.getAllChallenges(value,(response) => {
+                                                                   if (response) {
+                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
+                                                                   }else{
+                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
+                                                                   }
+                                                                   })
+                                        }).done();
   }
   
   

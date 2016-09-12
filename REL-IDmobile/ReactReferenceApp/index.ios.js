@@ -41,6 +41,7 @@ import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
+import UpdateMachine from './App/Components/UpdateAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
@@ -153,7 +154,9 @@ class ReactRefApp extends React.Component {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'DeviceMgmt') {
+    } else if (id === 'UpdateMachine') {
+      return (<UpdateMachine navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'DeviceMgmt') {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'QuestionSet') {
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
