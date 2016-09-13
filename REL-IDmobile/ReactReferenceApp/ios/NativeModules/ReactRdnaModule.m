@@ -18,9 +18,10 @@ RDNA *rdnaObject;
 id<RDNACallbacks> rdnaClientCallbacks;
 RDNAPrivacyStream *privacyStreamObject;
 RCTBridge *_Nullable localbridgeDispatcher;
-
+dispatch_semaphore_t semaphore;
+RDNAIWACreds *rdnaIWACredsObj;
 @interface ReactRdnaModule()<RDNAPrivacyStreamCallBacks,CLLocationManagerDelegate>{
-  
+ 
   id <RDNAPrivacyStreamCallBacks> privacyStreamCallBack;
   CLLocationManager *locationManagerObject;
   BOOL isRDNAIntilized;
@@ -45,6 +46,7 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
                    GatewayHost:(NSString *)authGatewayHNIP
                    GatewayPort:(NSString*)authGatewayPORT
+                   
                    CipherSpec:(NSString *)cipherSpec
                    CipherSalt:(NSString *)cipherSalt
                    ProxySettings:(NSString *)proxySettings
@@ -472,6 +474,21 @@ RCT_EXPORT_METHOD (updateNotification:(NSString *)notificationID
   
 }
 
+RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)password action:(BOOL)action reactCallBack:(RCTResponseSenderBlock)callback){
+  
+  rdnaIWACredsObj.userName = userName;
+  rdnaIWACredsObj.password = password;
+  rdnaIWACredsObj.authStatus = action==YES?RDNA_IWA_AUTH_SUCCESS:RDNA_IWA_AUTH_CANCELLED;
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:0]};
+  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+  callback(@[responseArray]);
+  
+  dispatch_semaphore_signal(semaphore);
+  
+  
+}
+
+
 #pragma mark Wrapper callback methods
 
 
@@ -582,10 +599,20 @@ RCT_EXPORT_METHOD (updateNotification:(NSString *)notificationID
 
 - (RDNAIWACreds *)getCredentials:(NSString *)domainUrl{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
-                                                            body:@{@"response":domainUrl}];
-  return 0;
+  
+  rdnaIWACredsObj  = [[RDNAIWACreds alloc] init];
+ 
+    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
+                                                              body:@{@"response":domainUrl}];
+  semaphore = dispatch_semaphore_create(0);
+  dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+  
+  return rdnaIWACredsObj;
 }
+
+
+
+
 
 - (int)onGetPostLoginAuthenticationResponseStatus:(NSString *)status{
   

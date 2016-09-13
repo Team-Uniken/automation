@@ -11,7 +11,19 @@ import NavigationBar from 'react-native-navbar';
 import BottomMenu from './BottomMenu';
 import NavButton from './NavButton';
 import Drawer from 'react-native-drawer';
-
+import Modal from 'react-native-simple-modal';
+var {DeviceEventEmitter} = require('react-native');
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+let getCredentialSubscriptions;
+const {
+  View,
+  Image,
+  Text,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  TextInput,
+} = React;
 
 /*
   Instantiaions
@@ -25,7 +37,10 @@ export default class Main extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { open: false,
+    userName: '',
+    password:'',
+      baseUrl:'',};
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.state.navBar                 = {};
 
@@ -57,8 +72,73 @@ export default class Main extends React.Component {
       open: this.props.drawerState.open || false,
       disabled: this.props.drawerState.disabled || false,
     };
+    
   }
-
+  open() {
+    this.setState({
+                  open: true
+                  });
+  }
+  
+  close() {
+    this.setState({
+                  open: false
+                  });
+  }
+  
+  onGetCredentialsStatus(domainUrl)
+  {
+    
+    this.open();
+    this.setState({
+                  baseUrl: domainUrl.response
+                  });
+  }
+  checkCreds() {
+    
+    const user = this.state.userName;
+    const pass = this.state.password;
+    if(user.length > 0)
+    {
+      
+      ReactRdna.setCredentials(this.state.userName,this.state.password,true,(response) => {
+                               if (response) {
+                               console.log('immediate response is'+response[0].error);
+                               }else{
+                               console.log('immediate response is'+response[0].error);
+                               }
+                               })
+      this.close();
+    }else{
+      alert('Please enter valid data');
+    }
+    
+  }
+  
+  cancelCreds(){
+    
+    ReactRdna.setCredentials(this.state.userName,this.state.password,false,(response) => {
+                             if (response) {
+                             console.log('immediate response is'+response[0].error);
+                             }else{
+                             console.log('immediate response is'+response[0].error);
+                             }
+                             })
+    
+    this.close();
+  }
+  onUserChange(event) {
+    var newstate = this.state;
+    newstate.userName = event.nativeEvent.text;
+    this.setState(newstate);
+  }
+  
+  onPasswordChange(event) {
+    var newstate = this.state;
+    newstate.password = event.nativeEvent.text;
+    this.setState(newstate);
+  }
+  
   /**
    * Toggles the drawer open and closed. Is passed down the chain to navbar.
    * @return {null}
@@ -70,7 +150,26 @@ export default class Main extends React.Component {
       this.drawer.open();
     }
   }
-
+  
+  componentWillMount(){
+       if(getCredentialSubscriptions){
+      getCredentialSubscriptions.remove();
+    }
+    getCredentialSubscriptions  = DeviceEventEmitter.addListener(
+                                                                 'onGetCredentials',
+                                                                 this.onGetCredentialsStatus.bind(this)
+                                                                 );
+  }
+  
+  onGetCredentialsStatus(domainUrl)
+  {
+    
+    this.open();
+    this.setState({
+                  baseUrl: domainUrl.response
+                  });
+  }
+  
   /**
    * Builds the main wrapper elements of the post-login screen.
    * Main----
@@ -138,6 +237,69 @@ export default class Main extends React.Component {
         />
         {this.props.children}
         <BottomMenu navigator={this.props.navigator} bottomMenu={this.props.bottomMenu} />
+            <Modal
+            style={styles.modalwrap}
+            overlayOpacity={0.75}
+            offset={100}
+            open={this.state.open}
+            modalDidOpen={() => console.log('modal did open')}
+            modalDidClose={() => this.setState({
+                                               open: false
+                                               })}>
+            <View style={styles.modalTitleWrap}>
+            <Text style={styles.modalTitle}>
+            401 Authentication{'\n'}{this.state.baseUrl}
+            </Text>
+            
+            <View style={styles.border}></View>
+            </View>
+            <TextInput
+            autoCorrect={false}
+            ref='userName'
+            style={styles.modalInput}
+            placeholder={'Enter username'}
+            value={this.state.userName}
+            onChange={this.onUserChange.bind(this)}
+            placeholderTextColor={Skin.colors.HINT_COLOR}
+            />
+            <TextInput
+            autoCorrect={false}
+            ref='password'
+            style={styles.modalInput}
+            secureTextEntry
+            placeholder={'Enter password'}
+            value={this.state.password}
+            onChange={this.onPasswordChange.bind(this)}
+            placeholderTextColor={Skin.colors.HINT_COLOR}
+            />
+            <View style={styles.border}></View>
+            <View style={{
+            flex: 1,
+            flexDirection: 'row'
+            }}>
+            <TouchableHighlight
+            onPress={() => this.setState({
+                                         userName:'',
+                                         password:'',
+                                         open: false
+                                         }),this.cancelCreds.bind(this)}
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={styles.modalButton}>
+            <Text style={styles.modalButtonText}>
+            CANCEL
+            </Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+            onPress={this.checkCreds.bind(this)}
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={styles.modalButton}>
+            <Text style={styles.modalButtonText}>
+            SUBMIT
+            </Text>
+            </TouchableHighlight>
+            </View>
+            </Modal>
+
       </Drawer>
     );
   }
@@ -190,5 +352,69 @@ Main.defaultProps = {
   },
   toggleDrawer: this.toggleDrawer,
 };
-
+const styles = StyleSheet.create({
+                                 modalwrap: {
+                                 height: 160,
+                                 flexDirection: 'column',
+                                 borderRadius: 15,
+                                 backgroundColor: '#fff',
+                                 },
+                                 modalTitleWrap: {
+                                 justifyContent: 'center',
+                                 flex: 1,
+                                 },
+                                 modalTitle: {
+                                 color: Skin.colors.PRIMARY_TEXT,
+                                 textAlign: 'center',
+                                 justifyContent: 'center',
+                                 alignItems: 'center',
+                                 fontSize: 18,
+                                 fontWeight: 'bold',
+                                  backgroundColor: 'transparent',
+                                 marginTop :10,
+                                 
+                                 },
+                                 modalButton: {
+                                 flex: 1,
+                                 alignItems: 'center',
+                                 justifyContent: 'center',
+                                 padding: 10,
+                                 },
+                                 modalButtonText: {
+                                 textAlign: 'center',
+                                 },
+                                 modalInput: {
+                                 textAlign: 'left',
+                                 color: Skin.colors.PRIMARY_TEXT,
+                                 height: 35,
+                                 fontSize: 16,
+                
+                                 },
+                                 border: {
+                                 height: 1,
+                                 backgroundColor: Skin.colors.DIVIDER_COLOR,
+                                 marginBottom: 10,
+                                 },
+                                 DeviceListView: {
+                                 justifyContent: 'center',
+                                 backgroundColor: 'transparent',
+                                 },
+                                 button: {
+                                 height: 48,
+                                 width: 48,
+                                 opacity: 0.6,
+                                 justifyContent: "center",
+                                 marginTop: 4,
+                                 },
+                                 images: {
+                                 width: 18,
+                                 height: 18,
+                                 margin: 16,
+                                 },
+                                 customerow: {
+                                 flexDirection: 'row',
+                                 height: 56,
+                                 backgroundColor: 'transparent',
+                                 },
+                                 });
 module.exports = Main;
