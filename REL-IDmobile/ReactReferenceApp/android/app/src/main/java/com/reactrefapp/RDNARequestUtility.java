@@ -17,14 +17,14 @@ import com.facebook.react.bridge.WritableMap;
 /**
  * Created by uniken on 22/4/16.
  */
-public class NetworkOperation extends ReactContextBaseJavaModule {
-
+public class RDNARequestUtility extends ReactContextBaseJavaModule {
+    private String TAG = "RDNARequestUtility";
     private String proxyHNIP = null;
     private int proxyPort = -1;
 
     private ReactApplicationContext reactContext;
 
-    public NetworkOperation(ReactApplicationContext reactContext) {
+    public RDNARequestUtility(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
     }
@@ -59,7 +59,21 @@ public class NetworkOperation extends ReactContextBaseJavaModule {
         }
     }
 
+    @ReactMethod
     public void doHTTPPostRequest(String url, ReadableMap map, Callback callback){
+        Logger.d(TAG , "----- url "+url);
+        if(isNetworkAvailable(reactContext)){
+            new NetworkHttpPostTask(proxyHNIP, proxyPort,map, callback).execute(url);
+        } else {
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", 1);
+            errorMap.putString("response", "Please check your network connection");
+
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
+
+            callback.invoke(writableArray);
+        }
 
     }
 

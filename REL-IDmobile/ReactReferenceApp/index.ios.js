@@ -22,7 +22,7 @@ import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
 import LoadScene from './App/Scenes/Load';
 import Web from './App/Scenes/Web';
-
+import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
 // SECURITY SCENES
 import Activation from './App/Components/challenges/Activation';
@@ -41,6 +41,7 @@ import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
+import UpdateMachine from './App/Components/UpdateAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
@@ -52,36 +53,36 @@ const {
 
 
 const FadeIn = {
-  opacity: {
-    from: 0,
-    to: 1,
-    min: 0, // 0.5,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: 1000,
-  },
+opacity: {
+from: 0,
+to: 1,
+min: 0, // 0.5,
+max: 1,
+type: 'linear',
+extrapolate: true,
+round: 1000,
+},
 };
 
 const FadeOut = {
-  opacity: {
-    from: 1,
-    to: 0,
-    min: 0,
-    max: 1, // 0.5,
-    type: 'linear',
-    extrapolate: true,
-    round: 1000,
-  },
+opacity: {
+from: 1,
+to: 0,
+min: 0,
+max: 1, // 0.5,
+type: 'linear',
+extrapolate: true,
+round: 1000,
+},
 };
 
 
 class ReactRefApp extends React.Component {
-
-
+  
+  
   renderScene(route, nav) {
     let id = route.id;
-
+    
     if (id === 'Load') {
       // id = 'Accounts'
       // id = 'UserLogin';
@@ -99,9 +100,9 @@ class ReactRefApp extends React.Component {
       // id = 'SecureWebView';
       // id = 'QuestionSet';
       // id = 'QuestionVerification';
-     // id = 'Contact';
+      // id = 'Contact';
     }
-
+    
     // MAIN SCENES
     if (id === 'Main' || id === 'Accounts') {
       return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
@@ -115,20 +116,20 @@ class ReactRefApp extends React.Component {
       return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Appointments') {
       return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-
-    // LOAD SCENES
+      
+      // LOAD SCENES
     } else if (id === 'Load') {
       return (<LoadScene navigator={nav} />);
-
-    // SECONDARY SCENES
+      
+      // SECONDARY SCENES
     } else if (id === 'ComingSoon') {
       return (<ComingSoonScene navigator={nav} title={route.title} />);
-    /*
-    } else if (id === 'QBank') {
-      return (<QBank navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'SecureChat') {
-      return (<SecureChat navigator={nav} />);
-    */
+      /*
+       } else if (id === 'QBank') {
+       return (<QBank navigator={nav} url={route.url} title={route.title} />);
+       } else if (id === 'SecureChat') {
+       return (<SecureChat navigator={nav} />);
+       */
     } else if (id === 'Appointment') {
       return (<Appointment navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'AddAppointment') {
@@ -141,8 +142,8 @@ class ReactRefApp extends React.Component {
       return (<Web navigator={nav} url={route.url} title={route.title} secure navigate />);
     } else if (id === 'WebView') {
       return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
-     
-    // SECURITY SCENES
+      
+      // SECURITY SCENES
     } else if (id === 'Activation') {
       return (<Activation navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'PasswordSet') {
@@ -153,7 +154,9 @@ class ReactRefApp extends React.Component {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'DeviceMgmt') {
+    } else if (id === 'UpdateMachine') {
+      return (<UpdateMachine navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'DeviceMgmt') {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'QuestionSet') {
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
@@ -161,46 +164,48 @@ class ReactRefApp extends React.Component {
       return (<QuestionVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'DevBind') {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'NotificationMgmt') {
+      return (<NotificationMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     }
-
+    
     return (<Text>Error</Text>);
   }
-
+  
   render() {
     return (
-      <FormattedWrapper locale="en" currency="USD">
-        <Navigator
-          renderScene={this.renderScene}
-          initialRoute={{
+            <FormattedWrapper locale="en" currency="USD">
+            <Navigator
+            renderScene={this.renderScene}
+            initialRoute={{
             id: 'Load',
             title: 'REL-IDmobile'
-          }}
-          configureScene={(route) => {
+            }}
+            configureScene={(route) => {
             if (route.sceneConfig){
-              return route.sceneConfig;
+            return route.sceneConfig;
             } else {
-              let config = Navigator.SceneConfigs.FadeAndroid;
-              // var config = Navigator.SceneConfigs.FloatFromRight
-              config = {
-
-                // Rebound spring parameters when transitioning FROM this scene
-                springFriction: 26,
-                springTension: 200,
-
-                // Velocity to start at when transitioning without gesture
-                defaultTransitionVelocity: 3.5,
-
-                gestures: null,
-                animationInterpolators: {
-                  into: buildStyleInterpolator(FadeIn),
-                  out: buildStyleInterpolator(FadeOut),
-                },
+            let config = Navigator.SceneConfigs.FadeAndroid;
+            // var config = Navigator.SceneConfigs.FloatFromRight
+            config = {
+            
+            // Rebound spring parameters when transitioning FROM this scene
+            springFriction: 26,
+            springTension: 200,
+            
+            // Velocity to start at when transitioning without gesture
+            defaultTransitionVelocity: 3.5,
+            
+            gestures: null,
+            animationInterpolators: {
+            into: buildStyleInterpolator(FadeIn),
+            out: buildStyleInterpolator(FadeOut),
+            },
             };
-              return config;
-          }}}
-        />
-      </FormattedWrapper>
-    );
+            return config;
+            }}}
+            />
+            </FormattedWrapper>
+            );
   }
 }
 

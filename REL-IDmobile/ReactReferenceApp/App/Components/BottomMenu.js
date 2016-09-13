@@ -182,7 +182,7 @@ Skin.botmenu = StyleSheet.create({
 	icon:{
 		fontFamily: 'icomoon',
 		fontSize: 30,
-		paddingTop: 15,
+		marginTop: 15,
 		color: Skin.colors.TEXT_COLOR,
 		flex:2,
 		textAlign:'center'

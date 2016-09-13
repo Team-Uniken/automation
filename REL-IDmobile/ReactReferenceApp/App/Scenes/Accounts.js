@@ -12,7 +12,7 @@ import Main from '../Components/Main';
 import ListItem from '../Components/ListItem';
 import ListSectionHeader from '../Components/ListSectionHeader';
 import { FormattedCurrency } from 'react-native-globalize';
-
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
   Instantiaions
 */
@@ -61,16 +61,43 @@ export default class AccountsScene extends React.Component {
      * @return {null}
      */
   componentDidMount() {
+    this.getMyNotifications();
     this.getAccountDetails();
   }
+  
+  
+  getMyNotifications(){
+    
+    var recordCount = "0";
+    var startIndex = "1";
+    var enterpriseID = "";
+    var startDate = "";
+    var endDate = "";
+    ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
+                               
+                               console.log('----- NotificationMgmt.getMyNotifications.response ');
+                               console.log(response);
+                               
+                               if (response[0].error !== 0) {
+                               console.log('----- ----- response is not 0');
+                               //                               if (NotificationObtianedResponse !== undefined) {
+                               //                               // If error occurred reload last response
+                               //
+                               //                                                              }
+                               }
+                               
+                               });
+  }
+  
+  
 
   /**
    * Retrieves the account data in a json format
    * @return {[type]} [description]
    */
   getAccountDetails() {
-    RDNARequestUtility.doHTTPGetRequest('http://apisdkdev.uniken.com:8080/APIBanking/getAccounts.jsp?userid=10',
-      (response) => {
+//    RDNARequestUtility.doHTTPGetRequest('http://apisdkdev.uniken.com:8080/APIBanking/getAccounts.jsp?userid=10',
+//      (response) => {
         /*
             REAL DATA
          "{
@@ -84,7 +111,7 @@ export default class AccountsScene extends React.Component {
            "status":"success"
           }
         */
-        response = {
+       var response = {
           0: {
             error: 0,
             response:
@@ -115,8 +142,8 @@ export default class AccountsScene extends React.Component {
         } else {
           alert(response[0].response);
         }
-      }
-    );
+//      }
+//    );
   }
 
     /**

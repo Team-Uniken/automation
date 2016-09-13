@@ -63,7 +63,7 @@ btnText(){
 	render() {
 
 		return (
-      <MainActivation>
+      <MainActivation navigator={this.props.navigator}>
         <View style={{marginTop:38}}>
           <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
           <Text style={Skin.activationStyle.title}>Access Code</Text>

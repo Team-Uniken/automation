@@ -32,6 +32,11 @@ var {
 
 var dnaProxyPort;
 var dnaUserName;
+var dnaPasswd;
+var isTouchVerified;
+var isTouchIdSet;
+var isPatternVerified;
+
 var styles = StyleSheet.create({
   hamburger: {
     width: 24,

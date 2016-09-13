@@ -24,6 +24,7 @@ import UserLogin from './challenges/UserLogin';
 import DeviceBinding from './challenges/DeviceBinding';
 import DeviceName from './challenges/DeviceName';
 import PasswordVerification from './challenges/PasswordVerification';
+import ScreenHider from './challenges/ScreenHider';
 
 // COMPONENTS
 import buildStyleInterpolator from 'buildStyleInterpolator';
@@ -117,7 +118,7 @@ class TwoFactorAuthMachine extends React.Component {
   onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
 
-
+    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
     subscriptions.remove();
@@ -151,7 +152,7 @@ class TwoFactorAuthMachine extends React.Component {
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
           }
-          //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
       } else {
@@ -189,7 +190,7 @@ class TwoFactorAuthMachine extends React.Component {
       }
     } else {
       console.log(e);
-      alert('Internal system error occurred.');
+      alert('Internal system error occurred.'+res.errCode);
     }
   }
 
@@ -207,6 +208,7 @@ class TwoFactorAuthMachine extends React.Component {
 
 
   showNextChallenge(args) {
+    
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
 
@@ -257,8 +259,10 @@ class TwoFactorAuthMachine extends React.Component {
       }
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devname') {
+      //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       return (<DeviceName navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devbind') {
+      //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
@@ -342,6 +346,7 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   callCheckChallenge() {
+    Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
       ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {

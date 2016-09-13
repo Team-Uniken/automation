@@ -28,6 +28,7 @@ export default class QuestionSet extends React.Component {
 
   constructor(props) {
     super(props);
+    dismissKeyboard();
     obj = this;
     const ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
@@ -181,7 +182,7 @@ export default class QuestionSet extends React.Component {
     return (
       <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
-          <Text style={Skin.activationStyle.title}>Question and Answer</Text>
+          <Text style={Skin.activationStyle.title}>Secret Question and Answer</Text>
           <View style={[Skin.activationStyle.input_wrap]}>
             <View style={Skin.activationStyle.textinput_wrap}>
               <TextInput

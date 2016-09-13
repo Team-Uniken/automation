@@ -12,7 +12,7 @@ import Skin from '../../Skin';
 import MainActivation from '../MainActivation';
 import Events from 'react-native-simple-events';
 
-let check = false;
+let check = true;
 let responseJson;
 const {
   View,
@@ -22,6 +22,7 @@ const {
   Image,
   Animated,
   StyleSheet,
+  AsyncStorage,
 } = React;
 
 
@@ -30,8 +31,8 @@ export default class DeviceBinding extends React.Component {
     super(props);
     this.state = {
       opa: new Animated.Value(0),
-      type: 'Temporary',
-      icon: Skin.icon.temporary,
+      type: 'Permanent',
+      icon: Skin.icon.permanent,
     };
     /*
     this._props = {
@@ -63,6 +64,24 @@ export default class DeviceBinding extends React.Component {
       },
     };
     */
+  }
+  
+  componentDidMount() {
+//    obj = this;
+    
+    
+//     AsyncStorage.getItem("passwd").then((value) => {
+//                                         if(value){
+//                                         if(value == "empty"){
+                                        
+//                                         }else{
+//                                             check = true;
+//                                             this.setDeviceBinding();
+//                                             }
+//                                         }
+//                                         }).done();
+//    check = true;
+//    this.setDeviceBinding();
   }
 
   setDeviceBinding() {
@@ -114,7 +133,7 @@ export default class DeviceBinding extends React.Component {
   render() {
     console.log(JSON.stringify(this.props.url));
     return (
-      <MainActivation>
+            <MainActivation navigator={this.props.navigator}>
         <View style={{marginTop:38}}>
           <Text style={Skin.activationStyle.counter}>
             {this.props.url.currentIndex}/{this.props.url.chlngsCount}

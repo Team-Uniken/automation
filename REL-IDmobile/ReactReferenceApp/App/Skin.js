@@ -60,7 +60,9 @@ const BLACK_TEXT_COLOR = '#000';
 const ERROR_TEXT_COLOR = '#CC0000';
 const BUTTON_TEXT_COLOR = '#fff';
 
-
+const APPROVE_BUTTON_COLOR = '#92D050';
+const REJECT_BUTTON_COLOR = '#800000';
+const FRAUD_BUTTON_COLOR = '#212121';
 // Fonts
 const CORE_FONT = 'Century Gothic';
 const ICON_FONT = 'icomoon';
@@ -423,6 +425,158 @@ const appointmentrow = StyleSheet.create({
 });
 
 
+const notification = StyleSheet.create({
+  customerow: {
+    backgroundColor: '#fff',
+    width: SCREEN_WIDTH-32,
+    marginTop:20,
+    marginLeft:16,
+    marginRight:16,
+  },
+    container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    height:200,
+    width:300
+  },
+  row: {
+    flexDirection: 'row',
+        width: SCREEN_WIDTH-32,
+
+  },
+  notificationButton:{
+    flexDirection:'row',
+    width: SCREEN_WIDTH-32,
+  },
+    amountrow: {
+    flexDirection: 'row',
+        width: SCREEN_WIDTH-32,
+
+  },
+    text: {
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    margin: 14,
+  },
+  col: {
+    marginRight: 20,
+    flexDirection: 'column'
+  },
+   col1: {
+    marginRight: 20,
+    flex:7,
+    flexDirection: 'column',
+  },
+  subject: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: BLACK_TEXT_COLOR,
+    width: 188,
+    textAlign: 'left',
+    opacity:1,
+    marginLeft:8,
+    marginTop:8,
+    backgroundColor:'transparent',
+
+  },
+  time: {
+    fontSize: 16,
+    color: BLACK_TEXT_COLOR,
+    textAlign: 'right',
+    width: SCREEN_WIDTH-236,
+    opacity:0.6,
+     marginRight:8,
+    marginTop:8,
+    backgroundColor:'transparent',
+  },
+  body: {
+    fontSize: 16,
+    color: BLACK_TEXT_COLOR,
+    opacity: 0.6,
+  },
+    dot: {
+    fontSize: 16,
+     width:15,
+    color: BLACK_TEXT_COLOR,
+     marginLeft:8,
+    opacity:0.6,
+  },
+   body2: {
+    fontSize: 16,
+    marginRight:32,
+     width: SCREEN_WIDTH-71,
+    color: BLACK_TEXT_COLOR,
+    opacity: 0.6,
+                                      
+      
+  },
+   bold: {         
+    fontSize: 22,
+    width: SCREEN_WIDTH-48,
+    color: BLACK_TEXT_COLOR,
+    opacity:1,
+     textAlign:'right',
+    fontWeight: 'bold', 
+    marginLeft:8,
+    marginRight:8,
+  },
+  amountContainer:{
+    justifyContent:'flex-end',
+   flex:3,
+                                      
+                                       
+                      
+  },
+    htmlstyle: {
+    fontSize: 20,
+    color: BLACK_TEXT_COLOR,
+    width: SCREEN_WIDTH-32,
+    opacity:1,
+    marginLeft:8,
+  },
+  
+  buttontext: {
+    fontSize: SCREEN_WIDTH <= 320 ? 18 : 20,
+    color: '#FFF',
+    textAlign: 'center',
+    opacity:1,
+  },
+   confirmbutton: {
+   /* width:(SCREEN_WIDTH-32)/3,
+    
+    height:56,*/
+    flex:1,
+    backgroundColor:APPROVE_BUTTON_COLOR,
+  },
+   denybutton: {
+   /* width:(SCREEN_WIDTH-32)/3,
+    
+    height:56,*/
+    flex:1,
+    backgroundColor:REJECT_BUTTON_COLOR,
+  },
+    fraudbutton: {
+   /* width:(SCREEN_WIDTH-32)/3,
+    
+    height:56,*/
+    flex:1,
+    backgroundColor:FRAUD_BUTTON_COLOR,
+  },
+    approvebutton: {
+   /* width:(SCREEN_WIDTH-32)/2,
+    height:56, */
+    flex:1,
+    backgroundColor:APPROVE_BUTTON_COLOR,
+  },
+    rejectbutton: {
+    /*width:(SCREEN_WIDTH-32)/2,
+    height:56, */
+    flex:1,
+    backgroundColor:REJECT_BUTTON_COLOR,
+  },
+});
 
 const addappointment = StyleSheet.create({
   row: {
@@ -570,8 +724,48 @@ const coreStyle = StyleSheet.create({
     alignItems: 'center',
   //backgroundColor: 'rgba(100,100,0,0.5)',
   },
+});
 
-
+const PatternLockStyle = StyleSheet.create({
+   patternlockview: {
+     marginTop:20,
+     width: 270,
+     height: 270,
+   },
+   button: {
+     flexDirection: 'row',
+     alignItems: 'center',
+     backgroundColor: TEXT_COLOR,
+     height:60,
+     width:270,
+     marginTop: 16,
+   },
+   errorMsg: {
+     fontSize: 16,
+     color: TEXT_COLOR,
+     textAlign: 'center',
+     textAlignVertical: 'center',
+     margin: 16,
+  },
+  operationMsg:{
+     fontSize: 20,
+     fontWeight:'bold',
+     color: TEXT_COLOR,
+     textAlign: 'center',
+     alignItems:'center',
+     textAlignVertical: 'center',
+     margin: 16,
+  },
+  patternLockParentContainer:{
+    height:SCREEN_HEIGHT - 75,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  patternLockChildContainer:{
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center'
+  },
 });
 
 const ConnectionProfile = StyleSheet.create({
@@ -607,6 +801,11 @@ const ConnectionProfile = StyleSheet.create({
     flexDirection: 'row',
     height: 56,
     backgroundColor: 'transparent',
+  },
+  selectederow: {
+  flexDirection: 'row',
+  height: 56,
+  backgroundColor: '#dbdbdb',
   },
 });
 
@@ -784,8 +983,8 @@ const loadStyle = StyleSheet.create({
   relid: {
     fontFamily: 'icomoon',
     fontSize: 21,
-    paddingLeft: 25,
-    //marginLeft: 47,
+   // marginLeft: 31 + leftrid,
+    marginLeft: 47,
     width: 170,
     flex: 1,
     color: '#FFFFFF',
@@ -912,8 +1111,8 @@ const controlStyle = StyleSheet.create({
   menuItem: {
     color: '#ffffff',
     fontFamily: CORE_FONT,
-    paddingTop: 15,
-    paddingBottom: 15,
+    marginTop: 15,
+    marginBottom: 15,
   },
   menuBorder: {
     borderStyle: 'solid',
@@ -997,9 +1196,11 @@ const activationStyle = StyleSheet.create({
   wrap: {
     flexDirection: 'column',
     width: max.width,
-    height: max.height,
     justifyContent: 'flex-start',
-  //backgroundColor: 'red',
+  },
+  fullscreen:{
+    width:max.width,
+    height:SCREEN_HEIGHT-100,
   },
   counter: {
     fontSize: 14,
@@ -1061,8 +1262,8 @@ const activationStyle = StyleSheet.create({
     textAlign: 'center',
   },
   topGroup: {
-     height: 400,
-//     backgroundColor: 'red',
+//     height: 400,
+   //  backgroundColor: 'red',
      justifyContent: 'flex-end',
      flexDirection: 'column',
   },
@@ -1078,9 +1279,11 @@ module.exports = {
   SCREEN_HEIGHT,
   customeStyle,
   appointmentrow,
+  notification,
   addappointment,
   questionrow,
   ConnectionProfile,
+  PatternLockStyle,
   nav,
   open,
   spd: SPEED,

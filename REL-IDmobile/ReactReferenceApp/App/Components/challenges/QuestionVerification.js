@@ -5,7 +5,7 @@
 */
 import React from 'react-native';
 import Skin from '../../Skin';
-
+import Main from '../Main';
 /*
   CALLED
 */
@@ -72,6 +72,8 @@ export default class QuestionVerification extends React.Component {
   }
 
   checkAnswer() {
+    Main.isTouchVerified = "NO";
+    Main.isTouchIdSet = "YES";
     const scAns = this.state.sAnswer;
     if (scAns.length > 0) {
       responseJson = this.props.url.chlngJson;

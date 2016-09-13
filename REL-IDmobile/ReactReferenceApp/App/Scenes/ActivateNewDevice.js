@@ -17,7 +17,10 @@ import { FormattedCurrency } from 'react-native-globalize';
   Instantiaions
 */
 // const ReactRdna = React.NativeModules.ReactRdnaModule;
-const RDNARequestUtility = React.NativeModules.RDNARequestUtility;
+//const RDNARequestUtility = React.NativeModules.RDNARequestUtility;
+const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+
+
 
 
 var Dimensions = require('Dimensions');
@@ -53,29 +56,49 @@ class ActivateNewDeviceScene extends React.Component{
   AsyncStorage.getItem("userId").then((value) => {
                     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
                     currentProfile = JSON.parse(currentProfile);
-                    var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
+                    //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
                                
-                    
-                               
-                    var url = baseUrl.concat(value);
-                    fetch(url, {
-                        method: 'POST',
-                        })
-                    .then((response) => response.text())
-                    .then((responseText) => {
-                        console.log(responseText);
-                        var res = JSON.parse(responseText);
-                        this.state.accCode =res.otpId;
-                        this.state.accValue=res.otpValue;
-                        var Msg=res.expiryTs;
-                        this.state.expiryMsg = 'Your access code expires on '.concat(Msg);
-                        this.setState({ isLoading:false});
-                        })
-                    .catch((error) => {
-                         console.warn(error);
-                         this.state.expiryMsg="Failed to generate access code. Please try again";
-                         this.setState({ isLoading:false});
-                         });
+                   var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/generateOTP.htm";
+
+                  //  var url = baseUrl.concat(value);
+                    // fetch(url, {
+                    //     method: 'POST',
+                    //     })
+                    // .then((response) => response.text())
+                    // .then((responseText) => {
+                    //     console.log(responseText);
+                    //     var res = JSON.parse(responseText);
+                    //     this.state.accCode =res.otpId;
+                    //     this.state.accValue=res.otpValue;
+                    //     var Msg=res.expiryTs;
+                    //     this.state.expiryMsg = 'Your access code expires on '.concat(Msg);
+                    //     this.setState({ isLoading:false});
+                    //     })
+                    // .catch((error) => {
+                    //      console.warn(error);
+                    //      this.state.expiryMsg="Failed to generate access code. Please try again";
+                    //      this.setState({ isLoading:false});
+                    //      });
+
+
+
+
+    var userMap = {"userId":value};
+   RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
+                                           console.log(response);
+                                           if(response[0].error==0){
+                                           var res = JSON.parse(response[0].response);
+                                           this.state.accCode =res.otpId;
+                                           this.state.accValue=res.otpValue;
+                                           var Msg=res.expiryTs;
+                                           this.state.expiryMsg = 'Your access code expires on '.concat(Msg);
+                                           this.setState({ isLoading:false});
+                                           }else{
+                                                alert('Error');
+                                           }
+                                       
+                                              })
+
                     }).done();
                     });
   }
