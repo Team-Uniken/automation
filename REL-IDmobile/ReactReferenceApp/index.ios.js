@@ -3,275 +3,210 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-//test
 
-var React = require('react-native');
-var Dimensions = require('Dimensions');
-var PixelRatio = require('PixelRatio');
+import React from 'react-native';
+console.disableYellowBox = true;
 
-var Main = require('./App/Components/Main');
-var Device = require('./App/Components/device');
-var Load = require('./App/Components/Load');
-var Web = require('./App/Components/Web');
-var Menu = require('./App/Components/Menu');
-var QBank = require('./App/Components/Qbank');
-var ComingSoon = require('./App/Components/ComingSoon');
-var UserLogin = require('./App/Components/challenges/UserLogin');
-var PasswordVerification = require('./App/Components/challenges/PasswordVerification');
-var Appointment = require('./App/Components/Appointment');
-var AddAppointment = require('./App/Components/AddAppointment');
-var SecureChat = require('./App/Components/secure_chat/Navigation');
-var Demo = require('./App/Components/demo');
-var Activation = require('./App/Components/challenges/Activation');
-var Password = require('./App/Components/challenges/Password');
-var Otp = require('./App/Components/challenges/Otp');
-var SetQue = require('./App/Components/challenges/SetQue');
-var Machine = require('./App/Components/TwoFactorAuthMachine');
+// Main Scenes
+import AccountsScene from './App/Scenes/Accounts';
+import PayBillsScene from './App/Scenes/PayBills';
+import ContactScene from './App/Scenes/Contact';
+import DepositsScene from './App/Scenes/Deposits';
+import FindBranchScene from './App/Scenes/FindBranch';
 
-var buildStyleInterpolator = require('buildStyleInterpolator');
+// Secondary Scenes
+import DeviceMgmtScene from './App/Scenes/DeviceMgmt';
+import AppointmentsScene from './App/Scenes/Appointments';
+import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
+import ComingSoonScene from './App/Scenes/ComingSoon';
+import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
+import LoadScene from './App/Scenes/Load';
+import Web from './App/Scenes/Web';
+import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
-var SCREEN_WIDTH = Dimensions.get('window').width;
-var SCREEN_HEIGHT = Dimensions.get('window').height;
+// SECURITY SCENES
+import Activation from './App/Components/challenges/Activation';
+import PasswordSet from './App/Components/challenges/PasswordSet';
+import Otp from './App/Components/challenges/Otp';
+import QuestionSet from './App/Components/challenges/QuestionSet';
+import QuestionVerification from './App/Components/challenges/QuestionVerification';
+import UserLogin from './App/Components/challenges/UserLogin';
+import DeviceBinding from './App/Components/challenges/DeviceBinding';
+import PasswordVerification from './App/Components/challenges/PasswordVerification';
 
-var {DeviceEventEmitter} = require('react-native');
-var responseJson;
-var chlngJson;
-var nextChlngName;
-
-var CORE_FONT = 'Century Gothic';
-var NAV_BAR_TINT = '#FFFFFF'
-var NAV_SHADOW_BOOL = true;
-var MENU_TXT_COLOR = '#2579A2';
-var ICON_COLOR = '#FFFFFF';
-var ICON_FAMILY = 'icomoon';
-var MID_COL = '#2579A2';
-var LIGHT_COL = '#50ADDC';
-var DARK_COL = '#10253F';
-var Spd = 1;
-var LoadSpd = 0.1;
+// COMPONENTS
 
 
+import Appointment from './App/Components/Appointment';
+import AddAppointment from './App/Components/AddAppointment';
+//import SecureChat from './App/Components/secure_chat/Navigation';
+import Machine from './App/Components/TwoFactorAuthMachine';
+import UpdateMachine from './App/Components/UpdateAuthMachine';
+import { FormattedWrapper } from 'react-native-globalize';
+import buildStyleInterpolator from 'buildStyleInterpolator';
 
-
-var {
+const {
   AppRegistry,
-  StyleSheet,
-  Text,
   Navigator,
-  View,
+  Text,
 } = React;
 
 
-var FromTheRight = {
-  opacity: {
-    value: 1.0,
-    type: 'constant',
-  },
+const FadeIn = {
+opacity: {
+from: 0,
+to: 1,
+min: 0, // 0.5,
+max: 1,
+type: 'linear',
+extrapolate: true,
+round: 1000,
+},
+};
 
-  transformTranslate: {
-    from: {x: Dimensions.get('window').width, y: 0, z: 0},
-    to: {x: 0, y: 0, z: 0},
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-
-  translateX: {
-    from: Dimensions.get('window').width,
-    to: 0,
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-
-  scaleX: {
-    value: 1,
-    type: 'constant',
-  },
-  scaleY: {
-    value: 1,
-    type: 'constant',
-  },
+const FadeOut = {
+opacity: {
+from: 1,
+to: 0,
+min: 0,
+max: 1, // 0.5,
+type: 'linear',
+extrapolate: true,
+round: 1000,
+},
 };
 
 
-var ToTheLeft = {
-  transformTranslate: {
-    from: {x: 0, y: 0, z: 0},
-    to: {x: -Dimensions.get('window').width, y: 0, z: 0},
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-  opacity: {
-    value: 1.0,
-    type: 'constant',
-  },
-
-  translateX: {
-    from: 0,
-    to: -Dimensions.get('window').width,
-    min: 0,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: PixelRatio.get(),
-  },
-};
-
-
-
-
-class ReactRefApp extends React.Component{
-
-  constructor(props){
-    super(props);
+class ReactRefApp extends React.Component {
+  
+  
+  renderScene(route, nav) {
+    let id = route.id;
+    
+    if (id === 'Load') {
+      // id = 'Accounts'
+      // id = 'UserLogin';
+      // id = 'Activation';
+      // id = "PasswordSet";
+      // id = 'PasswordVerification';
+      // id = 'FindBranch';
+      // id = 'ConnectionProfile';
+      // id = 'Device';
+      // id = 'PayBills';
+      // id = 'QuestionSet';
+      // id = 'DevBind';
+      // id = 'Deposits';
+      // id = 'ActivateNewDevice';
+      // id = 'SecureWebView';
+      // id = 'QuestionSet';
+      // id = 'QuestionVerification';
+      // id = 'Contact';
+    }
+    
+    // MAIN SCENES
+    if (id === 'Main' || id === 'Accounts') {
+      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'PayBills') {
+      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Contact') {
+      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Deposits') {
+      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'FindBranch') {
+      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Appointments') {
+      return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      
+      // LOAD SCENES
+    } else if (id === 'Load') {
+      return (<LoadScene navigator={nav} />);
+      
+      // SECONDARY SCENES
+    } else if (id === 'ComingSoon') {
+      return (<ComingSoonScene navigator={nav} title={route.title} />);
+      /*
+       } else if (id === 'QBank') {
+       return (<QBank navigator={nav} url={route.url} title={route.title} />);
+       } else if (id === 'SecureChat') {
+       return (<SecureChat navigator={nav} />);
+       */
+    } else if (id === 'Appointment') {
+      return (<Appointment navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'AddAppointment') {
+      return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'ActivateNewDevice') {
+      return (<ActivateNewDeviceScene navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'ConnectionProfile') {
+      return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'SecureWebView') {
+      return (<Web navigator={nav} url={route.url} title={route.title} secure navigate />);
+    } else if (id === 'WebView') {
+      return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
+      
+      // SECURITY SCENES
+    } else if (id === 'Activation') {
+      return (<Activation navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'PasswordSet') {
+      return (<PasswordSet navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'UserLogin') {
+      return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'PasswordVerification') {
+      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'Machine') {
+      return (<Machine navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'UpdateMachine') {
+      return (<UpdateMachine navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'DeviceMgmt') {
+      return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+    } else if (id === 'QuestionSet') {
+      return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'QuestionVerification') {
+      return (<QuestionVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    } else if (id === 'DevBind') {
+      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'NotificationMgmt') {
+      return (<NotificationMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+    }
+    
+    return (<Text>Error</Text>);
   }
-
-  renderScene(route,nav) {
-    var id = route.id;
-
-    if(id == "Main"){
-      return (<Main navigator={nav}/>);
-    }else if (id == "Load"){
-      return (<Load navigator={nav}/>);      
-    }else if (id == "Web"){
-      return (<Web navigator={nav} url={route.url} title={route.title}/>);      
-    }else if (id == "ComingSoon"){
-      return (<ComingSoon navigator={nav} title={route.title}/>);      
-    }else if (id == "UserLogin"){
-      return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);     
-    }else if (id == "PasswordVerification"){
-      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);     
-    }else if (id == "QBank"){
-      return (<QBank navigator={nav} url={route.url} title={route.title} />);
-    }else if (id == "SecureChat"){
-      return (<SecureChat navigator={nav}/>);
-    }else if (id == "Appointment"){
-      return (<Appointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }else if (id == "AddAppointment"){
-      return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);//rdna={route.DnaObject}/>);
-    }else if (id == "Machine"){
-      return (<Machine navigator={nav} url={route.url} title={route.title}/>);
-    }else if (id == "Device"){
-      return (<Device navigator={nav} url={route.url} title={route.title}/>);
-    } 
-
-  }
-
+  
   render() {
-
-
     return (
-      <Navigator
-        style={styles.navigator}
-        renderScene={this.renderScene}
-        initialRoute={
-          {id: "Load"}
-          //{id: "Web",title:"Uniken Wiki",url:"http://wiki.uniken.com"}
-        }
-        configureScene={(route) => {
-          var config = Navigator.SceneConfigs.FloatFromRight;
-          config ={
-
-              // Rebound spring parameters when transitioning FROM this scene
-              springFriction: 26,
-              springTension: 200,
-
-              // Velocity to start at when transitioning without gesture
-              defaultTransitionVelocity: 1.5,
-
-              // Animation interpolators for horizontal transitioning:
-              animationInterpolators: {
-                into: buildStyleInterpolator(FromTheRight),
-                out: buildStyleInterpolator(ToTheLeft),
-              }
-          }
-          return config;
-        }}
-      />
-    );
+            <FormattedWrapper locale="en" currency="USD">
+            <Navigator
+            renderScene={this.renderScene}
+            initialRoute={{
+            id: 'Load',
+            title: 'REL-IDmobile'
+            }}
+            configureScene={(route) => {
+            if (route.sceneConfig){
+            return route.sceneConfig;
+            } else {
+            let config = Navigator.SceneConfigs.FadeAndroid;
+            // var config = Navigator.SceneConfigs.FloatFromRight
+            config = {
+            
+            // Rebound spring parameters when transitioning FROM this scene
+            springFriction: 26,
+            springTension: 200,
+            
+            // Velocity to start at when transitioning without gesture
+            defaultTransitionVelocity: 3.5,
+            
+            gestures: null,
+            animationInterpolators: {
+            into: buildStyleInterpolator(FadeIn),
+            out: buildStyleInterpolator(FadeOut),
+            },
+            };
+            return config;
+            }}}
+            />
+            </FormattedWrapper>
+            );
   }
 }
-
-
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#111111',
-    fontFamily: CORE_FONT
-  },
-  bar:{
-    backgroundColor: MID_COL,
-    width: 20,
-    height:3,
-    marginTop:3,
-  },
-  navbar:{
-    backgroundColor: '#ffffff',
-    height: 65,
-    flexDirection: 'row',
-    padding: 10,
-    paddingTop:30
-  },
-  navButton:{
-    //backgroundColor:'#dddddd',
-    backgroundColor: 'transparent',
-    width: 100,
-    height: 20,
-
-    flex:1,
-
-  },
-  navButtonText:{
-    //textAlign: 'left',
-    //fontFamily: CORE_FONT,
-  },
-  navButtonIcon:{
-    fontFamily: CORE_FONT,
-  },
-  navRight:{
-    //textAlign: 'right'
-   // right: 0,
-   // position: 'absolute'
-  },
-  navLeft:{
-    //left: 0,
-   // position: 'absolute',
-    //flex:1
-  },
-  navTitle:{
-    flex:2,
-    fontFamily: CORE_FONT,
-    textAlign: 'center',
-    color: MID_COL,
-    fontSize: 20,
-  }
-});
-
-
-/*
-navigationBar: <NavigationBar
-             title="Menu"
-             titleColor={MID_COL}
-             backgroundStyle={{backgroundColor:'#ffffff'}}
-             customTitle={
-                <Text 
-                  style={{
-                    fontFamily:CORE_FONT,
-                    color: MID_COL,
-                    fontSize: 20
-                  }}
-                >Menu</Text>}
-              
-          />
-          */
 
 AppRegistry.registerComponent('ReactRefApp', () => ReactRefApp);

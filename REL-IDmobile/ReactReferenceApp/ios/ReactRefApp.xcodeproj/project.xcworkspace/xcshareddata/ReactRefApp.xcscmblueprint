@@ -4,14 +4,19 @@
     "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : {
       "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "branches\/mobdev\/iOS\/branches",
       "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "branches\/mobdev\/iOS\/tags"
+    },
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++3" : {
+
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++3" : 0,
     "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : 0,
     "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "22597F7A-23AD-469A-A11A-F838F9279C57",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++3" : "..\/..\/Desktop\/uniken_sra_sdk",
     "97a5aa30-ea10-46b2-9392-452a990f902b++4151" : "ReactNativeSRA\/",
     "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F" : "GIT_Repo\/"
   },
@@ -23,6 +28,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Team-Uniken\/REL-ID_internal.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/relidapisdk",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6e416058-ee1f-40bc-b3a3-9c790494852a++3"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/engdev",

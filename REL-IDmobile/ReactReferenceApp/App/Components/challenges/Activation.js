@@ -1,198 +1,164 @@
+'use strict';
 
+/*
+  ALWAYS NEED
+*/
+import React from 'react-native';
+import Skin from '../../Skin';
 
-var React = require('react-native');
-var TEXT_COLOR = '#FFFFFF';
-var MIDBLUE = '#2579A2';
-var ToolBar = require('../ToolBar');
-var Password = require('./Password');
-var Events = require('react-native-simple-events');
-var Events = require('react-native-simple-events');
-var {
-	View,
-	Text,
-	Navigator,
-	TextInput,
-	TouchableHighlight,
-	ActivityIndicatorIOS,
-	StyleSheet,
-  Dimensions,
-	ScrollView,
+/*
+  CALLED
+*/
+import Events from 'react-native-simple-events';
+import MainActivation from '../MainActivation';
+
+const {
+  View,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  InteractionManager,
 } = React;
 
-var styles = StyleSheet.create({
-	Container: {
-	    flex: 1,
-      backgroundColor: 'rgba(8,26,60,0.9)'
-	},
-  toolbarrow: {
-            flexDirection:'row',
-            backgroundColor: '#fff',
-            width:Dimensions.get('window').width,
-  },
-  step:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 16,
-    width:Dimensions.get('window').width,
 
-  },
-  Varification:{
-     textAlign: "center",
-    marginTop:16,
-    color: TEXT_COLOR,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: 20,
-    width:Dimensions.get('window').width,
-  },
-	match:{
-		 textAlign: "center",
-		marginTop:16,
-		color: '#cdcdc1',
-		justifyContent: 'center',
-		alignItems: 'center',
-		fontSize: 20,
-		marginLeft:Dimensions.get('window').width/2-120,
-		width:240,
-	},
-	Varificationkey:{
-		 textAlign: "center",
-		marginTop:16,
-		color: TEXT_COLOR,
-		justifyContent: 'center',
-		alignItems: 'center',
-		fontSize: 24,
-		width:Dimensions.get('window').width,
-	},
-  div:{
-    marginTop:16,
-    width:Dimensions.get('window').width,
-    backgroundColor: '#fff',
-    height:1,
-  },
+export default class Activation extends React.Component {
 
-	button: {
-			fontFamily: 'Century Gothic',
-		backgroundColor:'transparent',
-	flex:1,
-	fontSize: 16,
-	margin:1,
-	textAlign:'center',
-	textAlignVertical:'center',
-	color: '#FFF',
-	marginTop:16,
-	},
-
-	roundcorner: {
-		height: 56,
-		width: 280,
-	marginTop:16,
-	marginBottom:16,
-	marginLeft:Dimensions.get('window').width/2-140,
-	borderWidth: 1,
-	borderColor: "#fff",
-	backgroundColor: 'rgba(255,255,255,0.1)',
-	borderRadius: 30,
-	},
-
-	input: {
-		fontFamily: 'Century Gothic',
-		backgroundColor: 'rgba(255,255,255,0.1)',
-		height: 56,
-		fontSize:16,
-		width: 280,
-		marginTop:16,
-		color: 'rgba(255,255,255,1)',
-		marginLeft:Dimensions.get('window').width/2-140,
-		textAlign:'center',
-		alignItems: 'center',
-	},
-
-});
-
-
-
-class Activation extends React.Component{
-	btnText(){
-		if(this.props.url.chlngJson.chlng_idx===this.props.url.chlngsCount){
-			return "Submit";
-		}else{
-			return "Continue";
-		}}
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      activatonCode : ''
-
+      activatonCode: '',
     };
+    /*
+    this._props = {
+      url: {
+        chlngJson: {
+          chlng_idx: 1,
+          sub_challenge_index: 0,
+          chlng_name: 'actcode',
+          chlng_type: 2,
+          challengeOperation: 0,
+          chlng_prompt: [
+            ['2sm88b4'],
+          ],
+          chlng_info: [
+            {
+              key: 'Prompt label',
+              value: 'Verification Key',
+            }, {
+              key: 'Response label',
+              value: 'Activation Code',
+            }, {
+              key: 'Description',
+              value: 'Match verification key and enter activation code',
+            }, {
+              key: 'Reading',
+              value: 'Activation verification challenge',
+            },
+          ],
+          chlng_resp: [
+            {
+              challenge: '2sm88b4',
+            },
+          ],
+          challenge_response_policy: [],
+          chlng_response_validation: false,
+          attempts_left: 3,
+        },
+        chlngsCount: 1,
+        currentIndex: 1,
+      },
+    };
+  */
   }
 
-  checkActivationCode(){
-    var vkey = this.state.activatonCode;
-    if(vkey.length>0){
-      responseJson = this.props.url.chlngJson;
+  onActivationCodeChange(event) {
+    this.setState({ activatonCode: event.nativeEvent.text });
+    //console.log(event.nativeEvent.text);
+  }
+  btnText() {
+    if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
+      return 'SUBMIT';
+    }
+    return 'NEXT';
+  }
+
+  checkActivationCode() {
+    //console.log(this);
+    let vkey = this.state.activatonCode;
+    if (vkey.length > 0) {
+      let responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = vkey;
-      Events.trigger('showNextChallenge', {response: responseJson});
+      Events.trigger('showNextChallenge', { response: responseJson });
     }
-    else{
-      alert('Please enter Verification Key');
+    else {
+      alert('Enter Activation Code');
     }
   }
-  onActivationCodeChange(event){
-    this.setState({activatonCode: event.nativeEvent.text});
+
+  componentDidMount() {
+
+      InteractionManager.runAfterInteractions(() => {
+          this.refs.activatonCode.focus();
+      });
   }
 
-	render() {
-		return (
-			<View style={styles.Container}>
-			<ToolBar navigator={this.props.navigator} title="Activation"/>
-			<ScrollView >
+  render() {
+   
+    return (
+      <MainActivation navigator={this.props.navigator}>
+        <View style={Skin.activationStyle.topGroup}>
+          <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
+          <Text style={Skin.activationStyle.title}>Activation</Text>
+          <Text style={Skin.activationStyle.info}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
+          
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
+                Verify:
+              </Text>
+              <Text style={[Skin.activationStyle.textinput]}>
+                {this.props.url.chlngJson.chlng_resp[0].challenge}
+              </Text>
+            </View>
+          </View>
 
-			<Text style={styles.step}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-
-         <Text style={styles.Varification}>Verify and Activate</Text>
-<Text style={styles.div}> </Text>
-<Text style={styles.Varificationkey}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[0].value}</Text>
-<Text style={styles.match}>{this.props.url.chlngJson.chlng_info[2].value}</Text>
-
-<Text style={styles.div}> </Text>
-<Text style={styles.Varification}>{this.props.url.chlngJson.chlng_info[1].value}</Text>
-
-
-
-<TextInput
-	autoCorrect={false}
-  ref='activatonCode'
-	placeholder={'Enter Activation Code'}
-	placeholderTextColor={'rgba(255,255,255,0.5)'}
-	style={styles.input}
-  onChange={this.onActivationCodeChange.bind(this)}
-/>
-<Text style={styles.step}>{this.props.url.chlngJson.attempts_left} Attempts Left</Text>
-
-
- <TouchableHighlight
- style={styles.roundcorner}
-//	 onPress={()=>{
-            onPress={this.checkActivationCode.bind(this)}
-//		 Events.trigger('showNextChallenge', {response: this.props.url.chlngJson});
-//	 }}
-	 underlayColor={'#082340'}
-	 activeOpacity={0.6}
- >
- <Text style={styles.button}>{this.btnText()}</Text>
- </TouchableHighlight>
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <Text style={[Skin.activationStyle.textinput,Skin.activationStyle.textinput_lead]}>
+                Activate:
+              </Text>
+              <TextInput
+                returnKeyType={'next'}
+                autoCorrect={false}
+                secureTextEntry={true}
+                keyboardType={'default'}
+                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                style={Skin.activationStyle.textinput}
+                value={this.state.inputUsername}
+                ref={'activatonCode'}
+                placeholder={'Code'}
+                onChange={this.onActivationCodeChange.bind(this)}
+                onSubmitEditing={this.checkActivationCode.bind(this)}
+              />
+            </View>
+          </View>
+          <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
 
 
-
-</ScrollView >
-			</View>
-		);
-	}
-};
-
-module.exports = Activation;
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+              style={Skin.activationStyle.button}
+              underlayColor={'#082340'}
+              onPress={this.checkActivationCode.bind(this)}
+              activeOpacity={0.6}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </MainActivation>
+    );
+  }
+}

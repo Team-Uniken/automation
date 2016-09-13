@@ -1,53 +1,35 @@
+'use strict';
+
 var React = require('react-native');
-
-
-
 var {
-Dimensions,
-    StyleSheet,
-    View,
-    Text,
-    Image,
-	TouchableHighlight,
-	Dimensions,
-  Dimensions,
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  WebView,
 } = React;
+  
+var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
 
-var Appointment = React.createClass({
-
-
-  render() {
-
+var SampleApp = React.createClass({
+  render: function() {
     return (
-      <View style={styles.toolbarrow}>
-      <Text
-        style={{fontSize:22,color: '#2579a2',margin:12,fontWeight: 'bold', width:Dimensions.get('window').width-80,}}
-      >Activation</Text>
-      <TouchableHighlight
-        onPress={()=>{
-                this.props.navigator.pop();
-        }}
-        underlayColor={'#FFFFFF'}
-        activeOpacity={0.6}
-      >
-        <Text
-          style={{textAlign: 'right',fontSize:24,color: '#2579a2',margin:12,}}
-        >X</Text>
-      </TouchableHighlight>
+  	  <View style={styles.container}>
+        <WebView html={html}/>        
       </View>
-		);
-
-
-
-
-  },
+    );
+  }
 });
 
-var styles = {
-  toolbarrow: {
-            flexDirection:'row',
-            backgroundColor: '#fff',
-            width:Dimensions.get('window').width,
-  },
-};
-module.exports = Appointment;
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+   
+  }
+});
+
+AppRegistry.registerComponent('SampleApp', () => SampleApp);
+
+module.exports = SampleApp;
