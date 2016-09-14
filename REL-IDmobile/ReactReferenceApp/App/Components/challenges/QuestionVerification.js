@@ -122,7 +122,7 @@ export default class QuestionVerification extends React.Component {
                 returnKeyType={'next'}
                 secureTextEntry={true}
                 keyboardType={'default'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={Skin.activationStyle.textinput}
                 onSubmitEditing={this.checkAnswer.bind(this)} />
             </View>
