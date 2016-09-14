@@ -160,6 +160,7 @@ export default class DeviceBinding extends React.Component {
             style={Skin.activationStyle.button}
             onPress={this.setDeviceBinding.bind(this)}
             activeOpacity={0.8}
+            underlayColor={Skin.login.BUTTON_UNDERLAY}
           >
             <Text style={Skin.activationStyle.buttontext}>
               {this.btnText()}

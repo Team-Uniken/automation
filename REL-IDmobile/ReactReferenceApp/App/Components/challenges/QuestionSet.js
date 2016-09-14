@@ -234,7 +234,7 @@ export default class QuestionSet extends React.Component {
             <TouchableHighlight
               style={Skin.activationStyle.button}
               onPress={this.setSecrets.bind(this)}
-              underlayColor={'#082340'}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
               activeOpacity={0.6}
             >
               <Text style={Skin.activationStyle.buttontext}>

@@ -148,7 +148,7 @@ export default class Activation extends React.Component {
           <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
               style={Skin.activationStyle.button}
-              underlayColor={'#082340'}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
               onPress={this.checkActivationCode.bind(this)}
               activeOpacity={0.6}
             >

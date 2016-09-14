@@ -159,7 +159,7 @@ export default class PasswordSet extends React.Component {
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}
-            underlayColor={'#082340'}
+            underlayColor={Skin.login.BUTTON_UNDERLAY}
             onPress={this.setPassword.bind(this)}
             activeOpacity={0.6}
             >

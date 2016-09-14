@@ -105,7 +105,7 @@ btnText(){
         <View style={Skin.activationStyle.input_wrap}>
           <TouchableHighlight
             style={Skin.activationStyle.button}
-            underlayColor={'#082340'}
+            underlayColor={Skin.login.BUTTON_UNDERLAY}
             onPress={this.checkAccessCode.bind(this)}
             activeOpacity={0.6}
           >

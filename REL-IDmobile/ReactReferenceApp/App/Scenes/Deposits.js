@@ -63,7 +63,7 @@ export default class DepositsScene extends React.Component {
               alignSelf: 'center',
               //backgroundColor: 'red',
               fontSize: 30,
-              color: Skin.colors.PRIMARY,
+              color: Skin.PLACEHOLDER_TEXT_COLOR_RGB,
               fontWeight: 'bold',
               alignItems: 'center',
             }}

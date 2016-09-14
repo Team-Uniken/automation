@@ -269,6 +269,7 @@ export default class DeviceName extends React.Component {
               onPress={this.decidePlatformAndShowAlert.bind(this)}
               style={Skin.activationStyle.button}
               activeOpacity={0.8}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
             >
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}

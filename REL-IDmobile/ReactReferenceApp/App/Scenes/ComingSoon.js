@@ -63,7 +63,7 @@ export default class ComingSoonScene extends React.Component{
                             textAlign: 'center',
                             alignSelf: 'center',
                             fontSize: 30,
-                            color: Skin.colors.PRIMARY,
+                            color: Skin.PLACEHOLDER_TEXT_COLOR_RGB,
                             fontWeight: 'bold',
                             alignItems: 'center',
                         }}
