@@ -22,6 +22,7 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   Platform,
   Alert,
   AsyncStorage,
@@ -265,7 +266,7 @@ export default class DeviceName extends React.Component {
             </View>
           </View>
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               onPress={this.decidePlatformAndShowAlert.bind(this)}
               style={Skin.activationStyle.button}
               activeOpacity={0.8}
@@ -274,7 +275,7 @@ export default class DeviceName extends React.Component {
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </MainActivation>

@@ -18,6 +18,7 @@ const {
   View,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   ListView,
   TextInput,
   StyleSheet,
@@ -231,7 +232,7 @@ export default class QuestionSet extends React.Component {
             </View>
           </View>
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={Skin.activationStyle.button}
               onPress={this.setSecrets.bind(this)}
               underlayColor={Skin.login.BUTTON_UNDERLAY}
@@ -240,7 +241,7 @@ export default class QuestionSet extends React.Component {
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </MainActivation>

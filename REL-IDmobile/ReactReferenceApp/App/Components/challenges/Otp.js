@@ -20,7 +20,7 @@ const {
   View,
   Text,
   TextInput,
-  TouchableHighlight,
+  TouchableOpacity,
 } = React;
 
 class Activation extends React.Component{
@@ -103,7 +103,7 @@ btnText(){
         </View>
         <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
         <View style={Skin.activationStyle.input_wrap}>
-          <TouchableHighlight
+          <TouchableOpacity
             style={Skin.activationStyle.button}
             underlayColor={Skin.login.BUTTON_UNDERLAY}
             onPress={this.checkAccessCode.bind(this)}
@@ -112,7 +112,7 @@ btnText(){
             <Text style={Skin.activationStyle.buttontext}>
               {this.btnText()}
             </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </MainActivation>
 

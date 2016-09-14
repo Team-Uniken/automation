@@ -18,7 +18,7 @@ import OpenLinks from '../OpenLinks';
   INSTANCED
  */
 let responseJson;
-const {View, Text, TextInput, TouchableHighlight, ScrollView, } = React;
+const {View, Text, TextInput,TouchableOpacity, TouchableHighlight, ScrollView, } = React;
 
 export default class QuestionVerification extends React.Component {
 
@@ -130,7 +130,7 @@ export default class QuestionVerification extends React.Component {
           <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
 
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={Skin.activationStyle.button}
               underlayColor={Skin.login.BUTTON_UNDERLAY}
               onPress={this.checkAnswer.bind(this)}
@@ -138,7 +138,7 @@ export default class QuestionVerification extends React.Component {
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
         <OpenLinks />

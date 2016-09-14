@@ -20,6 +20,7 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   InteractionManager,
   AsyncStorage,
 } = React;
@@ -157,7 +158,7 @@ export default class PasswordSet extends React.Component {
             </View>
             </View>
             <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
             style={Skin.activationStyle.button}
             underlayColor={Skin.login.BUTTON_UNDERLAY}
             onPress={this.setPassword.bind(this)}
@@ -166,7 +167,7 @@ export default class PasswordSet extends React.Component {
             <Text style={Skin.activationStyle.buttontext}>
             {this.btnText()}
             </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             </View>
             </View>
             </MainActivation>

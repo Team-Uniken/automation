@@ -30,6 +30,7 @@ const {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
+  TouchableOpacity,
   Alert,
 } = React;
 
@@ -300,16 +301,16 @@ class PasswordVerification extends React.Component {
             </View>
             </View>
             <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
             style={Skin.activationStyle.button}
             onPress={this.decidePlatformAndShowAlert.bind(this)}
             underlayColor={Skin.login.BUTTON_UNDERLAY}
-            activeOpacity={0.6}
+            activeOpacity={0.8}
             >
             <Text style={Skin.activationStyle.buttontext}>
             SUBMIT
             </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             </View>
             </View>
             <Text style={Skin.activationStyle.warning_text}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>

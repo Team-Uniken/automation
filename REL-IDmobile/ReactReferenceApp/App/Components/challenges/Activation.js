@@ -18,6 +18,7 @@ const {
   TextInput,
   TouchableHighlight,
   InteractionManager,
+  TouchableOpacity,
 } = React;
 
 
@@ -146,7 +147,7 @@ export default class Activation extends React.Component {
 
 
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={Skin.activationStyle.button}
               underlayColor={Skin.login.BUTTON_UNDERLAY}
               onPress={this.checkActivationCode.bind(this)}
@@ -155,7 +156,7 @@ export default class Activation extends React.Component {
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </MainActivation>
