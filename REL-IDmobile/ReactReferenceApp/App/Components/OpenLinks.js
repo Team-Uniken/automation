@@ -28,19 +28,19 @@ const styles = StyleSheet.create({
     marginBottom:50,
   },
   openlink_wrap: {
-    backgroundColor: Skin.colors.DARK_PRIMARY,
+    backgroundColor: Skin.login.OPEN_LINK_BG,
     width: 80,
     height: 80,
     flexDirection: 'column',
   },
   openlink_text: {
-    color: Skin.colors.TEXT_COLOR,
+    color: Skin.login.OPEN_LINK_TEXT_COLOR,
     textAlign: 'center',
     fontSize: 13,
     flex: 1,
   },
   openlink_icon: {
-    color: Skin.colors.TEXT_COLOR,
+    color: Skin.login.OPEN_LINK_ICON_COLOR,
     fontFamily: 'icomoon',
     flex: 2,
     textAlign: 'center',

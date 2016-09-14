@@ -17,6 +17,7 @@
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
+		1AFFCC711D88E1CE00D1223B /* ubs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AFFCC701D88E1CE00D1223B /* ubs.png */; };
 		65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
 		65281C751D6C544C00F15ACE /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C741D6C544C00F15ACE /* libapi-sdk.a */; };
 		654F81611CC9129C009E6168 /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
@@ -150,6 +151,7 @@
 		13B07F961A680F5B00A75B9A /* ReactRefApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
+		1AFFCC701D88E1CE00D1223B /* ubs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ubs.png; sourceTree = "<group>"; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		65281C721D6C544C00F15ACE /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		65281C741D6C544C00F15ACE /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1AFFCC701D88E1CE00D1223B /* ubs.png */,
 				65281C701D6C544C00F15ACE /* api-sdk */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
@@ -660,6 +663,7 @@
 				1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */,
 				6567FBCB1CC1122F00AC6A04 /* App in Resources */,
 				656227ED1CB50B2300AD7F6C /* gothic_0.TTF in Resources */,
+				1AFFCC711D88E1CE00D1223B /* ubs.png in Resources */,
 				654F81D11CC9FAD5009E6168 /* Images.xcassets in Resources */,
 				6567FBCD1CC1127B00AC6A04 /* index.ios.js in Resources */,
 				654F81D21CC9FAD5009E6168 /* Info.plist in Resources */,
@@ -874,6 +878,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -913,6 +918,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

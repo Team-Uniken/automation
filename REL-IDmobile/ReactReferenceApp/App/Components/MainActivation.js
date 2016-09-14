@@ -168,7 +168,7 @@ class MainActivation extends React.Component {
          <TouchableWithoutFeedback onPress={this.dismiss}>
               <View style={Skin.activationStyle.container}>
                 <StatusBar
-                  backgroundColor={Skin.colors.DARK_PRIMARY}
+                  backgroundColor={Skin.main.STATUS_BAR_BG}
                   barStyle={'light-content'}
                 />
                 <View style={Skin.activationStyle.bgbase} />
@@ -186,20 +186,20 @@ class MainActivation extends React.Component {
                 <TouchableHighlight
                   activeOpacity={1.0}
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: Skin.login.CONNECTION_BUTTON_BG,
                     height: 50,
                     width: 50,
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderTopRightRadius: 20,
                   }}
-                  underlayColor={Skin.colors.DARK_PRIMARY}
+                  underlayColor={Skin.login.CONNECTION_BUTTON_UNDERLAY}
                   onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}
                 >
                   <View>
                     <Text
                       style={{
-                        color: Skin.colors.DARK_PRIMARY,
+                        color: Skin.login.CONNECTION_BUTTON_ICON_COLOR,
                         fontSize: 30,
                       }}
                     >
@@ -218,7 +218,7 @@ class MainActivation extends React.Component {
           <TouchableWithoutFeedback onPress={this.dismiss}>
             <View style={Skin.activationStyle.container}>
               <StatusBar
-                backgroundColor={Skin.colors.DARK_PRIMARY}
+                backgroundColor={Skin.main.STATUS_BAR_BG}
                 barStyle={'light-content'}
               />
               <View style={Skin.activationStyle.bgbase} />
@@ -237,20 +237,20 @@ class MainActivation extends React.Component {
               <TouchableHighlight
                 activeOpacity={1.0}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: Skin.login.CONNECTION_BUTTON_BG,
                   height: 50,
                   width: 50,
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderTopRightRadius: 20,
                 }}
-                underlayColor={Skin.colors.DARK_PRIMARY}
+                underlayColor={Skin.login.CONNECTION_BUTTON_UNDERLAY}
                 onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}
               >
                 <View>
                   <Text
                     style={{
-                      color: Skin.colors.DARK_PRIMARY,
+                      color: Skin.login.CONNECTION_BUTTON_ICON_COLOR,
                       fontSize: 30,
                     }}
                   >

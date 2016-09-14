@@ -64,10 +64,10 @@ class BottomMenu extends React.Component{
 					<View key={'menu_'+i} style={Skin.botmenu.boxwraphover} >
 						<View style={Skin.botmenu.hoverbar}>
 						</View>
-						<TouchableHighlight style={Skin.botmenu.boxhover} underlayColor={Skin.colors.LIGHT_PRIMARY} onPress={()=>this.handleClick(i)}>
+						<TouchableHighlight style={Skin.botmenu.boxhover} underlayColor={Skin.main.BOTTOM_MENU_SELECT_UNDERLAY} onPress={()=>this.handleClick(i)}>
 							<View style={{flex:1,flexDirection:'column'}}>
-								<Text style={[Skin.botmenu.icon,{color:Skin.colors.TEXT_COLOR}]}>{this.props.list[i]['icon']}</Text>
-								<Text style={[Skin.botmenu.title,{color:Skin.colors.TEXT_COLOR}]}>{this.props.list[i]['title']}</Text>
+								<Text style={[Skin.botmenu.icon,{color:Skin.main.BOTTOM_MENU_SELECT_COLOR}]}>{this.props.list[i]['icon']}</Text>
+								<Text style={[Skin.botmenu.title,{color:Skin.main.BOTTOM_MENU_SELECT_COLOR}]}>{this.props.list[i]['title']}</Text>
 							</View>
 						</TouchableHighlight>
 					</View>
@@ -80,10 +80,10 @@ class BottomMenu extends React.Component{
 					<View key={'menu_'+i} style={Skin.botmenu.boxwrap}>
 						<View style={Skin.botmenu.hoverbar_empty}>
 						</View>
-						<TouchableHighlight style={Skin.botmenu.box} underlayColor={Skin.colors.TEXT_COLOR} onPress={()=>this.handleClick(i)}>
+						<TouchableHighlight style={Skin.botmenu.box} underlayColor={Skin.main.BOTTOM_MENU_UNDERLAY} onPress={()=>this.handleClick(i)}>
 							<View style={{flex:1,flexDirection:'column'}}>
-								<Text style={[Skin.botmenu.icon,{color:Skin.colors.PRIMARY}]}>{this.props.list[i]['icon']}</Text>
-								<Text style={[Skin.botmenu.title,{color:Skin.colors.PRIMARY}]}>{this.props.list[i]['title']}</Text>
+								<Text style={[Skin.botmenu.icon,{color:Skin.main.BOTTOM_MENU_COLOR}]}>{this.props.list[i]['icon']}</Text>
+								<Text style={[Skin.botmenu.title,{color:Skin.main.BOTTOM_MENU_COLOR}]}>{this.props.list[i]['title']}</Text>
 							</View>
 						</TouchableHighlight>
 					</View>
@@ -150,7 +150,7 @@ module.exports = BottomMenu;
 
 Skin.botmenu = StyleSheet.create({
 	hoverbar:{
-		backgroundColor: 'rgba('+Skin.colors.PRIMARY_RGB+',0.25)',
+		backgroundColor: 'rgba('+Skin.main.BOTTOM_MENU_HIGHLIGHT_COLOR_RGB+','+Skin.main.BOTTOM_MENU_HIGHLIGHT_OPACITY+')',
 		height: 10
 	},
 	hoverbar_empty:{
@@ -169,10 +169,10 @@ Skin.botmenu = StyleSheet.create({
 	},
 	box:{
 		flex: 1,
-		backgroundColor: Skin.colors.DARK_PRIMARY,
+		backgroundColor: Skin.main.BOTTOM_MENU_BG,
 	},
 	boxhover:{
-		backgroundColor: Skin.colors.PRIMARY,
+		backgroundColor: Skin.main.BOTTOM_MENU_SELECT_BG,
 		flex: 1,
 	},
 	wrap:{
@@ -183,7 +183,7 @@ Skin.botmenu = StyleSheet.create({
 		fontFamily: 'icomoon',
 		fontSize: 30,
 		marginTop: 15,
-		color: Skin.colors.TEXT_COLOR,
+		color: Skin.main.BOTTOM_MENU_COLOR,
 		flex:2,
 		textAlign:'center'
 
@@ -191,7 +191,7 @@ Skin.botmenu = StyleSheet.create({
 	title:{
 		fontSize: 10,
 		fontWeight: 'bold',
-		color: Skin.colors.TEXT_COLOR,
+		color: Skin.main.BOTTOM_MENU_COLOR,
 		flex:1,
 		textAlign: 'center'
 	}

@@ -31,7 +31,7 @@ export default class DepositsScene extends React.Component {
         navBar={{
           title: 'Deposits',
           visible: true,
-          tint: Skin.colors.TEXT_COLOR,
+          tint: Skin.main.NAVBAR_TINT,
           left:{
             text: '',
             icon: '\ue20e',

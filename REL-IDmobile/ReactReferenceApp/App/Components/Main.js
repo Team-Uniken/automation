@@ -211,9 +211,9 @@ export default class Main extends React.Component {
         panOpenMask={0.2}
       >
         <NavigationBar
-          title={{ title: this.props.navBar.title, tintColor: Skin.colors.TEXT_COLOR }}
-          tintColor={Skin.colors.PRIMARY}
-          statusBar={{ tintColor: Skin.colors.DARK_PRIMARY, style: 'light-content' }}
+          title={{ title: this.props.navBar.title, tintColor: Skin.main.TITLE_COLOR}}
+          tintColor={Skin.main.NAVBAR_BG}
+          statusBar={{ tintColor: Skin.main.STATUS_BAR_BG, style: 'light-content' }}
           rightButton={<NavButton
             left={false}
             icon={this.state.navBar.right.icon}

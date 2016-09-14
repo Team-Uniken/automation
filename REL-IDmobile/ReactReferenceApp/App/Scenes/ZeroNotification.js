@@ -483,7 +483,7 @@ export default class NotificationMgmtScene extends React.Component {
             navBar={{
             title: 'My Notifications',
             visible: true,
-            tint: Skin.colors.TEXT_COLOR,
+            tint: Skin.main.NAVBAR_TINT,
             left: {
             text: 'Back',
             icon: 'x',
@@ -497,7 +497,7 @@ export default class NotificationMgmtScene extends React.Component {
             }}
             navigator={this.props.navigator}
             >
-            <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY, }}>
+            <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
             <ListView
             ref="listView"
             automaticallyAdjustContentInsets={false}

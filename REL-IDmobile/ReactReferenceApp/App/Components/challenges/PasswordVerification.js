@@ -273,13 +273,13 @@ class PasswordVerification extends React.Component {
     return (
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
-            <Animated.View style={[Skin.loadStyle.rid_wrap]}>
-            <View style={Skin.loadStyle.rid_center}>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
-            <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
-            </View>
-            </Animated.View>
+                    <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+                      <View style={Skin.loadStyle.rid_center}>
+                        <Animated.Image source={require('../img/ubs.png')}
+                          style={{width:120}} resizeMode={'contain'}
+                        />
+                      </View>
+                    </Animated.View>
             
             <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
             <View style={Skin.activationStyle.textinput_wrap}>
@@ -290,7 +290,7 @@ class PasswordVerification extends React.Component {
             autoCorrect={false}
             autoCapitalize={'none'}
             placeholder={'Password'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            placeholderTextColor={'rgba('+Skin.login.PLACEHOLDER_TEXT_COLOR_RGB +', '+Skin.login.PLACEHOLDER_TEXT_OPACITY+')'}
             style={Skin.activationStyle.textinput}
             value={this.state.inputPassword}
             onSubmitEditing={this.decidePlatformAndShowAlert.bind(this)}
@@ -299,7 +299,6 @@ class PasswordVerification extends React.Component {
             
             </View>
             </View>
-            <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}
@@ -313,6 +312,7 @@ class PasswordVerification extends React.Component {
             </TouchableHighlight>
             </View>
             </View>
+            <Text style={Skin.activationStyle.warning_text}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
             <OpenLinks />
             </MainActivation>
             );
