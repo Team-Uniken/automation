@@ -300,6 +300,7 @@ class PasswordVerification extends React.Component {
             
             </View>
             </View>
+            <Text style={Skin.activationStyle.warning_text}>Attempts Left : {this.props.url.chlngJson.attempts_left}</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableOpacity
             style={Skin.activationStyle.button}
@@ -313,7 +314,6 @@ class PasswordVerification extends React.Component {
             </TouchableOpacity>
             </View>
             </View>
-            <Text style={Skin.activationStyle.warning_text}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
             <OpenLinks />
             </MainActivation>
             );
