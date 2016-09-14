@@ -130,7 +130,7 @@ export default class PasswordSet extends React.Component {
             keyboardType={'default'}
             ref={'password'}
             placeholder={'Enter Password'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
             style={Skin.activationStyle.textinput}
             secureTextEntry={true}
             blurOnSubmit={false}
@@ -148,7 +148,7 @@ export default class PasswordSet extends React.Component {
             returnKeyType={'next'}
             keyboardType={'default'}
             placeholder={'Confirm Password'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
             style={Skin.activationStyle.textinput}
             secureTextEntry={true}
             onChange={this.onConfirmPasswordChange.bind(this)}

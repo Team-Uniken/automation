@@ -366,7 +366,7 @@ class UserLogin extends React.Component{
                         autoCapitalize={'none'}
                         keyboardType={'email-address'}
                         placeholder={'Username'}
-                        placeholderTextColor={'rgba('+Skin.login.PLACEHOLDER_TEXT_COLOR_RGB +', '+Skin.login.PLACEHOLDER_TEXT_OPACITY+')'}
+                        placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                         style={Skin.activationStyle.textinput}
                         value={this.state.inputUsername}
                         onSubmitEditing={this.checkUsername.bind(this)}

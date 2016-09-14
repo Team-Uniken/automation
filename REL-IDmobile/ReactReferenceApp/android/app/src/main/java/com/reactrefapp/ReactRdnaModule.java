@@ -94,9 +94,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onTerminate(RDNA.RDNAStatusTerminate rdnaStatusTerminate) {
+            public int onTerminate(final String s) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
+
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onTerminate", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
                 return 0;
             }
+
 
             @Override
             public int onPauseRuntime(final String rdnaStatusPause) {
@@ -395,15 +409,15 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setDevToken(String devToken){
-      Log.d(TAG, "setdevtoken:" + devToken);
-      String deviceToken=null;
-      try {
-        JSONObject jobj=new JSONObject(devToken);
-        deviceToken= jobj.getString("token");
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      Constants.DEV_TOKEN=deviceToken;
+        Log.d(TAG, "setdevtoken:" + devToken);
+        String deviceToken=null;
+        try {
+            JSONObject jobj=new JSONObject(devToken);
+            deviceToken= jobj.getString("token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Constants.DEV_TOKEN=deviceToken;
     }
 
     @ReactMethod
@@ -493,7 +507,22 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         callback.invoke(writableArray);
     }
-
+    @ReactMethod
+    public void getDefaultCipherSalt(Callback callback)
+    {
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.getDefaultCipherSalt();
+        WritableMap statusMap = Arguments.createMap();
+        if(rdnaObj != null) {
+            int error = status.errorCode;
+            statusMap.putInt("error", error);
+            if(status.errorCode == 0 && status.result!=null) {
+                statusMap.putString("response", String.valueOf(status.result));
+            }
+        } else {
+            statusMap.putInt("error", 1);
+        }
+        callback.invoke(statusMap);
+    }
     @ReactMethod
     public void encryptDataPacket(String data,String salt, Callback callback)
     {

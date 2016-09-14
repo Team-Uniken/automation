@@ -254,7 +254,7 @@ export default class DeviceName extends React.Component {
                 returnKeyType={'next'}
                 autoCorrect={false}
                 keyboardType={'default'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                 placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={Skin.activationStyle.textinput}
                 value={this.state.deviceName}
                 ref={'deviceName'}

@@ -290,7 +290,7 @@ class PasswordVerification extends React.Component {
             autoCorrect={false}
             autoCapitalize={'none'}
             placeholder={'Password'}
-            placeholderTextColor={'rgba('+Skin.login.PLACEHOLDER_TEXT_COLOR_RGB +', '+Skin.login.PLACEHOLDER_TEXT_OPACITY+')'}
+            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
             style={Skin.activationStyle.textinput}
             value={this.state.inputPassword}
             onSubmitEditing={this.decidePlatformAndShowAlert.bind(this)}

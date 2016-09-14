@@ -210,11 +210,11 @@ const styles = StyleSheet.create({
     fontFamily: Skin.font.ICON_FONT,
     textAlign: 'center',
     fontSize: 200,
-    color: Skin.colors.TEXT_COLOR,
+    color: Skin.DEV_BIND_ICON_TEXT_COLOR_RGB,
   },
   type: {
     fontSize:30,
-    color: Skin.colors.TEXT_COLOR,
+    color: Skin.DEV_BIND_TYPE_TEXT_COLOR_RGB,
     textAlign: 'center',
     fontWeight: 'bold',
   },

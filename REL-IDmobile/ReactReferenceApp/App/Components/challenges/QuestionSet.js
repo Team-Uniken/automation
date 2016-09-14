@@ -189,7 +189,7 @@ export default class QuestionSet extends React.Component {
                 ref={(component) => { this.quesInput = component; return this.quesInput; }}
                 autoCorrect={false}
                 placeholder={'Type/Select question'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={[
                   Skin.activationStyle.textinput,
                   {
@@ -219,7 +219,7 @@ export default class QuestionSet extends React.Component {
               <TextInput
                 autoCorrect={false}
                 placeholder={'Enter your secret answer'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                 placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={[Skin.activationStyle.textinput, {
                   textAlign: 'left',
                   paddingLeft:5,

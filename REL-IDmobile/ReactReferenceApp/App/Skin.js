@@ -12,6 +12,12 @@ const SCREEN_WIDTH = require('Dimensions').get('window').width;
 const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
+
+
+const PLACEHOLDER_TEXT_COLOR_RGB='rgba(59,59,59,0.7)'//255,255,255,0.7
+const DEV_BIND_ICON_TEXT_COLOR_RGB='rgba(0,0,0,0.5)'//255,255,255,0.7
+const DEV_BIND_TYPE_TEXT_COLOR_RGB='rgba(0,0,0,0.5)'//255,255,255,0.7
+
 const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
@@ -58,6 +64,7 @@ const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + '
 
 const load = {
   OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
+
   OVERLAY_SPINNER_COLOR: '#CCCCCC',
   BG_COLOR_RGB: '255,255,255',
   BG_COLOR_OPACITY: '0.9',
@@ -1335,6 +1342,9 @@ module.exports = {
   transforms,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
+  PLACEHOLDER_TEXT_COLOR_RGB,
+  DEV_BIND_ICON_TEXT_COLOR_RGB,
+  DEV_BIND_TYPE_TEXT_COLOR_RGB,
   customeStyle,
   appointmentrow,
   notification,

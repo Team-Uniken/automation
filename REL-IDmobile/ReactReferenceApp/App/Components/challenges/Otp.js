@@ -91,7 +91,7 @@ btnText(){
               autoCorrect={false}
               secureTextEntry
               keyboardType={'default'}
-              placeholderTextColor={'rgba(255,255,255,0.7)'}
+               placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
               style={Skin.activationStyle.textinput}
               value={this.state.inputUsername}
               ref={'accessCode'}

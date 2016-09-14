@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 30,
     backgroundColor: Skin.colors.BACK_GRAY,
-    paddingVertical: 20,
+    marginVertical: 20,
     fontWeight: 'bold',
   },
   footer:{
