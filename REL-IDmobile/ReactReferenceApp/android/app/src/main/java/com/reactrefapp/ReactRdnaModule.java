@@ -94,7 +94,20 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onTerminate(RDNA.RDNAStatusTerminate rdnaStatusTerminate) {
+            public int onTerminate(final String s) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
+
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onTerminate", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
                 return 0;
             }
 
@@ -135,9 +148,14 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onConfigReceived(RDNA.RDNAStatusGetConfig rdnaStatusGetConfig) {
+            public int onConfigReceived(String s) {
                 return 0;
             }
+
+//            @Override
+//            public int onConfigReceived(RDNA.RDNAStatusGetConfig rdnaStatusGetConfig) {
+//                return 0;
+//            }
 
             @Override
             public int onCheckChallengeResponseStatus(final String rdnaStatusCheckChallengeResponse) {
@@ -168,19 +186,34 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onGetAllChallengeStatus(RDNA.RDNAStatusGetAllChallenges rdnaStatusGetAllChallenges) {
+            public int onGetAllChallengeStatus(String s) {
                 return 0;
             }
 
             @Override
-            public int onUpdateChallengeStatus(RDNA.RDNAStatusUpdateChallenges rdnaStatusUpdateChallenges) {
+            public int onUpdateChallengeStatus(String s) {
                 return 0;
             }
 
             @Override
-            public int onForgotPasswordStatus(RDNA.RDNAStatusForgotPassword rdnaStatusForgotPassword) {
+            public int onForgotPasswordStatus(String s) {
                 return 0;
             }
+
+//            @Override
+//            public int onGetAllChallengeStatus(RDNA.RDNAStatusGetAllChallenges rdnaStatusGetAllChallenges) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public int onUpdateChallengeStatus(RDNA.RDNAStatusUpdateChallenges rdnaStatusUpdateChallenges) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public int onForgotPasswordStatus(RDNA.RDNAStatusForgotPassword rdnaStatusForgotPassword) {
+//                return 0;
+//            }
 
 
             @Override
