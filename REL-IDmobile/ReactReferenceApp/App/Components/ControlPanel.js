@@ -8,7 +8,7 @@ var React = require('react-native');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-
+var constant = require('./Constants');
 /*
  CALLED
  */
@@ -82,6 +82,8 @@ class ControlPanel extends React.Component{
   }
   
   componentDidMount(){
+    constant.USER_SESSION = "YES";
+    
     Obj = this;
     if(eventLogOff){
       eventLogOff.remove();
@@ -302,7 +304,10 @@ class ControlPanel extends React.Component{
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Notifications</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.props.navigator.push({id: 'ComingSoon', title:'Change Secret Question',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
+            <TouchableHighlight onPress={()=>{this.getChallengesByName("secqa");}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
+            </TouchableHighlight><View style={styles.menuBorder}></View>
+            
+            <TouchableHighlight onPress={()=>{this.getChallengesByName("pass");}}  style={styles.touch}><Text style={styles.menuItem}>Change Pin</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Help & Support',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>

@@ -20,6 +20,7 @@ import TouchID from 'react-native-touch-id';
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
+var constant = require('../Constants');
 /*
 	INSTANCES
  */
@@ -156,6 +157,7 @@ class UserLogin extends React.Component{
   
   
   componentWillMount() {
+     constant.USER_SESSION = "NO";
       if(Platform.OS == "android"){
                   try{
                     AsyncStorage.getItem("userData").then((value)=>{
