@@ -10,7 +10,6 @@ import Skin from '../Skin';
 /*
   CALLED
 */
-
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Modal from 'react-native-simple-modal';
 import Loader from './Loader';
@@ -18,6 +17,7 @@ import Events from 'react-native-simple-events';
 import { InteractionManager } from "react-native";
 var {DeviceEventEmitter} = require('react-native');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+var constant = require('./Constants');
 /* 
   INSTANCES
 */
@@ -47,7 +47,7 @@ class MainActivation extends React.Component {
       userName: '',
     password:'',
     baseUrl:'',
-
+    isSettingButtonHide:1.0,
     };
     console.log('\nMain Activation in constructor');
     console.log(this.state.visible);
@@ -100,7 +100,7 @@ class MainActivation extends React.Component {
   
   cancelCreds(){
     
-    ReactRdna.setCredentials(this.state.userName,this.state.password,true,(response) => {
+    ReactRdna.setCredentials(this.state.userName,this.state.password,false,(response) => {
                              if (response) {
                              console.log('immediate response is'+response[0].error);
                              }else{
@@ -137,7 +137,17 @@ class MainActivation extends React.Component {
                                                                  'onGetCredentials',
                                                                  this.onGetCredentialsStatus.bind(this)
                                                                  );
+   
+      if(  constant.USER_SESSION === "YES"){
+        this.setState({isSettingButtonHide: 0});
+      }else{
+        this.setState({isSettingButtonHide:1.0});
+      }
+    
+    
   }
+ 
+  
   hideLoader(args){
   console.log('\n in hideLoader of main activation');
   obj.hideLoaderView();
@@ -243,11 +253,12 @@ class MainActivation extends React.Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderTopRightRadius: 20,
+                  opacity:this.state.isSettingButtonHide,
                 }}
                 underlayColor={Skin.colors.DARK_PRIMARY}
                 onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}
               >
-                <View>
+                <View >
                   <Text
                     style={{
                       color: Skin.colors.DARK_PRIMARY,
