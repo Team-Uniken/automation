@@ -100,7 +100,7 @@ class MainActivation extends React.Component {
   
   cancelCreds(){
     
-    ReactRdna.setCredentials(this.state.userName,this.state.password,true,(response) => {
+    ReactRdna.setCredentials(this.state.userName,this.state.password,false,(response) => {
                              if (response) {
                              console.log('immediate response is'+response[0].error);
                              }else{
