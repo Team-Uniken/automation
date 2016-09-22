@@ -47,8 +47,8 @@ var styles = StyleSheet.create({
 	},
 	rowwrap:{
 		backgroundColor: Skin.colors.TEXT_COLOR,
-		padding: 10,
-		width:SCREEN_WIDTH*4/5,
+		padding: 8,
+		width: (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*4/5 : SCREEN_WIDTH-32,
 		marginBottom:2
 	}
 

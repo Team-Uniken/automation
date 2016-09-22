@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 80,
-    marginTop:50,
+    marginTop:50*(Skin.SCREEN_HEIGHT/1000),
     marginBottom:50,
   },
   openlink_wrap: {

@@ -351,7 +351,7 @@ class UserLogin extends React.Component{
                 navigator={this.props.navigator}>
                
                 <View style={Skin.activationStyle.topGroup}>
-                <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+                <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70*(Skin.SCREEN_HEIGHT/1000)}]}>
                 <View style={Skin.loadStyle.rid_center}>
                 <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
                 <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>

@@ -68,7 +68,7 @@ class Load extends React.Component {
     i_opac_val: new Animated.Value(0),
     d_opac_val: new Animated.Value(0),
     relid_text_opac: new Animated.Value(0),
-    rid_top: new Animated.Value(200),
+    rid_top: new Animated.Value(150),
     r_text_opac: new Animated.Value(0),
     i_text_opac: new Animated.Value(0),
     d_text_opac: new Animated.Value(0),

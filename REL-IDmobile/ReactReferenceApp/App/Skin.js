@@ -12,6 +12,18 @@ const SCREEN_WIDTH = require('Dimensions').get('window').width;
 const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
+const SCREEN_HEIGHT_RATIO=1;
+
+if(SCREEN_HEIGHT<=426){
+SCREEN_HEIGHT_RATIO=0.5
+}else if(SCREEN_HEIGHT<=470){
+SCREEN_HEIGHT_RATIO=1
+}else if(SCREEN_HEIGHT<640){
+SCREEN_HEIGHT_RATIO=1.5
+}else{
+SCREEN_HEIGHT_RATIO=2
+}
+
 const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
@@ -992,7 +1004,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: 250,
+    top: 200,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,
@@ -1277,6 +1289,7 @@ module.exports = {
   transforms,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
+  SCREEN_HEIGHT_RATIO,
   customeStyle,
   appointmentrow,
   notification,
