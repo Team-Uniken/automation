@@ -989,7 +989,7 @@ const loadStyle = StyleSheet.create({
   },
   relid_wrap: {
     alignItems: 'center',
-    top: 205,
+    top: SCREEN_HEIGHT/3+5,
 
   },
   relid: {
@@ -1004,7 +1004,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: 200,
+    top: SCREEN_HEIGHT/3,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,
