@@ -45,6 +45,8 @@ var WebViewBridge = React.createClass({
      * Sets the proxy for this WebView. 
      */
     proxy: PropTypes.object,
+
+    webViewClient: PropTypes.object,
   },
 
    

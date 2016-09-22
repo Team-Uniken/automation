@@ -17,6 +17,7 @@ import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import PatternLock from '../../Scenes/PatternLock'
 import TouchID from 'react-native-touch-id';
+
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
@@ -99,29 +100,6 @@ class UserLogin extends React.Component{
       obj.checkUsernameFailure();
     };
   }
-
-  componentDidUpdate(){
-    if(Platform.OS == "android" && this.locked == false){
-        AsyncStorage.getItem("passwd").then((value) => {
-                                              if(value){
-                                                if(value === "empty"){
-                                                    console.log("user empty");
-                                                }else{
-                                                  AsyncStorage.getItem("userId").then((value) => {
-                                                    savedUserName = value;
-                                                    obj.state.inputUsername = savedUserName;
-                                                    obj.checkUsername();
-                                                  }).done();
-                                                }
-                                              }else{
-                                                      console.log("no value in async storage");
-                                                      InteractionManager.runAfterInteractions(() => {
-                                                                                              this.refs.inputUsername.focus();
-                                                                                              });                                            
-                                            }
-                                            }).done();
-    }
-  }
   
   componentDidMount() {
     obj = this;
@@ -166,7 +144,6 @@ class UserLogin extends React.Component{
                         this.setState({
                           pattern:true,
                         });
-                        //this.verifyPattern(chlngJson);
                       }
                     }).done();
                   }
@@ -177,8 +154,6 @@ class UserLogin extends React.Component{
 
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
   }
-  
-  
   
   _verifyTouchIdSupport(){
     TouchID.isSupported()
@@ -333,12 +308,15 @@ class UserLogin extends React.Component{
     this.locked =false;
     var thisRef = this;
     AsyncStorage.setItem("userId",userid,()=>{
-      AsyncStorage.setItem("passwd",password,()=>{
-          thisRef.setState({
-              pattern:false,
-          });
-      });
-    });
+        Main.dnaPasswd = password;
+        savedUserName = userid;
+        obj.state.inputUsername = savedUserName;
+        obj.checkUsername();
+        //this.locked = true;
+        // thisRef.setState({
+        // pattern:false,
+        // });
+   });
   }
   
   render() {

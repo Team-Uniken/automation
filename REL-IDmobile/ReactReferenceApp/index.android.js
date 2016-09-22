@@ -13,6 +13,7 @@ import PayBillsScene from './App/Scenes/PayBills';
 import ContactScene from './App/Scenes/Contact';
 import DepositsScene from './App/Scenes/Deposits';
 import FindBranchScene from './App/Scenes/FindBranch';
+import Main from './App/Components/Main';
 
 // Secondary Scenes
 import DeviceMgmtScene from './App/Scenes/DeviceMgmt';
@@ -21,7 +22,7 @@ import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
 import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
 import LoadScene from './App/Scenes/Load';
-import PatternLock from './App/Scenes/PatternLock'
+//import PatternLock from './App/Scenes/PatternLock'
 import Web from './App/Scenes/Web';
 import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
@@ -46,6 +47,8 @@ import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
+import UpdateMachine from './App/Components/UpdateAuthMachine';
+import PostLoginAuthMachine from './App/Components/PostLoginAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
@@ -60,6 +63,7 @@ const {
   AppRegistry,
   Navigator,
   Text,
+  AsyncStorage,
   BackAndroid,
 } = React;
 
@@ -93,7 +97,7 @@ const FadeOut = {
 class ReactRefApp extends React.Component {
 
 
-  renderScene(route, nav) {
+renderScene(route, nav) {
     let id = route.id;
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -164,12 +168,8 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       return (<ActivateNewDeviceScene navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
-    }else if (id === 'Pattern') {
-      return (<PatternLock navigator={nav} url={route.url} title={route.title} 
-              onSetPattern={route.setPatternCallback} data={route.url.data} 
-              onUnlock={route.unlockCallback} mode={route.mode} />);
     } else if (id === 'SecureWebView') {
-      return (<Web navigator={nav} url={route.url} title={route.title} secure navigate />);
+      return (<Web navigator={nav} url={route.url} title={route.title} proxy={Main.proxy} secure navigate />);
     } else if (id === 'WebView') {
       return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
 
@@ -184,6 +184,10 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'UpdateMachine') {
+      return (<UpdateMachine navigator={nav} url={route.url} title={route.title} />);
+    } else if (id === 'PostLoginAuthMachine') {
+      return (<PostLoginAuthMachine navigator={nav} url={route.url} title={route.title} challengesToBeUpdated={route.challengesToBeUpdated} />);
     } else if (id === 'DeviceMgmt') {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'QuestionSet') {
@@ -243,6 +247,12 @@ componentDidMount() {
       </FormattedWrapper>
     );
   }
+
+  getProxy(){
+   return AsyncStorage.getItem("Proxy");
+  }
 }
+
+
 
 AppRegistry.registerComponent('ReactRefApp', () => ReactRefApp);

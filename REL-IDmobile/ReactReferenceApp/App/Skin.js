@@ -524,22 +524,19 @@ const notification = StyleSheet.create({
                                       
       
   },
-   bold: {         
+    bold: {         
     fontSize: 22,
     width: SCREEN_WIDTH-48,
     color: BLACK_TEXT_COLOR,
     opacity:1,
-     textAlign:'right',
+    textAlign:'right',
     fontWeight: 'bold', 
     marginLeft:8,
     marginRight:8,
   },
   amountContainer:{
     justifyContent:'flex-end',
-   flex:3,
-                                      
-                                       
-                      
+    flex:3,                      
   },
     htmlstyle: {
     fontSize: 20,
@@ -989,7 +986,7 @@ const loadStyle = StyleSheet.create({
   },
   relid_wrap: {
     alignItems: 'center',
-    top: SCREEN_HEIGHT/3+5,
+    top: 205,
 
   },
   relid: {
@@ -1004,7 +1001,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: SCREEN_HEIGHT/3,
+    top: 200,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,

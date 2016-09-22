@@ -18,6 +18,8 @@ const {
   TextInput,
   TouchableHighlight,
   InteractionManager,
+  Platform,
+  AsyncStorage,
 } = React;
 
 
@@ -95,11 +97,15 @@ export default class Activation extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount(){
+    if(Platform.OS === "android"){
+       let keys = ['userData','setPattern'];
+       AsyncStorage.multiRemove(keys);
+    }
+  }
 
-      InteractionManager.runAfterInteractions(() => {
-          this.refs.activatonCode.focus();
-      });
+  componentDidMount() {
+    this.refs['activatonCode'].focus();
   }
 
   render() {
