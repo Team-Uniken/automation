@@ -383,14 +383,14 @@ class PasswordVerification extends React.Component {
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
             <Animated.View style={[Skin.loadStyle.rid_wrap]}>
-            <View style={Skin.loadStyle.rid_center}>
+            <View style={[Skin.loadStyle.rid_center,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
             </View>
             </Animated.View>
             
-            <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
+            <View style={[Skin.activationStyle.input_wrap,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
             <View style={Skin.activationStyle.textinput_wrap}>
             <TextInput
             ref='inputPassword'
