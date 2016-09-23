@@ -183,8 +183,8 @@ export default class QuestionSet extends React.Component {
       <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
          <Text style={Skin.activationStyle.counter}>
- +            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
- +            </Text>
+             {this.props.url.currentIndex}/{this.props.url.chlngsCount}
+             </Text>
           <Text style={Skin.activationStyle.title}>Secret Question and Answer</Text>
           <View style={[Skin.activationStyle.input_wrap]}>
             <View style={Skin.activationStyle.textinput_wrap}>
