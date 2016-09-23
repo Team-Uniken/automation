@@ -386,7 +386,7 @@ class PasswordVerification extends Component {
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
             <Animated.View style={[Skin.loadStyle.rid_wrap]}>
-            <View style={Skin.loadStyle.rid_center}>
+            <View style={[Skin.loadStyle.rid_center,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
