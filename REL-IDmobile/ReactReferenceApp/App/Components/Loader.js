@@ -16,7 +16,6 @@ class Loader extends React.Component {
     return (
 
             <Spinner visible={this.props.visible}
-            overlayColor={this.state.ColorProp}
             color={this.state.color}
             />
 

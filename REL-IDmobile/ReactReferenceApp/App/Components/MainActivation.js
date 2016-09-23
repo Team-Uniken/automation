@@ -43,6 +43,7 @@ class MainActivation extends React.Component {
     ColorProp:'rgba(255,255,255,1)',
     color:'#4fadd8',
     visible: this.props.visible,
+    opacity:1,
       open: false,
       userName: '',
     password:'',
@@ -163,12 +164,16 @@ class MainActivation extends React.Component {
   hideLoaderView(){
     console.log('\n in hide Loader view of main activation');
     this.setState({visible: false});
+    this.setState({opacity: 1});
+     this.setState({isSettingButtonHide: 1});
     console.log(this.state.visible);
   }
 
   showLoaderView(){
     console.log('\n in show Loader view of main activation');
     this.setState({visible: true});
+     this.setState({opacity: 0});
+      this.setState({isSettingButtonHide: 0});
     console.log(this.state.visible);
   }
   
@@ -186,7 +191,7 @@ class MainActivation extends React.Component {
                 <View style={Skin.activationStyle.bgbase} />
                 <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
                 <View style={Skin.activationStyle.bgcolorizer} />
-                <View style={Skin.activationStyle.centering_wrap}>
+                <View style={[Skin.activationStyle.centering_wrap,{opacity:this.state.opacity}]}>
                 <ScrollView
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}>
@@ -244,6 +249,7 @@ class MainActivation extends React.Component {
                 </Text>
                 
                 <View style={styles.border}></View>
+                
                 </View>
                 <TextInput
                 autoCorrect={false}
@@ -315,7 +321,7 @@ class MainActivation extends React.Component {
                 />
               </View>
               <View style={Skin.activationStyle.bgcolorizer} />
-              <View style={Skin.activationStyle.centering_wrap}>
+                <View style={[Skin.activationStyle.centering_wrap,{opacity:this.state.opacity}]}>
                 <View style={Skin.activationStyle.wrap}>
                   {this.props.children}
                 </View>

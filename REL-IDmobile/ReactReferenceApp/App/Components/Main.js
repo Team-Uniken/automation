@@ -273,6 +273,7 @@ export default class Main extends React.Component {
             onChange={this.onUserChange.bind(this)}
             placeholderTextColor={Skin.colors.HINT_COLOR}
             />
+            <View style={styles.underline}></View>
             <TextInput
             autoCorrect={false}
             ref='password'
@@ -283,7 +284,7 @@ export default class Main extends React.Component {
             onChange={this.onPasswordChange.bind(this)}
             placeholderTextColor={Skin.colors.HINT_COLOR}
             />
-            <View style={styles.border}></View>
+            <View style={styles.underline}></View>
             <View style={{
             flex: 1,
             flexDirection: 'row'
@@ -371,7 +372,7 @@ Main.defaultProps = {
 };
 const styles = StyleSheet.create({
                                  modalwrap: {
-                                 height: 160,
+                                 height: 180,
                                  flexDirection: 'column',
                                  borderRadius: 15,
                                  backgroundColor: '#fff',
@@ -401,16 +402,22 @@ const styles = StyleSheet.create({
                                  textAlign: 'center',
                                  },
                                  modalInput: {
-                                 textAlign: 'left',
+                                 textAlign: 'center',
                                  color: Skin.colors.PRIMARY_TEXT,
-                                 height: 35,
+                                 height: 32,
                                  fontSize: 16,
+                               
+                                 backgroundColor:null
                 
                                  },
                                  border: {
                                  height: 1,
+                                 marginBottom:16,
                                  backgroundColor: Skin.colors.DIVIDER_COLOR,
-                                 marginBottom: 10,
+                                 },
+                                 underline: {
+                                 height: 2,
+                                 backgroundColor: Skin.colors.DIVIDER_COLOR,
                                  },
                                  DeviceListView: {
                                  justifyContent: 'center',
