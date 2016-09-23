@@ -989,7 +989,7 @@ const loadStyle = StyleSheet.create({
   },
   relid_wrap: {
     alignItems: 'center',
-    top: SCREEN_HEIGHT/3+5,
+    top: SCREEN_HEIGHT/4+5,
 
   },
   relid: {
