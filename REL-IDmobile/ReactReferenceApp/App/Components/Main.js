@@ -42,6 +42,10 @@ export default class Main extends React.Component {
     password:'',
       baseUrl:'',};
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.cancelCreds = this.cancelCreds.bind(this);
+    this.checkCreds = this.checkCreds.bind(this);
+    this.selectedDialogOp = false;
+   // this.cancelCreds = ;
     this.state.navBar                 = {};
 
     this.state.navBar.title           = this.props.navBar.title || '';
@@ -88,12 +92,10 @@ export default class Main extends React.Component {
   
   onGetCredentialsStatus(domainUrl)
   {
-    
+    this.state.baseUrl = domainUrl.response;
     this.open();
-    this.setState({
-                  baseUrl: domainUrl.response
-                  });
   }
+
   checkCreds() {
     
     const user = this.state.userName;
@@ -107,8 +109,7 @@ export default class Main extends React.Component {
                                }else{
                                console.log('immediate response is'+response[0].error);
                                }
-                               })
-      this.close();
+                               });
     }else{
       alert('Please enter valid data');
     }
@@ -123,10 +124,9 @@ export default class Main extends React.Component {
                              }else{
                              console.log('immediate response is'+response[0].error);
                              }
-                             })
-    
-    this.close();
+                             });
   }
+
   onUserChange(event) {
     var newstate = this.state;
     newstate.userName = event.nativeEvent.text;
@@ -163,11 +163,8 @@ export default class Main extends React.Component {
   
   onGetCredentialsStatus(domainUrl)
   {
-    
+    this.state.baseUrl = domainUrl.response;
     this.open();
-    this.setState({
-                  baseUrl: domainUrl.response
-                  });
   }
   
   /**
@@ -238,14 +235,28 @@ export default class Main extends React.Component {
         {this.props.children}
         <BottomMenu navigator={this.props.navigator} bottomMenu={this.props.bottomMenu} />
             <Modal
+            onPress={()=>{
+              this.setState({
+                            userName:'',
+                            password:'',
+                            open: false
+                          });this.cancelCreds();
+            }}
             style={styles.modalwrap}
             overlayOpacity={0.75}
             offset={100}
             open={this.state.open}
             modalDidOpen={() => console.log('modal did open')}
-            modalDidClose={() => this.setState({
-                                               open: false
-                                               })}>
+            modalDidClose={() => {
+                                    if(this.selectedDialogOp){
+                                      this.selectedDialogOp = false;
+                                      this.checkCreds();
+                                    }
+                                    else{
+                                      this.selectedDialogOp = false;
+                                      this.cancelCreds();
+                                    }
+                                 }}>
             <View style={styles.modalTitleWrap}>
             <Text style={styles.modalTitle}>
             401 Authentication{'\n'}{this.state.baseUrl}
@@ -278,11 +289,14 @@ export default class Main extends React.Component {
             flexDirection: 'row'
             }}>
             <TouchableHighlight
-            onPress={() => this.setState({
+            onPress={() => {
+                            this.selectedDialogOp = false;
+                            this.setState({
                                          userName:'',
                                          password:'',
                                          open: false
-                                         }),this.cancelCreds.bind(this)}
+                                         });
+                            }}
             underlayColor={Skin.colors.REPPLE_COLOR}
             style={styles.modalButton}>
             <Text style={styles.modalButtonText}>
@@ -290,7 +304,10 @@ export default class Main extends React.Component {
             </Text>
             </TouchableHighlight>
             <TouchableHighlight
-            onPress={this.checkCreds.bind(this)}
+            onPress={()=>{
+                           this.selectedDialogOp = true;
+                           this.close();
+                        }}
             underlayColor={Skin.colors.REPPLE_COLOR}
             style={styles.modalButton}>
             <Text style={styles.modalButtonText}>

@@ -36,11 +36,28 @@ class PatternView extends React.Component {
 
     this.props.onGetPattern({
       pattern: event.nativeEvent.text,
+      size:event.nativeEvent.size,
     });
   }
 
   render() {
     return (<RCTPatternView {...this.props} onChange={this.onChange}/>);
+  }
+
+  enableInput(){
+    UIManager.dispatchViewManagerCommand(
+      React.findNodeHandle(this),
+      UIManager.RCTPatternView.Commands.enableInput,
+      [],
+    );
+  }
+
+  disableInput(){
+     UIManager.dispatchViewManagerCommand(
+      React.findNodeHandle(this),
+      UIManager.RCTPatternView.Commands.disableInput,
+      [],
+    );
   }
 
   getPatternString() {
@@ -66,6 +83,7 @@ PatternView.propTypes = {
   dotColor: PropTypes.string,
   gridRows: PropTypes.string,
   gridColumns: PropTypes.string,
+  enablePatternDetection:PropTypes.bool,
   ...View.propTypes,
 };
 

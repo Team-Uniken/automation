@@ -43,15 +43,24 @@ class MainActivation extends React.Component {
     ColorProp:'rgba(255,255,255,1)',
     color:'#4fadd8',
     visible: this.props.visible,
-     open: false,
+      open: false,
       userName: '',
     password:'',
     baseUrl:'',
     isSettingButtonHide:1.0,
     };
+    
+    this.cancelCreds = this.cancelCreds.bind(this);
+    this.checkCreds = this.checkCreds.bind(this);
+    this.selectedDialogOp = false;
+    this.scrollEnabled = true;
+    if(this.props.scroll!=null && this.props.scroll!=undefined){
+      this.scrollEnabled = this.props.scroll;
+    }
     console.log('\nMain Activation in constructor');
     console.log(this.state.visible);
   }
+
   open() {
     this.setState({
                   open: true
@@ -64,19 +73,16 @@ class MainActivation extends React.Component {
                   });
   }
   
-  
   dismiss() {
     dismissKeyboard();
   }
   
   onGetCredentialsStatus(domainUrl)
   {
-   
+    this.state.baseUrl = domainUrl.response;
     this.open();
-    this.setState({
-                  baseUrl: domainUrl.response
-                  });
   }
+
   checkCreds() {
     
     const user = this.state.userName;
@@ -90,12 +96,10 @@ class MainActivation extends React.Component {
                      }else{
                      console.log('immediate response is'+response[0].error);
                      }
-                     })
-      this.close();
+                     });
     }else{
       alert('Please enter valid data');
     }
-  
   }
   
   cancelCreds(){
@@ -106,10 +110,9 @@ class MainActivation extends React.Component {
                              }else{
                              console.log('immediate response is'+response[0].error);
                              }
-                             })
-    
-     this.close();
+                             });
   }
+
   onUserChange(event) {
     var newstate = this.state;
     newstate.userName = event.nativeEvent.text;
@@ -138,7 +141,7 @@ class MainActivation extends React.Component {
                                                                  this.onGetCredentialsStatus.bind(this)
                                                                  );
    
-      if(  constant.USER_SESSION === "YES"){
+      if(constant.USER_SESSION === "YES"){
         this.setState({isSettingButtonHide: 0});
       }else{
         this.setState({isSettingButtonHide:1.0});
@@ -146,11 +149,10 @@ class MainActivation extends React.Component {
     
     
   }
- 
-  
+
   hideLoader(args){
-  console.log('\n in hideLoader of main activation');
-  obj.hideLoaderView();
+    console.log('\n in hideLoader of main activation');
+    obj.hideLoaderView();
   }
   
   showLoader(args){
@@ -159,10 +161,11 @@ class MainActivation extends React.Component {
   }
   
   hideLoaderView(){
-  console.log('\n in hide Loader view of main activation');
-  this.setState({visible: false});
+    console.log('\n in hide Loader view of main activation');
+    this.setState({visible: false});
     console.log(this.state.visible);
   }
+
   showLoaderView(){
     console.log('\n in show Loader view of main activation');
     this.setState({visible: true});
@@ -175,8 +178,7 @@ class MainActivation extends React.Component {
 //    this.state.visible = this.props.visible;
     if(Platform.OS == "android"){
       return (
-         <TouchableWithoutFeedback onPress={this.dismiss}>
-              <View style={Skin.activationStyle.container}>
+              <View style={Skin.activationStyle.container} onPress={this.dismiss}>
                 <StatusBar
                   backgroundColor={Skin.colors.DARK_PRIMARY}
                   barStyle={'light-content'}
@@ -202,6 +204,7 @@ class MainActivation extends React.Component {
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderTopRightRadius: 20,
+                    opacity:this.state.isSettingButtonHide,
                   }}
                   underlayColor={Skin.colors.DARK_PRIMARY}
                   onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}
@@ -219,9 +222,82 @@ class MainActivation extends React.Component {
                   </View>
                 </TouchableHighlight>
                 <Loader visible={this.state.visible}/>
-              
+                <Modal
+                style={styles.modalwrap}
+                overlayOpacity={0.75}
+                offset={100}
+                open={this.state.open}
+                modalDidOpen={() => console.log('modal did open')}
+                modalDidClose={() => {
+                                       if(this.selectedDialogOp){
+                                         this.selectedDialogOp = false;
+                                         this.checkCreds();
+                                       }
+                                       else{
+                                         this.selectedDialogOp = false;
+                                         this.cancelCreds();
+                                       }
+                                   }}>
+                <View style={styles.modalTitleWrap}>
+                <Text style={styles.modalTitle}>
+                401 Authentication{'\n'}{this.state.baseUrl}
+                </Text>
+                
+                <View style={styles.border}></View>
+                </View>
+                <TextInput
+                autoCorrect={false}
+                ref='userName'
+                style={styles.modalInput}
+                placeholder={'Enter username'}
+                value={this.state.userName}
+                onChange={this.onUserChange.bind(this)}
+                placeholderTextColor={Skin.colors.HINT_COLOR}
+                 />
+                <TextInput
+                autoCorrect={false}
+                ref='password'
+                style={styles.modalInput}
+                secureTextEntry
+                placeholder={'Enter password'}
+                value={this.state.password}
+                onChange={this.onPasswordChange.bind(this)}
+                placeholderTextColor={Skin.colors.HINT_COLOR}
+                />
+                <View style={styles.border}></View>
+                <View style={{
+                flex: 1,
+                flexDirection: 'row'
+                }}>
+                <TouchableHighlight
+                onPress={() => {
+                                  this.selectedDialogOp = false;
+                                  this.setState({
+                                              userName:'',
+                                              password:'',
+                                              open: false
+                                              });
+                                }}
+                underlayColor={Skin.colors.REPPLE_COLOR}
+                style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>
+                CANCEL
+                </Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                onPress={()=> {
+                               selectedDialogOp = true;
+                               this.close();
+                              }}
+                underlayColor={Skin.colors.REPPLE_COLOR}
+                style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>
+                SUBMIT
+                </Text>
+                </TouchableHighlight>
+                </View>
+                </Modal>
               </View>
-               </TouchableWithoutFeedback>
           );
     }else if(Platform.OS == "ios"){
         return (
@@ -278,9 +354,16 @@ class MainActivation extends React.Component {
                 offset={100}
                 open={this.state.open}
                 modalDidOpen={() => console.log('modal did open')}
-                modalDidClose={() => this.setState({
-                                                   open: false
-                                                   })}>
+                modalDidClose={() => {
+                                       if(this.selectedDialogOp){
+                                         this.selectedDialogOp = false;
+                                         this.checkCreds();
+                                       }
+                                       else{
+                                         this.selectedDialogOp = false;
+                                         this.cancelCreds();
+                                       }
+                                   }}>
                 <View style={styles.modalTitleWrap}>
                 <Text style={styles.modalTitle}>
                 401 Authentication{'\n'}{this.state.baseUrl}
@@ -313,11 +396,14 @@ class MainActivation extends React.Component {
                 flexDirection: 'row'
                 }}>
                 <TouchableHighlight
-                onPress={() => this.setState({
-                                             userName:'',
-                                             password:'',
-                                             open: false
-                                             }),this.cancelCreds.bind(this)}
+                onPress={() => {
+                                  this.selectedDialogOp = false;
+                                  this.setState({
+                                              userName:'',
+                                              password:'',
+                                              open: false
+                                              });
+                              }}
                 underlayColor={Skin.colors.REPPLE_COLOR}
                 style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>
@@ -325,7 +411,10 @@ class MainActivation extends React.Component {
                 </Text>
                 </TouchableHighlight>
                 <TouchableHighlight
-                onPress={this.checkCreds.bind(this)}
+                onPress={()=> {
+                               this.selectedDialogOp = true;
+                               this.close();
+                              }}
                 underlayColor={Skin.colors.REPPLE_COLOR}
                 style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>

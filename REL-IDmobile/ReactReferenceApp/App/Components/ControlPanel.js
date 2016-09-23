@@ -24,7 +24,7 @@ let chlngJson;
 let nextChlngName;
 var eventLogOff;
 let onGetNotifications;
-let onGetAllChallengeEvent;
+let eventGetPostLoginChallenges;
 let challengeName;
 /*
  INSTANCES
@@ -46,6 +46,8 @@ class ControlPanel extends React.Component{
   constructor(props){
     super(props);
     console.log(props);
+
+    this.getPostLoginChallenges = this.getPostLoginChallenges.bind(this);
     //this.getMyNotifications();
   }
   
@@ -109,49 +111,39 @@ class ControlPanel extends React.Component{
                                                         'onGetNotifications',
                                                         this.onGetNotificationsDetails.bind(this)
                                                         );
-    if(onGetAllChallengeEvent){
-      onGetAllChallengeEvent.remove();
-    }
-    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-                                                            'onGetAllChallengeStatus',
-                                                            this.onGetAllChallengeStatus.bind(this)
-                                                            );
-    
   }
+
+
   
   componentWillUnmount() {
 
   }
-  
-  onGetAllChallengeStatus(e){
-    const res = JSON.parse(e.response);
+
+  onGetPostLoginChallenges(status){
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(status.response);
     console.log(res);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-   
-   
-        
-        chlngJson = res.pArgs.response.ResponseData;
-        
-        //var arrChlng = chlngJson.chlng;
-        var selectedChlng;
-        var status = 0;
-        for(var i = 0; i < chlngJson.chlng.length; i++){
-          var chlng = chlngJson.chlng[i];
-          if(chlng.chlng_name === challengeName){
-            
-          }else{
-            chlngJson.chlng.splice(i, 1);
-            i--;
+        if (res.pArgs.response.ResponseData) {
+          console.log('PostLoginAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
+          const chlngJson = res.pArgs.response.ResponseData;
+          if (chlngJson != null) {  
+            const nextChlngName = chlngJson.chlng[0].chlng_name;
+            console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+            this.props.navigator.push({
+              id: 'PostLoginAuthMachine',
+              title: nextChlngName,
+              url: {
+                "chlngJson":chlngJson,
+                "screenId": nextChlngName,
+              },
+              challengesToBeUpdated:[challengeName],
+            });
           }
         }
-      
-      
-      
-        nextChlngName = chlngJson.chlng[0].chlng_name
-        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-        
       } else {
         alert(res.pArgs.response.StatusMsg);
       }
@@ -159,22 +151,7 @@ class ControlPanel extends React.Component{
       alert('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-    
   }
-  
-  getChallengesByName(chlngName){
-    challengeName = chlngName;
-    AsyncStorage.getItem('userId').then((value) => {
-                                        ReactRdna.getAllChallenges(value,(response) => {
-                                                                   if (response) {
-                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
-                                                                   }else{
-                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
-                                                                   }
-                                                                   })
-                                        }).done();
-  }
-  
   
   onGetNotificationsDetails(e) {
     console.log('----- onGetNotificationsDetails');
@@ -255,7 +232,31 @@ class ControlPanel extends React.Component{
                                
                                });
   }
-  
+
+  getPostLoginChallenges(useCaseName,challengeToBeUpdated){
+    if(eventGetPostLoginChallenges){
+      eventGetPostLoginChallenges.remove();
+    }
+
+    eventGetPostLoginChallenges = DeviceEventEmitter.addListener(
+                                                        'onGetPostLoginChallenges',
+                                                        this.onGetPostLoginChallenges.bind(this)
+                                                        );
+    challengeName = challengeToBeUpdated;
+    console.log("onGetPostLoginChallenges ----- show loader");
+    Events.trigger('showLoader', true);
+    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
+    AsyncStorage.getItem('userId').then((value) => {
+      ReactRdna.getPostLoginChallenges(value,useCaseName, (response) => {
+        if (response[0].error === 0) {
+          console.log('immediate response is' + response[0].error);
+        } else {
+          console.log('immediate response is' + response[0].error);
+          alert(response[0].error);
+        }
+      });
+    }).done();
+  }
   
   doNavigation() {
     console.log('doNavigation:');
@@ -304,16 +305,16 @@ class ControlPanel extends React.Component{
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Notifications</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.getChallengesByName("secqa");}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
+            <TouchableHighlight onPress={()=>{this.getPostLoginChallenges('verifyChallenge','secqa');}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.getChallengesByName("pass");}}  style={styles.touch}><Text style={styles.menuItem}>Change Pin</Text>
+            <TouchableHighlight onPress={()=>{this.getPostLoginChallenges('verifyChallenge','pass');}}  style={styles.touch}><Text style={styles.menuItem}>Change Pin</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Help & Support',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://52.74.188.241/demoapp/relid.html'});}}  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
+            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://10.0.11.100'});}}  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Open Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://google.com'});}}  style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>

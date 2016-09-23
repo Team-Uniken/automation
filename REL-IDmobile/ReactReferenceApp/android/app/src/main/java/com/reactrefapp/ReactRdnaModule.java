@@ -20,17 +20,21 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by uniken on 5/4/16.
  */
 public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
+    Handler uiHandler;
+    Semaphore lock = new Semaphore(0,true);
+    RDNA.RDNAIWACreds rdnaiwaCreds = null;
+
     private RDNA.RDNACallbacks callbacks;                 // Callback object to get the runtime status of RDNA.
     private RDNA rdnaObj;
     private ReactApplicationContext context;
     private String TAG = "ReactRdnaModule";
-    Handler uiHandler;
 
     public ReactRdnaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -148,7 +152,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onConfigReceived(String s) {
+            public int onConfigReceived(String rdnaStatusGetConfig) {
                 return 0;
             }
 
@@ -166,9 +170,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                         WritableMap params = Arguments.createMap();
                         params.putString("response", rdnaStatusCheckChallengeResponse);
 
-                        //WritableArray writableArray = Arguments.createArray();
-                        //writableArray.pushMap(params);
-
                         context
                                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("onCheckChallengeResponseStatus", params);
@@ -176,67 +177,109 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 };
 
                 callOnMainThread(runnable);
-                /*int a = 10;
-                while(a > 0){
-                    a--;
-                    Log.d(TAG,"--------- " + a);
-                }*/
 
                 return 0;
             }
 
             @Override
-            public int onGetAllChallengeStatus(String s) {
+            public int onGetAllChallengeStatus(final String rdnaStatusGetAllChallenges) {
+                Logger.d(TAG, "-------- rdnaStatusGetAllChallenges " + rdnaStatusGetAllChallenges);
+                Runnable runnable= new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", rdnaStatusGetAllChallenges);
+
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onGetAllChallengeStatus", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
+
                 return 0;
             }
 
             @Override
-            public int onUpdateChallengeStatus(String s) {
+            public int onUpdateChallengeStatus(final String rdnaStatusUpdateChallenges) {
+                Logger.d(TAG, "-------- onUpdateChallengeStatus " + rdnaStatusUpdateChallenges);
+                Runnable runnable= new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", rdnaStatusUpdateChallenges);
+
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onUpdateChallengeStatus", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
+
                 return 0;
             }
 
             @Override
-            public int onForgotPasswordStatus(String s) {
+            public int onForgotPasswordStatus(final String rdnaStatusForgotPassword) {
+                Logger.d(TAG, "-------- onForgotPasswordStatus " + rdnaStatusForgotPassword);
+                Runnable runnable= new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", rdnaStatusForgotPassword);
+
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onForgotPasswordStatus", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
+
                 return 0;
             }
-
-//            @Override
-//            public int onGetAllChallengeStatus(RDNA.RDNAStatusGetAllChallenges rdnaStatusGetAllChallenges) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public int onUpdateChallengeStatus(RDNA.RDNAStatusUpdateChallenges rdnaStatusUpdateChallenges) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public int onForgotPasswordStatus(RDNA.RDNAStatusForgotPassword rdnaStatusForgotPassword) {
-//                return 0;
-//            }
-
 
             @Override
             public int onLogOff(final String status) {
+                Logger.d(TAG, "-------- onLogOff " + status);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
                         WritableMap params = Arguments.createMap();
                         params.putString("response", status);
 
-                        context
-                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("onLogOff", params);
                     }
                 };
 
                 callOnMainThread(runnable);
+
                 return 0;
             }
 
             @Override
-            public RDNA.RDNAIWACreds getCredentials(String s) {
-                return null;
+            public RDNA.RDNAIWACreds getCredentials(final String domainUrl) {
+                Logger.d(TAG, "-------- getCredentials " + domainUrl);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", domainUrl);
+
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onGetCredentials", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
+
+                try {
+                    lock.acquire();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                return rdnaiwaCreds;
             }
 
             @Override
@@ -250,13 +293,21 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onGetPostLoginChallenges(String s) {
-                WritableMap params = Arguments.createMap();
-                params.putString("response", s);
+            public int onGetPostLoginChallenges(final String rdnaGetPostLoginStatus) {
+                Logger.d(TAG, "-------- onGetPostLoginChallenges " + rdnaGetPostLoginStatus);
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", rdnaGetPostLoginStatus);
 
-                context
-                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("onGetPostLoginChallenges", params);
+                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onGetPostLoginChallenges", params);
+                    }
+                };
+
+                callOnMainThread(runnable);
+
                 return 0;
             }
 
@@ -281,12 +332,13 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onUpdateDeviceDetails(final String s) {
+            public int onUpdateDeviceDetails(final String rdnaUpdateDeviceStatus) {
+                Logger.d(TAG, "-------- onUpdateDeviceDetails " + rdnaUpdateDeviceStatus);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
                         WritableMap params = Arguments.createMap();
-                        params.putString("response", s);
+                        params.putString("response", rdnaUpdateDeviceStatus);
 
                         context
                                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -363,6 +415,35 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void updateChallenges(String challenges, String userID, Callback callback){
+        Logger.d(TAG , "----- updateChallenges " + challenges);
+        Logger.d(TAG , "----- userID " + userID);
+        int error = rdnaObj.updateChallenges(challenges, userID);
+
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void getAllChallenges(String userID, Callback callback){
+        Logger.d(TAG , "----- userID " + userID);
+        int error = rdnaObj.getAllChallenges(userID);
+
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
     public void terminate(Callback callback){
         Logger.d(TAG , "----- terminate call ");
         int error = rdnaObj.terminate();
@@ -428,15 +509,15 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setDevToken(String devToken){
-      Log.d(TAG, "setdevtoken:" + devToken);
-      String deviceToken=null;
-      try {
-        JSONObject jobj=new JSONObject(devToken);
-        deviceToken= jobj.getString("token");
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
-      Constants.DEV_TOKEN=deviceToken;
+        Log.d(TAG, "setdevtoken:" + devToken);
+        String deviceToken=null;
+        try {
+            JSONObject jobj=new JSONObject(devToken);
+            deviceToken= jobj.getString("token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Constants.DEV_TOKEN=deviceToken;
     }
 
     @ReactMethod
@@ -566,6 +647,20 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }
 
         callback.invoke(statusMap);
+    }
+
+    @ReactMethod
+    public void setCredentials(String username,String password,boolean val,Callback callback){
+        rdnaiwaCreds = new RDNA.RDNAIWACreds();
+        rdnaiwaCreds.userName = username;
+        rdnaiwaCreds.userPassword = password;
+        rdnaiwaCreds.status = val == true ? RDNA.RDNAIWAAuthStatus.AUTH_SUCCESS : RDNA.RDNAIWAAuthStatus.AUTH_CANCELLED;
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", 0);
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+        lock.release();
     }
 
     @ReactMethod

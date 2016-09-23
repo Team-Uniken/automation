@@ -17,13 +17,13 @@ import Main from './Main';
 // SECURITY SCENES
 import Activation from './challenges/Activation';
 import PasswordSet from './challenges/PasswordSet';
-import Otp from './challenges/Otp';
+import PostLoginAccessCode from './challenges/PostLoginAccessCode';
 import QuestionSet from './challenges/QuestionSet';
-import QuestionVerification from './challenges/QuestionVerification';
+import PostLoginQuestionVerification from './challenges/PostLoginQuestionVerification';
 import UserLogin from './challenges/UserLogin';
 import DeviceBinding from './challenges/DeviceBinding';
 import DeviceName from './challenges/DeviceName';
-import PasswordVerification from './challenges/PasswordVerification';
+import PostLoginPasswordVerification from './challenges/PostLoginPasswordVerification';
 import ScreenHider from './challenges/ScreenHider';
 
 // COMPONENTS
@@ -42,6 +42,9 @@ let challengeJson;
 let challengeJsonArr;
 let currentIndex;
 let subscriptions;
+let challengeName;
+
+let onGetAllChallengeEvent;
 let obj;
 let screenId;
 const {
@@ -55,10 +58,12 @@ const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtil
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-class TwoFactorAuthMachine extends React.Component {
+class PostLoginAuthMachine extends React.Component {
   constructor(props) {
     super(props);
-    console.log('---------- Machine param ');
+    console.log('---------- PostLoginAuthMachine param ');
+    this.stateNavigator = null;
+    this.showNextChallenge = this.showNextChallenge.bind(this);
   }
 
   componentWillMount() {
@@ -73,12 +78,23 @@ class TwoFactorAuthMachine extends React.Component {
       challengeJson=saveChallengeJson;
     }
     challengeJsonArr = challengeJson.chlng;
+
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
+
     subscriptions = DeviceEventEmitter.addListener(
       'onCheckChallengeResponseStatus',
       this.onCheckChallengeResponseStatus.bind(this)
+    );
+
+    if(onGetAllChallengeEvent){
+      onGetAllChallengeEvent.remove();
+    }
+
+    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+      'onGetAllChallengeStatus',
+      this.onGetAllChallengeStatus.bind(this)
     );
 
      Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
@@ -86,14 +102,11 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   componentDidMount() {
-    screenId = 'UserLogin';// this.props.screenId;
-    
-    //  Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-    //  Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+    screenId = 'UserLogin';
   }
 
   componentWillUnmount() {
-    console.log('----- TwoFactorAuthMachine unmounted');
+    console.log('----- PostLoginAuthMachine unmounted');
   }
 
   onErrorOccured(response){
@@ -103,10 +116,10 @@ class TwoFactorAuthMachine extends React.Component {
       console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
       let nextChlngName = chlngJson.chlng[0].chlng_name;
       if (chlngJson != null) {
-        console.log('TwoFactorAuthMachine - onErrorOccured - chlngJson != null');
+        console.log('PostLoginAuthMachine - onErrorOccured - chlngJson != null');
         //obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
         obj.props.navigator.push({
-          id: 'Machine',
+          id: 'PostLoginAuthMachine',
           title: nextChlngName,
           url: {
             chlngJson,
@@ -131,34 +144,28 @@ class TwoFactorAuthMachine extends React.Component {
 
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
-      console.log('TwoFactorAuthMachine - statusCode ' + statusCode);
+      console.log('PostLoginAuthMachine - statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
-          console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
+          console.log('PostLoginAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
-            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+            console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
             //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
             this.props.navigator.push({
-              id: 'Machine',
-              title: nextChlngName,
+              id: 'PostLoginAuthMachine',
+              title: "nextChlngName",
               url: {
-                chlngJson,
-                screenId: nextChlngName,
+                "chlngJson":chlngJson,
+                "screenId": nextChlngName,
               },
+              challengesToBeUpdated:[challengeName],
             });
           }
         } else {
-          console.log('TwoFactorAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
-          const pPort = res.pArgs.pxyDetails.port;
-          if (pPort > 0) {
-            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
-            Main.proxy = pPort;
-           // AsyncStorage.setItem("Proxy",""+pPort);
-          }
-          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          console.log('PostLoginAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
+          this.getChallengesByName(this.props.challengesToBeUpdated[0]);
         }
       } else {
         Alert.alert(
@@ -168,21 +175,22 @@ class TwoFactorAuthMachine extends React.Component {
               onPress: () => {
                         var chlngJson;
           if(res.pArgs.response.ResponseData==null){
-          chlngJson = saveChallengeJson;
+             chlngJson = saveChallengeJson;
           }else{
-          chlngJson = res.pArgs.response.ResponseData;
+             chlngJson = res.pArgs.response.ResponseData;
           }
 
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
-            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+            console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+    
             this.props.navigator.push({
-              id: 'Machine',
+              id: 'PostLoginAuthMachine',
               title: nextChlngName,
               url: {
                 chlngJson,
                 screenId: nextChlngName,
+                challengesToBeUpdated:[challengeName],
               },
             });
           }
@@ -239,6 +247,7 @@ class TwoFactorAuthMachine extends React.Component {
   }
 
   renderScene(route, nav) {
+    obj.stateNavigator = nav;
     const id = route.id;
     console.log('---------- renderScene ' + id + ' url ' + route.url);
 
@@ -253,14 +262,14 @@ class TwoFactorAuthMachine extends React.Component {
       return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
-        return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
+        return (<PostLoginPasswordVerification navigator={nav} url={route.url} title={route.title} />);
       }
       return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'otp') {
-      return (<Otp navigator={nav} url={route.url} title={route.title} />);
+      return (<PostLoginAccessCode navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
-        return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
+        return (<PostLoginQuestionVerification navigator={nav} url={route.url} title={route.title} />);
       }
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devname') {
@@ -278,7 +287,6 @@ class TwoFactorAuthMachine extends React.Component {
   render() {
     return (
       <Navigator
-        ref={(ref) => { this.stateNavigator = ref; return ref; }}
         renderScene={this.renderScene}
         initialRoute={{
           id: this.props.url.screenId,
@@ -350,6 +358,58 @@ class TwoFactorAuthMachine extends React.Component {
 
   }
 
+  onGetAllChallengeStatus(e){
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+   
+   
+        
+        const chlngJson = res.pArgs.response.ResponseData;
+        
+        //var arrChlng = chlngJson.chlng;
+        var selectedChlng;
+        var status = 0;
+        for(var i = 0; i < chlngJson.chlng.length; i++){
+          var chlng = chlngJson.chlng[i];
+          if(chlng.chlng_name === challengeName){
+            
+          }else{
+            chlngJson.chlng.splice(i, 1);
+            i--;
+          }
+        }
+      
+        const nextChlngName = chlngJson.chlng[0].chlng_name;
+        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    }else {
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
+    
+  }
+  
+  getChallengesByName(chlngName){
+    challengeName = chlngName;
+    Events.trigger('showLoader', true);
+    AsyncStorage.getItem('userId').then((value) => {
+                                        ReactRdna.getAllChallenges(value,(response) => {
+                                                                   if (response) {
+                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
+                                                                   }else{
+                                                                   console.log('s immediate response is'+response[0].error);
+                                                                   }
+                                                                   })
+                                        }).done();
+  }
+
   callCheckChallenge() {
     console.log("onCheckChallengeResponse ----- show loader");
     Events.trigger('showLoader', true);
@@ -368,4 +428,4 @@ class TwoFactorAuthMachine extends React.Component {
 }
 
 
-module.exports = TwoFactorAuthMachine;
+module.exports = PostLoginAuthMachine;
