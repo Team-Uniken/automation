@@ -3,7 +3,8 @@
 */
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -22,10 +23,12 @@ var {
 	TextInput,
 	TouchableHighlight,
 	StyleSheet
-} = React;
+} = ReactNative;
+
+const{Component}=React;
 
 
-class ListSectionHeader extends React.Component{
+class ListSectionHeader extends Component{
 	constructor(props){
 		super(props);
 	}

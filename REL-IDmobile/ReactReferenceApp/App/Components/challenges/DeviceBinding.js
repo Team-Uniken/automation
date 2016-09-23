@@ -3,7 +3,8 @@
 /*
   NEEDED
 */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 
 /*
@@ -23,10 +24,13 @@ const {
   Animated,
   StyleSheet,
   AsyncStorage,
-} = React;
+} = ReactNative;
 
+const{
+  Component
+} =  React;
 
-export default class DeviceBinding extends React.Component {
+export default class DeviceBinding extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -134,15 +138,13 @@ export default class DeviceBinding extends React.Component {
     console.log(JSON.stringify(this.props.url));
     return (
             <MainActivation navigator={this.props.navigator}>
-        
-            <Text style={Skin.activationStyle.counter}>
-              {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-            </Text>
-            <Text style={Skin.activationStyle.title}>Remember Device</Text>
-            <Text style={Skin.activationStyle.info}>
-              Tap icon to change your setting:
-            </Text>
-   
+          <Text style={Skin.activationStyle.counter}>
+            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
+          </Text>
+          <Text style={Skin.activationStyle.title}>Remember Device</Text>
+          <Text style={Skin.activationStyle.info}>
+            Tap icon to change your setting:
+          </Text>
         <Animated.View style={styles.animWrap}>
           <TouchableHighlight
             style={styles.touch}

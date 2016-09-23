@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 import Modal from 'react-native-simple-modal';
 
@@ -17,7 +18,6 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
  */
 const {
   StyleSheet,
-//  Component,
   Text,
   ListView,
   TextInput,
@@ -27,7 +27,9 @@ const {
   TouchableHighlight,
   View,
   Alert,
-} = React;
+} = ReactNative;
+
+const{Component}=React;
 let obj;
 let onUpdateDevice;
 let onGetDevice;
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class DeviceMgmtScene extends React.Component {
+export default class DeviceMgmtScene extends Component {
   constructor(props) {
     super(props);
     obj = this;

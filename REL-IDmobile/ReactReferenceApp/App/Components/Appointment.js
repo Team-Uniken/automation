@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -16,7 +17,9 @@ const {
   Text,
   TouchableHighlight,
   ListView,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
 
 let obj;
 const appointmentData = [{
@@ -108,7 +111,7 @@ var SampleRow = React.createClass({
 });
 
 
-export default class Appointment extends React.Component {
+export default class Appointment extends Component {
 
   constructor(props) {
     super(props);

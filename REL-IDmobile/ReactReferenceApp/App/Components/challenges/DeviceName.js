@@ -3,7 +3,8 @@
 /*
   NEEDED
 */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 import Main from '../Main';
 import PatternLock from '../../Scenes/PatternLock'
@@ -29,12 +30,16 @@ const {
   Platform,
   Alert,
   AsyncStorage,
+} = ReactNative;
+
+const{
+  Component
 } = React;
 
 let responseJson;
 
 
-export default class DeviceName extends React.Component {
+export default class DeviceName extends Component {
   constructor(props) {
     super(props);
     this.state = {

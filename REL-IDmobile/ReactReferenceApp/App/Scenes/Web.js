@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -17,6 +18,10 @@ const {
   TouchableOpacity,
   View,
   WebView,
+} = ReactNative;
+
+const{
+  Component
 } = React;
 
 const WEBVIEW_REF = 'webview';
@@ -24,7 +29,7 @@ const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = 'http://www.google.com';
 
 
-export default class Web extends React.Component {
+export default class Web extends Component {
 
   constructor(props) {
     super(props);

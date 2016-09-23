@@ -4,7 +4,8 @@
  */
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 console.disableYellowBox = true;
 
 // Main Scenes
@@ -65,7 +66,10 @@ const {
   Text,
   AsyncStorage,
   BackAndroid,
-} = React;
+} = ReactNative;
+
+
+const{Component} =  React;
 
 
 const FadeIn = {
@@ -94,7 +98,7 @@ const FadeOut = {
 
 
 
-class ReactRefApp extends React.Component {
+class ReactRefApp extends Component {
 
 
 renderScene(route, nav) {

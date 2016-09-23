@@ -2,7 +2,8 @@
 /*
   NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 
 /*
@@ -38,9 +39,11 @@ var {
   Dimensions,
   ScrollView,
   AsyncStorage,
-} = React;
+} = ReactNative;
 
-class ActivateNewDeviceScene extends React.Component{
+const{Component}=React;
+
+class ActivateNewDeviceScene extends Component{
   constructor(props){
   super(props);
   this.state = {

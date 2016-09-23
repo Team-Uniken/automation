@@ -2,7 +2,8 @@
 /*
   NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 
 /*
@@ -16,10 +17,12 @@ import Main from '../Components/Main';
 const {
   View,
   Text,
-} = React;
+} = ReactNative;
+
+const{Component}=React;
 
 
-export default class DepositsScene extends React.Component {
+export default class DepositsScene extends Component {
 
   render () {
     return (

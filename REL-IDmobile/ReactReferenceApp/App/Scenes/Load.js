@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 /*
  CALLED
@@ -54,13 +55,17 @@ const {
   PushNotificationIOS,
   AppStateIOS,
   AlertIOS,
-} = React;
+} = ReactNative;
+
+const{
+  Component
+}=React;
 
 /*
  Class Load
  */
 
-class Load extends React.Component {
+class Load extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -621,7 +626,7 @@ class Load extends React.Component {
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.fullscreen}>
          
-            <Animated.View style={[Skin.loadStyle.rid_wrap, { top: Skin.SCREEN_HEIGHT/4 }]}>
+            <Animated.View style={[Skin.loadStyle.rid_wrap, { top: this.state.rid_top }]}>
             <View style={Skin.loadStyle.rid_center}>
             <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r, { opacity: this.state.r_opac_val }]}>g
             </Animated.Text>

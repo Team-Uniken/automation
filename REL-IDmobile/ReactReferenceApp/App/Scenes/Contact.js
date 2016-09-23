@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 
 /*
@@ -19,9 +20,13 @@ const {
   Text,
   TouchableOpacity,
   StyleSheet,
-} = React;
+} = ReactNative;
 
-export default class ContactScene extends React.Component {
+
+const{Component} = React;
+
+
+export default class ContactScene extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);

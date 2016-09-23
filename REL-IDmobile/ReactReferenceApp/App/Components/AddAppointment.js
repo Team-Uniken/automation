@@ -3,7 +3,8 @@
 /*
   NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 
 /*
@@ -25,13 +26,15 @@ const {
   Platform,
   PickerIOS,
   TouchableOpacity,
-} = React;
+} = ReactNative;
+
+const{Component} = React;
 
 const Picker = Platform.OS === 'ios' ? PickerIOS : PickerAndroid;
 let PickerItem = Picker.Item;
 
 
-class AddAppointment extends React.Component {
+class AddAppointment extends Component {
 
   constructor(props) {
     super(props);

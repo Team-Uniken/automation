@@ -1,4 +1,5 @@
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var constant = require('./Constants');
 import Modal from 'react-native-simple-modal';
 import TextField from 'react-native-md-textinput';
@@ -11,7 +12,6 @@ var {
     StyleSheet,
     Text,
     View,
-    Component,
     ListView,
     AppRegistry,
     TextInput,
@@ -21,8 +21,10 @@ var {
     AsyncStorage,
     Alert,
     StatusBar,
-} = React;
+} = ReactNative;
 
+
+const{Component} = React;
 
 var ToolBar = require('./ToolBar');
 var TEXTCOLOR = '#A9A9A9';

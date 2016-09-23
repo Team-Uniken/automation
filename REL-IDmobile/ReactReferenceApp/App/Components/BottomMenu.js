@@ -4,7 +4,8 @@
 
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -26,11 +27,13 @@ var {
 	TouchableHighlight,
 	ActivityIndicatorIOS,
 	StyleSheet
+} = ReactNative;
+
+const{
+	Component
 } = React;
 
-
-
-class BottomMenu extends React.Component{
+class BottomMenu extends Component{
 
 	constructor(props){
 		super(props);

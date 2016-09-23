@@ -5,7 +5,8 @@
 // ALWAYS NEED
 'use strict';
 
-const React = require('react-native');
+const React = require('react');
+const ReactNative = require('react-native');
 // const Skin = require('./MainStyleSheet');
 // const styles = Skin.styles;
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
@@ -36,8 +37,8 @@ const open = {
 };
 
 // Called
-const { StyleSheet, Dimensions, PixelRatio } = React;
-
+const { StyleSheet, Dimensions, PixelRatio } = ReactNative;
+const{Component}=React;
 
 // Colors
 const DARK_PRIMARY = '#2579A2'; // '#0277BD'; //
@@ -986,7 +987,8 @@ const loadStyle = StyleSheet.create({
   },
   relid_wrap: {
     alignItems: 'center',
-    top: SCREEN_HEIGHT/4+5,
+    top: 205,
+
   },
   relid: {
     fontFamily: 'icomoon',
@@ -1000,7 +1002,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: SCREEN_HEIGHT/3,
+    top: 200,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,

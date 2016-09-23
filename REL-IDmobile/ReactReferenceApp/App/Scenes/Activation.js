@@ -3,7 +3,8 @@
 */
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -29,10 +30,13 @@ var {
   //TouchableHighlight,
   //ActivityIndicatorIOS,
   //StyleSheet
-} = React;
+} = ReactNative;
 
 
-export default class ActivationScene extends React.Component{
+const{Component}=React;
+
+
+export default class ActivationScene extends Component{
   constructor(props){
     super(props);
   }

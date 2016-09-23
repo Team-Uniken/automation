@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -23,12 +24,16 @@ const {
   TouchableWithoutFeedback,
   StyleSheet,
   TextInput,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
+
+let _toggleDrawer;
 
 /*
   Instantiaions
 */
-export default class Main extends React.Component {
+export default class Main extends Component {
 
   /**
    * [constructor description]
@@ -76,6 +81,8 @@ export default class Main extends React.Component {
       open: this.props.drawerState.open || false,
       disabled: this.props.drawerState.disabled || false,
     };
+
+    _toggleDrawer = this.toggleDrawer;
     
   }
   open() {
@@ -368,7 +375,7 @@ Main.defaultProps = {
     visible: true,
     active: 1,
   },
-  toggleDrawer: this.toggleDrawer,
+  toggleDrawer: _toggleDrawer,
 };
 const styles = StyleSheet.create({
                                  modalwrap: {

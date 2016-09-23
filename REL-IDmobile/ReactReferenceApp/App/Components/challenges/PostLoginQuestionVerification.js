@@ -3,7 +3,8 @@
 /*
   NEEDED
 */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 import Main from '../Main';
 /*
@@ -18,9 +19,10 @@ import OpenLinks from '../OpenLinks';
   INSTANCED
  */
 let responseJson;
-const {View, Text, TextInput, TouchableHighlight, ScrollView, } = React;
+const {View, Text, TextInput, TouchableHighlight, ScrollView, } = ReactNative;
+const{Component} =  React;
 
-export default class PostLoginQuestionVerification extends React.Component {
+export default class PostLoginQuestionVerification extends Component {
 
   constructor(props) {
     super(props);

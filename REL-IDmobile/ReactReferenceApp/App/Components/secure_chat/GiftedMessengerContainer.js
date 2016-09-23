@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {
+import ReactNative, {
   Linking,
   Platform,
   ActionSheetIOS,
@@ -8,8 +8,11 @@ import React, {
   View,
   Text,
   Navigator,
-  Component,
 } from 'react-native';
+
+import React from 'react';
+
+const{Component} =  React;
 
 var GiftedMessenger = require('react-native-gifted-messenger');
 var Communications = require('react-native-communications');

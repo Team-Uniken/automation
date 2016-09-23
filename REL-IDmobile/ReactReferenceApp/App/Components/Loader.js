@@ -1,8 +1,9 @@
-import React, { View,Text } from 'react-native';
+import React, { Component } from 'react';
+import ReactNative, { View,Text } from 'react-native';
 
 import Spinner from 'react-native-loading-spinner-overlay';
 
-class Loader extends React.Component {
+class Loader extends Component {
   
   constructor(props) {
     super(props);

@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
 
@@ -41,10 +42,12 @@ const {
   AsyncStorage,
   Platform,
   AlertIOS,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
 
 
-class UserLogin extends React.Component{
+class UserLogin extends Component{
   constructor(props){
     super(props);
     this.state = {

@@ -3,7 +3,8 @@
 /*
   ALWAYS NEED
 */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
 /*
@@ -20,10 +21,14 @@ const {
   InteractionManager,
   Platform,
   AsyncStorage,
-} = React;
+} = ReactNative;
 
 
-export default class Activation extends React.Component {
+const{
+  Component
+} =  React;
+
+export default class Activation extends Component {
 
   constructor(props) {
     super(props);

@@ -3,7 +3,8 @@
 /*
   ALWAYS NEED
 */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 
@@ -53,12 +54,17 @@ const {
   Alert,
   DeviceEventEmitter,
   Platform,
-} = React;
+} = ReactNative;
+
+const{
+  Component
+} =  React;
+
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-class PostLoginAuthMachine extends React.Component {
+class PostLoginAuthMachine extends Component {
   constructor(props) {
     super(props);
     console.log('---------- PostLoginAuthMachine param ');

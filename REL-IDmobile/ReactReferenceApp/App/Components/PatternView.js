@@ -1,10 +1,12 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var {
-  PropTypes,
   requireNativeComponent,
   UIManager,
   View,
-} = React;
+} = ReactNative;
+
+const{PropTypes,Component} = React;
 
 var RCTPatternView = requireNativeComponent('RCTPatternView', PatternView, {
   nativeOnly: { onChange: true }
@@ -21,7 +23,7 @@ var RCTPatternView = requireNativeComponent('RCTPatternView', PatternView, {
 //   },
 // };
 
-class PatternView extends React.Component {
+class PatternView extends Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -38,6 +40,11 @@ class PatternView extends React.Component {
       pattern: event.nativeEvent.text,
       size:event.nativeEvent.size,
     });
+
+    this.clearPattern = this.clearPattern.bind(this);
+    this.getPatternString = this.getPatternString.bind(this);
+    this.disableInput = this.disableInput.bind(this);
+    this.enableInput =this.enableInput.bind(this);
   }
 
   render() {
@@ -46,7 +53,7 @@ class PatternView extends React.Component {
 
   enableInput(){
     UIManager.dispatchViewManagerCommand(
-      React.findNodeHandle(this),
+      ReactNative.findNodeHandle(this),
       UIManager.RCTPatternView.Commands.enableInput,
       [],
     );
@@ -54,7 +61,7 @@ class PatternView extends React.Component {
 
   disableInput(){
      UIManager.dispatchViewManagerCommand(
-      React.findNodeHandle(this),
+      ReactNative.findNodeHandle(this),
       UIManager.RCTPatternView.Commands.disableInput,
       [],
     );
@@ -62,7 +69,7 @@ class PatternView extends React.Component {
 
   getPatternString() {
     UIManager.dispatchViewManagerCommand(
-      React.findNodeHandle(this),
+      ReactNative.findNodeHandle(this),
       UIManager.RCTPatternView.Commands.getPatternString,
       [],
     );
@@ -70,7 +77,7 @@ class PatternView extends React.Component {
 
   clearPattern(){
     UIManager.dispatchViewManagerCommand(
-      React.findNodeHandle(this),
+      ReactNative.findNodeHandle(this),
       UIManager.RCTPatternView.Commands.clearPattern,
       [],
     );
