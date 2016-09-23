@@ -987,7 +987,7 @@ const loadStyle = StyleSheet.create({
   },
   relid_wrap: {
     alignItems: 'center',
-    top: 205,
+    top:SCREEN_HEIGHT/4+5,
 
   },
   relid: {
@@ -1002,7 +1002,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: 200,
+    top: SCREEN_HEIGHT/3,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,
@@ -1250,6 +1250,7 @@ const activationStyle = StyleSheet.create({
     fontSize: 22,
     color: TEXT_COLOR,
     textAlign: 'center',
+    backgroundColor:null,
   },
   textinput_lead: {
     flex: 1,
