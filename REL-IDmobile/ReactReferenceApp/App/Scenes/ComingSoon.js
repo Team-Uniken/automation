@@ -2,7 +2,8 @@
 /*
     NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 
 /*
@@ -16,9 +17,11 @@ import Main from '../Components/Main';
 const {
     View,
     Text,
-} = React;
+} = ReactNative;
 
-export default class ComingSoonScene extends React.Component{
+const{Component}=React;
+
+export default class ComingSoonScene extends Component{
     constructor(props){
         super(props);
         console.log(this.props);

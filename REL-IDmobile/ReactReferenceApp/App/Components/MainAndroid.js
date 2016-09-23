@@ -1,6 +1,7 @@
 
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Drawer = require('react-native-drawer');
 //var NavigationBar = require('react-native-navbar');
 var Menu = require('./OldMenu');
@@ -28,7 +29,9 @@ var {
   StyleSheet,
   StatusBarIOS,
   BackAndroid,
-} = React;
+} = ReactNative;
+
+const{Component} = React;
 
 var dnaProxyPort;
 var dnaUserName;
@@ -97,7 +100,7 @@ var styles = StyleSheet.create({
   }
 });
 
-class Main extends React.Component{
+class Main extends Component{
 
   constructor(props){
     super(props);

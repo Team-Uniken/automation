@@ -3,7 +3,8 @@
 /*
   ALWAYS NEED
 */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 import Main from '../Components/Main';
 import MainActivation from '../Components/MainActivation';
@@ -19,12 +20,16 @@ const {
     Text,
     Platform,
     AsyncStorage,
+} = ReactNative;
+
+const{
+  Component
 } = React;
 
 const MAX_ATTEMPTS = 4;
 const MIN_DOTS = 4;
 
-class PatternLock extends React.Component {
+class PatternLock extends Component {
 
   constructor(props) {
     super(props);

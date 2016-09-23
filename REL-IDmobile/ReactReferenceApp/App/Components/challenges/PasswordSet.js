@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Main';
 /*
@@ -22,10 +23,11 @@ const {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
-} = React;
+} = ReactNative;
 
+const{Component} = React;
 
-export default class PasswordSet extends React.Component {
+export default class PasswordSet extends Component {
   constructor(props) {
     super(props);
     this.state = {

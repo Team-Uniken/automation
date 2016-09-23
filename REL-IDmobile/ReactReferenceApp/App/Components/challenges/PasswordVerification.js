@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 import Main from '../Main';
 import TouchID from 'react-native-touch-id';
@@ -35,10 +36,12 @@ const {
   InteractionManager,
   AsyncStorage,
   Alert,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
 
 
-class PasswordVerification extends React.Component {
+class PasswordVerification extends Component {
   constructor(props) {
     super(props);
     /*
@@ -383,14 +386,14 @@ class PasswordVerification extends React.Component {
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
             <Animated.View style={[Skin.loadStyle.rid_wrap]}>
-            <View style={[Skin.loadStyle.rid_center,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
+            <View style={Skin.loadStyle.rid_center}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
             </View>
             </Animated.View>
             
-            <View style={[Skin.activationStyle.input_wrap,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
+            <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
             <View style={Skin.activationStyle.textinput_wrap}>
             <TextInput
             ref='inputPassword'

@@ -1,14 +1,15 @@
 import Skin from '../Skin';
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 const {
-  Component,
   Image,
   TouchableOpacity,
   Text,
   View,
-  PropTypes,
   StyleSheet,
-} = React;
+} = ReactNative;
+
+const{Component ,PropTypes} = React;
 
 export default class NavButton extends Component {
 

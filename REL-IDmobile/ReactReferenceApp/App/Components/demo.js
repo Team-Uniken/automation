@@ -1,13 +1,14 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
   Text,
   View,
   WebView,
-} = React;
+} = ReactNative;
   
 var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
 

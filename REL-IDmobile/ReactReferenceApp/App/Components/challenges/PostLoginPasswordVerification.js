@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 import Main from '../Main';
 import TouchID from 'react-native-touch-id';
@@ -34,10 +35,14 @@ const {
   InteractionManager,
   AsyncStorage,
   Alert,
-} = React;
+} = ReactNative;
+
+const{
+  Component
+} =  React;
 
 
-class PostLoginPasswordVerification extends React.Component {
+class PostLoginPasswordVerification extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,7 +82,7 @@ class PostLoginPasswordVerification extends React.Component {
   render() {
         return (
           <MainActivation navigator={this.props.navigator}>
-            <View style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center', backgroundColor: 'red' }}>
+            <View style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
               <View style={Skin.activationStyle.topGroup}>
                 <Animated.View style={[Skin.loadStyle.rid_wrap]}>
                   <View style={Skin.loadStyle.rid_center}>

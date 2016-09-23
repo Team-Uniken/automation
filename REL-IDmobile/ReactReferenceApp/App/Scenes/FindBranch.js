@@ -2,7 +2,8 @@
 /*
     NEED
  */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -18,10 +19,12 @@ const {
   Navigator,
   Text,
   MapView,
-} = React;
+} = ReactNative;
+
+const{Component} =React;
 
 
-class FindBranchScene extends React.Component{
+class FindBranchScene extends Component{
 
     constructor(props){
         super(props);

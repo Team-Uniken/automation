@@ -4,7 +4,8 @@
  */
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -16,7 +17,6 @@ import Events from 'react-native-simple-events';
 var styles = Skin.loadStyle;
 var Main = require('./Main');
 //var Menu = require('./Menu');
-var UserLogin = require('./challenges/UserLogin');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -38,11 +38,16 @@ var {
   AsyncStorage,
   Alert,
   ScrollView,
+} = ReactNative;
+
+const{
+  Component
 } = React;
+
 var styles = Skin.controlStyle;
 var Obj;
 
-class ControlPanel extends React.Component{
+class ControlPanel extends Component{
   constructor(props){
     super(props);
     console.log(props);

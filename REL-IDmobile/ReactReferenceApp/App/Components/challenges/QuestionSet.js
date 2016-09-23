@@ -3,7 +3,8 @@
 /*
   NEEDED
 */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 
 /*
@@ -22,9 +23,11 @@ const {
   TextInput,
   StyleSheet,
   InteractionManager,
-} = React;
+} = ReactNative;
 
-export default class QuestionSet extends React.Component {
+const{Component} = React;
+
+export default class QuestionSet extends Component {
 
   constructor(props) {
     super(props);
@@ -182,9 +185,6 @@ export default class QuestionSet extends React.Component {
     return (
       <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
-         <Text style={Skin.activationStyle.counter}>
-             {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-             </Text>
           <Text style={Skin.activationStyle.title}>Secret Question and Answer</Text>
           <View style={[Skin.activationStyle.input_wrap]}>
             <View style={Skin.activationStyle.textinput_wrap}>

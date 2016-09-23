@@ -4,7 +4,8 @@
 */
 'use strict';
 
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React,{Component} from 'react';
 import Skin from '../Skin';
 
 /*
@@ -33,10 +34,11 @@ const {
   StyleSheet,
   TextInput,
 
-} = React;
+} = ReactNative;
+
 let obj;
 let getCredentialSubscriptions;
-class MainActivation extends React.Component {
+class MainActivation extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -3,7 +3,8 @@
 /*
   ALWAYS NEED
 */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
 /*
@@ -21,9 +22,11 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
-} = React;
+} = ReactNative;
 
-class PostLoginAccessCode extends React.Component{
+const{Component} = React;
+
+class PostLoginAccessCode extends Component{
 
 
   constructor(props){

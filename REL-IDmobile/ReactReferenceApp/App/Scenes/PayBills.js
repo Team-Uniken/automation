@@ -2,7 +2,8 @@
 /*
     NEED
  */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -17,13 +18,18 @@ import { FormattedCurrency } from 'react-native-globalize';
   Instantiaions
 */
 // const ReactRdna = React.NativeModules.ReactRdnaModule;
-const RDNARequestUtility = React.NativeModules.RDNARequestUtility;
+const RDNARequestUtility = ReactNative.NativeModules.RDNARequestUtility;
 const {
     View,
     Text,
     StyleSheet,
     ListView,
-} = React;
+} = ReactNative;
+
+const{
+  Component
+} =React;
+
 let self;
 const headers = {
   1: 'Upcoming Bills',
@@ -38,7 +44,7 @@ const iconcolor = {
   2: Skin.colors.POSITIVE_ACCENT,
 };
 
-export default class PayBillsScene extends React.Component {
+export default class PayBillsScene extends Component {
 
   constructor(props) {
     super(props);

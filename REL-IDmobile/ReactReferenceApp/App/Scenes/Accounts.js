@@ -2,7 +2,8 @@
 /*
     NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 
 /*
@@ -17,13 +18,19 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
   Instantiaions
 */
 // const ReactRdna = React.NativeModules.ReactRdnaModule;
-const RDNARequestUtility = React.NativeModules.RDNARequestUtility;
+const RDNARequestUtility = ReactNative.NativeModules.RDNARequestUtility;
 const {
     View,
     Text,
     StyleSheet,
     ListView,
+} = ReactNative;
+
+const{
+ Component
 } = React;
+
+
 let self;
 const headers = {
   1: 'Savings',
@@ -42,7 +49,7 @@ const iconcolor = {
 };
 
 
-export default class AccountsScene extends React.Component {
+export default class AccountsScene extends Component {
 
   constructor(props) {
     super(props);

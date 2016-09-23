@@ -3,7 +3,8 @@
 /*
   ALWAYS NEED
 */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 
 /*
@@ -21,9 +22,11 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
-} = React;
+} = ReactNative;
 
-class Activation extends React.Component{
+const{Component} =  React;
+
+class Activation extends Component{
 
 
   constructor(props){
