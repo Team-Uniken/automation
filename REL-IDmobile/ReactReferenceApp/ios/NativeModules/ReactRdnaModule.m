@@ -614,9 +614,9 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 
 
 
-- (int)onGetPostLoginAuthenticationResponseStatus:(NSString *)status{
+- (int)onGetPostLoginChallenges:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginAuthenticationResponseStatus"
+  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginChallenges"
                                                             body:@{@"response":status}];
   return 0;
 }
