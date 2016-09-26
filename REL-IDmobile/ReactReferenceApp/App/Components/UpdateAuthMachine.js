@@ -16,9 +16,9 @@ import Skin from '../Skin';
 
 // SECURITY SCENES
 import Activation from './challenges/Activation';
-import PasswordSet from './challenges/PasswordSet';
+import PasswordSet from './challenges/UpdatePasswordSet';
 import Otp from './challenges/Otp';
-import QuestionSet from './challenges/QuestionSet';
+import QuestionSet from './challenges/UpdateQuestionSet';
 import QuestionVerification from './challenges/QuestionVerification';
 import UserLogin from './challenges/UserLogin';
 import DeviceBinding from './challenges/DeviceBinding';
