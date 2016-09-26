@@ -18,6 +18,7 @@ import com.uniken.rdna.RDNA;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -152,14 +153,21 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public int onConfigReceived(String rdnaStatusGetConfig) {
+            public int onConfigReceived(final String rdnaStatusGetConfig) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", rdnaStatusGetConfig);
+
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onConfigReceived", params);
+                    }
+                };
+                callOnMainThread(runnable);
                 return 0;
             }
-
-//            @Override
-//            public int onConfigReceived(RDNA.RDNAStatusGetConfig rdnaStatusGetConfig) {
-//                return 0;
-//            }
 
             @Override
             public int onCheckChallengeResponseStatus(final String rdnaStatusCheckChallengeResponse) {
@@ -606,6 +614,24 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
 
         callback.invoke(writableArray);
+    }
+
+
+    @ReactMethod
+    public void getDefaultCipherSalt(Callback callback)
+    {
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.getDefaultCipherSalt();
+        WritableMap statusMap = Arguments.createMap();
+        if(rdnaObj != null) {
+            int error = status.errorCode;
+            statusMap.putInt("error", error);
+            if(status.errorCode == 0 && status.result!=null) {
+                statusMap.putString("response",new String(status.result));
+            }
+        } else {
+            statusMap.putInt("error", 1);
+        }
+        callback.invoke(statusMap);
     }
 
     @ReactMethod
