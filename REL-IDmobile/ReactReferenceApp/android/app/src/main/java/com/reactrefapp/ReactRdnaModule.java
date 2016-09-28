@@ -129,7 +129,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                                 .emit("onPauseCompleted", params);
                     }
                 };
-
                 callOnMainThread(runnable);
                 return 0;
             }
@@ -141,13 +140,11 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                     public void run() {
                         WritableMap params = Arguments.createMap();
                         params.putString("response", status);
-
                         context
                                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("onResumeCompleted", params);
                     }
                 };
-
                 callOnMainThread(runnable);
                 return 0;
             }
