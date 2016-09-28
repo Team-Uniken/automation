@@ -194,13 +194,10 @@ class MainActivation extends Component {
                 <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
                 <View style={Skin.activationStyle.bgcolorizer} />
                 <View style={[Skin.activationStyle.centering_wrap,{opacity:this.state.opacity}]}>
-                <ScrollView
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}>
+       
                   <View style={Skin.activationStyle.wrap}>
                     {this.props.children}
                   </View>
-                </ScrollView>
                 </View>
                 <TouchableHighlight
                   activeOpacity={1.0}
