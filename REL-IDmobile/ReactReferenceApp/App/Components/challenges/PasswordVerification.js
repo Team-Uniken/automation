@@ -25,7 +25,6 @@ let responseJson;
 let obj;
 let savedpass;
 let subscription;
-let onForgotPasswordEvent;
 let chlngJson;
 let nextChlngName;
 const {
@@ -165,39 +164,9 @@ class PasswordVerification extends Component {
           }
     }
     
-    if(onForgotPasswordEvent){
-      onForgotPasswordEvent.remove();
-    }
-    onForgotPasswordEvent = DeviceEventEmitter.addListener(
-                                                        'onForgotPasswordStatus',
-                                                        this.onForgotPasswordStatusDetails.bind(this)
-                                                        );
   }
   
-  onForgotPasswordStatusDetails(e){
-    Events.trigger('hideLoader', true);
-    const res = JSON.parse(e.response);
-    console.log(res);
-    if (res.errCode === 0) {
-      const statusCode = res.pArgs.response.StatusCode;
-      if (statusCode === 100) {
-        
-        chlngJson = res.pArgs.response.ResponseData;
-        nextChlngName = chlngJson.chlng[0].chlng_name;
-
-        
-         Events.trigger('showForgotPasswordFlow', { response: { id: 'Machine', title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } } });
-      } else {
-        alert(res.pArgs.response.StatusMsg);
-      }
-    }else {
-      alert('Something went wrong');
-      // If error occurred reload devices list with previous response
-    }
-    
-  }
-  
-
+ 
   onSetPattern(data){
     subscription = DeviceEventEmitter.addListener(
       'onCheckChallengeResponseStatus',
@@ -463,7 +432,6 @@ class PasswordVerification extends Component {
             </View>
             </View>
             <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-             <Text style={Skin.customeStyle.forgot} onPress={this.forgotPassword}>Forgot Password</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}

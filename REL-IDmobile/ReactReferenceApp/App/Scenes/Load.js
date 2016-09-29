@@ -14,7 +14,6 @@ import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import erelid from '../../erelid.json';
-import Events from 'react-native-simple-events';
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 
@@ -88,9 +87,6 @@ class Load extends Component {
    //Push notification code
   
     componentWillMount(){
-
-       Events.on('showForgotPasswordFlow', 'showForgotPasswordFlow', this.showForgotPasswordFlow);
-      
       if(Platform.OS === 'ios'){
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
@@ -99,15 +95,7 @@ class Load extends Component {
       //Android push notification listeners to be added here.
       }
     }
-  componentWillUnmount(){
-     // Events.rm('showForgotPasswordFlow', 'showForgotPasswordFlow');
-  }
   
-
-
-  showForgotPasswordFlow(args) {
- Obj.props.navigator.push(args.response);
-  }
   _onNotification(notification) {
     
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
