@@ -1,0 +1,107 @@
+.logo {
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+}
+.page-footer{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+
+/** Sidebar menu icons with text below **/
+a.icon-container {
+  display: inline-block;
+  margin: 15px auto;
+  text-align: center;
+}
+
+.icon-text {
+  display: block;
+  line-height: 0;
+  font-size: 9px;
+  word-break: break-all;
+  word-wrap:break-word;
+}
+
+.icon {
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+.login-logo{
+width: 100px;
+height: 100px;
+}
+.sidebar-logo{
+width: 30px;
+height: 30px;
+}
+
+/** Submenu sidebar **/
+.app-container .content-container .side-sub-menu{
+left: 80px;
+width: 200px;
+padding-top: 65px;
+background-color: #50acdc;
+}
+
+.side-sub-menu .icon-text {
+ display: block;
+ line-height: 0;
+ font-size: 9px;
+ word-break: break-all;
+ word-wrap:break-word;
+ text-align: left;
+ color: #ffffff;
+ font-size: 1em;
+}
+
+.side-sub-menu li a .icon-text{
+ padding-left: 30px;
+}
+.side-sub-menu li.sub-menu-header a .icon-text{
+ padding-left: 15px;
+ font-weight: 600;
+}
+
+.side-sub-menu .nav>li>a{
+padding: 15px;
+}
+.side-sub-menu .nav>li>a:hover{
+background-color: #353d47;
+}
+
+
+.radio3 label{
+	background-color: #fff;
+	border: 1px solid #ddd;
+	overflow-x: hidden;
+	word-wrap: break-word;
+}
+.radio3 label::after, .radio3 label::before{
+	left: 5px;
+}
+
+#UpdateControls input, #UpdateControls select{
+    background-color: #acaeaf;
+	border-color: #266baf;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 10px;
+    color: #FFF;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.customcbxcss {
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.bootstrap-switch-large{
+    width: 200px;
+}

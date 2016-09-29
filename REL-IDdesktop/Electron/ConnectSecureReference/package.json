@@ -1,0 +1,12 @@
+{
+  "name": "REL-IDSecureApp",
+  "productName": "REL-IDSecureApp",
+  "version": "1.0.4",
+  "description": "Building Secure Trust...",
+  "main": "main.js",
+  "private": true,
+  "dependencies": {
+    "fs": "0.0.2",
+    "nconf": "^0.8.4"
+  }
+}

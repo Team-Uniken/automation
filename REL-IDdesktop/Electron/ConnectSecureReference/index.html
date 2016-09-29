@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to REL-ID</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fonts -->
+    <link rel="stylesheet" type="text/css" href="./lib/css/CenturyGothic.css">
+    <link rel="stylesheet" type="text/css" href="./lib/css/Lato.css">
+    <link rel="stylesheet" type="text/css" href="./lib/css/checkbox3.min.css">
+    <!-- CSS Libs -->
+    <link rel="stylesheet" type="text/css" href="./lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./lib/css/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="./lib/css/font-awesome.min.css">
+    <!-- CSS App -->
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/flat-dark.css">
+    <link rel="stylesheet" type="text/css" href="./css/custom.css">
+    <script type="text/javascript" src="./lib/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="./lib/js/bootstrap-switch.min.js"></script>
+    <script src="js/rdna.js"></script>
+    <script src="js/script.js"></script>
+</head>
+<body class="flat-blue login-page" style="height:680px;">
+    <div class="app-container">
+        <div class="row content-container">
+            <div class="side-menu sidebar-inverse">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="side-menu-container">
+                        <ul class="nav navbar-nav">
+                            <li rel="Home" class="active">
+                                <a href="#" class="icon-container">
+                                    <img src="img/REL-ID_logo_blue.png" alt="" class="sidebar-logo"/><span class="icon-text"></span>
+                                </a>
+                            </li>
+                            <li rel="RDP">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-desktop"></span><span class="icon-text">Remote Desktop</span>
+                                </a>
+                            </li>
+                            <li rel="Portal">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-th-large"></span><span class="icon-text" >Portal</span>
+                                </a>
+                            </li>
+                            <li rel="CRM">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-users"></span><span class="icon-text">CRM</span>
+                                </a>
+                            </li>
+                            <li rel="Email">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-envelope-o"></span><span class="icon-text">Email</span>
+                                </a>
+                            </li>
+                            <li rel="Chat">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-comments-o"></span><span class="icon-text">Chat</span>
+                                </a>
+                            </li>
+                            <li rel="settingsSubmenu">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-cog"></span><span class="icon-text">Settings</span>
+                                </a>
+                            </li>
+                            <li rel="LogOff">
+                                <a href="#" class="icon-container">
+                                    <span class="icon fa fa-power-off"></span><span class="icon-text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </nav>
+            </div>
+            <div class="side-sub-menu sidebar-inverse" id="subMenu" style="display: none;">
+              <div class="side-menu-container">
+                <ul class="sub-nav nav" id="settingsSubmenu">
+                  <li class="sub-menu-header">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">Account</span>
+                      </a>
+                  </li>
+                  <li rel="credentials" style="cursor:pointer">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">Credentials</span>
+                      </a>
+                  </li>
+                  <li rel="devices" style="cursor:pointer">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">Devices</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu-header">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">My Settings</span>
+                      </a>
+                  </li>
+                  <li rel="general_settings" style="cursor:pointer">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">General Setting</span>
+                      </a>
+                  </li>
+                  <li rel="proxy_settings" style="cursor:pointer">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">Proxy Setting</span>
+                      </a>
+                  </li>
+                  <li rel="connection_settings" style="cursor:pointer">
+                      <a href="#" class="icon-container">
+                          <span class="icon-text">Connection Profile</span>
+                      </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.navbar-collapse -->
+            </div>
+            <!-- Main Content -->
+            <div class="container-fluid">
+                <div class="side-body padding-top">
+                    <div class="row no-gap">
+                        <div class="container">
+		                    <div class="login-box" id="login-box">
+                                <div>
+                                    <div class="login-form row">
+                                        <div class="col-sm-12 text-center login-header" id="HeaderLogo">
+                                            <img src="img/REL-ID_logo_white.png" alt="Click for login" class="login-logo" style="cursor:pointer" />
+                                            <h3 class="login-title" style="cursor:pointer">Click here to</h3>
+                                            <h2 class="login-title" style="cursor:pointer">LOGIN</h2>
+                                        </div>
+                                        <div class="col-sm-12 text-center login-header" id="HeaderForm" style="display: none;">
+                                            <img src="img/REL-ID_logo_white.png" alt="" class="login-logo" />
+                                            <h4 class="login-title" id="lblGreetings" style="display: none;">Welcome to REL-ID</h4>
+                                            <h4 class="login-title" id="lblLoadingMsg" style="display: none;">Loading... Please Wait...!</h4>
+                                            <h5 class="login-title" id="lblUserVerification" style="display: none;">Verify UserID</h5>
+                                            <h5 class="login-title" id="lblPasswordVerification" style="display: none;">Verify Password</h5>
+                                            <h5 class="login-title" id="lblSetPassword" style="display: none;">Set Password</h5>
+                                            <h5 class="login-title" id="lblActivation" style="display: none;">Activate Your Account</h5>
+                                            <h5 class="login-title" id="lblOTP" style="display: none;">One Time Password Verification</h5>
+                                            <h5 class="login-title" id="lblDeviceReg" style="display: none;">Device Registration</h5>
+                                            <h5 class="login-title" id="lblSetSecQA" style="display: none;">Set Your Secondary Credentials</h5>
+                                            <h5 class="login-title" id="lblVerifySecQA" style="display: none;">Verify your Secondary Credentials</h5>
+                                            <h5 class="login-title" id="lblUserLoggedIN" style="display: none;">User Logged-in Successfully</h5>
+                                            <h5 class="login-title" id="lblGeneralSettingsHeading" style="display: none;">General Setting</h5>
+                                            <h5 class="login-title" id="lblProxySettingsHeading" style="display: none;">Proxy Setting</h5>
+                                            <h5 class="login-title" id="lblConnectionProfileHeading" style="display: none;">Connection Profiles</h5>
+                                            <h5 class="login-title" id="lblLoggingOff" style="display: none;">Please wait logging off...!</h5>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="login-body" id="divLoginBody">
+                                                <form id="frmUserVerification" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <input type="text" id="txtUserName" class="form-control" placeholder="Enter UserName" pval="" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtUserName').getAttribute('pval');" onFocus="this.placeholder=''">
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="SUBMIT">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmActivationCode" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <input type="text" id="txtVerificationKey" class="form-control" placeholder="Verification Key" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtVerificationKey').getAttribute('pval');" onFocus="this.placeholder=''" disabled>
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" id="txtActivationCode" class="form-control" placeholder="Activation Code" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtActivationCode').getAttribute('pval');" onFocus="this.placeholder=''">
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="SUBMIT">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmSecQa" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <select id="questionList" onchange="this.nextElementSibling.value=this.value" class="form-control editableBox">
+                                                                <option value="Set your own question">Set question</option>
+                                                            </select>
+                                                            <input type="text" id="txtQuestion" class="form-control timeTextBox" placeholder="Type or select question" pval="Type or select question" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtQuestion').getAttribute('pval');" onFocus="this.placeholder=''">
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" id="txtAnswer" class="form-control" placeholder="Answer" pval="Answer" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtAnswer').getAttribute('pval');" onFocus="this.placeholder=''">
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="SUBMIT">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmPassword" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <input id="txtPassword" type="password" class="form-control" placeholder="Password" pval="" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtPassword').getAttribute('pval');" onFocus="this.placeholder=''" />
+                                                        </div>
+                                                        <div class="control">
+                                                            <span class="color-white" id="forgotPswdLink" style="cursor:pointer;text-align: right;">Forgot Password</span>
+                                                        </div>
+                                                        <div class="control">
+                                                            <input id="txtConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" pval="" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtConfirmPassword').getAttribute('pval');" onFocus="this.placeholder=''" />
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" id="btnPassSubmit" class="btn btn-primary form-control" value="LOGIN">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmOTP" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <input type="text" id="txtOTPKey" class="form-control" placeholder="OTP Key" pval="" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtOTPKey').getAttribute('pval');" onFocus="this.placeholder=''" disabled />
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" id="txtOTPValue" class="form-control" placeholder="Enter OTP" pval="" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtOTPValue').getAttribute('pval');" onFocus="this.placeholder=''" />
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="SUBMIT">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmDeviceBinding" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <h4 id="lblDevType" class="login-title color-white">Set this device as</h4>
+                                                            <input type="checkbox" id="chkbxDevType" name="premanentDevice" data-off-text="Temporary" data-on-text="Permanent" checked class="BSswitch" data-handle-width="100">
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="SUBMIT">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmDeviceAlias" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <input type="text" id="txtDevName" class="form-control" placeholder="Enter Device Name" pval="Enter Device Name" onBlur="if(this.value=='')this.placeholder=document.getElementById('txtDevName').getAttribute('pval');" onFocus="this.placeholder=''" />
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="SUBMIT">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmCredentialsDetails" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset id="UpdateControlsCreds">
+                                                        <h5 class="login-title color-white">Username:</h5>
+                                                        <div class="control">
+                                                            <input type="text" id="txtManageUsername" class="form-control">
+                                                        </div>
+                                                        <h5 class="login-title color-white">Manage Password:</h5>
+                                                        <div class="control">
+                                                            <input type="text" id="txtOldPassword" class="form-control" required value="Old Password" onBlur="if(this.value=='')this.value='Old Password'" onFocus="if(this.value=='Old Password')this.value='' ">
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" id="txtOldpasswordAgain" class="form-control" required value="Old Password Again" onBlur="if(this.value=='')this.value='Old Password Again'" onFocus="if(this.value=='Old Password Again')this.value='' ">
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" id="txtNewPassword" class="form-control" required value="New Password" onBlur="if(this.value=='')this.value='New Password'" onFocus="if(this.value=='New Password')this.value='' ">
+                                                        </div>
+                                                        <h5 class="login-title color-white">Manage Challenge Question:</h5>
+                                                        <div class="control">
+                                                            <select id="manageQuestionList" onchange="this.nextElementSibling.value=this.value" class="form-control editableQuestionBox">
+                                                                <option value="Set your own question">Set question</option>
+                                                                <option value="Question 1">Question 1</option>
+                                                                <option value="Question 2">Question 2</option>
+                                                                <option value="Question 3">Question 3</option>
+                                                            </select>
+                                                            <input type="text" id="txtManageQuestion" class="form-control questiontextbox" required value="Set question" onBlur="if(this.value=='')this.value='Set question'" onFocus="if(this.value=='Set question')this.value='' "/>
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" class="form-control" required value="Answer" onBlur="if(this.value=='')this.value='Answer'" onFocus="if(this.value=='Answer')this.value='' " id="ManageAanswer">
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn" value="Save">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <form id="frmGeneralSettings" action="javascript:void(0);" method="get" style="display: none;">
+                                                  <fieldset>
+                                                    <div class="control">
+                                                      <!-- <input type="checkbox"><span><a href="#" class="color-white" >Auto Launch</a></span> -->
+                                                      <div class="checkbox3 checkbox-inline checkbox-check checkbox-dark color-white">
+                                                        <input type="checkbox" id="checkbox-fa-light-3">
+                                                        <label for="checkbox-fa-light-3">
+                                                            Auto Launch
+                                                        </label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="login-button text-center">
+                                                        <input type="submit" class="btn btn-primary form-control" value="Clear user data">
+                                                    </div>
+                                                  </fieldset>
+                                                </form>
+                                                <form id="frmProxySettings" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <div class="checkbox3 checkbox-inline checkbox-check checkbox-dark color-white">
+                                                                <input type="checkbox" id="checkbox-fa-light-2">
+                                                                <label for="checkbox-fa-light-2">
+                                                                    Use System Proxy
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text" id="txtProxyAddress" class="form-control" placeholder="Enter Proxy Address" onBlur="if(this.value=='')this.placeholder='Enter Proxy Address'" onFocus="this.placeholder='' ">
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="number" id="txtPort" class="form-control" placeholder="Enter Port (0-65535)" onBlur="if(this.value=='')this.placeholder='Enter Port (0-65535)'" onFocus="this.placeholder='' ">
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="text"  id="txtProxyUser" class="form-control" placeholder="Enter Proxy UserId" onBlur="if(this.value=='')this.placeholder='Enter Proxy UserId'" onFocus="this.placeholder='' ">
+                                                        </div>
+                                                        <div class="control">
+                                                            <input type="password" id="txtProxyPassword" class="form-control" placeholder="Enter Proxy Password" onBlur="if(this.value=='')this.placeholder='Enter Proxy Password'" onFocus="this.placeholder='' ">
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                            <input type="submit" class="btn btn-primary form-control" value="Save">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <div id="frmConnectionProfileList" style="display: none;">
+                                                    <fieldset>
+                                                        <div class="control">
+                                                            <input type="file" id="ConnectionProfileFile" class="form-control" placeholder="Select the file" onBlur="if(this.value=='')this.placeholder='Select the file'" onFocus="if(this.value=='Select the file')this.value='' ">
+                                                        </div>
+                                                    </fieldset>
+                                                    <h5 class="login-title color-white">Select Connection Profile</h5>
+                                                    <div class="control" id="profileList">
+                                                    </div>
+                                                    <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false" rel="select">Apply Profile</button>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false" rel="delete">Delete Profile</button>
+                                                </div>
+                                                <form id="frmDeviceList" action="javascript:void(0);" method="get" style="display: none;">
+                                                    <fieldset id="UpdateControlsDevice" class="devcontrols">
+                                                        <div class="control" id="deviceListDiv" style="overflow-y:auto">
+                                                            <h5 class="login-title color-white">Permanent Devices</h5>
+                                                            <div id="divPermanentDevices" class="list-group">
+                                                            </div>
+                                                            <h5 class="login-title color-white">Temporary Devices</h5>
+                                                            <div id="divTemporaryDevices" class="list-group">
+                                                            </div>
+                                                        </div>
+                                                        <div class="login-button text-center">
+                                                          <input type="submit" class="btn btn-primary form-control btns-inline" rel="update" value="Update Device">
+                                                          <input type="submit" class="btn btn-primary form-control btns-inline" rel="delete" value="Delete Device">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                                <div id="errorMessage" style="display: none;"></div>
+                                            </div>
+                                            <div class="login-footer text-center" id="RememberMe" style="display: none;">
+                                                <div class="checkbox3 checkbox-inline checkbox-check checkbox-dark color-white">
+                                                    <input type="checkbox" id="checkbox-fa-light-4">
+                                                    <label for="checkbox-fa-light-4 customcbxcss">
+                                                        Remember me
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="login-footer text-center" id="AttemptDiv" style="display: none;">
+                                                <span class="color-white" id="attempts"></span>
+                                            </div>
+                                        </div>
+                                        <div class="login-footer text-center" id="SwitchUserDiv" style="display: none;">
+                                            <span class="color-white" id="switchuserlink" style="cursor:pointer">Switch User</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="app-footer">
+        <div class="wrapper text-center">
+            <span class=""><a href="#" id="lnkHelpSupport" class="color-white">Help &amp; Support</a></span>
+        </div>
+    </footer>
+    </div>
+</body>
+
+</html>
