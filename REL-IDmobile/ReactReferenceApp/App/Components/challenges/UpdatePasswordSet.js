@@ -7,12 +7,15 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Main';
+
 /*
  CALLED
  */
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
 import dismissKeyboard from 'dismissKeyboard';
+import PatternLock from '../../Scenes/PatternLock'
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
  Instantiaions
  */
@@ -22,10 +25,16 @@ const {
   TextInput,
   TouchableHighlight,
   InteractionManager,
+  DeviceEventEmitter,
   AsyncStorage,
+  Platform,
+  Alert,
 } = ReactNative;
 
 const{Component} = React;
+
+let responseJson;
+let updatePasswordSubscription;
 
 export default class PasswordSet extends React.Component {
   constructor(props) {
@@ -33,43 +42,99 @@ export default class PasswordSet extends React.Component {
     this.state = {
     password: '',
     cPassword: '',
+    pattern:false,
     };
-    /*
-     this._props = {
-     url: {
-     chlngJson: {
-     chlng_idx: 1,
-     sub_challenge_index: 0,
-     chlng_name: 'pass',
-     chlng_type: 1,
-     challengeOperation: 1,
-     chlng_prompt: [[]],
-     chlng_info: [
-     {
-     key: 'Response label',
-     value: 'Password',
-     }, {
-     key: 'description',
-     value: 'Enter password of length 8-10 characters',
-     },
-     ],
-     chlng_resp: [
-     {
-     "challenge":"password",
-     "response":"",
-     }
-     ],
-     challenge_response_policy: [],
-     chlng_response_validation: false,
-     attempts_left: 3,
-     },
-     chlngsCount: 1,
-     currentIndex: 1,
-     },
-     };
-     */
+
+    this.onSetPattern = this.onSetPattern.bind(this);
+    this.decidePlatformAndProceed = this.decidePlatformAndProceed.bind(this);
+    this.encryptPasswordThenProceed = this.encryptPasswordThenProceed.bind(this);
+    this.validateAndProceed = this.validateAndProceed.bind(this);
+    this.isUserDataPresent = false;  
   }
-  
+
+  encryptPasswordThenProceed(){
+     ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaPasswd, (response) => {
+                                                 if (response) {
+                                                 console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                 AsyncStorage.setItem("passwd", response[0].response);
+                                                 } else {
+                                                 console.log('immediate response is' + response[0].response);
+                                                 }
+                                                 })
+                     
+    this.setPassword();
+  }
+
+   decidePlatformAndProceed(){
+     if (Platform.OS === 'ios') {
+         AsyncStorage.getItem("passwd").then((passwd)=>{
+             if(passwd){
+                this.encryptPasswordThenProceed();
+             }
+             else{
+               this.setPassword();
+             }
+         }).done();
+     } else {
+       AsyncStorage.getItem("userData").then((userData) => {
+         if (userData) {
+           this.isUserDataPresent = true;
+           this.setPassword();
+         }
+         else {
+           this.isUserDataPresent = false;
+           this.setPassword();
+         }
+       }).done();
+     }
+  }
+
+  validateAndProceed(){
+    const pw = this.state.password;
+    const cpw = this.state.cPassword;
+   
+    if (pw.length > 0) {
+      if (cpw.length > 0) {
+        if (pw === cpw) {
+           Main.dnaPasswd = pw;
+           this.decidePlatformAndProceed();
+        } else {
+          alert('Password and Confirm Password do not match');
+        }
+      } else {
+        alert('Please enter confirm password ');
+      }
+    } else {
+      alert('Please enter password ');
+    }
+  }
+
+  onCheckChallengeResponseStats(args){
+    // alert("In act checkResponse");
+     updatePasswordSubscription.remove();
+     const res = JSON.parse(args.response);
+     if(res.errCode == 0){
+        var statusCode = res.pArgs.response.StatusCode;
+        if(statusCode!=100){
+         // alert("removing data statusCode = "+  statusCode);
+          let keys = ['userData','setPattern'];
+          AsyncStorage.multiRemove(keys);
+        }
+     }else{
+      // alert("removing data errorCode = " + res.errCode);
+        let keys = ['userData','setPattern'];
+        AsyncStorage.multiRemove(keys);
+     }
+  }
+
+  onSetPattern(data) {
+    updatePasswordSubscription = DeviceEventEmitter.addListener(
+        'onCheckChallengeResponseStatus',
+        this.onCheckChallengeResponseStats.bind(this));
+     Main.dnaPasswd = null;
+     Events.trigger('showNextChallenge', data);
+  }
+
   componentDidMount() {
     Main.isTouchIdSet = "NO";
     InteractionManager.runAfterInteractions(() => {
@@ -104,12 +169,23 @@ export default class PasswordSet extends React.Component {
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
-         //  if(this.validatePassword(pw)){
+          //  if(this.validatePassword(pw)){
           Main.dnaPasswd = pw;
-          let responseJson = this.props.url.chlngJson;
+          responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
           dismissKeyboard();
-          Events.trigger('showNextChallenge', {response: responseJson});
+
+          if (Platform.OS === "android") {
+            if (this.isUserDataPresent) {
+              this.setState({
+                pattern: true
+              });
+            } else {
+              Events.trigger('showNextChallenge', { response: responseJson });
+            }
+          } else {
+            Events.trigger('showNextChallenge', { response: responseJson });
+          }
           // }else{
           // alert('Invalide Password');
           // }
@@ -132,6 +208,7 @@ export default class PasswordSet extends React.Component {
   }
   
   render() {
+    if(this.state.pattern === false){
     return (
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
@@ -167,7 +244,7 @@ export default class PasswordSet extends React.Component {
             style={Skin.activationStyle.textinput}
             secureTextEntry={true}
             onChange={this.onConfirmPasswordChange.bind(this)}
-            onSubmitEditing={this.setPassword.bind(this)}
+            onSubmitEditing={this.validateAndProceed}
             />
             </View>
             </View>
@@ -175,7 +252,7 @@ export default class PasswordSet extends React.Component {
             <TouchableHighlight
             style={Skin.activationStyle.button}
             underlayColor={'#082340'}
-            onPress={this.setPassword.bind(this)}
+            onPress={this.validateAndProceed}
             activeOpacity={0.6}
             >
             <Text style={Skin.activationStyle.buttontext}>
@@ -186,6 +263,12 @@ export default class PasswordSet extends React.Component {
             </View>
             </MainActivation>
             );
+    }
+    else{
+      return (<PatternLock navigator={this.props.navigator} 
+              onSetPattern={this.onSetPattern} data={{ response: responseJson }}
+              mode="set" />);
+    }
   }
 }
 

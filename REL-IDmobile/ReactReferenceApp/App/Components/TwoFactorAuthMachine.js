@@ -18,6 +18,7 @@ import Main from './Main';
 // SECURITY SCENES
 import Activation from './challenges/Activation';
 import PasswordSet from './challenges/PasswordSet';
+import UpdatePasswordSet from './challenges/UpdatePasswordSet';
 import Otp from './challenges/Otp';
 import QuestionSet from './challenges/QuestionSet';
 import QuestionVerification from './challenges/QuestionVerification';
@@ -43,6 +44,7 @@ let challengeJson;
 let challengeJsonArr;
 let currentIndex;
 let subscriptions;
+let onForgotPasswordSubscription;
 let obj;
 let screenId;
 const {
@@ -63,6 +65,9 @@ class TwoFactorAuthMachine extends Component {
   constructor(props) {
     super(props);
     console.log('---------- Machine param ');
+    this.onCheckChallengeResponseStatus = this.onCheckChallengeResponseStatus.bind(this);
+    this.initiateForgotPasswordFlow = this.initiateForgotPasswordFlow.bind(this);
+    this.mode = "normal";
   }
 
   componentWillMount() {
@@ -82,11 +87,12 @@ class TwoFactorAuthMachine extends Component {
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
     subscriptions = DeviceEventEmitter.addListener(
       'onCheckChallengeResponseStatus',
-      this.onCheckChallengeResponseStatus.bind(this)
+      this.onCheckChallengeResponseStatus
     );
 
      Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
      Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
   }
 
   componentDidMount() {
@@ -203,6 +209,14 @@ class TwoFactorAuthMachine extends Component {
     }
   }
 
+  onForgotPasswordStatus(res){
+    if(onForgotPasswordSubscription){
+       onForgotPasswordSubscription.remove();
+    }
+    
+    this.onCheckChallengeResponseStatus(e);
+  }
+
 
   /**
    public static final String CHLNG_CHECK_USER       = "checkuser";
@@ -258,8 +272,12 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
+      }else if(this.mode === "normal"){
+         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
-      return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
+      else{
+         return (<UpdatePasswordSet navigator={nav} url={route.url} title={route.title} />);
+      }
     } else if (id === 'otp') {
       return (<Otp navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {
@@ -354,8 +372,27 @@ class TwoFactorAuthMachine extends Component {
 
   }
 
+  initiateForgotPasswordFlow(){
+    this.mode = "forgotPassword";
+    Events.rm('forgotPassowrd','forgotPassword');
+    onForgotPasswordSubscription = DeviceEventEmitter.addListener(
+      'onForgotPasswordStatus',
+      this.onCheckChallengeResponseStatus
+    );
+    console.log("initiateForgotPasswordFlow ----- show loader");
+    Events.trigger('showLoader', true);
+    ReactRdna.forgotPassword(Main.dnaUserName, (response) => {
+      if (response[0].error === 0) {
+        console.log('immediate response is' + response[0].error);
+      } else {
+        console.log('immediate response is' + response[0].error);
+        alert(response[0].error);
+      }
+    });
+  }
+
   callCheckChallenge() {
-    console.log("onCheckChallengeResponse ----- show loader");
+    console.log("callCheckChallenge ----- show loader");
     Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {

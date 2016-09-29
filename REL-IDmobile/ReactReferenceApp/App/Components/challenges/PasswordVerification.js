@@ -16,6 +16,7 @@ import TouchID from 'react-native-touch-id';
 import PatternLock from '../../Scenes/PatternLock'
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
+import Link from '../Link';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
@@ -98,6 +99,8 @@ class PasswordVerification extends Component {
     };
     
     this.onSetPattern = this.onSetPattern.bind(this);
+    this.onCheckChallengeResponseStat.bind(this);
+    this.onForgotPasswordClick = this.onForgotPasswordClick.bind(this);
   }
   
   componentWillMount(){
@@ -152,25 +155,38 @@ class PasswordVerification extends Component {
                                             
                                             }).done();
     }
-    else if(Platform.OS === "android"){
-          if(Main.dnaPasswd != null && Main.dnaPasswd != undefined){
-              this.state.inputPassword = Main.dnaPasswd;
-              this.checkPassword();
-          }
-          else{
-            InteractionManager.runAfterInteractions(() => {
-                this.refs.inputPassword.focus();
-            });
-          }
-    }
-    
+    else if (Platform.OS === "android") {
+
+      if (subscription) {
+        subscription.remove();
+      }
+      
+      subscription = DeviceEventEmitter.addListener(
+        'onCheckChallengeResponseStatus',
+        this.onCheckChallengeResponseStat
+      );
+
+      if (Main.isPatternEnabled && Main.dnaPasswd != null && Main.dnaPasswd != undefined) {
+        this.state.inputPassword = Main.dnaPasswd;
+        this.checkPassword();
+      }
+      else {
+        Main.dnaPasswd = null;
+        InteractionManager.runAfterInteractions(() => {
+          this.refs.inputPassword.focus();
+        });
+      }
+    } 
   }
   
  
   onSetPattern(data){
+    if(subscription){
+      subscription.remove();
+    }
     subscription = DeviceEventEmitter.addListener(
       'onCheckChallengeResponseStatus',
-      this.onCheckChallengeResponseStat.bind(this)
+      this.onCheckChallengeResponseStat
     );
     //alert("onSetPattern");
 
@@ -184,19 +200,32 @@ class PasswordVerification extends Component {
   onCheckChallengeResponseStat(args){
      //Events.trigger('hideLoader', true);
     // alert("In pass checkResponse");
-     subscription.remove();
+     if(subscription){
+       subscription.remove();
+     }
      const res = JSON.parse(args.response);
      if(res.errCode == 0){
         var statusCode = res.pArgs.response.StatusCode;
         if(statusCode!=100){
-         // alert("removing data statusCode = "+  statusCode);
+         // alert("removing data statusCode = "+  statusCode)
+         if(Platform.OS === "android"){
           let keys = ['userData','setPattern'];
           AsyncStorage.multiRemove(keys);
+          Main.dnaPasswd = null;
+         }
+         else{
+           //IOS code here
+         }
         }
      }else{
       // alert("removing data errorCode = " + res.errCode);
+      if(Platform.OS === "android"){
         let keys = ['userData','setPattern'];
         AsyncStorage.multiRemove(keys);
+      }
+      else{
+        //IOS code here
+      }
      }
   }
 
@@ -384,22 +413,11 @@ class PasswordVerification extends Component {
   clearText(fieldName) {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
-   forgotPassword(){
-    
-    Events.trigger('showLoader', true);
-    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
-    AsyncStorage.getItem('userId').then((value) => {
-                                        ReactRdna.forgotPassword(value, (response) => {
-                                                                         if (response[0].error === 0) {
-                                                                         console.log('immediate response is' + response[0].error);
-                                                                         } else {
-                                                                         console.log('immediate response is' + response[0].error);
-                                                                         alert(response[0].error);
-                                                                         }
-                                                                         });
-                                        }).done();
-    
+
+  onForgotPasswordClick(){
+    Events.trigger("forgotPassowrd");
   }
+  
   render() {
     if(this.state.pattern === false){
         return (
@@ -431,6 +449,7 @@ class PasswordVerification extends Component {
             
             </View>
             </View>
+            <Text style={Skin.linkStyle.text} onPress={this.onForgotPasswordClick}>Forgot Password ?</Text>
             <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight

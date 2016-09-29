@@ -1162,6 +1162,17 @@ const nav = {
 };
 
 
+const linkStyle = StyleSheet.create({
+   text:{
+     textAlign:'center',
+     marginTop:5,
+     padding:5,
+     textDecorationLine:'underline',
+     color:'white',
+     fontSize:15
+   }
+});
+
 
 const activationStyle = StyleSheet.create({
   container: {
@@ -1302,6 +1313,7 @@ module.exports = {
   loadspd: LOADSPEED,
   controlStyle,
   activationStyle,
+  linkStyle,
   colors,
   statusBarStyle,
   text,

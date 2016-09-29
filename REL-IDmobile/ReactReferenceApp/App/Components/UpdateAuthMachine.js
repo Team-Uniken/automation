@@ -16,7 +16,7 @@ import Skin from '../Skin';
 
 // SECURITY SCENES
 import Activation from './challenges/Activation';
-import PasswordSet from './challenges/UpdatePasswordSet';
+import UpdatePasswordSet from './challenges/UpdatePasswordSet';
 import Otp from './challenges/Otp';
 import QuestionSet from './challenges/UpdateQuestionSet';
 import QuestionVerification from './challenges/QuestionVerification';
@@ -272,7 +272,7 @@ class UpdateAuthMachine extends Component {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
       }
-      return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
+      return (<UpdatePasswordSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'otp') {
       return (<Otp navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {

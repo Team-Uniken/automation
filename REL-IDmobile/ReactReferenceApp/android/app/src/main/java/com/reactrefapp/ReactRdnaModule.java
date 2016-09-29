@@ -12,6 +12,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.uniken.rdna.RDNA;
 
@@ -684,6 +685,22 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
         callback.invoke(writableArray);
         lock.release();
+    }
+
+    @ReactMethod
+    public void forgotPassword(String userId,Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            int error =   rdnaObj.forgotPassword(userId);
+            errorMap.putInt("error", error);
+        }
+        else{
+            errorMap.putInt("error",1);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
     }
 
     @ReactMethod
