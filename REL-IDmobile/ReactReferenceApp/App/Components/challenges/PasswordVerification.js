@@ -8,6 +8,7 @@ import React from 'react';
 import Skin from '../../Skin';
 import Main from '../Main';
 import TouchID from 'react-native-touch-id';
+//import Machine1 from '../TwoFactorAuthMachine';
 
 /*
  CALLED
@@ -24,6 +25,9 @@ let responseJson;
 let obj;
 let savedpass;
 let subscription;
+let onForgotPasswordEvent;
+let chlngJson;
+let nextChlngName;
 const {
   Text,
   ScrollView,
@@ -159,8 +163,40 @@ class PasswordVerification extends Component {
                 this.refs.inputPassword.focus();
             });
           }
-    } 
+    }
+    
+    if(onForgotPasswordEvent){
+      onForgotPasswordEvent.remove();
+    }
+    onForgotPasswordEvent = DeviceEventEmitter.addListener(
+                                                        'onForgotPasswordStatus',
+                                                        this.onForgotPasswordStatusDetails.bind(this)
+                                                        );
   }
+  
+  onForgotPasswordStatusDetails(e){
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+        
+        chlngJson = res.pArgs.response.ResponseData;
+        nextChlngName = chlngJson.chlng[0].chlng_name;
+
+        
+         Events.trigger('showForgotPasswordFlow', { response: { id: 'Machine', title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } } });
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    }else {
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
+    
+  }
+  
 
   onSetPattern(data){
     subscription = DeviceEventEmitter.addListener(
@@ -379,7 +415,22 @@ class PasswordVerification extends Component {
   clearText(fieldName) {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
-  
+   forgotPassword(){
+    
+    Events.trigger('showLoader', true);
+    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
+    AsyncStorage.getItem('userId').then((value) => {
+                                        ReactRdna.forgotPassword(value, (response) => {
+                                                                         if (response[0].error === 0) {
+                                                                         console.log('immediate response is' + response[0].error);
+                                                                         } else {
+                                                                         console.log('immediate response is' + response[0].error);
+                                                                         alert(response[0].error);
+                                                                         }
+                                                                         });
+                                        }).done();
+    
+  }
   render() {
     if(this.state.pattern === false){
         return (
@@ -412,6 +463,7 @@ class PasswordVerification extends Component {
             </View>
             </View>
             <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+             <Text style={Skin.customeStyle.forgot} onPress={this.forgotPassword}>Forgot Password</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}

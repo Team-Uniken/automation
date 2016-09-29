@@ -183,7 +183,15 @@ const customeStyle = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 8,
-  },
+    },
+    forgot: {
+     fontSize: 16,
+     color: TEXT_COLOR,
+     textAlign: 'center',
+     textAlignVertical: 'center',
+     marginTop: 8,
+     textDecorationLine:'underline',
+     },
   row: {
     flexDirection: 'row',
     width: SCREEN_WIDTH,
