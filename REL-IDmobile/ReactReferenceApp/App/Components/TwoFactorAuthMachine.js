@@ -27,11 +27,13 @@ import DeviceName from './challenges/DeviceName';
 import PasswordVerification from './challenges/PasswordVerification';
 import ScreenHider from './challenges/ScreenHider';
 
+
 // COMPONENTS
 import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from './Constants';
+import Demo from './demo';
 
 
 
@@ -45,6 +47,7 @@ let currentIndex;
 let subscriptions;
 let obj;
 let screenId;
+let stepdone=false;
 const {
   Navigator,
   AsyncStorage,
@@ -87,6 +90,8 @@ class TwoFactorAuthMachine extends Component {
 
      Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
      Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+          Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
+
   }
 
   componentDidMount() {
@@ -131,6 +136,8 @@ class TwoFactorAuthMachine extends Component {
     subscriptions.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
+    Events.rm('showCurrentChallenge', 'showCurrentChallenge');
+
     console.log(res);
 
     if (res.errCode == 0) {
@@ -140,6 +147,7 @@ class TwoFactorAuthMachine extends Component {
         if (res.pArgs.response.ResponseData) {
           console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
+          
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
             console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
@@ -254,6 +262,7 @@ class TwoFactorAuthMachine extends Component {
     if (id === 'checkuser') {
       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'actcode') {
+      stepdone=false;
       return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
@@ -265,6 +274,9 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'secqa' || id == 'secondarySecqa') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
+      // }else if(stepdone==false){
+      //   stepdone=true;
+      // return (<Demo navigator={nav} url={route.url} title={route.title} />);
       }
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devname') {
@@ -333,8 +345,29 @@ class TwoFactorAuthMachine extends Component {
     }
   }
 
-  showCurrentChallenge() {
-
+  showCurrentChallenge(args) {
+  console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
+    // alert(JSON.stringify(args));
+   // alert("response = "+ JSON.stringify(args));
+    const i = challengeJsonArr.indexOf(currentIndex);
+    challengeJsonArr[i] = args.response;
+    // currentIndex ++;
+    if (obj.hasNextChallenge()) {
+      // Show Next challenge screen
+      const currentChlng = obj.getCurrentChallenge();
+      obj.stateNavigator.push({
+        id: currentChlng.chlng_name,
+        url: {
+          chlngJson: currentChlng,
+          chlngsCount: challengeJsonArr.length,
+          currentIndex: currentIndex + 1,
+        },
+        title: obj.props.title,
+      });
+    } else {
+      // Call checkChallenge
+      obj.callCheckChallenge();
+    }
   }
 
   start(json, nav) {

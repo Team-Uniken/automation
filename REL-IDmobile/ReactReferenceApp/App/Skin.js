@@ -363,6 +363,55 @@ const questionrow = StyleSheet.create({
 });
 
 
+const AccountActivationStep = StyleSheet.create({
+   header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    opacity: 1,
+    marginTop:16,
+    width: SCREEN_WIDTH,
+    textAlign: 'left',
+    marginLeft:8,
+    textAlignVertical: 'center',
+  },
+   compulsory_chlng_name: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 1,
+    marginTop:4,
+    width: SCREEN_WIDTH,
+    marginLeft:24,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+     optional_chlng_name: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 1,
+    marginLeft:16,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+    seprator: {
+    width: SCREEN_WIDTH,
+    backgroundColor: '#fff',
+    height: 2,
+    opacity: 1,
+  },
+  title: {
+    fontSize: 24,
+    color: '#fff',
+    opacity: 1,
+    height: 40,
+    marginTop:8,
+    marginBottom:8,
+    width: SCREEN_WIDTH-32,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+});
+
 
 
 const appointmentrow = StyleSheet.create({
@@ -1290,6 +1339,7 @@ module.exports = {
   SCREEN_HEIGHT,
   SCREEN_HEIGHT_RATIO,
   customeStyle,
+  AccountActivationStep,
   appointmentrow,
   notification,
   addappointment,
