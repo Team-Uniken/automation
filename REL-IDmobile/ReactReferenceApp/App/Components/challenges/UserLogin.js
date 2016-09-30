@@ -139,21 +139,25 @@ class UserLogin extends Component{
   
   componentWillMount() {
      constant.USER_SESSION = "NO";
-      if(Platform.OS == "android"){
-                  try{
-                    AsyncStorage.getItem("userData").then((value)=>{
-                      if(value!=null && value!=undefined){ 
-                      //  var chlngJson = { id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } };  
-                        this.setState({
-                          pattern:true,
-                        });
-                      }
-                    }).done();
-                  }
-                  catch(e){}
-       }else{
-         this.locked =false;
+     if (Platform.OS == "android") {
+       try {
+         AsyncStorage.getItem("userData").then((value) => {
+           if (value) {
+             this.setState({
+               pattern: true,
+             });
+
+             Main.isPatternEnabled = true;
+           }
+           else{
+             Main.isPatternEnabled = false;
+           }
+         }).done();
        }
+       catch (e) { }
+     } else {
+       this.locked = false;
+     }
 
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
   }
