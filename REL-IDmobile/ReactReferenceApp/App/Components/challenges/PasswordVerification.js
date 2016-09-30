@@ -16,7 +16,7 @@ import TouchID from 'react-native-touch-id';
 import PatternLock from '../../Scenes/PatternLock'
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
-import Link from '../Link';
+//import Link from '../Link';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
