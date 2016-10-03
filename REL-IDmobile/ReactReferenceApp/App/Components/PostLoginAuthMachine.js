@@ -163,10 +163,10 @@ class PostLoginAuthMachine extends Component {
               id: 'PostLoginAuthMachine',
               title: "nextChlngName",
               url: {
-                "chlngJson":chlngJson,
+                "chlngJson": chlngJson,
                 "screenId": nextChlngName,
               },
-              challengesToBeUpdated:[challengeName],
+              challengesToBeUpdated: [challengeName],
             });
           }
         } else {
@@ -178,38 +178,36 @@ class PostLoginAuthMachine extends Component {
           'Error',
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
-              onPress: () => {
-                        var chlngJson;
-          if(res.pArgs.response.ResponseData==null){
-             chlngJson = saveChallengeJson;
-          }else{
-             chlngJson = res.pArgs.response.ResponseData;
-          }
+            onPress: () => {
+              var chlngJson;
+              if (res.pArgs.response.ResponseData == null) {
+                chlngJson = saveChallengeJson;
+              } else {
+                chlngJson = res.pArgs.response.ResponseData;
+              }
 
-          const nextChlngName = chlngJson.chlng[0].chlng_name;
-          if (chlngJson != null) {
-            console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-    
-            this.props.navigator.push({
-              id: 'PostLoginAuthMachine',
-              title: nextChlngName,
-              url: {
-                chlngJson,
-                screenId: nextChlngName,
-                challengesToBeUpdated:[challengeName],
-              },
-            });
-          }
+              const nextChlngName = chlngJson.chlng[0].chlng_name;
+              if (chlngJson != null) {
+                console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
 
-
-              },
+                this.props.navigator.push({
+                  id: 'PostLoginAuthMachine',
+                  title: nextChlngName,
+                  url: {
+                    chlngJson,
+                    screenId: nextChlngName,
+                    challengesToBeUpdated: [challengeName],
+                  },
+                });
+              }
+            },
             style: 'cancel',
           }]
         );
       }
     } else {
       console.log(e);
-      alert('Internal system error occurred.'+res.errCode);
+      alert('Internal system error occurred.' + res.errCode);
     }
   }
 

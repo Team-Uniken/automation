@@ -90,7 +90,7 @@ class ControlPanel extends Component{
   
   componentDidMount(){
     constant.USER_SESSION = "YES";
-    
+   AsyncStorage.setItem("isPwdSet","empty");
     Obj = this;
     if(eventLogOff){
       eventLogOff.remove();

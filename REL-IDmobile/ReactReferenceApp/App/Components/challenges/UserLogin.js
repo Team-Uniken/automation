@@ -139,6 +139,7 @@ class UserLogin extends Component{
   
   componentWillMount() {
      constant.USER_SESSION = "NO";
+    AsyncStorage.setItem("isPwdSet","empty");
      if (Platform.OS == "android") {
        try {
          AsyncStorage.getItem("userData").then((value) => {

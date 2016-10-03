@@ -123,7 +123,7 @@ class PasswordVerification extends Component {
     if(Platform.OS === "ios"){
         AsyncStorage.getItem("passwd").then((value) => {
                                             if(value){
-                                                if(value == "empty"){
+                                                if(value === "empty"){
                                                 //PROCEED NORMAL WAY.
                                                 InteractionManager.runAfterInteractions(() => {
                                                                                         this.refs.inputPassword.focus();
@@ -386,6 +386,7 @@ class PasswordVerification extends Component {
     var pw = this.state.inputPassword;
     if (pw.length > 0) {
      // alert(pw);
+         AsyncStorage.setItem("isPwdSet","YES");
       Main.dnaPasswd = pw;
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
@@ -449,8 +450,8 @@ class PasswordVerification extends Component {
             
             </View>
             </View>
-            <Text style={Skin.linkStyle.text} onPress={this.onForgotPasswordClick}>Forgot Password ?</Text>
             <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+            <Text style={Skin.linkStyle.text} onPress={this.onForgotPasswordClick}>Forgot Password ?</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}

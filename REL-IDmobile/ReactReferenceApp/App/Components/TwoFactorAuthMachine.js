@@ -12,7 +12,6 @@ import Skin from '../Skin';
   CALLED
 */
 import Main from './Main';
-
 // Secondary Scenes
 
 // SECURITY SCENES
@@ -179,6 +178,16 @@ class TwoFactorAuthMachine extends Component {
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
       } else {
+        
+        AsyncStorage.getItem("isPwdSet").then((flag) => {
+                                                if(flag === "YES"){
+                                                    AsyncStorage.setItem("passwd","empty");
+
+                                                }
+                                              
+                                                }).done();
+        
+        
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
