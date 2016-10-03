@@ -92,6 +92,9 @@ class ControlPanel extends Component{
     constant.USER_SESSION = "YES";
    AsyncStorage.setItem("isPwdSet","empty");
     Obj = this;
+    
+    Events.on('cancelOperation', 'cancelOperation', this.cancelOperation);
+    
     if(eventLogOff){
       eventLogOff.remove();
     }
@@ -121,9 +124,21 @@ class ControlPanel extends Component{
 
   
   componentWillUnmount() {
-
+    Events.rm('cancelOperation', 'cancelOperation');
   }
 
+  cancelOperation(args){
+    Obj.props.toggleDrawer();
+    var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+    for(var i = 0; i < allScreens.length; i++){
+      var screen = allScreens[i];
+      if(screen.id == 'Main'){
+        var mySelectedRoute = Obj.props.navigator.getCurrentRoutes()[i];
+         Obj.props.navigator.popToRoute(mySelectedRoute);
+        break ;
+      }
+    }
+  }
   onGetPostLoginChallenges(status){
     Events.trigger('hideLoader', true);
     const res = JSON.parse(status.response);

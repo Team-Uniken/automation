@@ -84,6 +84,7 @@ export default class QuestionSet extends React.Component {
         currentIndex: 1,
       },
     };
+     this.gotoControlPanel = this.gotoControlPanel.bind(this);
   }
 
   componentDidMount() {
@@ -111,6 +112,10 @@ export default class QuestionSet extends React.Component {
     this.setState({ secAnswer: event.nativeEvent.text });
   }
 
+  gotoControlPanel(){
+    Events.trigger('cancelOperation');
+  }
+  
   setSecrets() {
     //console.log(this);
     const kSecQ = this.state.secQue;
@@ -248,33 +253,34 @@ export default class QuestionSet extends React.Component {
           </View>
         </View>
       </MainActivation>
-        <TouchableHighlight
-                  activeOpacity={1.0}
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: 'white',
-                    width: 50,
-                    height: 50,
-                    top: 0,
-                    left: 0,
-                    borderTopRightRadius: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',                    
-                  }}
-                  underlayColor={Skin.colors.DARK_PRIMARY}
-                >
-                  <View>
-                    <Text
-                      style={{
-                        color: Skin.colors.DARK_PRIMARY,
-                        fontSize: 24,
-                      }}
-                    >
-                    X
-                    </Text>
-              
-                  </View>
-                </TouchableHighlight>
+            <TouchableHighlight
+            activeOpacity={1.0}
+            style={{
+            position: 'absolute',
+            backgroundColor: null,
+            height: 48,
+            top: 0,
+            left: 0,
+            paddingLeft:12,
+            paddingTop:24,
+            alignItems: 'center',
+            justifyContent: 'center',
+            }}
+            underlayColor={Skin.colors.DARK_PRIMARY}
+             onPress={this.gotoControlPanel}
+            >
+            <View>
+            <Text
+            style={{
+            color: 'white',
+            fontSize: 24,
+            }}
+            >
+            X
+            </Text>
+            
+            </View>
+            </TouchableHighlight>
           </View>
 		);
   }

@@ -49,7 +49,8 @@ export default class PasswordSet extends React.Component {
     this.decidePlatformAndProceed = this.decidePlatformAndProceed.bind(this);
     this.encryptPasswordThenProceed = this.encryptPasswordThenProceed.bind(this);
     this.validateAndProceed = this.validateAndProceed.bind(this);
-    this.isUserDataPresent = false;  
+    this.isUserDataPresent = false;
+    this.gotoControlPanel = this.gotoControlPanel.bind(this);
   }
 
   encryptPasswordThenProceed(){
@@ -268,21 +269,22 @@ export default class PasswordSet extends React.Component {
                   activeOpacity={1.0}
                   style={{
                     position: 'absolute',
-                    backgroundColor: 'white',
-                    width: 50,
-                    height: 50,
+                    backgroundColor: null,
+                    height: 48,
                     top: 0,
                     left: 0,
-                    borderTopRightRadius: 20,
+                    paddingLeft:12,
+                     paddingTop:24,
                     alignItems: 'center',
                     justifyContent: 'center',                    
                   }}
                   underlayColor={Skin.colors.DARK_PRIMARY}
+                  onPress={this.gotoControlPanel}
                 >
                   <View>
                     <Text
                       style={{
-                        color: Skin.colors.DARK_PRIMARY,
+                        color: 'white',
                         fontSize: 24,
                       }}
                     >
