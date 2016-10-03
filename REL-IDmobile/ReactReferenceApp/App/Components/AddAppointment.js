@@ -15,7 +15,6 @@ import Modal from 'react-native-simple-modal';
 import DatePicker from 'react-native-datepicker';
 import PickerAndroid from 'react-native-picker-android';
 
-
 const {
   View,
   Text,
