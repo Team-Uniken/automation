@@ -46,6 +46,7 @@ class MainActivation extends Component {
     color:'#4fadd8',
     visible: this.props.visible,
     opacity:1,
+    loadertext:0,
       open: false,
       userName: '',
     password:'',
@@ -167,6 +168,7 @@ class MainActivation extends Component {
     console.log('\n in hide Loader view of main activation');
     this.setState({visible: false});
     this.setState({opacity: 1});
+     this.setState({loadertext:0});
      this.setState({isSettingButtonHide: 1});
     console.log(this.state.visible);
   }
@@ -175,6 +177,7 @@ class MainActivation extends Component {
     console.log('\n in show Loader view of main activation');
     this.setState({visible: true});
      this.setState({opacity: 0});
+      this.setState({loadertext: 1});
       this.setState({isSettingButtonHide: 0});
     console.log(this.state.visible);
   }
@@ -193,8 +196,8 @@ class MainActivation extends Component {
                 <View style={Skin.activationStyle.bgbase} />
                 <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
                 <View style={Skin.activationStyle.bgcolorizer} />
+                  <Text style={[Skin.activationStyle.loadertext,{opacity:0}]}>Processing...</Text>
                 <View style={[Skin.activationStyle.centering_wrap,{opacity:this.state.opacity}]}>
-       
                   <View style={Skin.activationStyle.wrap}>
                     {this.props.children}
                   </View>

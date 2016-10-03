@@ -1236,6 +1236,18 @@ const activationStyle = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   },
+  loadertext: {
+   position: 'absolute',
+    top:SCREEN_HEIGHT/2,
+     fontSize: 16,
+     width:SCREEN_WIDTH,
+    color: TEXT_COLOR,
+    opacity:1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 10,
+   
+  },
   bgcolorizer: {
     position: 'absolute',
     top: 20,

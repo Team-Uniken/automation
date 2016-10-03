@@ -210,6 +210,7 @@ export default class PasswordSet extends React.Component {
   render() {
     if(this.state.pattern === false){
     return (
+                  <View style={{ height: Skin.SCREEN_HEIGHT,width:Skin.SCREE_WIDTH}}>
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
             
@@ -261,7 +262,36 @@ export default class PasswordSet extends React.Component {
             </TouchableHighlight>
             </View>
             </View>
+            
             </MainActivation>
+             <TouchableHighlight
+                  activeOpacity={1.0}
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: 'white',
+                    width: 50,
+                    height: 50,
+                    top: 0,
+                    left: 0,
+                    borderTopRightRadius: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',                    
+                  }}
+                  underlayColor={Skin.colors.DARK_PRIMARY}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        color: Skin.colors.DARK_PRIMARY,
+                        fontSize: 24,
+                      }}
+                    >
+                    X
+                    </Text>
+              
+                  </View>
+                </TouchableHighlight>
+          </View>
             );
     }
     else{

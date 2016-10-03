@@ -183,6 +183,7 @@ export default class QuestionSet extends React.Component {
      */
 
     return (
+    <View style={{ height: Skin.SCREEN_HEIGHT,width:Skin.SCREE_WIDTH}}>
       <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
           <Text style={Skin.activationStyle.title}>Secret Question and Answer</Text>
@@ -247,6 +248,34 @@ export default class QuestionSet extends React.Component {
           </View>
         </View>
       </MainActivation>
+        <TouchableHighlight
+                  activeOpacity={1.0}
+                  style={{
+                    position: 'absolute',
+                    backgroundColor: 'white',
+                    width: 50,
+                    height: 50,
+                    top: 0,
+                    left: 0,
+                    borderTopRightRadius: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',                    
+                  }}
+                  underlayColor={Skin.colors.DARK_PRIMARY}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        color: Skin.colors.DARK_PRIMARY,
+                        fontSize: 24,
+                      }}
+                    >
+                    X
+                    </Text>
+              
+                  </View>
+                </TouchableHighlight>
+          </View>
 		);
   }
 }
