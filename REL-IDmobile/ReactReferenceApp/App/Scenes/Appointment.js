@@ -1,8 +1,10 @@
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var AddAppointment = require('./AddAppointment');
 var ToolBar = require('./ToolBar');
 var Skin = require('../Skin');
 var obj;
+
 var appointmentData = [{
   "date": "2016-05-06",
   "time": "20:00",

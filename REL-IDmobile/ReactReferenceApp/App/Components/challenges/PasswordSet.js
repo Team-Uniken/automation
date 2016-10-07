@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Main';
 /*
@@ -22,10 +23,11 @@ const {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
-} = React;
+} = ReactNative;
 
+const{Component} = React;
 
-export default class PasswordSet extends React.Component {
+export default class PasswordSet extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,6 +78,12 @@ export default class PasswordSet extends React.Component {
   }
   
   
+  validatePassword(textval) {
+   // var passwordregex = /^[0-9]/;
+     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+    return passwordregex.test(textval);
+  }
+
   onPasswordChange(event) {
     this.setState({ password: event.nativeEvent.text });
   }
@@ -91,11 +99,15 @@ export default class PasswordSet extends React.Component {
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
+         //  if(this.validatePassword(pw)){
           Main.dnaPasswd = pw;
           let responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
           dismissKeyboard();
           Events.trigger('showNextChallenge', {response: responseJson});
+          // }else{
+          // alert('Invalide Password');
+          // }
         } else {
           alert('Password and Confirm Password do not match');
         }

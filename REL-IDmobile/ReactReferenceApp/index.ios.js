@@ -4,7 +4,8 @@
  */
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 console.disableYellowBox = true;
 
 // Main Scenes
@@ -42,6 +43,7 @@ import AddAppointment from './App/Components/AddAppointment';
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/TwoFactorAuthMachine';
 import UpdateMachine from './App/Components/UpdateAuthMachine';
+import PostLoginAuthMachine from './App/Components/PostLoginAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
@@ -49,8 +51,9 @@ const {
   AppRegistry,
   Navigator,
   Text,
-} = React;
+}  = ReactNative;
 
+const{Component} =  React;
 
 const FadeIn = {
 opacity: {
@@ -77,7 +80,7 @@ round: 1000,
 };
 
 
-class ReactRefApp extends React.Component {
+class ReactRefApp extends Component {
   
   
   renderScene(route, nav) {
@@ -156,6 +159,8 @@ class ReactRefApp extends React.Component {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'UpdateMachine') {
       return (<UpdateMachine navigator={nav} url={route.url} title={route.title} />);
+    }else if (id === 'PostLoginAuthMachine') {
+      return (<PostLoginAuthMachine navigator={nav} url={route.url} title={route.title} challengesToBeUpdated={route.challengesToBeUpdated} />);
     }else if (id === 'DeviceMgmt') {
       return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     } else if (id === 'QuestionSet') {

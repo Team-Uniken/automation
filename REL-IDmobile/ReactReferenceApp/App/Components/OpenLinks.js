@@ -3,7 +3,8 @@
 /*
   ALWAYS NEED
 */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 import Communications from 'react-native-communications';
 
@@ -15,7 +16,9 @@ const {
     StyleSheet,
     Text,
     TouchableOpacity,
-} = React;
+} = ReactNative;
+
+const{Component} = React;
 
 
 const styles = StyleSheet.create({
@@ -24,7 +27,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 80,
-    marginTop:50,
+    marginTop:50*(Skin.SCREEN_HEIGHT/1000),
     marginBottom:50,
   },
   openlink_wrap: {
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default class OpenLinks extends React.Component {
+export default class OpenLinks extends Component {
   constructor(props) {
     super(props);
     this.state = {};

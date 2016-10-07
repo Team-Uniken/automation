@@ -3,7 +3,8 @@
 */
 'use strict';
 
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -22,10 +23,12 @@ var {
 	TextInput,
 	TouchableHighlight,
 	StyleSheet
-} = React;
+} = ReactNative;
 
 
-class ListItem extends React.Component{
+const{Component}=React;
+
+class ListItem extends Component{
 	constructor(props){
 		super(props);
 	}
@@ -47,8 +50,8 @@ var styles = StyleSheet.create({
 	},
 	rowwrap:{
 		backgroundColor: Skin.colors.TEXT_COLOR,
-		padding: 10,
-		width:SCREEN_WIDTH*4/5,
+		padding: 8,
+		width: (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*4/5 : SCREEN_WIDTH-32,
 		marginBottom:2
 	}
 

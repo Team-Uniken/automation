@@ -1,7 +1,8 @@
 'use strict';
 //onGetNotifications
 //onUpdateNotification
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 
@@ -28,7 +29,12 @@ const {
   View,
   WebView,
   Alert,
+} = ReactNative;
+
+const{
+  Component
 } = React;
+
 //let onUpdateDevice;
 //let onGetDevice;
 //let devicesList;
@@ -295,7 +301,7 @@ var SampleRow = React.createClass({
                                   });
 
 
-export default class NotificationMgmtScene extends React.Component {
+export default class NotificationMgmtScene extends Component {
   
   componentWillMount() {
     

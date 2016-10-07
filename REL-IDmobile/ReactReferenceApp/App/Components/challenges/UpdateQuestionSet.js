@@ -27,7 +27,7 @@ const {
 
 const{Component} = React;
 
-export default class QuestionSet extends Component {
+export default class QuestionSet extends React.Component {
 
   constructor(props) {
     super(props);
@@ -84,6 +84,7 @@ export default class QuestionSet extends Component {
         currentIndex: 1,
       },
     };
+     this.gotoControlPanel = this.gotoControlPanel.bind(this);
   }
 
   componentDidMount() {
@@ -111,6 +112,10 @@ export default class QuestionSet extends Component {
     this.setState({ secAnswer: event.nativeEvent.text });
   }
 
+  gotoControlPanel(){
+    Events.trigger('cancelOperation');
+  }
+  
   setSecrets() {
     //console.log(this);
     const kSecQ = this.state.secQue;
@@ -183,11 +188,9 @@ export default class QuestionSet extends Component {
      */
 
     return (
+    <View style={{ height: Skin.SCREEN_HEIGHT,width:Skin.SCREE_WIDTH}}>
       <MainActivation navigator={this.props.navigator}>
         <View style={Skin.activationStyle.topGroup}>
-         <Text style={Skin.activationStyle.counter}>
-             {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-             </Text>
           <Text style={Skin.activationStyle.title}>Secret Question and Answer</Text>
           <View style={[Skin.activationStyle.input_wrap]}>
             <View style={Skin.activationStyle.textinput_wrap}>
@@ -250,6 +253,35 @@ export default class QuestionSet extends Component {
           </View>
         </View>
       </MainActivation>
+            <TouchableHighlight
+            activeOpacity={1.0}
+            style={{
+            position: 'absolute',
+            backgroundColor: null,
+            height: 48,
+            top: 0,
+            left: 0,
+            paddingLeft:12,
+            paddingTop:24,
+            alignItems: 'center',
+            justifyContent: 'center',
+            }}
+            underlayColor={Skin.colors.DARK_PRIMARY}
+             onPress={this.gotoControlPanel}
+            >
+            <View>
+            <Text
+            style={{
+            color: 'white',
+            fontSize: 24,
+            }}
+            >
+            X
+            </Text>
+            
+            </View>
+            </TouchableHighlight>
+          </View>
 		);
   }
 }

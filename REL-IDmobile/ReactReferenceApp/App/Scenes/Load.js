@@ -3,7 +3,8 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../Skin';
 /*
  CALLED
@@ -13,7 +14,6 @@ import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import erelid from '../../erelid.json';
-
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 
@@ -54,13 +54,17 @@ const {
   PushNotificationIOS,
   AppStateIOS,
   AlertIOS,
-} = React;
+} = ReactNative;
+
+const{
+  Component
+}=React;
 
 /*
  Class Load
  */
 
-class Load extends React.Component {
+class Load extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +72,7 @@ class Load extends React.Component {
     i_opac_val: new Animated.Value(0),
     d_opac_val: new Animated.Value(0),
     relid_text_opac: new Animated.Value(0),
-    rid_top: new Animated.Value(200),
+    rid_top: new Animated.Value(150),
     r_text_opac: new Animated.Value(0),
     i_text_opac: new Animated.Value(0),
     d_text_opac: new Animated.Value(0),
@@ -83,9 +87,6 @@ class Load extends React.Component {
    //Push notification code
   
     componentWillMount(){
-
-      
-
       if(Platform.OS === 'ios'){
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
@@ -621,7 +622,7 @@ class Load extends React.Component {
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.fullscreen}>
          
-            <Animated.View style={[Skin.loadStyle.rid_wrap, { top: this.state.rid_top }]}>
+            <Animated.View style={[Skin.loadStyle.rid_wrap, { top: Skin.SCREEN_HEIGHT/4 }]}>
             <View style={Skin.loadStyle.rid_center}>
             <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r, { opacity: this.state.r_opac_val }]}>g
             </Animated.Text>

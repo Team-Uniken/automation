@@ -12,7 +12,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 /**
  * Created by uniken on 23/8/16.
  */
-public class ReactPatternView extends PatternView {
+public class ReactPatternView extends PatternView implements PatternView.OnPatternDetectedListener{
 
     private OnGetListener listener;
 
@@ -41,10 +41,23 @@ public class ReactPatternView extends PatternView {
 
         WritableMap event = Arguments.createMap();
         event.putString("text", pattern);
+        event.putInt("size",getPattern().size());
         ReactContext reactContext = (ReactContext) getContext();
         reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "topChange", event);
-
         return pattern;
+    }
+
+    public ReactPatternView enablePatternDetection(boolean flag){
+        if(flag) {
+            setOnPatternDetectedListener(this);
+        }
+
+        return this;
+    }
+
+    @Override
+    public void onPatternDetected() {
+        getPatternString();
     }
 
     public interface OnGetListener{

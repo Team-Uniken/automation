@@ -2,7 +2,8 @@
 /*
     NEED
  */
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -18,10 +19,12 @@ const {
   Navigator,
   Text,
   MapView,
-} = React;
+} = ReactNative;
+
+const{Component} =React;
 
 
-class FindBranchScene extends React.Component{
+class FindBranchScene extends Component{
 
     constructor(props){
         super(props);
@@ -73,8 +76,9 @@ class FindBranchScene extends React.Component{
                   }
               );
             },
-            (error) => alert(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+            (error) => {alert(error)},
+            //(error) => alert(error.message),
+            { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
           );
 
         this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -116,11 +120,13 @@ class FindBranchScene extends React.Component{
                 }}
                 navigator={this.props.navigator}
             >
+              <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY }}>
                 <MapView
                     style={{flex:1,width:Skin.SCREEN_WIDTH}}
                     showsUserLocation={true}
                     followUserLocation={true}
                 />
+              </View>
             </Main>
         );
     }

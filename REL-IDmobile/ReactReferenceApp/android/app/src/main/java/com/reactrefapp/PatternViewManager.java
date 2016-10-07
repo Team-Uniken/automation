@@ -34,6 +34,8 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
     ReactPatternView view;
     public static final int COMMAND_GET_PATTERN = 1;
     public static final int COMMAND_CLEAR_PATTERN = 2;
+    public static final int COMMAND_ENABLE_INPUT = 3;
+    public static final int COMMAND_DISABLE_INPUT = 4;
 
    // public static final String EVENT_ON_GET_PATTERN = "onGetPattern";
 
@@ -57,6 +59,11 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
     @ReactProp(name = "circleColor")
     public void setCircleColor(PatternView view,String colorHexCode){
         view.setCircleColor(getColor(colorHexCode));
+    }
+
+    @ReactProp(name = "enablePatternDetection")
+    public void enablePatternDetection(ReactPatternView view,boolean val) {
+        view.enablePatternDetection(val);
     }
 
     @ReactProp(name = "dotColor")
@@ -87,7 +94,9 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
         Log.d("React", " View manager getCommandsMap:");
         return MapBuilder.of(
                 "getPatternString", COMMAND_GET_PATTERN,
-                "clearPattern",COMMAND_CLEAR_PATTERN);
+                "clearPattern",COMMAND_CLEAR_PATTERN,
+                "enableInput",COMMAND_ENABLE_INPUT,
+                "disableInput",COMMAND_DISABLE_INPUT);
     }
 
     @Override
@@ -105,6 +114,16 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
 
             case COMMAND_CLEAR_PATTERN: {
                 view.clearPattern();
+                return;
+            }
+
+            case COMMAND_ENABLE_INPUT:{
+                view.enableInput();
+                return;
+            }
+
+            case COMMAND_DISABLE_INPUT:{
+                view.disableInput();
                 return;
             }
 

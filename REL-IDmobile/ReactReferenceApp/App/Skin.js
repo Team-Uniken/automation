@@ -5,13 +5,26 @@
 // ALWAYS NEED
 'use strict';
 
-const React = require('react-native');
+const React = require('react');
+const ReactNative = require('react-native');
 // const Skin = require('./MainStyleSheet');
 // const styles = Skin.styles;
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
 const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
+const SCREEN_HEIGHT_RATIO=1;
+
+if(SCREEN_HEIGHT<=426){
+SCREEN_HEIGHT_RATIO=0.5
+}else if(SCREEN_HEIGHT<=470){
+SCREEN_HEIGHT_RATIO=1
+}else if(SCREEN_HEIGHT<640){
+SCREEN_HEIGHT_RATIO=1.5
+}else{
+SCREEN_HEIGHT_RATIO=2
+}
+
 const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
@@ -24,8 +37,8 @@ const open = {
 };
 
 // Called
-const { StyleSheet, Dimensions, PixelRatio } = React;
-
+const { StyleSheet, Dimensions, PixelRatio } = ReactNative;
+const{Component}=React;
 
 // Colors
 const DARK_PRIMARY = '#2579A2'; // '#0277BD'; //
@@ -170,7 +183,7 @@ const customeStyle = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 8,
-  },
+    },
   row: {
     flexDirection: 'row',
     width: SCREEN_WIDTH,
@@ -350,6 +363,55 @@ const questionrow = StyleSheet.create({
 });
 
 
+const AccountActivationStep = StyleSheet.create({
+   header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    opacity: 1,
+    marginTop:16,
+    width: SCREEN_WIDTH,
+    textAlign: 'left',
+    marginLeft:8,
+    textAlignVertical: 'center',
+  },
+   compulsory_chlng_name: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 1,
+    marginTop:4,
+    width: SCREEN_WIDTH,
+    marginLeft:24,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+     optional_chlng_name: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 1,
+    marginLeft:16,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+    seprator: {
+    width: SCREEN_WIDTH,
+    backgroundColor: '#fff',
+    height: 2,
+    opacity: 1,
+  },
+  title: {
+    fontSize: 24,
+    color: '#fff',
+    opacity: 1,
+    height: 40,
+    marginTop:8,
+    marginBottom:8,
+    width: SCREEN_WIDTH-32,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+});
+
 
 
 const appointmentrow = StyleSheet.create({
@@ -512,22 +574,19 @@ const notification = StyleSheet.create({
                                       
       
   },
-   bold: {         
+    bold: {         
     fontSize: 22,
     width: SCREEN_WIDTH-48,
     color: BLACK_TEXT_COLOR,
     opacity:1,
-     textAlign:'right',
+    textAlign:'right',
     fontWeight: 'bold', 
     marginLeft:8,
     marginRight:8,
   },
   amountContainer:{
     justifyContent:'flex-end',
-   flex:3,
-                                      
-                                       
-                      
+    flex:3,                      
   },
     htmlstyle: {
     fontSize: 20,
@@ -977,7 +1036,7 @@ const loadStyle = StyleSheet.create({
   },
   relid_wrap: {
     alignItems: 'center',
-    top: 205,
+    top:SCREEN_HEIGHT/4+5,
 
   },
   relid: {
@@ -992,7 +1051,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: 250,
+    top: SCREEN_HEIGHT/3,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,
@@ -1152,6 +1211,17 @@ const nav = {
 };
 
 
+const linkStyle = StyleSheet.create({
+   text:{
+     textAlign:'center',
+     marginTop:5,
+     padding:5,
+     textDecorationLine:'underline',
+     color:'white',
+     fontSize:15
+   }
+});
+
 
 const activationStyle = StyleSheet.create({
   container: {
@@ -1165,6 +1235,18 @@ const activationStyle = StyleSheet.create({
     left: 0,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
+  },
+  loadertext: {
+   position: 'absolute',
+    top:SCREEN_HEIGHT/2,
+     fontSize: 16,
+     width:SCREEN_WIDTH,
+    color: TEXT_COLOR,
+    opacity:1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 10,
+   
   },
   bgcolorizer: {
     position: 'absolute',
@@ -1240,6 +1322,7 @@ const activationStyle = StyleSheet.create({
     fontSize: 22,
     color: TEXT_COLOR,
     textAlign: 'center',
+    backgroundColor:null,
   },
   textinput_lead: {
     flex: 1,
@@ -1277,7 +1360,9 @@ module.exports = {
   transforms,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
+  SCREEN_HEIGHT_RATIO,
   customeStyle,
+  AccountActivationStep,
   appointmentrow,
   notification,
   addappointment,
@@ -1290,6 +1375,7 @@ module.exports = {
   loadspd: LOADSPEED,
   controlStyle,
   activationStyle,
+  linkStyle,
   colors,
   statusBarStyle,
   text,

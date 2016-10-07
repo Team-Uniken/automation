@@ -1,4 +1,5 @@
-var React = require('react-native');
+var ReactNative = require('react-native');
+var React = require('react');
 var Skin = require('../Skin');
 
 
@@ -9,7 +10,7 @@ var {
     Text,
     Image,
 	   TouchableHighlight,
-    } = React;
+    } = ReactNative;
 
 var Toolbar = React.createClass({
   render() {

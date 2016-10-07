@@ -3,15 +3,20 @@
 /*
  ALWAYS NEED
  */
-import React from 'react-native';
+import ReactNative from 'react-native';
+import React from 'react';
 import Skin from '../../Skin';
 import Main from '../Main';
 import TouchID from 'react-native-touch-id';
+//import Machine1 from '../TwoFactorAuthMachine';
+
 /*
  CALLED
  */
+import PatternLock from '../../Scenes/PatternLock'
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
+//import Link from '../Link';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
@@ -20,6 +25,9 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 let responseJson;
 let obj;
 let savedpass;
+let subscription;
+let chlngJson;
+let nextChlngName;
 const {
   Text,
   ScrollView,
@@ -27,14 +35,17 @@ const {
   View,
   Platform,
   Animated,
+  DeviceEventEmitter,
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
   Alert,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
 
 
-class PasswordVerification extends React.Component {
+class PasswordVerification extends Component {
   constructor(props) {
     super(props);
     /*
@@ -84,55 +95,140 @@ class PasswordVerification extends React.Component {
     passAttempts: 5,
     Challenge: this.props.url.chlngJson,
     failureMessage: '',
+    pattern : false,
     };
+    
+    this.onSetPattern = this.onSetPattern.bind(this);
+    this.onCheckChallengeResponseStat.bind(this);
+    this.onForgotPasswordClick = this.onForgotPasswordClick.bind(this);
   }
   
+  componentWillMount(){
+    // if(Platform.OS === "android"){
+    //       if(Main.dnaPasswd != null && Main.dnaPasswd != undefined){
+    //           this.state.inputPassword = Main.dnaPasswd;
+    //           this.checkPassword();
+    //       }
+    //       else{
+    //         InteractionManager.runAfterInteractions(() => {
+    //             this.refs.inputPassword.focus();
+    //         });
+    //       }
+    // } 
+  }
+
   componentDidMount() {
     obj = this;
     
-    
-    AsyncStorage.getItem("passwd").then((value) => {
-                                        if(value){
-                                        if(value == "empty"){
-                                        //PROCEED NORMAL WAY.
-                                        InteractionManager.runAfterInteractions(() => {
-                                                                                this.refs.inputPassword.focus();
-                                                                                });
-                                        }else{
-                                        
-                                            if(Platform.OS == "ios"){
-                                                if(Main.isTouchVerified === "YES"){
-                                                        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
-                                                                                    if (response) {
-                                                                                    console.log('immediate response of encrypt data packet is is' + response[0].error);
-                                                                                    this.state.inputPassword = response[0].response;
-                                                                                    this.checkPassword();
-                                                                                    } else {
-                                                                                    console.log('immediate response is' + response[0].response);
-                                                                                    // alert(response[0].error);
-                                                                                    
-                                                                                    }
+    if(Platform.OS === "ios"){
+        AsyncStorage.getItem("passwd").then((value) => {
+                                            if(value){
+                                                if(value === "empty"){
+                                                //PROCEED NORMAL WAY.
+                                                InteractionManager.runAfterInteractions(() => {
+                                                                                        this.refs.inputPassword.focus();
+                                                                                        });
+                                                }else{
+                                                    if(Main.isTouchVerified === "YES"){
+                                                            ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
+                                                                                        if (response) {
+                                                                                        console.log('immediate response of encrypt data packet is is' + response[0].error);
+                                                                                        this.state.inputPassword = response[0].response;
+                                                                                        this.checkPassword();
+                                                                                        } else {
+                                                                                        console.log('immediate response is' + response[0].response);
+                                                                                        // alert(response[0].error);
+                                                                                        
+                                                                                        }
+                                                                                        });
+                                                      }else{
+                                                        InteractionManager.runAfterInteractions(() => {
+                                                                                              this.refs.inputPassword.focus();
+                                                                                              });
+                                                      }
+                                                }
+                                            }else{
+                                               InteractionManager.runAfterInteractions(() => {
+                                                                                    this.refs.inputPassword.focus();
                                                                                     });
-                                                  }else{
-                                                  InteractionManager.runAfterInteractions(() => {
-                                                                                          this.refs.inputPassword.focus();
-                                                                                          });
-                                                  }
                                             }
-                                            else if(Platform.OS == "android"){
-                                              this.state.inputPassword = value;
-                                              this.checkPassword();
-                                            }
-                                        }
-                                        }else{
-                                        InteractionManager.runAfterInteractions(() => {
-                                                                                this.refs.inputPassword.focus();
-                                                                                });
-                                        }
-                                        
-                                        }).done();
+                                            
+                                            }).done();
+    }
+    else if (Platform.OS === "android") {
+
+      if (subscription) {
+        subscription.remove();
+      }
+      
+      subscription = DeviceEventEmitter.addListener(
+        'onCheckChallengeResponseStatus',
+        this.onCheckChallengeResponseStat
+      );
+
+      if (Main.isPatternEnabled && Main.dnaPasswd != null && Main.dnaPasswd != undefined) {
+        this.state.inputPassword = Main.dnaPasswd;
+        this.checkPassword();
+      }
+      else {
+        Main.dnaPasswd = null;
+        InteractionManager.runAfterInteractions(() => {
+          this.refs.inputPassword.focus();
+        });
+      }
+    } 
   }
   
+ 
+  onSetPattern(data){
+    if(subscription){
+      subscription.remove();
+    }
+    subscription = DeviceEventEmitter.addListener(
+      'onCheckChallengeResponseStatus',
+      this.onCheckChallengeResponseStat
+    );
+    //alert("onSetPattern");
+
+    // this.setState({
+    //   pattern:false,
+    // });
+    this.checkPassword();
+    Main.dnaPasswd = null;
+  }
+
+  onCheckChallengeResponseStat(args){
+     //Events.trigger('hideLoader', true);
+    // alert("In pass checkResponse");
+     if(subscription){
+       subscription.remove();
+     }
+     const res = JSON.parse(args.response);
+     if(res.errCode == 0){
+        var statusCode = res.pArgs.response.StatusCode;
+        if(statusCode!=100){
+         // alert("removing data statusCode = "+  statusCode)
+         if(Platform.OS === "android"){
+          let keys = ['userData','setPattern'];
+          AsyncStorage.multiRemove(keys);
+          Main.dnaPasswd = null;
+         }
+         else{
+           //IOS code here
+         }
+        }
+     }else{
+      // alert("removing data errorCode = " + res.errCode);
+      if(Platform.OS === "android"){
+        let keys = ['userData','setPattern'];
+        AsyncStorage.multiRemove(keys);
+      }
+      else{
+        //IOS code here
+      }
+     }
+  }
+
   onPasswordChange(event) {
     this.setState({ inputPassword: event.nativeEvent.text });
   }
@@ -143,6 +239,7 @@ class PasswordVerification extends React.Component {
     }
     return 'Continue';
   }
+
   updateProgress() {
     setTimeout((function(){
                 this.setState({ progress: this.state.progress + (0.4 * Skin.loadspd) });
@@ -220,31 +317,80 @@ class PasswordVerification extends React.Component {
   decidePlatformAndShowAlert(){
     const pw = this.state.inputPassword;
     if (pw.length > 0) {
-    AsyncStorage.getItem("UseTouchId").then((value) => {
-                                            if(value === "NO"){
-                                              this.checkPassword();
-                                            }else{
-                                                if(Platform.OS === 'ios'){
-                                                  this.onVerifyTouchIdSupport();
-                                                } else {
-                                                //this.showSetPatternAlert();
-                                                  this.checkPassword();
-                                              }
-                                            }
- 
-                                        }).done();
+      if(Platform.OS === "android"){
+        AsyncStorage.getItem("setPattern").then((flag) => {
+          if(flag === "false"){
+            //alert("setPattern = false");
+            this.checkPassword();
+            Main.dnaPasswd = null;
+          }
+          else{
+            this.showSetPatternAlert();
+          }
+        }).done(); 
+      }else{
+          AsyncStorage.getItem("UseTouchId").then((value) => {
+                                                  if(value === "NO"){
+                                                    this.checkPassword();
+                                                  }else{
+                                                      if(Platform.OS === 'ios'){
+                                                        this.onVerifyTouchIdSupport();
+                                                      } 
+                                                  }
+      
+                                              }).done();
+      }
     }else{
       alert('Please enter password');
     }
   }
-  
+
+  showSetPatternAlert() {
+      Alert.alert(
+        'Message',
+        'Do you want to enable pattern feature?',
+        [
+          {
+            text: 'NO',
+            onPress: () => {
+              console.log('Cancel Pressed');
+              try {
+                AsyncStorage.setItem("setPattern", "false", () => {
+                  this.checkPassword();
+                  Main.dnaPasswd = null;
+                });
+              }
+              catch (e) { }
+            }
+          },
+          {
+            text: 'YES',
+            onPress: () => {
+              console.log('YES Pressed');
+              try {
+                AsyncStorage.setItem("setPattern", "true", () => {
+                  Main.dnaPasswd = this.state.inputPassword;
+                  this.setState({
+                    pattern:true
+                  });
+                });
+              }
+              catch (e) { }
+            }
+          },
+        ]
+      );
+  }
   
   checkPassword() {
-    const pw = this.state.inputPassword;
+    var pw = this.state.inputPassword;
     if (pw.length > 0) {
+     // alert(pw);
+         AsyncStorage.setItem("isPwdSet","YES");
       Main.dnaPasswd = pw;
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
+     // alert("Response Json = "+ JSON.stringify(responseJson));
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       alert('Please enter password');
@@ -268,13 +414,18 @@ class PasswordVerification extends React.Component {
   clearText(fieldName) {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
+
+  onForgotPasswordClick(){
+    Events.trigger("forgotPassowrd");
+  }
   
   render() {
-    return (
+    if(this.state.pattern === false){
+        return (
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
             <Animated.View style={[Skin.loadStyle.rid_wrap]}>
-            <View style={Skin.loadStyle.rid_center}>
+            <View style={[Skin.loadStyle.rid_center,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i]}>h</Text>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
@@ -300,6 +451,7 @@ class PasswordVerification extends React.Component {
             </View>
             </View>
             <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+            <Text style={Skin.linkStyle.text} onPress={this.onForgotPasswordClick}>Forgot Password ?</Text>
             <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
             style={Skin.activationStyle.button}
@@ -316,6 +468,10 @@ class PasswordVerification extends React.Component {
             <OpenLinks />
             </MainActivation>
             );
+    } else{
+      return (<PatternLock navigator={this.props.navigator} title="Verify Pattern"  
+              onSetPattern={this.onSetPattern} mode="set" />);
+    }
   }
 }
 

@@ -22,7 +22,7 @@ let responseJson;
 const {View, Text, TextInput, TouchableHighlight, ScrollView, } = ReactNative;
 const{Component} =  React;
 
-export default class QuestionVerification extends Component {
+export default class PostLoginQuestionVerification extends Component {
 
   constructor(props) {
     super(props);
@@ -98,55 +98,52 @@ export default class QuestionVerification extends Component {
   render() {
     return (
       <MainActivation navigator={this.props.navigator}>
-        <View
-          style={Skin.activationStyle.topGroup}
-        >
-          <Text style={Skin.activationStyle.counter}>
-            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-          </Text>
-          <Text style={Skin.activationStyle.title}>
-            Secret Question
-          </Text>
-          <Text style={Skin.activationStyle.info}>
-            {this.props.url.chlngJson.attempts_left} Attempts Left
-          </Text>
-          <Text style={Skin.activationStyle.info}>
-            {this.props.url.chlngJson.chlng_resp[0].challenge}
-          </Text>
+        <View style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
+          <View
+            style={Skin.activationStyle.topGroup}>
+            <Text style={Skin.activationStyle.title}>
+              Secret Question
+            </Text>
+            <Text style={Skin.activationStyle.info}>
+              {this.props.url.chlngJson.attempts_left} Attempts Left
+            </Text>
+            <Text style={Skin.activationStyle.info}>
+              {this.props.url.chlngJson.chlng_resp[0].challenge}
+            </Text>
 
-          <View style={Skin.activationStyle.input_wrap}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-              <TextInput
-                autoCorrect={false}
-                ref={'answer'}
-                placeholder={'Enter Secret Answer'}
-                onChange={this.onAnswerChange.bind(this)}
-                returnKeyType={'next'}
-                secureTextEntry={true}
-                keyboardType={'default'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
-                style={Skin.activationStyle.textinput}
-                onSubmitEditing={this.checkAnswer.bind(this)} />
+            <View style={Skin.activationStyle.input_wrap}>
+              <View style={Skin.activationStyle.textinput_wrap}>
+                <TextInput
+                  autoCorrect={false}
+                  ref={'answer'}
+                  placeholder={'Enter Secret Answer'}
+                  onChange={this.onAnswerChange.bind(this) }
+                  returnKeyType={'next'}
+                  secureTextEntry={true}
+                  keyboardType={'default'}
+                  placeholderTextColor={'rgba(255,255,255,0.7)'}
+                  style={Skin.activationStyle.textinput}
+                  onSubmitEditing={this.checkAnswer.bind(this) } />
+              </View>
+            </View>
+            <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+
+            <View style={Skin.activationStyle.input_wrap}>
+              <TouchableHighlight
+                style={Skin.activationStyle.button}
+                underlayColor={'#082340'}
+                onPress={this.checkAnswer.bind(this) }
+                activeOpacity={0.6}>
+                <Text style={Skin.activationStyle.buttontext}>
+                  {this.btnText() }
+                </Text>
+              </TouchableHighlight>
             </View>
           </View>
-          <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-
-          <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
-              style={Skin.activationStyle.button}
-              underlayColor={'#082340'}
-              onPress={this.checkAnswer.bind(this)}
-              activeOpacity={0.6}>
-              <Text style={Skin.activationStyle.buttontext}>
-                {this.btnText()}
-              </Text>
-            </TouchableHighlight>
-          </View>
         </View>
-        <OpenLinks />
       </MainActivation>
       );
   }
 }
 
-module.exports = QuestionVerification;
+module.exports = PostLoginQuestionVerification;

@@ -11,19 +11,20 @@ import Skin from '../Skin';
 /*
   CALLED
 */
+import Main from './Main';
 
 // Secondary Scenes
 
 // SECURITY SCENES
 import Activation from './challenges/Activation';
-import UpdatePasswordSet from './challenges/UpdatePasswordSet';
-import Otp from './challenges/Otp';
-import QuestionSet from './challenges/UpdateQuestionSet';
-import QuestionVerification from './challenges/QuestionVerification';
+import PasswordSet from './challenges/PasswordSet';
+import PostLoginAccessCode from './challenges/PostLoginAccessCode';
+import QuestionSet from './challenges/QuestionSet';
+import PostLoginQuestionVerification from './challenges/PostLoginQuestionVerification';
 import UserLogin from './challenges/UserLogin';
 import DeviceBinding from './challenges/DeviceBinding';
 import DeviceName from './challenges/DeviceName';
-import PasswordVerification from './challenges/PasswordVerification';
+import PostLoginPasswordVerification from './challenges/PostLoginPasswordVerification';
 import ScreenHider from './challenges/ScreenHider';
 
 // COMPONENTS
@@ -32,7 +33,7 @@ import ConnectionProfile from '../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from './Constants';
 
-var Main = require('./Main');
+
 
 /*
   Instantiaions
@@ -42,6 +43,9 @@ let challengeJson;
 let challengeJsonArr;
 let currentIndex;
 let subscriptions;
+let challengeName;
+
+let onGetAllChallengeEvent;
 let obj;
 let screenId;
 const {
@@ -52,16 +56,20 @@ const {
   Platform,
 } = ReactNative;
 
-const{Component}=React;
+const{
+  Component
+} =  React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-class UpdateAuthMachine extends Component {
+class PostLoginAuthMachine extends Component {
   constructor(props) {
     super(props);
-    console.log('---------- Update Machine param ');
+    console.log('---------- PostLoginAuthMachine param ');
+    this.stateNavigator = null;
+    this.showNextChallenge = this.showNextChallenge.bind(this);
   }
 
   componentWillMount() {
@@ -76,24 +84,35 @@ class UpdateAuthMachine extends Component {
       challengeJson=saveChallengeJson;
     }
     challengeJsonArr = challengeJson.chlng;
+
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
+
     subscriptions = DeviceEventEmitter.addListener(
-      'onUpdateChallengeStatus',
-      this.onUpdateChallengeResponseStatus.bind(this)
+      'onCheckChallengeResponseStatus',
+      this.onCheckChallengeResponseStatus.bind(this)
     );
+
+    if(onGetAllChallengeEvent){
+      onGetAllChallengeEvent.remove();
+    }
+
+    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+      'onGetAllChallengeStatus',
+      this.onGetAllChallengeStatus.bind(this)
+    );
+
+     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
 
   componentDidMount() {
-       screenId = 'Main';
-    // this.props.screenId;
-    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+    screenId = 'UserLogin';
   }
 
   componentWillUnmount() {
-    console.log('----- UpdateAuthMachine unmounted');
+    console.log('----- PostLoginAuthMachine unmounted');
   }
 
   onErrorOccured(response){
@@ -103,10 +122,10 @@ class UpdateAuthMachine extends Component {
       console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
       let nextChlngName = chlngJson.chlng[0].chlng_name;
       if (chlngJson != null) {
-        console.log('UpdateAuthMachine - onErrorOccured - chlngJson != null');
+        console.log('PostLoginAuthMachine - onErrorOccured - chlngJson != null');
         //obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
         obj.props.navigator.push({
-          id: 'UpdateMachine',
+          id: 'PostLoginAuthMachine',
           title: nextChlngName,
           url: {
             chlngJson,
@@ -117,12 +136,11 @@ class UpdateAuthMachine extends Component {
     }
   }
 
- 
-
-  onUpdateChallengeResponseStatus(e) {
+  onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
-
+    console.log("onCheckChallengeResponse ----- hide loader");
     Events.trigger('hideLoader', true);
+
     // Unregister All Events
     // We can also unregister in componentWillUnmount
     subscriptions.remove();
@@ -132,87 +150,64 @@ class UpdateAuthMachine extends Component {
 
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
-      console.log('UpdateAuthMachine - statusCode ' + statusCode);
+      console.log('PostLoginAuthMachine - statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
-          console.log('UpdateAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
+          console.log('PostLoginAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
-            console.log('UpdateAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+            console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
             //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
             this.props.navigator.push({
-              id: 'UpdateMachine',
-              title: nextChlngName,
+              id: 'PostLoginAuthMachine',
+              title: "nextChlngName",
               url: {
-                chlngJson,
-                screenId: nextChlngName,
+                "chlngJson": chlngJson,
+                "screenId": nextChlngName,
               },
+              challengesToBeUpdated: [challengeName],
             });
           }
         } else {
-          console.log('UpdateAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
-          const pPort = res.pArgs.pxyDetails.port;
-          if (pPort > 0) {
-            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
-          }
-            alert(res.pArgs.response.StatusMsg);
-        
-          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-          
+          console.log('PostLoginAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
+          this.getChallengesByName(this.props.challengesToBeUpdated[0]);
         }
       } else {
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
-              onPress: () => {
-                        var chlngJson;
-          if(res.pArgs.response.ResponseData==null){
-          chlngJson = saveChallengeJson;
-          }else{
-          chlngJson = res.pArgs.response.ResponseData;
-          }
-                                         
-                                        
-                              const currentChlng = challengeJsonArr[--currentIndex];
-                                         for(var i = 0; i < chlngJson.chlng.length; i++){
-                                         var chlng = chlngJson.chlng[i];
-                                         if(chlng.chlng_name === currentChlng.chlng_name){
-                                         
-                                         }else{
-                                         chlngJson.chlng.splice(i, 1);
-                                         i--;
-                                         }
-                                         }
-                                         
-      
-                                         
+            onPress: () => {
+              var chlngJson;
+              if (res.pArgs.response.ResponseData == null) {
+                chlngJson = saveChallengeJson;
+              } else {
+                chlngJson = res.pArgs.response.ResponseData;
+              }
 
-          const nextChlngName = chlngJson.chlng[0].chlng_name;
-          if (chlngJson != null) {
-            console.log('UpdateAuthMachine - onUpdateChallengeResponseStatus - chlngJson != null');
-            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-            this.props.navigator.push({
-              id: 'UpdateMachine',
-              title: nextChlngName,
-              url: {
-                chlngJson,
-                screenId: nextChlngName,
-              },
-            });
-          }
+              const nextChlngName = chlngJson.chlng[0].chlng_name;
+              if (chlngJson != null) {
+                console.log('PostLoginAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
 
-
-              },
+                this.props.navigator.push({
+                  id: 'PostLoginAuthMachine',
+                  title: nextChlngName,
+                  url: {
+                    chlngJson,
+                    screenId: nextChlngName,
+                    challengesToBeUpdated: [challengeName],
+                  },
+                });
+              }
+            },
             style: 'cancel',
           }]
         );
       }
     } else {
       console.log(e);
-      alert('Internal system error occurred.'+res.errCode);
+      alert('Internal system error occurred.' + res.errCode);
     }
   }
 
@@ -233,7 +228,7 @@ class UpdateAuthMachine extends Component {
     
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
-
+   // alert("response = "+ JSON.stringify(args));
     const i = challengeJsonArr.indexOf(currentIndex);
     challengeJsonArr[i] = args.response;
     currentIndex ++;
@@ -251,11 +246,12 @@ class UpdateAuthMachine extends Component {
       });
     } else {
       // Call checkChallenge
-      obj.callUpdateChallenge();
+      obj.callCheckChallenge();
     }
   }
 
   renderScene(route, nav) {
+    obj.stateNavigator = nav;
     const id = route.id;
     console.log('---------- renderScene ' + id + ' url ' + route.url);
 
@@ -270,14 +266,14 @@ class UpdateAuthMachine extends Component {
       return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
-        return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
+        return (<PostLoginPasswordVerification navigator={nav} url={route.url} title={route.title} />);
       }
-      return (<UpdatePasswordSet navigator={nav} url={route.url} title={route.title} />);
+      return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'otp') {
-      return (<Otp navigator={nav} url={route.url} title={route.title} />);
+      return (<PostLoginAccessCode navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
-        return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
+        return (<PostLoginQuestionVerification navigator={nav} url={route.url} title={route.title} />);
       }
       return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'devname') {
@@ -295,7 +291,6 @@ class UpdateAuthMachine extends Component {
   render() {
     return (
       <Navigator
-        ref={(ref) => { this.stateNavigator = ref; return ref; }}
         renderScene={this.renderScene}
         initialRoute={{
           id: this.props.url.screenId,
@@ -367,11 +362,64 @@ class UpdateAuthMachine extends Component {
 
   }
 
-  callUpdateChallenge() {
+  onGetAllChallengeStatus(e){
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+   
+   
+        
+        const chlngJson = res.pArgs.response.ResponseData;
+        
+        //var arrChlng = chlngJson.chlng;
+        var selectedChlng;
+        var status = 0;
+        for(var i = 0; i < chlngJson.chlng.length; i++){
+          var chlng = chlngJson.chlng[i];
+          if(chlng.chlng_name === challengeName){
+            
+          }else{
+            chlngJson.chlng.splice(i, 1);
+            i--;
+          }
+        }
+      
+        const nextChlngName = chlngJson.chlng[0].chlng_name;
+        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    }else {
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
+    
+  }
+  
+  getChallengesByName(chlngName){
+    challengeName = chlngName;
+    Events.trigger('showLoader', true);
+    AsyncStorage.getItem('userId').then((value) => {
+                                        ReactRdna.getAllChallenges(value,(response) => {
+                                                                   if (response) {
+                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
+                                                                   }else{
+                                                                   console.log('s immediate response is'+response[0].error);
+                                                                   }
+                                                                   })
+                                        }).done();
+  }
+
+  callCheckChallenge() {
+    console.log("onCheckChallengeResponse ----- show loader");
     Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.updateChallenges(JSON.stringify(challengeJson), value, (response) => {
+      ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
         if (response[0].error === 0) {
           console.log('immediate response is' + response[0].error);
         } else {
@@ -384,4 +432,4 @@ class UpdateAuthMachine extends Component {
 }
 
 
-module.exports = UpdateAuthMachine;
+module.exports = PostLoginAuthMachine;

@@ -3,8 +3,8 @@
 /*
   ALWAYS NEED
 */
-import ReactNative from 'react-native';
 import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
 /*
@@ -24,9 +24,9 @@ const {
   TouchableHighlight,
 } = ReactNative;
 
-const{Component} =  React;
+const{Component} = React;
 
-class Activation extends Component{
+class PostLoginAccessCode extends Component{
 
 
   constructor(props){
@@ -123,4 +123,4 @@ btnText(){
 	}
 }
 
-module.exports = Activation;
+module.exports = PostLoginAccessCode;

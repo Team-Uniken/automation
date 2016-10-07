@@ -4,7 +4,8 @@
  */
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
@@ -33,14 +34,17 @@ var {
   TouchableHighlight,
   AsyncStorage,
   Alert,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
+
 var styles = Skin.controlStyle;
 
 
 
 var Obj;
 
-class ControlPanel extends React.Component{
+class ControlPanel extends Component{
   constructor(props){
     super(props);
   }

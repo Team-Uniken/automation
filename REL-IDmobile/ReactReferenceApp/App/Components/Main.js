@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
@@ -23,12 +24,16 @@ const {
   TouchableWithoutFeedback,
   StyleSheet,
   TextInput,
-} = React;
+} = ReactNative;
+
+const{Component} =  React;
+
+let _toggleDrawer;
 
 /*
   Instantiaions
 */
-export default class Main extends React.Component {
+export default class Main extends Component {
 
   /**
    * [constructor description]
@@ -42,6 +47,10 @@ export default class Main extends React.Component {
     password:'',
       baseUrl:'',};
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.cancelCreds = this.cancelCreds.bind(this);
+    this.checkCreds = this.checkCreds.bind(this);
+    this.selectedDialogOp = false;
+   // this.cancelCreds = ;
     this.state.navBar                 = {};
 
     this.state.navBar.title           = this.props.navBar.title || '';
@@ -72,6 +81,8 @@ export default class Main extends React.Component {
       open: this.props.drawerState.open || false,
       disabled: this.props.drawerState.disabled || false,
     };
+
+    _toggleDrawer = this.toggleDrawer;
     
   }
   open() {
@@ -88,12 +99,10 @@ export default class Main extends React.Component {
   
   onGetCredentialsStatus(domainUrl)
   {
-    
+    this.state.baseUrl = domainUrl.response;
     this.open();
-    this.setState({
-                  baseUrl: domainUrl.response
-                  });
   }
+
   checkCreds() {
     
     const user = this.state.userName;
@@ -107,8 +116,7 @@ export default class Main extends React.Component {
                                }else{
                                console.log('immediate response is'+response[0].error);
                                }
-                               })
-      this.close();
+                               });
     }else{
       alert('Please enter valid data');
     }
@@ -123,10 +131,9 @@ export default class Main extends React.Component {
                              }else{
                              console.log('immediate response is'+response[0].error);
                              }
-                             })
-    
-    this.close();
+                             });
   }
+
   onUserChange(event) {
     var newstate = this.state;
     newstate.userName = event.nativeEvent.text;
@@ -163,11 +170,8 @@ export default class Main extends React.Component {
   
   onGetCredentialsStatus(domainUrl)
   {
-    
+    this.state.baseUrl = domainUrl.response;
     this.open();
-    this.setState({
-                  baseUrl: domainUrl.response
-                  });
   }
   
   /**
@@ -238,14 +242,28 @@ export default class Main extends React.Component {
         {this.props.children}
         <BottomMenu navigator={this.props.navigator} bottomMenu={this.props.bottomMenu} />
             <Modal
+            onPress={()=>{
+              this.setState({
+                            userName:'',
+                            password:'',
+                            open: false
+                          });this.cancelCreds();
+            }}
             style={styles.modalwrap}
             overlayOpacity={0.75}
             offset={100}
             open={this.state.open}
             modalDidOpen={() => console.log('modal did open')}
-            modalDidClose={() => this.setState({
-                                               open: false
-                                               })}>
+            modalDidClose={() => {
+                                    if(this.selectedDialogOp){
+                                      this.selectedDialogOp = false;
+                                      this.checkCreds();
+                                    }
+                                    else{
+                                      this.selectedDialogOp = false;
+                                      this.cancelCreds();
+                                    }
+                                 }}>
             <View style={styles.modalTitleWrap}>
             <Text style={styles.modalTitle}>
             401 Authentication{'\n'}{this.state.baseUrl}
@@ -262,6 +280,7 @@ export default class Main extends React.Component {
             onChange={this.onUserChange.bind(this)}
             placeholderTextColor={Skin.colors.HINT_COLOR}
             />
+            <View style={styles.underline}></View>
             <TextInput
             autoCorrect={false}
             ref='password'
@@ -272,17 +291,20 @@ export default class Main extends React.Component {
             onChange={this.onPasswordChange.bind(this)}
             placeholderTextColor={Skin.colors.HINT_COLOR}
             />
-            <View style={styles.border}></View>
+            <View style={styles.underline}></View>
             <View style={{
             flex: 1,
             flexDirection: 'row'
             }}>
             <TouchableHighlight
-            onPress={() => this.setState({
+            onPress={() => {
+                            this.selectedDialogOp = false;
+                            this.setState({
                                          userName:'',
                                          password:'',
                                          open: false
-                                         }),this.cancelCreds.bind(this)}
+                                         });
+                            }}
             underlayColor={Skin.colors.REPPLE_COLOR}
             style={styles.modalButton}>
             <Text style={styles.modalButtonText}>
@@ -290,7 +312,10 @@ export default class Main extends React.Component {
             </Text>
             </TouchableHighlight>
             <TouchableHighlight
-            onPress={this.checkCreds.bind(this)}
+            onPress={()=>{
+                           this.selectedDialogOp = true;
+                           this.close();
+                        }}
             underlayColor={Skin.colors.REPPLE_COLOR}
             style={styles.modalButton}>
             <Text style={styles.modalButtonText}>
@@ -350,11 +375,11 @@ Main.defaultProps = {
     visible: true,
     active: 1,
   },
-  toggleDrawer: this.toggleDrawer,
+  toggleDrawer: _toggleDrawer,
 };
 const styles = StyleSheet.create({
                                  modalwrap: {
-                                 height: 160,
+                                 height: 180,
                                  flexDirection: 'column',
                                  borderRadius: 15,
                                  backgroundColor: '#fff',
@@ -384,16 +409,22 @@ const styles = StyleSheet.create({
                                  textAlign: 'center',
                                  },
                                  modalInput: {
-                                 textAlign: 'left',
+                                 textAlign: 'center',
                                  color: Skin.colors.PRIMARY_TEXT,
-                                 height: 35,
+                                 height: 32,
                                  fontSize: 16,
+                               
+                                 backgroundColor:null
                 
                                  },
                                  border: {
                                  height: 1,
+                                 marginBottom:16,
                                  backgroundColor: Skin.colors.DIVIDER_COLOR,
-                                 marginBottom: 10,
+                                 },
+                                 underline: {
+                                 height: 2,
+                                 backgroundColor: Skin.colors.DIVIDER_COLOR,
                                  },
                                  DeviceListView: {
                                  justifyContent: 'center',

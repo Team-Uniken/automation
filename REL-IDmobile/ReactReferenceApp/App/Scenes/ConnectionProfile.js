@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Modal from 'react-native-simple-modal';
 import Skin from '../Skin';
 import Main from '../Components/Main';
@@ -8,14 +9,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-const {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, } = React;
-
+const {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, } = ReactNative;
+const {Component}=React;
 let CONNECTION_PROFILES_DATA = [];
 let CURRENT_CONNECTION_PROFILES_DATA = [];
 
 let obj;
 
-class ConnectionProfileScene extends React.Component {
+class ConnectionProfileScene extends Component {
   
   constructor(props) {
     super(props);
@@ -403,8 +404,9 @@ class ConnectionProfileScene extends React.Component {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         modalInput: {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         textAlign: 'left',
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         color: Skin.colors.PRIMARY_TEXT,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 48,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 32,
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         fontSize: 16,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        backgroundColor:null,
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         },
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         border: {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         height: 1,

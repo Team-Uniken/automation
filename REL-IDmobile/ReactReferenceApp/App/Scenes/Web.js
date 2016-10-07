@@ -1,12 +1,14 @@
 'use strict';
 
-import React from 'react-native';
+import React from 'react';
+import ReactNative from 'react-native';
 import Skin from '../Skin';
 
 /*
   CALLED
 */
 import Main from '../Components/Main';
+import WebViewAndroid from '../android_native_modules/nativewebview';
 import Communications from 'react-native-communications';
 
 const {
@@ -16,7 +18,10 @@ const {
   TouchableOpacity,
   View,
   WebView,
-  WebViewAndroid,
+} = ReactNative;
+
+const{
+  Component
 } = React;
 
 const WEBVIEW_REF = 'webview';
@@ -24,7 +29,7 @@ const WEBVIEW_REF = 'webview';
 const DEFAULT_URL = 'http://www.google.com';
 
 
-export default class Web extends React.Component {
+export default class Web extends Component {
 
   constructor(props) {
     super(props);
@@ -90,7 +95,7 @@ export default class Web extends React.Component {
 
       if(!this.props.secure) {
       return (
-        <WebView
+        <WebViewAndroid
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
@@ -101,14 +106,12 @@ export default class Web extends React.Component {
           //onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onLoad={()=>{console.log('loaded')}}
           scalesPageToFit={this.state.scalesPageToFit}
-          //source={this.props.source}
-          //proxy={this.props.proxy}
           javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
         />
       );
     }else{
       return (
-        <WebView
+        <WebViewAndroid
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
@@ -118,9 +121,9 @@ export default class Web extends React.Component {
           decelerationRate="normal"
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onLoad={()=>{console.log('loaded')}}
+          webViewClient={{params:null}}
           scalesPageToFit={this.state.scalesPageToFit}
-//          source={this.props.source}
-          proxy={this.props.proxy}
+          proxy={{host:"127.0.0.1",port:this.props.proxy}}
           javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
         />
       );

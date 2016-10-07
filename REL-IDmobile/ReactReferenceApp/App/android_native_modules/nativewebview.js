@@ -1,4 +1,5 @@
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var invariant = require('invariant');
 var keyMirror = require('keymirror');
 var merge = require('merge');
@@ -13,12 +14,13 @@ var {
   View,
   WebView,
   requireNativeComponent,
-  PropTypes,
   DeviceEventEmitter,
   NativeModules: {
     WebViewBridgeManager
   }
-} = React;
+} = ReactNative;
+
+const{PropTypes} = React;
 
 var RCT_WEBVIEWBRIDGE_REF = 'webviewbridge';
 
@@ -45,6 +47,8 @@ var WebViewBridge = React.createClass({
      * Sets the proxy for this WebView. 
      */
     proxy: PropTypes.object,
+
+    webViewClient: PropTypes.object,
   },
 
    
