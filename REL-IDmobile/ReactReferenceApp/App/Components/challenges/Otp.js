@@ -25,7 +25,7 @@ const {
 } = ReactNative;
 
 const{Component} =  React;
-
+var Camera = require("react-native-camera");
 class Activation extends Component{
 
 
@@ -61,6 +61,25 @@ btnText(){
 	}else{
 		return "Continue";
 	}}
+  
+  scanQR() {
+    var test = this._onSucess;
+    Events.on('onQRSuccess', 'onQRSuccess', this.onQRSuccess);
+    Events.on('onQRCancel', 'onQRCancel', this.onQRCancel);
+    Events.trigger('scanQRCode', test);
+  }
+  
+  onQRSuccess(result){
+    Events.rm('onQRSuccess', 'onQRSuccess');
+    Events.rm('onQRCancel', 'onQRCancel');
+    alert(' QR success :  '+result);
+  }
+  
+  onQRCancel(){
+    Events.rm('onQRSuccess', 'onQRSuccess');
+    Events.rm('onQRCancel', 'onQRCancel');
+    alert('You clicked Cancel');
+  }
 
 
 	render() {
@@ -105,6 +124,20 @@ btnText(){
           </View>
         </View>
         <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
+            
+            <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+            style={Skin.activationStyle.button}
+            underlayColor={'#082340'}
+            onPress={this.scanQR.bind(this)}
+            activeOpacity={0.6}
+            >
+            <Text style={Skin.activationStyle.buttontext}>
+            {'Scan QRCode'}
+            </Text>
+            </TouchableHighlight>
+            </View>
+            
         <View style={Skin.activationStyle.input_wrap}>
           <TouchableHighlight
             style={Skin.activationStyle.button}
