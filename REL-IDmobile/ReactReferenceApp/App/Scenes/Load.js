@@ -6,6 +6,7 @@
 import ReactNative from 'react-native';
 import React from 'react';
 import Skin from '../Skin';
+import Events from 'react-native-simple-events';
 /*
  CALLED
  */
@@ -87,6 +88,7 @@ class Load extends Component {
    //Push notification code
   
     componentWillMount(){
+       Events.on('scanQRCode', 'scanQRCode', this.scanQRCode);
       if(Platform.OS === 'ios'){
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
@@ -613,6 +615,15 @@ class Load extends Component {
   doNavigation() {
     console.log('doNavigation:');
     this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+  }
+  
+  scanQRCode(args) {
+        Obj.props.navigator.push({
+                                id: 'QRCode',
+                                title: 'QRCode',
+                                });
+    
+    
   }
   
   render() {

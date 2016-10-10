@@ -34,7 +34,7 @@ import QuestionVerification from './App/Components/challenges/QuestionVerificati
 import UserLogin from './App/Components/challenges/UserLogin';
 import DeviceBinding from './App/Components/challenges/DeviceBinding';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
-
+import QRCodeScreenScene from './App/Components/challenges/QRCodeScreen';
 // COMPONENTS
 
 
@@ -81,7 +81,6 @@ round: 1000,
 
 
 class ReactRefApp extends Component {
-  
   
   renderScene(route, nav) {
     let id = route.id;
@@ -172,9 +171,14 @@ class ReactRefApp extends Component {
     }else if (id === 'NotificationMgmt') {
       return (<NotificationMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
     }
-    
-    return (<Text>Error</Text>);
+    else if (id === 'QRCode') {
+      return (<QRCodeScreenScene navigator={nav} title={route.title} />);
+    }
+    else{
+      alert("ID not defined");
+    }
   }
+
   
   render() {
     return (

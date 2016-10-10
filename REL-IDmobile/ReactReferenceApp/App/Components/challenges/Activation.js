@@ -21,6 +21,9 @@ const {
   InteractionManager,
   Platform,
   AsyncStorage,
+  StyleSheet,
+  AlertIOS,
+  
 } = ReactNative;
 
 
@@ -28,59 +31,21 @@ const{
   Component
 } =  React;
 
+var Camera = require("react-native-camera");
+
 export default class Activation extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       activatonCode: '',
+    showCamera: true,
+    cameraType: Camera.constants.Type.back,
     };
-    /*
-    this._props = {
-      url: {
-        chlngJson: {
-          chlng_idx: 1,
-          sub_challenge_index: 0,
-          chlng_name: 'actcode',
-          chlng_type: 2,
-          challengeOperation: 0,
-          chlng_prompt: [
-            ['2sm88b4'],
-          ],
-          chlng_info: [
-            {
-              key: 'Prompt label',
-              value: 'Verification Key',
-            }, {
-              key: 'Response label',
-              value: 'Activation Code',
-            }, {
-              key: 'Description',
-              value: 'Match verification key and enter activation code',
-            }, {
-              key: 'Reading',
-              value: 'Activation verification challenge',
-            },
-          ],
-          chlng_resp: [
-            {
-              challenge: '2sm88b4',
-            },
-          ],
-          challenge_response_policy: [],
-          chlng_response_validation: false,
-          attempts_left: 3,
-        },
-        chlngsCount: 1,
-        currentIndex: 1,
-      },
-    };
-  */
   }
 
   onActivationCodeChange(event) {
     this.setState({ activatonCode: event.nativeEvent.text });
-    //console.log(event.nativeEvent.text);
   }
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
@@ -90,7 +55,6 @@ export default class Activation extends Component {
   }
 
   checkActivationCode() {
-    //console.log(this);
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
@@ -112,8 +76,28 @@ export default class Activation extends Component {
   componentDidMount() {
     this.refs['activatonCode'].focus();
   }
+  
+  scanQR() {
+    var test = this._onSucess;
+    Events.on('onQRSuccess', 'onQRSuccess', this.onQRSuccess);
+    Events.on('onQRCancel', 'onQRCancel', this.onQRCancel);
+    Events.trigger('scanQRCode', test);
+  }
+
+  onQRSuccess(result){
+    Events.rm('onQRSuccess', 'onQRSuccess');
+    Events.rm('onQRCancel', 'onQRCancel');
+    alert(' QR success :  '+result);
+  }
+  
+  onQRCancel(){
+    Events.rm('onQRSuccess', 'onQRSuccess');
+    Events.rm('onQRCancel', 'onQRCancel');
+    alert('You clicked Cancel');
+  }
 
   render() {
+
    
     return (
       <MainActivation navigator={this.props.navigator}>
@@ -154,7 +138,19 @@ export default class Activation extends Component {
             </View>
           </View>
           <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-
+            
+            <View style={Skin.activationStyle.input_wrap}>
+            <TouchableHighlight
+            style={Skin.activationStyle.button}
+            underlayColor={'#082340'}
+            onPress={this.scanQR.bind(this)}
+            activeOpacity={0.6}
+            >
+            <Text style={Skin.activationStyle.buttontext}>
+            {'Scan QRCode'}
+            </Text>
+            </TouchableHighlight>
+            </View>
 
           <View style={Skin.activationStyle.input_wrap}>
             <TouchableHighlight
@@ -171,5 +167,13 @@ export default class Activation extends Component {
         </View>
       </MainActivation>
     );
-  }
+    }
 }
+var styles = StyleSheet.create({
+                               container: {
+                               flex: 1,
+                               justifyContent: "center",
+                               alignItems: "center",
+                               backgroundColor: "transparent",
+                               }
+                               });

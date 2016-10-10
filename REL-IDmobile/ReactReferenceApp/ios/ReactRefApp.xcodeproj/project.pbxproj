@@ -58,8 +58,8 @@
 		6582FD671D95257D0075C15D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
 		6582FD691D9526890075C15D /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
 		6582FD6A1D9526920075C15D /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
-		6582FD811D9550CC0075C15D /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD801D9550CC0075C15D /* libapi-sdk.a */; };
-		6582FD821D9550CC0075C15D /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD801D9550CC0075C15D /* libapi-sdk.a */; };
+		65D2A8351DA7CB93004713D9 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D2A8271DA7C35F004713D9 /* libRCTCamera.a */; };
+		65D2A8361DA7CBA9004713D9 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D2A8271DA7C35F004713D9 /* libRCTCamera.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +141,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = TouchID;
 		};
+		65D2A8261DA7C35F004713D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E8CA15E97C6F455EA1A41D45 /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -191,10 +198,9 @@
 		6582FD571D9524ED0075C15D /* RCTTouchId.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTouchId.xcodeproj; path = "../node_modules/react-native-smart-touch-id/ios/RCTTouchId/RCTTouchId.xcodeproj"; sourceTree = "<group>"; };
 		6582FD601D95256E0075C15D /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		6582FD681D9526890075C15D /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		6582FD7E1D9550CC0075C15D /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		6582FD801D9550CC0075C15D /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		E8CA15E97C6F455EA1A41D45 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,7 +214,6 @@
 				65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				6582FD811D9550CC0075C15D /* libapi-sdk.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
@@ -217,6 +222,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				65D2A8361DA7CBA9004713D9 /* libRCTCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,11 +236,11 @@
 				65127E031D795B4000FB36E1 /* libRCTPushNotification.a in Frameworks */,
 				65127E041D795B4000FB36E1 /* libReact.a in Frameworks */,
 				65127E051D795B4000FB36E1 /* libRCTActionSheet.a in Frameworks */,
-				6582FD821D9550CC0075C15D /* libapi-sdk.a in Frameworks */,
 				65127E061D795B4000FB36E1 /* libRCTGeolocation.a in Frameworks */,
 				65127E071D795B4000FB36E1 /* libRCTImage.a in Frameworks */,
 				65127E081D795B4000FB36E1 /* libRCTLinking.a in Frameworks */,
 				65127E091D795B4000FB36E1 /* libRCTNetwork.a in Frameworks */,
+				65D2A8351DA7CB93004713D9 /* libRCTCamera.a in Frameworks */,
 				65127E0B1D795B4000FB36E1 /* libRCTSettings.a in Frameworks */,
 				65127E0C1D795B4000FB36E1 /* libRCTText.a in Frameworks */,
 				65127E0D1D795B4000FB36E1 /* libRCTVibration.a in Frameworks */,
@@ -368,29 +374,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6582FD7C1D9550CC0075C15D /* api-sdk */ = {
+		65D2A8221DA7C35F004713D9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6582FD7D1D9550CC0075C15D /* include */,
-				6582FD7F1D9550CC0075C15D /* libs */,
+				65D2A8271DA7C35F004713D9 /* libRCTCamera.a */,
 			);
-			path = "api-sdk";
-			sourceTree = "<group>";
-		};
-		6582FD7D1D9550CC0075C15D /* include */ = {
-			isa = PBXGroup;
-			children = (
-				6582FD7E1D9550CC0075C15D /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		6582FD7F1D9550CC0075C15D /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				6582FD801D9550CC0075C15D /* libapi-sdk.a */,
-			);
-			path = libs;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -417,6 +406,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				E8CA15E97C6F455EA1A41D45 /* RCTCamera.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -432,7 +422,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				6582FD7C1D9550CC0075C15D /* api-sdk */,
 				6582FD681D9526890075C15D /* libstdc++.tbd */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
@@ -503,7 +492,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 730;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
@@ -529,6 +518,10 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = 65D2A8221DA7C35F004713D9 /* Products */;
+					ProjectRef = E8CA15E97C6F455EA1A41D45 /* RCTCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -663,6 +656,13 @@
 			fileType = archive.ar;
 			path = libTouchID.a;
 			remoteRef = 6582FD641D95256E0075C15D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65D2A8271DA7C35F004713D9 /* libRCTCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCamera.a;
+			remoteRef = 65D2A8261DA7C35F004713D9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -803,6 +803,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../../../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 				);
 				INFOPLIST_FILE = ReactRefApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -811,6 +812,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/api-sdk/libs",
 					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -840,6 +842,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../../../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 				);
 				INFOPLIST_FILE = ReactRefApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -848,6 +851,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/api-sdk/libs",
 					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -881,6 +885,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../../../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 				);
 				INFOPLIST_FILE = "ReactRefAppDeveloper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -918,6 +923,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../../../react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 				);
 				INFOPLIST_FILE = "ReactRefAppDeveloper-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -976,6 +982,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1016,6 +1023,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
