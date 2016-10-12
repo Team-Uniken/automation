@@ -95,7 +95,7 @@ btnText(){
   onQRScanCancel(){
     Events.rm('onQRScanSuccess', 'onQRScanSuccess');
     Events.rm('onQRScanCancel', 'onQRScanCancel');
-    alert('You Clicked Cancel');
+//    alert('You Clicked Cancel');
   }
 
 

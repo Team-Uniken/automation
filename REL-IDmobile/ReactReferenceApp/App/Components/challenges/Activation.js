@@ -110,7 +110,7 @@ export default class Activation extends Component {
   onQRScanCancel(){
     Events.rm('onQRScanSuccess', 'onQRScanSuccess');
     Events.rm('onQRScanCancel', 'onQRScanCancel');
-    alert('You clicked Cancel');
+//    alert('You clicked Cancel');
   }
 
   render() {
