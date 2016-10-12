@@ -29,12 +29,12 @@ var QRCodeScreen = React.createClass({
 
                                      
    _onPressCancel: function() {
-   Events.trigger('onQRCancel', 'test');
+   Events.trigger('onQRCancel', '');
    var $this = this;
    $this.props.navigator.pop();
    },
    
-     _onBarCodeRead: function(result) {
+    _onBarCodeRead: function(result) {
      var $this = this;
      
      if (this.barCodeFlag) {
@@ -43,6 +43,7 @@ var QRCodeScreen = React.createClass({
      setTimeout(function() {
                 VibrationIOS.vibrate();
                 $this.props.navigator.pop();
+                Events.trigger('showLoader', true);
                 Events.trigger('onQRSuccess', result.data);
 //                $this.props.onSucess(result.data);
                 }, 1000);

@@ -55,7 +55,7 @@ var QRCode = React.createClass({
 
     getDefaultProps: function() {
         return {
-            value: 'https://github.com/cssivision',
+            value: '',
             fgColor: 'white',
             bgColor: 'black',
             size: 128,

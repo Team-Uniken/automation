@@ -89,6 +89,8 @@ class Load extends Component {
   
     componentWillMount(){
        Events.on('scanQRCode', 'scanQRCode', this.scanQRCode);
+//      Events.on('onQRSuccess', 'onQRSuccess', this.onQRSuccess);
+//      Events.on('onQRCancel', 'onQRCancel', this.onQRCancel);
       if(Platform.OS === 'ios'){
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
@@ -289,6 +291,8 @@ class Load extends Component {
                                                              }
                                                              });
     
+
+    
     AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
                          console.log('get Item, Connection Profiles:');
                          profiles = JSON.parse(profiles);
@@ -426,6 +430,9 @@ class Load extends Component {
                                             });
     
   }
+  
+  
+  
   _handleAppStateChange(currentAppState) {
     console.log('_handleAppStateChange');
     console.log(currentAppState);
@@ -559,8 +566,9 @@ class Load extends Component {
 //    console.log('in verify touchId fallback');
 //    this.newDoInitialize();
 //  }
+
   
-  
+
   newDoInitialize(){
     initSuc = false;
     isRunAfterInteractions = false;
@@ -618,12 +626,27 @@ class Load extends Component {
   }
   
   scanQRCode(args) {
+    Events.on('onQRSuccess', 'onQRSuccess', Obj.onQRSuccess);
+    Events.on('onQRCancel', 'onQRCancel', Obj.onQRCancel);
         Obj.props.navigator.push({
                                 id: 'QRCode',
                                 title: 'QRCode',
                                 });
     
     
+  }
+  
+  onQRSuccess(result){
+    InteractionManager.runAfterInteractions(() => {
+                                            
+                                                Events.trigger('onQRScanSuccess', result);
+                                            });
+  }
+  
+  onQRCancel(){
+    InteractionManager.runAfterInteractions(() => {
+                                            Events.trigger('onQRScanCancel', '');
+                                            });
   }
   
   render() {

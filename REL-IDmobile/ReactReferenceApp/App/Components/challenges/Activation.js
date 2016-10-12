@@ -26,7 +26,7 @@ const {
   
 } = ReactNative;
 
-
+var Obj;
 const{
   Component
 } =  React;
@@ -67,6 +67,7 @@ export default class Activation extends Component {
   }
 
   componentWillMount(){
+    Obj =this;
     if(Platform.OS === "android"){
        let keys = ['userData','setPattern'];
        AsyncStorage.multiRemove(keys);
@@ -79,20 +80,36 @@ export default class Activation extends Component {
   
   scanQR() {
     var test = this._onSucess;
-    Events.on('onQRSuccess', 'onQRSuccess', this.onQRSuccess);
-    Events.on('onQRCancel', 'onQRCancel', this.onQRCancel);
+    Events.on('onQRScanSuccess', 'onQRScanSuccess', this.onQRScanSuccess);
+    Events.on('onQRScanCancel', 'onQRScanCancel', this.onQRScanCancel);
     Events.trigger('scanQRCode', test);
   }
 
-  onQRSuccess(result){
-    Events.rm('onQRSuccess', 'onQRSuccess');
-    Events.rm('onQRCancel', 'onQRCancel');
-    alert(' QR success :  '+result);
+  onQRScanSuccess(result){
+    Events.rm('onQRScanSuccess', 'onQRScanSuccess');
+    Events.rm('onQRScanCancel', 'onQRScanCancel');
+    if(result.length!=0){
+      var res = JSON.parse(result);
+      var vfKey = res.vf_key;
+      var aCode = res.code;
+      var exp = res.expiry;
+      var obtainedVfKey = Obj.props.url.chlngJson.chlng_resp[0].challenge;
+      if(obtainedVfKey===vfKey){
+        let responseJson = Obj.props.url.chlngJson;
+        responseJson.chlng_resp[0].response = aCode;
+        Events.trigger('hideLoader', true);
+        Events.trigger('showNextChallenge', { response: responseJson });
+      }else{
+        alert('Verification code does not match');
+      }
+    }else{
+      alert('Error to scan QR code ');
+    }
   }
   
-  onQRCancel(){
-    Events.rm('onQRSuccess', 'onQRSuccess');
-    Events.rm('onQRCancel', 'onQRCancel');
+  onQRScanCancel(){
+    Events.rm('onQRScanSuccess', 'onQRScanSuccess');
+    Events.rm('onQRScanCancel', 'onQRScanCancel');
     alert('You clicked Cancel');
   }
 

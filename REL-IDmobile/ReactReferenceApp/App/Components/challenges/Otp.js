@@ -26,6 +26,7 @@ const {
 
 const{Component} =  React;
 var Camera = require("react-native-camera");
+var Obj;
 class Activation extends Component{
 
 
@@ -37,7 +38,7 @@ class Activation extends Component{
     };
   }
   componentDidMount() {
-
+    Obj = this;
 		}
 
   checkAccessCode(){
@@ -64,21 +65,37 @@ btnText(){
   
   scanQR() {
     var test = this._onSucess;
-    Events.on('onQRSuccess', 'onQRSuccess', this.onQRSuccess);
-    Events.on('onQRCancel', 'onQRCancel', this.onQRCancel);
-    Events.trigger('scanQRCode', test);
+    Events.on('onQRScanSuccess', 'onQRScanSuccess', this.onQRScanSuccess);
+    Events.on('onQRScanCancel', 'onQRScanCancel', this.onQRScanCancel);
+    Events.trigger('scanQRCode', '');
   }
   
-  onQRSuccess(result){
-    Events.rm('onQRSuccess', 'onQRSuccess');
-    Events.rm('onQRCancel', 'onQRCancel');
-    alert(' QR success :  '+result);
+  onQRScanSuccess(result){
+    Events.rm('onQRScanSuccess', 'onQRScanSuccess');
+    Events.rm('onQRScanCancel', 'onQRScanCancel');
+    if(result.length!=0){
+      var res = JSON.parse(result);
+      var aCode = res.Access_Code;
+      var aValue = res.Access_Value;
+      var exp = res.expiry;
+      var obtained_ACode = Obj.props.url.chlngJson.chlng_resp[0].challenge;
+      if(obtained_ACode===aCode){
+        let responseJson = Obj.props.url.chlngJson;
+        responseJson.chlng_resp[0].response = aValue;
+        Events.trigger('hideLoader', true);
+        Events.trigger('showNextChallenge', { response: responseJson });
+      }else{
+        alert('Access code does not match');
+      }
+    }else{
+      alert('Error to scan QR code ');
+    }
   }
   
-  onQRCancel(){
-    Events.rm('onQRSuccess', 'onQRSuccess');
-    Events.rm('onQRCancel', 'onQRCancel');
-    alert('You clicked Cancel');
+  onQRScanCancel(){
+    Events.rm('onQRScanSuccess', 'onQRScanSuccess');
+    Events.rm('onQRScanCancel', 'onQRScanCancel');
+    alert('You Clicked Cancel');
   }
 
 
