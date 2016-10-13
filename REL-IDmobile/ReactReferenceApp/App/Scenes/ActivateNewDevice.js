@@ -51,7 +51,7 @@ class ActivateNewDeviceScene extends Component{
   accValue:'-----',
   expiryMsg:'Your access code expires on ',
   isLoading:false,
-  QRtext: 'appa'
+  QRtext: ''
   };
   }
 
@@ -89,10 +89,8 @@ class ActivateNewDeviceScene extends Component{
     
   var QRTextStr = this.state.QRtext;
   var length = QRTextStr.length;
-    alert(length);
   if(length===0){
   return (
-          
     <Main
     drawerState={{
       open: false,
