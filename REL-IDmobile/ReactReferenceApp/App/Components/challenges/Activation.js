@@ -90,8 +90,8 @@ export default class Activation extends Component {
     Events.rm('onQRScanCancel', 'onQRScanCancel');
     if(result.length!=0){
       var res = JSON.parse(result);
-      var vfKey = res.vf_key;
-      var aCode = res.code;
+      var vfKey = res.key;
+      var aCode = res.value;
       var exp = res.expiry;
       var obtainedVfKey = Obj.props.url.chlngJson.chlng_resp[0].challenge;
       if(obtainedVfKey===vfKey){
@@ -100,9 +100,11 @@ export default class Activation extends Component {
         Events.trigger('hideLoader', true);
         Events.trigger('showNextChallenge', { response: responseJson });
       }else{
+        Events.trigger('hideLoader', true);
         alert('Verification code does not match');
       }
     }else{
+      Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
     }
   }

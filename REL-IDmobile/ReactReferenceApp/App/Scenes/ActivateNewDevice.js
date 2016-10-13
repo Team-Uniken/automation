@@ -70,8 +70,10 @@ class ActivateNewDeviceScene extends Component{
                                            this.state.accCode =res.otpId;
                                            this.state.accValue=res.otpValue;
                                            var Msg=res.expiryTs;
-                                        var QRJson = {'Access_Code':res.otpId,'Access_Value':res.otpValue,'Expiry':res.expiryTs}
+                                        if(res.otpId.length>0){
+                                        var QRJson = {'key':res.otpId,'value':res.otpValue,'Expiry':res.expiryTs}
                                         var QRcontextString = JSON.stringify(QRJson);
+                                        }
                                            this.state.expiryMsg = 'Your access code expires on '.concat(Msg);
                                         this.setState({ isLoading:false, QRtext:QRcontextString});
                                            }else{
@@ -87,8 +89,10 @@ class ActivateNewDeviceScene extends Component{
     
   var QRTextStr = this.state.QRtext;
   var length = QRTextStr.length;
+    alert(length);
   if(length===0){
   return (
+          
     <Main
     drawerState={{
       open: false,
@@ -111,7 +115,9 @@ class ActivateNewDeviceScene extends Component{
     }}
     navigator={this.props.navigator}
     >
-      <View style={styles.container}>
+     <View style={styles.container}>
+     <ScrollView>
+    <View style={styles.container}>
     <Text style={styles.headline}>Activate a new device using Verification Code and Access Code below.</Text>
     <Text style={styles.codeTitle}> Verification Code:</Text>
     <Text style={styles.codeValue}>{this.state.accCode}</Text>
@@ -120,8 +126,10 @@ class ActivateNewDeviceScene extends Component{
     <Text style={styles.footer}> {this.state.expiryMsg}</Text>
       
     </View>
-
+    </ScrollView>
+          </View>
     </Main>
+          
           );
     }else{
     return (
@@ -148,6 +156,8 @@ class ActivateNewDeviceScene extends Component{
             navigator={this.props.navigator}
             >
             <View style={styles.container}>
+            <ScrollView>
+            <View style={styles.container}>
             <Text style={styles.headline}>Activate a new device using Verification Code and Access Code below.</Text>
             <Text style={styles.codeTitle}> Verification Code:</Text>
             <Text style={styles.codeValue}>{this.state.accCode}</Text>
@@ -163,8 +173,11 @@ class ActivateNewDeviceScene extends Component{
             />
             </View>
             </View>
-            
+
+            </ScrollView>
+             </View>
             </Main>
+            
             );
   
   }

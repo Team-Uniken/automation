@@ -75,8 +75,8 @@ btnText(){
     Events.rm('onQRScanCancel', 'onQRScanCancel');
     if(result.length!=0){
       var res = JSON.parse(result);
-      var aCode = res.Access_Code;
-      var aValue = res.Access_Value;
+      var aCode = res.key;
+      var aValue = res.value;
       var exp = res.expiry;
       var obtained_ACode = Obj.props.url.chlngJson.chlng_resp[0].challenge;
       if(obtained_ACode===aCode){
@@ -85,9 +85,11 @@ btnText(){
         Events.trigger('hideLoader', true);
         Events.trigger('showNextChallenge', { response: responseJson });
       }else{
+        Events.trigger('hideLoader', true);
         alert('Access code does not match');
       }
     }else{
+      Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
     }
   }
