@@ -41,7 +41,6 @@ var QRCodeScreen = React.createClass({
      this.barCodeFlag = false;
      
      setTimeout(function() {
-                VibrationIOS.vibrate();
                 $this.props.navigator.pop();
                 Events.trigger('showLoader', true);
                 Events.trigger('onQRSuccess', result.data);
