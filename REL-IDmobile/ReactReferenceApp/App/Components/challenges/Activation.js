@@ -75,7 +75,7 @@ export default class Activation extends Component {
   }
 
   componentDidMount() {
-    this.refs['activatonCode'].focus();
+//    this.refs['activatonCode'].focus();
   }
   
   scanQR() {
