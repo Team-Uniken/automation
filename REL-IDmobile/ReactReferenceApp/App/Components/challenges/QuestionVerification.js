@@ -19,8 +19,12 @@ import OpenLinks from '../OpenLinks';
   INSTANCED
  */
 let responseJson;
+<<<<<<< HEAD
 const {View, Text, TextInput, TouchableHighlight, ScrollView, } = ReactNative;
 const{Component} =  React;
+=======
+const {View, Text, TextInput,TouchableOpacity, TouchableHighlight, ScrollView, } = React;
+>>>>>>> demo/ubs
 
 export default class QuestionVerification extends Component {
 
@@ -124,23 +128,22 @@ export default class QuestionVerification extends Component {
                 returnKeyType={'next'}
                 secureTextEntry={true}
                 keyboardType={'default'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={Skin.activationStyle.textinput}
                 onSubmitEditing={this.checkAnswer.bind(this)} />
             </View>
           </View>
-          <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-
+  <Text style={Skin.activationStyle.warning_text}>Attempts Left : {this.props.url.chlngJson.attempts_left}</Text>
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={Skin.activationStyle.button}
-              underlayColor={'#082340'}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
               onPress={this.checkAnswer.bind(this)}
               activeOpacity={0.6}>
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
         <OpenLinks />

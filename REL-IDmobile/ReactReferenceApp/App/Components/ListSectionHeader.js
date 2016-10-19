@@ -51,10 +51,10 @@ var styles = StyleSheet.create({
 		alignItems:'center',
 	},
 	text:{
-		color: 'rgba('+Skin.colors.PRIMARY_TEXT_RGB+',0.46)',
+		color: Skin.list.LIST_HEADER_COLOR,
 		paddingBottom: 5,
 		paddingTop: 10,
-		backgroundColor: Skin.colors.BACK_GRAY,
+		backgroundColor: Skin.main.BACKGROUND_COLOR,
 	},
 	rowwrap:{
 		width: SCREEN_WIDTH*4/5,

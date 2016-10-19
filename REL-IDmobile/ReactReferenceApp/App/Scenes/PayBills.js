@@ -216,7 +216,7 @@ export default class PayBillsScene extends Component {
         navBar={{
           title: 'Pay Bills',
           visible: true,
-          tint: Skin.colors.TEXT_COLOR,
+          tint: Skin.main.NAVBAR_TINT,
           left: {
             text: '',
             icon: '\ue20e',

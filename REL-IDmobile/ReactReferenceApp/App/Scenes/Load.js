@@ -47,6 +47,7 @@ const {
   Animated,
   InteractionManager,
   AppState,
+  Image,
   AsyncStorage,
   Alert,
   Platform,
@@ -348,12 +349,12 @@ class Load extends Component {
                        Animated.parallel([
                                           Animated.timing(this.state.r_opac_val, {
                                                           toValue: 1,
-                                                          duration: 500 * Skin.spd,
+                                                          duration: 2000 * Skin.spd,
                                                           delay: 1000 * Skin.spd,
                                                           }),
                                           Animated.timing(this.state.r_text_opac, {
                                                           toValue: 1,
-                                                          duration: 500 * Skin.spd,
+                                                          duration: 2000 * Skin.spd,
                                                           delay: 1000 * Skin.spd,
                                                           }),
                                           ]),
@@ -619,22 +620,17 @@ class Load extends Component {
     console.log('************ Load Render');
     console.log(this.props.navigator.state);
     return (
-            <MainActivation navigator={this.props.navigator}>
+      <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.fullscreen}>
          
             <Animated.View style={[Skin.loadStyle.rid_wrap, { top: Skin.SCREEN_HEIGHT/4 }]}>
             <View style={Skin.loadStyle.rid_center}>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r, { opacity: this.state.r_opac_val }]}>g
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i, { opacity: this.state.i_opac_val }]}>h
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d, { opacity: this.state.d_opac_val }]}>i
-            </Animated.Text>
+            <Animated.Image source={require('../Components/img/ubs.png')}
+                style={{width:120,opacity: this.state.r_opac_val}} resizeMode={'contain'}
+              />
             </View>
             </Animated.View>
             <View style={Skin.loadStyle.relid_wrap}>
-            <Animated.Text style={[Skin.loadStyle.relid, { opacity: this.state.relid_opac_val }]}>W
-            </Animated.Text>
             </View>
             <View style={Skin.loadStyle.text_wrap}>
             <View style={Skin.loadStyle.text_center}>

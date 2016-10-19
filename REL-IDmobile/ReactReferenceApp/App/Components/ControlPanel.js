@@ -294,7 +294,7 @@ class ControlPanel extends Component{
   render(){
     return (
             <View style={styles.container}>
-            <Text style={styles.controlHeader}>UNIKEN</Text>
+            <Text style={styles.controlHeader}>{Skin.admin.MENU_TITLE}</Text>
             <ScrollView>
             
             <View style={styles.menuBorder}></View>

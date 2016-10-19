@@ -13,6 +13,7 @@ const SCREEN_WIDTH = require('Dimensions').get('window').width;
 const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
+<<<<<<< HEAD
 const SCREEN_HEIGHT_RATIO=1;
 
 if(SCREEN_HEIGHT<=426){
@@ -24,6 +25,13 @@ SCREEN_HEIGHT_RATIO=1.5
 }else{
 SCREEN_HEIGHT_RATIO=2
 }
+=======
+
+
+const PLACEHOLDER_TEXT_COLOR_RGB='rgba(59,59,59,0.5)'//255,255,255,0.7
+const DEV_BIND_ICON_TEXT_COLOR_RGB='rgba(0,0,0,0.5)'//255,255,255,0.7
+const DEV_BIND_TYPE_TEXT_COLOR_RGB='rgba(0,0,0,0.5)'//255,255,255,0.7
+>>>>>>> demo/ubs
 
 const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
@@ -40,10 +48,11 @@ const open = {
 const { StyleSheet, Dimensions, PixelRatio } = ReactNative;
 const{Component}=React;
 
+
 // Colors
-const DARK_PRIMARY = '#2579A2'; // '#0277BD'; //
-const BACK_GRAY = '#f2f2f2';
-const PRIMARY = '#4FADD8'; // '#03A9F4';// 03A9F4
+const DARK_PRIMARY = '#909090'; // '#0277BD'; //
+const BACK_GRAY = '#f3f3f3';
+const PRIMARY = '#e9e9e9'; // '#03A9F4';// 03A9F4
 
 const LIGHT_PRIMARY = '#BCE0F2'; // '#B3e5FC';//
 const TEXT_COLOR = '#FFFFFF';
@@ -64,6 +73,60 @@ const LIGHT_PRIMARY_RGB = hexToRgb(LIGHT_PRIMARY).r + ',' + hexToRgb(LIGHT_PRIMA
 const PRIMARY_TEXT_RGB = hexToRgb(PRIMARY_TEXT).r + ',' + hexToRgb(PRIMARY_TEXT).g + ',' + hexToRgb(PRIMARY_TEXT).b;
 const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + ',' + hexToRgb(TEXT_COLOR).b;
 
+
+
+
+
+const load = {
+  OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
+
+  OVERLAY_SPINNER_COLOR: '#CCCCCC',
+  BG_COLOR_RGB: '255,255,255',
+  BG_COLOR_OPACITY: '0.9',
+  LOAD_SEQUENCE_TEXT_COLOR: '#3b3b3b'
+}
+const login = {
+  TEXT_INPUT_BG_RGB: '231,231,231',
+  TEXT_INPUT_BG_OPACITY: '1',
+  TEXT_INPUT_COLOR: '#3b3b3b',
+  BUTTON_TEXT_COLOR: '#ffffff',
+  BUTTON_BG: '#6a7e39',
+  BUTTON_UNDERLAY: '#3b3b3b',
+  OPEN_LINK_BG: '#e7e7e7',
+  OPEN_LINK_TEXT_COLOR: '#3b3b3b',
+  OPEN_LINK_ICON_COLOR: '#3b3b3b',
+  PLACEHOLDER_TEXT_COLOR_RGB: '59,59,59',
+  PLACEHOLDER_TEXT_OPACITY: '0.7',
+  CONNECTION_BUTTON_BG: '#e7e7e7',
+  CONNECTION_BUTTON_ICON_COLOR: '#3b3b3b',
+  CONNECTION_BUTTON_UNDERLAY: '#3b3b3b',
+  WARNING_TEXT_COLOR:'#3b3b3b',
+}
+
+const main = {
+  STATUS_BAR_BG: '#3b3b3b',
+  BACKGROUND_COLOR: '#F9F9F9',
+  BOTTOM_MENU_BG: '#3b3b3b',
+  BOTTOM_MENU_COLOR: '#B0B0B0',
+  BOTTOM_MENU_UNDERLAY: '#3b3b3b',
+  BOTTOM_MENU_SELECT_BG: '#e7e7e7',
+  BOTTOM_MENU_SELECT_COLOR: '#3b3b3b',
+  BOTTOM_MENU_SELECT_UNDERLAY: '#e7e7e7',
+  BOTTOM_MENU_HIGHLIGHT_COLOR_RGB: '176,176,176',
+  BOTTOM_MENU_HIGHLIGHT_OPACITY: '1',
+  NAVBAR_TINT: '#ffffff',
+  NAVBAR_BG: '#3b3b3b',
+  TITLE_COLOR: '#ffffff'
+}
+
+const admin = {
+  MENU_TITLE: 'UBS',
+  MENU_FONT:'Times New Roman'
+}
+
+const list = {
+  LIST_HEADER_COLOR: '#3b3b3b',
+}
 
 const BACKGROUND_COLOR = '#fff';
 const BUTTON_BACKGROUND_COLOR = PRIMARY;
@@ -178,12 +241,17 @@ const customeStyle = StyleSheet.create({
     opacity: 0.7,
   },
     attempt: {
+<<<<<<< HEAD
     fontSize: 16,
     color: TEXT_COLOR,
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 8,
     },
+=======
+
+  },
+>>>>>>> demo/ubs
   row: {
     flexDirection: 'row',
     width: SCREEN_WIDTH,
@@ -943,11 +1011,11 @@ const logStyle = StyleSheet.create({
     paddingLeft: 10,
     color: TEXT_COLOR,
     textAlign: 'center',
-    backgroundColor: 'rgba(' + DARK_PRIMARY_RGB + ',0.54)',
+    backgroundColor: 'rgba(' + login.TEXT_INPUT_BG_RGB + ',0.54)',
   },
   button: {
     height: 60,
-    backgroundColor: TEXT_COLOR,
+    backgroundColor: login.BUTTON_BG,
     flex: 1,
   },
   button_text: {
@@ -1017,7 +1085,7 @@ const loadStyle = StyleSheet.create({
     fontSize: 89,
     marginLeft: 31 + leftrid,
     marginTop: 31,
-    color: LIGHT_PRIMARY,
+    color: '#ffffff',
   //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_r: {
@@ -1031,7 +1099,7 @@ const loadStyle = StyleSheet.create({
     position: 'absolute',
     fontSize: 120,
     marginLeft: 62 + leftrid,
-    color: DARK_PRIMARY,
+    color: '#ffffff',
   //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   relid_wrap: {
@@ -1062,7 +1130,7 @@ const loadStyle = StyleSheet.create({
     width: 200,
   },
   text: {
-    color: '#FFFFFF',
+    color: load.LOAD_SEQUENCE_TEXT_COLOR,
     textAlign: 'center',
     width: 200,
     //fontFamily: CORE_FONT,
@@ -1184,7 +1252,7 @@ const controlStyle = StyleSheet.create({
   },
   controlHeader: {
     color: '#ffffff',
-    fontFamily: CORE_FONT,
+    fontFamily: admin.MENU_FONT,
     paddingTop: 30,
     fontSize: 30,
     paddingBottom: 50,
@@ -1236,6 +1304,7 @@ const activationStyle = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   },
+<<<<<<< HEAD
   loadertext: {
    position: 'absolute',
     top:SCREEN_HEIGHT/2,
@@ -1247,6 +1316,15 @@ const activationStyle = StyleSheet.create({
     textAlignVertical: 'center',
     marginTop: 10,
    
+=======
+  warning_text:{
+    fontSize: 16,
+    color: login.WARNING_TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 8,
+    height:20
+>>>>>>> demo/ubs
   },
   bgcolorizer: {
     position: 'absolute',
@@ -1254,7 +1332,7 @@ const activationStyle = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(' + PRIMARY_RGB + ',0.85)',
+    backgroundColor: 'rgba(' + load.BG_COLOR_RGB + ','+load.BG_COLOR_OPACITY+')',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
   },
@@ -1263,7 +1341,7 @@ const activationStyle = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(' + PRIMARY_RGB + ',1)',
+    backgroundColor: 'rgba(' + load.BG_COLOR_RGB + ',1)',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
   },
@@ -1296,7 +1374,7 @@ const activationStyle = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 20,
-    color: TEXT_COLOR,
+    color: load.TITLE_COLOR,
   },
   info: {
     fontSize: 16,
@@ -1315,12 +1393,12 @@ const activationStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
-    backgroundColor: 'rgba(' + DARK_PRIMARY_RGB + ',0.7)',
+    backgroundColor: 'rgba(' + login.TEXT_INPUT_BG_RGB + ','+login.TEXT_INPUT_BG_OPACITY+')',
   },
   textinput: {
     flex: 1,
     fontSize: 22,
-    color: TEXT_COLOR,
+    color: login.TEXT_INPUT_COLOR,
     textAlign: 'center',
     backgroundColor:null,
   },
@@ -1335,12 +1413,12 @@ const activationStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 60,
-    backgroundColor: TEXT_COLOR,
+    backgroundColor: login.BUTTON_BG,
   },
   buttontext: {
     flex: 1,
     fontSize: 22,
-    color: PRIMARY,
+    color: login.BUTTON_TEXT_COLOR,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -1360,7 +1438,13 @@ module.exports = {
   transforms,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
+<<<<<<< HEAD
   SCREEN_HEIGHT_RATIO,
+=======
+  PLACEHOLDER_TEXT_COLOR_RGB,
+  DEV_BIND_ICON_TEXT_COLOR_RGB,
+  DEV_BIND_TYPE_TEXT_COLOR_RGB,
+>>>>>>> demo/ubs
   customeStyle,
   AccountActivationStep,
   appointmentrow,
@@ -1371,6 +1455,11 @@ module.exports = {
   PatternLockStyle,
   nav,
   open,
+  load,
+  main,
+  login,
+  admin,
+  list,
   spd: SPEED,
   loadspd: LOADSPEED,
   controlStyle,

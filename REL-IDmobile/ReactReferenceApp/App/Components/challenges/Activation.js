@@ -19,9 +19,14 @@ const {
   TextInput,
   TouchableHighlight,
   InteractionManager,
+<<<<<<< HEAD
   Platform,
   AsyncStorage,
 } = ReactNative;
+=======
+  TouchableOpacity,
+} = React;
+>>>>>>> demo/ubs
 
 
 const{
@@ -143,7 +148,7 @@ export default class Activation extends Component {
                 autoCorrect={false}
                 secureTextEntry={true}
                 keyboardType={'default'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={Skin.activationStyle.textinput}
                 value={this.state.inputUsername}
                 ref={'activatonCode'}
@@ -153,20 +158,19 @@ export default class Activation extends Component {
               />
             </View>
           </View>
-          <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-
+            <Text style={Skin.activationStyle.warning_text}>Attempts Left : {this.props.url.chlngJson.attempts_left}</Text>
 
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={Skin.activationStyle.button}
-              underlayColor={'#082340'}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
               onPress={this.checkActivationCode.bind(this)}
               activeOpacity={0.6}
             >
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </MainActivation>

@@ -34,7 +34,7 @@ export default class DepositsScene extends Component {
         navBar={{
           title: 'Deposits',
           visible: true,
-          tint: Skin.colors.TEXT_COLOR,
+          tint: Skin.main.NAVBAR_TINT,
           left:{
             text: '',
             icon: '\ue20e',
@@ -66,7 +66,7 @@ export default class DepositsScene extends Component {
               alignSelf: 'center',
               //backgroundColor: 'red',
               fontSize: 30,
-              color: Skin.colors.PRIMARY,
+              color: Skin.PLACEHOLDER_TEXT_COLOR_RGB,
               fontWeight: 'bold',
               alignItems: 'center',
             }}

@@ -26,7 +26,11 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
+<<<<<<< HEAD
   DeviceEventEmitter,
+=======
+  TouchableOpacity,
+>>>>>>> demo/ubs
   Platform,
   Alert,
   AsyncStorage,
@@ -288,6 +292,7 @@ export default class DeviceName extends Component {
   }
 
   render() {
+<<<<<<< HEAD
    if(this.state.pattern === false){
         return (
           <MainActivation navigator={this.props.navigator}>
@@ -334,6 +339,49 @@ export default class DeviceName extends Component {
               onSetPattern={this.onSetPattern} data={{ response: responseJson }}
               mode="set" />);
     }
+=======
+    return (
+      <MainActivation navigator={this.props.navigator}>
+        <View style={Skin.activationStyle.topGroup}>
+          <Text style={Skin.activationStyle.counter}>
+            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
+          </Text>
+          <Text style={Skin.activationStyle.title}>Device Name</Text>
+          <Text style={Skin.activationStyle.info}>
+            Set a nickname for this device:
+          </Text>
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <TextInput
+                returnKeyType={'next'}
+                autoCorrect={false}
+                keyboardType={'default'}
+                 placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
+                style={Skin.activationStyle.textinput}
+                value={this.state.deviceName}
+                ref={'deviceName'}
+                placeholder={'Enter Device Nickname'}
+                onChange={this.onDeviceNameChange.bind(this)}
+                onSubmitEditing={this.setDeviceName.bind(this)}
+              />
+            </View>
+          </View>
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableOpacity
+              onPress={this.decidePlatformAndShowAlert.bind(this)}
+              style={Skin.activationStyle.button}
+              activeOpacity={0.8}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
+            >
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </MainActivation>
+    );
+>>>>>>> demo/ubs
   }
 }
 

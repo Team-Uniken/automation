@@ -155,12 +155,12 @@ export default class DeviceBinding extends Component {
           </TouchableHighlight>
         </Animated.View>
         <Text style={styles.type}>{this.state.type}</Text>
-
         <View style={Skin.activationStyle.input_wrap}>
           <TouchableOpacity
             style={Skin.activationStyle.button}
             onPress={this.setDeviceBinding.bind(this)}
             activeOpacity={0.8}
+            underlayColor={Skin.login.BUTTON_UNDERLAY}
           >
             <Text style={Skin.activationStyle.buttontext}>
               {this.btnText()}
@@ -211,11 +211,11 @@ const styles = StyleSheet.create({
     fontFamily: Skin.font.ICON_FONT,
     textAlign: 'center',
     fontSize: 200,
-    color: Skin.colors.TEXT_COLOR,
+    color: Skin.DEV_BIND_ICON_TEXT_COLOR_RGB,
   },
   type: {
     fontSize:30,
-    color: Skin.colors.TEXT_COLOR,
+    color: Skin.DEV_BIND_TYPE_TEXT_COLOR_RGB,
     textAlign: 'center',
     fontWeight: 'bold',
   },

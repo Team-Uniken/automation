@@ -21,6 +21,7 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   InteractionManager,
   AsyncStorage,
 } = ReactNative;
@@ -142,7 +143,7 @@ export default class PasswordSet extends Component {
             keyboardType={'default'}
             ref={'password'}
             placeholder={'Enter Password'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
             style={Skin.activationStyle.textinput}
             secureTextEntry={true}
             blurOnSubmit={false}
@@ -160,7 +161,7 @@ export default class PasswordSet extends Component {
             returnKeyType={'next'}
             keyboardType={'default'}
             placeholder={'Confirm Password'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
             style={Skin.activationStyle.textinput}
             secureTextEntry={true}
             onChange={this.onConfirmPasswordChange.bind(this)}
@@ -169,16 +170,16 @@ export default class PasswordSet extends Component {
             </View>
             </View>
             <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
             style={Skin.activationStyle.button}
-            underlayColor={'#082340'}
+            underlayColor={Skin.login.BUTTON_UNDERLAY}
             onPress={this.setPassword.bind(this)}
             activeOpacity={0.6}
             >
             <Text style={Skin.activationStyle.buttontext}>
             {this.btnText()}
             </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             </View>
             </View>
             </MainActivation>

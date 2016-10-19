@@ -336,6 +336,7 @@ class UserLogin extends Component{
                 <MainActivation
                 navigator={this.props.navigator}>
                
+<<<<<<< HEAD
                 <View style={Skin.activationStyle.topGroup}>
                 <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70*(Skin.SCREEN_HEIGHT/1000)}]}>
                 <View style={Skin.loadStyle.rid_center}>
@@ -375,7 +376,48 @@ class UserLogin extends Component{
                 </Text>
                 </TouchableOpacity>
                 </View>
+=======
+                  <View style={Skin.activationStyle.topGroup}>
+                    <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+                      <View style={Skin.loadStyle.rid_center}>
+                        <Animated.Image source={require('../img/ubs.png')}
+                          style={{width:120}} resizeMode={'contain'}
+                        />
+                      </View>
+                    </Animated.View>
+                  
+                  <View style={[Skin.activationStyle.input_wrap,{marginTop:60}]}>
+                    <View style={Skin.activationStyle.textinput_wrap}>
+                      <TextInput
+                        ref='inputUsername'
+                        returnKeyType={'next'}
+                        autoCorrect={false}
+                        autoCapitalize={'none'}
+                        keyboardType={'email-address'}
+                        placeholder={'Username'}
+                        placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
+                        style={Skin.activationStyle.textinput}
+                        value={this.state.inputUsername}
+                        onSubmitEditing={this.checkUsername.bind(this)}
+                        onChange={this.onUsernameChange.bind(this)}
+                      />
+                    </View>
+                  </View>
+                  <View style={Skin.activationStyle.input_wrap}>
+                    <TouchableOpacity
+                    style={Skin.activationStyle.button}
+                    onPress={this.checkUsername.bind(this)}
+                    underlayColor={Skin.login.BUTTON_UNDERLAY}
+                    activeOpacity={0.8}
+                    >
+                    <Text style={Skin.activationStyle.buttontext}>
+                    LOGIN
+                    </Text>
+                    </TouchableOpacity>
+                  </View>
+>>>>>>> demo/ubs
                 </View>
+                <Text style={Skin.activationStyle.warning_text}></Text>
                 <OpenLinks />
                 </MainActivation>
                 );

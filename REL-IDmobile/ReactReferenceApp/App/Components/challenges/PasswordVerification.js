@@ -39,6 +39,7 @@ const {
   TouchableHighlight,
   InteractionManager,
   AsyncStorage,
+  TouchableOpacity,
   Alert,
 } = ReactNative;
 
@@ -424,6 +425,7 @@ class PasswordVerification extends Component {
         return (
             <MainActivation navigator={this.props.navigator}>
             <View style={Skin.activationStyle.topGroup}>
+<<<<<<< HEAD
             <Animated.View style={[Skin.loadStyle.rid_wrap]}>
             <View style={[Skin.loadStyle.rid_center,{marginTop:60*(Skin.SCREEN_HEIGHT/1000)}]}>
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r]}>g</Text>
@@ -431,6 +433,15 @@ class PasswordVerification extends Component {
             <Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d]}>i</Text>
             </View>
             </Animated.View>
+=======
+                    <Animated.View style={[Skin.loadStyle.rid_wrap,{marginTop:70}]}>
+                      <View style={Skin.loadStyle.rid_center}>
+                        <Animated.Image source={require('../img/ubs.png')}
+                          style={{width:120}} resizeMode={'contain'}
+                        />
+                      </View>
+                    </Animated.View>
+>>>>>>> demo/ubs
             
             <View style={[Skin.activationStyle.input_wrap, { marginTop: 60 }]}>
             <View style={Skin.activationStyle.textinput_wrap}>
@@ -441,7 +452,7 @@ class PasswordVerification extends Component {
             autoCorrect={false}
             autoCapitalize={'none'}
             placeholder={'Password'}
-            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
             style={Skin.activationStyle.textinput}
             value={this.state.inputPassword}
             onSubmitEditing={this.decidePlatformAndShowAlert.bind(this)}
@@ -450,19 +461,23 @@ class PasswordVerification extends Component {
             
             </View>
             </View>
+<<<<<<< HEAD
             <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
             <Text style={Skin.linkStyle.text} onPress={this.onForgotPasswordClick}>Forgot Password ?</Text>
+=======
+            <Text style={Skin.activationStyle.warning_text}>Attempts Left : {this.props.url.chlngJson.attempts_left}</Text>
+>>>>>>> demo/ubs
             <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
             style={Skin.activationStyle.button}
             onPress={this.decidePlatformAndShowAlert.bind(this)}
-            underlayColor={'#082340'}
-            activeOpacity={0.6}
+            underlayColor={Skin.login.BUTTON_UNDERLAY}
+            activeOpacity={0.8}
             >
             <Text style={Skin.activationStyle.buttontext}>
             SUBMIT
             </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             </View>
             </View>
             <OpenLinks />
