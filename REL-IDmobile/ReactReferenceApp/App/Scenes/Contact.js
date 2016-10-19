@@ -52,7 +52,7 @@ export default class ContactScene extends Component {
         navBar={{
           title: 'Contact',
           visible: true,
-          tint: Skin.colors.TEXT_COLOR,
+          tint: Skin.main.NAVBAR_TINT,
           left: {
             text: '',
             icon: '\ue20e',

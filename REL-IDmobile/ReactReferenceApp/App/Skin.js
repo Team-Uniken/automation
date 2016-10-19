@@ -13,18 +13,21 @@ const SCREEN_WIDTH = require('Dimensions').get('window').width;
 const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
-const SCREEN_HEIGHT_RATIO=1;
 
-if(SCREEN_HEIGHT<=426){
-SCREEN_HEIGHT_RATIO=0.5
-}else if(SCREEN_HEIGHT<=470){
-SCREEN_HEIGHT_RATIO=1
-}else if(SCREEN_HEIGHT<640){
-SCREEN_HEIGHT_RATIO=1.5
-}else{
-SCREEN_HEIGHT_RATIO=2
+const SCREEN_HEIGHT_RATIO = 1;
+if (SCREEN_HEIGHT <= 426) {
+  SCREEN_HEIGHT_RATIO = 0.5
+} else if (SCREEN_HEIGHT <= 470) {
+  SCREEN_HEIGHT_RATIO = 1
+} else if (SCREEN_HEIGHT < 640) {
+  SCREEN_HEIGHT_RATIO = 1.5
+} else {
+  SCREEN_HEIGHT_RATIO = 2
 }
 
+const PLACEHOLDER_TEXT_COLOR_RGB = 'rgba(59,59,59,0.5)' //255,255,255,0.7
+const DEV_BIND_ICON_TEXT_COLOR_RGB = 'rgba(0,0,0,0.5)' //255,255,255,0.7
+const DEV_BIND_TYPE_TEXT_COLOR_RGB = 'rgba(0,0,0,0.5)' //255,255,255,0.7
 const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
@@ -37,13 +40,14 @@ const open = {
 };
 
 // Called
-const { StyleSheet, Dimensions, PixelRatio } = ReactNative;
-const{Component}=React;
+const {StyleSheet, Dimensions, PixelRatio} = ReactNative;
+const {Component} = React;
+
 
 // Colors
-const DARK_PRIMARY = '#2579A2'; // '#0277BD'; //
-const BACK_GRAY = '#f2f2f2';
-const PRIMARY = '#4FADD8'; // '#03A9F4';// 03A9F4
+const DARK_PRIMARY = '#909090'; // '#0277BD'; //
+const BACK_GRAY = '#f3f3f3';
+const PRIMARY = '#e9e9e9'; // '#03A9F4';// 03A9F4
 
 const LIGHT_PRIMARY = '#BCE0F2'; // '#B3e5FC';//
 const TEXT_COLOR = '#FFFFFF';
@@ -64,6 +68,60 @@ const LIGHT_PRIMARY_RGB = hexToRgb(LIGHT_PRIMARY).r + ',' + hexToRgb(LIGHT_PRIMA
 const PRIMARY_TEXT_RGB = hexToRgb(PRIMARY_TEXT).r + ',' + hexToRgb(PRIMARY_TEXT).g + ',' + hexToRgb(PRIMARY_TEXT).b;
 const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + ',' + hexToRgb(TEXT_COLOR).b;
 
+
+
+
+
+const load = {
+  OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
+
+  OVERLAY_SPINNER_COLOR: '#CCCCCC',
+  BG_COLOR_RGB: '255,255,255',
+  BG_COLOR_OPACITY: '0.9',
+  LOAD_SEQUENCE_TEXT_COLOR: '#3b3b3b'
+}
+const login = {
+  TEXT_INPUT_BG_RGB: '231,231,231',
+  TEXT_INPUT_BG_OPACITY: '1',
+  TEXT_INPUT_COLOR: '#3b3b3b',
+  BUTTON_TEXT_COLOR: '#ffffff',
+  BUTTON_BG: '#6a7e39',
+  BUTTON_UNDERLAY: '#3b3b3b',
+  OPEN_LINK_BG: '#e7e7e7',
+  OPEN_LINK_TEXT_COLOR: '#3b3b3b',
+  OPEN_LINK_ICON_COLOR: '#3b3b3b',
+  PLACEHOLDER_TEXT_COLOR_RGB: '59,59,59',
+  PLACEHOLDER_TEXT_OPACITY: '0.7',
+  CONNECTION_BUTTON_BG: '#e7e7e7',
+  CONNECTION_BUTTON_ICON_COLOR: '#3b3b3b',
+  CONNECTION_BUTTON_UNDERLAY: '#3b3b3b',
+  WARNING_TEXT_COLOR: '#3b3b3b',
+}
+
+const main = {
+  STATUS_BAR_BG: '#3b3b3b',
+  BACKGROUND_COLOR: '#F9F9F9',
+  BOTTOM_MENU_BG: '#3b3b3b',
+  BOTTOM_MENU_COLOR: '#B0B0B0',
+  BOTTOM_MENU_UNDERLAY: '#3b3b3b',
+  BOTTOM_MENU_SELECT_BG: '#e7e7e7',
+  BOTTOM_MENU_SELECT_COLOR: '#3b3b3b',
+  BOTTOM_MENU_SELECT_UNDERLAY: '#e7e7e7',
+  BOTTOM_MENU_HIGHLIGHT_COLOR_RGB: '176,176,176',
+  BOTTOM_MENU_HIGHLIGHT_OPACITY: '1',
+  NAVBAR_TINT: '#ffffff',
+  NAVBAR_BG: '#3b3b3b',
+  TITLE_COLOR: '#ffffff'
+}
+
+const admin = {
+  MENU_TITLE: 'UBS',
+  MENU_FONT: 'Times New Roman'
+}
+
+const list = {
+  LIST_HEADER_COLOR: '#3b3b3b',
+}
 
 const BACKGROUND_COLOR = '#fff';
 const BUTTON_BACKGROUND_COLOR = PRIMARY;
@@ -177,13 +235,13 @@ const customeStyle = StyleSheet.create({
     margin: 12,
     opacity: 0.7,
   },
-    attempt: {
+  attempt: {
     fontSize: 16,
     color: TEXT_COLOR,
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 8,
-    },
+  },
   row: {
     flexDirection: 'row',
     width: SCREEN_WIDTH,
@@ -364,36 +422,36 @@ const questionrow = StyleSheet.create({
 
 
 const AccountActivationStep = StyleSheet.create({
-   header: {
+  header: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
     opacity: 1,
-    marginTop:16,
+    marginTop: 16,
     width: SCREEN_WIDTH,
     textAlign: 'left',
-    marginLeft:8,
+    marginLeft: 8,
     textAlignVertical: 'center',
   },
-   compulsory_chlng_name: {
+  compulsory_chlng_name: {
     fontSize: 16,
     color: '#fff',
     opacity: 1,
-    marginTop:4,
+    marginTop: 4,
     width: SCREEN_WIDTH,
-    marginLeft:24,
+    marginLeft: 24,
     textAlign: 'left',
     textAlignVertical: 'center',
   },
-     optional_chlng_name: {
+  optional_chlng_name: {
     fontSize: 16,
     color: '#fff',
     opacity: 1,
-    marginLeft:16,
+    marginLeft: 16,
     textAlign: 'left',
     textAlignVertical: 'center',
   },
-    seprator: {
+  seprator: {
     width: SCREEN_WIDTH,
     backgroundColor: '#fff',
     height: 2,
@@ -404,9 +462,9 @@ const AccountActivationStep = StyleSheet.create({
     color: '#fff',
     opacity: 1,
     height: 40,
-    marginTop:8,
-    marginBottom:8,
-    width: SCREEN_WIDTH-32,
+    marginTop: 8,
+    marginBottom: 8,
+    width: SCREEN_WIDTH - 32,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
@@ -490,45 +548,45 @@ const appointmentrow = StyleSheet.create({
 const notification = StyleSheet.create({
   customerow: {
     backgroundColor: '#fff',
-    width: SCREEN_WIDTH-32,
-    marginTop:20,
-    marginLeft:16,
-    marginRight:16,
+    width: SCREEN_WIDTH - 32,
+    marginTop: 20,
+    marginLeft: 16,
+    marginRight: 16,
   },
-    container: {
+  container: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'white',
-    height:200,
-    width:300
+    height: 200,
+    width: 300
   },
   row: {
     flexDirection: 'row',
-        width: SCREEN_WIDTH-32,
+    width: SCREEN_WIDTH - 32,
 
   },
-  notificationButton:{
-    flexDirection:'row',
-    width: SCREEN_WIDTH-32,
-  },
-    amountrow: {
+  notificationButton: {
     flexDirection: 'row',
-        width: SCREEN_WIDTH-32,
+    width: SCREEN_WIDTH - 32,
+  },
+  amountrow: {
+    flexDirection: 'row',
+    width: SCREEN_WIDTH - 32,
 
   },
-    text: {
-    flex:1,
-    alignItems:'center',
-    justifyContent:'center',
+  text: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 14,
   },
   col: {
     marginRight: 20,
     flexDirection: 'column'
   },
-   col1: {
+  col1: {
     marginRight: 20,
-    flex:7,
+    flex: 7,
     flexDirection: 'column',
   },
   subject: {
@@ -537,103 +595,103 @@ const notification = StyleSheet.create({
     color: BLACK_TEXT_COLOR,
     width: 188,
     textAlign: 'left',
-    opacity:1,
-    marginLeft:8,
-    marginTop:8,
-    backgroundColor:'transparent',
+    opacity: 1,
+    marginLeft: 8,
+    marginTop: 8,
+    backgroundColor: 'transparent',
 
   },
   time: {
     fontSize: 16,
     color: BLACK_TEXT_COLOR,
     textAlign: 'right',
-    width: SCREEN_WIDTH-236,
-    opacity:0.6,
-     marginRight:8,
-    marginTop:8,
-    backgroundColor:'transparent',
+    width: SCREEN_WIDTH - 236,
+    opacity: 0.6,
+    marginRight: 8,
+    marginTop: 8,
+    backgroundColor: 'transparent',
   },
   body: {
     fontSize: 16,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
   },
-    dot: {
+  dot: {
     fontSize: 16,
-     width:15,
+    width: 15,
     color: BLACK_TEXT_COLOR,
-     marginLeft:8,
-    opacity:0.6,
+    marginLeft: 8,
+    opacity: 0.6,
   },
-   body2: {
+  body2: {
     fontSize: 16,
-    marginRight:32,
-     width: SCREEN_WIDTH-71,
+    marginRight: 32,
+    width: SCREEN_WIDTH - 71,
     color: BLACK_TEXT_COLOR,
     opacity: 0.6,
-                                      
-      
+
+
   },
-    bold: {         
+  bold: {
     fontSize: 22,
-    width: SCREEN_WIDTH-48,
+    width: SCREEN_WIDTH - 48,
     color: BLACK_TEXT_COLOR,
-    opacity:1,
-    textAlign:'right',
-    fontWeight: 'bold', 
-    marginLeft:8,
-    marginRight:8,
+    opacity: 1,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    marginLeft: 8,
+    marginRight: 8,
   },
-  amountContainer:{
-    justifyContent:'flex-end',
-    flex:3,                      
+  amountContainer: {
+    justifyContent: 'flex-end',
+    flex: 3,
   },
-    htmlstyle: {
+  htmlstyle: {
     fontSize: 20,
     color: BLACK_TEXT_COLOR,
-    width: SCREEN_WIDTH-32,
-    opacity:1,
-    marginLeft:8,
+    width: SCREEN_WIDTH - 32,
+    opacity: 1,
+    marginLeft: 8,
   },
-  
+
   buttontext: {
     fontSize: SCREEN_WIDTH <= 320 ? 18 : 20,
     color: '#FFF',
     textAlign: 'center',
-    opacity:1,
+    opacity: 1,
   },
-   confirmbutton: {
-   /* width:(SCREEN_WIDTH-32)/3,
-    
-    height:56,*/
-    flex:1,
-    backgroundColor:APPROVE_BUTTON_COLOR,
+  confirmbutton: {
+    /* width:(SCREEN_WIDTH-32)/3,
+     
+     height:56,*/
+    flex: 1,
+    backgroundColor: APPROVE_BUTTON_COLOR,
   },
-   denybutton: {
-   /* width:(SCREEN_WIDTH-32)/3,
-    
-    height:56,*/
-    flex:1,
-    backgroundColor:REJECT_BUTTON_COLOR,
+  denybutton: {
+    /* width:(SCREEN_WIDTH-32)/3,
+     
+     height:56,*/
+    flex: 1,
+    backgroundColor: REJECT_BUTTON_COLOR,
   },
-    fraudbutton: {
-   /* width:(SCREEN_WIDTH-32)/3,
-    
-    height:56,*/
-    flex:1,
-    backgroundColor:FRAUD_BUTTON_COLOR,
+  fraudbutton: {
+    /* width:(SCREEN_WIDTH-32)/3,
+     
+     height:56,*/
+    flex: 1,
+    backgroundColor: FRAUD_BUTTON_COLOR,
   },
-    approvebutton: {
-   /* width:(SCREEN_WIDTH-32)/2,
-    height:56, */
-    flex:1,
-    backgroundColor:APPROVE_BUTTON_COLOR,
+  approvebutton: {
+    /* width:(SCREEN_WIDTH-32)/2,
+     height:56, */
+    flex: 1,
+    backgroundColor: APPROVE_BUTTON_COLOR,
   },
-    rejectbutton: {
+  rejectbutton: {
     /*width:(SCREEN_WIDTH-32)/2,
     height:56, */
-    flex:1,
-    backgroundColor:REJECT_BUTTON_COLOR,
+    flex: 1,
+    backgroundColor: REJECT_BUTTON_COLOR,
   },
 });
 
@@ -786,44 +844,44 @@ const coreStyle = StyleSheet.create({
 });
 
 const PatternLockStyle = StyleSheet.create({
-   patternlockview: {
-     marginTop:20,
-     width: 270,
-     height: 270,
-   },
-   button: {
-     flexDirection: 'row',
-     alignItems: 'center',
-     backgroundColor: TEXT_COLOR,
-     height:60,
-     width:270,
-     marginTop: 16,
-   },
-   errorMsg: {
-     fontSize: 16,
-     color: TEXT_COLOR,
-     textAlign: 'center',
-     textAlignVertical: 'center',
-     margin: 16,
+  patternlockview: {
+    marginTop: 20,
+    width: 270,
+    height: 270,
   },
-  operationMsg:{
-     fontSize: 20,
-     fontWeight:'bold',
-     color: TEXT_COLOR,
-     textAlign: 'center',
-     alignItems:'center',
-     textAlignVertical: 'center',
-     margin: 16,
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: TEXT_COLOR,
+    height: 60,
+    width: 270,
+    marginTop: 16,
   },
-  patternLockParentContainer:{
-    height:SCREEN_HEIGHT - 75,
-    justifyContent:'center',
-    alignItems:'center',
+  errorMsg: {
+    fontSize: 16,
+    color: TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    margin: 16,
   },
-  patternLockChildContainer:{
-    flexDirection:'column',
-    justifyContent:'center',
-    alignItems:'center'
+  operationMsg: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: TEXT_COLOR,
+    textAlign: 'center',
+    alignItems: 'center',
+    textAlignVertical: 'center',
+    margin: 16,
+  },
+  patternLockParentContainer: {
+    height: SCREEN_HEIGHT - 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  patternLockChildContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 
@@ -862,9 +920,9 @@ const ConnectionProfile = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   selectederow: {
-  flexDirection: 'row',
-  height: 56,
-  backgroundColor: '#dbdbdb',
+    flexDirection: 'row',
+    height: 56,
+    backgroundColor: '#dbdbdb',
   },
 });
 
@@ -943,11 +1001,11 @@ const logStyle = StyleSheet.create({
     paddingLeft: 10,
     color: TEXT_COLOR,
     textAlign: 'center',
-    backgroundColor: 'rgba(' + DARK_PRIMARY_RGB + ',0.54)',
+    backgroundColor: 'rgba(' + login.TEXT_INPUT_BG_RGB + ',0.54)',
   },
   button: {
     height: 60,
-    backgroundColor: TEXT_COLOR,
+    backgroundColor: login.BUTTON_BG,
     flex: 1,
   },
   button_text: {
@@ -1017,7 +1075,7 @@ const loadStyle = StyleSheet.create({
     fontSize: 89,
     marginLeft: 31 + leftrid,
     marginTop: 31,
-    color: LIGHT_PRIMARY,
+    color: '#ffffff',
   //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_r: {
@@ -1031,18 +1089,18 @@ const loadStyle = StyleSheet.create({
     position: 'absolute',
     fontSize: 120,
     marginLeft: 62 + leftrid,
-    color: DARK_PRIMARY,
+    color: '#ffffff',
   //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   relid_wrap: {
     alignItems: 'center',
-    top:SCREEN_HEIGHT/4+5,
+    top: SCREEN_HEIGHT / 4 + 5,
 
   },
   relid: {
     fontFamily: 'icomoon',
     fontSize: 21,
-   // marginLeft: 31 + leftrid,
+    // marginLeft: 31 + leftrid,
     marginLeft: 47,
     width: 170,
     flex: 1,
@@ -1051,7 +1109,7 @@ const loadStyle = StyleSheet.create({
   //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
-    top: SCREEN_HEIGHT/3,
+    top: SCREEN_HEIGHT / 3,
     alignItems: 'center',
     //backgroundColor: 'red',
     height: 100,
@@ -1062,7 +1120,7 @@ const loadStyle = StyleSheet.create({
     width: 200,
   },
   text: {
-    color: '#FFFFFF',
+    color: load.LOAD_SEQUENCE_TEXT_COLOR,
     textAlign: 'center',
     width: 200,
     //fontFamily: CORE_FONT,
@@ -1184,7 +1242,7 @@ const controlStyle = StyleSheet.create({
   },
   controlHeader: {
     color: '#ffffff',
-    fontFamily: CORE_FONT,
+    fontFamily: admin.MENU_FONT,
     paddingTop: 30,
     fontSize: 30,
     paddingBottom: 50,
@@ -1212,14 +1270,14 @@ const nav = {
 
 
 const linkStyle = StyleSheet.create({
-   text:{
-     textAlign:'center',
-     marginTop:5,
-     padding:5,
-     textDecorationLine:'underline',
-     color:'white',
-     fontSize:15
-   }
+  text: {
+    textAlign: 'center',
+    marginTop: 5,
+    padding: 5,
+    textDecorationLine: 'underline',
+    color: 'white',
+    fontSize: 15
+  }
 });
 
 const nwd = StyleSheet.create({
@@ -1307,16 +1365,23 @@ const activationStyle = StyleSheet.create({
     height: SCREEN_HEIGHT
   },
   loadertext: {
-   position: 'absolute',
-    top:SCREEN_HEIGHT/2,
-     fontSize: 16,
-     width:SCREEN_WIDTH,
+    position: 'absolute',
+    top: SCREEN_HEIGHT / 2,
+    fontSize: 16,
+    width: SCREEN_WIDTH,
     color: TEXT_COLOR,
-    opacity:1,
+    opacity: 1,
     textAlign: 'center',
     textAlignVertical: 'center',
-    marginTop: 10,
-   
+    marginTop: 10
+  },
+  warning_text: {
+    fontSize: 16,
+    color: login.WARNING_TEXT_COLOR,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    marginTop: 8,
+    height: 20
   },
   bgcolorizer: {
     position: 'absolute',
@@ -1324,7 +1389,7 @@ const activationStyle = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(' + PRIMARY_RGB + ',0.85)',
+    backgroundColor: 'rgba(' + load.BG_COLOR_RGB + ',' + load.BG_COLOR_OPACITY + ')',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
   },
@@ -1333,7 +1398,7 @@ const activationStyle = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(' + PRIMARY_RGB + ',1)',
+    backgroundColor: 'rgba(' + load.BG_COLOR_RGB + ',1)',
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
   },
@@ -1350,9 +1415,9 @@ const activationStyle = StyleSheet.create({
     width: max.width,
     justifyContent: 'flex-start',
   },
-  fullscreen:{
-    width:max.width,
-    height:SCREEN_HEIGHT-100,
+  fullscreen: {
+    width: max.width,
+    height: SCREEN_HEIGHT - 100,
   },
   counter: {
     fontSize: 14,
@@ -1366,7 +1431,7 @@ const activationStyle = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 20,
-    color: TEXT_COLOR,
+    color: load.TITLE_COLOR,
   },
   info: {
     fontSize: 16,
@@ -1385,14 +1450,14 @@ const activationStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
-    backgroundColor: 'rgba(' + DARK_PRIMARY_RGB + ',0.7)',
+    backgroundColor: 'rgba(' + login.TEXT_INPUT_BG_RGB + ',' + login.TEXT_INPUT_BG_OPACITY + ')',
   },
   textinput: {
     flex: 1,
     fontSize: 22,
-    color: TEXT_COLOR,
+    color: login.TEXT_INPUT_COLOR,
     textAlign: 'center',
-    backgroundColor:null,
+    backgroundColor: null,
   },
   textinput_lead: {
     flex: 1,
@@ -1405,20 +1470,20 @@ const activationStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 60,
-    backgroundColor: TEXT_COLOR,
+    backgroundColor: login.BUTTON_BG,
   },
   buttontext: {
     flex: 1,
     fontSize: 22,
-    color: PRIMARY,
+    color: login.BUTTON_TEXT_COLOR,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   topGroup: {
-//     height: 400,
-   //  backgroundColor: 'red',
-     justifyContent: 'flex-end',
-     flexDirection: 'column',
+    //     height: 400,
+    //  backgroundColor: 'red',
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
   },
 });
 
@@ -1431,6 +1496,9 @@ module.exports = {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   SCREEN_HEIGHT_RATIO,
+  PLACEHOLDER_TEXT_COLOR_RGB,
+  DEV_BIND_ICON_TEXT_COLOR_RGB,
+  DEV_BIND_TYPE_TEXT_COLOR_RGB,
   customeStyle,
   AccountActivationStep,
   appointmentrow,
@@ -1441,6 +1509,11 @@ module.exports = {
   PatternLockStyle,
   nav,
   open,
+  load,
+  main,
+  login,
+  admin,
+  list,
   spd: SPEED,
   loadspd: LOADSPEED,
   controlStyle,

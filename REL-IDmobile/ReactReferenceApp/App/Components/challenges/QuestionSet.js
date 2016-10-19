@@ -19,6 +19,7 @@ const {
   View,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   ListView,
   TextInput,
   StyleSheet,
@@ -195,7 +196,7 @@ export default class QuestionSet extends Component {
                 ref={(component) => { this.quesInput = component; return this.quesInput; }}
                 autoCorrect={false}
                 placeholder={'Type/Select question'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={[
                   Skin.activationStyle.textinput,
                   {
@@ -225,7 +226,7 @@ export default class QuestionSet extends Component {
               <TextInput
                 autoCorrect={false}
                 placeholder={'Enter your secret answer'}
-                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                 placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
                 style={[Skin.activationStyle.textinput, {
                   textAlign: 'left',
                   paddingLeft:5,
@@ -237,16 +238,16 @@ export default class QuestionSet extends Component {
             </View>
           </View>
           <View style={Skin.activationStyle.input_wrap}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={Skin.activationStyle.button}
               onPress={this.setSecrets.bind(this)}
-              underlayColor={'#082340'}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
               activeOpacity={0.6}
             >
               <Text style={Skin.activationStyle.buttontext}>
                 {this.btnText()}
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       </MainActivation>

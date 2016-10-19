@@ -103,7 +103,7 @@ class FindBranchScene extends Component{
                 navBar={{
                     title: 'Find Branch',
                     visible: true,
-                    tint: Skin.colors.TEXT_COLOR,
+                    tint: Skin.main.NAVBAR_TINT,
                     left:{
                         text: '',
                         icon: '\ue20e',

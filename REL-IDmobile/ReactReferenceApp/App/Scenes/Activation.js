@@ -22,32 +22,29 @@ var Main = require('./Main');
 /* 
   Instantiaions
 */
-var {
-  View,
-  Text,
-  Navigator,
-  //TextInput,
-  //TouchableHighlight,
-  //ActivityIndicatorIOS,
-  //StyleSheet
+var {View, Text, Navigator,
+//TextInput,
+//TouchableHighlight,
+//ActivityIndicatorIOS,
+//StyleSheet
 } = ReactNative;
 
 
-const{Component}=React;
+const {Component} = React;
 
 
-export default class ActivationScene extends Component{
-  constructor(props){
+export default class ActivationScene extends Component {
+  constructor(props) {
     super(props);
   }
   render() {
     return (
       <Main>
-        <View style={{flex:1,backgroundColor:Skin.colors.BACK_GRAY}}>
+        <View style={ { flex: 1, backgroundColor: Skin.colors.BACK_GRAY } }>
           <Text>This is my Deposits content</Text>
         </View>
       </Main>
-    );
+      );
   }
 }
 
