@@ -1222,6 +1222,76 @@ const linkStyle = StyleSheet.create({
    }
 });
 
+const nwd = StyleSheet.create({
+     button: {
+    alignItems: 'center',
+    height: 48,
+    width:250,
+     borderRadius: 8,
+     marginTop:16,
+    backgroundColor: '#f00',
+  },
+  buttontext: {
+    height: 48,
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+   regtypebutton: {
+    alignItems: 'center',
+    height: 70,
+    width:70,
+     borderRadius: 8,
+     margin:8,
+     marginBottom:4,
+    backgroundColor: '#f00',
+  },
+  regtypebuttontext: {
+    height: 70,
+    fontSize: 48,
+    color: '#fff',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+   row: {
+    flexDirection: 'row',
+  },
+   col: {
+    flexDirection: 'column',
+  },
+    textinput: {
+    fontSize: 16,
+     height:48,
+    width:250,
+    color: '#000',
+    marginBottom:12,
+    backgroundColor:'#ebebeb',
+  },
+   check_text_condition: {
+    fontSize: 16,
+    color: '#f00',
+    opacity: 1,
+    textAlign: 'left',
+    textDecorationLine:'underline',
+    textAlignVertical: 'center',
+  },
+    check_text: {
+    fontSize: 20,
+    color: '#000',
+    opacity: 1,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+   note: {
+    fontSize: 14,
+    color: '#f00',
+    opacity: 1,
+    width:250,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+});
 
 const activationStyle = StyleSheet.create({
   container: {
@@ -1375,6 +1445,7 @@ module.exports = {
   loadspd: LOADSPEED,
   controlStyle,
   activationStyle,
+  nwd,
   linkStyle,
   colors,
   statusBarStyle,

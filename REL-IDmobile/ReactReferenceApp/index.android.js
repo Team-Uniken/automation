@@ -41,6 +41,10 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 // COMPONENTS
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import First from './App/Components/nwd/first';
+import Second from './App/Components/nwd/second';
+import Register from './App/Components/nwd/register';
+import Register14 from './App/Components/nwd/register14';
 
 import Demo from './App/Components/demo';
 
@@ -146,8 +150,15 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Appointments') {
       return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-
     // LOAD SCENES
+    }else if (id === 'first') {
+      return (<First navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    }else if (id === 'second') {
+      return (<Second navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    }else if (id === 'register') {
+      return (<Register navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    }else if (id === 'register14') {
+      return (<Register14 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     }else if (id === 'demo') {
       return (<Demo navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
 

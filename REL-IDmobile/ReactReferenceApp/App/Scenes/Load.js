@@ -54,6 +54,8 @@ const {
   PushNotificationIOS,
   AppStateIOS,
   AlertIOS,
+  Image,
+  StyleSheet,
 } = ReactNative;
 
 const{
@@ -612,51 +614,40 @@ class Load extends Component {
   
   doNavigation() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+    this.props.navigator.push({ id: "first", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
   }
   
   render() {
     console.log('************ Load Render');
     console.log(this.props.navigator.state);
     return (
-            <MainActivation navigator={this.props.navigator}>
-            <View style={Skin.activationStyle.fullscreen}>
-         
-            <Animated.View style={[Skin.loadStyle.rid_wrap, { top: Skin.SCREEN_HEIGHT/4 }]}>
-            <View style={Skin.loadStyle.rid_center}>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r, { opacity: this.state.r_opac_val }]}>g
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i, { opacity: this.state.i_opac_val }]}>h
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d, { opacity: this.state.d_opac_val }]}>i
-            </Animated.Text>
-            </View>
-            </Animated.View>
-            <View style={Skin.loadStyle.relid_wrap}>
-            <Animated.Text style={[Skin.loadStyle.relid, { opacity: this.state.relid_opac_val }]}>W
-            </Animated.Text>
-            </View>
-            <View style={Skin.loadStyle.text_wrap}>
-            <View style={Skin.loadStyle.text_center}>
-            <Animated.Text style={[Skin.loadStyle.text, { opacity: this.state.r_text_opac }]}>
-            Initializing Authentication
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.text, { opacity: this.state.i_text_opac }]}>
-            Authenticating Device
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.text, { opacity: this.state.d_text_opac }]}>
-            Securing Connection
-            </Animated.Text>
-            <Animated.Text style={[Skin.loadStyle.text, { opacity: this.state.relid_text_opac }]}>
-            Secure Access Established
-            </Animated.Text>
-            </View>
-            </View>
-               </View>
-            </MainActivation>
+        <View style={styles.container}>
+      <Image source={require('image!load')} style={styles.bg} />
+      <Text style={styles.icon}>N</Text>
+     </View>
             );
   }
 }
+var styles = StyleSheet.create({
+  bg : {
+    height: Skin.SCREEN_HEIGHT,
+    width: Skin.SCREEN_WIDTH,
+  },
+  container: {
+    flex: 1,
+  },
+  icon:{
+      position: 'absolute',
+    top:(Skin.SCREEN_HEIGHT-100)/2,
+    bottom: 0,
+    left: (Skin.SCREEN_WIDTH-100)/2,
+    right: 0,
+    width: 100,
+    color:'#fff',
+    fontSize: 100,
+    height: 100,
+  }
+});
 
 
 module.exports = Load;
