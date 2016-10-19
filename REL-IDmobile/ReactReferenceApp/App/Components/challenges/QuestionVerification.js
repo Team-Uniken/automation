@@ -19,12 +19,8 @@ import OpenLinks from '../OpenLinks';
   INSTANCED
  */
 let responseJson;
-<<<<<<< HEAD
-const {View, Text, TextInput, TouchableHighlight, ScrollView, } = ReactNative;
-const{Component} =  React;
-=======
-const {View, Text, TextInput,TouchableOpacity, TouchableHighlight, ScrollView, } = React;
->>>>>>> demo/ubs
+const {Component} = React;
+const {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, } = React;
 
 export default class QuestionVerification extends Component {
 
@@ -101,47 +97,35 @@ export default class QuestionVerification extends Component {
 
   render() {
     return (
-      <MainActivation navigator={this.props.navigator}>
-        <View
-          style={Skin.activationStyle.topGroup}
-        >
-          <Text style={Skin.activationStyle.counter}>
-            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
+      <MainActivation navigator={ this.props.navigator }>
+        <View style={ Skin.activationStyle.topGroup }>
+          <Text style={ Skin.activationStyle.counter }>
+            { this.props.url.currentIndex }/
+            { this.props.url.chlngsCount }
           </Text>
-          <Text style={Skin.activationStyle.title}>
+          <Text style={ Skin.activationStyle.title }>
             Secret Question
           </Text>
-          <Text style={Skin.activationStyle.info}>
-            {this.props.url.chlngJson.attempts_left} Attempts Left
+          <Text style={ Skin.activationStyle.info }>
+            { this.props.url.chlngJson.attempts_left } Attempts Left
           </Text>
-          <Text style={Skin.activationStyle.info}>
-            {this.props.url.chlngJson.chlng_resp[0].challenge}
+          <Text style={ Skin.activationStyle.info }>
+            { this.props.url.chlngJson.chlng_resp[0].challenge }
           </Text>
-
-          <View style={Skin.activationStyle.input_wrap}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-              <TextInput
-                autoCorrect={false}
-                ref={'answer'}
-                placeholder={'Enter Secret Answer'}
-                onChange={this.onAnswerChange.bind(this)}
-                returnKeyType={'next'}
-                secureTextEntry={true}
-                keyboardType={'default'}
-                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
-                style={Skin.activationStyle.textinput}
-                onSubmitEditing={this.checkAnswer.bind(this)} />
+          <View style={ Skin.activationStyle.input_wrap }>
+            <View style={ Skin.activationStyle.textinput_wrap }>
+              <TextInput autoCorrect={ false } ref={ 'answer' } placeholder={ 'Enter Secret Answer' } onChange={ this.onAnswerChange.bind(this) } returnKeyType={ 'next' }
+                secureTextEntry={ true } keyboardType={ 'default' } placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB } style={ Skin.activationStyle.textinput } onSubmitEditing={ this.checkAnswer.bind(this) }
+              />
             </View>
           </View>
-  <Text style={Skin.activationStyle.warning_text}>Attempts Left : {this.props.url.chlngJson.attempts_left}</Text>
-          <View style={Skin.activationStyle.input_wrap}>
-            <TouchableOpacity
-              style={Skin.activationStyle.button}
-              underlayColor={Skin.login.BUTTON_UNDERLAY}
-              onPress={this.checkAnswer.bind(this)}
-              activeOpacity={0.6}>
-              <Text style={Skin.activationStyle.buttontext}>
-                {this.btnText()}
+          <Text style={ Skin.activationStyle.warning_text }>Attempts Left :
+            { this.props.url.chlngJson.attempts_left }
+          </Text>
+          <View style={ Skin.activationStyle.input_wrap }>
+            <TouchableOpacity style={ Skin.activationStyle.button } underlayColor={ Skin.login.BUTTON_UNDERLAY } onPress={ this.checkAnswer.bind(this) } activeOpacity={ 0.6 }>
+              <Text style={ Skin.activationStyle.buttontext }>
+                { this.btnText() }
               </Text>
             </TouchableOpacity>
           </View>

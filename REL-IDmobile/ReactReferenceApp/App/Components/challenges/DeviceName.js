@@ -21,24 +21,9 @@ import MainActivation from '../MainActivation';
 
 let activationResSubscription;
 
-const {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-<<<<<<< HEAD
-  DeviceEventEmitter,
-=======
-  TouchableOpacity,
->>>>>>> demo/ubs
-  Platform,
-  Alert,
-  AsyncStorage,
-} = ReactNative;
+const {View, Text, TextInput, TouchableHighlight, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, } = ReactNative;
 
-const{
-  Component
-} = React;
+const {Component} = React;
 
 let responseJson;
 
@@ -48,14 +33,14 @@ export default class DeviceName extends Component {
     super(props);
     this.state = {
       deviceName: this.props.url.chlngJson.chlng_resp[0].response,
-      pattern:false,
+      pattern: false,
     };
 
     this.setDeviceName = this.setDeviceName.bind(this);
     this.showPattern = this.showPattern.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
-    this.isUserDataPresent = false;  
-}
+    this.isUserDataPresent = false;
+  }
 
   showPattern(chlngRes) {
     this.props.navigator.push({
@@ -70,62 +55,62 @@ export default class DeviceName extends Component {
   }
 
   showSetPatternAlert() {
-      Alert.alert(
-        'Message',
-        'Do you want to enable pattern feature?',
-        [
-          {
-            text: 'NO',
-            onPress: () => {
-              console.log('Cancel Pressed');
-              try {
-                AsyncStorage.setItem("setPattern", "false", () => {
-                  this.setDeviceName();
-                  Main.dnaPasswd = null;
-                });
-              }
-              catch (e) { }
-            }
-          },
-          {
-            text: 'YES',
-            onPress: () => {
-              console.log('YES Pressed');
-              try {
-                AsyncStorage.setItem("setPattern", "true", () => {
-                  this.setDeviceName();
-                });
-              }
-              catch (e) { }
-            }
-          },
-        ]
-      );
-   }
+    Alert.alert(
+      'Message',
+      'Do you want to enable pattern feature?',
+      [
+        {
+          text: 'NO',
+          onPress: () => {
+            console.log('Cancel Pressed');
+            try {
+              AsyncStorage.setItem("setPattern", "false", () => {
+                this.setDeviceName();
+                Main.dnaPasswd = null;
+              });
+            } catch ( e ) {}
+          }
+        },
+        {
+          text: 'YES',
+          onPress: () => {
+            console.log('YES Pressed');
+            try {
+              AsyncStorage.setItem("setPattern", "true", () => {
+                this.setDeviceName();
+              });
+            } catch ( e ) {}
+          }
+        },
+      ]
+    );
+  }
 
   componentDidMount() {
     this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
 
-    if(!(this.state.deviceName) || this.state.deviceName.length <= 0 ){
+    if (!(this.state.deviceName) || this.state.deviceName.length <= 0) {
       this.state.deviceName = "tempByApplication";
     }
-    
-    
-//    if(Platform.OS == "ios"){
-////      if(Main.isTouchVerified === "NO"){
-//        this.decidePlatformAndShowAlert();
-////      }else{
-////        this.setDeviceName();
-////      }
-//    }
-   
-    }
 
-  onDeviceNameChange(event) {
-    this.setState({ deviceName: event.nativeEvent.text });
+
+    //    if(Platform.OS == "ios"){
+    ////      if(Main.isTouchVerified === "NO"){
+    //        this.decidePlatformAndShowAlert();
+    ////      }else{
+    ////        this.setDeviceName();
+    ////      }
+    //    }
+
   }
 
- 
+  onDeviceNameChange(event) {
+    this.setState({
+      deviceName: event.nativeEvent.text
+    });
+  }
+
+
   setDeviceName() {
     const dName = this.state.deviceName;
     if (dName.length > 0) {
@@ -133,99 +118,104 @@ export default class DeviceName extends Component {
       responseJson.chlng_resp[0].response = dName;
       if (Platform.OS === "android") {
         try {
-          AsyncStorage.getItem("setPattern").then((value)=> {
+          AsyncStorage.getItem("setPattern").then((value) => {
             if (value === "true" && !this.isUserDataPresent) {
-             // var chlngRes = { response: responseJson };
-             // AsyncStorage.setItem("setPattern", "false");
+              // var chlngRes = { response: responseJson };
+              // AsyncStorage.setItem("setPattern", "false");
               this.setState({
-                pattern:true
+                pattern: true
               });
             } else {
-               Events.trigger('showNextChallenge', { response: responseJson });
+              Events.trigger('showNextChallenge', {
+                response: responseJson
+              });
             }
           }).done();
-        }
-        catch (e) { }
-      }
-      else {
-        Events.trigger('showNextChallenge', { response: responseJson });
+        } catch ( e ) {}
+      } else {
+        Events.trigger('showNextChallenge', {
+          response: responseJson
+        });
       }
     } else {
       alert('Please enter device name ');
     }
     dismissKeyboard();
   }
-  
 
-  onVerifyTouchIdSupport(){
+
+  onVerifyTouchIdSupport() {
     TouchID.isSupported()
-    .then(supported => {
-          // Success code
-          console.log('TouchID is supported.');
-          this.OnTouchIdAlert();
-          })
-    .catch(error => {
-           // Failure code
-           this.setDeviceName();//normal way
-           console.log('TouchID is not supported.');
-           console.log(error);
-           });
+      .then(supported => {
+        // Success code
+        console.log('TouchID is supported.');
+        this.OnTouchIdAlert();
+      })
+      .catch(error => {
+        // Failure code
+        this.setDeviceName(); //normal way
+        console.log('TouchID is not supported.');
+        console.log(error);
+      });
   }
-  
-  OnTouchIdAlert(){
-      if(Platform.OS === 'ios'){
-        Alert.alert(
-                    'Message',
-                    'Do you want to enable touchId feature?',
-                    [
-                     {
-                     text: 'NO',
-                     onPress: () => {console.log('Cancel Pressed');
-                     AsyncStorage.setItem("userID","empty");
-                     this.setDeviceName();
-                     style: 'cancel'
-                     }
-                     
-                     },
-                     {
-                     text: 'YES',
-                     onPress: () => {
-                      AsyncStorage.setItem("userId", Main.dnaUserName);
-//                     ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaUserName, (response) => {
-//                                          if (response) {
-//                                          console.log('immediate response of encrypt data packet is is' + response[0].error);
-//                                          // alert(response[0].error);
-//                                          } else {
-//                                          console.log('immediate response is' + response[0].response);
-//                                          // alert(response[0].error);
-//                                                 AsyncStorage.setItem("userId", response[0].response);
-//                                          }
-//                                          })
-                     ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaPasswd, (response) => {
-                                                 if (response) {
-                                                 console.log('immediate response of encrypt data packet is is' + response[0].error);
-                                                 AsyncStorage.setItem("passwd", response[0].response);
-                                                 } else {
-                                                 console.log('immediate response is' + response[0].response);
-                                                 // alert(response[0].error);
-                                                 
-                                                 }
-                                                 })
-                     
-                     this.setDeviceName();
 
-                     }
-                     },
-                     ]
-                    )
-       }else{
-       
-       //Show alert for pattern.
-       }
+  OnTouchIdAlert() {
+    if (Platform.OS === 'ios') {
+      Alert.alert(
+        'Message',
+        'Do you want to enable touchId feature?',
+        [
+          {
+            text: 'NO',
+            onPress: () => {
+              console.log('Cancel Pressed');
+              AsyncStorage.setItem("userID", "empty");
+              this.setDeviceName();
+              style: 'cancel'
+            }
+
+          },
+          {
+            text: 'YES',
+            onPress: () => {
+              AsyncStorage.setItem("userId", Main.dnaUserName);
+              //                     ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaUserName, (response) => {
+              //                                          if (response) {
+              //                                          console.log('immediate response of encrypt data packet is is' + response[0].error);
+              //                                          // alert(response[0].error);
+              //                                          } else {
+              //                                          console.log('immediate response is' + response[0].response);
+              //                                          // alert(response[0].error);
+              //                                                 AsyncStorage.setItem("userId", response[0].response);
+              //                                          }
+              //                                          })
+              ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", Main.dnaPasswd, (response) => {
+                if (response) {
+                  console.log('immediate response of encrypt data packet is is' + response[0].error);
+                  AsyncStorage.setItem("passwd", response[0].response);
+                } else {
+                  console.log('immediate response is' + response[0].response);
+                  // alert(response[0].error);
+
+                }
+              })
+
+              this.setDeviceName();
+
+            }
+          },
+        ]
+      )
+    } else {
+
+      //Show alert for pattern.
+    }
   }
 
   onDeviceNameChangeText(event) {
-    this.setState({ deviceName: event.nativeEvent.text });
+    this.setState({
+      deviceName: event.nativeEvent.text
+    });
   }
 
   btnText() {
@@ -238,150 +228,86 @@ export default class DeviceName extends Component {
     }
     return 'Continue';
   }
-  
-  decidePlatformAndShowAlert(){
+
+  decidePlatformAndShowAlert() {
     const dName = this.state.deviceName;
     if (dName.length > 0) {
-        if(Platform.OS === 'ios'){
-          if(Main.isTouchIdSet === "NO"){
-            this.onVerifyTouchIdSupport();
-          }else{
-            this.setDeviceName();
-          }
+      if (Platform.OS === 'ios') {
+        if (Main.isTouchIdSet === "NO") {
+          this.onVerifyTouchIdSupport();
         } else {
-          AsyncStorage.getItem("userData").then((userData)=>{
-            if(userData!=null && userData!=undefined){
-                this.isUserDataPresent = true;
-                this.setDeviceName();
-            }
-            else{
-                this.showSetPatternAlert();
-            }
-          });
+          this.setDeviceName();
         }
-    }
-    else{
+      } else {
+        AsyncStorage.getItem("userData").then((userData) => {
+          if (userData != null && userData != undefined) {
+            this.isUserDataPresent = true;
+            this.setDeviceName();
+          } else {
+            this.showSetPatternAlert();
+          }
+        });
+      }
+    } else {
       alert("Please enter device name");
     }
   }
 
-  onCheckChallengeResponseStats(args){
+  onCheckChallengeResponseStats(args) {
     // alert("In act checkResponse");
-     activationResSubscription.remove();
-     const res = JSON.parse(args.response);
-     if(res.errCode == 0){
-        var statusCode = res.pArgs.response.StatusCode;
-        if(statusCode!=100){
-         // alert("removing data statusCode = "+  statusCode);
-          let keys = ['userData','setPattern'];
-          AsyncStorage.multiRemove(keys);
-        }
-     }else{
-      // alert("removing data errorCode = " + res.errCode);
-        let keys = ['userData','setPattern'];
+    activationResSubscription.remove();
+    const res = JSON.parse(args.response);
+    if (res.errCode == 0) {
+      var statusCode = res.pArgs.response.StatusCode;
+      if (statusCode != 100) {
+        // alert("removing data statusCode = "+  statusCode);
+        let keys = ['userData', 'setPattern'];
         AsyncStorage.multiRemove(keys);
-     }
+      }
+    } else {
+      // alert("removing data errorCode = " + res.errCode);
+      let keys = ['userData', 'setPattern'];
+      AsyncStorage.multiRemove(keys);
+    }
   }
-  
+
   onSetPattern(data) {
     activationResSubscription = DeviceEventEmitter.addListener(
-        'onCheckChallengeResponseStatus',
-        this.onCheckChallengeResponseStats.bind(this));
-     Main.dnaPasswd = null;
-     Events.trigger('showNextChallenge', data);
+      'onCheckChallengeResponseStatus',
+      this.onCheckChallengeResponseStats.bind(this));
+    Main.dnaPasswd = null;
+    Events.trigger('showNextChallenge', data);
   }
 
   render() {
-<<<<<<< HEAD
-   if(this.state.pattern === false){
-        return (
-          <MainActivation navigator={this.props.navigator}>
-            <View style={Skin.activationStyle.topGroup}>
-              <Text style={Skin.activationStyle.counter}>
-                {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-              </Text>
-              <Text style={Skin.activationStyle.title}>Device Name</Text>
-              <Text style={Skin.activationStyle.info}>
-                Set a nickname for this device:
-              </Text>
-              <View style={Skin.activationStyle.input_wrap}>
-                <View style={Skin.activationStyle.textinput_wrap}>
-                  <TextInput
-                    returnKeyType={'next'}
-                    autoCorrect={false}
-                    keyboardType={'default'}
-                    placeholderTextColor={'rgba(255,255,255,0.7)'}
-                    style={Skin.activationStyle.textinput}
-                    value={this.state.deviceName}
-                    ref={'deviceName'}
-                    placeholder={'Enter Device Nickname'}
-                    onChange={this.onDeviceNameChange.bind(this)}
-                    onSubmitEditing={this.setDeviceName.bind(this)}
-                  />
-                </View>
-              </View>
-              <View style={Skin.activationStyle.input_wrap}>
-                <TouchableHighlight
-                  onPress={this.decidePlatformAndShowAlert.bind(this)}
-                  style={Skin.activationStyle.button}
-                  activeOpacity={0.8}>
-                  <Text style={Skin.activationStyle.buttontext}>
-                    {this.btnText()}
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </View>
-          </MainActivation>
-        );
-    }
-    else if(this.state.pattern === true){
-      return (<PatternLock navigator={this.props.navigator} 
-              onSetPattern={this.onSetPattern} data={{ response: responseJson }}
-              mode="set" />);
-    }
-=======
     return (
-      <MainActivation navigator={this.props.navigator}>
-        <View style={Skin.activationStyle.topGroup}>
-          <Text style={Skin.activationStyle.counter}>
-            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
+      <MainActivation navigator={ this.props.navigator }>
+        <View style={ Skin.activationStyle.topGroup }>
+          <Text style={ Skin.activationStyle.counter }>
+            { this.props.url.currentIndex }/
+            { this.props.url.chlngsCount }
           </Text>
-          <Text style={Skin.activationStyle.title}>Device Name</Text>
-          <Text style={Skin.activationStyle.info}>
+          <Text style={ Skin.activationStyle.title }>Device Name</Text>
+          <Text style={ Skin.activationStyle.info }>
             Set a nickname for this device:
           </Text>
-          <View style={Skin.activationStyle.input_wrap}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-              <TextInput
-                returnKeyType={'next'}
-                autoCorrect={false}
-                keyboardType={'default'}
-                 placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
-                style={Skin.activationStyle.textinput}
-                value={this.state.deviceName}
-                ref={'deviceName'}
-                placeholder={'Enter Device Nickname'}
-                onChange={this.onDeviceNameChange.bind(this)}
-                onSubmitEditing={this.setDeviceName.bind(this)}
+          <View style={ Skin.activationStyle.input_wrap }>
+            <View style={ Skin.activationStyle.textinput_wrap }>
+              <TextInput returnKeyType={ 'next' } autoCorrect={ false } keyboardType={ 'default' } placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB } style={ Skin.activationStyle.textinput }
+                value={ this.state.deviceName } ref={ 'deviceName' } placeholder={ 'Enter Device Nickname' } onChange={ this.onDeviceNameChange.bind(this) } onSubmitEditing={ this.setDeviceName.bind(this) }
               />
             </View>
           </View>
-          <View style={Skin.activationStyle.input_wrap}>
-            <TouchableOpacity
-              onPress={this.decidePlatformAndShowAlert.bind(this)}
-              style={Skin.activationStyle.button}
-              activeOpacity={0.8}
-              underlayColor={Skin.login.BUTTON_UNDERLAY}
-            >
-              <Text style={Skin.activationStyle.buttontext}>
-                {this.btnText()}
+          <View style={ Skin.activationStyle.input_wrap }>
+            <TouchableOpacity onPress={ this.decidePlatformAndShowAlert.bind(this) } style={ Skin.activationStyle.button } activeOpacity={ 0.8 } underlayColor={ Skin.login.BUTTON_UNDERLAY }>
+              <Text style={ Skin.activationStyle.buttontext }>
+                { this.btnText() }
               </Text>
             </TouchableOpacity>
           </View>
         </View>
       </MainActivation>
-    );
->>>>>>> demo/ubs
+      );
   }
 }
 
