@@ -5,7 +5,7 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
+
 console.disableYellowBox = true;
 
 // Main Scenes
@@ -47,13 +47,14 @@ import PostLoginAuthMachine from './App/Components/PostLoginAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 
-const {
+import {
   AppRegistry,
   Navigator,
-  Text,
-}  = ReactNative;
+  Text
+} from 'react-native';
 
-const{Component} =  React;
+
+import { Component } from 'react';
 
 const FadeIn = {
 opacity: {
