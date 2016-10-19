@@ -144,7 +144,7 @@ constructor(props){
   </View>
 </View>  
 
-<Text style={Skin.nwd.note}>Default Login Credential</Text>
+<Text style={Skin.nwd.note}>Default Login Credential </Text>
 
     <TextInput
                 returnKeyType={'next'}
