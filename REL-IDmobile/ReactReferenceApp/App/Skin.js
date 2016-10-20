@@ -1291,6 +1291,12 @@ const nwd = StyleSheet.create({
     marginBottom:32,
     width:SCREEN_WIDTH,
   },
+     headertext:{
+    width:SCREEN_WIDTH,
+      textAlign: 'center',
+    color:'#000',
+    fontSize:20,
+  },
      button: {
     alignItems: 'center',
     height: 48,
