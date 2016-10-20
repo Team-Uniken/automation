@@ -1306,12 +1306,11 @@ const nwd = StyleSheet.create({
     height: 100,
   },
    welcometextstyle:{
-    marginTop:32,
-    marginBottom:32,
+    marginTop:16,
     width:SCREEN_WIDTH,
       textAlign: 'center',
     color:'#000',
-    fontSize:16,
+    fontSize:20,
     height:48,
   },
      button: {

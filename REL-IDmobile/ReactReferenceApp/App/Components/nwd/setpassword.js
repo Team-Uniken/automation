@@ -7,42 +7,15 @@ import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Tital from './tital';
 import Button from './button';
 import Margin from './margin';
+import Input from './input';
 
 const {
-  StyleSheet,
   Text,
   View,
-  TouchableHighlight,
-  TouchableOpacity,
-  TextInput,
-  Slider,
-  ScrollView,
 } = ReactNative;
 const{Component} =  React;
 
-var styles = StyleSheet.create({
 
-     slidetext:{
-    width: Skin.SCREEN_WIDTH,
-      textAlign: 'center',
-    color:'#000',
-    fontSize:16,
-  },
-    slider:{
-    width: 250,
-  },
-     labelStyle: {
-        flex: 1
-    },
-    checkboxStyle: {
-        width: 24,
-        height: 24,
-        borderWidth: 2,
-        borderColor: '#f00',
-        borderRadius: 5,
-
-    } 
-});
 
 
 
@@ -78,26 +51,15 @@ space={16}/>
 
       <Margin
 space={32}/>
+  
 
-    <TextInput
-                returnKeyType={'next'}
-                autoCorrect={false}
-                autoCapitalize={'none'}
-                keyboardType={'email-address'}
-                placeholder={'Enter Password'}
-                placeholderTextColor={'rgba(171,171,171,1)'}
-                style={Skin.nwd.textinput}
-                />   
-
-  <TextInput
-                returnKeyType={'next'}
-                autoCorrect={false}
-                autoCapitalize={'none'}
-                keyboardType={'email-address'}
-                placeholder={'Confirm Password'}
-                placeholderTextColor={'rgba(171,171,171,1)'}
-                style={Skin.nwd.textinput}
-                />
+               <Input
+ placeholder={'Enter Password'}
+ marginBottom={12}
+/>
+                <Input
+ placeholder={'Confirm Password'}
+/>
 <Margin
 space={32}/>
 

@@ -5,6 +5,7 @@ import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import Button from './button';
 import Margin from './margin';
+import Input from './input';
 
 const {
   StyleSheet,
@@ -20,7 +21,7 @@ const{Component} =  React;
 
 class First extends Component {
  
-  checkuser() {
+  verifypassword() {
     alert("todo");
   }
   
@@ -29,26 +30,17 @@ class First extends Component {
     return (  
         <View style={Skin.nwd.container}>
       <Text style={Skin.nwd.topicon}>N</Text>
-        <Text style={Skin.nwd.welcometextstyle}>Welcome to New World CLUB</Text>
+        <Text style={Skin.nwd.welcometextstyle}>Welcome to NWD</Text>
       <Margin
 space={32}/>
-   
-  <TextInput
-                returnKeyType={'next'}
-                autoCorrect={false}
-                autoCapitalize={'none'}
-                keyboardType={'email-address'}
-                placeholder={'Enter Username'}
-                placeholderTextColor={'rgba(171,171,171,1)'}
-                style={[Skin.nwd.textinput,{marginBottom:0}]}
-                />
-
-
-
+   <Text   style={[Skin.nwd.note,{textAlign: 'center'}]}>Attempt left 3</Text>
+<Input
+ placeholder={'Enter Password'}
+/>
   <Button
   lable="Submit"
-  onPress={this.checkuser.bind(this)}/>
-
+  onPress={this.verifypassword.bind(this)}/>
+  <Text style={[Skin.nwd.note,{textAlign: 'center',marginTop:8}]}>Forgot your username/password?</Text>
      </View>
             );
   }

@@ -5,6 +5,7 @@ import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import Button from './button';
 import Margin from './margin';
+import Input from './input';
 
 const {
   StyleSheet,
@@ -29,19 +30,15 @@ class First extends Component {
     return (  
         <View style={Skin.nwd.container}>
       <Text style={Skin.nwd.topicon}>N</Text>
-        <Text style={Skin.nwd.welcometextstyle}>Welcome to New World CLUB</Text>
+        <Text style={Skin.nwd.welcometextstyle}>Welcome to NWD</Text>
       <Margin
 space={32}/>
+
+<Input
+ placeholder={'Enter Username'}
+/>
    
-  <TextInput
-                returnKeyType={'next'}
-                autoCorrect={false}
-                autoCapitalize={'none'}
-                keyboardType={'email-address'}
-                placeholder={'Enter Username'}
-                placeholderTextColor={'rgba(171,171,171,1)'}
-                style={[Skin.nwd.textinput,{marginBottom:0}]}
-                />
+ 
 
 
 
