@@ -13,14 +13,6 @@ const {
 const{Component} =  React;
 
 var styles = StyleSheet.create({
-  bg : {
-    height: Skin.SCREEN_HEIGHT,
-    width: Skin.SCREEN_WIDTH,
-  },
-  container: {
-    flex: 1,
-    alignItems:'center',
-  },
   icon:{
     marginTop:(Skin.SCREEN_HEIGHT-100)/8,
     width: Skin.SCREEN_WIDTH,
@@ -57,7 +49,7 @@ class First extends Component {
 
   render() {
     return (  
-        <View style={styles.container}>
+        <View style={Skin.nwd.container}>
       <Text style={styles.icon}>N</Text>
       <Text style={styles.textstyle}>Welcome to New World CLUB</Text>
        <TouchableOpacity

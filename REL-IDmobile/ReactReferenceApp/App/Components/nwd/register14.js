@@ -5,6 +5,7 @@ import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Tital from './tital';
+import Button from './button';
 
 
 const {
@@ -24,10 +25,7 @@ var styles = StyleSheet.create({
     flex: 1,
      alignItems:'center',
   }, 
-  scrollcontainer: {
-    flex: 1,
- alignItems:'center',
-  },
+
  
      labelStyle: {
         flex: 1
@@ -72,7 +70,7 @@ constructor(props){
       scrollEnabled={true}
       showsVerticalScrollIndicator={false}
       >
-<View style={styles.scrollcontainer}>
+<View style={Skin.nwd.scrollcontainer}>
 <View>
 
 
@@ -151,16 +149,8 @@ constructor(props){
                 placeholderTextColor={'rgba(171,171,171,1)'}
                 style={Skin.nwd.textinput}
                 />
-
-<TouchableOpacity
-                style={Skin.nwd.button}
-                underlayColor={'#082340'}
-                activeOpacity={0.8}
-                >
-                <Text style={Skin.nwd.buttontext}>
-                 Submit
-                </Text>
-                </TouchableOpacity>
+ <Button
+  lable="Submit"/>
 
 </View>
       </ScrollView>

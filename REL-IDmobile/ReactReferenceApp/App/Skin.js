@@ -1281,6 +1281,16 @@ const linkStyle = StyleSheet.create({
 });
 
 const nwd = StyleSheet.create({
+    container: {
+    flex: 1,
+    alignItems:'center',
+  },
+    scrollcontainer: {
+    flex: 1,
+    alignItems:'center',
+    marginBottom:32,
+    width:SCREEN_WIDTH,
+  },
      button: {
     alignItems: 'center',
     height: 48,

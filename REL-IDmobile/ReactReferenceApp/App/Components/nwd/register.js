@@ -5,6 +5,7 @@ import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Tital from './tital';
+import Button from './button';
 
 const {
   StyleSheet,
@@ -19,15 +20,7 @@ const {
 const{Component} =  React;
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems:'center',
-  }, 
-  scrollcontainer: {
-    flex: 1,
-    alignItems:'center',
-    marginBottom:32,
-  },
+
      slidetext:{
     width: Skin.SCREEN_WIDTH,
       textAlign: 'center',
@@ -73,14 +66,14 @@ constructor(props){
 
   render() {
     return (  
-        <View style={styles.container}>
+        <View style={Skin.nwd.container}>
       <Tital
       tital="Registration"></Tital>
       <ScrollView
       scrollEnabled={true}
       showsVerticalScrollIndicator={false}
       >
-<View style={styles.scrollcontainer}>
+<View style={Skin.nwd.scrollcontainer}>
               
    <TextInput
                 returnKeyType={'next'}
@@ -147,16 +140,8 @@ constructor(props){
       <Text style={Skin.nwd.check_text_condition}>Terms and Conditions Link </Text>
 
   </View>
-
-<TouchableOpacity
-                style={Skin.nwd.button}
-                underlayColor={'#082340'}
-                activeOpacity={0.8}
-                >
-                <Text style={Skin.nwd.buttontext}>
-                 Submit
-                </Text>
-                </TouchableOpacity>
+  <Button
+  lable="Submit"/>
 
 </View>
       </ScrollView>
