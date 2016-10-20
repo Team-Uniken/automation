@@ -233,7 +233,7 @@ componentDidMount() {
         <Navigator
           renderScene={this.renderScene}
           initialRoute={{
-            id: 'Load',
+            id: 'register14',
             title: 'REL-IDmobile'
           }}
           configureScene={(route) => {

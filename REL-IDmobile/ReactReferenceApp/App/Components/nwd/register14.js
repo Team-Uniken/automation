@@ -4,6 +4,8 @@ import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
+import Tital from './tital';
+
 
 const {
   StyleSheet,
@@ -26,14 +28,7 @@ var styles = StyleSheet.create({
     flex: 1,
  alignItems:'center',
   },
-   titalstyle:{
-    width: Skin.SCREEN_WIDTH,
-      textAlign: 'center',
-    color:'#000',
-    fontSize:24,
-    margin:12,
-    marginBottom:16,
-  },
+ 
      labelStyle: {
         flex: 1
     },
@@ -71,7 +66,8 @@ constructor(props){
   render() {
     return (  
         <View style={styles.container}>
-      <Text style={styles.titalstyle}>Registration</Text>
+      <Tital
+      tital="Registration"></Tital>
       <ScrollView
       scrollEnabled={true}
       showsVerticalScrollIndicator={false}
