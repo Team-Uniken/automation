@@ -18,6 +18,7 @@ class Button extends Component {
                 style={Skin.nwd.button}
                 underlayColor={'#082340'}
                 activeOpacity={0.8}
+                  onPress={this.props.onPress}
                 >
                 <Text style={Skin.nwd.buttontext}>
                  {this.props.lable}

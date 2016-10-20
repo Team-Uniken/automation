@@ -46,6 +46,10 @@ import Second from './App/Components/nwd/second';
 import Register from './App/Components/nwd/register';
 import Register14 from './App/Components/nwd/register14';
 import SetPassword from './App/Components/nwd/setpassword';
+import CheckUser from './App/Components/nwd/checkuser';
+import virifypassword from './App/Components/nwd/virifypassword';
+
+
 
 import Demo from './App/Components/demo';
 
@@ -198,7 +202,9 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       return (<PasswordSet navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'UserLogin') {
       return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'PasswordVerification') {
+    } else if (id === 'checkuser') {
+      return (<CheckUser navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    }else if (id === 'PasswordVerification') {
       return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine navigator={nav} url={route.url} title={route.title} />);
@@ -235,7 +241,7 @@ componentDidMount() {
         <Navigator
           renderScene={this.renderScene}
           initialRoute={{
-            id: 'setpassword',
+            id: 'login01',
             title: 'REL-IDmobile'
           }}
           configureScene={(route) => {

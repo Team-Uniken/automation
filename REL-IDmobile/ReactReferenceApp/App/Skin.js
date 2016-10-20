@@ -1297,6 +1297,23 @@ const nwd = StyleSheet.create({
     color:'#000',
     fontSize:20,
   },
+   topicon:{
+    marginTop:(SCREEN_HEIGHT-100)/8,
+    width: SCREEN_WIDTH,
+    color:'#f00',
+      textAlign: 'center',
+    fontSize: 100,
+    height: 100,
+  },
+   welcometextstyle:{
+    marginTop:32,
+    marginBottom:32,
+    width:SCREEN_WIDTH,
+      textAlign: 'center',
+    color:'#000',
+    fontSize:16,
+    height:48,
+  },
      button: {
     alignItems: 'center',
     height: 48,
