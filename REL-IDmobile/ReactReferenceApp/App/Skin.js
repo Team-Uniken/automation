@@ -1311,7 +1311,19 @@ const nwd = StyleSheet.create({
       textAlign: 'center',
     color:'#000',
     fontSize:20,
-    height:48,
+  },
+   regtype:{
+      textAlign: 'center',
+    color:'#000',
+    fontSize:16,
+    marginBottom:32,
+  },
+   hint:{
+    width:SCREEN_WIDTH,
+      textAlign: 'center',
+    color:'#dbdbdb',
+    fontSize:16,
+    marginBottom:32,
   },
      button: {
     alignItems: 'center',
