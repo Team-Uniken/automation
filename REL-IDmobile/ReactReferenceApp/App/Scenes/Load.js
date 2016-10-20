@@ -16,7 +16,7 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import erelid from '../../erelid.json';
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
-
+const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var PushNotification = require('react-native-push-notification');
 //import Notification from 'react-native-system-notification';
 
@@ -267,6 +267,10 @@ class Load extends Component {
         initCount = initSuccess;
         chlngJson = responseJson.pArgs.response.ResponseData;
         nextChlngName = chlngJson.chlng[0].chlng_name
+        const pPort = responseJson.pArgs.pxyDetails.port;
+        if (pPort > 0) {
+         RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
+        }
         Obj.onInitCompleted();
         console.log('--------- onInitializeCompleted initCount ' + initCount);
       } else {
@@ -606,7 +610,7 @@ class Load extends Component {
 
   doNavigation() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "first", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+    this.props.navigator.push({ id: "login01", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
 
   }
 

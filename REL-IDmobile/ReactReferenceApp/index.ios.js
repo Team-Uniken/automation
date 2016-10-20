@@ -37,6 +37,15 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 // COMPONENTS
 
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import Login01 from './App/Components/nwd/login01';
+import Second from './App/Components/nwd/second';
+import Register from './App/Components/nwd/register';
+import Register14 from './App/Components/nwd/register14';
+import SetPassword from './App/Components/nwd/setpassword';
+
+
+
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
@@ -122,7 +131,18 @@ class ReactRefApp extends Component {
       return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
       
       // LOAD SCENES
-    } else if (id === 'Load') {
+    }else if (id === 'login01') {
+      return (<Login01 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    }else if (id === 'second') {
+    return (<Second navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  }else if (id === 'register') {
+    return (<Register navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  }else if (id === 'register14') {
+    return (<Register14 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  }else if (id === 'demo') {
+    return (<Demo navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+
+  } else if (id === 'Load') {
       return (<LoadScene navigator={nav} />);
       
       // SECONDARY SCENES
