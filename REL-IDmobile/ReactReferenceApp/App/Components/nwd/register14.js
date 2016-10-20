@@ -6,64 +6,72 @@ import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Tital from './tital';
 import Button from './button';
+import CheckBox from './checkbox';
+import Input from './input';
+import Margin from './margin';
+
 
 
 const {
-  StyleSheet,
   Text,
   View,
-  TouchableHighlight,
-  TouchableOpacity,
-  TextInput,
-  Slider,
   ScrollView,
 } = ReactNative;
 const{Component} =  React;
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-     alignItems:'center',
-  }, 
-
- 
-     labelStyle: {
-        flex: 1
-    },
-    checkboxStyle: {
-        width: 24,
-        height: 24,
-        borderWidth: 2,
-        borderColor: '#f00',
-        borderRadius: 5,
-
-    } 
-});
-
-
-
 
 class Register extends Component {
 
 constructor(props){
     super(props);
     this.state = {
-    check:'',
+    device:'',
+    touchid:'',
+    wechat:'',
+    rememberusername:'',
+    welcomescreen:'',
 
     };
   }
 
-  selectCheckbox() {
-    if(this.state.check.length==0){
-          this.setState({ check:'\u2714'});
+  selectdevice() {
+    if(this.state.device.length==0){
+          this.setState({ device:'\u2714'});
     }else{
-          this.setState({ check:''});
+          this.setState({ device:''});
+    }
+    } 
+     selecttouchid() {
+    if(this.state.touchid.length==0){
+          this.setState({ touchid:'\u2714'});
+    }else{
+          this.setState({ touchid:''});
+    }
+    } 
+     selectwechat() {
+    if(this.state.wechat.length==0){
+          this.setState({ wechat:'\u2714'});
+    }else{
+          this.setState({ wechat:''});
+    }
+    } 
+     selectrememberusername() {
+    if(this.state.rememberusername.length==0){
+          this.setState({ rememberusername:'\u2714'});
+    }else{
+          this.setState({ rememberusername:''});
+    }
+    } 
+     selectwelcomescreen() {
+    if(this.state.welcomescreen.length==0){
+          this.setState({ welcomescreen:'\u2714'});
+    }else{
+          this.setState({ welcomescreen:''});
     }
     } 
 
   render() {
     return (  
-        <View style={styles.container}>
+        <View style={Skin.nwd.container}>
       <Tital
       tital="Registration"></Tital>
       <ScrollView
@@ -71,84 +79,44 @@ constructor(props){
       showsVerticalScrollIndicator={false}
       >
 <View style={Skin.nwd.scrollcontainer}>
+
 <View>
+<CheckBox
+value={this.state.device}
+onSelect={this.selectdevice.bind(this)}
+lable="Make Device Permanent"/>
 
+<CheckBox
+value={this.state.touchid}
+onSelect={this.selecttouchid.bind(this)}
+lable="Enable TouchID Login"/>           
 
-           
-  <View style={Skin.nwd.row}>
- <CheckboxField
-                defaultColor='tranprant'
-                selectedColor="#247fd2"
-                  onSelect={this.selectCheckbox}
-                checkboxStyle={styles.checkboxStyle}
-                 onSelect={this.selectCheckbox.bind(this)}
-                labelSide="right">
-                <Text style={{ color: '#f00' }}>{this.state.check}</Text>
-            </CheckboxField>
-      <Text style={Skin.nwd.check_text}>Make Device Permanent</Text>
-  </View>
+<CheckBox
+value={this.state.wechat}
+onSelect={this.selectwechat.bind(this)}
+lable="Enable WeChat Login"/>
 
-<View style={Skin.nwd.row}>
- <CheckboxField
-                defaultColor='tranprant'
-                selectedColor="#247fd2"
-                  onSelect={this.selectCheckbox}
-                checkboxStyle={styles.checkboxStyle}
-                 onSelect={this.selectCheckbox.bind(this)}
-                labelSide="right">
-                <Text style={{ color: '#f00' }}>{this.state.check}</Text>
-            </CheckboxField>
-      <Text style={Skin.nwd.check_text}>Enable TouchID Login</Text>
-  </View>
-<View style={Skin.nwd.row}>
- <CheckboxField
-                defaultColor='tranprant'
-                selectedColor="#247fd2"
-                  onSelect={this.selectCheckbox}
-                checkboxStyle={styles.checkboxStyle}
-                 onSelect={this.selectCheckbox.bind(this)}
-                labelSide="right">
-                <Text style={{ color: '#f00' }}>{this.state.check}</Text>
-            </CheckboxField>
-      <Text style={Skin.nwd.check_text}>Enable WeChat Login</Text>
-  </View>
-  <View style={Skin.nwd.row}>
- <CheckboxField
-                defaultColor='tranprant'
-                selectedColor="#247fd2"
-                  onSelect={this.selectCheckbox}
-                checkboxStyle={styles.checkboxStyle}
-                 onSelect={this.selectCheckbox.bind(this)}
-                labelSide="right">
-                <Text style={{ color: '#f00' }}>{this.state.check}</Text>
-            </CheckboxField>
-      <Text style={Skin.nwd.check_text}>Remember Username</Text>
-  </View>
-  <View style={Skin.nwd.row}>
- <CheckboxField
-                defaultColor='tranprant'
-                selectedColor="#247fd2"
-                  onSelect={this.selectCheckbox}
-                checkboxStyle={styles.checkboxStyle}
-                 onSelect={this.selectCheckbox.bind(this)}
-                labelSide="right">
-                <Text style={{ color: '#f00' }}>{this.state.check}</Text>
-            </CheckboxField>
-      <Text style={Skin.nwd.check_text}>Skip welcome screen</Text>
-  </View>
+<CheckBox
+value={this.state.rememberusername}
+onSelect={this.selectrememberusername.bind(this)}
+lable="Remember Username"/>
+
+<CheckBox
+value={this.state.welcomescreen}
+onSelect={this.selectwelcomescreen.bind(this)}
+lable="Skip welcome screen"/>
+
 </View>  
 
+ <Margin
+space={16}/>
 <Text style={Skin.nwd.note}>Default Login Credential</Text>
 
-    <TextInput
-                returnKeyType={'next'}
-                autoCorrect={false}
-                autoCapitalize={'none'}
-                keyboardType={'email-address'}
-                placeholder={'Device Name'}
-                placeholderTextColor={'rgba(171,171,171,1)'}
-                style={Skin.nwd.textinput}
-                />
+<Input
+ placeholder={'Device Name'}
+/>
+    <Margin
+space={16}/>
  <Button
   lable="Submit"/>
 
