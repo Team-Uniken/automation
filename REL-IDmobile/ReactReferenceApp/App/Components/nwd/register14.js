@@ -4,7 +4,7 @@ import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-import Tital from './tital';
+import Title from './title';
 import Button from './button';
 import CheckBox from './checkbox';
 import Input from './input';
@@ -72,8 +72,8 @@ constructor(props){
   render() {
     return (  
         <View style={Skin.nwd.container}>
-      <Tital
-      tital="Registration"></Tital>
+      <Title
+      tital="Registration"></Title>
       <ScrollView
       scrollEnabled={true}
       showsVerticalScrollIndicator={false}
