@@ -15,10 +15,11 @@ class Button extends Component {
                 returnKeyType={'next'}
                 autoCorrect={false}
                 autoCapitalize={'none'}
-                keyboardType={'email-address'}
+                 keyboardType={this.props.keyboardType}
                 placeholder={this.props.placeholder}
                 placeholderTextColor={'rgba(171,171,171,1)'}
                 style={[Skin.nwd.textinput,{marginBottom:this.props.marginBottom}]}
+                 ref={this.props.ref}
                 />
             );
   }

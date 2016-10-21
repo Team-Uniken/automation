@@ -7,6 +7,8 @@ import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Tital from './tital';
 import Button from './button';
 import hash from 'hash.js';
+import Input from './input';
+
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const {
   StyleSheet,
@@ -257,6 +259,12 @@ class Register extends Component {
       ref={'phoneNumber'}
       onChange={this.onPhoneNumberChange.bind(this)}
       />
+
+      <Input
+ placeholder={'Enter Username'}
+ ref={'phoneNumber'}
+ keyboardType={'numeric'}
+/>
       <Text style={styles.slidetext}>Slide to prove your human</Text>
       <Slider style={styles.slider}/>
       
