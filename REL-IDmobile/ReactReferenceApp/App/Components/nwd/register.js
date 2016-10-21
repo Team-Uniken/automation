@@ -22,6 +22,7 @@ const {
   InteractionManager,
   Alert,
   AsyncStorage,
+  Linking,
 } = ReactNative;
 const{Component} =  React;
 
@@ -63,14 +64,22 @@ class Register extends Component {
     email:'',
     confirmEmail:'',
     phoneNumber:'',
-      
+    value: this.props.value,
+    randomMinValue:1,
+    randomMaxValue:90,
       
     };
+    
   }
   
-  componentDidMount() {
+  componentWillMount() {
+    this.state.value = 0;
+    this.state.randomMinValue  = this.getRandomInt(5,90);
+    this.state.randomMaxValue = this.state.randomMinValue+10;
     InteractionManager.runAfterInteractions(() => {
       //this.refs.firstName.focus();
+   
+      
       });
   }
   
@@ -106,6 +115,8 @@ class Register extends Component {
   
   validateAndProcced(){
     
+    
+    
     if(this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.lastName.length > 0
       && this.state.confirmEmail.length > 0  && this.state.phoneNumber.length > 0){
         
@@ -113,6 +124,13 @@ class Register extends Component {
         this.showMessage("Error","All feilds are mandatory",false);
         return;
       }
+    
+    if(this.state.value > this.state.randomMinValue   && this.state.value < this.state.randomMaxValue ){
+      
+    }else{
+      this.showMessage("Error","You are not human",false);
+      return;
+    }
     
     if(this.state.check.length > 0){
       this.registerUser();
@@ -183,7 +201,9 @@ class Register extends Component {
         ]
       )
   }
-  
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
   
   render() {
     return (
@@ -241,8 +261,13 @@ class Register extends Component {
       </View>
       
       <Text style={styles.slidetext}>Slide to prove your human</Text>
-      <Slider style={styles.slider}/>
-      
+      <Text style={styles.slidetext}>Select range from {this.state.randomMinValue} to {this.state.randomMaxValue}</Text>
+      <Slider style={styles.slider}
+      {...this.props}
+      minimumValue={0}
+      maximumValue={100}
+      onValueChange={(value) => this.setState({value: value})}/>
+      <Text>Value: {Math.floor(this.state.value)}</Text>
       <View style={[Skin.nwd.row,{height:48}]}>
       
       <CheckboxField
@@ -254,7 +279,9 @@ class Register extends Component {
       labelSide="right">
       <Text style={{ color: '#f00' }}>{this.state.check}</Text>
       </CheckboxField>
-      <Text style={Skin.nwd.check_text_condition}>Terms and Conditions Link </Text>
+      <Text style={Skin.nwd.check_text_condition}
+      onPress={() => Linking.openURL("https://www.google.com") }
+      >Terms and Conditions Link </Text>
       
       </View>
       <Button

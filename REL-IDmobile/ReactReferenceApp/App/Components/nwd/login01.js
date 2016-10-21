@@ -14,7 +14,7 @@ const{Component} =  React;
 class First extends Component {
   selectReg() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "second"});
+    this.props.navigator.push({ id: "selectlogin",title: "nextChlngName", url: { "chlngJson": this.props.url.chlngJson, "screenId": this.props.url.screenId}});
   }
   
  register() {
