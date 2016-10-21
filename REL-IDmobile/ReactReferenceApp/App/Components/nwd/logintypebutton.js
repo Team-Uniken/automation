@@ -17,6 +17,7 @@ class LoginTypeButton extends Component {
         <TouchableOpacity
                 style={Skin.nwd.regtypebutton}
                 underlayColor={'#082340'}
+                onPress={this.props.onPress}
                 activeOpacity={0.8}
                 >
                 <Text style={Skin.nwd.regtypebuttontext}>

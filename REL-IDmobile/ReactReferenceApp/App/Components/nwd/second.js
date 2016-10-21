@@ -12,7 +12,18 @@ const {
 } = ReactNative;
 const{Component} =  React;
 
+
+
 class Second extends Component {
+  password() {
+    this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": this.props.url.chlngJson, "screenId": this.props.url.screenId} });
+  }
+   touch() {
+    alert("todo");
+  }
+   wechat() {
+    alert("todo");
+  }
   render() {
     return (  
         <View style={Skin.nwd.container}>
@@ -22,12 +33,15 @@ class Second extends Component {
        <View style={Skin.nwd.row}>
        <LoginTypeButton
        lable="T"
+        onPress={this.touch.bind(this)}
        text="TouchId"/>
       <LoginTypeButton
        lable="P"
+       onPress={this.password.bind(this)}
        text="Password"/>
         <LoginTypeButton
        lable="W"
+      onPress={this.wechat.bind(this)}
        text="WeChat"/>
  </View>
      </View>
