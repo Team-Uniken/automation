@@ -20,6 +20,8 @@ class Button extends Component {
                 placeholderTextColor={'rgba(171,171,171,1)'}
                 style={[Skin.nwd.textinput,{marginBottom:this.props.marginBottom}]}
                  ref={this.props.ref}
+                 onChange={this.props.onChange}
+                  onSubmitEditing={() => { this.props.onSubmitEditing }}
                 />
             );
   }
