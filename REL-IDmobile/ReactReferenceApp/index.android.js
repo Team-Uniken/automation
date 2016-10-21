@@ -42,7 +42,7 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import Login01 from './App/Components/nwd/login01';
-import Second from './App/Components/nwd/second';
+import SelectLogin from './App/Components/nwd/selectlogin';
 import Register from './App/Components/nwd/register';
 import Register14 from './App/Components/nwd/register14';
 import SetPassword from './App/Components/nwd/setpassword';
@@ -160,8 +160,8 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
     // LOAD SCENES
     }else if (id === 'login01') {
       return (<Login01 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'second') {
-      return (<Second navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+    }else if (id === 'selectlogin') {
+      return (<SelectLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     }else if (id === 'register') {
       return (<Register navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     }else if (id === 'register14') {
@@ -243,7 +243,7 @@ componentDidMount() {
         <Navigator
           renderScene={this.renderScene}
           initialRoute={{
-            id: 'Load',
+            id: 'selectlogin',
             title: 'REL-IDmobile'
           }}
           configureScene={(route) => {
