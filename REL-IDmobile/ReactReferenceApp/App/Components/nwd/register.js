@@ -220,8 +220,8 @@ class Register extends Component {
       placeholder={'First Name'}
       ref={'firstName'}
       keyboardType={'default'}
-      onChange={this.onLastNameChange.bind(this)}
-      onSubmitEditing={() => { this.refs.email.focus(); }}
+      onChange={this.onFirstNameChange.bind(this)}
+      onSubmitEditing={() => { this.refs.lastName.focus(); }}
       marginBottom={8}
       />
       
