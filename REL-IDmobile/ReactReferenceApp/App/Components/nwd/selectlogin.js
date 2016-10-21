@@ -3,7 +3,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
-import LoginTypeButton from './logintypebutton';
+import LoginTypeButton from '../view/logintypebutton';
 
 
 const {

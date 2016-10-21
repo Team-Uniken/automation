@@ -23,6 +23,10 @@ import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
 var constant = require('../Constants');
+
+import Button from '../view/button';
+import Margin from '../view/margin';
+import Input from '../view/input';
 /*
   INSTANCES
  */
@@ -119,7 +123,7 @@ class UserLogin extends Component {
         } else {
           console.log("no value in async storage");
           InteractionManager.runAfterInteractions(() => {
-            this.refs.inputUsername.focus();
+            // this.refs.inputUsername.focus();
           });
 
         }
@@ -334,40 +338,31 @@ class UserLogin extends Component {
   }
 
   render() {
-    if (this.state.pattern === false) {
-      var fla = this.state.isLoaderVisible;
-      console.log('\n\n\n is Loader == ', fla);
-      return (
-
-        <MainActivation navigator={ this.props.navigator }>
-          <View style={ Skin.activationStyle.topGroup }>
-            <Animated.View style={ [Skin.loadStyle.rid_wrap, { marginTop: 70 }] }>
-              <View style={ Skin.loadStyle.rid_center }>
-              </View>
-            </Animated.View>
-            <View style={ [Skin.activationStyle.input_wrap, { marginTop: 60 }] }>
-              <View style={ Skin.activationStyle.textinput_wrap }>
-                <TextInput ref='inputUsername' returnKeyType={ 'next' } autoCorrect={ false } autoCapitalize={ 'none' } keyboardType={ 'email-address' }
-                  placeholder={ 'Username' } placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB } style={ Skin.activationStyle.textinput } value={ this.state.inputUsername } onSubmitEditing={ this.checkUsername.bind(this) }
-                  onChange={ this.onUsernameChange.bind(this) } />
-              </View>
-            </View>
-            <View style={ Skin.activationStyle.input_wrap }>
-              <TouchableOpacity style={ Skin.activationStyle.button } onPress={ this.checkUsername.bind(this) } underlayColor={ Skin.login.BUTTON_UNDERLAY } activeOpacity={ 0.8 }>
-                <Text style={ Skin.activationStyle.buttontext }>
-                  LOGIN
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <Text style={ Skin.activationStyle.warning_text }></Text>
-          <OpenLinks />
-        </MainActivation>
-        );
-    } else {
-      return (<PatternLock navigator={ this.props.navigator } title="Verify Pattern" onUnlock={ this.onUnlock } mode="verify" />);
+    return (
+      <View style={Skin.nwd.container}>
+      <Text style={Skin.nwd.topicon}>N</Text>
+      <Text style={Skin.nwd.welcometextstyle}>Welcome to NWD</Text>
+      <Margin
+      space={32}/>
+      <View>
+      <Input
+      ref='inputUsername'
+      returnKeyType={ 'next' }
+      keyboardType={ 'email-address' }
+      placeholder={ 'Username' }
+      value={ this.state.inputUsername }
+      onSubmitEditing={ this.checkUsername.bind(this) }
+      onChange={ this.onUsernameChange.bind(this) }
+      />
+      
+      </View>
+      <Button
+      lable="Submit"
+      onPress={ this.checkUsername.bind(this) }/>
+      
+      </View>
+      );
     }
-  }
 }
 
 module.exports = UserLogin;

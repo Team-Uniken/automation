@@ -44,9 +44,7 @@ import Login01 from './App/Components/nwd/login01';
 import SelectLogin from './App/Components/nwd/selectlogin';
 import Register from './App/Components/nwd/register';
 import Register14 from './App/Components/nwd/register14';
-import SetPassword from './App/Components/nwd/setpassword';
-import CheckUser from './App/Components/nwd/checkuser';
-import VerifyPassword from './App/Components/nwd/verifypassword';
+
 
 
 
@@ -142,8 +140,6 @@ class ReactRefApp extends Component {
       return (<Register navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     }else if (id === 'register14') {
       return (<Register14 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'setpassword') {
-      return (<SetPassword navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     }else if (id === 'demo') {
       return (<Demo navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
     }else if (id === 'Load') {

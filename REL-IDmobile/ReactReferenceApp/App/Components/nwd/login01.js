@@ -3,7 +3,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
-import Button from './button';
+import Button from '../view/button';
 const {
   Text,
   View,
@@ -14,7 +14,8 @@ const{Component} =  React;
 class First extends Component {
   selectReg() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "selectlogin",title: "nextChlngName", url: { "chlngJson": this.props.url.chlngJson, "screenId": this.props.url.screenId}});
+//    this.props.navigator.push({ id: "selectlogin",title: "nextChlngName", url: { "chlngJson": this.props.url.chlngJson, "screenId": this.props.url.screenId}});
+    this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": this.props.url.chlngJson, "screenId": this.props.url.screenId} });
   }
   
  register() {

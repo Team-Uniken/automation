@@ -13,6 +13,11 @@ import Main from '../Main';
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
 import dismissKeyboard from 'dismissKeyboard';
+
+import Button from '../view/button';
+import Margin from '../view/margin';
+import Input from '../view/input';
+import Title from '../view/title';
 /*
  Instantiaions
  */
@@ -74,7 +79,7 @@ export default class PasswordSet extends Component {
   componentDidMount() {
     Main.isTouchIdSet = "NO";
     InteractionManager.runAfterInteractions(() => {
-                                            this.refs.password.focus();
+                                           // this.refs.password.focus();
                                             });
   }
   
@@ -128,63 +133,48 @@ export default class PasswordSet extends Component {
   }
   
   render() {
+    
     return (
-            <MainActivation navigator={this.props.navigator}>
-            <View style={Skin.activationStyle.topGroup}>
-            <Text style={Skin.activationStyle.counter}>
-            {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-            </Text>
-            <Text style={Skin.activationStyle.title}>Set Password</Text>
-            <View style={Skin.activationStyle.input_wrap}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-            autoCorrect={false}
-            returnKeyType={'next'}
-            keyboardType={'default'}
-            ref={'password'}
-            placeholder={'Enter Password'}
-            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
-            style={Skin.activationStyle.textinput}
-            secureTextEntry={true}
-            blurOnSubmit={false}
-            onChange={this.onPasswordChange.bind(this)}
-            onSubmitEditing={() => { this.refs.cPassword.focus(); }}
-            />
-            </View>
-            </View>
-            
-            <View style={Skin.activationStyle.input_wrap}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-            <TextInput
-            autoCorrect={false}
-            ref={'cPassword'}
-            returnKeyType={'next'}
-            keyboardType={'default'}
-            placeholder={'Confirm Password'}
-            placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
-            style={Skin.activationStyle.textinput}
-            secureTextEntry={true}
-            onChange={this.onConfirmPasswordChange.bind(this)}
-            onSubmitEditing={this.setPassword.bind(this)}
-            />
-            </View>
-            </View>
-            <View style={Skin.activationStyle.input_wrap}>
-            <TouchableOpacity
-            style={Skin.activationStyle.button}
-            underlayColor={Skin.login.BUTTON_UNDERLAY}
-            onPress={this.setPassword.bind(this)}
-            activeOpacity={0.6}
-            >
-            <Text style={Skin.activationStyle.buttontext}>
-            {this.btnText()}
-            </Text>
-            </TouchableOpacity>
-            </View>
-            </View>
-            </MainActivation>
-            );
-  }
+      <View style={Skin.nwd.container}>
+      <Title
+      tital="Registration"></Title>
+      <Margin
+      space={16}/>
+      <Text style={Skin.nwd.headertext}>Your username is{"\n"}<Text style={Skin.nwd.note}>abc *******lnn@gmail.com</Text>{"\n"}Set Account Password</Text>
+      <Margin
+      space={32}/>
+      <View>
+      <Input
+      returnKeyType={'next'}
+      keyboardType={'default'}
+      ref={'password'}
+      placeholder={'Enter Password'}
+      secureTextEntry={true}
+      blurOnSubmit={false}
+      onChange={this.onPasswordChange.bind(this)}
+      onSubmitEditing={() => { this.refs.cPassword.focus(); }}
+      marginBottom={12}
+      />
+      <Input
+      placeholder={'Confirm Password'}
+      ref={'cPassword'}
+      returnKeyType={'next'}
+      keyboardType={'default'}
+      placeholder={'Confirm Password'}
+      secureTextEntry={true}
+      onChange={this.onConfirmPasswordChange.bind(this)}
+      onSubmitEditing={this.setPassword.bind(this)}
+      />
+      </View>
+      <Margin
+      space={32}/>
+      <Button
+      onPress={this.setPassword.bind(this)}
+      lable= {this.btnText()}/>
+      </View>
+      );
+
+     }
 }
 
 module.exports = PasswordSet;

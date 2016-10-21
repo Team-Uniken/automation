@@ -13,7 +13,7 @@ import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import MainActivation from '../MainActivation';
 
-const {View, Text, TextInput, TouchableHighlight, InteractionManager, Platform, AsyncStorage, TouchableOpacity, } = React;
+const {View, Text, TextInput, TouchableHighlight, InteractionManager, Platform, AsyncStorage, TouchableOpacity, } = ReactNative;
 
 
 const {Component} = React;

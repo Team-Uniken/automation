@@ -4,11 +4,11 @@ import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-import Title from './title';
-import Button from './button';
-import CheckBox from './checkbox';
-import Input from './input';
-import Margin from './margin';
+import Title from '../view/title';
+import Button from '../view/button';
+import CheckBox from '../view/checkbox';
+import Input from '../view/input';
+import Margin from '../view/margin';
 
 
 

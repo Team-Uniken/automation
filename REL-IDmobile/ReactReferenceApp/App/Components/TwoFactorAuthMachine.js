@@ -290,7 +290,7 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
-      }else if(this.mode === "normal"){
+      }else if(challengeOperation == 1){
          return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
       else{

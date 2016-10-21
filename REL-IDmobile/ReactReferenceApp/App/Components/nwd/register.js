@@ -4,10 +4,10 @@ import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-import Title from './title';
-import Button from './button';
+import Title from '../view/title';
+import Button from '../view/button';
 import hash from 'hash.js';
-import Input from './input';
+import Input from '../view/input';
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const {
@@ -156,7 +156,7 @@ class Register extends Component {
       //                                                             MOB_NUM_ID_STR, mandatory = false				// sholud be there
       //                                                             IS_RELIDZERO_ENABLED, mandatory = true			// hardcode
       var userMap = {"userId":this.state.firstName+this.state.lastName,
-      "groupName":"core-dev",
+      "groupName":"clientteam",
       "emailId":this.state.email,
       "mobNum":this.state.phoneNumber,
       "isRELIDZeroEnabled":"true",

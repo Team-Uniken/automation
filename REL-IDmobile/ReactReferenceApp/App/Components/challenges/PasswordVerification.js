@@ -16,6 +16,11 @@ import TouchID from 'react-native-touch-id';
 import PatternLock from '../../Scenes/PatternLock'
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
+
+import Button from '../view/button';
+import Margin from '../view/margin';
+import Input from '../view/input';
+
 //import Link from '../Link';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -114,7 +119,7 @@ class PasswordVerification extends Component {
           if (value === "empty") {
             //PROCEED NORMAL WAY.
             InteractionManager.runAfterInteractions(() => {
-              this.refs.inputPassword.focus();
+             // this.refs.inputPassword.focus();
             });
           } else {
             if (Main.isTouchVerified === "YES") {
@@ -131,13 +136,13 @@ class PasswordVerification extends Component {
               });
             } else {
               InteractionManager.runAfterInteractions(() => {
-                this.refs.inputPassword.focus();
+               // this.refs.inputPassword.focus();
               });
             }
           }
         } else {
           InteractionManager.runAfterInteractions(() => {
-            this.refs.inputPassword.focus();
+            //this.refs.inputPassword.focus();
           });
         }
 
@@ -412,45 +417,31 @@ class PasswordVerification extends Component {
   }
 
   render() {
-    if (this.state.pattern === false) {
-      return (
-        <MainActivation navigator={ this.props.navigator }>
-          <View style={ Skin.activationStyle.topGroup }>
-            <Animated.View style={ [Skin.loadStyle.rid_wrap] }>
-              <View style={ [Skin.loadStyle.rid_center, { marginTop: 60 * (Skin.SCREEN_HEIGHT / 1000) }] }>
-                <Text style={ [Skin.loadStyle.logo_rid, Skin.loadStyle.logo_r] }>g</Text>
-                <Text style={ [Skin.loadStyle.logo_rid, Skin.loadStyle.logo_i] }>h</Text>
-                <Text style={ [Skin.loadStyle.logo_rid, Skin.loadStyle.logo_d] }>i</Text>
-              </View>
-            </Animated.View>
-            <View style={ [Skin.activationStyle.input_wrap, { marginTop: 60 }] }>
-              <View style={ Skin.activationStyle.textinput_wrap }>
-                <TextInput ref='inputPassword' returnKeyType={ 'next' } secureTextEntry autoCorrect={ false } autoCapitalize={ 'none' } placeholder={ 'Password' }
-                  placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB } style={ Skin.activationStyle.textinput } value={ this.state.inputPassword } onSubmitEditing={ this.decidePlatformAndShowAlert.bind(this) } onChange={ this.onPasswordChange.bind(this) }
-                />
-              </View>
-            </View>
-            <Text style={ Skin.customeStyle.attempt }>Attempts Left
-              { this.props.url.chlngJson.attempts_left }
-            </Text>
-            <Text style={ Skin.linkStyle.text } onPress={ this.onForgotPasswordClick }>Forgot Password ?</Text>
-            <Text style={ Skin.activationStyle.warning_text }>Attempts Left :
-              { this.props.url.chlngJson.attempts_left }
-            </Text>
-            <View style={ Skin.activationStyle.input_wrap }>
-              <TouchableOpacity style={ Skin.activationStyle.button } onPress={ this.decidePlatformAndShowAlert.bind(this) } underlayColor={ Skin.login.BUTTON_UNDERLAY } activeOpacity={ 0.8 }>
-                <Text style={ Skin.activationStyle.buttontext }>
-                  SUBMIT
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <OpenLinks />
-        </MainActivation>
-        );
-    } else {
-      return (<PatternLock navigator={ this.props.navigator } title="Verify Pattern" onSetPattern={ this.onSetPattern } mode="set" />);
-    }
+    return (
+      <View style={Skin.nwd.container}>
+      <Text style={Skin.nwd.topicon}>N</Text>
+      <Text style={Skin.nwd.welcometextstyle}>Welcome to NWD</Text>
+      <Margin
+      space={32}/>
+      <Text   style={[Skin.nwd.note,{textAlign: 'center'}]}>Attempt left {this.props.url.chlngJson.attempts_left}</Text>
+      <View>
+      <Input
+      ref='inputPassword'
+      returnKeyType={ 'next' }
+      secureTextEntry
+      placeholder={ 'Password' }
+      value={ this.state.inputPassword }
+      onSubmitEditing={ this.decidePlatformAndShowAlert.bind(this) }
+      onChange={ this.onPasswordChange.bind(this) }
+      />
+      </View>
+      <Button
+      lable="Submit"
+      onPress={ this.decidePlatformAndShowAlert.bind(this)}/>
+      <Text style={[Skin.nwd.note,{textAlign: 'center',marginTop:8}]}
+      onPress={ this.onForgotPasswordClick }>Forgot your username/password?</Text>
+      </View>
+      );
   }
 }
 
