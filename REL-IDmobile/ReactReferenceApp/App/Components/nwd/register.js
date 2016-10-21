@@ -70,7 +70,7 @@ class Register extends Component {
   
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-       //this.refs.firstName.focus();
+      //this.refs.firstName.focus();
       });
   }
   
@@ -154,7 +154,7 @@ class Register extends Component {
         showMessage("Activation Code Sent to","\nPlease check the email for more instruction.",true);
         
         }else{
-            alert(res.errorMessage);
+        alert(res.errorMessage);
         }
         }else{
         alert('Error');
@@ -195,53 +195,55 @@ class Register extends Component {
       showsVerticalScrollIndicator={false}
       >
       <View style={Skin.nwd.scrollcontainer}>
-
-       <Input
- placeholder={'First Name'}
- ref={'firstName'}
- keyboardType={'default'}
-     onChange={this.onLastNameChange.bind(this)}
+      <View >
+      <Input
+      placeholder={'First Name'}
+      ref={'firstName'}
+      keyboardType={'default'}
+      onChange={this.onLastNameChange.bind(this)}
       onSubmitEditing={() => { this.refs.email.focus(); }}
       marginBottom={8}
-/>   
-
-       <Input
- placeholder={'Last Name'}
- ref={'lastName'}
- keyboardType={'default'}
-     onChange={this.onLastNameChange.bind(this)}
+      />
+      
+      <Input
+      placeholder={'Last Name'}
+      ref={'lastName'}
+      keyboardType={'default'}
+      onChange={this.onLastNameChange.bind(this)}
       onSubmitEditing={() => { this.refs.email.focus(); }}
-        marginBottom={8}
-/>     
-     
-       <Input
- placeholder={'Email'}
- ref={'email'}
- keyboardType={'email-address'}
- onChange={this.onEmailChange.bind(this)}
-onSubmitEditing={() => { this.refs.confirmEmail.focus(); }}
-  marginBottom={8}
-/>  
+      marginBottom={8}
+      />
+      
       <Input
- placeholder={'Confirm Email'}
- ref={'confirmEmail'}
- keyboardType={'email-address'}
- onChange={this.onConfirmEmailChange.bind(this)}
-  onSubmitEditing={() => { this.refs.phoneNumber.focus(); }}
-    marginBottom={8}
-/>    
-
+      placeholder={'Email'}
+      ref={'email'}
+      keyboardType={'email-address'}
+      onChange={this.onEmailChange.bind(this)}
+      onSubmitEditing={() => { this.refs.confirmEmail.focus(); }}
+      marginBottom={8}
+      />
       <Input
- placeholder={'Phone Number'}
- ref={'phoneNumber'}
- keyboardType={'numeric'}
- onChange={this.onPhoneNumberChange.bind(this)}
-   marginBottom={16}
-/>
+      placeholder={'Confirm Email'}
+      ref={'confirmEmail'}
+      keyboardType={'email-address'}
+      onChange={this.onConfirmEmailChange.bind(this)}
+      onSubmitEditing={() => { this.refs.phoneNumber.focus(); }}
+      marginBottom={8}
+      />
+      
+      <Input
+      placeholder={'Phone Number'}
+      ref={'phoneNumber'}
+      keyboardType={'numeric'}
+      onChange={this.onPhoneNumberChange.bind(this)}
+      marginBottom={16}
+      />
+      </View>
+      
       <Text style={styles.slidetext}>Slide to prove your human</Text>
       <Slider style={styles.slider}/>
       
-      <View style={Skin.nwd.row}>
+      <View style={[Skin.nwd.row,{height:48}]}>
       
       <CheckboxField
       defaultColor='tranprant'

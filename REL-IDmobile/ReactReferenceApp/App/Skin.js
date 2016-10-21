@@ -1290,6 +1290,7 @@ const nwd = StyleSheet.create({
     alignItems:'center',
     marginBottom:32,
     width:SCREEN_WIDTH,
+    marginTop:16,
   },
      headertext:{
     width:SCREEN_WIDTH,
@@ -1334,7 +1335,8 @@ const nwd = StyleSheet.create({
     backgroundColor: '#f00',
   },
   buttontext: {
-    height: 48,
+    margin:15,
+    height: 18,
     fontSize: 18,
     color: '#fff',
     textAlign: 'center',
@@ -1358,6 +1360,8 @@ const nwd = StyleSheet.create({
   },
    row: {
     flexDirection: 'row',
+    alignItems: 'center',
+  
   },
    col: {
     flexDirection: 'column',
@@ -1369,11 +1373,13 @@ const nwd = StyleSheet.create({
     color: '#000',
     marginBottom:12,
     backgroundColor:'#ebebeb',
+    paddingLeft:8,
   },
    check_text_condition: {
     fontSize: 16,
     color: '#f00',
     opacity: 1,
+    height:24,
     textAlign: 'left',
     textDecorationLine:'underline',
     textAlignVertical: 'center',
