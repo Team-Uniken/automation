@@ -14,6 +14,7 @@ const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
 
+const VIEW_WIDTH = 300;
 const SCREEN_HEIGHT_RATIO = 1;
 if (SCREEN_HEIGHT <= 426) {
   SCREEN_HEIGHT_RATIO = 0.5
@@ -1308,7 +1309,7 @@ const nwd = StyleSheet.create({
   },
    welcometextstyle:{
     marginTop:16,
-    width:SCREEN_WIDTH,
+    width:VIEW_WIDTH,
       textAlign: 'center',
     color:'#000',
     fontSize:20,
@@ -1329,14 +1330,15 @@ const nwd = StyleSheet.create({
      button: {
     alignItems: 'center',
     height: 48,
-    width:250,
+    width:VIEW_WIDTH,
      borderRadius: 8,
      marginTop:16,
     backgroundColor: '#f00',
   },
   buttontext: {
-    margin:15,
-    height: 18,
+    paddingTop:12,
+    paddingBottom:12,
+    height: 48,
     fontSize: 18,
     color: '#fff',
     textAlign: 'center',
@@ -1361,6 +1363,11 @@ const nwd = StyleSheet.create({
    row: {
     flexDirection: 'row',
     alignItems: 'center',
+    width:VIEW_WIDTH,
+  },
+    row1: {
+    flexDirection: 'row',
+    alignItems: 'center',
   
   },
    col: {
@@ -1369,7 +1376,7 @@ const nwd = StyleSheet.create({
     textinput: {
     fontSize: 16,
      height:48,
-    width:250,
+    width:VIEW_WIDTH,
     color: '#000',
     marginBottom:12,
     backgroundColor:'#ebebeb',
@@ -1395,7 +1402,7 @@ const nwd = StyleSheet.create({
     fontSize: 14,
     color: '#f00',
     opacity: 1,
-    width:250,
+    width:VIEW_WIDTH,
     textAlign: 'left',
     textAlignVertical: 'center',
   },
@@ -1562,6 +1569,7 @@ module.exports = {
   load,
   main,
   login,
+  VIEW_WIDTH,
   admin,
   list,
   spd: SPEED,

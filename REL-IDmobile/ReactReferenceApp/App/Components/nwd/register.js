@@ -34,7 +34,7 @@ color:'#000',
 fontSize:16,
   },
 slider:{
-width: 250,
+width: Skin.VIEW_WIDTH,
   },
 labelStyle: {
 flex: 1

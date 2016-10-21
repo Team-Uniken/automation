@@ -31,6 +31,7 @@ var styles = StyleSheet.create({
    row: {
     flexDirection: 'row',
     height:48,
+    width:Skin.VIEW_WIDTH
   },
 });
 

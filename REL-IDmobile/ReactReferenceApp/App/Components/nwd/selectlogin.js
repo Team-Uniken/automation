@@ -30,7 +30,7 @@ class Second extends Component {
       <Text style={Skin.nwd.topicon}>N</Text>
       <Text style={[Skin.nwd.welcometextstyle,{margin:0}]}>Welcome to New World CLUB</Text>
        <Text style={Skin.nwd.hint}>Select a login</Text>
-       <View style={Skin.nwd.row}>
+       <View style={Skin.nwd.row1}>
        <LoginTypeButton
        lable="T"
         onPress={this.touch.bind(this)}

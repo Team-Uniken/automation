@@ -243,7 +243,7 @@ componentDidMount() {
         <Navigator
           renderScene={this.renderScene}
           initialRoute={{
-            id: 'register',
+            id: 'verifypassword',
             title: 'REL-IDmobile'
           }}
           configureScene={(route) => {
