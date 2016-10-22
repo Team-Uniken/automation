@@ -5,6 +5,7 @@
 // ALWAYS NEED
 'use strict';
 
+
 const React = require('react');
 const ReactNative = require('react-native');
 // const Skin = require('./MainStyleSheet');
@@ -14,7 +15,7 @@ const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
 
-const VIEW_WIDTH = SCREEN_WIDTH-50;
+const VIEW_WIDTH = SCREEN_WIDTH - 50;
 const SCREEN_HEIGHT_RATIO = 1;
 if (SCREEN_HEIGHT <= 426) {
   SCREEN_HEIGHT_RATIO = 0.5
@@ -69,10 +70,6 @@ const LIGHT_PRIMARY_RGB = hexToRgb(LIGHT_PRIMARY).r + ',' + hexToRgb(LIGHT_PRIMA
 const PRIMARY_TEXT_RGB = hexToRgb(PRIMARY_TEXT).r + ',' + hexToRgb(PRIMARY_TEXT).g + ',' + hexToRgb(PRIMARY_TEXT).b;
 const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + ',' + hexToRgb(TEXT_COLOR).b;
 
-
-
-
-
 const load = {
   OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
 
@@ -115,14 +112,9 @@ const main = {
   TITLE_COLOR: '#ffffff'
 }
 
-const admin = {
-  MENU_TITLE: 'UBS',
-  MENU_FONT: 'Times New Roman'
-}
+const admin = { MENU_TITLE: 'UBS',MENU_FONT: 'Times New Roman' }
 
-const list = {
-  LIST_HEADER_COLOR: '#3b3b3b',
-}
+const list = { LIST_HEADER_COLOR: '#3b3b3b', }
 
 const BACKGROUND_COLOR = '#fff';
 const BUTTON_BACKGROUND_COLOR = PRIMARY;
@@ -130,7 +122,11 @@ const BORDER_COLOR = PRIMARY;
 const TITLE_COLOR = '#fff';
 const BLACK_TEXT_COLOR = '#000';
 const ERROR_TEXT_COLOR = '#CC0000';
-const BUTTON_TEXT_COLOR = '#fff';
+const BUTTON_BG_COLOR = '#d92a2e';
+const BUTTON_TEXT_COLOR = '#ffffff';
+const BUTTON_UNDERLAY_COLOR = '#000000';
+const LOGO_COLOR = '#d92a2e';
+const LIGHT_TEXT_COLOR = '#929292'
 
 const APPROVE_BUTTON_COLOR = '#92D050';
 const REJECT_BUTTON_COLOR = '#800000';
@@ -139,16 +135,18 @@ const FRAUD_BUTTON_COLOR = '#212121';
 const CORE_FONT = 'Century Gothic';
 const ICON_FONT = 'icomoon';
 
+
 // Speeds
 const SPEED = 0.4; // 0.8
 const LOADSPEED = 0.3; // 0.3
 
 // Icons
-const icon = {
+module.exports.icon = {
   temporary: '\ue924',
   permanent: '\ue06b',
   hamburger: '\ue2cb',
   settings: '\ue2cb',
+  logo: 'N',
 };
 
 // Titles
@@ -198,6 +196,96 @@ function hexToRgb(hex) {
     b: parseInt(result[3], 16)
   } : null;
 }
+
+
+
+module.exports.baseline = {
+  button: {
+    base: StyleSheet.create({
+      base: {
+        alignItems: 'center',
+        height: 42,
+        width: VIEW_WIDTH,
+        borderRadius: 8,
+        marginBottom: 22,
+        backgroundColor: BUTTON_BG_COLOR,
+      }
+    }).base,
+    text: StyleSheet.create({
+      text: {
+        paddingTop: 9,
+        height: 42,
+        fontSize: 18,
+        color: BUTTON_TEXT_COLOR,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+      }
+    }).text,
+    underlayColor: BUTTON_UNDERLAY_COLOR,
+    activeOpacity: 0.8,
+  }
+}
+
+module.exports.layout0 = {
+  wrap:{
+    container:{
+      flex: 1,
+      justifyContent: "center",
+    },
+  },
+  top:{
+    container: {
+      flex: 5,
+      justifyContent: "flex-end",
+      alignItems: "center"
+    },
+    icon: {
+      //marginTop: (SCREEN_HEIGHT - 100) / 8,
+      //width: SCREEN_WIDTH,
+      color: LOGO_COLOR,
+      textAlign: 'center',
+      fontSize: 100,
+      //backgroundColor: '#50ae3c',
+      marginBottom: 0,
+    },
+    subtitle: {
+      //width: VIEW_WIDTH,
+      textAlign: 'center',
+      color: BLACK_TEXT_COLOR,
+      fontSize: 20,
+      height: 32,
+      //backgroundColor: PRIMARY,
+    },
+    prompt: {
+      height: 70,
+      textAlign: 'center',
+      color: LIGHT_TEXT_COLOR,
+      fontSize: 16,
+      //backgroundColor: DARK_PRIMARY,
+    },
+  },
+  bottom:{
+    container: {
+      flex: 6,
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
+  }
+}
+
+/*
+const baseline = StyleSheet.create({
+  base:{
+          alignItems: 'center',
+          height: 48,
+          width: VIEW_WIDTH,
+          borderRadius: 8,
+          marginTop: 16,
+          backgroundColor: BUTTON_BG_COLOR,
+      }
+})
+
+*/
 
 
 const customeStyle = StyleSheet.create({
@@ -1281,132 +1369,27 @@ const linkStyle = StyleSheet.create({
   }
 });
 
-const nwd = StyleSheet.create({
-    container: {
-    flex: 1,
-    alignItems:'center',
-  },
-    scrollcontainer: {
-    flex: 1,
-    alignItems:'center',
-    marginBottom:32,
-    width:SCREEN_WIDTH,
-    marginTop:16,
-  },
-     headertext:{
-    width:SCREEN_WIDTH,
-      textAlign: 'center',
-    color:'#000',
-    fontSize:20,
-  },
-   topicon:{
-    marginTop:(SCREEN_HEIGHT-100)/8,
-    width: SCREEN_WIDTH,
-    color:'#f00',
-      textAlign: 'center',
-    fontSize: 100,
-    height: 100,
-  },
-   welcometextstyle:{
-    marginTop:16,
-    width:VIEW_WIDTH,
-      textAlign: 'center',
-    color:'#000',
-    fontSize:20,
-  },
-   regtype:{
-      textAlign: 'center',
-    color:'#000',
-    fontSize:16,
-    marginBottom:32,
-  },
-   hint:{
-    width:SCREEN_WIDTH,
-      textAlign: 'center',
-    color:'#dbdbdb',
-    fontSize:16,
-    marginBottom:32,
-  },
-     button: {
-    alignItems: 'center',
-    height: 48,
-    width:VIEW_WIDTH,
-     borderRadius: 8,
-     marginTop:16,
-    backgroundColor: '#f00',
-  },
-  buttontext: {
-    paddingTop:12,
-    paddingBottom:12,
-    height: 48,
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-   regtypebutton: {
-    alignItems: 'center',
-    height: 70,
-    width:70,
-     borderRadius: 8,
-     margin:8,
-     marginBottom:4,
-    backgroundColor: '#f00',
-  },
-  regtypebuttontext: {
-    height: 70,
-    fontSize: 48,
-    color: '#fff',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width:VIEW_WIDTH,
-  },
-    row1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  
-  },
-   col: {
-    flexDirection: 'column',
-  },
-    textinput: {
-    fontSize: 16,
-     height:48,
-    width:VIEW_WIDTH,
-    color: '#000',
-    marginBottom:12,
-    backgroundColor:'#ebebeb',
-    paddingLeft:8,
-  },
-   check_text_condition: {
-    fontSize: 16,
-    color: '#f00',
-    opacity: 1,
-    height:24,
-    textAlign: 'left',
-    textDecorationLine:'underline',
-    textAlignVertical: 'center',
-  },
-    check_text: {
-    fontSize: 20,
-    color: '#000',
-    opacity: 1,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-  },
-   note: {
-    fontSize: 14,
-    color: '#f00',
-    opacity: 1,
-    width:VIEW_WIDTH,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-  },
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const activationStyle = StyleSheet.create({
   container: {
@@ -1544,7 +1527,8 @@ const activationStyle = StyleSheet.create({
   },
 });
 
-module.exports = {
+
+const collection = {
   coreStyle,
   logStyle,
   progStyle,
@@ -1576,7 +1560,6 @@ module.exports = {
   loadspd: LOADSPEED,
   controlStyle,
   activationStyle,
-  nwd,
   linkStyle,
   colors,
   statusBarStyle,
@@ -1585,6 +1568,6 @@ module.exports = {
     ICON_FONT,
     CORE_FONT,
   },
-  icon,
 };
 
+module.exports = Object.assign(module.exports, collection);

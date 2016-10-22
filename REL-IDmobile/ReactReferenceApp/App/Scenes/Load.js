@@ -43,11 +43,7 @@ let appalive = false;
 
 const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform,
   //Push notification code
-  PushNotificationIOS,
-  AppStateIOS,
-  AlertIOS,
-  StyleSheet,
-} = ReactNative;
+  PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
 
@@ -269,7 +265,8 @@ class Load extends Component {
         nextChlngName = chlngJson.chlng[0].chlng_name
         const pPort = responseJson.pArgs.pxyDetails.port;
         if (pPort > 0) {
-         RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
+          RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {
+          });
         }
         Obj.onInitCompleted();
         console.log('--------- onInitializeCompleted initCount ' + initCount);
@@ -610,7 +607,14 @@ class Load extends Component {
 
   doNavigation() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "login01", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+    this.props.navigator.push({
+      id: "Screen_0_1_welcome",
+      title: "nextChlngName",
+      url: {
+        "chlngJson": chlngJson,
+        "screenId": nextChlngName
+      }
+    });
 
   }
 
@@ -618,29 +622,30 @@ class Load extends Component {
     console.log('************ Load Render');
     console.log(this.props.navigator.state);
     return (
-        <View style={styles.container}>
-      <Image source={require('image!load')} style={styles.bg} />
-      <Text style={styles.icon}>N</Text>
-     </View>
-            );
+      <View style={styles.container}>
+        <Image
+          source={require('image!load')}
+          style={styles.bg} />
+      </View>
+      );
   }
 }
 var styles = StyleSheet.create({
-  bg : {
+  bg: {
     height: Skin.SCREEN_HEIGHT,
     width: Skin.SCREEN_WIDTH,
   },
   container: {
     flex: 1,
   },
-  icon:{
-      position: 'absolute',
-    top:(Skin.SCREEN_HEIGHT-100)/2,
+  icon: {
+    position: 'absolute',
+    top: (Skin.SCREEN_HEIGHT - 100) / 2,
     bottom: 0,
-    left: (Skin.SCREEN_WIDTH-100)/2,
+    left: (Skin.SCREEN_WIDTH - 100) / 2,
     right: 0,
     width: 100,
-    color:'#fff',
+    color: '#fff',
     fontSize: 100,
     height: 100,
   }

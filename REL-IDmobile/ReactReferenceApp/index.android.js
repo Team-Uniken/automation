@@ -41,7 +41,7 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 // COMPONENTS
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-import Login01 from './App/Components/nwd/login01';
+import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
 import SelectLogin from './App/Components/nwd/selectlogin';
 import Register from './App/Components/nwd/register';
 import Register14 from './App/Components/nwd/register14';
@@ -71,16 +71,10 @@ import dismissKeyboard from 'react-native-dismiss-keyboard';
 var {DeviceEventEmitter} = require('react-native')
 DeviceEventEmitter.addListener('keyboardDidHide', dismissKeyboard)
 
-const {
-  AppRegistry,
-  Navigator,
-  Text,
-  AsyncStorage,
-  BackAndroid,
-} = ReactNative;
+const {AppRegistry, Navigator, Text, AsyncStorage, BackAndroid, } = ReactNative;
 
 
-const{Component} =  React;
+const {Component} = React;
 
 
 const FadeIn = {
@@ -112,15 +106,15 @@ const FadeOut = {
 class ReactRefApp extends Component {
 
 
-renderScene(route, nav) {
+  renderScene(route, nav) {
     let id = route.id;
 
-BackAndroid.addEventListener('hardwareBackPress', () => {
-  if (nav.getCurrentRoutes().length <= 1 ) {
-     return false;
-  }
-  return true;
-});
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      if (nav.getCurrentRoutes().length <= 1) {
+        return false;
+      }
+      return true;
+    });
 
 
 
@@ -141,41 +135,91 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       // id = 'SecureWebView';
       // id = 'QuestionSet';
       // id = 'QuestionVerification';
-     // id = 'Contact';
+      // id = 'Contact';
     }
 
     // MAIN SCENES
     if (id === 'Main' || id === 'Accounts') {
-      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<AccountsScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'PayBills') {
-      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<PayBillsScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'Contact') {
-      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<ContactScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'Deposits') {
-      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<DepositsScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'FindBranch') {
-      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<FindBranchScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'Appointments') {
-      return (<AppointmentsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<AppointmentsScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     // LOAD SCENES
-    }else if (id === 'login01') {
-      return (<Login01 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'selectlogin') {
-      return (<SelectLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'register') {
-      return (<Register navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'register14') {
-      return (<Register14 navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'setpassword') {
-      return (<SetPassword navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'demo') {
-      return (<Demo navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'Load') {
+    } else if (id === 'Screen_0_1_welcome') {
+      return (<Screen_0_1_welcome
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'selectlogin') {
+      return (<SelectLogin
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'register') {
+      return (<Register
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'register14') {
+      return (<Register14
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'setpassword') {
+      return (<SetPassword
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'demo') {
+      return (<Demo
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'Load') {
       return (<LoadScene navigator={nav} />);
 
     // SECONDARY SCENES
     } else if (id === 'ComingSoon') {
-      return (<ComingSoonScene navigator={nav} title={route.title} />);
+      return (<ComingSoonScene
+                navigator={nav}
+                title={route.title} />);
     /*
     } else if (id === 'QBank') {
       return (<QBank navigator={nav} url={route.url} title={route.title} />);
@@ -183,99 +227,177 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
       return (<SecureChat navigator={nav} />);
     */
     } else if (id === 'Appointment') {
-      return (<Appointment navigator={nav} url={route.url} title={route.title} />);
+      return (<Appointment
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'AddAppointment') {
-      return (<AddAppointment navigator={nav} url={route.url} title={route.title} />);
+      return (<AddAppointment
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'ActivateNewDevice') {
-      return (<ActivateNewDeviceScene navigator={nav} url={route.url} title={route.title} />);
+      return (<ActivateNewDeviceScene
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'ConnectionProfile') {
-      return (<ConnectionProfileScene navigator={nav} url={route.url} title={route.title} />);
+      return (<ConnectionProfileScene
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'SecureWebView') {
-      return (<Web navigator={nav} url={route.url} title={route.title} proxy={Main.proxy} secure navigate />);
+      return (<Web
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                proxy={Main.proxy}
+                secure
+                navigate />);
     } else if (id === 'WebView') {
-      return (<Web navigator={nav} url={route.url} title={route.title} navigate />);
+      return (<Web
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                navigate />);
 
     // SECURITY SCENES
     } else if (id === 'Activation') {
-      return (<Activation navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<Activation
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'PasswordSet') {
-      return (<PasswordSet navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<PasswordSet
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'UserLogin') {
-      return (<UserLogin navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<UserLogin
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'checkuser') {
-      return (<CheckUser navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'verifypassword') {
-      return (<VerifyPassword navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    }else if (id === 'PasswordVerification') {
-      return (<PasswordVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<CheckUser
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'verifypassword') {
+      return (<VerifyPassword
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'PasswordVerification') {
+      return (<PasswordVerification
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
-      return (<Machine navigator={nav} url={route.url} title={route.title} />);
+      return (<Machine
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'UpdateMachine') {
-      return (<UpdateMachine navigator={nav} url={route.url} title={route.title} />);
+      return (<UpdateMachine
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'PostLoginAuthMachine') {
-      return (<PostLoginAuthMachine navigator={nav} url={route.url} title={route.title} challengesToBeUpdated={route.challengesToBeUpdated} />);
+      return (<PostLoginAuthMachine
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                challengesToBeUpdated={route.challengesToBeUpdated} />);
     } else if (id === 'DeviceMgmt') {
-      return (<DeviceMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+      return (<DeviceMgmtScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'QuestionSet') {
-      return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
+      return (<QuestionSet
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
     } else if (id === 'QuestionVerification') {
-      return (<QuestionVerification navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+      return (<QuestionVerification
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'DevBind') {
-      return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
-     }else if (id === 'NotificationMgmt') {
-      return (<NotificationMgmtScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject}/>);
+      return (<DeviceBinding
+                navigator={nav}
+                url={route.url}
+                title={route.title} />);
+    } else if (id === 'NotificationMgmt') {
+      return (<NotificationMgmtScene
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     }
 
-    return (<Text>Error</Text>);
+    return (<Text>
+              Error
+            </Text>);
   }
 
 
-componentDidMount() {
+  componentDidMount() {
     console.log('component did mounted.');
 
-   
+
 
   }
 
   render() {
     return (
-      <FormattedWrapper locale="en" currency="USD">
+      <FormattedWrapper
+        locale="en"
+        currency="USD">
         <Navigator
           renderScene={this.renderScene}
           initialRoute={{
-            id: 'register14',
-            title: 'REL-IDmobile'
-          }}
+                          id: 'register14',
+                          title: 'REL-IDmobile'
+                        }}
           configureScene={(route) => {
-            if (route.sceneConfig){
-              return route.sceneConfig;
-            } else {
-              let config = Navigator.SceneConfigs.FadeAndroid;
-              // var config = Navigator.SceneConfigs.FloatFromRight
-              config = {
-
-                // Rebound spring parameters when transitioning FROM this scene
-                springFriction: 26,
-                springTension: 200,
-
-                // Velocity to start at when transitioning without gesture
-                defaultTransitionVelocity: 3.5,
-
-                gestures: null,
-                animationInterpolators: {
-                  into: buildStyleInterpolator(FadeIn),
-                  out: buildStyleInterpolator(FadeOut),
-                },
-            };
-              return config;
-          }}}
-        />
+                            if (route.sceneConfig) {
+                              return route.sceneConfig;
+                            } else {
+                              let config = Navigator.SceneConfigs.FadeAndroid;
+                              // var config = Navigator.SceneConfigs.FloatFromRight
+                              config = {
+                          
+                                // Rebound spring parameters when transitioning FROM this scene
+                                springFriction: 26,
+                                springTension: 200,
+                          
+                                // Velocity to start at when transitioning without gesture
+                                defaultTransitionVelocity: 3.5,
+                          
+                                gestures: null,
+                                animationInterpolators: {
+                                  into: buildStyleInterpolator(FadeIn),
+                                  out: buildStyleInterpolator(FadeOut),
+                                },
+                              };
+                              return config;
+                            }
+                          }} />
       </FormattedWrapper>
-    );
+      );
   }
 
-  getProxy(){
-   return AsyncStorage.getItem("Proxy");
+  getProxy() {
+    return AsyncStorage.getItem("Proxy");
   }
 }
 

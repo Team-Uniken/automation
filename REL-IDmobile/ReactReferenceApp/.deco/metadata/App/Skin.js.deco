@@ -1,0 +1,89 @@
+{
+	"liveValues": [
+		{
+			"range": {
+				"from": {
+					"line": 232,
+					"ch": 22
+				},
+				"to": {
+					"line": 232,
+					"ch": 30
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent",
+			"group": "VIEW"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 238,
+					"ch": 22
+				},
+				"to": {
+					"line": 238,
+					"ch": 32
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent",
+			"group": "VIEW"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 239,
+					"ch": 18
+				},
+				"to": {
+					"line": 239,
+					"ch": 26
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "AlignItems",
+			"type": "string",
+			"name": "AlignItems",
+			"group": "VIEW"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 269,
+					"ch": 22
+				},
+				"to": {
+					"line": 269,
+					"ch": 34
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent",
+			"group": "VIEW"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 270,
+					"ch": 18
+				},
+				"to": {
+					"line": 270,
+					"ch": 26
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "AlignItems",
+			"type": "string",
+			"name": "AlignItems",
+			"group": "VIEW"
+		}
+	]
+}
