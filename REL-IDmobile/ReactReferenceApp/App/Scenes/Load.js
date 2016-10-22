@@ -609,6 +609,7 @@ class Load extends Component {
     console.log('doNavigation:');
     this.props.navigator.push({
       id: "Screen_0_1_welcome",
+      //id: "Screen_0_2_selectlogin",
       title: "nextChlngName",
       url: {
         "chlngJson": chlngJson,

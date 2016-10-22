@@ -14,6 +14,7 @@ const SCREEN_WIDTH = require('Dimensions').get('window').width;
 const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
+const LANGUAGE = 'en'
 
 const VIEW_WIDTH = SCREEN_WIDTH - 50;
 const SCREEN_HEIGHT_RATIO = 1;
@@ -142,11 +143,14 @@ const LOADSPEED = 0.3; // 0.3
 
 // Icons
 module.exports.icon = {
-  temporary: '\ue924',
-  permanent: '\ue06b',
-  hamburger: '\ue2cb',
-  settings: '\ue2cb',
-  logo: '\ue900',
+  temporary: '\ue8b5',
+  permanent: '\ue000',
+  hamburger: '\ue5d2',
+  settings: '\ue8b8',
+  logo: '\ue92e',
+  wechat: '\ue935',
+  password: '\ue0da',
+  touchid: '\ue90d',
 };
 
 // Titles
@@ -199,6 +203,37 @@ function hexToRgb(hex) {
 
 
 
+
+
+text = {
+  en: {
+    test: 'test',
+    '0': {
+      '1': {
+        subtitle: 'Welcome to New World CLUB',
+        need_to_register_button: 'I need to register',
+        already_member: 'I\'m already a member',
+        prompt: '',
+      },
+      '2': {
+        subtitle: 'Welcome to New World CLUB',
+        prompt: 'Select a login',
+      }
+    },
+    PASSWORD_BUTTON_TEXT: 'SUBMIT',
+    USERNAME_BUTTON_TEXT: 'LOGIN',
+    LINK_1_TEXT: 'Branches',
+    LINK_1_ICON: 't',
+    LINK_1_LINK: '',
+    LINK_2_TEXT: 'Help',
+    LINK_2_ICON: '\ue050',
+    LINK_2_LINK: '',
+    LINK_3_TEXT: 'Website',
+    LINK_3_ICON: '\ue2b1',
+    LINK_3_LINK: '',
+  }
+}
+module.exports.text = text.en
 module.exports.baseline = {
   button: {
     base: StyleSheet.create({
@@ -207,7 +242,7 @@ module.exports.baseline = {
         height: 42,
         width: VIEW_WIDTH,
         borderRadius: 8,
-        marginBottom: 22,
+        marginBottom: 27,
         backgroundColor: BUTTON_BG_COLOR,
       }
     }).base,
@@ -226,14 +261,17 @@ module.exports.baseline = {
   }
 }
 
+
+
+
 module.exports.layout0 = {
-  wrap:{
-    container:{
+  wrap: {
+    container: {
       flex: 1,
       justifyContent: "center",
     },
   },
-  top:{
+  top: {
     container: {
       flex: 46,
       justifyContent: "flex-end",
@@ -255,22 +293,48 @@ module.exports.layout0 = {
       color: BLACK_TEXT_COLOR,
       fontSize: 20,
       height: 32,
-      //backgroundColor: PRIMARY,
+    //backgroundColor: PRIMARY,
     },
     prompt: {
       height: 70,
       textAlign: 'center',
       color: LIGHT_TEXT_COLOR,
-      fontSize: 16,
-      //backgroundColor: DARK_PRIMARY,
+      fontSize: 15,
+    //backgroundColor: DARK_PRIMARY,
     },
   },
-  bottom:{
+  bottom: {
     container: {
       flex: 54,
       justifyContent: "flex-start",
       alignItems: "center",
     },
+    loginbutton: {
+      subtitle: {
+        color: BLACK_TEXT_COLOR,
+        marginTop: 0,
+        textAlign: 'center',
+      },
+      base: {
+        width: 70,
+        height: 70,
+        borderRadius: 12,
+        marginBottom: 3,
+        textAlign: 'center',
+        marginLeft: 10,
+        marginRight: 10,
+      },
+      icon:{
+        fontFamily: ICON_FONT,
+        color:BUTTON_TEXT_COLOR,
+        fontSize: 45,
+        marginTop: 10,
+      },
+      wrap: {
+        flexDirection: 'row',
+        flex:1,
+      }
+    }
   }
 }
 
@@ -1564,7 +1628,6 @@ const collection = {
   linkStyle,
   colors,
   statusBarStyle,
-  text,
   font: {
     ICON_FONT,
     CORE_FONT,

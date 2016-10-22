@@ -41,11 +41,9 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
 import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
-import SelectLogin from './App/Components/nwd/selectlogin';
+import Screen_0_2_selectlogin from './App/Components/nwd/Screen_0_2_selectlogin';
 import Register from './App/Components/nwd/register';
 import Register14 from './App/Components/nwd/register14';
-
-
 
 
 import Appointment from './App/Components/Appointment';
@@ -112,6 +110,7 @@ class ReactRefApp extends Component {
       // id = 'QuestionSet';
       // id = 'QuestionVerification';
       // id = 'Contact';
+      //id = 'Screen_0_2_selectlogin'
     }
 
     // MAIN SCENES
@@ -159,8 +158,8 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'selectlogin') {
-      return (<SelectLogin
+    } else if (id === 'Screen_0_2_selectlogin') {
+      return (<Screen_0_2_selectlogin
                 navigator={nav}
                 url={route.url}
                 title={route.title}
