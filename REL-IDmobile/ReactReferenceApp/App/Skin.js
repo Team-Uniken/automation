@@ -146,7 +146,7 @@ module.exports.icon = {
   permanent: '\ue06b',
   hamburger: '\ue2cb',
   settings: '\ue2cb',
-  logo: 'N',
+  logo: '\ue900',
 };
 
 // Titles
@@ -235,7 +235,7 @@ module.exports.layout0 = {
   },
   top:{
     container: {
-      flex: 5,
+      flex: 46,
       justifyContent: "flex-end",
       alignItems: "center"
     },
@@ -244,9 +244,10 @@ module.exports.layout0 = {
       //width: SCREEN_WIDTH,
       color: LOGO_COLOR,
       textAlign: 'center',
-      fontSize: 100,
+      fontSize: 80,
       //backgroundColor: '#50ae3c',
-      marginBottom: 0,
+      marginBottom: 26,
+      fontFamily: ICON_FONT,
     },
     subtitle: {
       //width: VIEW_WIDTH,
@@ -266,7 +267,7 @@ module.exports.layout0 = {
   },
   bottom:{
     container: {
-      flex: 6,
+      flex: 54,
       justifyContent: "flex-start",
       alignItems: "center",
     },

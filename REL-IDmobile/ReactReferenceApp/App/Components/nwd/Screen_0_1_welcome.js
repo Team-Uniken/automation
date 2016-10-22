@@ -191,7 +191,7 @@ class First extends Component {
     return (
       <View style={Skin.layout0.wrap.container}>
         <View style={Skin.layout0.top.container}>
-          <Text style={Skin.layout0.top.icon}>
+          <Text style={[Skin.layout0.top.icon,Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
           </Text>
           <Text style={Skin.layout0.top.subtitle}>
