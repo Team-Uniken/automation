@@ -118,16 +118,22 @@ const admin = { MENU_TITLE: 'UBS',MENU_FONT: 'Times New Roman' }
 const list = { LIST_HEADER_COLOR: '#3b3b3b', }
 
 const BACKGROUND_COLOR = '#fff';
-const BUTTON_BACKGROUND_COLOR = PRIMARY;
-const BORDER_COLOR = PRIMARY;
-const TITLE_COLOR = '#fff';
-const BLACK_TEXT_COLOR = '#000';
-const ERROR_TEXT_COLOR = '#CC0000';
-const BUTTON_BG_COLOR = '#d92a2e';
-const BUTTON_TEXT_COLOR = '#ffffff';
-const BUTTON_UNDERLAY_COLOR = '#000000';
-const LOGO_COLOR = '#d92a2e';
+const BUTTON_BACKGROUND_COLOR = PRIMARY
+const BORDER_COLOR = PRIMARY
+const TITLE_TEXT_COLOR = '#000'
+const TITLE_COLOR = TITLE_TEXT_COLOR
+const TITLE_BG_COLOR = '#ffffff'
+const BLACK_TEXT_COLOR = '#000'
+const ERROR_TEXT_COLOR = '#CC0000'
+const BUTTON_BG_COLOR = '#d92a2e'
+const BUTTON_TEXT_COLOR = '#ffffff'
+const BUTTON_UNDERLAY_COLOR = '#000000'
+const LOGO_COLOR = '#d92a2e'
 const LIGHT_TEXT_COLOR = '#929292'
+const INPUT_BG_COLOR = '#f1f1f1'
+const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
+const INPUT_TEXT_COLOR = '#2C2C2C'
+const INPUT_BD_COLOR = '#d92a2e'
 
 const APPROVE_BUTTON_COLOR = '#92D050';
 const REJECT_BUTTON_COLOR = '#800000';
@@ -149,8 +155,10 @@ module.exports.icon = {
   settings: '\ue8b8',
   logo: '\ue92e',
   wechat: '\ue935',
-  password: '\ue0da',
+  facebook: '\ue932',
+  password: '\ue7ff',
   touchid: '\ue90d',
+  close: '\ue5cd',
 };
 
 // Titles
@@ -220,6 +228,11 @@ text = {
         prompt: 'Select a login',
       }
     },
+    '1':{
+      '1':{
+        submit_button: 'Submit',
+      }
+    },
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
     USERNAME_BUTTON_TEXT: 'LOGIN',
     LINK_1_TEXT: 'Branches',
@@ -231,8 +244,8 @@ text = {
     LINK_3_TEXT: 'Website',
     LINK_3_ICON: '\ue2b1',
     LINK_3_LINK: '',
-  }
-}
+  }  
+}  
 module.exports.text = text.en
 module.exports.baseline = {
   button: {
@@ -240,7 +253,7 @@ module.exports.baseline = {
       base: {
         alignItems: 'center',
         height: 42,
-        width: VIEW_WIDTH,
+        width: 260,
         borderRadius: 8,
         marginBottom: 27,
         backgroundColor: BUTTON_BG_COLOR,
@@ -258,6 +271,47 @@ module.exports.baseline = {
     }).text,
     underlayColor: BUTTON_UNDERLAY_COLOR,
     activeOpacity: 0.8,
+  },
+  textinput: {
+    base: {
+      textAlign: 'left',
+      height: 46,
+      width: 260,  
+      paddingLeft: 10, 
+      paddingTop: 3,
+      backgroundColor: INPUT_BG_COLOR,
+      color: INPUT_TEXT_COLOR,
+      flex:1,
+      fontSize: 18,
+    },
+    placeholderTextColor: INPUT_PLACEHOLDER_COLOR,
+    wrapfocus: {
+      borderBottomColor: INPUT_BD_COLOR,
+    },
+    wrap:{
+      borderColor: 'transparent',
+      borderBottomWidth: 3,
+      borderTopWidth: 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      width: 260,
+      flexDirection: "row",
+      alignItems: "stretch",
+      marginBottom: 12,
+    }
+  },
+  checkbox:{
+    base:{
+      width: 24,
+      height: 24,
+      borderWidth: 1,
+      borderColor: BUTTON_BG_COLOR,
+      borderRadius: 0,
+      //backgroundColor: "rgb(248,231,28)"
+    },
+    selectedColor: 'transparent',
+    defaultColor: 'transparent',
+    checkColor: BUTTON_BG_COLOR,
   }
 }
 
@@ -324,19 +378,100 @@ module.exports.layout0 = {
         marginLeft: 10,
         marginRight: 10,
       },
-      icon:{
+      icon: {
         fontFamily: ICON_FONT,
-        color:BUTTON_TEXT_COLOR,
+        color: BUTTON_TEXT_COLOR,
         fontSize: 45,
         marginTop: 10,
       },
       wrap: {
         flexDirection: 'row',
-        flex:1,
+        height: 110,
       }
     }
   }
 }
+
+
+
+module.exports.layout1 = {
+  wrap: {
+    flex: 1,
+      //justifyContent: "center",
+    //alignItems: 'center',
+  },
+  title:{
+    wrap:{
+      //backgroundColor: '#ae0000',
+      flex: 12,
+      //alignItems: 'center',
+    },
+    container: {
+      flex:1,
+      flexDirection:'row',
+      marginTop: 26,
+      justifyContent: "space-between",
+      //backgroundColor: "rgba(255,186,186,1)"
+    },
+    button:{
+      width: 50,
+      textAlign: 'center',
+      fontSize: 20,
+      paddingTop: 15,
+      color: BUTTON_BG_COLOR,
+      fontFamily: ICON_FONT,
+      //backgroundColor: "rgba(165,255,250,1)" 
+    },
+    base:{
+      color: TITLE_TEXT_COLOR,
+      fontSize: 19,
+      textAlign: 'center',
+      width: 260,
+      paddingTop: 12,
+      //backgroundColor: TITLE_BG_COLOR
+      //backgroundColor: "rgba(80,188,28,1)"
+    }
+  },
+  content:{
+    wrap:{
+      flex: 66,
+      alignItems: 'center',
+      //backgroundColor: "rgba(203,255,132,1)",
+    },
+    container: {
+      width:260,
+    },
+    slider:{
+      text:{
+        textAlign:'center',
+        fontSize: 18,
+      },
+      base:{
+        //backgroundColor: "rgba(255,164,164,1)",
+        //color: '#ff0000'
+        height:23,
+      },
+      minimumTrackTintColor: BUTTON_BG_COLOR,
+      maximumTrackTintColor: INPUT_BG_COLOR,
+    }
+  },
+  bottom:{
+    wrap:{
+      flex: 24,
+      alignItems: 'center',
+      //backgroundColor: "rgba(155,199,255,1)"
+    },
+    container: {
+      width:260,
+      backgroundColor: "rgba(50,107,180,1)"
+    },
+  }
+}
+
+
+
+
+
 
 /*
 const baseline = StyleSheet.create({

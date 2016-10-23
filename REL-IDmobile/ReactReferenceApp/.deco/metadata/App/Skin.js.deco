@@ -3,29 +3,27 @@
 		{
 			"range": {
 				"from": {
-					"line": 232,
-					"ch": 22
-				},
-				"to": {
-					"line": 232,
-					"ch": 30
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "JustifyContent",
-			"type": "string",
-			"name": "JustifyContent",
-			"group": "VIEW"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 238,
-					"ch": 22
-				},
-				"to": {
-					"line": 238,
+					"line": 133,
 					"ch": 32
+				},
+				"to": {
+					"line": 133,
+					"ch": 53
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "INPUT_PLACEHOLDER_COLOR"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 240,
+					"ch": 22
+				},
+				"to": {
+					"line": 240,
+					"ch": 24
 				}
 			},
 			"editWith": "dropdown",
@@ -37,12 +35,29 @@
 		{
 			"range": {
 				"from": {
-					"line": 239,
-					"ch": 18
+					"line": 246,
+					"ch": 5
 				},
 				"to": {
-					"line": 239,
-					"ch": 26
+					"line": 246,
+					"ch": 3
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent",
+			"group": "VIEW"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 247,
+					"ch": 3
+				},
+				"to": {
+					"line": 247,
+					"ch": 1
 				}
 			},
 			"editWith": "dropdown",
@@ -54,36 +69,278 @@
 		{
 			"range": {
 				"from": {
-					"line": 270,
-					"ch": 22
+					"line": 276,
+					"ch": 17
 				},
 				"to": {
-					"line": 270,
+					"line": 276,
+					"ch": 23
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "TextAlign",
+			"type": "string",
+			"name": "TextAlign"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 278,
+					"ch": 19
+				},
+				"to": {
+					"line": 278,
+					"ch": 17
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent",
+			"group": "VIEW"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 297,
+					"ch": 21
+				},
+				"to": {
+					"line": 297,
+					"ch": 26
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "FlexDirection",
+			"type": "string",
+			"name": "FlexDirection"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 298,
+					"ch": 18
+				},
+				"to": {
+					"line": 298,
+					"ch": 27
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "AlignItems",
+			"type": "string",
+			"name": "AlignItems"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 309,
+					"ch": 25
+				},
+				"to": {
+					"line": 309,
+					"ch": 42
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 404,
+					"ch": 25
+				},
+				"to": {
+					"line": 404,
 					"ch": 34
 				}
 			},
-			"editWith": "dropdown",
-			"dropdownOptions": "JustifyContent",
+			"editWith": "colorPicker",
 			"type": "string",
-			"name": "JustifyContent",
-			"group": "VIEW"
+			"name": "BackgroundColor"
 		},
 		{
 			"range": {
 				"from": {
-					"line": 271,
-					"ch": 18
+					"line": 406,
+					"ch": 20
 				},
 				"to": {
-					"line": 271,
-					"ch": 26
+					"line": 406,
+					"ch": 28
 				}
 			},
 			"editWith": "dropdown",
 			"dropdownOptions": "AlignItems",
 			"type": "string",
-			"name": "AlignItems",
-			"group": "VIEW"
+			"name": "AlignItems"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 410,
+					"ch": 20
+				},
+				"to": {
+					"line": 410,
+					"ch": 25
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "FlexDirection",
+			"type": "string",
+			"name": "FlexDirection"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 412,
+					"ch": 22
+				},
+				"to": {
+					"line": 412,
+					"ch": 37
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 413,
+					"ch": 25
+				},
+				"to": {
+					"line": 413,
+					"ch": 46
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 419,
+					"ch": 18
+				},
+				"to": {
+					"line": 419,
+					"ch": 20
+				}
+			},
+			"type": "number",
+			"name": "PaddingTop"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 422,
+					"ch": 25
+				},
+				"to": {
+					"line": 422,
+					"ch": 46
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 429,
+					"ch": 18
+				},
+				"to": {
+					"line": 429,
+					"ch": 20
+				}
+			},
+			"type": "number",
+			"name": "PaddingTop"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 431,
+					"ch": 25
+				},
+				"to": {
+					"line": 431,
+					"ch": 44
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 438,
+					"ch": 25
+				},
+				"to": {
+					"line": 438,
+					"ch": 46
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 449,
+					"ch": 27
+				},
+				"to": {
+					"line": 449,
+					"ch": 48
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 461,
+					"ch": 25
+				},
+				"to": {
+					"line": 461,
+					"ch": 46
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 465,
+					"ch": 23
+				},
+				"to": {
+					"line": 465,
+					"ch": 43
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
 		}
 	]
 }

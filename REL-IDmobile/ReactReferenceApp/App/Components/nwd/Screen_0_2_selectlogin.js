@@ -57,6 +57,12 @@ class Second extends Component {
               onPress={this.wechat.bind(this)}
               text="WeChat" />
           </View>
+          <View style={Skin.layout0.bottom.loginbutton.wrap}>
+            <LoginTypeButton
+              label={Skin.icon.facebook}
+              onPress={this.touch.bind(this)}
+              text="Facebook" />
+          </View>
         </View>
       </View>
       );

@@ -49,7 +49,7 @@ class First extends Component {
 
   register() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "register" });
+    this.props.navigator.push({ id: "Screen_1_1_register" });
   }
 
   render() {
