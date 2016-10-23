@@ -11,7 +11,7 @@ class Button extends Component {
   render() {
     return (
       <TouchableOpacity
-        style={Skin.baseline.button.base}
+        style={[Skin.baseline.button.base,this.props.style]}
         underlayColor={Skin.baseline.button.underlayColor}
         activeOpacity={Skin.baseline.button.activeOpacity}
         onPress={this.props.onPress}>

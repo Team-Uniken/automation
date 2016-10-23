@@ -43,7 +43,8 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
 import Screen_0_2_selectlogin from './App/Components/nwd/Screen_0_2_selectlogin';
 import Screen_1_1_register from './App/Components/nwd/Screen_1_1_register';
-import Register14 from './App/Components/nwd/register14';
+import Screen_1_3_setPassword from './App/Components/nwd/Screen_1_3_setPassword';
+import Screen_1_4_registerOptions from './App/Components/nwd/Screen_1_4_registerOptions';
 
 
 import Appointment from './App/Components/Appointment';
@@ -110,7 +111,9 @@ class ReactRefApp extends Component {
       // id = 'QuestionSet';
       // id = 'QuestionVerification';
       // id = 'Contact';
-      id = 'Screen_1_1_register'
+      //id = 'Screen_1_1_register'
+      //id = 'Screen_1_4_registerOptions'
+      id = 'Screen_1_3_setPassword'
     }
 
     // MAIN SCENES
@@ -170,8 +173,14 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'register14') {
-      return (<Register14
+    } else if (id === 'Screen_1_3_setPassword') {
+      return (<Screen_1_3_setPassword
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'Screen_1_4_registerOptions') {
+      return (<Screen_1_4_registerOptions
                 navigator={nav}
                 url={route.url}
                 title={route.title}

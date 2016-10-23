@@ -198,6 +198,7 @@ const colors = {
   REPPLE_COLOR: '#E0E0E0',
   HINT_COLOR: '#8F8F8F',
   BLACK_TEXT_COLOR: BLACK_TEXT_COLOR,
+  BUTTON_BG_COLOR: BUTTON_BG_COLOR
 };
 
 function hexToRgb(hex) {
@@ -440,6 +441,28 @@ module.exports.layout1 = {
     },
     container: {
       width:260,
+      flex:1,
+      //backgroundColor: "rgba(203,45,102,1)",
+    },
+    top:{
+      container:{
+        flex:53,
+        justifyContent: "flex-end",
+        //backgroundColor: '#00ff00'
+      },
+      text:{
+        fontSize: 21,
+        color: '#000000',
+        textAlign:'center',
+        marginBottom: 22,
+      }
+    },
+    bottom:{
+      container:{
+        flex:47,
+        justifyContent: "flex-start",
+        //backgroundColor: '#00ffff'
+      },
     },
     slider:{
       text:{
@@ -463,12 +486,17 @@ module.exports.layout1 = {
     },
     container: {
       width:260,
-      backgroundColor: "rgba(50,107,180,1)"
+      //backgroundColor: "rgba(50,107,180,1)"
     },
+    button:{
+      marginTop:17,
+    }
   }
 }
 
-
+module.exports.layout2 = Object.assign(module.exports.layout1,{
+  
+})
 
 
 
