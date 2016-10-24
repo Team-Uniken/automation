@@ -13,10 +13,11 @@ const{Component} =  React;
 
 class Tital extends Component {
 
+  
   render() {
     return (
       <View style={Skin.layout1.title.container}>
-        <Text style={Skin.layout1.title.button}>{Skin.icon.close}</Text>
+        <Text style={Skin.layout1.title.button} onPress={this.props.onClose }>{Skin.icon.close}</Text>
         <Text style={Skin.layout1.title.base}>{this.props.children}</Text>
         <Text style={Skin.layout1.title.button}></Text>
       </View>

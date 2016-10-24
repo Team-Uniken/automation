@@ -35,7 +35,8 @@ class Register extends Component {
       randomMaxValue: 90,
       keyboardVisible: false,
     };
-
+    
+    this.close = this.close.bind(this);
   }
 
   componentWillMount() {
@@ -43,26 +44,26 @@ class Register extends Component {
     this.state.randomMinValue = this.getRandomInt(5, 90);
     this.state.randomMaxValue = this.state.randomMinValue + 10;
     InteractionManager.runAfterInteractions(() => {
-      this.refs.lastname.focus()
+      this.refs.firstname.focus()
     });
     this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
 
   }
-  
-  
+
+
   keyboardWillShow (e) {
     this.setState({
       keyboardVisible: true
     })
     //Alert.alert('yes')
   }
-  
+
   keyboardWillHide (e) {
     this.setState({
       keyboardVisible: false
     })
-  }  
+  }
 
   componentWillUnmount () {
     this.keyboardWillShowListener.remove()
@@ -99,11 +100,15 @@ class Register extends Component {
     this.setState({ phoneNumber: event.nativeEvent.text });
   }
 
+  
+  close(){
+    this.props.navigator.pop();
+  }
   validateAndProcced() {
 
 
 
-    if (this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.lastName.length > 0
+    if (this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.email.length > 0
         && this.state.confirmEmail.length > 0 && this.state.phoneNumber.length > 0) {
 
     } else {
@@ -111,12 +116,12 @@ class Register extends Component {
       return;
     }
 
-    if (this.state.value > this.state.randomMinValue && this.state.value < this.state.randomMaxValue) {
-
-    } else {
-      this.showMessage("Error", "You are not human", false);
-      return;
-    }
+    // if (this.state.value > this.state.randomMinValue && this.state.value < this.state.randomMaxValue) {
+    //
+    // } else {
+    //   this.showMessage("Error", "You are not human", false);
+    //   return;
+    // }
 
     if (this.state.check.length > 0) {
       this.registerUser();
@@ -202,11 +207,14 @@ class Register extends Component {
                   barStyle={'default'}
                 />
         <View style={Skin.layout1.title.wrap}>
-          <Title>Registration</Title>
+          <Title
+      onClose={()=>{this.close();}}
+      >Registration</Title>
         </View>
         <ScrollView style={Skin.layout1.content.scrollwrap}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
+              <View>
                 <Input
                   placeholder={'First Name'}
                   ref={'firstname'}
@@ -232,6 +240,7 @@ class Register extends Component {
                   autoCorrect={false}
                   autoComplete={false}
                   autoCapitalize={true}
+                  onChange={this.onLastNameChange.bind(this)}
                   onSubmitEditing={() => {
                     this.refs.email.focus();
                   }}
@@ -296,26 +305,28 @@ class Register extends Component {
                   Terms and Conditions Link
                 </Text>
               </View>
+              </View>
             </View>
           </View>
         </ScrollView>
-        <View 
+        <View
           style={Skin.layout1.bottom.wrap}>
           <View style={Skin.layout1.bottom.container}>
             <Button
-              label={Skin.text['1']['1'].submit_button}/>
+              label={Skin.text['1']['1'].submit_button}
+              onPress={this.validateAndProcced.bind(this)}/>
           </View>
         </View>
         <KeyboardSpacer topSpacing={-55}/>
 
-       
-        
+
+
         {/*<TextInput
           //autoCorrect={false}
           //autoCapitalize={'none'}
           //keyboardType={this.props.keyboardType}
           //placeholder={this.props.placeholder}
-          placeholderTextColor={Skin.baseline.textinput.placeholderTextColor} 
+          placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
           //returnKeyType={this.props.returnKeyType}
           //secureTextEntry={this.props.secureTextEntry}
           //onChange={this.props.onChange}
@@ -410,7 +421,7 @@ class Register extends Component {
             lable="Submit"
             onPress={this.validateAndProcced.bind(this)} />
         </ScrollView>*/}
-      </View> 
+      </View>
       );
   }
 }
