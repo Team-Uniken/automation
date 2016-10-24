@@ -338,14 +338,44 @@ class UserLogin extends Component {
   }
 
   render() {
-    return (
-      <View style={Skin.nwd.container}>
-      <Text style={Skin.nwd.topicon}>N</Text>
-      <Text style={Skin.nwd.welcometextstyle}>Welcome to NWD</Text>
-      <Margin
-      space={32}/>
-      <View>
-      <Input
+    // return (
+    //     <View style={Skin.layout1.wrap}>
+    //   <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+    //         {Skin.icon.logo}
+    //       </Text>
+    //   <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
+    //   <Margin
+    //   space={32}/>
+    //   <View>
+    //   <Input
+    //   ref='inputUsername'
+    //   returnKeyType={ 'next' }
+    //   keyboardType={ 'email-address' }
+    //   placeholder={ 'Username' }
+    //   value={ this.state.inputUsername }
+    //   onSubmitEditing={ this.checkUsername.bind(this) }
+    //   onChange={ this.onUsernameChange.bind(this) }
+    //   />
+    //   </View>
+    //   <Button
+    //   lable="Submit"
+    //   onPress={ this.checkUsername.bind(this) }/>
+    //  </View>
+    //   );
+         return (
+      <View style={Skin.layout0.wrap.container}>
+        <View style={Skin.layout0.top.container}>
+          <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+            {Skin.icon.logo}
+          </Text>
+        <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
+        <Text style={Skin.layout0.top.prompt}>
+            {Skin.text['2']['1'].prompt}
+          </Text>
+        </View>
+        <View style={Skin.layout0.bottom.container}>       
+
+       <Input
       ref='inputUsername'
       returnKeyType={ 'next' }
       keyboardType={ 'email-address' }
@@ -354,12 +384,10 @@ class UserLogin extends Component {
       onSubmitEditing={ this.checkUsername.bind(this) }
       onChange={ this.onUsernameChange.bind(this) }
       />
-      
-      </View>
       <Button
-      lable="Submit"
-      onPress={ this.checkUsername.bind(this) }/>
-      
+      label={Skin.text['2']['1'].submit_button}
+      onPress={ this.checkUsername.bind(this) }/>         
+        </View>
       </View>
       );
     }

@@ -234,6 +234,12 @@ text = {
         submit_button: 'Submit',
       }
     },
+    '2':{
+      '1':{
+        subtitle:'Welcome to NWD',
+         submit_button: 'Submit',
+      }
+    },
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
     USERNAME_BUTTON_TEXT: 'LOGIN',
     LINK_1_TEXT: 'Branches',
