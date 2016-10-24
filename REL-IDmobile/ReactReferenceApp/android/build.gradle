@@ -18,6 +18,7 @@ configurations.all {
         force 'com.android.support:support-v4:24.2.1'
         force 'com.android.support:design:24.4.0'
         force 'com.android.support:appcompat-v7:24.1.1'
+        force 'com.google.android.gms:play-services-gcm:9.6.1'
     }
 }
 
