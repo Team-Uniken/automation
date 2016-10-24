@@ -1,7 +1,17 @@
 'use strict';
 
-import React from 'react';
-import ReactNative from 'react-native';
+
+import React, { Component } from 'react';
+import ReactNative, { View, StyleSheet,
+  Text,
+  ListView,
+  TextInput,
+//  Dimensions,
+  AsyncStorage,
+  DeviceEventEmitter,
+  TouchableHighlight,
+  Alert,Swipeout,} from 'react-native'
+
 import Skin from '../Skin';
 import Modal from 'react-native-simple-modal';
 
@@ -10,26 +20,12 @@ import Modal from 'react-native-simple-modal';
 */
 import Main from '../Components/Main';
 import Constants from '../Components/Constants';
-import Swipeout from 'react-native-swipeout';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-/*
-  INSTANCED
- */
-const {
-  StyleSheet,
-  Text,
-  ListView,
-  TextInput,
-//  Dimensions,
-  AsyncStorage,
-  DeviceEventEmitter,
-  TouchableHighlight,
-  View,
-  Alert,
-} = ReactNative;
 
-const{Component}=React;
+
+
+
 let obj;
 let onUpdateDevice;
 let onGetDevice;

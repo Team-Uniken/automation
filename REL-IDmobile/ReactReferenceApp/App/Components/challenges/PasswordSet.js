@@ -160,7 +160,6 @@ export default class PasswordSet extends Component {
       ref={'cPassword'}
       returnKeyType={'next'}
       keyboardType={'default'}
-      placeholder={'Confirm Password'}
       secureTextEntry={true}
       onChange={this.onConfirmPasswordChange.bind(this)}
       onSubmitEditing={this.setPassword.bind(this)}

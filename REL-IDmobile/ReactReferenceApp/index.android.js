@@ -41,13 +41,20 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 // COMPONENTS
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+// import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
+// import SelectLogin from './App/Components/nwd/selectlogin';
+// import Register from './App/Components/nwd/register';
+// import Register14 from './App/Components/nwd/register14';
+// import SetPassword from './App/Components/nwd/setpassword';
+// import CheckUser from './App/Components/nwd/checkuser';
+// import VerifyPassword from './App/Components/nwd/verifypassword';
+
+
 import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
-import SelectLogin from './App/Components/nwd/selectlogin';
-import Register from './App/Components/nwd/register';
-import Register14 from './App/Components/nwd/register14';
-import SetPassword from './App/Components/nwd/setpassword';
-import CheckUser from './App/Components/nwd/checkuser';
-import VerifyPassword from './App/Components/nwd/verifypassword';
+import Screen_0_2_selectlogin from './App/Components/nwd/Screen_0_2_selectlogin';
+import Screen_1_1_register from './App/Components/nwd/Screen_1_1_register';
+import Screen_1_3_setPassword from './App/Components/nwd/Screen_1_3_setPassword';
+import Screen_1_4_registerOptions from './App/Components/nwd/Screen_1_4_registerOptions';
 
 
 
@@ -176,37 +183,37 @@ class ReactRefApp extends Component {
                 title={route.title}
                 rdna={route.DnaObject} />);
     // LOAD SCENES
-    } else if (id === 'Screen_0_1_welcome') {
+    }else if (id === 'Screen_0_1_welcome') {
       return (<Screen_0_1_welcome
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'selectlogin') {
-      return (<SelectLogin
+    } else if (id === 'Screen_0_2_selectlogin') {
+      return (<Screen_0_2_selectlogin
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'register') {
-      return (<Register
+    } else if (id === 'Screen_1_1_register') {
+      return (<Screen_1_1_register
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'register14') {
-      return (<Register14
+    } else if (id === 'Screen_1_3_setPassword') {
+      return (<Screen_1_3_setPassword
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'setpassword') {
-      return (<SetPassword
+    } else if (id === 'Screen_1_4_registerOptions') {
+      return (<Screen_1_4_registerOptions
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'demo') {
+    }else if (id === 'demo') {
       return (<Demo
                 navigator={nav}
                 url={route.url}
@@ -276,18 +283,6 @@ class ReactRefApp extends Component {
                 rdna={route.DnaObject} />);
     } else if (id === 'UserLogin') {
       return (<UserLogin
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'checkuser') {
-      return (<CheckUser
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'verifypassword') {
-      return (<VerifyPassword
                 navigator={nav}
                 url={route.url}
                 title={route.title}
@@ -365,7 +360,7 @@ class ReactRefApp extends Component {
         <Navigator
           renderScene={this.renderScene}
           initialRoute={{
-                          id: 'register14',
+                          id: 'Load',
                           title: 'REL-IDmobile'
                         }}
           configureScene={(route) => {
