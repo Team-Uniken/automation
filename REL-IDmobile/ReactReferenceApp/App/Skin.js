@@ -238,6 +238,10 @@ text = {
       '1':{
         subtitle:'Welcome to NWD',
          submit_button: 'Submit',
+      },
+      '2': {
+         subtitle:'Welcome to NWD',
+         submit_button: 'Submit',
       }
     },
     PASSWORD_BUTTON_TEXT: 'SUBMIT',

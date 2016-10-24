@@ -14,6 +14,10 @@ import dismissKeyboard from 'dismissKeyboard';
 import MainActivation from '../MainActivation';
 import Events from 'react-native-simple-events';
 
+import Margin from '../view/margin';
+import Input from '../view/input';
+import Button from '../view/button';
+
 let obj;
 const {
   View,
@@ -184,32 +188,32 @@ export default class QuestionSet extends Component {
      */
 
     return (
-      <MainActivation navigator={this.props.navigator}>
-        <View style={Skin.activationStyle.topGroup}>
+     <View style={Skin.layout0.wrap.container}>
+         <View style={Skin.layout0.top.container}>
          <Text style={Skin.activationStyle.counter}>
              {this.props.url.currentIndex}/{this.props.url.chlngsCount}
              </Text>
-          <Text style={Skin.activationStyle.title}>Secret Question and Answer</Text>
-          <View style={[Skin.activationStyle.input_wrap]}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-              <TextInput
-                ref={(component) => { this.quesInput = component; return this.quesInput; }}
-                autoCorrect={false}
-                placeholder={'Type/Select question'}
-                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
-                style={[
-                  Skin.activationStyle.textinput,
-                  {
-                    textAlign: 'left',
-                    paddingLeft: 5,
-                    fontSize: 15,
-                  },
-                ]}
-                onChange={this.onQuestionChange.bind(this)}
-                multiline
-              />
-            </View>
-          </View>
+         <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
+           <Margin
+      space={16}/>
+          <View
+          style={[
+            Skin.baseline.textinput.wrap,
+              this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
+          ]}>
+          <TextInput 
+           multiline
+           style = {Skin.baseline.textinput.base}
+           autoCorrect={false}
+            placeholder={'Type/Select question'}
+           ref={(component) => { this.quesInput = component; return this.quesInput; }}
+           returnKeyType = {"next"}
+           placeholderTextColor={Skin.baseline.textinput.placeholderTextColor} 
+            onChange={this.onQuestionChange.bind(this)}
+           />
+         </View>
+           <Margin
+      space={8}/>
           <View style={styles.listViewWrap}>
             <ListView
               ref="listView"
@@ -221,37 +225,23 @@ export default class QuestionSet extends Component {
               showsVerticalScrollIndicator
             />
           </View>
-          <View style={[Skin.activationStyle.input_wrap]}>
-            <View style={Skin.activationStyle.textinput_wrap}>
-              <TextInput
-                autoCorrect={false}
+            <Margin
+      space={8}/>
+       <View style={Skin.layout0.bottom.container}>   
+         <Input
                 placeholder={'Enter your secret answer'}
-                 placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
-                style={[Skin.activationStyle.textinput, {
-                  textAlign: 'left',
-                  paddingLeft:5,
-                  justifyContent:'center',
-                }]}
                 onSubmitEditing={this.setSecrets.bind(this)}
                 onChange={this.onAnswerChange.bind(this)}
-              />
-            </View>
-          </View>
-          <View style={Skin.activationStyle.input_wrap}>
-            <TouchableOpacity
-              style={Skin.activationStyle.button}
-              onPress={this.setSecrets.bind(this)}
-              underlayColor={Skin.login.BUTTON_UNDERLAY}
-              activeOpacity={0.6}
-            >
-              <Text style={Skin.activationStyle.buttontext}>
-                {this.btnText()}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              />    
+              <Button
+                label= {this.btnText()}
+                onPress={this.setSecrets.bind(this)}/> 
+      </View>
         </View>
-      </MainActivation>
+      </View>
 		);
+
+
   }
 }
 
@@ -261,6 +251,7 @@ const styles = StyleSheet.create({
   listViewWrap:{
     backgroundColor:'white',
     height: 105,
+     width: 260,
   },
   row:{
     backgroundColor: Skin.colors.TEXT_COLOR,
