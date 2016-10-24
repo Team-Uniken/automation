@@ -156,7 +156,6 @@ export default class PasswordSet extends Component {
       marginBottom={12}
       />
       <Input
-      placeholder={'Confirm Password'}
       ref={'cPassword'}
       returnKeyType={'next'}
       keyboardType={'default'}

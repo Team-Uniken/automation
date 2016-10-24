@@ -625,7 +625,7 @@ class Load extends Component {
     return (
       <View style={styles.container}>
         <Image
-          source={require('image!load')}
+          source={require('../img/ic_welcome.png')}
           style={styles.bg} />
       </View>
       );
