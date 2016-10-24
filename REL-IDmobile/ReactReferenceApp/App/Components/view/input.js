@@ -33,13 +33,20 @@ class Button extends Component {
            returnKeyType = {"next"}
            placeholderTextColor={Skin.baseline.textinput.placeholderTextColor} 
            returnKeyType={this.props.returnKeyType}
+           returnKeyLabel={this.props.returnKeyLabel}
            secureTextEntry={this.props.secureTextEntry}
+           selectionColor={Skin.colors.BUTTON_BG_COLOR}
            autoFocus = {this.props.autoFocus}
            onChange={this.props.onChange}
            onSubmitEditing={this.props.onSubmitEditing}
            onFocus={()=>{this.setFocus(true)}}
            onBlur={()=>{this.setFocus(false)}}
-           
+           autoComplete={this.props.autoComplete}
+           autoFocus={this.props.autoFocus}
+           autoCorrect={this.props.autoCorrect}
+           autoCapitalize={this.props.autoCapitalize}
+           keyboardAppearance={'light'}
+           enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}
            />
          </View>
       );

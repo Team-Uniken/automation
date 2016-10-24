@@ -111,7 +111,7 @@ class ReactRefApp extends Component {
       // id = 'QuestionSet';
       // id = 'QuestionVerification';
       // id = 'Contact';
-      id = 'Screen_1_1_register'
+      //id = 'Screen_1_1_register'
       //id = 'Screen_1_4_registerOptions'
       //id = 'Screen_1_3_setPassword'
     }

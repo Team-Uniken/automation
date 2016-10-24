@@ -204,16 +204,19 @@ class Register extends Component {
         <View style={Skin.layout1.title.wrap}>
           <Title>Registration</Title>
         </View>
-        <ScrollView
-          style={Skin.layout1.content.scrollwrap}
-          >
+        <ScrollView style={Skin.layout1.content.scrollwrap}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
                 <Input
                   placeholder={'First Name'}
                   ref={'firstname'}
                   keyboardType={'default'}
+                  returnKeyType={'next'}
+                  enablesReturnKeyAutomatically={true}
                   autoFocus={true}
+                  autoCorrect={false}
+                  autoComplete={false}
+                  autoCapitalize={true}
                   onChange={this.onFirstNameChange.bind(this)}
                   onSubmitEditing={() => {
                     this.refs.lastname.focus();
@@ -223,7 +226,12 @@ class Register extends Component {
                   placeholder={'Last Name'}
                   ref={'lastname'}
                   keyboardType={'default'}
+                  returnKeyType={'next'}
+                  enablesReturnKeyAutomatically={true}
                   autoFocus={false}
+                  autoCorrect={false}
+                  autoComplete={false}
+                  autoCapitalize={true}
                   onSubmitEditing={() => {
                     this.refs.email.focus();
                   }}
@@ -232,7 +240,11 @@ class Register extends Component {
                   placeholder={'Email'}
                   ref={'email'}
                   keyboardType={'email-address'}
+                  returnKeyType={'next'}
+                  enablesReturnKeyAutomatically={true}
                   autoFocus={false}
+                  autoCorrect={false}
+                  autoCapitalize={false}
                   onChange={this.onEmailChange.bind(this)}
                   onSubmitEditing={() => {
                     this.refs.confirmEmail.focus();
@@ -241,7 +253,10 @@ class Register extends Component {
                   placeholder={'Confirm Email'}
                   ref={'confirmEmail'}
                   keyboardType={'email-address'}
+                  enablesReturnKeyAutomatically={true}
                   autoFocus={false}
+                  autoCorrect={false}
+                  autoCapitalize={false}
                   onChange={this.onConfirmEmailChange.bind(this)}
                   onSubmitEditing={() => {
                     this.refs.phoneNumber.focus();
@@ -249,7 +264,11 @@ class Register extends Component {
                 <Input
                   placeholder={'Phone Number'}
                   ref={'phoneNumber'}
-                  keyboardType={'numeric'}
+                  keyboardType={'default'}
+                  enablesReturnKeyAutomatically={true}
+                  autoFocus={false}
+                  autoCorrect={false}
+                  autoCapitalize={false}
                   onChange={this.onPhoneNumberChange.bind(this)}/>
                 <Text style={Skin.layout1.content.slider.text}>
                   Slide to prove your human
@@ -287,7 +306,7 @@ class Register extends Component {
               label={Skin.text['1']['1'].submit_button}/>
           </View>
         </View>
-        <KeyboardSpacer topSpacing={-40}/>
+        <KeyboardSpacer topSpacing={-55}/>
 
        
         
