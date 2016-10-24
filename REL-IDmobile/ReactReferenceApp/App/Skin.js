@@ -398,13 +398,16 @@ module.exports.layout0 = {
 module.exports.layout1 = {
   wrap: {
     flex: 1,
-      //justifyContent: "center",
+    //justifyContent: "center",
     //alignItems: 'center',
   },
+  statusbar:{},
   title:{
     wrap:{
       //backgroundColor: '#ae0000',
-      flex: 12,
+      //flex: 12,
+      minHeight:76,
+      zIndex: 100,
       //alignItems: 'center',
     },
     container: {
@@ -434,8 +437,13 @@ module.exports.layout1 = {
     }
   },
   content:{
+    scrollwrap:{
+      flex:66,
+      flexDirection: 'column',
+      //backgroundColor: "rgba(10,20,132,1)",
+    },
     wrap:{
-      flex: 66,
+      flex: 1,
       alignItems: 'center',
       //backgroundColor: "rgba(203,255,132,1)",
     },
@@ -480,16 +488,19 @@ module.exports.layout1 = {
   },
   bottom:{
     wrap:{
-      flex: 24,
+      flex: 22,
+      //height: 50,
+      bottom: 0,
+      left: 0,
       alignItems: 'center',
       //backgroundColor: "rgba(155,199,255,1)"
     },
     container: {
       width:260,
+      paddingTop:5,
       //backgroundColor: "rgba(50,107,180,1)"
     },
     button:{
-      marginTop:17,
     }
   }
 }
