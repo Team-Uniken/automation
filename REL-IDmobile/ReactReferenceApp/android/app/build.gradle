@@ -77,13 +77,13 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "com.reactrefapp"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 24
         versionCode 1004
         versionName "1.0.0.4"
         ndk {
@@ -136,6 +136,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
+    compile project(':react-native-fbsdk')
     compile(name: 'app-sdk-debug', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     compile project(':ExtraDimensions')
@@ -154,6 +155,7 @@ dependencies {
 
 configurations.all {
     resolutionStrategy {
+        force 'com.google.android.gms:play-services-gcm:9.6.1'
         force 'com.android.support:support-v4:24.2.1'
         force 'com.android.support:design:24.4.0'
         force 'com.android.support:appcompat-v7:24.1.1'
