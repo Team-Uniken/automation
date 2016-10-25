@@ -6,6 +6,10 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Bank of Uniken</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) camera use</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>location</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
