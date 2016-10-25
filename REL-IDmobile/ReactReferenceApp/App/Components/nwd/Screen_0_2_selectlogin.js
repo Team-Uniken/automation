@@ -33,10 +33,6 @@ class SelectLogin extends Component {
       showPasswordVerify: false,
     }
 
-    if (this.props.tbacred) {
-      this.state.dataSource = this.props.tbacred.chlng_prompt[0];
-    }
-
     this.loginWith = this.loginWith.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -56,6 +52,12 @@ class SelectLogin extends Component {
 
   componentWillMount() {
     
+  }
+
+  renderif(condition,code){
+    if(condition){
+      return code;
+    }
   }
   
   //Facebook login code
@@ -97,6 +99,15 @@ class SelectLogin extends Component {
   }
 
   fillAdditionalLoginOptions(){
+    if(this.props.tbacred){
+      for(var i = 0;i<this.props.tbacred.chlng_prompt[0].length;i++){
+        var prompt = this.props.tbacred.chlng_prompt[0][i];
+        if(prompt.isRegistered){
+          this.state.dataSource.push(prompt);
+        }
+      }
+    }
+
     if(Platform.OS == 'android'){
       if(this.isRegistered('pattern')){
         if(this.state.dataSource){
@@ -113,7 +124,7 @@ class SelectLogin extends Component {
   }
 
   isRegistered(option){
-     return true;
+     return false;
   }
 
   //Facebook login code
@@ -190,7 +201,7 @@ class SelectLogin extends Component {
   }
 
   render() {
-    if (this.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify){
+    if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify){
       return (
         <View style={Skin.layout0.wrap.container}>
           <View style={Skin.layout0.top.container}>

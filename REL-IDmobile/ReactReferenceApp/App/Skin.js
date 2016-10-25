@@ -210,10 +210,6 @@ function hexToRgb(hex) {
   } : null;
 }
 
-
-
-
-
 text = {
   en: {
     test: 'test',
@@ -244,7 +240,7 @@ text = {
     '2':{
       '1':{
         subtitle:'Welcome to NWD',
-         submit_button: 'Submit',
+        submit_button: 'Submit',
       },
       '2': {
          subtitle:'Welcome to NWD',
@@ -331,6 +327,11 @@ module.exports.baseline = {
     selectedColor: 'transparent',
     defaultColor: 'transparent',
     checkColor: BUTTON_BG_COLOR,
+  },  
+  text_link_no_underline:{
+    color:BUTTON_BG_COLOR,
+    fontSize:12,
+    textAlign: 'center'
   }
 }
 
@@ -375,6 +376,13 @@ module.exports.layout0 = {
       fontSize: 15,
     //backgroundColor: DARK_PRIMARY,
     },
+    attempt:{
+      marginBottom:10,
+      marginTop:70,
+      textAlign:'center',
+      color: BUTTON_BG_COLOR,
+      fontSize: 15,
+    }
   },
   bottom: {
     container: {

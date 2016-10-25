@@ -27,6 +27,7 @@ var constant = require('../Constants');
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
+import Title from '../view/title';
 /*
   INSTANCES
  */
@@ -43,7 +44,10 @@ class PasswordVerification extends Component {
     super(props);
     this.state = {
       inputPassword: '',
+      showCloseButton:false
     };
+
+    this.onForgotPasswordClick = this.onForgotPasswordClick.bind(this);
   }
 
   onPasswordChange(event) {
@@ -66,34 +70,59 @@ class PasswordVerification extends Component {
     }
   }
 
+  onForgotPasswordClick() {
+    Events.trigger("forgotPassowrd");
+  }
+
+  renderif(condition, code) {
+    if (condition) {
+      return code;
+    }
+  }
+
   render() {
     return (
       <View style={Skin.layout0.wrap.container}>
+        <View style={Skin.layout1.title.wrap}>
+          {
+            this.renderif(this.state.showCloseButton,
+              <Title onClose={() => { } }></Title>
+            )  
+          }
+        </View>
         <View style={Skin.layout0.top.container}>
           <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
           </Text>
           <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-          <Text style={Skin.layout0.top.prompt}>
-            {Skin.text['2']['1'].prompt}
-          </Text>
         </View>
         <View style={Skin.layout0.bottom.container}>
+
+          <Text style={Skin.layout0.top.attempt}>
+            Attempt left {this.props.url.chlngJson.attempts_left}
+          </Text>
 
           <Input
             ref='inputPassword'
             returnKeyType={ 'next' }
-            keyboardType={ 'email-address' }
             secureTextEntry
             placeholder={Skin.text['2']['2'].textinput_placeholder }
             value={ this.state.inputPassword }
             onSubmitEditing={ this.checkPassword.bind(this) }
             onChange={ this.onPasswordChange.bind(this) }
+            enablesReturnKeyAutomatically={true}
+            autoFocus={true}
+            autoCorrect={false}
+            autoComplete={false}
+            autoCapitalize={false}
             />
-            
+
           <Button
             label={Skin.text['2']['1'].submit_button}
             onPress={ this.checkPassword.bind(this) }/>
+
+          <Text style={Skin.baseline.text_link_no_underline}
+            onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
         </View>
       </View>
     );

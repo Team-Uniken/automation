@@ -12,8 +12,6 @@ const {
 const{Component} =  React;
 
 class Tital extends Component {
-
-  
   render() {
     return (
       <View style={Skin.layout1.title.container}>
