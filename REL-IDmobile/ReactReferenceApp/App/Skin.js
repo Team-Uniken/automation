@@ -227,6 +227,13 @@ text = {
       '2': {
         subtitle: 'Welcome to New World CLUB',
         prompt: 'Select a login',
+        credTypes:{
+            'facebook':{key:'facebook', label:'Facebook'},
+            'wechat':{key:'wechat', label:'WeChat'},
+            'touchid':{key:'touchid', label:'TouchID'},
+            'pattern':{key:'pattern',label:'Pattern'},
+            'password':{key:'password', label:'Password'},
+        }
       }
     },
     '1':{
@@ -242,6 +249,7 @@ text = {
       '2': {
          subtitle:'Welcome to NWD',
          submit_button: 'Submit',
+         textinput_placeholder:'Enter Password',
       }
     },
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
