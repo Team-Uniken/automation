@@ -1832,6 +1832,7 @@ const collection = {
   addappointment,
   questionrow,
   ConnectionProfile,
+  BUTTON_BG_COLOR,
   PatternLockStyle,
   nav,
   open,

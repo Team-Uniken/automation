@@ -163,64 +163,6 @@ var QRCodeScreen = React.createClass({
     }
 
     var $this = this;
-
-    // return (
-    // <MainActivation navigator={this.props.navigator}>
-    //   <View style={Skin.activationStyle.topGroup}>
-    //     <Text style={Skin.activationStyle.title}>Activation</Text>
-
-    //     <Text style={[Skin.activationStyle.input_wrap,{justifyContent:'center'},Skin.activationStyle.info]}>
-    //       <Text>Step 1: Verify Code </Text>
-    //       <Text style={{fontWeight: 'bold'}}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-    //       <Text style={Skin.activationStyle.info}>{'\nStep 2: Scan QR Code'}</Text>
-    //     </Text>
-
-    //     <View style={[Skin.activationStyle.input_wrap, { justifyContent: 'center' }]}>
-    //       <View style={{ width: 200, height: 200, justifyContent: 'center',backgroundColor:'black' }}>
-    //         { $this.renderIf($this.state.showCamera,
-    //           <Camera onBarCodeRead={this._onBarCodeRead} style={styles.camera} type={Camera.constants.Type.back}>
-    //              <View style={styles.rectangleContainer}>
-    //                 <View style={styles.rectangle}/>
-    //              </View>
-    //            </Camera>)
-    //         }
-    //       </View>
-    //     </View>
-
-    // <View style={Skin.activationStyle.input_wrap}>
-    //   <View style={Skin.activationStyle.textinput_wrap}>
-    // <TextInput
-    //   returnKeyType={'next'}
-    //   autoCorrect={false}
-    //   secureTextEntry={true}
-    //   keyboardType={'default'}
-    //   placeholderTextColor={'rgba(255,255,255,0.7)'}
-    //   style={Skin.activationStyle.textinput}
-    //   value={this.state.inputUsername}
-    //   ref={'activatonCode'}
-    //   placeholder={'or Enter Numeric Code'}
-    //   onChange={this.onActivationCodeChange.bind(this)}
-    //   onSubmitEditing={this.checkActivationCode.bind(this)}
-    // />
-    //   </View>
-    // </View>
-    // <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-
-    // <View style={Skin.activationStyle.input_wrap}>
-    //   <TouchableHighlight
-    //     style={Skin.activationStyle.button}
-    //     underlayColor={'#082340'}
-    //     onPress={this.checkActivationCode.bind(this)}
-    //     activeOpacity={0.6}
-    //   >
-    //     <Text style={Skin.activationStyle.buttontext}>
-    //       {this.btnText()}
-    //     </Text>
-    //   </TouchableHighlight>
-    // </View>
-    //   </View>
-    // </MainActivation>
-    //  );
     return (
       <View style={Skin.layout1.wrap}>
         <StatusBar
