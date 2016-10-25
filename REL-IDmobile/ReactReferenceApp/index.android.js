@@ -3,7 +3,6 @@
  * https://github.com/facebook/react-native
  */
 'use strict';
-
 import React from 'react';
 
 console.disableYellowBox = true;
@@ -46,9 +45,11 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 // import CheckUser from './App/Components/nwd/checkuser';
 // import VerifyPassword from './App/Components/nwd/verifypassword';
 
+
 import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
 import Screen_0_2_selectlogin from './App/Components/nwd/Screen_0_2_selectlogin';
 import Screen_1_1_register from './App/Components/nwd/Screen_1_1_register';
+import Screen_1_2_activation from './App/Components/nwd/Screen_1_2_activation';
 import Screen_1_3_setPassword from './App/Components/nwd/Screen_1_3_setPassword';
 import Screen_1_4_registerOptions from './App/Components/nwd/Screen_1_4_registerOptions';
 
@@ -180,7 +181,13 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_1_3_setPassword') {
+    }  else if (id === 'Screen_1_2_activation') {
+      return (<Screen_1_2_activation
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    }else if (id === 'Screen_1_3_setPassword') {
       return (<Screen_1_3_setPassword
                 navigator={nav}
                 url={route.url}
@@ -192,13 +199,7 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    }else if (id === 'demo') {
-      return (<Demo
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'Load') {
+    }else if (id === 'Load') {
       return (<LoadScene navigator={nav} />);
 
       // SECONDARY SCENES
@@ -316,7 +317,6 @@ class ReactRefApp extends Component {
         title={route.title}
         rdna={route.DnaObject} />);
     }
-
     return (<Text>
       Error
     </Text>);

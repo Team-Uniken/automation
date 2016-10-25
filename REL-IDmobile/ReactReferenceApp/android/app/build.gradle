@@ -134,6 +134,8 @@ android {
 
 
 dependencies {
+    compile project(':react-native-camera')
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
