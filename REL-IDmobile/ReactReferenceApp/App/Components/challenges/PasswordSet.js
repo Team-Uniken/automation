@@ -136,68 +136,36 @@ export default class PasswordSet extends Component {
 
   render() {
 
-    // return (
-    //  <View style={Skin.nwd.container}>
-    // <Title
-    // tital="Registration"></Title>
-    // <Margin
-    // space={16}/>
-    // <Text style={Skin.nwd.headertext}>Your username is{"\n"}<Text style={Skin.nwd.note}>abc *******lnn@gmail.com</Text>{"\n"}Set Account Password</Text>
-    // <Margin
-    // space={32}/>
-    // <View>
-    // <Input
-    // returnKeyType={'next'}
-    // keyboardType={'default'}
-    // ref={'password'}
-    // placeholder={'Enter Password'}
-    // secureTextEntry={true}
-    // blurOnSubmit={false}
-    // onChange={this.onPasswordChange.bind(this)}
-    // onSubmitEditing={() => { this.refs.cPassword.focus(); }}
-    // marginBottom={12}
-    // />
-    // <Input
-    // ref={'cPassword'}
-    // returnKeyType={'next'}
-    // keyboardType={'default'}
-    // secureTextEntry={true}
-    // onChange={this.onConfirmPasswordChange.bind(this)}
-    // onSubmitEditing={this.setPassword.bind(this)}
-    // />
-    //  </View>
-    // <Margin
-    // space={32}/>
-    // <Button
-    // onPress={this.setPassword.bind(this)}
-    // lable= {this.btnText()}/>
-    //  </View>
-    //  );
+
     return (
       <View style={Skin.layout1.wrap}>
         <StatusBar
-          style={Skin.layout1.statusbar}
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'}
           />
         <View style={Skin.layout1.title.wrap}>
-          <Title
-            >Registration</Title>
+          <Title>Registration</Title>
         </View>
         <ScrollView style={Skin.layout1.content.scrollwrap}>
           <View style={Skin.layout1.content.wrap}>
             <View style={Skin.layout1.content.container}>
-              <View>
-                <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-                <Text style={Skin.layout0.top.prompt}>
-                  Your username is{"\n"}abc *******lnn@gmail.com{"\n"}Set Account Password
-                </Text>
+              <View style={Skin.layout1.content.top.container}>
+                <Text style={[Skin.layout1.content.top.text, {}]}>Your Username is</Text>
+                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>abs********lmn @gmail.com</Text>
+                <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
               </View>
+              <View style={Skin.layout1.content.bottom.container}>
 
-              <View style={Skin.layout0.bottom.container}>
+
+
+
                 <Input
                   returnKeyType={'next'}
                   keyboardType={'default'}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoComplete={false}
+                  autoCapitalize={false}
                   ref={'password'}
                   placeholder={'Enter Password'}
                   secureTextEntry={true}
@@ -206,25 +174,37 @@ export default class PasswordSet extends Component {
                   onSubmitEditing={() => { this.refs.cPassword.focus(); } }
                   marginBottom={12}
                   />
+
+
                 <Input
+                  autoFocus={false}
+                  autoComplete={false}
+                  autoCorrect={false}
+                  autoCapitalize={false}
+                  returnKeyType={'done'}
+                  secureTextEntry={true}
                   ref={'cPassword'}
-                  returnKeyType={'next'}
                   keyboardType={'default'}
                   placeholder={'Confirm Password'}
-                  secureTextEntry={true}
                   onChange={this.onConfirmPasswordChange.bind(this) }
                   onSubmitEditing={this.setPassword.bind(this) }
-                  />
 
-                <Button
-                  label={Skin.text['2']['1'].submit_button}
-                  onPress={this.setPassword.bind(this) }/>
+                  />
               </View>
             </View>
           </View>
         </ScrollView>
+        <View style={Skin.layout1.bottom.wrap}>
+          <View style={Skin.layout1.bottom.container}>
+            <Button style={Skin.layout1.bottom.button}
+              onPress={this.setPassword.bind(this) }
+              label={Skin.text['1']['1'].submit_button}/>
+          </View>
+        </View>
+        <KeyboardSpacer topSpacing={-40}/>
       </View>
     );
+
   }
 }
 

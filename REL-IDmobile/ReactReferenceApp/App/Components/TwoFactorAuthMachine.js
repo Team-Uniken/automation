@@ -16,10 +16,10 @@ import Main from './Main';
 
 // SECURITY SCENES
 import Activation from './nwd/Screen_1_2_activation';
-import PasswordSet from './challenges/PasswordSet';
+import PasswordSet from './nwd/Screen_1_3_setPassword';
 import UpdatePasswordSet from './challenges/UpdatePasswordSet';
 import Otp from './challenges/Otp';
-import QuestionSet from './challenges/QuestionSet';
+import QuestionSet from './nwd/Screen_Question_Set';
 import QuestionVerification from './nwd/Screen_Question_Verification';
 import UserLogin from './nwd/Screen_2_1_username';
 import DeviceBinding from './nwd/Screen_Device_Binding';
