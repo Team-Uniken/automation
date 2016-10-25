@@ -450,7 +450,7 @@ onGetAllChallengeStatus(e){
     }else if (id === 'RegisterOption') {
       return (<RegisterOption navigator={nav} parentnav={obj.props.navigator} url={route.url} title={route.title} />);
     }else if(id === 'pattern'){
-      return (<PatternLock navigator={nav} mode={route.mode} onUnlock={route.onUnlockPattern} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={nav} mode={route.mode} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>Error</Text>);
   }

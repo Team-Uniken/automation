@@ -122,7 +122,7 @@ class PatternLock extends Component {
           else{
             if(this.state.screen === "confirm"){
                 if(this.currentPattern === pattern){
-                  AsyncStorage.getItem('ERPasswd').then((value) => {
+                  AsyncStorage.getItem('RPasswd').then((value) => {
                       this.encryptUserData(null,Main.dnaPasswd,pattern);
                   }).done();
                 }
@@ -159,7 +159,8 @@ class PatternLock extends Component {
      if(status.error == 0){
        if(this.mode === "verify"){
           var userDataStr = status.response;
-          try{
+          //alert("Password: " + userDataStr);
+          //try{
             //var userData = JSON.parse(userDataStr);
 
            // if(userData.pattern === this.currentPattern){
@@ -176,11 +177,11 @@ class PatternLock extends Component {
              // this.refs["patternView"].clearPattern();
              // this.wrongAttempt();
             //}
-          }
-          catch(e){
-            this.refs["patternView"].clearPattern();
-            this.wrongAttempt();
-          }
+         // }
+          // catch(e){
+          //   this.refs["patternView"].clearPattern();
+          //   this.wrongAttempt();
+          // }
        }
      }else{
        this.refs["patternView"].clearPattern();

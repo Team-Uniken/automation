@@ -61,14 +61,6 @@ class SelectLogin extends Component {
     this.fillAdditionalLoginOptions();
   }
   
-  touch() {
-    alert("todo");
-  }
-  
-  wechat() {
-    alert("todo");
-  }
-  
   componentWillMount() {
     obj = this;
   }
@@ -133,6 +125,10 @@ class SelectLogin extends Component {
           this.state.dataSource.push({credType:'touchid',isRegistered:true});
         }
       }
+    }
+
+    if(this.state.dataSource.length > 0){
+      this.state.dataSource.push({credType:'password',isRegistered:true});
     }
   }
   
