@@ -1,23 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  VibrationIOS,
-  TextInput,
-  TouchableHighlight,
-  InteractionManager,
-  Platform,
-  AsyncStorage,
-  AlertIOS,
-  Keyboard,
-  StatusBar,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, VibrationIOS, TextInput, TouchableHighlight, InteractionManager, Platform, AsyncStorage, AlertIOS, Keyboard, StatusBar, ScrollView, Alert, } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -38,7 +22,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 var QRCodeScreen = React.createClass({
 
-  getInitialState: function (props) {
+  getInitialState: function(props) {
     return {
       activatonCode: '',
       showCamera: true,
@@ -53,10 +37,17 @@ var QRCodeScreen = React.createClass({
     onCancel: React.PropTypes.func,
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       cancelButtonVisible: true,
       cancelButtonTitle: 'Cancel',
+      url: {
+        chlngJson: {
+          chlng_resp: [{
+            challenge: 'ABCDEFG'
+          }]
+        }
+      }
     };
   },
 
@@ -67,13 +58,13 @@ var QRCodeScreen = React.createClass({
   //   $this.props.navigator.pop();
   // },
 
-  _onBarCodeRead: function (result) {
+  _onBarCodeRead: function(result) {
     var $this = this;
 
     if (this.barCodeFlag) {
       this.barCodeFlag = false;
 
-      setTimeout(function () {
+      setTimeout(function() {
         // $this.props.navigator.pop();
 
         //Events.trigger('onQRSuccess', result.data);
@@ -84,30 +75,29 @@ var QRCodeScreen = React.createClass({
     }
   },
 
-  onActivationCodeChange: function (event) {
+  onActivationCodeChange: function(event) {
     this.setState({ activatonCode: event.nativeEvent.text });
   },
 
-  btnText: function () {
+  btnText: function() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'NEXT';
   },
 
-  checkActivationCode: function () {
+  checkActivationCode: function() {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
-    }
-    else {
+    } else {
       alert('Enter Activation Code');
     }
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     Obj = this;
     if (Platform.OS === "android") {
       let keys = ['userData', 'setPattern'];
@@ -115,11 +105,11 @@ var QRCodeScreen = React.createClass({
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     // this.refs['activatonCode'].focus();
   },
 
-  onQRScanSuccess: function (result) {
+  onQRScanSuccess: function(result) {
     var $this = this;
     if (result.length != 0) {
       var res = JSON.parse(result);
@@ -130,36 +120,40 @@ var QRCodeScreen = React.createClass({
       if (obtainedVfKey === vfKey) {
         let responseJson = Obj.props.url.chlngJson;
         responseJson.chlng_resp[0].response = aCode;
-        Events.trigger('showNextChallenge', { response: responseJson });
+        Events.trigger('showNextChallenge', {
+          response: responseJson
+        });
       } else {
         Events.trigger('hideLoader', true);
 
         alert('Verification code does not match');
-        setTimeout(function () {
+        setTimeout(function() {
           $this.setState({ showCamera: true });
         }, 2000);
       }
     } else {
       Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
-      setTimeout(function () {
+      setTimeout(function() {
         $this.setState({ showCamera: true });
       }, 2000);
 
     }
   },
 
-  renderIf: function (condition, jsx) {
+  renderIf: function(condition, jsx) {
     if (condition) {
       return jsx;
     }
   },
 
-  render: function () {
+  render: function() {
     var cancelButton = null;
     this.barCodeFlag = true;
     if (this.props.cancelButtonVisible) {
-      cancelButton = <CancelButton onPress={this._onPressCancel} title={this.props.cancelButtonTitle} />;
+      cancelButton = <CancelButton
+                       onPress={this._onPressCancel}
+                       title={this.props.cancelButtonTitle} />;
     }
 
     var $this = this;
@@ -226,30 +220,39 @@ var QRCodeScreen = React.createClass({
         <StatusBar
           style={Skin.layout1.statusbar}
           backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'}
-          />
+          barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-          <Title
-            >Activation</Title>
+          <Title>
+            Activation
+          </Title>
         </View>
-        <ScrollView style={Skin.layout1.content.scrollwrap} contentContainerStyle={{ flex: 1 }}>
-          <View style={{ backgroundColor: '#000000', flex: 1, marginBottom: 12 }}>
-
+        <ScrollView
+          style={Skin.layout1.content.scrollwrap}
+          contentContainerStyle={{ flex: 1 }}>
+          <View style={{
+                         backgroundColor: '#000000',
+                         flex: 1,
+                         marginBottom: 12
+                       }}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
-                <Text style={[Skin.layout1.content.prompt, { marginTop: 10 }]}>Step 1: Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-                <Text style={[Skin.layout1.content.prompt, {}]}>Step 2: Scan QR Code</Text>
+                <Text style={[Skin.layout1.content.prompt, {
+                               marginTop: 10
+                             }]}>
+                  Step 1: Verify Code
+                  {this.props.url.chlngJson.chlng_resp[0].challenge}
+                </Text>
+                <Text style={[Skin.layout1.content.prompt, {}]}>
+                  Step 2: Scan QR Code
+                </Text>
                 <View style={Skin.layout1.content.cameraBox}>
-
-                  <Margin
-                    space={16}/>
-
-                  { $this.renderIf($this.state.showCamera,
-                    <Camera onBarCodeRead={this._onBarCodeRead} type={Camera.constants.Type.back}>
-                      <View style={styles.rectangle}/>
-                    </Camera>)
-                  }
-
+                  <Margin space={16} />
+                  {$this.renderIf($this.state.showCamera,
+                     <Camera
+                       onBarCodeRead={this._onBarCodeRead}
+                       type={Camera.constants.Type.back}>
+                       <View style={styles.rectangle} />
+                     </Camera>)}
                 </View>
                 <View style={Skin.layout1.content.enterWrap}>
                   <Input
@@ -261,59 +264,65 @@ var QRCodeScreen = React.createClass({
                     autoCapitalize={true}
                     secureTextEntry={true}
                     styleInput={Skin.layout1.content.enterInput}
-                    returnKeyType = {"next"}
+                    returnKeyType={"next"}
                     placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-                    onChange={this.onActivationCodeChange.bind(this) }
-                    onSubmitEditing={this.checkActivationCode.bind(this) }
-                    />
-
-
+                    onChange={this.onActivationCodeChange.bind(this)}
+                    onSubmitEditing={this.checkActivationCode.bind(this)} />
                 </View>
               </View>
             </View>
-
           </View>
         </ScrollView>
-        <View
-          style={Skin.layout1.bottom.wrap}>
+        <View style={Skin.layout1.bottom.wrap}>
           <View style={Skin.layout1.bottom.container}>
             <Button
               label={Skin.text['1']['1'].submit_button}
-              onPress={this.checkActivationCode.bind(this) }/>
+              onPress={this.checkActivationCode.bind(this)} />
             <Text
               onPress={() => {
-                Alert.alert(
-                  'Alert Title',
-                  'My Alert Msg',
-                  [
-                    { text: 'Ask me later', onPress: () => console.log('Ask me later pressed') },
-                    { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                    { text: 'OK', onPress: () => console.log('OK Pressed') },
-                  ]
-                )
-              } }
-              style={Skin.layout1.bottom.footertext}
-              >
+                         Alert.alert(
+                           'Alert Title',
+                           'My Alert Msg',
+                           [
+                             {
+                               text: 'Ask me later',
+                               onPress: () => console.log('Ask me later pressed')
+                             },
+                             {
+                               text: 'Cancel',
+                               onPress: () => console.log('Cancel Pressed'),
+                               style: 'cancel'
+                             },
+                             {
+                               text: 'OK',
+                               onPress: () => console.log('OK Pressed')
+                             },
+                           ]
+                         )
+                       }}
+              style={Skin.layout1.bottom.footertext}>
               Resend Activation Code
             </Text>
           </View>
         </View>
-        <KeyboardSpacer topSpacing={-45}/>
+        <KeyboardSpacer topSpacing={-45} />
       </View>
-    );
+      );
 
   },
 });
 
 var CancelButton = React.createClass({
-  render: function () {
+  render: function() {
     return (
       <View style={styles.cancelButton}>
         <TouchableOpacity onPress={this.props.onPress}>
-          <Text style={styles.cancelButtonText}>{this.props.title}</Text>
+          <Text style={styles.cancelButtonText}>
+            {this.props.title}
+          </Text>
         </TouchableOpacity>
       </View>
-    );
+      );
   },
 });
 

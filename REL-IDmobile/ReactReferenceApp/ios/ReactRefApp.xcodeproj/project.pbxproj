@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -15,6 +16,7 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1A6A1F8C1DBFFC8400721AEC /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A7F14421DBFCAC600985CBB /* libRCTCamera.a */; };
 		1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		6511E1181DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */; };
 		6511E1191DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */; };
@@ -132,6 +134,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		1A7F14411DBFCAC600985CBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D88FC2CEE0674C25B1E0B87B /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
 		};
 		65281C2E1D6C34EA00F15ACE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
