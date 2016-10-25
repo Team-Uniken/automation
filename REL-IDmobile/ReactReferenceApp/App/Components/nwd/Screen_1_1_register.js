@@ -3,9 +3,9 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Title from '../view/title';
 import Button from '../view/button';
+import Checkbox from '../view/checkbox';
 import hash from 'hash.js';
 import Input from '../view/input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -24,7 +24,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      check: '',
+      check: false,
       firstName: '',
       lastName: '',
       email: '',
@@ -68,10 +68,12 @@ class Register extends Component {
 
 
   selectCheckbox() {
-    if (this.state.check.length == 0) {
-      this.setState({ check: '\u2714' });
+    if (!this.state.check) {
+      this.setState({ check: true });
+      Alert.alert('true')
     } else {
-      this.setState({ check: '' });
+      this.setState({ check: false });
+      Alert.alert('false')
     }
   }
 
@@ -115,7 +117,7 @@ class Register extends Component {
     } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("Error", "Email is not valid.", false);
       return;
-    } else if (this.state.value < 100) {
+    } else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check.length > 0) {
@@ -289,21 +291,12 @@ class Register extends Component {
                   minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                   maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
                   onValueChange={(value) => this.setState({ value: value })} />
-                <View style={{ flexDirection: 'row' }}>
-                  <CheckboxField
-                    defaultColor={Skin.baseline.checkbox.defaultColor}
-                    selectedColor={Skin.baseline.checkbox.selectedColor}
-                    onSelect={this.selectCheckbox}
-                    checkboxStyle={Skin.baseline.checkbox.base}
-                    onSelect={this.selectCheckbox.bind(this)}>
-                    <Text style={Skin.baseline.checkbox.checkColor}>
-                      {this.state.check}
-                    </Text>
-                  </CheckboxField>
-                  <Text onPress={() => Linking.openURL("https://www.google.com")}>
-                    Terms and Conditions Link
-                  </Text>
-                </View>
+                <Checkbox
+                  onSelect={this.selectCheckbox.bind(this)}
+                  labelSide="right"
+                  onLabelPress={() => Linking.openURL("https://www.google.com")}>
+                  Terms and Conditions
+                </Checkbox>
               </View>
             </View>
           </View>

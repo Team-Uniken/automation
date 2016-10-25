@@ -159,6 +159,7 @@ module.exports.icon = {
   password: '\ue7ff',
   touchid: '\ue90d',
   close: '\ue5cd',
+  check: '\ue5ca',
 };
 
 // Titles
@@ -257,11 +258,15 @@ text = {
     },
     '2': {
       '1': {
-        subtitle: 'Welcome to NWD',
+        subtitle: 'Welcome to New World CLUB',
         submit_button: 'Submit',
       },
       '2': {
-        subtitle: 'Welcome to NWD',
+        subtitle: 'Welcome to New World CLUB',
+        submit_button: 'Submit',
+      },
+      '2': {
+        subtitle: 'Welcome to New World CLUB',
         submit_button: 'Submit',
         textinput_placeholder: 'Enter Password',
       }
@@ -344,12 +349,30 @@ module.exports.baseline = {
       borderRadius: 0,
     //backgroundColor: "rgb(248,231,28)"
     },
+    container: {
+      padding: 20,
+      paddingLeft: 0,
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    checkbox: {
+      borderWidth: 2,
+      borderColor: BUTTON_BG_COLOR,
+      borderRadius: 0
+    },
     label: {
-
+      alignSelf: 'center',
+      fontSize: 25,
+      flex: 1
     },
     selectedColor: 'transparent',
     defaultColor: 'transparent',
-    checkColor: BUTTON_BG_COLOR,
+    check: {
+      color: BUTTON_BG_COLOR,
+      fontFamily: ICON_FONT,
+      fontSize: 20,
+    },
   },
   text_link_no_underline: {
     color: BUTTON_BG_COLOR,

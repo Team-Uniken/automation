@@ -45,18 +45,6 @@ class UserLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      r_opac_val: new Animated.Value(0),
-      i_opac_val: new Animated.Value(0),
-      d_opac_val: new Animated.Value(0),
-      relid_text_opac: new Animated.Value(0),
-      rid_top: new Animated.Value(253),
-      r_text_opac: new Animated.Value(0),
-      i_text_opac: new Animated.Value(0),
-      d_text_opac: new Animated.Value(0),
-      relid_opac_val: new Animated.Value(0),
-      logWrapOpac: new Animated.Value(0),
-      logWarnOpac: new Animated.Value(0),
-      progWrapOpac: new Animated.Value(0),
       progress: 0,
       inputUsername: '',
       inputPassword: '',
@@ -75,12 +63,41 @@ class UserLogin extends Component {
 
   componentWillMount() {
     constant.USER_SESSION = "NO";
+    AsyncStorage.setItem("isPwdSet", "empty");
+    if (Platform.OS == "android") {
+      try {
+        AsyncStorage.getItem("userData").then((value) => {
+          if (value) {
+            this.setState({ pattern: true, });
+
+            Main.isPatternEnabled = true;
+          } else {
+            Main.isPatternEnabled = false;
+          }
+        }).done();
+      } catch ( e ) {}
+    } else {
+      this.locked = false;
+    }
+
+    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+  }
+
+  _verifyTouchIdSupport() {
+    TouchID.isSupported()
+      .then(supported => {
+        // Success code
+        console.log('TouchID is supported.');
+        obj._verifyTouchId();
+      })
+      .catch(error => {
+        console.log('TouchID is not supported.');
+        console.log(error);
+      });
   }
 
   onUsernameChange(event) {
-    this.setState({
-      inputUsername: event.nativeEvent.text
-    });
+    this.setState({ inputUsername: event.nativeEvent.text });
   }
 
   checkUsername() {
@@ -94,9 +111,8 @@ class UserLogin extends Component {
       Main.dnaUserName = un;
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = un;
-      Events.trigger('showNextChallenge', {
-        response: responseJson
-      });
+      Events.trigger('showNextChallenge', { response: responseJson });
+
     } else {
       dismissKeyboard();
       AsyncStorage.setItem("userId", "empty");
@@ -106,11 +122,18 @@ class UserLogin extends Component {
     }
   }
 
+  checkUsernameSuccess() {
+    Main.dnaUserName = savedUserName;
+    InteractionManager.runAfterInteractions(() => {
+      this.props.navigator.push(
+        { id: "Activation",title: nextChlngName,url: chlngJson }
+      );
+    });
+  }
+
   checkUsernameFailure() {
     console.log('\n\nin checkUsernameFailure');
-    this.setState({
-      isLoaderVisible: false
-    });
+    this.setState({ isLoaderVisible: false });
     this.state.progress = 0;
     Animated.sequence([
       Animated.timing(this.state.logWrapOpac, {
@@ -125,9 +148,7 @@ class UserLogin extends Component {
       })
     ]).start();
     this.clearText('inputUsername')
-    this.setState({
-      failureMessage: statusMessage
-    });
+    this.setState({ failureMessage: statusMessage });
     Animated.sequence([
       Animated.timing(this.state.logWarnOpac, {
         toValue: 1,
@@ -147,65 +168,39 @@ class UserLogin extends Component {
 
 
   clearText(fieldName) {
-    this.refs[fieldName].setNativeProps({
-      text: ''
-    });
+    this.refs[fieldName].setNativeProps({ text: '' });
   }
 
   render() {
-    // return (
-    //     <View style={Skin.layout1.wrap}>
-    //   <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
-    //         {Skin.icon.logo}
-    //       </Text>
-    //   <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-    //   <Margin
-    //   space={32}/>
-    //   <View>
-    //   <Input
-    //   ref='inputUsername'
-    //   returnKeyType={ 'next' }
-    //   keyboardType={ 'email-address' }
-    //   placeholder={ 'Username' }
-    //   value={ this.state.inputUsername }
-    //   onSubmitEditing={ this.checkUsername.bind(this) }
-    //   onChange={ this.onUsernameChange.bind(this) }
-    //   />
-    //   </View>
-    //   <Button
-    //   lable="Submit"
-    //   onPress={ this.checkUsername.bind(this) }/>
-    //  </View>
-    //   );
-         return (
+    return (
       <View style={Skin.layout0.wrap.container}>
         <View style={Skin.layout0.top.container}>
           <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
           </Text>
-        <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-        <Text style={Skin.layout0.top.prompt}>
+          <Text style={Skin.layout0.top.subtitle}>
+            {Skin.text['2']['1'].subtitle}
+          </Text>
+          <Text style={Skin.layout0.top.prompt}>
             {Skin.text['2']['1'].prompt}
           </Text>
         </View>
-        <View style={Skin.layout0.bottom.container}>       
-
-       <Input
-      ref='inputUsername'
-      returnKeyType={ 'next' }
-      keyboardType={ 'email-address' }
-      placeholder={ 'Username' }
-      value={ this.state.inputUsername }
-      onSubmitEditing={ this.checkUsername.bind(this) }
-      onChange={ this.onUsernameChange.bind(this) }
-      />
-      <Button
-      label={Skin.text['2']['1'].submit_button}
-      onPress={ this.checkUsername.bind(this) }/>         
+        <View style={Skin.layout0.bottom.container}>
+          <Input
+            ref='inputUsername'
+            returnKeyType={'next'}
+            keyboardType={'email-address'}
+            placeholder={'Username'}
+            value={this.state.inputUsername}
+            onSubmitEditing={this.checkUsername.bind(this)}
+            onChange={this.onUsernameChange.bind(this)} />
+          <Button
+            label={Skin.text['2']['1'].submit_button}
+            onPress={this.checkUsername.bind(this)} />
         </View>
       </View>
       );
-    }
+  }
 }
 
 module.exports = UserLogin;
