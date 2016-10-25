@@ -117,10 +117,14 @@ class SelectLogin extends Component {
         }
       }
     }
+
+    if(this.state.dataSource.length > 0){
+      this.state.dataSource.push({credType:'password',isRegistered:true});
+    }
   }
 
   isRegistered(option){
-     return false;
+     return true;
   }
 
   //Facebook login code
@@ -140,7 +144,7 @@ class SelectLogin extends Component {
   }
 
   onPatternUnlock(){
-
+    
   }
 
   doPatternLogin(){
