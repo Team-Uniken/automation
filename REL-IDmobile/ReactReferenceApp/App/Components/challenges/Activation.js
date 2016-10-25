@@ -22,9 +22,7 @@ export default class Activation extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      activatonCode: '',
-    };
+    this.state = { activatonCode: '', };
   /*
   this._props = {
     url: {
@@ -69,9 +67,7 @@ export default class Activation extends Component {
   }
 
   onActivationCodeChange(event) {
-    this.setState({
-      activatonCode: event.nativeEvent.text
-    });
+    this.setState({ activatonCode: event.nativeEvent.text });
   //console.log(event.nativeEvent.text);
   }
   btnText() {
@@ -87,9 +83,7 @@ export default class Activation extends Component {
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = vkey;
-      Events.trigger('showNextChallenge', {
-        response: responseJson
-      });
+      Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       alert('Enter Activation Code');
     }
@@ -103,49 +97,65 @@ export default class Activation extends Component {
   }
 
   componentDidMount() {
-    this.refs['activatonCode'].focus();
+    this.refs.activatonCode.focus();
   }
 
   render() {
 
     return (
-      <MainActivation navigator={ this.props.navigator }>
-        <View style={ Skin.activationStyle.topGroup }>
-          <Text style={ Skin.activationStyle.counter }>
-            { this.props.url.currentIndex }/
-            { this.props.url.chlngsCount }
+      <MainActivation navigator={this.props.navigator}>
+        <View style={Skin.activationStyle.topGroup}>
+          <Text style={Skin.activationStyle.counter}>
+            {this.props.url.currentIndex}/
+            {this.props.url.chlngsCount}
           </Text>
-          <Text style={ Skin.activationStyle.title }>Activation</Text>
-          <Text style={ Skin.activationStyle.info }>
-            { this.props.url.chlngJson.chlng_info[2].value }
+          <Text style={Skin.activationStyle.title}>
+            Activation
           </Text>
-          <View style={ Skin.activationStyle.input_wrap }>
-            <View style={ Skin.activationStyle.textinput_wrap }>
-              <Text style={ [Skin.activationStyle.textinput, Skin.activationStyle.textinput_lead] }>
+          <Text style={Skin.activationStyle.info}>
+            {this.props.url.chlngJson.chlng_info[2].value}
+          </Text>
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <Text style={[Skin.activationStyle.textinput, Skin.activationStyle.textinput_lead]}>
                 Verify:
               </Text>
-              <Text style={ [Skin.activationStyle.textinput] }>
-                { this.props.url.chlngJson.chlng_resp[0].challenge }
+              <Text style={[Skin.activationStyle.textinput]}>
+                {this.props.url.chlngJson.chlng_resp[0].challenge}
               </Text>
             </View>
           </View>
-          <View style={ Skin.activationStyle.input_wrap }>
-            <View style={ Skin.activationStyle.textinput_wrap }>
-              <Text style={ [Skin.activationStyle.textinput, Skin.activationStyle.textinput_lead] }>
+          <View style={Skin.activationStyle.input_wrap}>
+            <View style={Skin.activationStyle.textinput_wrap}>
+              <Text style={[Skin.activationStyle.textinput, Skin.activationStyle.textinput_lead]}>
                 Activate:
               </Text>
-              <TextInput returnKeyType={ 'next' } autoCorrect={ false } secureTextEntry={ true } keyboardType={ 'default' } placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB }
-                style={ Skin.activationStyle.textinput } value={ this.state.inputUsername } ref={ 'activatonCode' } placeholder={ 'Code' } onChange={ this.onActivationCodeChange.bind(this) } onSubmitEditing={ this.checkActivationCode.bind(this) }
-              />
+              <TextInput
+                returnKeyType={'next'}
+                autoCorrect={false}
+                secureTextEntry={true}
+                keyboardType={'default'}
+                placeholderTextColor={Skin.PLACEHOLDER_TEXT_COLOR_RGB}
+                style={Skin.activationStyle.textinput}
+                value={this.state.inputUsername}
+                ref={'activatonCode'}
+                placeholder={'Code'}
+                onChange={this.onActivationCodeChange.bind(this)}
+                onSubmitEditing={this.checkActivationCode.bind(this)} />
             </View>
           </View>
-          <Text style={ Skin.activationStyle.warning_text }>Attempts Left :
-            { this.props.url.chlngJson.attempts_left }
+          <Text style={Skin.activationStyle.warning_text}>
+            Attempts Left :
+            {this.props.url.chlngJson.attempts_left}
           </Text>
-          <View style={ Skin.activationStyle.input_wrap }>
-            <TouchableOpacity style={ Skin.activationStyle.button } underlayColor={ Skin.login.BUTTON_UNDERLAY } onPress={ this.checkActivationCode.bind(this) } activeOpacity={ 0.6 }>
-              <Text style={ Skin.activationStyle.buttontext }>
-                { this.btnText() }
+          <View style={Skin.activationStyle.input_wrap}>
+            <TouchableOpacity
+              style={Skin.activationStyle.button}
+              underlayColor={Skin.login.BUTTON_UNDERLAY}
+              onPress={this.checkActivationCode.bind(this)}
+              activeOpacity={0.6}>
+              <Text style={Skin.activationStyle.buttontext}>
+                {this.btnText()}
               </Text>
             </TouchableOpacity>
           </View>

@@ -462,6 +462,27 @@ module.exports.layout1 = {
       flex:1,
       //backgroundColor: "rgba(203,45,102,1)",
     },
+    prompt:{
+      flex:5,
+      textAlign:'center',
+      color: '#ffffff',
+      fontSize: 18,
+      minHeight: 20,
+    },
+    cameraBox:{
+      flex:75,
+      //backgroundColor: '#ffaaff'
+    },
+    enterWrap:{
+      flex:15,
+      minHeight: 50,
+    },
+    enterInput:{
+      backgroundColor: 'rgba(50,50,50,0.5)',
+      marginBottom: 0,
+      flex:1,
+    },
+    placeholderTextColor:'rgba(255,255,255,0.8)',
     top:{
       container:{
         flex:53,
@@ -511,6 +532,13 @@ module.exports.layout1 = {
       //backgroundColor: "rgba(50,107,180,1)"
     },
     button:{
+
+    },
+    footertext:{
+      color: BUTTON_BG_COLOR,
+      fontSize: 15,
+      textAlign: 'center',
+      textDecorationLine: 'underline',
     }
   }
 }

@@ -346,6 +346,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1A7F21EE1DBEC10800D90531 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */,
+				654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */,
+				654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6511E1131DBA5E4C00BBBB89 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,10 +490,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1A7F21EE1DBEC10800D90531 /* Frameworks */,
 				654B80D11DBE0C620052D415 /* Bolts.framework */,
-				654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */,
-				654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */,
-				654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */,
 				6511E1131DBA5E4C00BBBB89 /* api-sdk */,
 				6582FD681D9526890075C15D /* libstdc++.tbd */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
@@ -1044,6 +1052,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/FacebookSDK",
+					"$(inherited)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1092,6 +1104,10 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/FacebookSDK",
+					"$(inherited)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
