@@ -41,6 +41,7 @@ class SelectLogin extends Component {
     this.renderItem = this.renderItem.bind(this);
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.fillAdditionalLoginOptions = this.fillAdditionalLoginOptions.bind(this);
+    this.isRegistered = this.isRegistered.bind(this);
 
     this.fillAdditionalLoginOptions();
   }
@@ -97,13 +98,13 @@ class SelectLogin extends Component {
 
   fillAdditionalLoginOptions(){
     if(Platform.OS == 'android'){
-      if(isRegistered('pattern')){
+      if(this.isRegistered('pattern')){
         if(this.state.dataSource){
           this.state.dataSource.push({credType:'pattern',isRegistered:true});
         }
       }
     }else{
-      if(isRegistered('touchid')){
+      if(this.isRegistered('touchid')){
         if(this.state.dataSource){
           this.state.dataSource.push({credType:'touchid',isRegistered:true});
         }
