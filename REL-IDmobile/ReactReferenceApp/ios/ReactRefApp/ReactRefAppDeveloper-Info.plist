@@ -6,6 +6,8 @@
 	<string>$(PRODUCT_NAME) camera use</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

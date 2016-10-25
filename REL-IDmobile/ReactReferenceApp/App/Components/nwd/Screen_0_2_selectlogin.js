@@ -185,7 +185,7 @@ class SelectLogin extends Component {
   
   
   onTouchIDVerificationDone(){
-     AsyncStorage.getItem('RPasswd').then((value) => {
+     AsyncStorage.getItem('ERPasswd').then((value) => {
     ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
       if (response) {
       console.log('immediate response of encrypt data packet is is' + response[0].error);

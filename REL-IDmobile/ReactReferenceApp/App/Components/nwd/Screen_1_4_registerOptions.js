@@ -65,10 +65,13 @@ class Register extends Component {
     rememberusername: '',
     welcomescreen: '',
     pattern:'',
+    facebook:'',
+    refresh:'',
     };
     
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
+    this.close = this.close.bind(this);
   }
   
   
@@ -77,8 +80,24 @@ class Register extends Component {
   
   componentWillMount() {
     obj = this;
+    
+    for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
+      var chlng = this.props.url.chlngJson.chlng[i];
+      var promts =chlng.chlng_prompt[0];
+      
+      if(promts[0].isRegistered == true){
+        if(this.props.url.touchCred.isTouch==false){
+          this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+          break;
+        }
+      }
+      
+    }
   }
   
+  close(){
+    this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+  }
   selectdevice() {
     if (this.state.device.length == 0) {
       this.setState({ device: '\u2714' });
@@ -288,7 +307,7 @@ class Register extends Component {
       //fill response in challenge
       var key = Skin.text['0']['2'].credTypes.facebook.key;
       var value = result.id;
-      this.setState({ wechat: '\u2714' });
+      this.setState({ facebook: '\u2714' });
       
       
       var temp = this.props.url.chlngJson.chlng;
@@ -336,7 +355,7 @@ class Register extends Component {
         ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
           if (response) {
           console.log('immediate response of encrypt data packet is is' + response[0].error);
-          AsyncStorage.setItem("RPasswd", response[0].response);
+          AsyncStorage.setItem("ERPasswd", response[0].response);
           obj.setState({ touchid: '\u2714' });
           } else {
           console.log('immediate response is' + response[0].response);
@@ -368,6 +387,23 @@ class Register extends Component {
       }).done();
   }
   
+  
+  selectCheckBox(args){
+    
+    if(args === 'facebook'){
+      if (this.state.facebook.length == 0) {
+        this.doFacebookLogin();
+      } else {
+        this.setState({ facebook: '' });
+        var temp = this.props.url.chlngJson.chlng;
+        var respo = temp[0].chlng_resp;
+        respo[0].challenge = " ";
+        respo[0].response = " ";
+      }
+    }
+    
+  }
+  
   render() {
     //     return (
     //         <View style={Skin.nwd.container}>
@@ -386,7 +422,40 @@ class Register extends Component {
     //       </ScrollView>
     //      </View>
     //             );
+    var indents = [];
+    for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
+      var chlng = this.props.url.chlngJson.chlng[i];
+      var promts =chlng.chlng_prompt[0];
+      
+      if(promts[0].isRegistered == false){
+        indents.push(<CheckBox
+          value={this.state[promts[0].credType]}
+          onSelect={() => {this.selectCheckBox(promts[0].credType)} }
+          lable={"Enable "+Skin.text['0']['2'].credTypes[promts[0].credType].label+" Login"} />);
+        
+      }
+      
+    }
+      
+      if(this.props.url.touchCred.isTouch == true){
+      if(Platform.OS === 'android'){
+      indents.push( <CheckBox
+        value={this.state.pattern}
+        onSelect={this.selectpattern.bind(this) }
+        lable="Enable Pattern Login"/>);
+      }else{
+      indents.push( <CheckBox
+        value={this.state.touchid}
+        onSelect={this.selecttouchid.bind(this) }
+        lable="Enable TouchID Login"/>);
+      
+      }
+      }
+      
+      
     
+   
+
     return (
       <View style={Skin.layout1.wrap}>
       <StatusBar
@@ -395,34 +464,39 @@ class Register extends Component {
       barStyle={'default'}
       />
       <View style={Skin.layout1.title.wrap}>
-      <Title
+      <Title onClose={()=>{this.close();}}
       >Registration</Title>
       </View>
       <ScrollView style={Skin.layout1.content.scrollwrap}>
       <View style={Skin.layout1.content.wrap}>
       <View style={Skin.layout1.content.container}>
       <View>
+      
+      {indents}
       {
       // <CheckBox
       //       value={this.state.device}
       //       onSelect={this.selectdevice.bind(this) }
       //       lable="Make Device Permanent"/>
       }
+      {
       
-      <CheckBox
-      value={this.state.touchid}
-      onSelect={this.selecttouchid.bind(this) }
-      lable="Enable TouchID Login"/>
+//      <CheckBox
+//      value={this.state.touchid}
+//      onSelect={this.selecttouchid.bind(this) }
+//      lable="Enable TouchID Login"/>
+//      
+//      <CheckBox
+//      value={this.state.pattern}
+//      onSelect={this.selectpattern.bind(this) }
+//      lable="Enable Pattern Login"/>
+//      
+//      <CheckBox
+//      value={this.state.wechat}
+//      onSelect={this.selectfb.bind(this) }
+//      lable="Enable FaceBook Login"/>
       
-      <CheckBox
-      value={this.state.pattern}
-      onSelect={this.selectpattern.bind(this) }
-      lable="Enable Pattern Login"/>
-      
-      <CheckBox
-      value={this.state.wechat}
-      onSelect={this.selectfb.bind(this) }
-      lable="Enable FaceBook Login"/>
+      }
       
       {
       // <CheckBox

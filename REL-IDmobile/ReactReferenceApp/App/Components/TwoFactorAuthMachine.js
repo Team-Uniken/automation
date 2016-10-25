@@ -349,7 +349,7 @@ onGetAllChallengeStatus(e){
       
       const chlngJson = res.pArgs.response.ResponseData;
       
-      chlngJson ={ "chlng":[{"chlng_name":"secqa","chlng_idx":1,"chlng_info":[{"key":"Prompt label","value":"Secret Question"},{"key":"Response label","value":"Secret Answer"},{"key":"Description","value":"Choose your secret question and then provide answer"},{"key":"Reading","value":"Set secret question and answer"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"","response":""},{"challenge":"","response":""},{"challenge":"","response":""}],"chlng_type":2,"chlng_prompt":[["what is your petname","what is the name of your mother","what is the name of your father","what is the name of your sister","what is the name of your brother"],["what is your school name","what is your school address","what is the name of your school principal","what is the name of your class teacher","what is your school bus number"],["what is your office name","what is your office address","what is the name of your office manager","what is your office team name","what is your office team count"]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":3,"chlngs_per_batch":1},{"chlng_name":"pass","chlng_idx":2,"chlng_info":[{"key":"Response label","value":"Password"},{"key":"description","value":"Enter password of length 8-10 characters"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"password","response":""}],"chlng_type":1,"chlng_prompt":[[]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1},{"chlng_name":"tbacred","chlng_idx":3,"chlng_info":[{"key":"Label","value":"Additional Authentication"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"WeChat","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"},{"challenge":"WhatsApp","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"}],"chlng_type":2,"chlng_prompt":[[{"credType":"WeChat","isRegistered":false},{"credType":"facebook","isRegistered":false},{"credType":"WhatsApp","isRegistered":false},{"credType":"gmail","isRegistered":true}]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1}]};
+      chlngJson ={ "chlng":[{"chlng_name":"secqa","chlng_idx":1,"chlng_info":[{"key":"Prompt label","value":"Secret Question"},{"key":"Response label","value":"Secret Answer"},{"key":"Description","value":"Choose your secret question and then provide answer"},{"key":"Reading","value":"Set secret question and answer"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"","response":""},{"challenge":"","response":""},{"challenge":"","response":""}],"chlng_type":2,"chlng_prompt":[["what is your petname","what is the name of your mother","what is the name of your father","what is the name of your sister","what is the name of your brother"],["what is your school name","what is your school address","what is the name of your school principal","what is the name of your class teacher","what is your school bus number"],["what is your office name","what is your office address","what is the name of your office manager","what is your office team name","what is your office team count"]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":3,"chlngs_per_batch":1},{"chlng_name":"pass","chlng_idx":2,"chlng_info":[{"key":"Response label","value":"Password"},{"key":"description","value":"Enter password of length 8-10 characters"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"password","response":""}],"chlng_type":1,"chlng_prompt":[[]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1},{"chlng_name":"tbacred","chlng_idx":3,"chlng_info":[{"key":"Label","value":"Additional Authentication"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"WeChat","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"},{"challenge":"WhatsApp","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"}],"chlng_type":2,"chlng_prompt":[[{"credType":"facebook","isRegistered":false},{"credType":"Wechat","isRegistered":false},{"credType":"WhatsApp","isRegistered":false},{"credType":"gmail","isRegistered":true}]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1}]};
       
       for (var i = 0; i < chlngJson.chlng.length; i++) {
         if (chlngJson.chlng[i].chlng_name === 'tbacred')
@@ -358,8 +358,17 @@ onGetAllChallengeStatus(e){
       if( typeof arrTba != 'undefined' && arrTba instanceof Array ){
         
         if(arrTba.length > 0){
+          AsyncStorage.getItem('ERPasswd').then((value) => {
+            
+            if(value){
+            this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url:{chlngJson:{"chlng":arrTba},touchCred:{"isTouch":false}}});
+            }else{
+            this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url:{chlngJson:{"chlng":arrTba},touchCred:{"isTouch":true}}});
+            }
+            
+            }).done();
           
-          this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url:{chlngJson:{"chlng":arrTba}}});
+          
           
           
         }else{
@@ -439,7 +448,7 @@ onGetAllChallengeStatus(e){
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
     }else if (id === 'RegisterOption') {
-      return (<RegisterOption navigator={nav} url={route.url} title={route.title} />);
+      return (<RegisterOption navigator={nav} parentnav={obj.props.navigator} url={route.url} title={route.title} />);
     }else if(id === 'pattern'){
       return (<PatternLock navigator={nav} mode={route.mode} onUnlock={route.onUnlockPattern} onSetPattern={route.onSetPattern}/>);
     }

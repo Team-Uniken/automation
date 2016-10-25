@@ -92,7 +92,7 @@ class PatternLock extends Component {
         if(this.mode == "verify"){
           this.currentPattern = pattern;
           try{
-            AsyncStorage.getItem("RPasswd").then((data)=> {
+            AsyncStorage.getItem("ERPasswd").then((data)=> {
               try{
                 if(data!=null && data!=undefined){
                   this.decryptUserData(data,pattern);
@@ -122,7 +122,7 @@ class PatternLock extends Component {
           else{
             if(this.state.screen === "confirm"){
                 if(this.currentPattern === pattern){
-                  AsyncStorage.getItem('RPasswd').then((value) => {
+                  AsyncStorage.getItem('ERPasswd').then((value) => {
                       this.encryptUserData(null,Main.dnaPasswd,pattern);
                   }).done();
                 }
@@ -145,7 +145,7 @@ class PatternLock extends Component {
      if(status.error == 0){
        if(this.mode == "set"){
           try{
-             AsyncStorage.setItem("RPasswd",status.response);
+             AsyncStorage.setItem("ERPasswd",status.response);
              this.props.onSetPattern(this.props.data);
           }
           catch(error){
