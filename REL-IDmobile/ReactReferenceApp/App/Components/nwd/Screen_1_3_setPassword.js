@@ -103,6 +103,7 @@ export default class PasswordSet extends Component {
         if (pw === cpw) {
           //  if(this.validatePassword(pw)){
           Main.dnaPasswd = pw;
+          AsyncStorage.setItem("RPasswd", pw);
           let responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
           dismissKeyboard();

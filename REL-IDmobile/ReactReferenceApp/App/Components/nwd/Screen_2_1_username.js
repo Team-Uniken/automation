@@ -90,6 +90,7 @@ class UserLogin extends Component {
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
+      AsyncStorage.setItem("RUserId", un);
       Main.dnaUserName = un;
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = un;
