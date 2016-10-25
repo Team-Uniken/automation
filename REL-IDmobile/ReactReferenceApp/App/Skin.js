@@ -223,31 +223,50 @@ text = {
       '2': {
         subtitle: 'Welcome to New World CLUB',
         prompt: 'Select a login',
-        credTypes:{
-            'facebook':{key:'facebook', label:'Facebook'},
-            'wechat':{key:'wechat', label:'WeChat'},
-            'touchid':{key:'touchid', label:'TouchID'},
-            'pattern':{key:'pattern',label:'Pattern'},
-            'password':{key:'password', label:'Password'},
+        credTypes: {
+          'facebook': {
+            key: 'facebook',
+            label: 'Facebook'
+          },
+          'wechat': {
+            key: 'wechat',
+            label: 'WeChat'
+          },
+          'touchid': {
+            key: 'touchid',
+            label: 'TouchID'
+          },
+          'pattern': {
+            key: 'pattern',
+            label: 'Pattern'
+          },
+          'password': {
+            key: 'password',
+            label: 'Password'
+          },
         }
       }
     },
-    '1':{
-      '1':{
+    '1': {
+      '1': {
+        submit_button: 'Submit',
+      },
+      '4': {
         submit_button: 'Submit',
       }
     },
-    '2':{
-      '1':{
-        subtitle:'Welcome to NWD',
+    '2': {
+      '1': {
+        subtitle: 'Welcome to NWD',
         submit_button: 'Submit',
       },
       '2': {
-         subtitle:'Welcome to NWD',
-         submit_button: 'Submit',
-         textinput_placeholder:'Enter Password',
+        subtitle: 'Welcome to NWD',
+        submit_button: 'Submit',
+        textinput_placeholder: 'Enter Password',
       }
     },
+
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
     USERNAME_BUTTON_TEXT: 'LOGIN',
     LINK_1_TEXT: 'Branches',
@@ -259,8 +278,9 @@ text = {
     LINK_3_TEXT: 'Website',
     LINK_3_ICON: '\ue2b1',
     LINK_3_LINK: '',
-  }  
-}  
+  }
+}
+
 module.exports.text = text.en
 module.exports.baseline = {
   button: {
@@ -291,19 +311,19 @@ module.exports.baseline = {
     base: {
       textAlign: 'left',
       height: 46,
-      width: 260,  
-      paddingLeft: 10, 
+      width: 260,
+      paddingLeft: 10,
       paddingTop: 3,
       backgroundColor: INPUT_BG_COLOR,
       color: INPUT_TEXT_COLOR,
-      flex:1,
+      flex: 1,
       fontSize: 18,
     },
     placeholderTextColor: INPUT_PLACEHOLDER_COLOR,
     wrapfocus: {
       borderBottomColor: INPUT_BD_COLOR,
     },
-    wrap:{
+    wrap: {
       borderColor: 'transparent',
       borderBottomWidth: 3,
       borderTopWidth: 0,
@@ -315,22 +335,25 @@ module.exports.baseline = {
       marginBottom: 12,
     }
   },
-  checkbox:{
-    base:{
+  checkbox: {
+    base: {
       width: 24,
       height: 24,
       borderWidth: 1,
       borderColor: BUTTON_BG_COLOR,
       borderRadius: 0,
-      //backgroundColor: "rgb(248,231,28)"
+    //backgroundColor: "rgb(248,231,28)"
+    },
+    label: {
+
     },
     selectedColor: 'transparent',
     defaultColor: 'transparent',
     checkColor: BUTTON_BG_COLOR,
-  },  
-  text_link_no_underline:{
-    color:BUTTON_BG_COLOR,
-    fontSize:12,
+  },
+  text_link_no_underline: {
+    color: BUTTON_BG_COLOR,
+    fontSize: 12,
     textAlign: 'center'
   }
 }
@@ -376,10 +399,10 @@ module.exports.layout0 = {
       fontSize: 15,
     //backgroundColor: DARK_PRIMARY,
     },
-    attempt:{
-      marginBottom:10,
-      marginTop:70,
-      textAlign:'center',
+    attempt: {
+      marginBottom: 10,
+      marginTop: 70,
+      textAlign: 'center',
       color: BUTTON_BG_COLOR,
       fontSize: 15,
     }
@@ -424,133 +447,133 @@ module.exports.layout0 = {
 module.exports.layout1 = {
   wrap: {
     flex: 1,
-    //justifyContent: "center",
-    //alignItems: 'center',
+  //justifyContent: "center",
+  //alignItems: 'center',
   },
-  statusbar:{},
-  title:{
-    wrap:{
+  statusbar: {},
+  title: {
+    wrap: {
       //backgroundColor: '#ae0000',
       //flex: 12,
-      minHeight:76,
+      minHeight: 76,
       zIndex: 100,
-      //alignItems: 'center',
+    //alignItems: 'center',
     },
     container: {
-      flex:1,
-      flexDirection:'row',
+      flex: 1,
+      flexDirection: 'row',
       marginTop: 26,
       justifyContent: "space-between",
-      //backgroundColor: "rgba(255,186,186,1)"
+    //backgroundColor: "rgba(255,186,186,1)"
     },
-    button:{
+    button: {
       width: 50,
       textAlign: 'center',
       fontSize: 20,
       paddingTop: 15,
       color: BUTTON_BG_COLOR,
       fontFamily: ICON_FONT,
-      //backgroundColor: "rgba(165,255,250,1)" 
+    //backgroundColor: "rgba(165,255,250,1)" 
     },
-    base:{
+    base: {
       color: TITLE_TEXT_COLOR,
       fontSize: 19,
       textAlign: 'center',
       width: 260,
       paddingTop: 12,
-      //backgroundColor: TITLE_BG_COLOR
-      //backgroundColor: "rgba(80,188,28,1)"
+    //backgroundColor: TITLE_BG_COLOR
+    //backgroundColor: "rgba(80,188,28,1)"
     }
   },
-  content:{
-    scrollwrap:{
-      flex:66,
+  content: {
+    scrollwrap: {
+      flex: 66,
       flexDirection: 'column',
-      //backgroundColor: "rgba(10,20,132,1)",
+    //backgroundColor: "rgba(10,20,132,1)",
     },
-    wrap:{
+    wrap: {
       flex: 1,
       alignItems: 'center',
-      //backgroundColor: "rgba(203,255,132,1)",
+    //backgroundColor: "rgba(203,255,132,1)",
     },
     container: {
-      width:260,
-      flex:1,
-      //backgroundColor: "rgba(203,45,102,1)",
+      width: 260,
+      flex: 1,
+    //backgroundColor: "rgba(203,45,102,1)",
     },
-    prompt:{
-      flex:5,
-      textAlign:'center',
+    prompt: {
+      flex: 5,
+      textAlign: 'center',
       color: '#ffffff',
       fontSize: 18,
       minHeight: 20,
     },
-    cameraBox:{
-      flex:75,
-      //backgroundColor: '#ffaaff'
+    cameraBox: {
+      flex: 75,
+    //backgroundColor: '#ffaaff'
     },
-    enterWrap:{
-      flex:15,
+    enterWrap: {
+      flex: 15,
       minHeight: 50,
     },
-    enterInput:{
+    enterInput: {
       backgroundColor: 'rgba(50,50,50,0.5)',
       marginBottom: 0,
-      flex:1,
+      flex: 1,
     },
-    placeholderTextColor:'rgba(255,255,255,0.8)',
-    top:{
-      container:{
-        flex:53,
+    placeholderTextColor: 'rgba(255,255,255,0.8)',
+    top: {
+      container: {
+        flex: 53,
         justifyContent: "flex-end",
-        //backgroundColor: '#00ff00'
+      //backgroundColor: '#00ff00'
       },
-      text:{
+      text: {
         fontSize: 21,
         color: '#000000',
-        textAlign:'center',
+        textAlign: 'center',
         marginBottom: 22,
       }
     },
-    bottom:{
-      container:{
-        flex:47,
+    bottom: {
+      container: {
+        flex: 47,
         justifyContent: "flex-start",
-        //backgroundColor: '#00ffff'
+      //backgroundColor: '#00ffff'
       },
     },
-    slider:{
-      text:{
-        textAlign:'center',
+    slider: {
+      text: {
+        textAlign: 'center',
         fontSize: 18,
       },
-      base:{
+      base: {
         //backgroundColor: "rgba(255,164,164,1)",
         //color: '#ff0000'
-        height:23,
+        height: 23,
       },
       minimumTrackTintColor: BUTTON_BG_COLOR,
       maximumTrackTintColor: INPUT_BG_COLOR,
     }
   },
-  bottom:{
-    wrap:{
+  bottom: {
+    wrap: {
       flex: 22,
       //height: 50,
       bottom: 0,
       left: 0,
       alignItems: 'center',
-      //backgroundColor: "rgba(155,199,255,1)"
+    //backgroundColor: "rgba(155,199,255,1)"
     },
     container: {
-      width:260,
-      paddingTop:5,
-      //backgroundColor: "rgba(50,107,180,1)"
+      width: 260,
+      paddingTop: 5,
+    //backgroundColor: "rgba(50,107,180,1)"
     },
-    button:{
+    button: {
 
     },
-    footertext:{
+    footertext: {
       color: BUTTON_BG_COLOR,
       fontSize: 15,
       textAlign: 'center',
@@ -559,8 +582,8 @@ module.exports.layout1 = {
   }
 }
 
-module.exports.layout2 = Object.assign(module.exports.layout1,{
-  
+module.exports.layout2 = Object.assign(module.exports.layout1, {
+
 })
 
 
