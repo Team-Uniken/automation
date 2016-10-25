@@ -18,7 +18,7 @@ import Main from './Main';
 import Activation from './nwd/Screen_1_2_activation';
 import PasswordSet from './nwd/Screen_1_3_setPassword';
 import UpdatePasswordSet from './challenges/UpdatePasswordSet';
-import Otp from './challenges/Otp';
+import Otp from './nwd/Screen_Otp';
 import QuestionSet from './nwd/Screen_Question_Set';
 import QuestionVerification from './nwd/Screen_Question_Verification';
 import UserLogin from './nwd/Screen_2_1_username';
