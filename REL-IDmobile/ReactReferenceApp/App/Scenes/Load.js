@@ -616,7 +616,6 @@ class Load extends Component {
         "screenId": nextChlngName
       }
     });
-
   }
 
   render() {

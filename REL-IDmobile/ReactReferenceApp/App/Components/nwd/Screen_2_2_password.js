@@ -16,7 +16,6 @@ import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
-import PatternLock from '../../Scenes/PatternLock'
 import TouchID from 'react-native-touch-id';
 
 import PasscodeAuth from 'react-native-passcode-auth';

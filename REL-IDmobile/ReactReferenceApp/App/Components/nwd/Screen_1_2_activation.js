@@ -60,13 +60,6 @@ var QRCodeScreen = React.createClass({
     };
   },
 
-
-  // _onPressCancel: function () {
-  //   Events.trigger('onQRCancel', '');
-  //   var $this = this;
-  //   $this.props.navigator.pop();
-  // },
-
   _onBarCodeRead: function (result) {
     var $this = this;
 
@@ -109,10 +102,6 @@ var QRCodeScreen = React.createClass({
 
   componentWillMount: function () {
     Obj = this;
-    if (Platform.OS === "android") {
-      let keys = ['userData', 'setPattern'];
-      AsyncStorage.multiRemove(keys);
-    }
   },
 
   componentDidMount: function () {

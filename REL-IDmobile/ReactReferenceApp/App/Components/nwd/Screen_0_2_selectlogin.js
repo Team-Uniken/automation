@@ -38,6 +38,8 @@ class SelectLogin extends Component {
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.fillAdditionalLoginOptions = this.fillAdditionalLoginOptions.bind(this);
     this.isRegistered = this.isRegistered.bind(this);
+    this.doPatternLogin = this.doPatternLogin.bind(this);
+    this.onPatternUnlock =this.onPatternUnlock.bind(this);
 
     this.fillAdditionalLoginOptions();
   }
@@ -137,6 +139,18 @@ class SelectLogin extends Component {
     }
   }
 
+  onPatternUnlock(){
+
+  }
+
+  doPatternLogin(){
+    this.props.navigator.push({
+      id: 'pattern',
+      onUnlock:this.onPatternUnlock,
+      mode:'verify'
+    });
+  }
+
   // <View style={Skin.layout0.bottom.loginbutton.wrap}>
   //               <LoginTypeButton
   //                 label={Skin.icon.touchid}
@@ -186,7 +200,7 @@ class SelectLogin extends Component {
         alert("todo:");
         break;
       case type.pattern.key:
-         alert("todo");
+         this.doPatternLogin();
          break;
       case type.wechat.key:
         alert("todo:");

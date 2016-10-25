@@ -76,24 +76,6 @@ export default class DeviceBinding extends Component {
     */
   }
 
-  componentDidMount() {
-    //    obj = this;
-
-
-    //     AsyncStorage.getItem("passwd").then((value) => {
-    //                                         if(value){
-    //                                         if(value == "empty"){
-
-    //                                         }else{
-    //                                             check = true;
-    //                                             this.setDeviceBinding();
-    //                                             }
-    //                                         }
-    //                                         }).done();
-    //    check = true;
-    //    this.setDeviceBinding();
-  }
-
   setDeviceBinding() {
     let flag;
     if (check) {
@@ -163,15 +145,11 @@ export default class DeviceBinding extends Component {
         <Text style={Skin.layout0.top.subtitle}>{this.state.type}</Text>
 
 
- <View style={Skin.layout0.bottom.container}>
-         <Button
-          label= {this.btnText() }
-          onPress={this.setDeviceBinding.bind(this) }/>
+        <View style={Skin.layout0.bottom.container}>
+          <Button
+            label= {this.btnText() }
+            onPress={this.setDeviceBinding.bind(this) }/>
         </View>
-
-
-    
-
       </View>
     );
   }

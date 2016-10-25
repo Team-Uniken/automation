@@ -80,14 +80,6 @@ export default class PasswordSet extends Component {
      */
   }
 
-  componentDidMount() {
-    Main.isTouchIdSet = "NO";
-    InteractionManager.runAfterInteractions(() => {
-      // this.refs.password.focus();
-    });
-  }
-
-
   validatePassword(textval) {
     // var passwordregex = /^[0-9]/;
     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
@@ -158,9 +150,6 @@ export default class PasswordSet extends Component {
               </View>
               <View style={Skin.layout1.content.bottom.container}>
 
-
-
-
                 <Input
                   returnKeyType={'next'}
                   keyboardType={'default'}
@@ -176,7 +165,6 @@ export default class PasswordSet extends Component {
                   onSubmitEditing={() => { this.refs.cPassword.focus(); } }
                   marginBottom={12}
                   />
-
 
                 <Input
                   autoFocus={false}

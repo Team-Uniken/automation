@@ -79,8 +79,6 @@ export default class QuestionVerification extends Component {
   }
 
   checkAnswer() {
-    Main.isTouchVerified = "NO";
-    Main.isTouchIdSet = "YES";
     const scAns = this.state.sAnswer;
     if (scAns.length > 0) {
       responseJson = this.props.url.chlngJson;

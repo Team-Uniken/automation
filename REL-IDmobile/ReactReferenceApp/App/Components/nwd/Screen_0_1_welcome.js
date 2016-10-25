@@ -35,16 +35,7 @@ class First extends Component {
         "screenId": this.props.url.screenId
       }
     });
-  /*
-  this.props.navigator.push({
-    id: "Machine",
-    title: "nextChlngName",
-    url: {
-      "chlngJson": this.props.url.chlngJson,
-      "screenId": this.props.url.screenId
-    }
-  });
-  */
+
   }
 
   register() {
