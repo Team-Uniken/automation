@@ -418,28 +418,40 @@ class PasswordVerification extends Component {
 
   render() {
     return (
-      <View style={Skin.nwd.container}>
-      <Text style={Skin.nwd.topicon}>N</Text>
-      <Text style={Skin.nwd.welcometextstyle}>Welcome to NWD</Text>
-      <Margin
-      space={32}/>
-      <Text   style={[Skin.nwd.note,{textAlign: 'center'}]}>Attempt left {this.props.url.chlngJson.attempts_left}</Text>
-      <View>
-      <Input
-      ref='inputPassword'
-      returnKeyType={ 'next' }
-      secureTextEntry
-      placeholder={ 'Password' }
-      value={ this.state.inputPassword }
-      onSubmitEditing={ this.decidePlatformAndShowAlert.bind(this) }
-      onChange={ this.onPasswordChange.bind(this) }
-      />
-      </View>
-      <Button
-      lable="Submit"
-      onPress={ this.decidePlatformAndShowAlert.bind(this)}/>
-      <Text style={[Skin.nwd.note,{textAlign: 'center',marginTop:8}]}
+      <View style={Skin.layout0.wrap.container}>
+        <View style={Skin.layout0.top.container}>
+          <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+            {Skin.icon.logo}
+          </Text>
+          <Text style={Skin.layout0.top.subtitle}>
+            {Skin.text['2']['1'].subtitle}
+          </Text>
+          <Text style={Skin.layout0.top.prompt}>
+            {Skin.text['2']['1'].prompt}
+            Attempt left {this.props.url.chlngJson.attempts_left}
+          </Text>
+        </View>
+        <View style={Skin.layout0.bottom.container}>
+          <Input
+            ref='inputPassword'
+            returnKeyType={ 'next' }
+            secureTextEntry
+            placeholder={ 'Password' }
+            value={ this.state.inputPassword }
+            onSubmitEditing={ this.decidePlatformAndShowAlert.bind(this) }
+            onChange={ this.onPasswordChange.bind(this) }
+            enablesReturnKeyAutomatically={true}
+            autoFocus={true}
+            autoCorrect={false}
+            autoComplete={false}
+            autoCapitalize={false}
+            />
+          <Button
+            label={Skin.text['2']['1'].submit_button}
+            onPress={ this.decidePlatformAndShowAlert.bind(this)} />
+          <Text style={[Skin.nwd.note,{textAlign: 'center',marginTop:8}]}
       onPress={ this.onForgotPasswordClick }>Forgot your username/password?</Text>
+        </View>
       </View>
       );
   }

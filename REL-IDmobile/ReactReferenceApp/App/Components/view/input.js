@@ -23,10 +23,10 @@ class Button extends Component {
       <View
           style={[
             Skin.baseline.textinput.wrap,
-              this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
+              this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}, this.props.styleView
           ]}>
           <TextInput 
-           style = {Skin.baseline.textinput.base}
+           style = {[Skin.baseline.textinput.base,this.props.styleInput]}
            keyboardType={this.props.keyboardType}
            placeholder={this.props.placeholder}
            ref={'textinput'}

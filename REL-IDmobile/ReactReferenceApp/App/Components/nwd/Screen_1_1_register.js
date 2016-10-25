@@ -104,35 +104,42 @@ class Register extends Component {
   close(){
     this.props.navigator.pop();
   }
+
+  validateEmail(email){
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  }
+
   validateAndProcced() {
 
-
-
-    if (this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.email.length > 0
-        && this.state.confirmEmail.length > 0 && this.state.phoneNumber.length > 0) {
-
-    } else {
-      this.showMessage("Error", "All feilds are mandatory", false);
+    if (!(this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.email.length > 0
+        && this.state.confirmEmail.length > 0 && this.state.phoneNumber.length > 0))
+    {
+      this.showMessage("Error", "All fields are mandatory.", false);
       return;
-    }
-
-    // if (this.state.value > this.state.randomMinValue && this.state.value < this.state.randomMaxValue) {
-    //
-    // } else {
-    //   this.showMessage("Error", "You are not human", false);
-    //   return;
-    // }
-
-    if (this.state.check.length > 0) {
+    } else if (!this.validateEmail(this.state.email)){
+      this.showMessage("Error", "Email is not valid.", false);
+      return;
+    } else if (this.state.value < 100) {
+      this.showMessage("Error", "Please move the slider to the right.", false);
+      return;
+    } else if (this.state.check.length > 0) {
       this.registerUser();
     } else {
-      this.showMessage("Error", "Accept Term and Condition", false);
+      this.showMessage("Error", "Accept Terms and Conditions", false);
     }
 
   }
 
 
   registerUser() {
+    Alert.alert(
+      'Activation Code Sent to',
+      this.state.confirmEmail+'\nPlease check your email for more instructions.',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]
+    )
 
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
