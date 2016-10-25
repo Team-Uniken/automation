@@ -103,7 +103,7 @@ var QRCodeScreen = React.createClass({
       Events.trigger('showNextChallenge', { response: responseJson });
     }
     else {
-      alert('Enter Activation Code');
+      alert('Enter Access Code');
     }
   },
 
