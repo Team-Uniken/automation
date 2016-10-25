@@ -28,7 +28,7 @@ class First extends Component {
   selectReg() {
     console.log('doNavigation:');
     this.props.navigator.push({
-      id: "Screen_0_2_selectlogin",
+      id: "Machine",
       title: "nextChlngName",
       url: {
         "chlngJson": this.props.url.chlngJson,
