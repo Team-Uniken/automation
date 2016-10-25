@@ -128,7 +128,8 @@ class PasswordVerification extends Component {
 
   render() {
     return (
-      <View style={Skin.layout1.wrap}>
+      <View style={[Skin.layout1.wrap,{flex:1}]}>
+      <View style={{ justifyContent: 'center' }}>
         <View style={Skin.layout1.title.wrap}>
           {
             this.renderif(this.state.showCloseButton,
@@ -174,6 +175,7 @@ class PasswordVerification extends Component {
                 onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
             </View>
           </View>
+      </View>
       </View>
     );
   }
