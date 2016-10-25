@@ -15,7 +15,7 @@ import Main from './Main';
 // Secondary Scenes
 
 // SECURITY SCENES
-import Activation from './challenges/Activation';
+import Activation from './nwd/Screen_1_2_activation';
 import PasswordSet from './challenges/PasswordSet';
 import UpdatePasswordSet from './challenges/UpdatePasswordSet';
 import Otp from './challenges/Otp';
