@@ -53,12 +53,6 @@ class SelectLogin extends Component {
   componentWillMount() {
     
   }
-
-  renderif(condition,code){
-    if(condition){
-      return code;
-    }
-  }
   
   //Facebook login code
   doFacebookLogin() {

@@ -20,7 +20,7 @@ import OpenLinks from '../OpenLinks';
  */
 let responseJson;
 const {Component} = React;
-const {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, } = React;
+const {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, } = ReactNative;
 
 export default class QuestionVerification extends Component {
 

@@ -45,12 +45,11 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
               new RDNAReactPackage(),
-              new RCTCameraPackage(),
               new ExtraDimensionsPackage(MainActivity.currentActivity),
               new ReactNativePushNotificationPackage(),
               new NotificationPackage(MainActivity.currentActivity),
-              new FBSDKPackage(getCallbackManager())
-
+              new FBSDKPackage(getCallbackManager()),
+              new RCTCameraPackage()
       );
     }
   };
