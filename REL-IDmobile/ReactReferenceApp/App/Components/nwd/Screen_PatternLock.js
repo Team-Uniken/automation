@@ -92,7 +92,7 @@ class PatternLock extends Component {
         if(this.mode == "verify"){
           this.currentPattern = pattern;
           try{
-            AsyncStorage.getItem("userData").then((data)=> {
+            AsyncStorage.getItem("RPasswd").then((data)=> {
               try{
                 if(data!=null && data!=undefined){
                   this.decryptUserData(data,pattern);
@@ -114,7 +114,6 @@ class PatternLock extends Component {
               this.setState({
                 screen: "confirm",
               });
-              
             }
             else{
               alert("Pattern should atleast be of 4 dots");
@@ -123,7 +122,9 @@ class PatternLock extends Component {
           else{
             if(this.state.screen === "confirm"){
                 if(this.currentPattern === pattern){
-                  this.encryptUserData(Main.dnaUserName,Main.dnaPasswd,pattern);
+                  AsyncStorage.getItem('RPasswd').then((value) => {
+                      this.encryptUserData(null,Main.dnaPasswd,pattern);
+                  }).done();
                 }
                 else{
                   alert("Confirm pattern does not match");
@@ -144,7 +145,7 @@ class PatternLock extends Component {
      if(status.error == 0){
        if(this.mode == "set"){
           try{
-             AsyncStorage.setItem("userData",status.response);
+             AsyncStorage.setItem("RPasswd",status.response);
              this.props.onSetPattern(this.props.data);
           }
           catch(error){
@@ -159,31 +160,26 @@ class PatternLock extends Component {
        if(this.mode === "verify"){
           var userDataStr = status.response;
           try{
-            var userData = JSON.parse(userDataStr);
+            //var userData = JSON.parse(userDataStr);
 
-            if(userData.pattern === this.currentPattern){
+           // if(userData.pattern === this.currentPattern){
               // alert("pattern matched");
               this.msg ="";
-              // this.setState({
-              //   invalidPattern:false
-              // });
-          
-              this.props.onUnlock(userData.userid,userData.password,this.props.data);
-            }
-            else{
-              this.refs["patternView"].clearPattern();
-              this.wrongAttempt();
-              // this.setState({
-              //    invalidPattern:true
-              // });
-            }
+              var resp = {
+                password:userDataStr,
+                data:this.props.data
+              }
+
+              this.props.onUnlock(resp);
+           // }
+            //else{
+             // this.refs["patternView"].clearPattern();
+             // this.wrongAttempt();
+            //}
           }
           catch(e){
             this.refs["patternView"].clearPattern();
             this.wrongAttempt();
-            // this.setState({
-            //      invalidPattern:true
-            // });
           }
        }
      }else{
@@ -193,15 +189,15 @@ class PatternLock extends Component {
   }
 
   encryptUserData(userid,password,pattern){
-     var data = {
-       "userid":userid,
-       "password":password,
-       "pattern":pattern,   
-     };
+    //  var data = {
+    //    "userid":userid,
+    //    "password":password,
+    //    "pattern":pattern,   
+    //  };
 
-     var dataStr = JSON.stringify(data);
+    //  var dataStr = JSON.stringify(data);
      
-     ReactRdna.encryptDataPacket(dataStr,pattern,this.onDataEncrypted);
+     ReactRdna.encryptDataPacket(password,pattern,this.onDataEncrypted);
   }
 
   decryptUserData(data,pattern){
