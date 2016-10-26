@@ -5,16 +5,14 @@ import { Checkbox } from 'react-native-checkbox-field';
 import Skin from '../../Skin';
 
 
-const Styles = {
-  checkboxStyle: {
+const Styles = { defaultColor: '#fff',selectedColor: '#247fd2' };
 
-  },
-  defaultColor: '#fff',
-  selectedColor: '#247fd2'
-};
 
 
 const CheckboxField = (props) => {
+
+  const source = props.selected ? Skin.icon.check : ''
+
   return (
     <TouchableOpacity onPress={props.onSelect}>
       <View style={props.containerStyle}>
@@ -32,15 +30,13 @@ const CheckboxField = (props) => {
           selectedColor={props.selectedColor}
           checkboxStyle={props.checkboxStyle}>
           <Text style={Skin.baseline.checkbox.check}>
-            {Skin.icon.check}
+            {source}
           </Text>
         </Checkbox>
         {props.labelSide === 'right' ?
          <Text
            onPress={props.onLabelPress}
-           style={[props.labelStyle, {
-                    textAlign: 'right'
-                  }]}>
+           style={props.labelStyle}>
            {props.children}
          </Text>
          : null}
@@ -70,7 +66,7 @@ CheckboxField.propTypes = {
 CheckboxField.defaultProps = {
   containerStyle: Skin.baseline.checkbox.container,
   labelStyle: Skin.baseline.checkbox.label,
-  checkboxStyle: Skin.baseline.checkbox.checkbox,
+  checkboxStyle: Skin.baseline.checkbox.base,
   defaultColor: Skin.baseline.checkbox.defaultColor,
   selectedColor: Skin.baseline.checkbox.selectedColor,
   onSelect: () => {

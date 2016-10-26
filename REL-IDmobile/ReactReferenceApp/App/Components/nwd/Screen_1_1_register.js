@@ -70,10 +70,8 @@ class Register extends Component {
   selectCheckbox() {
     if (!this.state.check) {
       this.setState({ check: true });
-      Alert.alert('true')
     } else {
       this.setState({ check: false });
-      Alert.alert('false')
     }
   }
 
@@ -120,7 +118,7 @@ class Register extends Component {
     } else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
-    } else if (this.state.check.length > 0) {
+    } else if (this.state.check) {
       this.registerUser();
     } else {
       this.showMessage("Error", "Accept Terms and Conditions", false);
@@ -293,7 +291,12 @@ class Register extends Component {
                   onValueChange={(value) => this.setState({ value: value })} />
                 <Checkbox
                   onSelect={this.selectCheckbox.bind(this)}
-                  labelSide="right"
+                  selected={this.state.check}
+                  labelSide={"right"}
+                  labelStyle={{
+                                color: Skin.colors.BUTTON_BG_COLOR,
+                                textDecorationLine: 'underline',
+                              }}
                   onLabelPress={() => Linking.openURL("https://www.google.com")}>
                   Terms and Conditions
                 </Checkbox>

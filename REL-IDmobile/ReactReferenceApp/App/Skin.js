@@ -312,6 +312,32 @@ module.exports.baseline = {
     underlayColor: BUTTON_UNDERLAY_COLOR,
     activeOpacity: 0.8,
   },
+  select: {
+    base: {
+      //backgroundColor: '#ffff00',
+      padding: 0,
+    },
+    select: {
+      borderWidth: 0,
+      height: 46,
+      width: 260,
+      backgroundColor: INPUT_BG_COLOR,
+      paddingLeft: 10,
+      paddingTop: 3,
+      alignSelf: 'center',
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+    },
+    selectText: {
+      alignSelf: 'center',
+      alignItems: 'center',
+      fontSize: 18,
+      textAlign: 'left',
+      color: INPUT_TEXT_COLOR,
+      flex: 1,
+    }
+  },
   textinput: {
     base: {
       textAlign: 'left',
@@ -344,27 +370,24 @@ module.exports.baseline = {
     base: {
       width: 24,
       height: 24,
-      borderWidth: 1,
+      margin: 13,
+      marginLeft: 0,
+      marginRight: 20,
+      borderWidth: 2,
       borderColor: BUTTON_BG_COLOR,
       borderRadius: 0,
     //backgroundColor: "rgb(248,231,28)"
     },
     container: {
-      padding: 20,
-      paddingLeft: 0,
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
     },
-    checkbox: {
-      borderWidth: 2,
-      borderColor: BUTTON_BG_COLOR,
-      borderRadius: 0
-    },
     label: {
       alignSelf: 'center',
-      fontSize: 25,
-      flex: 1
+      fontSize: 18,
+      textAlign: 'left',
+      flex: 1,
     },
     selectedColor: 'transparent',
     defaultColor: 'transparent',

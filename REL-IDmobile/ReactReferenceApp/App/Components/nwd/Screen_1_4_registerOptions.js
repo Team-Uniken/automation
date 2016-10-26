@@ -3,14 +3,14 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Title from '../view/title';
 import Button from '../view/button';
-import CheckBox from '../view/checkbox';
+import Checkbox from '../view/checkbox';
 import Input from '../view/input';
 import Margin from '../view/margin';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
+import ModalPicker from 'react-native-modal-picker'
 
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
@@ -35,7 +35,7 @@ const FBSDK = require('react-native-fbsdk');
 const {LoginButton, LoginManager, GraphRequest, GraphRequestManager, AccessToken} = FBSDK;
 
 
-const {Text, View, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage, Alert, AlertIOS, Platform, } = ReactNative;
+const {Text, TextInput, View, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage, Alert, AlertIOS, Platform, } = ReactNative;
 const {Component} = React;
 
 var obj;
@@ -44,14 +44,16 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      device: '',
-      touchid: '',
-      wechat: '',
-      rememberusername: '',
-      welcomescreen: '',
-      pattern: '',
-      facebook: '',
+      device: true,
+      touchid: false,
+      wechat: false,
+      rememberusername: true,
+      welcomescreen: true,
+      //pattern: '',
+      facebook: false,
       refresh: '',
+      deviceName: '',
+      defaultLogin: '',
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -86,11 +88,7 @@ class Register extends Component {
   }
 
   close() {
-    this.props.parentnav.push({
-      id: 'Main',
-      title: 'DashBoard',
-      url: ''
-    });
+    this.props.navigator.pop();
   }
   selectdevice() {
     if (this.state.device.length == 0) {
@@ -100,48 +98,124 @@ class Register extends Component {
     }
   }
   selecttouchid() {
-    if (this.state.touchid.length == 0) {
+    if (this.state.touchid) {
       this._clickHandler();
+      /******
+      THis need to be a callback based onsuccess
+      ******/
+      this.setState({ touchid: true });
+
     } else {
-      this.setState({ touchid: '' });
       AsyncStorage.setItem("RPasswd", "empty");
+      this.setState({ touchid: false });
     }
   }
 
-  selectpattern() {
-    if (this.state.pattern.length == 0) {
-      this.doPatternSet();
-    } else {
-      this.setState({ pattern: '' });
-      AsyncStorage.setItem("RPasswd", "empty");
+  /*
+    selectpattern() {
+      if (this.state.pattern.length == 0) {
+        this.doPatternSet();
+      } else {
+        this.setState({ pattern: '' });
+        AsyncStorage.setItem("RPasswd", "empty");
+      }
     }
-  }
+  */
   selectfb() {
-    if (this.state.wechat.length == 0) {
-
-      this.doFacebookLogin();
+    if (this.state.facebook) {
+      this.setState({ facebook: false });
     } else {
-      this.setState({ wechat: '' });
-      var temp = this.props.url.chlngJson.chlng;
-      var respo = temp[0].chlng_resp;
-      respo[0].challenge = " ";
-      respo[0].response = " ";
+      this.doFacebookLogin();
+      /******
+      THis need to be a callback based onsuccess
+      ******/
+      this.setState({ facebook: true });
+    /*
+    var temp = this.props.url.chlngJson.chlng;
+    var respo = temp[0].chlng_resp;
+    respo[0].challenge = " ";
+    respo[0].response = " ";
+    */
     }
   }
+
   selectrememberusername() {
-    if (this.state.rememberusername.length == 0) {
-      this.setState({ rememberusername: '\u2714' });
-    } else {
-      this.setState({ rememberusername: '' });
-    }
+    this.setState({
+      rememberusername: !this.state.rememberusername
+    });
   }
   selectwelcomescreen() {
-    if (this.state.welcomescreen.length == 0) {
-      this.setState({ welcomescreen: '\u2714' });
-    } else {
-      this.setState({ welcomescreen: '' });
-    }
+    this.setState({ welcomescreen: !this.state.welcomescreen });
   }
+
+
+
+  getLoginOptions() {
+    let index = 0;
+    let data = [
+      {
+        key: 'title',
+        section: true,
+        label: 'Default Login Options'
+      },
+      {
+        key: '',
+        label: 'None'
+      },
+      {
+        key: 'password',
+        label: 'Password'
+      }
+    ];
+
+    if (this.state.facebook) {
+      data.push({ key: 'facebook',label: 'Facebook' })
+    }
+    if (this.state.touchid) {
+      data.push({ key: 'touchid',label: 'TouchID' })
+    }
+    if (this.state.wechat) {
+      data.push({ key: 'wechat',label: 'WeChat' })
+    }
+    return data
+  }
+  changeDefaultLogin(option) {
+    this.setState({ defaultLogin: option.key })
+  }
+
+
+
+
+
+
+
+
+
+
+  onDeviceNameChange(event) {
+    this.setState({ deviceName: event.nativeEvent.text });
+  }
+
+  setDeviceName() {
+    const dName = this.state.deviceName;
+    if (dName.length > 0) {
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = dName;
+      Events.trigger('showNextChallenge', { response: responseJson });
+    } else {
+      alert('Please enter device name ');
+    }
+    dismissKeyboard();
+  }
+
+  onDeviceNameChangeText(event) {
+    this.setState({ deviceName: event.nativeEvent.text });
+  }
+
+
+
+
+
 
   onSetPattern(data) {
     this.props.navigator.pop();
@@ -385,21 +459,6 @@ class Register extends Component {
     }).done();
   }
 
-
-  selectCheckbox(args) {
-
-    if (args === 'facebook') {
-      if (this.state.facebook.length == 0) {
-        this.doFacebookLogin();
-      } else {
-        this.setState({ facebook: '' });
-        var temp = this.props.url.chlngJson.chlng;
-        var respo = temp[0].chlng_resp;
-        respo[0].challenge = " ";
-        respo[0].response = " ";
-      }
-    }
-  }
   /*
   var indents = [];
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
@@ -431,6 +490,8 @@ class Register extends Component {
       }
     */
 
+
+
   render() {
     return (
       <View style={Skin.layout1.wrap}>
@@ -448,81 +509,52 @@ class Register extends Component {
         <ScrollView style={Skin.layout1.content.scrollwrap}>
           <View style={Skin.layout1.content.wrap}>
             <View style={Skin.layout1.content.container}>
-              <View style={{ flexDirection: 'row' }}>
-                <CheckboxField
-                  defaultColor={Skin.baseline.checkbox.defaultColor}
-                  selectedColor={Skin.baseline.checkbox.selectedColor}
-                  onSelect={this.selectCheckbox}
-                  checkboxStyle={Skin.baseline.checkbox.base}
-                  onSelect={this.selectCheckbox.bind(this)}>
-                  <Text style={Skin.baseline.checkbox.checkColor}>
-                    {this.state.check}
-                  </Text>
-                </CheckboxField>
-                <Text style={Skin.baseline.checkbox.label}>
-                  Make Device Permanent
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <CheckboxField
-                  defaultColor={Skin.baseline.checkbox.defaultColor}
-                  selectedColor={Skin.baseline.checkbox.selectedColor}
-                  onSelect={this.selectCheckbox}
-                  checkboxStyle={Skin.baseline.checkbox.base}
-                  onSelect={this.selectCheckbox.bind(this)}>
-                  <Text style={Skin.baseline.checkbox.checkColor}>
-                    {this.state.check}
-                  </Text>
-                </CheckboxField>
-                <Text onPress={() => Linking.openURL("https://www.google.com")}>
-                  Terms and Conditions Link
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <CheckboxField
-                  defaultColor={Skin.baseline.checkbox.defaultColor}
-                  selectedColor={Skin.baseline.checkbox.selectedColor}
-                  onSelect={this.selectCheckbox}
-                  checkboxStyle={Skin.baseline.checkbox.base}
-                  onSelect={this.selectCheckbox.bind(this)}>
-                  <Text style={Skin.baseline.checkbox.checkColor}>
-                    {this.state.check}
-                  </Text>
-                </CheckboxField>
-                <Text onPress={() => Linking.openURL("https://www.google.com")}>
-                  Terms and Conditions Link
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <CheckboxField
-                  defaultColor={Skin.baseline.checkbox.defaultColor}
-                  selectedColor={Skin.baseline.checkbox.selectedColor}
-                  onSelect={this.selectCheckbox}
-                  checkboxStyle={Skin.baseline.checkbox.base}
-                  onSelect={this.selectCheckbox.bind(this)}>
-                  <Text style={Skin.baseline.checkbox.checkColor}>
-                    {this.state.check}
-                  </Text>
-                </CheckboxField>
-                <Text onPress={() => Linking.openURL("https://www.google.com")}>
-                  Terms and Conditions Link
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <CheckboxField
-                  defaultColor={Skin.baseline.checkbox.defaultColor}
-                  selectedColor={Skin.baseline.checkbox.selectedColor}
-                  onSelect={this.selectCheckbox}
-                  checkboxStyle={Skin.baseline.checkbox.base}
-                  onSelect={this.selectCheckbox.bind(this)}>
-                  <Text style={Skin.baseline.checkbox.checkColor}>
-                    {this.state.check}
-                  </Text>
-                </CheckboxField>
-                <Text>
-                  Terms and Conditions Link
-                </Text>
-              </View>
+              <Checkbox
+                onSelect={this.selectdevice.bind(this)}
+                selected={this.state.device}
+                labelSide={"right"}>
+                Make Device Permanent
+              </Checkbox>
+              <Checkbox
+                onSelect={this.selecttouchid.bind(this)}
+                selected={this.state.touchid}
+                labelSide={"right"}>
+                Enable TouchID Login
+              </Checkbox>
+              <Checkbox
+                onSelect={this.selectfb.bind(this)}
+                selected={this.state.facebook}
+                labelSide={"right"}>
+                Enable Facebook Login
+              </Checkbox>
+              <Checkbox
+                onSelect={this.selectrememberusername.bind(this)}
+                selected={this.state.rememberusername}
+                labelSide={"right"}>
+                Remember Username
+              </Checkbox>
+              <Checkbox
+                onSelect={this.selectwelcomescreen.bind(this)}
+                selected={this.state.welcomescreen}
+                labelSide={"right"}>
+                Skip Welcome Screen
+              </Checkbox>
+              <Input
+                ref='inputDeviceName'
+                returnKeyType={'done'}
+                keyboardType={'default'}
+                placeholder={'Device Name'}
+                value={this.state.inputDeviceName}
+                onChange={this.onDeviceNameChange.bind(this)} />
+              <ModalPicker
+                data={this.getLoginOptions()}
+                style={Skin.baseline.select.base}
+                selectStyle={Skin.baseline.select.select}
+                selectTextStyle={Skin.baseline.select.selectText}
+                initValue="Select Default Login"
+                onChange={(option) => {
+                            this.changeDefaultLogin(option)
+                          }} />
             </View>
           </View>
         </ScrollView>
