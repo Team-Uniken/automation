@@ -253,6 +253,7 @@ class Register extends Component {
                   autoFocus={false}
                   autoCorrect={false}
                   autoCapitalize={false}
+                  autoComplete={false}
                   onChange={this.onEmailChange.bind(this)}
                   onSubmitEditing={() => {
                                      this.refs.confirmEmail.focus();
@@ -265,6 +266,7 @@ class Register extends Component {
                   autoFocus={false}
                   autoCorrect={false}
                   autoCapitalize={false}
+                  autoComplete={false}
                   onChange={this.onConfirmEmailChange.bind(this)}
                   onSubmitEditing={() => {
                                      this.refs.phoneNumber.focus();
@@ -277,6 +279,7 @@ class Register extends Component {
                   autoFocus={false}
                   autoCorrect={false}
                   autoCapitalize={false}
+                  autoComplete={false}
                   onChange={this.onPhoneNumberChange.bind(this)} />
                 <Text style={Skin.layout1.content.slider.text}>
                   Slide to prove your human
