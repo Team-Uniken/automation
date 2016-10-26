@@ -59,6 +59,7 @@ const {
   Alert,
   DeviceEventEmitter,
   Platform,
+  Text
 } = ReactNative;
 
 const {Component} = React;
@@ -324,17 +325,21 @@ class TwoFactorAuthMachine extends Component {
           if (obj.hasNextChallenge()){
              currentChlng = obj.getCurrentChallenge();
           }
-        }
+          else{
+            obj.callCheckChallenge();
+          }
+        }else{
 
-        obj.stateNavigator.push({
-          id: currentChlng.chlng_name,
-          url: {
-            chlngJson: currentChlng,
-            chlngsCount: challengeJsonArr.length,
-            currentIndex: currentIndex + 1,
-          },
-          title: obj.props.title,
-        });
+          obj.stateNavigator.push({
+            id: currentChlng.chlng_name,
+            url: {
+              chlngJson: currentChlng,
+              chlngsCount: challengeJsonArr.length,
+              currentIndex: currentIndex + 1,
+            },
+            title: obj.props.title,
+          });
+        }
       } else {
         // Call checkChallenge
         obj.callCheckChallenge();
@@ -580,6 +585,7 @@ onGetAllChallengeStatus(e){
   }
 
   callCheckChallenge() {
+    console.log("checkChallenge" + JSON.stringify(challengeJson));
     console.log("callCheckChallenge ----- show loader");
     Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
