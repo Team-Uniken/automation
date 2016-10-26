@@ -317,7 +317,15 @@ class TwoFactorAuthMachine extends Component {
       currentIndex++;
       if (obj.hasNextChallenge()) {
         // Show Next challenge screen
-        const currentChlng = obj.getCurrentChallenge();
+        var currentChlng = obj.getCurrentChallenge();
+        alert(currentChlng.chlng_name);
+        if(currentChlng.chlng_name === 'tbacred'){
+          currentIndex++;
+          if (obj.hasNextChallenge()){
+             currentChlng = obj.getCurrentChallenge();
+          }
+        }
+
         obj.stateNavigator.push({
           id: currentChlng.chlng_name,
           url: {

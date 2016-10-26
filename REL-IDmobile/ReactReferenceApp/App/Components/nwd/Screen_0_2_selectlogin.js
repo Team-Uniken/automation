@@ -161,7 +161,7 @@ class SelectLogin extends Component {
       var value = result.id;
       this.props.tbacred.chlng_resp[0].challenge = key;
       this.props.tbacred.chlng_resp[0].response = value;
-      Events.trigger("showNextChallenge",null);
+      Events.trigger("showNextChallenge","");
       return (result)
     }
   }
@@ -209,17 +209,15 @@ class SelectLogin extends Component {
   }
   
   onDoPasswordCheckChallenge(args){
-    if (args.length > 0) {
+   // if (args.length > 0) {
       var responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = args;
       Events.trigger('showNextChallenge', {
       response: responseJson
         });
-    } else {
-      alert('Please enter password');
-    }
-  
-  
+   // } else {
+   //   alert('Please enter password');
+   // }
   }
   
   

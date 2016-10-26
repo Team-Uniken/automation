@@ -332,8 +332,8 @@ var styles = StyleSheet.create({
   },
 
   rectangle: {
-    height: 250,
-    width: 250,
+    height:250,
+    width:250,
     borderWidth: 2,
     borderColor: '#00FF00',
     backgroundColor: 'transparent',
