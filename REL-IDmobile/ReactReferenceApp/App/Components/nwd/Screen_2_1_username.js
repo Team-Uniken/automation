@@ -191,6 +191,10 @@ class UserLogin extends Component {
             returnKeyType={'next'}
             keyboardType={'email-address'}
             placeholder={'Username'}
+            autoFocus={true}
+            autoCorrect={false}
+            autoCapitalize={false}
+            autoComplete={false}
             value={this.state.inputUsername}
             onSubmitEditing={this.checkUsername.bind(this)}
             onChange={this.onUsernameChange.bind(this)} />
