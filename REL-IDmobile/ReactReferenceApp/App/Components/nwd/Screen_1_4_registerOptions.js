@@ -835,10 +835,8 @@ class Register extends Component {
       (result, error) => {
         {
           if (result.isCancelled) {
-            alert('Login cancelled');
+
           } else {
-            alert('Login success with permissions: '
-              + result.grantedPermissions.toString());
             AccessToken.getCurrentAccessToken().then((data) => {
               $this.profileRequestParams = {
                 fields: {
@@ -870,10 +868,8 @@ class Register extends Component {
   //Facebook login code
   facebookResponseCallback(error, result) {
     if (error) {
-      alert(result);
       return (result)
     } else {
-      alert(result);
       //fill response in challenge
       var key = Skin.text['0']['2'].credTypes.facebook.key;
       var value = result.id;
@@ -912,7 +908,6 @@ class Register extends Component {
   }
 
   passcodeAuth() {
-    alert('in passcode touch not supported');
   }
 
   encrypytPasswdiOS() {
