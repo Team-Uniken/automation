@@ -1897,6 +1897,7 @@ const collection = {
   PLACEHOLDER_TEXT_COLOR_RGB,
   DEV_BIND_ICON_TEXT_COLOR_RGB,
   DEV_BIND_TYPE_TEXT_COLOR_RGB,
+  BLACK_TEXT_COLOR,
   customeStyle,
   AccountActivationStep,
   appointmentrow,

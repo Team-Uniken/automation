@@ -138,49 +138,38 @@ export default class QuestionVerification extends Component {
     // );
 
     return (
-      <View style={Skin.layout1.wrap}>
-
-        <View style={Skin.layout1.content.wrap}>
-          <View style={Skin.layout0.top.container}>
-            <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
-              {Skin.icon.logo}
-            </Text>
-            <Text style={Skin.layout0.top.subtitle}>Secret Question</Text>
-          </View>
+      <View style={Skin.layout1.content.wrap}>
+        <View style={Skin.layout0.top.container}>
+          <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+            {Skin.icon.logo}
+          </Text>
+          <Text style={Skin.layout0.top.subtitle}>Secret Question</Text>
+        </View>
+        <Text style = {[Skin.baseline.textinput.base, this.props.styleInput]}>
+          { this.props.url.chlngJson.chlng_resp[0].challenge }
+        </Text>
+        <View style={Skin.layout0.bottom.container}>
+          <Text style={Skin.layout0.top.attempt}>
+            Attempt left {this.props.url.chlngJson.attempts_left}
+          </Text>
+          <TextInput
+            autoCorrect={ false }
+            ref={ 'answer' }
+            placeholder={ 'Enter Secret Answer' }
+            onChange={ this.onAnswerChange.bind(this) }
+            returnKeyType={ 'next' }
+            secureTextEntry={ true }
+            keyboardType={ 'default' }
+            placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB }
+            style = {[Skin.baseline.textinput.base, this.props.styleInput]}
+            onSubmitEditing={ this.checkAnswer.bind(this) }
+            />
+          <Margin
+            space={16}/>
           <View style={Skin.layout0.bottom.container}>
-           <Text style = {[Skin.baseline.textinput.base, this.props.styleInput]}>
-            { this.props.url.chlngJson.chlng_resp[0].challenge }
-            </Text>
-
-            <Text style={Skin.layout0.top.attempt}>
-              Attempt left {this.props.url.chlngJson.attempts_left}
-            </Text>
-            <TextInput
-              autoCorrect={ false }
-              ref={ 'answer' }
-              placeholder={ 'Enter Secret Answer' }
-              onChange={ this.onAnswerChange.bind(this) }
-              returnKeyType={ 'next' }
-              secureTextEntry={ true }
-              keyboardType={ 'default' }
-              placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB }
-              style = {[Skin.baseline.textinput.base, this.props.styleInput]}
-              onSubmitEditing={ this.checkAnswer.bind(this) }
-              />
-
-            <Margin
-              space={16}/>
-            <View style={Skin.layout0.bottom.container}>
-
-
-              <Button
-                label={Skin.text['2']['1'].submit_button}
-                onPress={ this.checkAnswer.bind(this) }/>
-            </View>
-
-
-
-
+            <Button
+              label={Skin.text['2']['1'].submit_button}
+              onPress={ this.checkAnswer.bind(this) }/>
           </View>
         </View>
       </View>

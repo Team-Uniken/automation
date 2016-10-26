@@ -27,7 +27,7 @@ import MainActivation from '../MainActivation';
 
 let activationResSubscription;
 
-const {View, Text, TextInput, TouchableHighlight, StatusBar,DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, } = ReactNative;
+const {View, Text, TextInput, TouchableHighlight, StatusBar, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, } = ReactNative;
 
 const {Component} = React;
 
@@ -63,9 +63,9 @@ export default class DeviceName extends Component {
     if (dName.length > 0) {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = dName;
-        Events.trigger('showNextChallenge', {
-          response: responseJson
-        });
+      Events.trigger('showNextChallenge', {
+        response: responseJson
+      });
     } else {
       alert('Please enter device name ');
     }
@@ -91,46 +91,48 @@ export default class DeviceName extends Component {
 
   render() {
     return (
- <View style={Skin.layout1.wrap}>
+      <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-         <Title
-          close={0}>
+          <Title
+            close={0}>
             Device Name
           </Title>
-        </View>        
-        <View style={ Skin.activationStyle.topGroup }>
+        </View>
 
-          <Text style={Skin.layout0.top.subtitle}>Set a nickname for this device: </Text>
-
-          <Margin
-            space={16}/>
-
-          <View style={Skin.layout0.bottom.container}>
-          <View>
-            <TextInput returnKeyType={ 'next' }
-              autoCorrect={ false }
-              keyboardType={ 'default' }
-              placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB }
-              style = {[Skin.baseline.textinput.base, this.props.styleInput]}
-              value={ this.state.deviceName }
-              ref={ 'deviceName' }
-              placeholder={ 'Enter Device Nickname' }
-              onChange={ this.onDeviceNameChange.bind(this) }
-              onSubmitEditing={ this.setDeviceName.bind(this) }
-              />
-              </View>
+        <View
+          style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center',}}>
+          <View style={ Skin.activationStyle.topGroup }>
+            <Text style={Skin.layout0.top.subtitle}>Set a nickname for this device: </Text>
 
             <Margin
               space={16}/>
-            <Button
-              label= {this.btnText() }
-              onPress={ this.setDeviceName.bind(this) }/>
-          </View>
 
+            <View style={Skin.layout0.bottom.container}>
+              <View>
+                <TextInput returnKeyType={ 'next' }
+                  autoCorrect={ false }
+                  keyboardType={ 'default' }
+                  placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB }
+                  style = {[Skin.baseline.textinput.base, this.props.styleInput]}
+                  value={ this.state.deviceName }
+                  ref={ 'deviceName' }
+                  placeholder={ 'Enter Device Nickname' }
+                  onChange={ this.onDeviceNameChange.bind(this) }
+                  onSubmitEditing={ this.setDeviceName.bind(this) }
+                  />
+              </View>
+
+              <Margin
+                space={16}/>
+              <Button
+                label= {this.btnText() }
+                onPress={ this.setDeviceName.bind(this) }/>
+            </View>
+          </View>
         </View>
       </View>
     );

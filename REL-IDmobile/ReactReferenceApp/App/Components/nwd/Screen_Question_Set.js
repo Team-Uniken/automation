@@ -32,7 +32,7 @@ const {
   InteractionManager,
 } = ReactNative;
 
-const{Component} = React;
+const {Component} = React;
 
 export default class QuestionSet extends Component {
 
@@ -49,7 +49,7 @@ export default class QuestionSet extends Component {
       secQue: '',
       secAnswer: '',
     };
-    
+
     this._props = {
       url: {
         chlng_idx: 1,
@@ -64,10 +64,10 @@ export default class QuestionSet extends Component {
           "Where were you when you had your first alcoholic drink (or cigarette)?",
           "When you were young, what did you want to be when you grew up?",
         ]],
-        chlng_info:[
+        chlng_info: [
           {
-            key:"Prompt label",
-            value:"Secret Question",
+            key: "Prompt label",
+            value: "Secret Question",
           }, {
             key: "Response label",
             value: "Secret Answer",
@@ -127,7 +127,7 @@ export default class QuestionSet extends Component {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].challenge = kSecQ;
       responseJson.chlng_resp[0].response = vSecA;
-      Events.trigger('showNextChallenge', {response: responseJson});
+      Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       dismissKeyboard();
       InteractionManager.runAfterInteractions(() => {
@@ -164,12 +164,12 @@ export default class QuestionSet extends Component {
       <TouchableHighlight
         style={styles.row}
         onPress={() => {
-          this.setState({secQue:rowData.msg});
+          this.setState({ secQue: rowData.msg });
           this.quesInput.setNativeProps({ text: rowData.msg });
-        }}
+        } }
         underlayColor={Skin.colors.REPPLE_COLOR}
         activeOpacity={0.6}
-      >
+        >
         <Text style={styles.rowtext} numberOfLines={2}>{rowData.msg}</Text>
       </TouchableHighlight>
     );
@@ -190,68 +190,72 @@ export default class QuestionSet extends Component {
      */
 
     return (
-     <View style={Skin.layout1.wrap}>
+      <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-         <Title
-          close={0}>
+          <Title
+            close={0}>
             Activation
           </Title>
         </View>
-         <View style={Skin.layout0.top.container}>
-         <Text style={Skin.activationStyle.counter}>
-             {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-             </Text>
-         <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
-           <Margin
-      space={16}/>
-          <View
-          style={[
-            Skin.baseline.textinput.wrap,
-              this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
-          ]}>
-          <TextInput 
-           multiline
-           style = {Skin.baseline.textinput.base}
-           autoCorrect={false}
-            placeholder={'Type/Select question'}
-           ref={(component) => { this.quesInput = component; return this.quesInput; }}
-           returnKeyType = {"next"}
-           placeholderTextColor={Skin.baseline.textinput.placeholderTextColor} 
-            onChange={this.onQuestionChange.bind(this)}
-           />
-         </View>
-           <Margin
-      space={8}/>
-          <View style={styles.listViewWrap}>
-            <ListView
-              ref="listView"
-              automaticallyAdjustContentInsets={false}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow.bind(this)}
-              renderSeperator={this.renderSeperator.bind(this)}
-              style={styles.listView}
-              showsVerticalScrollIndicator
-            />
+        <View
+          style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
+          <View>
+            <View style={Skin.layout0.top.container}>
+              <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
+              <Margin
+                space={16}/>
+              <View
+                style={[
+                  Skin.baseline.textinput.wrap,
+                  this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
+                ]}>
+                <TextInput
+                  multiline
+                  style = {Skin.baseline.textinput.base}
+                  autoCorrect={false}
+                  placeholder={'Type/Select question'}
+                  ref={(component) => { this.quesInput = component; return this.quesInput; } }
+                  returnKeyType = {"next"}
+                  placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
+                  onChange={this.onQuestionChange.bind(this) }
+                  />
+              </View>
+              <Margin
+                space={8}/>
+              <View style={styles.listViewWrap}>
+                <ListView
+                  ref="listView"
+                  automaticallyAdjustContentInsets={false}
+                  dataSource={this.state.dataSource}
+                  renderRow={this.renderRow.bind(this) }
+                  renderSeperator={this.renderSeperator.bind(this) }
+                  style={styles.listView}
+                  showsVerticalScrollIndicator
+                  />
+              </View>
+              <Margin
+                space={8}/>
+              <View style={Skin.layout0.bottom.container}>
+                <Input
+                  placeholder={'Enter your secret answer'}
+                  onSubmitEditing={this.setSecrets.bind(this) }
+                  onChange={this.onAnswerChange.bind(this) }
+                  />
+                <Button
+                  label= {this.btnText() }
+                  onPress={this.setSecrets.bind(this) }/>
+              </View>
+            </View>
           </View>
-            <Margin
-      space={8}/>
-       <View style={Skin.layout0.bottom.container}>   
-         <Input
-                placeholder={'Enter your secret answer'}
-                onSubmitEditing={this.setSecrets.bind(this)}
-                onChange={this.onAnswerChange.bind(this)}
-              />    
-              <Button
-                label= {this.btnText()}
-                onPress={this.setSecrets.bind(this)}/> 
-      </View>
+
         </View>
+
       </View>
-		);
+    );
 
 
   }
@@ -260,12 +264,12 @@ export default class QuestionSet extends Component {
 module.exports = QuestionSet;
 
 const styles = StyleSheet.create({
-  listViewWrap:{
-    backgroundColor:'white',
+  listViewWrap: {
+    backgroundColor: 'white',
     height: 105,
-     width: 260,
+    width: 260,
   },
-  row:{
+  row: {
     backgroundColor: Skin.colors.TEXT_COLOR,
     justifyContent: 'center',
     alignItems: 'center',
@@ -277,7 +281,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Skin.colors.DIVIDER_COLOR,
     borderWidth: 1,
   },
-  rowtext:{
+  rowtext: {
     color: Skin.colors.PRIMARY_COLOR,
     textAlign: 'left',
     flex: 1,
@@ -285,8 +289,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 5,
   },
-  divider:{
-    height:5, 
+  divider: {
+    height: 5,
     backgroundColor: Skin.colors.DIVIDER_COLOR,
   }
 

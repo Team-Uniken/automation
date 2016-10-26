@@ -126,39 +126,45 @@ export default class DeviceBinding extends Component {
   render() {
     console.log(JSON.stringify(this.props.url));
     return (
-     <View style={Skin.layout1.wrap}>
+      <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-         <Title
-          close={0}>
+          <Title
+            close={0}>
             Device Binding
           </Title>
         </View>
-        <Text style={Skin.layout0.top.subtitle}>Remember Device</Text>
-        <Text style={Skin.activationStyle.info}>
-          Tap icon to change your setting:
-        </Text>
-        <Animated.View style={styles.animWrap}>
-          <TouchableHighlight
-            style={styles.touch}
-            onPress={this.check.bind(this) }
-            underlayColor={'transparent'}
-            >
-            <Text style={styles.icon}>{this.state.icon}</Text>
-          </TouchableHighlight>
-        </Animated.View>
-        <Text style={Skin.layout0.top.subtitle}>{this.state.type}</Text>
+        <View
+          style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center', }}>
+          <View>
+            <Text style={Skin.layout0.top.subtitle}>Remember Device</Text>
+            <Text style={[Skin.activationStyle.info,{color:Skin.BLACK_TEXT_COLOR}]}>
+              Tap icon to change your setting:
+            </Text>
+            <Animated.View style={styles.animWrap}>
+              <TouchableHighlight
+                style={styles.touch}
+                onPress={this.check.bind(this) }
+                underlayColor={'transparent'}
+                >
+                <Text style={styles.icon}>{this.state.icon}</Text>
+              </TouchableHighlight>
+            </Animated.View>
+            <Text style={Skin.layout0.top.subtitle}>{this.state.type}</Text>
 
 
-        <View style={Skin.layout0.bottom.container}>
-          <Button
-            label= {this.btnText() }
-            onPress={this.setDeviceBinding.bind(this) }/>
+            <View style={Skin.layout0.bottom.container}>
+              <Button
+                label= {this.btnText() }
+                onPress={this.setDeviceBinding.bind(this) }/>
+            </View>
+          </View>
         </View>
       </View>
+
     );
   }
 }
