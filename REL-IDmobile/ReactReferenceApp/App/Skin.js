@@ -264,11 +264,6 @@ text = {
       '2': {
         subtitle: 'Welcome to New World CLUB',
         submit_button: 'Submit',
-      },
-      '2': {
-        subtitle: 'Welcome to New World CLUB',
-        submit_button: 'Submit',
-        textinput_placeholder: 'Enter Password',
       }
     },
 
@@ -292,6 +287,7 @@ module.exports.baseline = {
     base: StyleSheet.create({
       base: {
         alignItems: 'center',
+        justifyContent:'center',
         height: 42,
         width: 260,
         borderRadius: 8,
@@ -301,8 +297,6 @@ module.exports.baseline = {
     }).base,
     text: StyleSheet.create({
       text: {
-        paddingTop: 9,
-        height: 42,
         fontSize: 18,
         color: BUTTON_TEXT_COLOR,
         textAlign: 'center',
