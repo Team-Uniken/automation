@@ -30,6 +30,7 @@ const {
   Animated,
   StyleSheet,
   AsyncStorage,
+  StatusBar,
 } = ReactNative;
 
 const {
@@ -125,10 +126,17 @@ export default class DeviceBinding extends Component {
   render() {
     console.log(JSON.stringify(this.props.url));
     return (
-      <View style={Skin.layout0.wrap.container}>
-        <Text style={Skin.activationStyle.counter}>
-          {this.props.url.currentIndex}/{this.props.url.chlngsCount}
-        </Text>
+     <View style={Skin.layout1.wrap}>
+        <StatusBar
+          style={Skin.layout1.statusbar}
+          backgroundColor={Skin.main.STATUS_BAR_BG}
+          barStyle={'default'} />
+        <View style={Skin.layout1.title.wrap}>
+         <Title
+          close={0}>
+            Device Binding
+          </Title>
+        </View>
         <Text style={Skin.layout0.top.subtitle}>Remember Device</Text>
         <Text style={Skin.activationStyle.info}>
           Tap icon to change your setting:

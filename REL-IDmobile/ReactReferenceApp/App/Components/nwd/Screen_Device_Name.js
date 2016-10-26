@@ -27,7 +27,7 @@ import MainActivation from '../MainActivation';
 
 let activationResSubscription;
 
-const {View, Text, TextInput, TouchableHighlight, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, } = ReactNative;
+const {View, Text, TextInput, TouchableHighlight, StatusBar,DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, } = ReactNative;
 
 const {Component} = React;
 
@@ -91,16 +91,26 @@ export default class DeviceName extends Component {
 
   render() {
     return (
-      <View style={Skin.layout0.wrap.container}>
+ <View style={Skin.layout1.wrap}>
+        <StatusBar
+          style={Skin.layout1.statusbar}
+          backgroundColor={Skin.main.STATUS_BAR_BG}
+          barStyle={'default'} />
+        <View style={Skin.layout1.title.wrap}>
+         <Title
+          close={0}>
+            Device Name
+          </Title>
+        </View>        
         <View style={ Skin.activationStyle.topGroup }>
 
-          <Text style={Skin.layout0.top.subtitle}>Device Name</Text>
           <Text style={Skin.layout0.top.subtitle}>Set a nickname for this device: </Text>
 
           <Margin
             space={16}/>
 
           <View style={Skin.layout0.bottom.container}>
+          <View>
             <TextInput returnKeyType={ 'next' }
               autoCorrect={ false }
               keyboardType={ 'default' }
@@ -112,6 +122,7 @@ export default class DeviceName extends Component {
               onChange={ this.onDeviceNameChange.bind(this) }
               onSubmitEditing={ this.setDeviceName.bind(this) }
               />
+              </View>
 
             <Margin
               space={16}/>
