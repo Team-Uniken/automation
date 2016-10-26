@@ -106,8 +106,8 @@ class SelectLogin extends Component {
     this.state.dataSource=[];
     if(this.props.tbacred){
       for(var i = 0;i<this.props.tbacred.chlng_prompt[0].length;i++){
-        var prompt = this.props.tbacred.chlng_prompt[0][i];
-        if(prompt.isRegistered){
+        var prompt = JSON.parse(this.props.tbacred.chlng_prompt[0][i]);
+        if(prompt.is_registered){
           this.state.dataSource.push(prompt);
         }
       }
@@ -117,19 +117,19 @@ class SelectLogin extends Component {
     if(Platform.OS == 'android'){
       if(this.state.isRegistered){
         if(this.state.dataSource){
-          this.state.dataSource.push({credType:'pattern',isRegistered:true});
+          this.state.dataSource.push({cred_type:'pattern',is_registered:true});
         }
       }
     }else{
       if(this.state.isRegistered){
         if(this.state.dataSource){
-          this.state.dataSource.push({credType:'touchid',isRegistered:true});
+          this.state.dataSource.push({cred_type:'touchid',is_registered:true});
         }
       }
     }
 
     if(this.state.dataSource.length > 0){
-      this.state.dataSource.push({credType:'password',isRegistered:true});
+      this.state.dataSource.push({cred_type:'password',is_registered:true});
     }
   }
   
@@ -161,6 +161,7 @@ class SelectLogin extends Component {
       var value = result.id;
       this.props.tbacred.chlng_resp[0].challenge = key;
       this.props.tbacred.chlng_resp[0].response = value;
+      Events.trigger("showNextChallenge",null);
       return (result)
     }
   }
@@ -256,9 +257,9 @@ class SelectLogin extends Component {
     return (
       <View style={Skin.layout0.bottom.loginbutton.wrap}>
       <LoginTypeButton
-      label={Skin.icon[item.credType]}
-      onPress={() => { this.loginWith(item.credType); } }
-      text={Skin.text['0']['2'].credTypes[item.credType].label} />
+      label={Skin.icon[item.cred_type]}
+      onPress={() => { this.loginWith(item.cred_type); } }
+      text={Skin.text['0']['2'].credTypes[item.cred_type].label} />
       </View>
       );
   }

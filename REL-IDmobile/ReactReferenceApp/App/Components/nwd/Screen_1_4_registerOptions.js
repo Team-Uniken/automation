@@ -653,23 +653,27 @@ class Register extends Component {
 
   componentWillMount() {
     obj = this;
-
+    var isCheck = false;
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
       var promts = chlng.chlng_prompt[0];
 
-      if (promts[0].isRegistered == true) {
-        if (this.props.url.touchCred.isTouch == false) {
-          this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
-          break;
-        }
+      if (promts[0].isRegistered == false) {
+        isCheck = true;
+        break;
       }
 
+    }
+    
+    if(isCheck){
+      if (this.props.url.touchCred.isTouch == true) {
+        this.doNavigateDashBoard();
+      }
     }
   }
 
   close() {
-    this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+    this.doNavigateDashBoard();
   }
   selectdevice() {
     if (this.state.device.length == 0) {
@@ -766,7 +770,7 @@ class Register extends Component {
           alert(res.pArgs.response.StatusMsg);
 
          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+          obj.doNavigateDashBoard();
 
         }
       } else {
@@ -933,6 +937,9 @@ class Register extends Component {
 
 
   doUpdate() {
+    
+    
+    if(this.state.facebook == true){
 
     subscriptions = DeviceEventEmitter.addListener(
       'onUpdateChallengeStatus',
@@ -950,8 +957,14 @@ class Register extends Component {
         }
       });
     }).done();
+    }else{
+      this.doNavigateDashBoard();
+    }
   }
 
+  doNavigateDashBoard(){
+    this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+  }
 
   selectCheckBox(args) {
     if (args === 'facebook') {
@@ -991,7 +1004,7 @@ class Register extends Component {
       }
     }
     
-    if (this.props.url.touchCred.isTouch == true) {
+    if (this.props.url.touchCred.isTouch == false) {
       if (Platform.OS === 'android') {
         indents.push(
           <Checkbox
