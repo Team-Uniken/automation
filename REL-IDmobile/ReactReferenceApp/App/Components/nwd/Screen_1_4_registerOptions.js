@@ -877,6 +877,7 @@ class Register extends Component {
       //fill response in challenge
       var key = Skin.text['0']['2'].credTypes.facebook.key;
       var value = result.id;
+  
       this.setState({ facebook: true });
 
       var temp = this.props.url.chlngJson.chlng;

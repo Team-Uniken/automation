@@ -320,7 +320,7 @@ class TwoFactorAuthMachine extends Component {
       if (obj.hasNextChallenge()) {
         // Show Next challenge screen
         var currentChlng = obj.getCurrentChallenge();
-        alert(currentChlng.chlng_name);
+        //alert(currentChlng.chlng_name);
         if (currentChlng.chlng_name === 'tbacred') {
           currentIndex++;
           if (obj.hasNextChallenge()) {
