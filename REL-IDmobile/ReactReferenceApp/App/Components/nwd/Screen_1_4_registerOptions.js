@@ -656,16 +656,16 @@ class Register extends Component {
     var isCheck = false;
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
-      var promts = chlng.chlng_prompt[0];
+      var promts = JSON.parse(chlng.chlng_prompt[0]);
 
-      if (promts[0].isRegistered == false) {
+      if (promts.is_registered == false) {
         isCheck = true;
         break;
       }
 
     }
     
-    if(isCheck){
+    if(isCheck == false){
       if (this.props.url.touchCred.isTouch == true) {
         this.doNavigateDashBoard();
       }
