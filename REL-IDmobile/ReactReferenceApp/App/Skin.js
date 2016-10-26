@@ -159,7 +159,7 @@ module.exports.icon = {
   password: '\ue7ff',
   touchid: '\ue90d',
   close: '\ue5cd',
-  check: '\u2714',
+  check: '\ue5ca',
   pattern: 'P'
 };
 
