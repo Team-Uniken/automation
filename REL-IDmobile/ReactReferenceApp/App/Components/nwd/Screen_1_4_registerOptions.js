@@ -580,10 +580,10 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
+//import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Title from '../view/title';
 import Button from '../view/button';
-import CheckBox from '../view/checkbox';
+import Checkbox from '../view/checkbox';
 import Input from '../view/input';
 import Margin from '../view/margin';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -636,14 +636,14 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      device: '',
-      touchid: '',
-      wechat: '',
-      rememberusername: '',
-      welcomescreen: '',
-      pattern: '',
-      facebook: '',
-      refresh: '',
+      device: false,
+      touchid:false,
+      wechat: false,
+      rememberusername: false,
+      welcomescreen:false,
+      pattern: false,
+      facebook:false,
+      refresh: false,
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -673,25 +673,25 @@ class Register extends Component {
   }
   selectdevice() {
     if (this.state.device.length == 0) {
-      this.setState({ device: '\u2714' });
+      this.setState({ device: true });
     } else {
-      this.setState({ device: '' });
+      this.setState({ device: false });
     }
   }
   selecttouchid() {
-    if (this.state.touchid.length == 0) {
+    if (this.state.touchid === false) {
       this._clickHandler();
     } else {
-      this.setState({ touchid: '' });
+      this.setState({ touchid: false });
       AsyncStorage.setItem("RPasswd", "empty");
     }
   }
 
   selectpattern() {
-    if (this.state.pattern.length == 0) {
+    if (this.state.pattern === false) {
       this.doPatternSet();
     } else {
-      this.setState({ pattern: '' });
+      this.setState({ pattern: false });
       AsyncStorage.setItem("RPasswd", "empty");
     }
   }
@@ -724,7 +724,7 @@ class Register extends Component {
 
   onSetPattern(data) {
     this.props.navigator.pop();
-    this.setState({ pattern: '\u2714' });
+    this.setState({ pattern: true });
   }
 
   onUpdateChallengeResponseStatus(e) {
@@ -835,10 +835,8 @@ class Register extends Component {
       (result, error) => {
         {
           if (result.isCancelled) {
-            alert('Login cancelled');
+
           } else {
-            alert('Login success with permissions: '
-              + result.grantedPermissions.toString());
             AccessToken.getCurrentAccessToken().then((data) => {
               $this.profileRequestParams = {
                 fields: {
@@ -870,15 +868,12 @@ class Register extends Component {
   //Facebook login code
   facebookResponseCallback(error, result) {
     if (error) {
-      alert(result);
       return (result)
     } else {
-      alert(result);
       //fill response in challenge
       var key = Skin.text['0']['2'].credTypes.facebook.key;
       var value = result.id;
-      this.setState({ facebook: '\u2714' });
-
+      this.setState({ facebook: true });
 
       var temp = this.props.url.chlngJson.chlng;
       var respo = temp[0].chlng_resp;
@@ -913,7 +908,6 @@ class Register extends Component {
   }
 
   passcodeAuth() {
-    alert('in passcode touch not supported');
   }
 
   encrypytPasswdiOS() {
@@ -925,7 +919,7 @@ class Register extends Component {
           if (response) {
             console.log('immediate response of encrypt data packet is is' + response[0].error);
             AsyncStorage.setItem("ERPasswd", response[0].response);
-            obj.setState({ touchid: '\u2714' });
+            obj.setState({ touchid: true });
           } else {
             console.log('immediate response is' + response[0].response);
           }
@@ -958,19 +952,17 @@ class Register extends Component {
 
 
   selectCheckBox(args) {
-
     if (args === 'facebook') {
-      if (this.state.facebook.length == 0) {
+      if (this.state.facebook == false) {
         this.doFacebookLogin();
       } else {
-        this.setState({ facebook: '' });
+        this.setState({ facebook: false });
         var temp = this.props.url.chlngJson.chlng;
         var respo = temp[0].chlng_resp;
         respo[0].challenge = " ";
         respo[0].response = " ";
       }
     }
-
   }
 
   render() {
@@ -980,24 +972,49 @@ class Register extends Component {
       var promts = chlng.chlng_prompt[0];
 
       if (promts[0].isRegistered == false) {
-        indents.push(<CheckBox
-          value={this.state[promts[0].credType]}
-          onSelect={() => { this.selectCheckBox(promts[0].credType) } }
-          lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+        indents.push(
+              <Checkbox
+                 onSelect={() => { this.selectCheckBox(promts[0].credType) }}
+                 selected={this.state[promts[0].credType]}
+                 labelSide={"right"}
+                 lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"}>
+               </Checkbox>
+        );
+          // <CheckBox
+          // value={this.state[promts[0].credType]}
+          // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
+          // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
       }
     }
 
     if (this.props.url.touchCred.isTouch == true) {
       if (Platform.OS === 'android') {
-        indents.push(<CheckBox
-          value={this.state.pattern}
-          onSelect={this.selectpattern.bind(this) }
-          lable="Enable Pattern Login"/>);
+        indents.push(
+          <Checkbox
+                 onSelect={this.selectpattern.bind(this) }
+                 selected={this.state.pattern}
+                 labelSide={"right"}
+                 lable="Enable Pattern Login">
+               </Checkbox>
+        );
+          // <CheckBox
+          // value={this.state.pattern}
+          // onSelect={this.selectpattern.bind(this) }
+          // lable="Enable Pattern Login"/>);
       } else {
-        indents.push(<CheckBox
-          value={this.state.touchid}
-          onSelect={this.selecttouchid.bind(this) }
-          lable="Enable TouchID Login"/>);
+        indents.push(
+          <Checkbox
+                 onSelect={this.selecttouchid.bind(this) }
+                 selected={this.state.touchid}
+                 labelSide={"right"}
+                 lable="Enable TouchID Login">
+               </Checkbox>
+        );
+          
+          // <CheckBox
+          // value={this.state.touchid}
+          // onSelect={this.selecttouchid.bind(this) }
+          // lable="Enable TouchID Login"/>);
       }
     }
 

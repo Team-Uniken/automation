@@ -47,6 +47,8 @@ class SelectLogin extends Component {
     super(props);
     this.state = {
     dataSource: [],
+    isRegistered:false,
+    refresh:false,
     showPasswordVerify: false,
     }
     
@@ -54,11 +56,11 @@ class SelectLogin extends Component {
     this.renderItem = this.renderItem.bind(this);
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.fillAdditionalLoginOptions = this.fillAdditionalLoginOptions.bind(this);
-    this.isRegistered = this.isRegistered.bind(this);
+    this.checkForRegisteredCredsAndShow = this.checkForRegisteredCredsAndShow.bind(this);
     this.doPatternLogin = this.doPatternLogin.bind(this);
     this.onPatternUnlock =this.onPatternUnlock.bind(this);
     
-    this.fillAdditionalLoginOptions();
+    this.checkForRegisteredCredsAndShow();
   }
   
   componentWillMount() {
@@ -72,10 +74,7 @@ class SelectLogin extends Component {
       (result, error) => {
       {
       if (result.isCancelled) {
-      alert('Login cancelled');
       } else {
-      alert('Login success with permissions: '
-        + result.grantedPermissions.toString());
       AccessToken.getCurrentAccessToken().then((data) => {
         $this.profileRequestParams = {
       fields: {
@@ -104,6 +103,7 @@ class SelectLogin extends Component {
   }
   
   fillAdditionalLoginOptions(){
+    this.state.dataSource=[];
     if(this.props.tbacred){
       for(var i = 0;i<this.props.tbacred.chlng_prompt[0].length;i++){
         var prompt = this.props.tbacred.chlng_prompt[0][i];
@@ -112,15 +112,16 @@ class SelectLogin extends Component {
         }
       }
     }
-    
+     
+   
     if(Platform.OS == 'android'){
-      if(this.isRegistered('pattern')){
+      if(this.state.isRegistered){
         if(this.state.dataSource){
           this.state.dataSource.push({credType:'pattern',isRegistered:true});
         }
       }
     }else{
-      if(this.isRegistered('touchid')){
+      if(this.state.isRegistered){
         if(this.state.dataSource){
           this.state.dataSource.push({credType:'touchid',isRegistered:true});
         }
@@ -132,17 +133,29 @@ class SelectLogin extends Component {
     }
   }
   
-  isRegistered(option){
-    return true;
+  async checkForRegisteredCredsAndShow(option){
+    var ret = false;
+    await AsyncStorage.getItem('ERPasswd').then((value) => {
+      if(value==null || value === 'empty'){
+        this.state.isRegistered =false;
+        this.fillAdditionalLoginOptions();
+        this.setState({refresh:!this.state.refresh});
+      }
+      else{
+        this.state.isRegistered =true;
+        this.fillAdditionalLoginOptions();
+        this.setState({refresh:!this.state.refresh});
+      }
+    }).done();
+   
+    return ret;
   }
   
   //Facebook login code
   facebookResponseCallback(error, result) {
     if (error) {
-      alert(result);
       return (result)
     } else {
-      alert(result);
       //fill response in challenge
       var key = Skin.text['0']['2'].credTypes.facebook.key;
       var value = result.id;
