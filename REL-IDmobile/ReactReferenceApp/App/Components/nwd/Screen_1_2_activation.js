@@ -228,8 +228,7 @@ var QRCodeScreen = React.createClass({
                 <Text style={[Skin.layout1.content.prompt, {
                                marginTop: 10
                              }]}>
-                  Step 1: Verify Code
-                  {this.props.url.chlngJson.chlng_resp[0].challenge}
+                  Step 1: Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}
                 </Text>
                 <Text style={[Skin.layout1.content.prompt, {}]}>
                   Step 2: Scan QR Code
@@ -252,11 +251,12 @@ var QRCodeScreen = React.createClass({
                     autoComplete={false}
                     autoCapitalize={true}
                     secureTextEntry={true}
-                    styleInput={Skin.layout1.content.enterInput}
+                    styleInput={[Skin.layout1.content.enterInput,{color:Skin.baseline.textinput.placeholderTextColor}]}
                     returnKeyType={"next"}
                     placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
                     onChange={this.onActivationCodeChange.bind(this)}
                     onSubmitEditing={this.checkActivationCode.bind(this)} />
+                    
                 </View>
               </View>
             </View>
