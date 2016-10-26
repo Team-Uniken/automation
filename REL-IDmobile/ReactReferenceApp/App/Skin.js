@@ -264,6 +264,7 @@ text = {
       '2': {
         subtitle: 'Welcome to New World CLUB',
         submit_button: 'Submit',
+        textinput_placeholder: 'Enter Password',
       }
     },
 
