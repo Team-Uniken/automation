@@ -68,8 +68,11 @@ import Skin from '../../Skin';
 class CheckboxField extends Component {
   constructor(props) {
     super(props)
-    this.state = {source: props.selected ? Skin.icon.check : ''}
   }
+  onSelect(){
+    return this.props.selected ? Skin.icon.check : ''
+  }
+
   render(){
     return (
       <TouchableOpacity onPress={this.props.onSelect}>
@@ -88,7 +91,7 @@ class CheckboxField extends Component {
             selectedColor={this.props.selectedColor}
             checkboxStyle={this.props.checkboxStyle}>
             <Text style={Skin.baseline.checkbox.check}>
-              {this.state.source}
+              {this.onSelect()}
             </Text>
           </Checkbox>
           {this.props.labelSide === 'right' ?
