@@ -11,11 +11,11 @@ class LoginTypeButton extends Component {
     return (
       <View>
         <TouchableOpacity
-          style={[Skin.baseline.button.base, Skin.layout0.bottom.loginbutton.base]}
+          style={[Skin.baseline.button.base, Skin.layout0.bottom.loginbutton.base,{justifyContent:'center',alignItems:'center'}]}
           underlayColor={Skin.baseline.underlayColor}
           onPress={this.props.onPress}
           activeOpacity={Skin.baseline.activeOpacity}>
-          <Text style={Skin.layout0.bottom.loginbutton.icon}>
+          <Text style={[Skin.layout0.bottom.loginbutton.icon,{textAlign:'center',textAlignVertical:'center'}]}>
             {this.props.label}
           </Text>
         </TouchableOpacity>
