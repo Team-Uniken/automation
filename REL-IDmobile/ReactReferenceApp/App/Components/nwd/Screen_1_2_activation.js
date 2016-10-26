@@ -211,7 +211,8 @@ var QRCodeScreen = React.createClass({
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-          <Title>
+          <Title
+          close={0}>
             Activation
           </Title>
         </View>

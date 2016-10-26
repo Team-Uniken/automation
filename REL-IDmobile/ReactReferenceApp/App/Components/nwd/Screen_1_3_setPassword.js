@@ -139,7 +139,8 @@ export default class PasswordSet extends Component {
           barStyle={'default'}
           />
         <View style={Skin.layout1.title.wrap}>
-          <Title>Registration</Title>
+          <Title
+          close={0}>Registration</Title>
         </View>
         <ScrollView style={Skin.layout1.content.scrollwrap}>
           <View style={Skin.layout1.content.wrap}>

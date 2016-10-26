@@ -17,6 +17,7 @@ import Events from 'react-native-simple-events';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Button from '../view/button';
+import Title from '../view/title';
 
 let obj;
 const {
@@ -27,6 +28,7 @@ const {
   ListView,
   TextInput,
   StyleSheet,
+  StatusBar,
   InteractionManager,
 } = ReactNative;
 
@@ -188,7 +190,17 @@ export default class QuestionSet extends Component {
      */
 
     return (
-     <View style={Skin.layout0.wrap.container}>
+     <View style={Skin.layout1.wrap}>
+        <StatusBar
+          style={Skin.layout1.statusbar}
+          backgroundColor={Skin.main.STATUS_BAR_BG}
+          barStyle={'default'} />
+        <View style={Skin.layout1.title.wrap}>
+         <Title
+          close={0}>
+            Activation
+          </Title>
+        </View>
          <View style={Skin.layout0.top.container}>
          <Text style={Skin.activationStyle.counter}>
              {this.props.url.currentIndex}/{this.props.url.chlngsCount}
