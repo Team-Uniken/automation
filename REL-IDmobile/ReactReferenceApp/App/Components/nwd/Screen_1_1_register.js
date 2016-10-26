@@ -3,9 +3,9 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import Title from '../view/title';
 import Button from '../view/button';
+import Checkbox from '../view/checkbox';
 import hash from 'hash.js';
 import Input from '../view/input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -24,7 +24,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      check: '',
+      check: false,
       firstName: '',
       lastName: '',
       email: '',
@@ -35,7 +35,7 @@ class Register extends Component {
       randomMaxValue: 90,
       keyboardVisible: false,
     };
-    
+
     this.close = this.close.bind(this);
   }
 
@@ -52,30 +52,26 @@ class Register extends Component {
   }
 
 
-  keyboardWillShow (e) {
-    this.setState({
-      keyboardVisible: true
-    })
-    //Alert.alert('yes')
+  keyboardWillShow(e) {
+    this.setState({ keyboardVisible: true })
+  //Alert.alert('yes')
   }
 
-  keyboardWillHide (e) {
-    this.setState({
-      keyboardVisible: false
-    })
+  keyboardWillHide(e) {
+    this.setState({ keyboardVisible: false })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.keyboardWillShowListener.remove()
     this.keyboardWillHideListener.remove()
   }
 
 
   selectCheckbox() {
-    if (this.state.check.length == 0) {
-      this.setState({ check: '\u2714' });
+    if (!this.state.check) {
+      this.setState({ check: true });
     } else {
-      this.setState({ check: '' });
+      this.setState({ check: false });
     }
   }
 
@@ -100,30 +96,29 @@ class Register extends Component {
     this.setState({ phoneNumber: event.nativeEvent.text });
   }
 
-  
-  close(){
+
+  close() {
     this.props.navigator.pop();
   }
 
-  validateEmail(email){
+  validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    return re.test(email);
   }
 
   validateAndProcced() {
 
     if (!(this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.email.length > 0
-        && this.state.confirmEmail.length > 0 && this.state.phoneNumber.length > 0))
-    {
+        && this.state.confirmEmail.length > 0 && this.state.phoneNumber.length > 0)) {
       this.showMessage("Error", "All fields are mandatory.", false);
       return;
-    } else if (!this.validateEmail(this.state.email)){
+    } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("Error", "Email is not valid.", false);
       return;
-    } else if (this.state.value < 100) {
+    } else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
-    } else if (this.state.check.length > 0) {
+    } else if (this.state.check) {
       this.registerUser();
     } else {
       this.showMessage("Error", "Accept Terms and Conditions", false);
@@ -135,10 +130,8 @@ class Register extends Component {
   registerUser() {
     Alert.alert(
       'Activation Code Sent to',
-      this.state.confirmEmail+'\nPlease check your email for more instructions.',
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]
+      this.state.confirmEmail + '\nPlease check your email for more instructions.',
+      [{text: 'OK',onPress: () => console.log('OK Pressed')},]
     )
 
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
@@ -210,17 +203,18 @@ class Register extends Component {
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
-                  backgroundColor={Skin.main.STATUS_BAR_BG}
-                  barStyle={'default'}
-                />
+          backgroundColor={Skin.main.STATUS_BAR_BG}
+          barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-          <Title
-      onClose={()=>{this.close();}}
-      >Registration</Title>
+          <Title onClose={() => {
+                            this.close();
+                          }}>
+            Registration
+          </Title>
         </View>
         <ScrollView style={Skin.layout1.content.scrollwrap}>
-            <View style={Skin.layout1.content.wrap}>
-              <View style={Skin.layout1.content.container}>
+          <View style={Skin.layout1.content.wrap}>
+            <View style={Skin.layout1.content.container}>
               <View>
                 <Input
                   placeholder={'First Name'}
@@ -234,9 +228,8 @@ class Register extends Component {
                   autoCapitalize={true}
                   onChange={this.onFirstNameChange.bind(this)}
                   onSubmitEditing={() => {
-                    this.refs.lastname.focus();
-                  }}
-                  />
+                                     this.refs.lastname.focus();
+                                   }} />
                 <Input
                   placeholder={'Last Name'}
                   ref={'lastname'}
@@ -249,9 +242,8 @@ class Register extends Component {
                   autoCapitalize={true}
                   onChange={this.onLastNameChange.bind(this)}
                   onSubmitEditing={() => {
-                    this.refs.email.focus();
-                  }}
-                  />
+                                     this.refs.email.focus();
+                                   }} />
                 <Input
                   placeholder={'Email'}
                   ref={'email'}
@@ -263,8 +255,8 @@ class Register extends Component {
                   autoCapitalize={false}
                   onChange={this.onEmailChange.bind(this)}
                   onSubmitEditing={() => {
-                    this.refs.confirmEmail.focus();
-                  }}/>
+                                     this.refs.confirmEmail.focus();
+                                   }} />
                 <Input
                   placeholder={'Confirm Email'}
                   ref={'confirmEmail'}
@@ -275,8 +267,8 @@ class Register extends Component {
                   autoCapitalize={false}
                   onChange={this.onConfirmEmailChange.bind(this)}
                   onSubmitEditing={() => {
-                    this.refs.phoneNumber.focus();
-                  }}/>
+                                     this.refs.phoneNumber.focus();
+                                   }} />
                 <Input
                   placeholder={'Phone Number'}
                   ref={'phoneNumber'}
@@ -285,7 +277,7 @@ class Register extends Component {
                   autoFocus={false}
                   autoCorrect={false}
                   autoCapitalize={false}
-                  onChange={this.onPhoneNumberChange.bind(this)}/>
+                  onChange={this.onPhoneNumberChange.bind(this)} />
                 <Text style={Skin.layout1.content.slider.text}>
                   Slide to prove your human
                 </Text>
@@ -297,137 +289,29 @@ class Register extends Component {
                   minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                   maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
                   onValueChange={(value) => this.setState({ value: value })} />
-              <View style={{flexDirection:'row'}}>
-                <CheckboxField
-                  defaultColor={Skin.baseline.checkbox.defaultColor}
-                  selectedColor={Skin.baseline.checkbox.selectedColor}
-                  onSelect={this.selectCheckbox}
-                  checkboxStyle={Skin.baseline.checkbox.base}
-                  onSelect={this.selectCheckbox.bind(this)}>
-                  <Text style={Skin.baseline.checkbox.checkColor}>
-                    {this.state.check}
-                  </Text>
-                </CheckboxField>
-                <Text onPress={() => Linking.openURL("https://www.google.com")}>
-                  Terms and Conditions Link
-                </Text>
-              </View>
+                <Checkbox
+                  onSelect={this.selectCheckbox.bind(this)}
+                  selected={this.state.check}
+                  labelSide={"right"}
+                  labelStyle={{
+                                color: Skin.colors.BUTTON_BG_COLOR,
+                                textDecorationLine: 'underline',
+                              }}
+                  onLabelPress={() => Linking.openURL("https://www.google.com")}>
+                  Terms and Conditions
+                </Checkbox>
               </View>
             </View>
           </View>
         </ScrollView>
-        <View
-          style={Skin.layout1.bottom.wrap}>
+        <View style={Skin.layout1.bottom.wrap}>
           <View style={Skin.layout1.bottom.container}>
             <Button
               label={Skin.text['1']['1'].submit_button}
-              onPress={this.validateAndProcced.bind(this)}/>
+              onPress={this.validateAndProcced.bind(this)} />
           </View>
         </View>
-        <KeyboardSpacer topSpacing={-55}/>
-
-
-
-        {/*<TextInput
-          //autoCorrect={false}
-          //autoCapitalize={'none'}
-          //keyboardType={this.props.keyboardType}
-          //placeholder={this.props.placeholder}
-          placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-          //returnKeyType={this.props.returnKeyType}
-          //secureTextEntry={this.props.secureTextEntry}
-          //onChange={this.props.onChange}
-          //onFocus={()=>{this.setFocus(true)}}
-          //onBlur={this.setFocus(false).bind(this)}
-          />
-        <ScrollView
-          scrollEnabled={true}
-          showsVerticalScrollIndicator={false}>
-          <View style={[Skin.layout1.wrap.scrollcontainer, {
-                         backgroundColor: '#aecf00',
-                         padding: 5,
-                         height:50,
-                         width: 300,
-                       }]}>
-            <Input
-              placeholder={'First Name'}
-              ref={'firstName'}
-              keyboardType={'default'}
-              onChange={this.onFirstNameChange.bind(this)} />
-          {/*
-            <Input
-              style={Skin.baseline.textinput.base}
-              placeholder={'Last Name'}
-              ref={'lastName'}
-              keyboardType={'default'}
-              onChange={this.onLastNameChange.bind(this)}
-              onSubmitEditing={() => {
-                                 this.refs.email.focus();
-                               }} />
-            <Input
-              style={Skin.baseline.textinput.base}
-              placeholder={'Email'}
-              ref={'email'}
-              keyboardType={'email-address'}
-              onChange={this.onEmailChange.bind(this)}
-              onSubmitEditing={() => {
-                                 this.refs.confirmEmail.focus();
-                               }} />
-            <Input
-              style={Skin.baseline.textinput.base}
-              placeholder={'Confirm Email'}
-              ref={'confirmEmail'}
-              keyboardType={'email-address'}
-              onChange={this.onConfirmEmailChange.bind(this)}
-              onSubmitEditing={() => {
-                                 this.refs.phoneNumber.focus();
-                               }} />
-            <Input
-              style={Skin.baseline.textinput.base}
-              placeholder={'Phone Number'}
-              ref={'phoneNumber'}
-              keyboardType={'numeric'}
-              onChange={this.onPhoneNumberChange.bind(this)}
-              marginBottom={16} />
-          </View>
-          <Text style={styles.slidetext}>
-            Slide to prove your human
-          </Text>
-          <Text style={styles.slidetext}>
-            Select range from
-            {this.state.randomMinValue} to
-            {this.state.randomMaxValue}
-          </Text>
-          <Slider
-            style={styles.slider}
-            {...this.props}
-            minimumValue={0}
-            maximumValue={100}
-            onValueChange={(value) => this.setState({ value: value })} />
-          <Text>
-            Value:
-            {Math.floor(this.state.value)}
-          </Text>
-          <View>
-            <CheckboxField
-              defaultColor='tranprant'
-              selectedColor="#247fd2"
-              onSelect={this.selectCheckbox}
-              checkboxStyle={styles.checkboxStyle}
-              onSelect={this.selectCheckbox.bind(this)}
-              labelSide="right">
-              <Text style={{ color: '#f00' }}>
-                {this.state.check}
-              </Text>
-            </CheckboxField>
-            <Text onPress={() => Linking.openURL("https://www.google.com")}>
-              Terms and Conditions Link
-            </Text>
-          </View>
-          <Button
-            lable="Submit"
-            onPress={this.validateAndProcced.bind(this)} />
-        </ScrollView>*/}
+        <KeyboardSpacer topSpacing={-55} />
       </View>
       );
   }
