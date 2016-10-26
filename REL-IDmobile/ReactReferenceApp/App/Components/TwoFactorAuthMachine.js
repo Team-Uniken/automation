@@ -101,16 +101,16 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
-    
-    
-    if(onGetAllChallengeEvent){
+
+
+    if (onGetAllChallengeEvent) {
       onGetAllChallengeEvent.remove();
     }
-    
+
     onGetAllChallengeEvent = DeviceEventEmitter.addListener(
       'onGetAllChallengeStatus',
       this.onGetAllChallengeStatus.bind(this)
-      );
+    );
 
   }
 
@@ -197,14 +197,14 @@ class TwoFactorAuthMachine extends Component {
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
           AsyncStorage.getItem('userId').then((value) => {
-            ReactRdna.getAllChallenges(value,(response) => {
+            ReactRdna.getAllChallenges(value, (response) => {
               if (response) {
-              console.log('getAllChallenges immediate response is'+response[0].error);
-              }else{
-              console.log('s immediate response is'+response[0].error);
+                console.log('getAllChallenges immediate response is' + response[0].error);
+              } else {
+                console.log('s immediate response is' + response[0].error);
               }
-              })
-            }).done();
+            })
+          }).done();
 
         }
       } else {
@@ -277,18 +277,18 @@ class TwoFactorAuthMachine extends Component {
    **/
 
   getTBACreds() {
-  //added for testing
-//   var tbacred= {chlng_name:'tbacred',chlng_idx:1,chlng_info:[{key:'Label',value:'AdditionalAuthentication'}],attempts_left:3,max_attempts_count:0,chlng_resp:[{challenge:"",response:""}],chlng_type:2,chlng_prompt:[[{credType:'touchid',isRegistered:false},{credType:'facebook',isRegistered:false},{credType:'password',isRegistered:false},{credType:'wechat',isRegistered:false}]],chlng_response_validation:false,challenge_response_policy:[],chlng_cipher_spec:["MD5"],chlng_cipher_salt:"",sub_chlng_count:1,chlngs_per_batch:1};
-//   return tbacred;
+    //added for testing
+    //   var tbacred= {chlng_name:'tbacred',chlng_idx:1,chlng_info:[{key:'Label',value:'AdditionalAuthentication'}],attempts_left:3,max_attempts_count:0,chlng_resp:[{challenge:"",response:""}],chlng_type:2,chlng_prompt:[[{credType:'touchid',isRegistered:false},{credType:'facebook',isRegistered:false},{credType:'password',isRegistered:false},{credType:'wechat',isRegistered:false}]],chlng_response_validation:false,challenge_response_policy:[],chlng_cipher_spec:["MD5"],chlng_cipher_salt:"",sub_chlng_count:1,chlngs_per_batch:1};
+    //   return tbacred;
     //alert(challengeJsonArr.length);
 
     //Uncomment this when server is ready
-     for (var i = 0; i < challengeJsonArr.length; i++) {
-       if (challengeJsonArr[i].chlng_name === 'tbacred')
-         return challengeJsonArr[i];
-     }
+    for (var i = 0; i < challengeJsonArr.length; i++) {
+      if (challengeJsonArr[i].chlng_name === 'tbacred')
+        return challengeJsonArr[i];
+    }
 
-     return null;
+    return null;
   }
 
   showNextChallenge(args) {
@@ -296,10 +296,11 @@ class TwoFactorAuthMachine extends Component {
     // alert(JSON.stringify(args));
     // alert("response = "+ JSON.stringify(args));
     const i = challengeJsonArr.indexOf(currentIndex);
-    if (challengeJsonArr[currentIndex].chlng_name === 'tbacred') { 
+    if (challengeJsonArr[currentIndex].chlng_name === 'tbacred') {
       currentIndex++;
       if (obj.hasNextChallenge()) {
         const currentChlng = obj.getCurrentChallenge();
+        
         obj.stateNavigator.push({
           id: currentChlng.chlng_name,
           url: {
@@ -320,15 +321,25 @@ class TwoFactorAuthMachine extends Component {
         // Show Next challenge screen
         var currentChlng = obj.getCurrentChallenge();
         alert(currentChlng.chlng_name);
-        if(currentChlng.chlng_name === 'tbacred'){
+        if (currentChlng.chlng_name === 'tbacred') {
           currentIndex++;
-          if (obj.hasNextChallenge()){
-             currentChlng = obj.getCurrentChallenge();
+          if (obj.hasNextChallenge()) {
+            currentChlng = obj.getCurrentChallenge();
+
+            obj.stateNavigator.push({
+              id: currentChlng.chlng_name,
+              url: {
+                chlngJson: currentChlng,
+                chlngsCount: challengeJsonArr.length,
+                currentIndex: currentIndex + 1,
+              },
+              title: obj.props.title,
+            });
           }
-          else{
+          else {
             obj.callCheckChallenge();
           }
-        }else{
+        } else {
 
           obj.stateNavigator.push({
             id: currentChlng.chlng_name,
@@ -348,74 +359,74 @@ class TwoFactorAuthMachine extends Component {
   }
 
 
-onGetAllChallengeStatus(e){
-  Events.trigger('hideLoader', true);
-  const res = JSON.parse(e.response);
-  console.log(res);
-  if (res.errCode === 0) {
-    const statusCode = res.pArgs.response.StatusCode;
-    if (statusCode === 100) {
-      
-      
-      
-      var arrTba = new Array();
-      
-      const chlngJson = res.pArgs.response.ResponseData;
-      
-//     chlngJson ={ "chlng":[{"chlng_name":"secqa","chlng_idx":1,"chlng_info":[{"key":"Prompt label","value":"Secret Question"},{"key":"Response label","value":"Secret Answer"},{"key":"Description","value":"Choose your secret question and then provide answer"},{"key":"Reading","value":"Set secret question and answer"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"","response":""},{"challenge":"","response":""},{"challenge":"","response":""}],"chlng_type":2,"chlng_prompt":[["what is your petname","what is the name of your mother","what is the name of your father","what is the name of your sister","what is the name of your brother"],["what is your school name","what is your school address","what is the name of your school principal","what is the name of your class teacher","what is your school bus number"],["what is your office name","what is your office address","what is the name of your office manager","what is your office team name","what is your office team count"]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":3,"chlngs_per_batch":1},{"chlng_name":"pass","chlng_idx":2,"chlng_info":[{"key":"Response label","value":"Password"},{"key":"description","value":"Enter password of length 8-10 characters"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"password","response":""}],"chlng_type":1,"chlng_prompt":[[]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1},{"chlng_name":"tbacred","chlng_idx":3,"chlng_info":[{"key":"Label","value":"Additional Authentication"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"WeChat","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"},{"challenge":"WhatsApp","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"}],"chlng_type":2,"chlng_prompt":[[{"credType":"facebook","isRegistered":false},{"credType":"Wechat","isRegistered":false},{"credType":"WhatsApp","isRegistered":false},{"credType":"gmail","isRegistered":true}]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1}]};
-      
-      for (var i = 0; i < chlngJson.chlng.length; i++) {
-        if (chlngJson.chlng[i].chlng_name === 'tbacred')
-          arrTba.push(chlngJson.chlng[i]);
-      }
-      if( typeof arrTba != 'undefined' && arrTba instanceof Array ){
-        
-        if(arrTba.length > 0){
-          AsyncStorage.getItem('ERPasswd').then((value) => {
-            
-            if(value){
-            this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url:{chlngJson:{"chlng":arrTba},touchCred:{"isTouch":true}}});
-            }else{
-            this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url:{chlngJson:{"chlng":arrTba},touchCred:{"isTouch":false}}});
-            }
-            
+  onGetAllChallengeStatus(e) {
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+
+
+
+        var arrTba = new Array();
+
+        const chlngJson = res.pArgs.response.ResponseData;
+
+        //     chlngJson ={ "chlng":[{"chlng_name":"secqa","chlng_idx":1,"chlng_info":[{"key":"Prompt label","value":"Secret Question"},{"key":"Response label","value":"Secret Answer"},{"key":"Description","value":"Choose your secret question and then provide answer"},{"key":"Reading","value":"Set secret question and answer"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"","response":""},{"challenge":"","response":""},{"challenge":"","response":""}],"chlng_type":2,"chlng_prompt":[["what is your petname","what is the name of your mother","what is the name of your father","what is the name of your sister","what is the name of your brother"],["what is your school name","what is your school address","what is the name of your school principal","what is the name of your class teacher","what is your school bus number"],["what is your office name","what is your office address","what is the name of your office manager","what is your office team name","what is your office team count"]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":3,"chlngs_per_batch":1},{"chlng_name":"pass","chlng_idx":2,"chlng_info":[{"key":"Response label","value":"Password"},{"key":"description","value":"Enter password of length 8-10 characters"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"password","response":""}],"chlng_type":1,"chlng_prompt":[[]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1},{"chlng_name":"tbacred","chlng_idx":3,"chlng_info":[{"key":"Label","value":"Additional Authentication"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"WeChat","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"},{"challenge":"WhatsApp","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"}],"chlng_type":2,"chlng_prompt":[[{"credType":"facebook","isRegistered":false},{"credType":"Wechat","isRegistered":false},{"credType":"WhatsApp","isRegistered":false},{"credType":"gmail","isRegistered":true}]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1}]};
+
+        for (var i = 0; i < chlngJson.chlng.length; i++) {
+          if (chlngJson.chlng[i].chlng_name === 'tbacred')
+            arrTba.push(chlngJson.chlng[i]);
+        }
+        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
+
+          if (arrTba.length > 0) {
+            AsyncStorage.getItem('ERPasswd').then((value) => {
+
+              if (value) {
+                this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
+              } else {
+                this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } });
+              }
+
             }).done();
-          
-          
-          
-          
-        }else{
+
+
+
+
+          } else {
+            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          }
+        } else {
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
-      }else{
-        this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+
+        //        //var arrChlng = chlngJson.chlng;
+        //        var selectedChlng;
+        //        var status = 0;
+        //        for(var i = 0; i < chlngJson.chlng.length; i++){
+        //          var chlng = chlngJson.chlng[i];
+        //          if(chlng.chlng_name === challengeName){
+        //
+        //          }else{
+        //            chlngJson.chlng.splice(i, 1);
+        //            i--;
+        //          }
+        //        }
+        //
+        //        const nextChlngName = chlngJson.chlng[0].chlng_name;
+        //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+
+      } else {
+        alert(res.pArgs.response.StatusMsg);
       }
-      
-      //        //var arrChlng = chlngJson.chlng;
-      //        var selectedChlng;
-      //        var status = 0;
-      //        for(var i = 0; i < chlngJson.chlng.length; i++){
-      //          var chlng = chlngJson.chlng[i];
-      //          if(chlng.chlng_name === challengeName){
-      //
-      //          }else{
-      //            chlngJson.chlng.splice(i, 1);
-      //            i--;
-      //          }
-      //        }
-      //
-      //        const nextChlngName = chlngJson.chlng[0].chlng_name;
-      //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-      
     } else {
-      alert(res.pArgs.response.StatusMsg);
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
     }
-  }else {
-    alert('Something went wrong');
-    // If error occurred reload devices list with previous response
+
   }
-  
-}
 
 
   renderScene(route, nav) {
@@ -424,7 +435,7 @@ onGetAllChallengeStatus(e){
 
     let challengeOperation;
     if (route.url !== undefined && !(route.url instanceof Array)) {
-      if(route.url.chlngJson!== undefined)
+      if (route.url.chlngJson !== undefined)
         challengeOperation = route.url.chlngJson.challengeOperation;
     }
 
@@ -461,9 +472,9 @@ onGetAllChallengeStatus(e){
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
-    }else if (id === 'RegisterOption') {
+    } else if (id === 'RegisterOption') {
       return (<RegisterOption navigator={nav} parentnav={obj.props.navigator} url={route.url} title={route.title} />);
-    }else if(id === 'pattern'){
+    } else if (id === 'pattern') {
       return (<PatternLock navigator={nav} mode={route.mode} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>Error</Text>);
