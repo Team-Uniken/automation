@@ -160,6 +160,7 @@ module.exports.icon = {
   touchid: '\ue90d',
   close: '\ue5cd',
   check: '\u2714',
+  pattern: 'P'
 };
 
 // Titles
@@ -473,7 +474,6 @@ module.exports.layout0 = {
         fontFamily: ICON_FONT,
         color: BUTTON_TEXT_COLOR,
         fontSize: 45,
-        marginTop: 10,
       },
       wrap: {
         flexDirection: 'row',

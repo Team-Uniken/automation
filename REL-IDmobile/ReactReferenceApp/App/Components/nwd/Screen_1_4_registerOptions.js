@@ -765,8 +765,8 @@ class Register extends Component {
           }
           alert(res.pArgs.response.StatusMsg);
 
-          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+         // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
 
         }
       } else {
@@ -877,7 +877,9 @@ class Register extends Component {
 
       var temp = this.props.url.chlngJson.chlng;
       var respo = temp[0].chlng_resp;
-      respo[0].challenge = "FB";
+      
+      var promts = JSON.parse(temp[0].chlng_prompt[0]);
+      respo[0].challenge = promts.cred_type;
       respo[0].response = value;
 
       // this.props.tbacred.chlng_resp[0].challenge = key;
@@ -969,52 +971,54 @@ class Register extends Component {
     var indents = [];
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
-      var promts = chlng.chlng_prompt[0];
-
-      if (promts[0].isRegistered == false) {
+      var promts = JSON.parse(chlng.chlng_prompt[0]);
+      
+      
+      
+      if (promts.is_registered == false) {
         indents.push(
-              <Checkbox
-                 onSelect={() => { this.selectCheckBox(promts[0].credType) }}
-                 selected={this.state[promts[0].credType]}
-                 labelSide={"right"}
-                 lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"}>
-               </Checkbox>
-        );
-          // <CheckBox
-          // value={this.state[promts[0].credType]}
-          // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
-          // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+          <Checkbox
+          onSelect={() => { this.selectCheckBox(promts.cred_type) }}
+          selected={this.state[promts.cred_type]}
+          labelSide={"right"}
+          lable={"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}>
+          </Checkbox>
+          );
+        // <CheckBox
+        // value={this.state[promts[0].credType]}
+        // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
+        // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
       }
     }
-
+    
     if (this.props.url.touchCred.isTouch == true) {
       if (Platform.OS === 'android') {
         indents.push(
           <Checkbox
-                 onSelect={this.selectpattern.bind(this) }
-                 selected={this.state.pattern}
-                 labelSide={"right"}
-                 lable="Enable Pattern Login">
-               </Checkbox>
-        );
-          // <CheckBox
-          // value={this.state.pattern}
-          // onSelect={this.selectpattern.bind(this) }
-          // lable="Enable Pattern Login"/>);
+          onSelect={this.selectpattern.bind(this) }
+          selected={this.state.pattern}
+          labelSide={"right"}
+          lable="Enable Pattern Login">
+          </Checkbox>
+          );
+        // <CheckBox
+        // value={this.state.pattern}
+        // onSelect={this.selectpattern.bind(this) }
+        // lable="Enable Pattern Login"/>);
       } else {
         indents.push(
           <Checkbox
-                 onSelect={this.selecttouchid.bind(this) }
-                 selected={this.state.touchid}
-                 labelSide={"right"}
-                 lable="Enable TouchID Login">
-               </Checkbox>
-        );
-          
-          // <CheckBox
-          // value={this.state.touchid}
-          // onSelect={this.selecttouchid.bind(this) }
-          // lable="Enable TouchID Login"/>);
+          onSelect={this.selecttouchid.bind(this) }
+          selected={this.state.touchid}
+          labelSide={"right"}
+          lable="Enable TouchID Login">
+          </Checkbox>
+          );
+        
+        // <CheckBox
+        // value={this.state.touchid}
+        // onSelect={this.selecttouchid.bind(this) }
+        // lable="Enable TouchID Login"/>);
       }
     }
 
