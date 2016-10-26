@@ -687,7 +687,7 @@ class Register extends Component {
       this._clickHandler();
     } else {
       this.setState({ touchid: false });
-      AsyncStorage.setItem("RPasswd", "empty");
+      AsyncStorage.setItem("ERPasswd", "empty");
     }
   }
 
@@ -696,7 +696,7 @@ class Register extends Component {
       this.doPatternSet();
     } else {
       this.setState({ pattern: false });
-      AsyncStorage.setItem("RPasswd", "empty");
+      AsyncStorage.setItem("ERPasswd", "empty");
     }
   }
   selectfb() {
@@ -767,7 +767,7 @@ class Register extends Component {
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           }
-          alert(res.pArgs.response.StatusMsg);
+         // alert(res.pArgs.response.StatusMsg);
 
          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           obj.doNavigateDashBoard();

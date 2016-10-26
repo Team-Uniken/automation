@@ -123,7 +123,7 @@ class PatternLock extends Component {
             if(this.state.screen === "confirm"){
                 if(this.currentPattern === pattern){
                   AsyncStorage.getItem('RPasswd').then((value) => {
-                      this.encryptUserData(null,Main.dnaPasswd,pattern);
+                      this.encryptUserData(null,value,pattern);
                   }).done();
                 }
                 else{
