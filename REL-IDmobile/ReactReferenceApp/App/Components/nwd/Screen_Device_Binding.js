@@ -142,7 +142,7 @@ export default class DeviceBinding extends Component {
           <View>
             <Text style={Skin.layout0.top.subtitle}>Remember Device</Text>
             <Text style={[Skin.activationStyle.info,{color:Skin.BLACK_TEXT_COLOR}]}>
-              Tap icon to change your setting:
+              Tap icon to change your setting
             </Text>
             <Animated.View style={styles.animWrap}>
               <TouchableHighlight

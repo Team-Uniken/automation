@@ -41,8 +41,9 @@ export default class PasswordSet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      password: '',
-      cPassword: '',
+    password: '',
+    cPassword: '',
+    userID:'',
     };
     /*
      this._props = {
@@ -79,25 +80,32 @@ export default class PasswordSet extends Component {
      };
      */
   }
-
+  componentWillMount() {
+    
+    AsyncStorage.getItem('RUserId').then((value) => {
+      this.setState({ Username: value });
+      }).done();
+  }
+  
+  
   validatePassword(textval) {
     // var passwordregex = /^[0-9]/;
     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
-
+  
   onPasswordChange(event) {
     this.setState({ password: event.nativeEvent.text });
   }
-
+  
   onConfirmPasswordChange(event) {
     this.setState({ cPassword: event.nativeEvent.text });
   }
-
+  
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
-
+    
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
@@ -121,82 +129,82 @@ export default class PasswordSet extends Component {
       alert('Please enter password ');
     }
   }
-
+  
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'Continue';
   }
-
+  
   render() {
-
-
+    
+    
     return (
       <View style={Skin.layout1.wrap}>
-        <StatusBar
-          backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'}
-          />
-        <View style={Skin.layout1.title.wrap}>
-          <Title
-          close={0}>Registration</Title>
-        </View>
-        <ScrollView style={Skin.layout1.content.scrollwrap}>
-          <View style={Skin.layout1.content.wrap}>
-            <View style={Skin.layout1.content.container}>
-              <View style={Skin.layout1.content.top.container}>
-                <Text style={[Skin.layout1.content.top.text, {}]}>Your Username is</Text>
-                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>abs********lmn @gmail.com</Text>
-                <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
-              </View>
-              <View style={Skin.layout1.content.bottom.container}>
-
-                <Input
-                  returnKeyType={'next'}
-                  keyboardType={'default'}
-                  autoFocus={true}
-                  autoCorrect={false}
-                  autoComplete={false}
-                  autoCapitalize={false}
-                  ref={'password'}
-                  placeholder={'Enter Password'}
-                  secureTextEntry={true}
-                  blurOnSubmit={false}
-                  onChange={this.onPasswordChange.bind(this) }
-                  onSubmitEditing={() => { this.refs.cPassword.focus(); } }
-                  marginBottom={12}
-                  />
-
-                <Input
-                  autoFocus={false}
-                  autoComplete={false}
-                  autoCorrect={false}
-                  autoCapitalize={false}
-                  returnKeyType={'done'}
-                  secureTextEntry={true}
-                  ref={'cPassword'}
-                  keyboardType={'default'}
-                  placeholder={'Confirm Password'}
-                  onChange={this.onConfirmPasswordChange.bind(this) }
-                  onSubmitEditing={this.setPassword.bind(this) }
-
-                  />
-              </View>
-            </View>
-          </View>
-        </ScrollView>
-        <View style={Skin.layout1.bottom.wrap}>
-          <View style={Skin.layout1.bottom.container}>
-            <Button style={Skin.layout1.bottom.button}
-              onPress={this.setPassword.bind(this) }
-              label={Skin.text['1']['1'].submit_button}/>
-          </View>
-        </View>
-        <KeyboardSpacer topSpacing={-40}/>
+      <StatusBar
+      backgroundColor={Skin.main.STATUS_BAR_BG}
+      barStyle={'default'}
+      />
+      <View style={Skin.layout1.title.wrap}>
+      <Title
+      close={0}>Registration</Title>
       </View>
-    );
-
+      <ScrollView style={Skin.layout1.content.scrollwrap}>
+      <View style={Skin.layout1.content.wrap}>
+      <View style={Skin.layout1.content.container}>
+      <View style={Skin.layout1.content.top.container}>
+      <Text style={[Skin.layout1.content.top.text, {}]}>Your Username is</Text>
+      <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>{this.state.Username}</Text>
+      <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
+      </View>
+      <View style={Skin.layout1.content.bottom.container}>
+      
+      <Input
+      returnKeyType={'next'}
+      keyboardType={'default'}
+      autoFocus={true}
+      autoCorrect={false}
+      autoComplete={false}
+      autoCapitalize={false}
+      ref={'password'}
+      placeholder={'Enter Password'}
+      secureTextEntry={true}
+      blurOnSubmit={false}
+      onChange={this.onPasswordChange.bind(this) }
+      onSubmitEditing={() => { this.refs.cPassword.focus(); } }
+      marginBottom={12}
+      />
+      
+      <Input
+      autoFocus={false}
+      autoComplete={false}
+      autoCorrect={false}
+      autoCapitalize={false}
+      returnKeyType={'done'}
+      secureTextEntry={true}
+      ref={'cPassword'}
+      keyboardType={'default'}
+      placeholder={'Confirm Password'}
+      onChange={this.onConfirmPasswordChange.bind(this) }
+      onSubmitEditing={this.setPassword.bind(this) }
+      
+      />
+      </View>
+      </View>
+      </View>
+      </ScrollView>
+      <View style={Skin.layout1.bottom.wrap}>
+      <View style={Skin.layout1.bottom.container}>
+      <Button style={Skin.layout1.bottom.button}
+      onPress={this.setPassword.bind(this) }
+      label={Skin.text['1']['1'].submit_button}/>
+      </View>
+      </View>
+      <KeyboardSpacer topSpacing={-40}/>
+      </View>
+      );
+    
   }
 }
 

@@ -106,7 +106,7 @@ export default class DeviceName extends Component {
         <View
           style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center',}}>
           <View style={ Skin.activationStyle.topGroup }>
-            <Text style={Skin.layout0.top.subtitle}>Set a nickname for this device: </Text>
+            <Text style={Skin.layout0.top.subtitle}>Set a nickname for this device </Text>
 
             <Margin
               space={16}/>

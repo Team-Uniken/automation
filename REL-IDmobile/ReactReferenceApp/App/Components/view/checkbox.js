@@ -26,8 +26,10 @@ var styles = StyleSheet.create({
     fontSize: 20,
     color: '#000',
     opacity: 1,
+  height:48,
     textAlign: 'left',
     textAlignVertical: 'center',
+paddingTop:12,
   },
    row: {
     flexDirection: 'row',
