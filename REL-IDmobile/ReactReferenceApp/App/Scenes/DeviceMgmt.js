@@ -500,7 +500,7 @@ export default class DeviceMgmtScene extends Component {
           tint: Skin.colors.TEXT_COLOR,
           left: {
             text: 'Back',
-            icon: 'x',
+            icon: '',
             iconStyle: {},
             textStyle: {},
             handler: this.props.navigator.pop,

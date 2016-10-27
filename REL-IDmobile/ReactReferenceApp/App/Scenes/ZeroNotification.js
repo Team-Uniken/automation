@@ -492,7 +492,7 @@ export default class NotificationMgmtScene extends Component {
             tint: Skin.main.NAVBAR_TINT,
             left: {
             text: 'Back',
-            icon: 'x',
+            icon: '',
             iconStyle: {},
             textStyle: {},
             handler: this.props.navigator.pop,

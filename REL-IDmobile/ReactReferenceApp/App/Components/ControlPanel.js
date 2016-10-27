@@ -340,7 +340,7 @@ class ControlPanel extends Component{
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Help & Support',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://10.0.11.100'});}}  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
+            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Secure Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'http://54.179.148.241'});}}  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'SecureWebView', title:'Open Portal', sceneConfig:Navigator.SceneConfigs.PushFromRight, url:'https://www.google.co.in/'});}}  style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
