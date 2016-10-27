@@ -656,13 +656,14 @@ class Register extends Component {
     var isCheck = false;
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
+      if(chlng.chlng_prompt[0].length>0){
       var promts = JSON.parse(chlng.chlng_prompt[0]);
 
       if (promts.is_registered == false) {
         isCheck = true;
         break;
       }
-
+      }
     }
     
     if(isCheck == false){
@@ -985,7 +986,10 @@ class Register extends Component {
     var indents = [];
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
-      var promts = JSON.parse(chlng.chlng_prompt[0]);
+      
+      var promts;
+      if(chlng.chlng_prompt[0] > 0){
+      promts = JSON.parse(chlng.chlng_prompt[0]);
       
       
       
@@ -1004,7 +1008,7 @@ class Register extends Component {
         // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
       }
     }
-    
+    }
     if (this.props.url.touchCred.isTouch == false) {
       if (Platform.OS === 'android') {
         indents.push(
