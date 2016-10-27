@@ -292,6 +292,19 @@ class ControlPanel extends Component{
   }
   
   render(){
+
+     
+            // <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ActivateNewDevice', title:'Activate New Device',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
+            // </TouchableHighlight><View style={styles.menuBorder}></View>
+
+
+            //  <TouchableHighlight onPress={()=>{this.getPostLoginChallenges('verifyChallenge','secqa');}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
+            // </TouchableHighlight><View style={styles.menuBorder}></View>
+            
+            // <TouchableHighlight onPress={()=>{this.getPostLoginChallenges('verifyChallenge','pass');}}  style={styles.touch}><Text style={styles.menuItem}>Change Pin</Text>
+            // </TouchableHighlight><View style={styles.menuBorder}></View>
+            
+
     return (
             <View style={styles.container}>
             <Text style={styles.controlHeader}>{Skin.admin.MENU_TITLE}</Text>
@@ -315,21 +328,14 @@ class ControlPanel extends Component{
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Profile & Settings',sceneConfig:Navigator.SceneConfigs.PushFromRight});}} style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
-            
-            <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ActivateNewDevice', title:'Activate New Device',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Activate New Device</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            
+          
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'DeviceMgmt', title:'Self Device Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Device Managment</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'NotificationMgmt', title:'Notification Managment',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Notifications</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={()=>{this.getPostLoginChallenges('verifyChallenge','secqa');}}  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
-            
-            <TouchableHighlight onPress={()=>{this.getPostLoginChallenges('verifyChallenge','pass');}}  style={styles.touch}><Text style={styles.menuItem}>Change Pin</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
+           
             
             <TouchableHighlight onPress={()=>{this.props.toggleDrawer();this.props.navigator.push({id: 'ComingSoon', title:'Help & Support',sceneConfig:Navigator.SceneConfigs.PushFromRight,});}}  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
             </TouchableHighlight><View style={styles.menuBorder}></View>
