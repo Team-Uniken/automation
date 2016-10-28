@@ -113,7 +113,7 @@ const main = {
   TITLE_COLOR: '#ffffff'
 }
 
-const admin = { MENU_TITLE: 'UBS',MENU_FONT: 'Times New Roman' }
+const admin = { MENU_TITLE: 'NWD',MENU_FONT: 'Times New Roman' }
 
 const list = { LIST_HEADER_COLOR: '#3b3b3b', }
 
