@@ -52,18 +52,18 @@ var SampleRow = React.createClass({
           activeOpacity={1.0}
           underlayColor={Skin.colors.REPPLE_COLOR}
           onPress={() => {
-                     obj.props.navigator.push({
-                       id: "AddAppointment",
-                       title: "Add Appointment",
-                       url: {
-                         'date': this.props.date,
-                         'time': this.props.time,
-                         'location': this.props.location,
-                         'msg': this.props.msg,
-                         'buttontext': 'Update'
-                       }
-                     });
-                   }}>
+            obj.props.navigator.push({
+              id: "AddAppointment",
+              title: "Add Appointment",
+              url: {
+                'date': this.props.date,
+                'time': this.props.time,
+                'location': this.props.location,
+                'msg': this.props.msg,
+                'buttontext': 'Update'
+              }
+            });
+          } }>
           <View style={Skin.appointmentrow.col}>
             <View style={Skin.appointmentrow.row}>
               <Text style={Skin.appointmentrow.date}>
@@ -89,7 +89,7 @@ var SampleRow = React.createClass({
           </View>
         </TouchableHighlight>
       </View>
-      );
+    );
   }
 });
 
@@ -98,7 +98,7 @@ var {View, Text, TouchableHighlight, StatusBar, ListView, Image, Navigator, Text
 var Appointment = React.createClass({
 
 
-  getInitialState: function() {
+  getInitialState: function () {
     obj = this;
     var ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
@@ -130,8 +130,8 @@ var Appointment = React.createClass({
   },
   renderRow(rowData) {
     return <SampleRow
-             {...rowData}
-             style={Skin.appointmentrow.row} />
+      {...rowData}
+      style={Skin.appointmentrow.row} />
   },
   render() {
     return (
@@ -152,18 +152,18 @@ var Appointment = React.createClass({
           activeOpacity={1.0}
           underlayColor={Skin.colors.STATUS_BAR_COLOR}
           onPress={() => {
-                     obj.props.navigator.push({
-                       id: "AddAppointment",
-                       title: "Add Appointment",
-                       url: {
-                         'date': '2016-05-06',
-                         'time': '20:00',
-                         'location': 'Select Location',
-                         'msg': '',
-                         'buttontext': 'Save'
-                       }
-                     });
-                   }}>
+            obj.props.navigator.push({
+              id: "AddAppointment",
+              title: "Add Appointment",
+              url: {
+                'date': '2016-05-06',
+                'time': '20:00',
+                'location': 'Select Location',
+                'msg': '',
+                'buttontext': 'Save'
+              }
+            });
+          } }>
           <View>
             BUG
             {/* BUG
@@ -172,7 +172,7 @@ var Appointment = React.createClass({
           </View>
         </TouchableHighlight>
       </View>
-      );
+    );
   },
 });
 

@@ -54,18 +54,18 @@ var QRCodeScreen = React.createClass({
   _onBarCodeRead: function(result) {
     var $this = this;
 
-    if (this.barCodeFlag) {
+  //  if (this.barCodeFlag) {
       this.barCodeFlag = false;
 
-      setTimeout(function() {
+    //  setTimeout(function() {
         // $this.props.navigator.pop();
 
         //Events.trigger('onQRSuccess', result.data);
-        $this.setState({ showCamera: false });
-        Events.trigger('showLoader', true);
+   //     $this.setState({ showCamera: false });
+    //    Events.trigger('showLoader', true);
         $this.onQRScanSuccess(result.data);
-      }, 1000);
-    }
+    //  }, 1000);
+   // }
   },
 
   onActivationCodeChange: function(event) {
@@ -107,25 +107,30 @@ var QRCodeScreen = React.createClass({
       var exp = res.expiry;
       var obtainedVfKey = Obj.props.url.chlngJson.chlng_resp[0].challenge;
       if (obtainedVfKey === vfKey) {
+       // alert("QR scan success");
+       // Events.trigger('showLoader',true);
+        $this.setState({showCamera:false});
         let responseJson = Obj.props.url.chlngJson;
         responseJson.chlng_resp[0].response = aCode;
-        Events.trigger('showNextChallenge', {
-          response: responseJson
-        });
+        setTimeout(()=>{
+        Events.trigger('showNextChallenge', { response: responseJson });
+        },1000);
       } else {
-        Events.trigger('hideLoader', true);
+      //  Events.trigger('hideLoader', true);
 
         alert('Verification code does not match');
-        setTimeout(function() {
-          $this.setState({ showCamera: true });
-        }, 2000);
+        this.barCodeFlag = true;
+      //  setTimeout(function() {
+       //   $this.setState({ showCamera: true });
+       // }, 2000);
       }
     } else {
-      Events.trigger('hideLoader', true);
+     // Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
-      setTimeout(function() {
-        $this.setState({ showCamera: true });
-      }, 2000);
+      this.barCodeFlag = true;
+    //  setTimeout(function() {
+     //   $this.setState({ showCamera: true });
+   //   }, 2000);
 
     }
   },
