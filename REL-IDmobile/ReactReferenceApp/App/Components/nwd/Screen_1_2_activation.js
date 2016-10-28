@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, VibrationIOS, TextInput, TouchableHighlight, InteractionManager, Platform, AsyncStorage, AlertIOS, Keyboard, StatusBar, ScrollView, Alert, } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -9,74 +9,42 @@ import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import Skin from '../../Skin';
 import MainActivation from '../MainActivation';
-
-
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-var QRCodeScreen = React.createClass({
 
-  getInitialState: function(props) {
-    return {
+class Activation extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       activatonCode: '',
       showCamera: true,
       cameraType: Camera.constants.Type.back,
-    };
-  },
+    }
+  }
 
-  propTypes: {
-    cancelButtonVisible: React.PropTypes.bool,
-    cancelButtonTitle: React.PropTypes.string,
-    onSucess: React.PropTypes.func,
-    onCancel: React.PropTypes.func,
-  },
 
-  getDefaultProps: function() {
-    return {
-      cancelButtonVisible: true,
-      cancelButtonTitle: 'Cancel',
-      url: {
-        chlngJson: {
-          chlng_resp: [{
-            challenge: 'ABCDEFG'
-          }]
-        }
-      }
-    };
-  },
+  _onBarCodeRead(result) {
+    this.barCodeFlag = false;
+    this.onQRScanSuccess(result.data);
+  }
 
-  _onBarCodeRead: function(result) {
-    var $this = this;
+  onActivationCodeChange(e) {
+    this.setState({ activatonCode: e.nativeEvent.text });
+  }
 
-  //  if (this.barCodeFlag) {
-      this.barCodeFlag = false;
-
-    //  setTimeout(function() {
-        // $this.props.navigator.pop();
-
-        //Events.trigger('onQRSuccess', result.data);
-   //     $this.setState({ showCamera: false });
-    //    Events.trigger('showLoader', true);
-        $this.onQRScanSuccess(result.data);
-    //  }, 1000);
-   // }
-  },
-
-  onActivationCodeChange: function(event) {
-    this.setState({ activatonCode: event.nativeEvent.text });
-  },
-
-  btnText: function() {
+  btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'NEXT';
-  },
+  }
 
-  checkActivationCode: function() {
+  checkActivationCode() {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
@@ -85,16 +53,9 @@ var QRCodeScreen = React.createClass({
     } else {
       alert('Enter Activation Code');
     }
-  },
+  }
 
-  componentWillMount: function() {
-  },
-
-  componentDidMount: function() {
-    // this.refs['activatonCode'].focus();
-  },
-
-  onQRScanSuccess: function(result) {
+  onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
       var res = JSON.parse(result);
@@ -103,112 +64,51 @@ var QRCodeScreen = React.createClass({
       var exp = res.expiry;
       var obtainedVfKey = this.props.url.chlngJson.chlng_resp[0].challenge;
       if (obtainedVfKey === vfKey) {
-       // alert("QR scan success");
-       // Events.trigger('showLoader',true);
-        $this.setState({showCamera:false});
+        // alert("QR scan success");
+        // Events.trigger('showLoader',true);
+        $this.setState({ showCamera: false });
         let responseJson = $this.props.url.chlngJson;
         responseJson.chlng_resp[0].response = aCode;
-        setTimeout(()=>{
-        Events.trigger('showNextChallenge', { response: responseJson });
-        },1000);
+        setTimeout(() => {
+          Events.trigger('showNextChallenge', {
+            response: responseJson
+          });
+        }, 1000);
       } else {
-      //  Events.trigger('hideLoader', true);
+        //  Events.trigger('hideLoader', true);
 
         alert('Verification code does not match');
         this.barCodeFlag = true;
       //  setTimeout(function() {
-       //   $this.setState({ showCamera: true });
-       // }, 2000);
+      //   $this.setState({ showCamera: true });
+      // }, 2000);
       }
     } else {
-     // Events.trigger('hideLoader', true);
+      // Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
       this.barCodeFlag = true;
-    //  setTimeout(function() {
-     //   $this.setState({ showCamera: true });
-   //   }, 2000);
+      //  setTimeout(function() {
+      //   $this.setState({ showCamera: true });
+      //   }, 2000);
 
     }
-  },
+  }
 
-  renderIf: function(condition, jsx) {
+  renderIf(condition, jsx) {
     if (condition) {
       return jsx;
     }
-  },
+  }
 
-  close: function() {
+  close() {
+    Alert.alert('clicked')
+    console.log('navigator')
+    console.log(this.props)
     this.props.navigator.pop()
-  },
+  }
 
-  render: function() {
-    var cancelButton = null;
+  render() {
     this.barCodeFlag = true;
-    if (this.props.cancelButtonVisible) {
-      cancelButton = <CancelButton
-                       onPress={this._onPressCancel}
-                       title={this.props.cancelButtonTitle} />;
-    }
-
-    var $this = this;
-
-    // return (
-    // <MainActivation navigator={this.props.navigator}>
-    //   <View style={Skin.activationStyle.topGroup}>
-    //     <Text style={Skin.activationStyle.title}>Activation</Text>
-
-    //     <Text style={[Skin.activationStyle.input_wrap,{justifyContent:'center'},Skin.activationStyle.info]}>
-    //       <Text>Step 1: Verify Code </Text>
-    //       <Text style={{fontWeight: 'bold'}}>{this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-    //       <Text style={Skin.activationStyle.info}>{'\nStep 2: Scan QR Code'}</Text>
-    //     </Text>
-
-    //     <View style={[Skin.activationStyle.input_wrap, { justifyContent: 'center' }]}>
-    //       <View style={{ width: 200, height: 200, justifyContent: 'center',backgroundColor:'black' }}>
-    //         { $this.renderIf($this.state.showCamera,
-    //           <Camera onBarCodeRead={this._onBarCodeRead} style={styles.camera} type={Camera.constants.Type.back}>
-    //              <View style={styles.rectangleContainer}>
-    //                 <View style={styles.rectangle}/>
-    //              </View>
-    //            </Camera>)
-    //         }
-    //       </View>
-    //     </View>
-
-    // <View style={Skin.activationStyle.input_wrap}>
-    //   <View style={Skin.activationStyle.textinput_wrap}>
-    // <TextInput
-    //   returnKeyType={'next'}
-    //   autoCorrect={false}
-    //   secureTextEntry={true}
-    //   keyboardType={'default'}
-    //   placeholderTextColor={'rgba(255,255,255,0.7)'}
-    //   style={Skin.activationStyle.textinput}
-    //   value={this.state.inputUsername}
-    //   ref={'activatonCode'}
-    //   placeholder={'or Enter Numeric Code'}
-    //   onChange={this.onActivationCodeChange.bind(this)}
-    //   onSubmitEditing={this.checkActivationCode.bind(this)}
-    // />
-    //   </View>
-    // </View>
-    // <Text style={Skin.customeStyle.attempt}>Attempts Left {this.props.url.chlngJson.attempts_left}</Text>
-
-    // <View style={Skin.activationStyle.input_wrap}>
-    //   <TouchableHighlight
-    //     style={Skin.activationStyle.button}
-    //     underlayColor={'#082340'}
-    //     onPress={this.checkActivationCode.bind(this)}
-    //     activeOpacity={0.6}
-    //   >
-    //     <Text style={Skin.activationStyle.buttontext}>
-    //       {this.btnText()}
-    //     </Text>
-    //   </TouchableHighlight>
-    // </View>
-    //   </View>
-    // </MainActivation>
-    //  );
     return (
       <View style={Skin.layout1.wrap}>
         <StatusBar
@@ -231,41 +131,41 @@ var QRCodeScreen = React.createClass({
                          marginBottom: 12
                        }}>
             <View style={Skin.layout1.content.wrap}>
-              {$this.renderIf($this.state.showCamera,
-                <Camera
+              {this.renderIf(this.state.showCamera,
+                 <Camera
                    onBarCodeRead={this._onBarCodeRead}
                    type={Camera.constants.Type.back}
                    aspect={Camera.constants.Aspect.fill}
-                   style={Skin.layout1.content.camera.wrap}
-                   >
+                   style={Skin.layout1.content.camera.wrap}>
                    <View style={Skin.layout1.content.container}>
-                    <Text style={[Skin.layout1.content.camera.prompt, {
-                                 marginTop: 10
-                               }]}>
-                      Step 1: Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}
-                    </Text>
-                    <Text style={Skin.layout1.content.camera.prompt}>
-                      Step 2: Scan QR Code
-                    </Text>
-                    <View style={Skin.layout1.content.camera.boxwrap}>
-                      <View style={Skin.layout1.content.camera.box}/>
-                    </View>
-                    <View style={Skin.layout1.content.enterWrap}>
-                      <Input
-                        placeholder={'or Enter Numeric Code'}
-                        ref={'activationCode'}
-                        autoFocus={false}
-                        autoCorrect={false}
-                        autoComplete={false}
-                        autoCapitalize={true}
-                        secureTextEntry={true}
-                        styleInput={Skin.layout1.content.code.input}
-                        returnKeyType={"next"}
-                        placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-                        onChange={this.onActivationCodeChange.bind(this)}
-                        onSubmitEditing={this.checkActivationCode.bind(this)} />
-                    </View>
-                  </View>
+                     <Text style={[Skin.layout1.content.camera.prompt, {
+                                    marginTop: 10
+                                  }]}>
+                       Step 1: Verify Code
+                       {this.props.url.chlngJson.chlng_resp[0].challenge}
+                     </Text>
+                     <Text style={Skin.layout1.content.camera.prompt}>
+                       Step 2: Scan QR Code
+                     </Text>
+                     <View style={Skin.layout1.content.camera.boxwrap}>
+                       <View style={Skin.layout1.content.camera.box} />
+                     </View>
+                     <View style={Skin.layout1.content.enterWrap}>
+                       <Input
+                         placeholder={'or Enter Numeric Code'}
+                         ref={'activationCode'}
+                         autoFocus={false}
+                         autoCorrect={false}
+                         autoComplete={false}
+                         autoCapitalize={true}
+                         secureTextEntry={true}
+                         styleInput={Skin.layout1.content.code.input}
+                         returnKeyType={"next"}
+                         placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+                         onChange={this.onActivationCodeChange.bind(this)}
+                         onSubmitEditing={this.checkActivationCode.bind(this)} />
+                     </View>
+                   </View>
                  </Camera>)}
             </View>
           </View>
@@ -305,68 +205,25 @@ var QRCodeScreen = React.createClass({
         <KeyboardSpacer topSpacing={-45} />
       </View>
       );
-
-  },
-});
-
-var CancelButton = React.createClass({
-  render: function() {
-    return (
-      <View style={styles.cancelButton}>
-        <TouchableOpacity onPress={this.props.onPress}>
-          <Text style={styles.cancelButtonText}>
-            {this.props.title}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      );
-  },
-});
-
-var styles = StyleSheet.create({
-
-  camera: {
-    height: 200,
-    width: 200,
-    alignItems: 'center',
-  },
-
-  rectangleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-  },
-
-  rectangle: {
-    height:250,
-    width:250,
-    borderWidth: 2,
-    borderColor: '#00FF00',
-    backgroundColor: 'transparent',
-  },
-
-  cancelButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 3,
-    padding: 15,
-    width: 100,
-    bottom: 10,
-  },
-  cancelButtonText: {
-    fontSize: 17,
-    fontWeight: '500',
-    color: '#0097CE',
-  },
-
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "transparent",
   }
-});
+}
 
-module.exports = QRCodeScreen;
+
+Activation.propTypes = {
+  onSucess: React.PropTypes.func,
+  onCancel: React.PropTypes.func,
+}
+
+Activation.getDefaultProps = {
+  url: {
+    chlngJson: {
+      chlng_resp: [{
+        challenge: 'ABCDEFG'
+      }]
+    }
+  }
+}
+
+module.exports = Activation;
+
+

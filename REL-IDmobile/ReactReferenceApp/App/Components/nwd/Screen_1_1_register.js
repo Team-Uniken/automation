@@ -122,17 +122,14 @@ class Register extends Component {
       this.registerUser();
     } else {
       this.showMessage("Error", "Accept Terms and Conditions", false);
+
     }
 
   }
 
 
   registerUser() {
-    Alert.alert(
-      'Activation Code Sent to',
-      this.state.confirmEmail + '\nPlease check your email for more instructions.',
-      [{text: 'OK',onPress: () => console.log('OK Pressed')},]
-    )
+    
 
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
@@ -154,15 +151,13 @@ class Register extends Component {
         "isRELIDZeroEnabled": "true",
         "username": "gmuser",
         "password": hash.sha256().update("uniken123$").digest('hex'),
-
       };
       RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         if (response[0].error == 0) {
           var res = JSON.parse(response[0].response);
           if (res.isError === 'false') {
-            showMessage("Activation Code Sent to", "\nPlease check the email for more instruction.", true);
-
+            showMessage("Activation Code Sent to",this.state.confirmEmail+"\nPlease check the email for more instruction.", false);
           } else {
             alert(res.errorMessage);
           }
@@ -180,17 +175,13 @@ class Register extends Component {
   showMessage(title, msg, press) {
     Alert.alert(
       title,
-      msg, [
-        {
-          text: 'OK',
-          //onPress: () => this.props.navigator.push({
-          //  id: "ConnectionProfile"
-          //})
-          if(press) {
-            this.props.navigator.pop();
-          }
-        },
-      ]
+      msg,
+      [{
+        text: 'OK',
+        if(press) {
+          this.props.navigator.pop();
+        }
+      }]
     )
   }
 
