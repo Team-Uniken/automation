@@ -988,7 +988,7 @@ class Register extends Component {
       var chlng = this.props.url.chlngJson.chlng[i];
       
       var promts;
-      if(chlng.chlng_prompt[0] > 0){
+      if(chlng.chlng_prompt[0].length > 0){
       promts = JSON.parse(chlng.chlng_prompt[0]);
       
       
