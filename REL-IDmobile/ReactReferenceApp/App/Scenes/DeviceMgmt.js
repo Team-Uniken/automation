@@ -10,7 +10,7 @@ import ReactNative, { View, StyleSheet,
   AsyncStorage,
   DeviceEventEmitter,
   TouchableHighlight,
-  Alert,Swipeout,} from 'react-native'
+  Alert,} from 'react-native'
 
 import Skin from '../Skin';
 import Modal from 'react-native-simple-modal';
@@ -20,6 +20,7 @@ import Modal from 'react-native-simple-modal';
 */
 import Main from '../Components/Main';
 import Constants from '../Components/Constants';
+import Swipeout from 'react-native-swipeout';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
@@ -217,6 +218,7 @@ export default class DeviceMgmtScene extends Component {
     console.log(res);
     if (res.errCode === 0) {
       devicesList = res.pArgs.response.ResponseData;
+     // alert(JSON.stringify(devicesList));
       deviceHolderList = this.renderListViewData(devicesList.device);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(deviceHolderList),
@@ -345,7 +347,7 @@ export default class DeviceMgmtScene extends Component {
         device,
         index,
       });
-      return null;
+     // return null;
     });
     return data;
   }
