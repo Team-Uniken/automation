@@ -149,6 +149,11 @@ var QRCodeScreen = React.createClass({
     }
   },
 
+  close: function() {
+    this.props.navigator.pop();
+  },
+
+
   renderIf: function (condition, jsx) {
     if (condition) {
       return jsx;
@@ -171,47 +176,52 @@ var QRCodeScreen = React.createClass({
           barStyle={'default'}
           />
         <View style={Skin.layout1.title.wrap}>
-          <Title
-            >Access Code</Title>
+          <Title onClose={() => {
+                            this.close();
+                          }}>
+            Activation
+          </Title>
         </View>
         <ScrollView style={Skin.layout1.content.scrollwrap} contentContainerStyle={{ flex: 1 }}>
           <View style={{ backgroundColor: '#000000', flex: 1, marginBottom: 12 }}>
 
             <View style={Skin.layout1.content.wrap}>
-              <View style={Skin.layout1.content.container}>
-                <Text style={[Skin.layout1.content.prompt, { marginTop: 10 }]}>Step 1: Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}</Text>
-                <Text style={[Skin.layout1.content.prompt, {}]}>Step 2: Scan QR Code</Text>
-                <View style={Skin.layout1.content.cameraBox}>
-
-                  <Margin
-                    space={16}/>
-
-                  { $this.renderIf($this.state.showCamera,
-                    <Camera onBarCodeRead={this._onBarCodeRead} type={Camera.constants.Type.back}>
-                      <View style={styles.rectangle}/>
-                    </Camera>)
-                  }
-
-                </View>
-                <View style={Skin.layout1.content.enterWrap}>
-                  <Input
-                    placeholder={'or Enter Numeric Code'}
-                    ref={'activationCode'}
-                    autoFocus={false}
-                    autoCorrect={false}
-                    autoComplete={false}
-                    autoCapitalize={true}
-                    secureTextEntry={true}
-                    styleInput={[Skin.layout1.content.enterInput,{color:Skin.baseline.textinput.placeholderTextColor}]}
-                    returnKeyType = {"next"}
-                    placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-                    onChange={this.onActivationCodeChange.bind(this) }
-                    onSubmitEditing={this.checkActivationCode.bind(this) }
-                    />
-
-
-                </View>
-              </View>
+              {$this.renderIf($this.state.showCamera,
+                <Camera
+                   onBarCodeRead={this._onBarCodeRead}
+                   type={Camera.constants.Type.back}
+                   aspect={Camera.constants.Aspect.fill}
+                   style={Skin.layout1.content.camera.wrap}
+                   >
+                   <View style={Skin.layout1.content.container}>
+                    <Text style={[Skin.layout1.content.camera.prompt, {
+                                 marginTop: 10
+                               }]}>
+                      Step 1: Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}
+                    </Text>
+                    <Text style={Skin.layout1.content.camera.prompt}>
+                      Step 2: Scan QR Code
+                    </Text>
+                    <View style={Skin.layout1.content.camera.boxwrap}>
+                      <View style={Skin.layout1.content.camera.box}/>
+                    </View>
+                    <View style={Skin.layout1.content.enterWrap}>
+                      <Input
+                        placeholder={'or Enter Numeric Code'}
+                        ref={'activationCode'}
+                        autoFocus={false}
+                        autoCorrect={false}
+                        autoComplete={false}
+                        autoCapitalize={true}
+                        secureTextEntry={true}
+                        styleInput={Skin.layout1.content.code.input}
+                        returnKeyType={"next"}
+                        placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+                        onChange={this.onActivationCodeChange.bind(this)}
+                        onSubmitEditing={this.checkActivationCode.bind(this)} />
+                    </View>
+                  </View>
+                 </Camera>)}
             </View>
 
           </View>

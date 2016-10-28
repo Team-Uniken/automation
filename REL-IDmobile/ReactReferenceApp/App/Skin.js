@@ -289,7 +289,7 @@ module.exports.baseline = {
     base: StyleSheet.create({
       base: {
         alignItems: 'center',
-        justifyContent:'center',
+        justifyContent: 'center',
         height: 42,
         width: 260,
         borderRadius: 8,
@@ -542,27 +542,50 @@ module.exports.layout1 = {
       flex: 1,
     //backgroundColor: "rgba(203,45,102,1)",
     },
-    prompt: {
-      flex: 5,
-      textAlign: 'center',
-      color: '#ffffff',
-      fontSize: 18,
-      minHeight: 20,
+    camera: {
+      prompt: {
+        flex: 5,
+        textAlign: 'center',
+        color: '#ffffff',
+        fontSize: 18,
+        minHeight: 20,
+      },
+      wrap: {
+        width: SCREEN_WIDTH,
+        flex: 1,
+        alignItems: 'center',
+      //backgroundColor: "rgba(203,45,102,1)",
+      },
+      boxwrap: {
+        flex: 75,
+        //backgroundColor: '#ffaaff',
+        flexDirection: 'column',
+        //alignItems: 'center',
+        justifyContent: 'center',
+      },
+      box: {
+        borderWidth: 2,
+        borderColor: BUTTON_BG_COLOR,
+        width: 260,
+        flex: 1,
+        alignSelf: 'center',
+        //flexDirection:'row',
+        maxHeight: 260,
+      }
     },
-    cameraBox: {
-      flex: 75,
-    //backgroundColor: '#ffaaff'
+    code: {
+      wrap: {
+        flex: 15,
+        minHeight: 50,
+      },
+      input: {
+        backgroundColor: 'rgba(100,100,100,0.5)',
+        marginBottom: 0,
+        flex: 1,
+        color: '#ffffff'
+      },
+      placeholderTextColor: 'rgba(255,255,255,0.8)',
     },
-    enterWrap: {
-      flex: 15,
-      minHeight: 50,
-    },
-    enterInput: {
-      backgroundColor: 'rgba(50,50,50,0.5)',
-      marginBottom: 0,
-      flex: 1,
-    },
-    placeholderTextColor: 'rgba(255,255,255,0.8)',
     top: {
       container: {
         flex: 53,
