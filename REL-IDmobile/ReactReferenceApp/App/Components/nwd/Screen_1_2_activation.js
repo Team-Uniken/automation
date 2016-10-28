@@ -5,9 +5,6 @@ import { StyleSheet, View, Text, TouchableOpacity, VibrationIOS, TextInput, Touc
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
-
-var Obj;
-
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import Skin from '../../Skin';
@@ -91,7 +88,6 @@ var QRCodeScreen = React.createClass({
   },
 
   componentWillMount: function() {
-    Obj = this;
   },
 
   componentDidMount: function() {
@@ -105,12 +101,12 @@ var QRCodeScreen = React.createClass({
       var vfKey = res.key;
       var aCode = res.value;
       var exp = res.expiry;
-      var obtainedVfKey = Obj.props.url.chlngJson.chlng_resp[0].challenge;
+      var obtainedVfKey = this.props.url.chlngJson.chlng_resp[0].challenge;
       if (obtainedVfKey === vfKey) {
        // alert("QR scan success");
        // Events.trigger('showLoader',true);
         $this.setState({showCamera:false});
-        let responseJson = Obj.props.url.chlngJson;
+        let responseJson = $this.props.url.chlngJson;
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(()=>{
         Events.trigger('showNextChallenge', { response: responseJson });
