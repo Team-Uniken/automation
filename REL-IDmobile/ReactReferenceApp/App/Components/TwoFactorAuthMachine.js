@@ -294,7 +294,7 @@ class TwoFactorAuthMachine extends Component {
     // alert(JSON.stringify(args));
     // alert("response = "+ JSON.stringify(args));
     const i = challengeJsonArr.indexOf(currentIndex);
-    if (challengeJsonArr[currentIndex] && (challengeJsonArr[currentIndex].chlng_name === 'tbacred')) {
+    if (challengeJsonArr[currentIndex].chlng_name === 'tbacred') {
       currentIndex++;
       if (obj.hasNextChallenge()) {
         const currentChlng = obj.getCurrentChallenge();
