@@ -238,6 +238,7 @@ class ReactRefApp extends Component {
         navigator={nav}
         url={route.url}
         title={route.title}
+        proxy={Web.proxy}
         secure
         navigate />);
     } else if (id === 'WebView') {

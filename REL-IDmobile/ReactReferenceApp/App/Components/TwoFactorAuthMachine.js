@@ -37,7 +37,7 @@ import Events from 'react-native-simple-events';
 import Constants from './Constants';
 import Demo from './demo';
 import RegisterOption from './nwd/Screen_1_4_registerOptions';
-
+import Web from '../Scenes/Web';
 
 
 /*
@@ -191,7 +191,7 @@ class TwoFactorAuthMachine extends Component {
           const pPort = res.pArgs.pxyDetails.port;
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
-            Main.proxy = pPort;
+            Web.proxy = pPort;
             // AsyncStorage.setItem("Proxy",""+pPort);
           }
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
