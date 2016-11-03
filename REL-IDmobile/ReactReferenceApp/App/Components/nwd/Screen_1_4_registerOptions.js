@@ -999,7 +999,8 @@ class Register extends Component {
           onSelect={() => { this.selectCheckBox(promts.cred_type) }}
           selected={this.state[promts.cred_type]}
           labelSide={"right"}
-          lable={"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}>
+          >
+          {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
           </Checkbox>
           );
         // <CheckBox
@@ -1016,7 +1017,8 @@ class Register extends Component {
           onSelect={this.selectpattern.bind(this) }
           selected={this.state.pattern}
           labelSide={"right"}
-          lable="Enable Pattern Login">
+          >
+          Enable Pattern Login
           </Checkbox>
           );
         // <CheckBox
@@ -1029,7 +1031,8 @@ class Register extends Component {
           onSelect={this.selecttouchid.bind(this) }
           selected={this.state.touchid}
           labelSide={"right"}
-          lable="Enable TouchID Login">
+          >
+          Enable TouchID Login
           </Checkbox>
           );
         
