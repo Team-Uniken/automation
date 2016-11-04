@@ -23,14 +23,20 @@ class Activation extends Component {
     this.state = {
       activatonCode: '',
       showCamera: true,
+      barCodeFlag:true,
       cameraType: Camera.constants.Type.back,
     }
+    //this.barCodeFlag = true;
+    this._onBarCodeRead = this._onBarCodeRead.bind(this);
+    // this.barCodeScanFlag = true;
   }
 
 
   _onBarCodeRead(result) {
-    this.barCodeFlag = false;
-    this.onQRScanSuccess(result.data);
+    if(this.state.barCodeFlag === true){
+       this.state.barCodeFlag = false;
+       this.onQRScanSuccess(result.data);
+    }
   }
 
   onActivationCodeChange(e) {
@@ -48,6 +54,7 @@ class Activation extends Component {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
+      this.setState({ showCamera: false });
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
@@ -66,8 +73,12 @@ class Activation extends Component {
       if (obtainedVfKey === vfKey) {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
+    
         $this.setState({ showCamera: false });
         let responseJson = $this.props.url.chlngJson;
+        $this.barCodeFlag = false;
+        
+
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(() => {
           Events.trigger('showNextChallenge', {
@@ -78,15 +89,17 @@ class Activation extends Component {
         //  Events.trigger('hideLoader', true);
 
         alert('Verification code does not match');
-        this.barCodeFlag = true;
-      //  setTimeout(function() {
-      //   $this.setState({ showCamera: true });
-      // }, 2000);
+       // this.barCodeFlag = true;
+       setTimeout(function() {
+         $this.state.barCodeFlag = true;
+       }, 2000);
       }
     } else {
       // Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
-      this.barCodeFlag = true;
+      setTimeout(function() {
+        $this.state.barCodeFlag = true;
+      }, 2000);
       //  setTimeout(function() {
       //   $this.setState({ showCamera: true });
       //   }, 2000);
@@ -108,7 +121,7 @@ class Activation extends Component {
   }
 
   render() {
-    this.barCodeFlag = true;
+    
     return (
       <View style={Skin.layout1.wrap}>
         <StatusBar
@@ -133,7 +146,7 @@ class Activation extends Component {
             <View style={Skin.layout1.content.wrap}>
               {this.renderIf(this.state.showCamera,
                  <Camera
-                   onBarCodeRead={this._onBarCodeRead}
+                onBarCodeRead={this._onBarCodeRead}
                    type={Camera.constants.Type.back}
                    aspect={Camera.constants.Aspect.fill}
                    style={Skin.layout1.content.camera.wrap}>
