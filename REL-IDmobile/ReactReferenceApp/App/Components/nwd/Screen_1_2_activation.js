@@ -154,8 +154,8 @@ class Activation extends Component {
                      <Text style={[Skin.layout1.content.camera.prompt, {
                                     marginTop: 10
                                   }]}>
-                       Step 1: Verify Code
-                       {this.props.url.chlngJson.chlng_resp[0].challenge}
+                {"Step 1: Verify Code " +
+                       this.props.url.chlngJson.chlng_resp[0].challenge}
                      </Text>
                      <Text style={Skin.layout1.content.camera.prompt}>
                        Step 2: Scan QR Code
