@@ -443,7 +443,7 @@ module.exports.layout0 = {
     },
     attempt: {
       marginBottom: 10,
-      marginTop: 70,
+      marginTop: 60,
       textAlign: 'center',
       color: BUTTON_BG_COLOR,
       fontSize: 15,
