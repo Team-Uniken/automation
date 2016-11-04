@@ -83,7 +83,10 @@ class TwoFactorAuthMachine extends Component {
   
   componentWillMount() {
     obj = this;
-    this.isTouchPresent();
+    if(Platform.OS === 'ios'){
+      this.isTouchPresent();
+    }
+    
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
     if (saveChallengeJson == null) {
@@ -120,7 +123,6 @@ class TwoFactorAuthMachine extends Component {
   
   componentDidMount() {
     screenId = 'UserLogin';// this.props.screenId;
-    
     //  Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     //  Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
@@ -313,7 +315,7 @@ class TwoFactorAuthMachine extends Component {
     // alert(JSON.stringify(args));
     // alert("response = "+ JSON.stringify(args));
     const i = challengeJsonArr.indexOf(currentIndex);
-    if (challengeJsonArr[currentIndex].chlng_name === 'tbacred') {
+    if (challengeJsonArr[currentIndex] && (challengeJsonArr[currentIndex].chlng_name === 'tbacred')) {
       currentIndex++;
       if (obj.hasNextChallenge()) {
         const currentChlng = obj.getCurrentChallenge();

@@ -15,13 +15,13 @@ import Main from '../Main';
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
-import dismissKeyboard from 'dismissKeyboard';
 import TouchID from 'react-native-touch-id';
 
 import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
 var constant = require('../Constants');
+const dismissKeyboard = require('dismissKeyboard')
 
 import Button from '../view/button';
 import Margin from '../view/margin';
@@ -78,6 +78,10 @@ class PasswordVerification extends Component {
     if (condition) {
       return code;
     }
+  }
+
+  componentDidMount(){
+    dismissKeyboard();
   }
 
 
@@ -161,7 +165,7 @@ class PasswordVerification extends Component {
                 onSubmitEditing={ this.checkPassword.bind(this) }
                 onChange={ this.onPasswordChange.bind(this) }
                 enablesReturnKeyAutomatically={true}
-                autoFocus={true}
+                autoFocus={false}
                 autoCorrect={false}
                 autoComplete={false}
                 autoCapitalize={false}

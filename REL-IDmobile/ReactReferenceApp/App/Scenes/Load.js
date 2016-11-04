@@ -434,9 +434,6 @@ class Load extends Component {
       })
     } else if (currentAppState == 'active') {
       console.log('App State Change active:');
-      //var proxySettings;
-      //console.log(proxySettings);
-      //var jsonProxySettings = JSON.stringify(proxySettings);
       AsyncStorage.getItem("savedContext").then((value) => {
         if (value != null) {
           ReactRdna.resumeRuntime(value, null, (response) => {
