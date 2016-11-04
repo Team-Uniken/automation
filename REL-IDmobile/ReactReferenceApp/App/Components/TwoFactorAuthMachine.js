@@ -16,6 +16,7 @@ import Main from './Main';
 
 // SECURITY SCENES
 import Activation from './nwd/Screen_1_2_activation';
+import AccessCode from './nwd/Screen_Otp';
 import PasswordSet from './nwd/Screen_1_3_setPassword';
 import UpdatePasswordSet from './challenges/UpdatePasswordSet';
 import Otp from './nwd/Screen_1_2_activation';
@@ -481,7 +482,7 @@ class TwoFactorAuthMachine extends Component {
         return (<UpdatePasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {
-      return (<Otp navigator={nav} url={route.url} title={route.title} />);
+      return (<AccessCode navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);

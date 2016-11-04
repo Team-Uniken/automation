@@ -1,303 +1,241 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  VibrationIOS,
-  TextInput,
-  TouchableHighlight,
-  InteractionManager,
-  Platform,
-  AsyncStorage,
-  AlertIOS,
-  Keyboard,
-  StatusBar,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
-
-
-var Obj;
 
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import Skin from '../../Skin';
 import MainActivation from '../MainActivation';
-
-
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-var QRCodeScreen = React.createClass({
 
-  getInitialState: function (props) {
-    return {
-      activatonCode: '',
-      showCamera: true,
-      cameraType: Camera.constants.Type.back,
-    };
-  },
-
-  propTypes: {
-    cancelButtonVisible: React.PropTypes.bool,
-    cancelButtonTitle: React.PropTypes.string,
-    onSucess: React.PropTypes.func,
-    onCancel: React.PropTypes.func,
-  },
-
-  getDefaultProps: function () {
-    return {
-      cancelButtonVisible: true,
-      cancelButtonTitle: 'Cancel',
-    };
-  },
-
-
-  // _onPressCancel: function () {
-  //   Events.trigger('onQRCancel', '');
-  //   var $this = this;
-  //   $this.props.navigator.pop();
-  // },
-
-  _onBarCodeRead: function (result) {
-    var $this = this;
-
-    if (this.barCodeFlag) {
-      this.barCodeFlag = false;
-
-      setTimeout(function () {
-        // $this.props.navigator.pop();
-
-        //Events.trigger('onQRSuccess', result.data);
-        $this.setState({ showCamera: false });
-        Events.trigger('showLoader', true);
-        $this.onQRScanSuccess(result.data);
-      }, 1000);
+class AccessCode extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+    accessCode: '',
+    showCamera: true,
+    barCodeFlag:true,
+    cameraType: Camera.constants.Type.back,
     }
-  },
-
-  onActivationCodeChange: function (event) {
-    this.setState({ activatonCode: event.nativeEvent.text });
-  },
-
-  btnText: function () {
+    //this.barCodeFlag = true;
+    this._onBarCodeRead = this._onBarCodeRead.bind(this);
+    // this.barCodeScanFlag = true;
+  }
+  
+  
+  _onBarCodeRead(result) {
+    if(this.state.barCodeFlag === true){
+      this.state.barCodeFlag = false;
+      this.onQRScanSuccess(result.data);
+    }
+  }
+  
+  onAccessCodeChange(e) {
+    this.setState({ accessCode: e.nativeEvent.text });
+  }
+  
+  btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'NEXT';
-  },
-
-  checkActivationCode: function () {
-    let vkey = this.state.activatonCode;
+  }
+  
+  checkAccessCode() {
+    let vkey = this.state.accessCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
+      this.setState({ showCamera: false });
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
-    }
-    else {
+    } else {
       alert('Enter Access Code');
     }
-  },
-
-  componentWillMount: function () {
-    Obj = this;
-    if (Platform.OS === "android") {
-      let keys = ['userData', 'setPattern'];
-      AsyncStorage.multiRemove(keys);
-    }
-  },
-
-  componentDidMount: function () {
-    // this.refs['activatonCode'].focus();
-  },
-
-  onQRScanSuccess: function (result) {
+  }
+  
+  onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
       var res = JSON.parse(result);
       var vfKey = res.key;
       var aCode = res.value;
       var exp = res.expiry;
-      var obtainedVfKey = Obj.props.url.chlngJson.chlng_resp[0].challenge;
+      var obtainedVfKey = this.props.url.chlngJson.chlng_resp[0].challenge;
       if (obtainedVfKey === vfKey) {
-        let responseJson = Obj.props.url.chlngJson;
+        // alert("QR scan success");
+        // Events.trigger('showLoader',true);
+        
+        $this.setState({ showCamera: false });
+        let responseJson = $this.props.url.chlngJson;
+        $this.barCodeFlag = false;
+        
+        
         responseJson.chlng_resp[0].response = aCode;
-        Events.trigger('showNextChallenge', { response: responseJson });
+        setTimeout(() => {
+          Events.trigger('showNextChallenge', {
+          response: responseJson
+            });
+          }, 1000);
       } else {
-        Events.trigger('hideLoader', true);
-
+        //  Events.trigger('hideLoader', true);
+        
         alert('Verification code does not match');
-        setTimeout(function () {
-          $this.setState({ showCamera: true });
+        // this.barCodeFlag = true;
+        setTimeout(function() {
+          $this.state.barCodeFlag = true;
         }, 2000);
       }
     } else {
-      Events.trigger('hideLoader', true);
+      // Events.trigger('hideLoader', true);
       alert('Error to scan QR code ');
-      setTimeout(function () {
-        $this.setState({ showCamera: true });
+      setTimeout(function() {
+        $this.state.barCodeFlag = true;
       }, 2000);
-
+      //  setTimeout(function() {
+      //   $this.setState({ showCamera: true });
+      //   }, 2000);
+      
     }
-  },
-
-  close: function() {
-    this.props.navigator.pop();
-  },
-
-
-  renderIf: function (condition, jsx) {
+  }
+  
+  renderIf(condition, jsx) {
     if (condition) {
       return jsx;
     }
-  },
-
-  render: function () {
-    var cancelButton = null;
-    this.barCodeFlag = true;
-    if (this.props.cancelButtonVisible) {
-      cancelButton = <CancelButton onPress={this._onPressCancel} title={this.props.cancelButtonTitle} />;
-    }
-
-    var $this = this;
+  }
+  
+  close() {
+    Alert.alert('clicked')
+    console.log('navigator')
+    console.log(this.props)
+    this.props.navigator.pop()
+  }
+  
+  render() {
+    
     return (
       <View style={Skin.layout1.wrap}>
-        <StatusBar
-          style={Skin.layout1.statusbar}
-          backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'}
-          />
-        <View style={Skin.layout1.title.wrap}>
-          <Title onClose={() => {
-                            this.close();
-                          }}>
-            Activation
-          </Title>
-        </View>
-        <ScrollView style={Skin.layout1.content.scrollwrap} contentContainerStyle={{ flex: 1 }}>
-          <View style={{ backgroundColor: '#000000', flex: 1, marginBottom: 12 }}>
-
-            <View style={Skin.layout1.content.wrap}>
-              {$this.renderIf($this.state.showCamera,
-                <Camera
-                   onBarCodeRead={this._onBarCodeRead}
-                   type={Camera.constants.Type.back}
-                   aspect={Camera.constants.Aspect.fill}
-                   style={Skin.layout1.content.camera.wrap}
-                   >
-                   <View style={Skin.layout1.content.container}>
-                    <Text style={[Skin.layout1.content.camera.prompt, {
-                                 marginTop: 10
-                               }]}>
-                      Step 1: Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}
-                    </Text>
-                    <Text style={Skin.layout1.content.camera.prompt}>
-                      Step 2: Scan QR Code
-                    </Text>
-                    <View style={Skin.layout1.content.camera.boxwrap}>
-                      <View style={Skin.layout1.content.camera.box}/>
-                    </View>
-                    <View style={Skin.layout1.content.enterWrap}>
-                      <Input
-                        placeholder={'or Enter Numeric Code'}
-                        ref={'activationCode'}
-                        autoFocus={false}
-                        autoCorrect={false}
-                        autoComplete={false}
-                        autoCapitalize={true}
-                        secureTextEntry={true}
-                        styleInput={Skin.layout1.content.code.input}
-                        returnKeyType={"next"}
-                        placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-                        onChange={this.onActivationCodeChange.bind(this)}
-                        onSubmitEditing={this.checkActivationCode.bind(this)} />
-                    </View>
-                  </View>
-                 </Camera>)}
-            </View>
-
-          </View>
-        </ScrollView>
-        <View
-          style={Skin.layout1.bottom.wrap}>
-          <View style={Skin.layout1.bottom.container}>
-            <Button
-              label={Skin.text['1']['1'].submit_button}
-              onPress={this.checkActivationCode.bind(this) }/>
-          
-          </View>
-        </View>
-        <KeyboardSpacer topSpacing={-45}/>
+      <StatusBar
+      style={Skin.layout1.statusbar}
+      backgroundColor={Skin.main.STATUS_BAR_BG}
+      barStyle={'default'} />
+      <View style={Skin.layout1.title.wrap}>
+      <Title onClose={() => {
+      this.close();
+      }}>
+      Access Code
+      </Title>
       </View>
-    );
-
-  },
-});
-
-var CancelButton = React.createClass({
-  render: function () {
-    return (
-      <View style={styles.cancelButton}>
-        <TouchableOpacity onPress={this.props.onPress}>
-          <Text style={styles.cancelButtonText}>{this.props.title}</Text>
-        </TouchableOpacity>
+      <ScrollView
+      style={Skin.layout1.content.scrollwrap}
+      contentContainerStyle={{ flex: 1 }}>
+      <View style={{
+    backgroundColor: '#000000',
+    flex: 1,
+    marginBottom: 12
+      }}>
+      <View style={Skin.layout1.content.wrap}>
+      {this.renderIf(this.state.showCamera,
+        <Camera
+        onBarCodeRead={this._onBarCodeRead}
+        type={Camera.constants.Type.back}
+        aspect={Camera.constants.Aspect.fill}
+        style={Skin.layout1.content.camera.wrap}>
+        <View style={Skin.layout1.content.container}>
+        <Text style={[Skin.layout1.content.camera.prompt, {
+        marginTop: 10
+          }]}>
+         {"Step 1: Verify Code " +this.props.url.chlngJson.chlng_resp[0].challenge}
+        </Text>
+        <Text style={Skin.layout1.content.camera.prompt}>
+        Step 2: Scan QR Code
+        </Text>
+        <View style={Skin.layout1.content.camera.boxwrap}>
+        <View style={Skin.layout1.content.camera.box} />
+        </View>
+        <View style={Skin.layout1.content.enterWrap}>
+        <Input
+        placeholder={'or Enter Numeric Code'}
+        ref={'accessCode'}
+        autoFocus={false}
+        autoCorrect={false}
+        autoComplete={false}
+        autoCapitalize={true}
+        secureTextEntry={true}
+        styleInput={Skin.layout1.content.code.input}
+        returnKeyType={"next"}
+        placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+        onChange={this.onAccessCodeChange.bind(this)}
+        onSubmitEditing={this.checkAccessCode.bind(this)} />
+        </View>
+        </View>
+        </Camera>)}
       </View>
-    );
-  },
-});
-
-var styles = StyleSheet.create({
-
-  camera: {
-    height: 200,
-    width: 200,
-    alignItems: 'center',
-  },
-
-  rectangleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-  },
-
-  rectangle: {
-    height: 250,
-    width: 250,
-    borderWidth: 2,
-    borderColor: '#00FF00',
-    backgroundColor: 'transparent',
-  },
-
-  cancelButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 3,
-    padding: 15,
-    width: 100,
-    bottom: 10,
-  },
-  cancelButtonText: {
-    fontSize: 17,
-    fontWeight: '500',
-    color: '#0097CE',
-  },
-
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "transparent",
+      </View>
+      </ScrollView>
+      <View style={Skin.layout1.bottom.wrap}>
+      <View style={Skin.layout1.bottom.container}>
+      <Button
+      label={Skin.text['1']['1'].submit_button}
+      onPress={this.checkAccessCode.bind(this)} />
+      <Text
+      onPress={() => {
+      Alert.alert(
+        'Alert Title',
+        'My Alert Msg',
+        [
+          {
+        text: 'Ask me later',
+        onPress: () => console.log('Ask me later pressed')
+          },
+          {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+          },
+          {
+        text: 'OK',
+        onPress: () => console.log('OK Pressed')
+          },
+          ]
+        )
+      }}
+      style={Skin.layout1.bottom.footertext}>
+      Resend Access Code
+      </Text>
+      </View>
+      </View>
+      <KeyboardSpacer topSpacing={-45} />
+      </View>
+      );
   }
-});
+}
 
-module.exports = QRCodeScreen;
+
+AccessCode.propTypes = {
+onSucess: React.PropTypes.func,
+onCancel: React.PropTypes.func,
+}
+
+AccessCode.getDefaultProps = {
+url: {
+chlngJson: {
+chlng_resp: [{
+challenge: 'ABCDEFG'
+  }]
+}
+}
+}
+
+module.exports = AccessCode;
+
+
