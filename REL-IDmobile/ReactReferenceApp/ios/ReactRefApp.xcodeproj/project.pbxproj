@@ -16,8 +16,8 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		1A6A1F8C1DBFFC8400721AEC /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A7F14421DBFCAC600985CBB /* libRCTCamera.a */; };
 		1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
+		55271D501DD07F980072ABB9 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A36B3561DC0641D0062FA5F /* libRCTCamera.a */; };
 		5797D192178A4FEB996EFD7F /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
 		6511E1181DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */; };
 		6511E1191DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */; };
@@ -268,6 +268,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55271D501DD07F980072ABB9 /* libRCTCamera.a in Frameworks */,
 				654B80C41DBE0B210052D415 /* libRCTFBSDK.a in Frameworks */,
 				6582FD6A1D9526920075C15D /* libstdc++.tbd in Frameworks */,
 				6582FD671D95257D0075C15D /* libTouchID.a in Frameworks */,
