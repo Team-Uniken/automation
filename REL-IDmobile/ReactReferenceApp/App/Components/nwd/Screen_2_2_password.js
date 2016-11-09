@@ -130,9 +130,15 @@ class PasswordVerification extends Component {
   //       </View>
   //     </View>
 
+  containerTouched(event) {
+    dismissKeyboard();
+    return false;
+  }
+ 
+  
   render() {
     return (
-      <View style={[Skin.layout1.wrap,{flex:1}]}>
+      <View style={[Skin.layout1.wrap,{flex:1}]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
       <View style={{ justifyContent: 'center' }}>
         <View style={Skin.layout1.title.wrap}>
           {
