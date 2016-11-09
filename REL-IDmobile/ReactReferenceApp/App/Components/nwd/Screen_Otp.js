@@ -65,7 +65,27 @@ class AccessCode extends Component {
   onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
-      var res = JSON.parse(result);
+      var res;
+      try {
+        res = JSON.parse(result);
+        
+        if( "key" in res && "value" in res){}
+        else{
+          alert('Error to scan QR code ');
+          setTimeout(function() {
+            $this.state.barCodeFlag = true;
+          }, 2000);
+          return;
+        }
+        
+      } catch (e) {
+        alert('Error to scan QR code ');
+        setTimeout(function() {
+          $this.state.barCodeFlag = true;
+        }, 2000);
+        return;
+      }
+     
       var vfKey = res.key;
       var aCode = res.value;
       var exp = res.expiry;
