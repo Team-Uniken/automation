@@ -27,6 +27,7 @@ import io.neson.react.notification.NotificationPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
+
     private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
     protected static CallbackManager getCallbackManager() {

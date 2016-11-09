@@ -2,10 +2,11 @@
 
 buildscript {
     repositories {
-        jcenter { url "http://jcenter.bintray.com/"}
+       // jcenter { url "http://jcenter.bintray.com/"}
+       jcenter() 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -13,14 +14,14 @@ buildscript {
 }
 
 
-configurations.all {
-    resolutionStrategy {
-        force 'com.android.support:support-v4:24.2.1'
-        force 'com.android.support:design:24.4.0'
-        force 'com.android.support:appcompat-v7:24.1.1'
-        force 'com.google.android.gms:play-services-gcm:9.6.1'
-    }
-}
+//configurations.all {
+//    resolutionStrategy {
+//        force 'com.android.support:support-v4:24.2.1'
+//        force 'com.android.support:design:24.4.0'
+//        force 'com.android.support:appcompat-v7:24.1.1'
+//        force 'com.google.android.gms:play-services-gcm:9.6.1'
+//    }
+//}
 
 allprojects {
     repositories {
