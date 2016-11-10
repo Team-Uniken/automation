@@ -55,6 +55,7 @@ class SelectLogin extends Component {
     this.loginWith = this.loginWith.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
+    this.checkValidityOfAccessToken = this.checkValidityOfAccessToken.bind(this);
     this.fillAdditionalLoginOptions = this.fillAdditionalLoginOptions.bind(this);
     this.checkForRegisteredCredsAndShow = this.checkForRegisteredCredsAndShow.bind(this);
     this.doPatternLogin = this.doPatternLogin.bind(this);
@@ -149,6 +150,38 @@ class SelectLogin extends Component {
     }).done();
    
     return ret;
+  }
+
+  checkValidityOfAccessToken(){
+    $this = this;
+    AccessToken.getCurrentAccessToken().then((data)=>{
+      if(data){
+        var callback = function(error,result){
+          if(error){
+            $this.doFacebookLogin();
+          }else{
+            $this.facebookResponseCallback(null,result)
+          }
+        }
+
+        var config = {
+              httpMethod: 'GET',
+              version: 'v2.5',
+              accessToken: data.accessToken.toString()
+        }
+
+        var request = new GraphRequest(
+              '/me',
+              config,
+              callback
+        );
+
+         new GraphRequestManager().addRequest(request).start();
+      }
+      else{
+        $this.doFacebookLogin();
+      }
+    });
   }
   
   //Facebook login code
@@ -268,7 +301,7 @@ class SelectLogin extends Component {
     
     switch (credType) {
       case type.facebook.key:
-        this.doFacebookLogin();
+        this.checkValidityOfAccessToken();
         break;
       case type.password.key:
         this.setState({
@@ -305,6 +338,7 @@ class SelectLogin extends Component {
         </View>
         <View style={Skin.layout0.bottom.container}>
         <GridView
+        style={{flex:1}}
         items={this.state.dataSource}
         itemsPerRow={LOGIN_TYPE_PER_ROW}
         renderItem={this.renderItem}
