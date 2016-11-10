@@ -406,6 +406,18 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void resetChallenge( Callback callback){
+        int error = rdnaObj.resetChallenge();
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
     public void checkChallenges(String challengeRequestArray, String userID, Callback callback){
         Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
         Logger.d(TAG , "----- userID " + userID);
