@@ -98,6 +98,12 @@ export default class QuestionVerification extends Component {
     return 'Continue';
   }
 
+     close() {
+    let responseJson = this.props.url.chlngJson;
+    this.setState({ showCamera: false });
+    Events.trigger('showPreviousChallenge');
+  }
+
   render() {
     // return (
     //   <MainActivation navigator={ this.props.navigator }>
@@ -139,7 +145,12 @@ export default class QuestionVerification extends Component {
 
     return (
       <View style={Skin.layout1.content.wrap}>
+            
         <View style={Skin.layout0.top.container}>
+        <Title onClose={() => {
+      this.close();
+      }}>
+      </Title>
           <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
           </Text>

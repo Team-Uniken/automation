@@ -135,19 +135,20 @@ class PasswordVerification extends Component {
     return false;
   }
  
-  
+     close() {
+    let responseJson = this.props.url.chlngJson;
+    this.setState({ showCamera: false });
+    Events.trigger('showPreviousChallenge');
+  }
   render() {
     return (
       <View style={[Skin.layout1.wrap,{flex:1}]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
       <View style={{ justifyContent: 'center' }}>
         <View style={Skin.layout1.title.wrap}>
-          {
-            this.renderif(this.state.showCloseButton,
-              <View style={Skin.layout1.title.wrap}>
-                <Title onClose={() => { } }></Title>
-              </View>
-            )
-          }
+             <Title onClose={() => {
+      this.close();
+      }}>
+      </Title>
         </View>
           <View style={Skin.layout1.content.wrap}>
             <View style={Skin.layout0.top.container}>
