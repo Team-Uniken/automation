@@ -637,16 +637,17 @@ class Register extends Component {
     super(props);
     this.state = {
       device: false,
-      touchid:false,
+      touchid: false,
       wechat: false,
       rememberusername: false,
-      welcomescreen:false,
+      welcomescreen: false,
       pattern: false,
-      facebook:false,
+      facebook: false,
       refresh: false,
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
+    this.checkValidityOfAccessToken = this.checkValidityOfAccessToken.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
     this.close = this.close.bind(this);
   }
@@ -656,17 +657,17 @@ class Register extends Component {
     var isCheck = false;
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
-      if(chlng.chlng_prompt[0].length>0){
-      var promts = JSON.parse(chlng.chlng_prompt[0]);
+      if (chlng.chlng_prompt[0].length > 0) {
+        var promts = JSON.parse(chlng.chlng_prompt[0]);
 
-      if (promts.is_registered == false) {
-        isCheck = true;
-        break;
-      }
+        if (promts.is_registered == false) {
+          isCheck = true;
+          break;
+        }
       }
     }
-    
-    if(isCheck == false){
+
+    if (isCheck == false) {
       if (this.props.url.touchCred.isTouch == true) {
         this.doNavigateDashBoard();
       }
@@ -735,7 +736,7 @@ class Register extends Component {
   onUpdateChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
 
-//    Events.trigger('hideLoader', true);
+    //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
     subscriptions.remove();
@@ -768,9 +769,9 @@ class Register extends Component {
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           }
-         // alert(res.pArgs.response.StatusMsg);
+          // alert(res.pArgs.response.StatusMsg);
 
-         // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           obj.doNavigateDashBoard();
 
         }
@@ -786,7 +787,6 @@ class Register extends Component {
               } else {
                 chlngJson = res.pArgs.response.ResponseData;
               }
-
 
               const currentChlng = challengeJsonArr[--currentIndex];
               for (var i = 0; i < chlngJson.chlng.length; i++) {
@@ -833,38 +833,69 @@ class Register extends Component {
     });
   }
 
+  checkValidityOfAccessToken(){
+    $this = this;
+    AccessToken.getCurrentAccessToken().then((data)=>{
+      if(data){
+        var callback = function(error,result){
+          if(error){
+            $this.doFacebookLogin();
+          }else{
+            $this.facebookResponseCallback(null,result)
+          }
+        }
+
+        var config = {
+              httpMethod: 'GET',
+              version: 'v2.5',
+              accessToken: data.accessToken.toString()
+        }
+
+        var request = new GraphRequest(
+              '/me',
+              config,
+              callback
+        );
+
+         new GraphRequestManager().addRequest(request).start();
+      }
+      else{
+        $this.doFacebookLogin();
+      }
+    });
+  }
+
   //Facebook login code
   doFacebookLogin() {
     $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       (result, error) => {
-        {
-          if (result.isCancelled) {
+        if (result.isCancelled) {
 
-          } else {
-            AccessToken.getCurrentAccessToken().then((data) => {
-              $this.profileRequestParams = {
-                fields: {
-                  string: "id, name, email, first_name, last_name, gender"
-                }
+        } else {
+          AccessToken.getCurrentAccessToken().then((data) => {
+
+            $this.profileRequestParams = {
+              fields: {
+                string: "id, name, email, first_name, last_name, gender"
               }
+            }
 
-              $this.profileRequestConfig = {
-                httpMethod: 'GET',
-                version: 'v2.5',
-                parameters: $this.profileRequestParams,
-                accessToken: data.accessToken.toString()
-              }
+            $this.profileRequestConfig = {
+              httpMethod: 'GET',
+              version: 'v2.5',
+              parameters: $this.profileRequestParams,
+              accessToken: data.accessToken.toString()
+            }
 
-              $this.profileRequest = new GraphRequest(
-                '/me',
-                $this.profileRequestConfig,
-                $this.facebookResponseCallback,
-              );
+            $this.profileRequest = new GraphRequest(
+              '/me',
+              $this.profileRequestConfig,
+              $this.facebookResponseCallback,
+            );
 
-              new GraphRequestManager().addRequest($this.profileRequest).start();
-            }).done();
-          }
+            new GraphRequestManager().addRequest($this.profileRequest).start();
+          }).done();
         }
       }).done();
   }
@@ -878,12 +909,12 @@ class Register extends Component {
       //fill response in challenge
       var key = Skin.text['0']['2'].credTypes.facebook.key;
       var value = result.id;
-  
+
       this.setState({ facebook: true });
 
       var temp = this.props.url.chlngJson.chlng;
       var respo = temp[0].chlng_resp;
-      
+
       var promts = JSON.parse(temp[0].chlng_prompt[0]);
       respo[0].challenge = promts.cred_type;
       respo[0].response = value;
@@ -939,32 +970,32 @@ class Register extends Component {
 
 
   doUpdate() {
-    
-    
-    if(this.state.facebook == true){
-
-    subscriptions = DeviceEventEmitter.addListener(
-      'onUpdateChallengeStatus',
-      this.onUpdateChallengeResponseStatus.bind(this)
-    );
 
 
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.updateChallenges(JSON.stringify(this.props.url.chlngJson), value, (response) => {
-        if (response[0].error === 0) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-          alert(response[0].error);
-        }
-      });
-    }).done();
-    }else{
+    if (this.state.facebook == true) {
+
+      subscriptions = DeviceEventEmitter.addListener(
+        'onUpdateChallengeStatus',
+        this.onUpdateChallengeResponseStatus.bind(this)
+      );
+
+
+      AsyncStorage.getItem('userId').then((value) => {
+        ReactRdna.updateChallenges(JSON.stringify(this.props.url.chlngJson), value, (response) => {
+          if (response[0].error === 0) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+            alert(response[0].error);
+          }
+        });
+      }).done();
+    } else {
       this.doNavigateDashBoard();
     }
   }
 
-  doNavigateDashBoard(){
+  doNavigateDashBoard() {
     this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
   }
 
@@ -972,6 +1003,7 @@ class Register extends Component {
     if (args === 'facebook') {
       if (this.state.facebook == false) {
         this.doFacebookLogin();
+        //this.checkValidityOfAccessToken();
       } else {
         this.setState({ facebook: false });
         var temp = this.props.url.chlngJson.chlng;
@@ -986,41 +1018,41 @@ class Register extends Component {
     var indents = [];
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
-      
+
       var promts;
-      if(chlng.chlng_prompt[0].length > 0){
-      promts = JSON.parse(chlng.chlng_prompt[0]);
-      
-      
-      
-      if (promts.is_registered == false) {
-        indents.push(
-          <Checkbox
-          onSelect={() => { this.selectCheckBox(promts.cred_type) }}
-          selected={this.state[promts.cred_type]}
-          labelSide={"right"}
-          >
-          {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
-          </Checkbox>
+      if (chlng.chlng_prompt[0].length > 0) {
+        promts = JSON.parse(chlng.chlng_prompt[0]);
+
+
+
+        if (promts.is_registered == false) {
+          indents.push(
+            <Checkbox
+              onSelect={() => { this.selectCheckBox(promts.cred_type) } }
+              selected={this.state[promts.cred_type]}
+              labelSide={"right"}
+              >
+              {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
+            </Checkbox>
           );
-        // <CheckBox
-        // value={this.state[promts[0].credType]}
-        // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
-        // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+          // <CheckBox
+          // value={this.state[promts[0].credType]}
+          // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
+          // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+        }
       }
-    }
     }
     if (this.props.url.touchCred.isTouch == false) {
       if (Platform.OS === 'android') {
         indents.push(
           <Checkbox
-          onSelect={this.selectpattern.bind(this) }
-          selected={this.state.pattern}
-          labelSide={"right"}
-          >
-          Enable Pattern Login
+            onSelect={this.selectpattern.bind(this) }
+            selected={this.state.pattern}
+            labelSide={"right"}
+            >
+            Enable Pattern Login
           </Checkbox>
-          );
+        );
         // <CheckBox
         // value={this.state.pattern}
         // onSelect={this.selectpattern.bind(this) }
@@ -1028,14 +1060,14 @@ class Register extends Component {
       } else {
         indents.push(
           <Checkbox
-          onSelect={this.selecttouchid.bind(this) }
-          selected={this.state.touchid}
-          labelSide={"right"}
-          >
-          Enable TouchID Login
+            onSelect={this.selecttouchid.bind(this) }
+            selected={this.state.touchid}
+            labelSide={"right"}
+            >
+            Enable TouchID Login
           </Checkbox>
-          );
-        
+        );
+
         // <CheckBox
         // value={this.state.touchid}
         // onSelect={this.selecttouchid.bind(this) }

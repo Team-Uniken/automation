@@ -81,7 +81,9 @@ class TwoFactorAuthMachine extends Component {
     this.isTouchIDPresent = false;
     this.onGetAllChallengeStatus = this.onGetAllChallengeStatus.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
-    
+    this.showFirstChallenge = this.showFirstChallenge.bind(this);
+    this.canShowNextChallenge = this.canShowNextChallenge.bind(this);
+    this.showNextChallenge = this.showNextChallenge.bind(this);
   }
 
   componentWillMount() {
@@ -177,25 +179,7 @@ class TwoFactorAuthMachine extends Component {
         if (res.pArgs.response.ResponseData) {
           console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
-
-          const nextChlngName = chlngJson.chlng[0].chlng_name;
-          if (chlngJson != null) {
-            console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-
-            if (nextChlngName === 'tbacred') {
-              this.showNextChallenge(null);
-            } else {
-              this.props.navigator.push({
-                id: 'Machine',
-                title: nextChlngName,
-                url: {
-                  chlngJson,
-                  screenId: nextChlngName,
-                },
-              });
-            }
-          }
+          this.showFirstChallenge(chlngJson, 0);
         } else {
           console.log('TwoFactorAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const pPort = res.pArgs.pxyDetails.port;
@@ -354,73 +338,77 @@ class TwoFactorAuthMachine extends Component {
         });
     
   }
+
+  canShowNextChallenge() {
+    if (this.hasNextChallenge()) {
+      var currChallenge = this.getCurrentChallenge();
+      if (currChallenge.chlng_name === 'tbacred'
+        || currChallenge.chlng_name === 'devbind'
+        || currChallenge.chlng_name === 'devname'
+      ) {
+        return { show: false, challenge: currChallenge };
+      }
+      else {
+        return { show: true, challenge: currChallenge };
+      }
+    }
+    else {
+      return { show: false, challenge: null };
+    }
+  }
+
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
     // alert("response = "+ JSON.stringify(args));
-    const i = challengeJsonArr.indexOf(currentIndex);
-    if (challengeJsonArr[currentIndex] && (challengeJsonArr[currentIndex].chlng_name === 'tbacred')) {
-      currentIndex++;
-      if (obj.hasNextChallenge()) {
-        const currentChlng = obj.getCurrentChallenge();
 
-        obj.stateNavigator.push({
-          id: currentChlng.chlng_name,
-          url: {
-            chlngJson: currentChlng,
-            chlngsCount: challengeJsonArr.length,
-            currentIndex: currentIndex + 1,
-          },
-          title: obj.props.title,
-        });
-      } else {
-        obj.callCheckChallenge();
-      }
-    }
-    else {
-      challengeJsonArr[i] = args.response;
-      currentIndex++;
-      if (obj.hasNextChallenge()) {
-        // Show Next challenge screen
-        var currentChlng = obj.getCurrentChallenge();
-        //alert(currentChlng.chlng_name);
-        if (currentChlng.chlng_name === 'tbacred') {
+    //const i = challengeJsonArr.indexOf(currentIndex);
+   //challengeJsonArr[i] = args.response;
+    currentIndex++;
+    var result = this.canShowNextChallenge();
+    if (result.challenge) {
+      if (result.show === false) {
+        while ((result = this.canShowNextChallenge())
+                && result.show === false
+                && result.challenge
+              ) {
+          if (result.challenge.chlng_name === 'devbind') {
+            result.challenge.chlng_resp[0].response = 'true';
+          }
+
           currentIndex++;
-          if (obj.hasNextChallenge()) {
-            currentChlng = obj.getCurrentChallenge();
+        }
 
-            obj.stateNavigator.push({
-              id: currentChlng.chlng_name,
-              url: {
-                chlngJson: currentChlng,
-                chlngsCount: challengeJsonArr.length,
-                currentIndex: currentIndex + 1,
-              },
-              title: obj.props.title,
-            });
-          }
-          else {
-            obj.callCheckChallenge();
-          }
-        } else {
-
-          obj.stateNavigator.push({
-            id: currentChlng.chlng_name,
+        if (result.challenge) {
+          this.stateNavigator.push({
+            id: result.challenge.chlng_name,
             url: {
-              chlngJson: currentChlng,
+              chlngJson: result.challenge,
               chlngsCount: challengeJsonArr.length,
               currentIndex: currentIndex + 1,
             },
-            title: obj.props.title,
+            title: this.props.title,
           });
         }
+        else {
+          this.callCheckChallenge();
+        }
       } else {
-        // Call checkChallenge
-        obj.callCheckChallenge();
+        this.stateNavigator.push({
+          id: result.challenge.chlng_name,
+          url: {
+            chlngJson: result.challenge,
+            chlngsCount: challengeJsonArr.length,
+            currentIndex: currentIndex + 1,
+          },
+          title: this.props.title,
+        });
       }
+    } else {
+      // Call checkChallenge
+      this.callCheckChallenge();
     }
   }
-
 
   onGetAllChallengeStatus(e) {
     var $this = this;
@@ -430,15 +418,8 @@ class TwoFactorAuthMachine extends Component {
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-
-
-
         var arrTba = new Array();
-
         const chlngJson = res.pArgs.response.ResponseData;
-
-
-
         for (var i = 0; i < chlngJson.chlng.length; i++) {
           if (chlngJson.chlng[i].chlng_name === 'tbacred')
             arrTba.push(chlngJson.chlng[i]);
@@ -446,8 +427,6 @@ class TwoFactorAuthMachine extends Component {
         if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
 
           if (arrTba.length > 0) {
-
-
             AsyncStorage.getItem('ERPasswd').then((value) => {
 
               if (value) {
@@ -461,10 +440,6 @@ class TwoFactorAuthMachine extends Component {
               }
 
             }).done();
-
-
-
-
           } else {
             this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
           }
@@ -590,6 +565,28 @@ class TwoFactorAuthMachine extends Component {
 
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
+  }
+
+  showFirstChallenge(chlngJson, startIndex) {
+    if (chlngJson.chlng && chlngJson.chlng.length > startIndex) {
+      const firstChlngName = chlngJson.chlng[startIndex].chlng_name;
+      console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+      //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+
+      if (firstChlngName === 'tbacred' || firstChlngName === 'devbind'
+        || firstChlngName === 'devname') {
+        this.showFirstChallenge(chlngJson, startIndex + 1);
+      } else {
+        this.props.navigator.push({
+          id: 'Machine',
+          title: firstChlngName,
+          url: {
+            chlngJson,
+            screenId: firstChlngName,
+          },
+        });
+      }
+    }
   }
 
   hasPreviousChallenge() {
