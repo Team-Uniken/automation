@@ -13,6 +13,7 @@ const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
 const VIEW_WIDTH = SCREEN_WIDTH - 50;
 const SCREEN_HEIGHT_RATIO = 1;
+let obj;
 if (SCREEN_HEIGHT <= 426) {
   SCREEN_HEIGHT_RATIO = 0.5
 } else if (SCREEN_HEIGHT <= 470) {
@@ -25,6 +26,17 @@ if (SCREEN_HEIGHT <= 426) {
 
 
 class First extends Component {
+
+    closeStateMachine() {
+    console.log('---------- closeStateMachine ' );
+      obj.props.navigator.pop();
+   
+  }
+
+  componentWillMount() {
+    obj=this;
+    Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
+  }
   selectReg() {
     console.log('doNavigation:');
     this.props.navigator.push({

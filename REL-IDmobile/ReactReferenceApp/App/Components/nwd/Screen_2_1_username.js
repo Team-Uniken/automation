@@ -27,6 +27,8 @@ var constant = require('../Constants');
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
+import Title from '../view/title';
+
 /*
   INSTANCES
  */
@@ -171,10 +173,17 @@ class UserLogin extends Component {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
 
+    close() {
+    Events.trigger('closeStateMachine');
+  }
   render() {
     return (
       <View style={Skin.layout0.wrap.container}>
         <View style={Skin.layout0.top.container}>
+         <Title onClose={() => {
+      this.close();
+      }}>
+      </Title>
           <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
           </Text>
