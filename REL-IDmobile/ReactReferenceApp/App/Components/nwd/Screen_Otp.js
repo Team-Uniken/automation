@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid,Platform } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
