@@ -136,6 +136,12 @@ export default class PasswordSet extends Component {
     }
     return 'Continue';
   }
+
+     close() {
+    let responseJson = this.props.url.chlngJson;
+    this.setState({ showCamera: false });
+    Events.trigger('showPreviousChallenge');
+  }
   
   render() {
     
@@ -147,8 +153,11 @@ export default class PasswordSet extends Component {
       barStyle={'default'}
       />
       <View style={Skin.layout1.title.wrap}>
-      <Title
-      close={0}>Registration</Title>
+           <Title onClose={() => {
+      this.close();
+      }}>
+      Registration
+      </Title>
       </View>
       <ScrollView style={Skin.layout1.content.scrollwrap}>
       <View style={Skin.layout1.content.wrap}>

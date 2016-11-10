@@ -181,6 +181,12 @@ export default class QuestionSet extends Component {
     );
   }
 
+   close() {
+    let responseJson = this.props.url.chlngJson;
+    this.setState({ showCamera: false });
+    Events.trigger('showPreviousChallenge');
+  }
+
   render() {
 
     /**
@@ -196,10 +202,12 @@ export default class QuestionSet extends Component {
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-          <Title
-            close={0}>
-            Activation
-          </Title>
+          <Title onClose={() => {
+      this.close();
+      }}>
+      Activation
+      </Title>
+
         </View>
         <View
           style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
