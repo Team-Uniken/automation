@@ -29,7 +29,18 @@ class First extends Component {
 
     closeStateMachine() {
     console.log('---------- closeStateMachine ' );
-      obj.props.navigator.pop();
+     // obj.props.navigator.pop();
+      
+      var allScreens =obj.props.navigator.getCurrentRoutes(-1);
+      
+      for(var i = 0; i < allScreens.length; i++){
+        var screen = allScreens[i];
+        if(screen.id === 'Screen_0_1_welcome'){
+          var mySelectedRoute = obj.props.navigator.getCurrentRoutes()[i];
+          obj.props.navigator.popToRoute(mySelectedRoute);
+          return;
+        }
+      }
    
   }
 

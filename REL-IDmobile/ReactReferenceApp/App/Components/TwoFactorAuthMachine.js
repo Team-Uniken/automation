@@ -177,6 +177,7 @@ class TwoFactorAuthMachine extends Component {
       console.log('TwoFactorAuthMachine - statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
+          obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
           console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           this.showFirstChallenge(chlngJson, 0);
@@ -188,7 +189,8 @@ class TwoFactorAuthMachine extends Component {
             Web.proxy = pPort;
             // AsyncStorage.setItem("Proxy",""+pPort);
           }
-          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+         // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+         // this.props.navigator.pop();
           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
           AsyncStorage.getItem('userId').then((value) => {
             ReactRdna.getAllChallenges(value, (response) => {
@@ -305,7 +307,7 @@ class TwoFactorAuthMachine extends Component {
         currentIndex = 0;
         challengeJsonArr = saveChallengeJson.chlng;
         console.log('immediate response is' + response[0].error);
-        var allScreens = obj.stateNavigator.getCurrentRoutes(0);
+        var allScreens = obj.stateNavigator.getCurrentRoutes(-1);
         
         for(var i = 0; i < allScreens.length; i++){
         var screen = allScreens[i];
@@ -328,7 +330,6 @@ class TwoFactorAuthMachine extends Component {
                     screenId: nextChlngName,
                   },
                 });
-        
         
         }
         } else {
@@ -441,10 +442,17 @@ class TwoFactorAuthMachine extends Component {
 
             }).done();
           } else {
-            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+             Events.trigger('closeStateMachine');
+            InteractionManager.runAfterInteractions(() => {
+              this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+              });
+            
           }
         } else {
-          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+           Events.trigger('closeStateMachine');
+          InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+            });
         }
 
         //        //var arrChlng = chlngJson.chlng;
