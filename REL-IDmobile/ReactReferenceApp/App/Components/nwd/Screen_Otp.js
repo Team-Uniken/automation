@@ -181,10 +181,9 @@ class AccessCode extends Component {
   }
 
   close() {
-    Alert.alert('clicked')
-    console.log('navigator')
-    console.log(this.props)
-    this.props.navigator.pop()
+    let responseJson = this.props.url.chlngJson;
+    this.setState({ showCamera: false });
+    Events.trigger('showPreviousChallenge');
   }
 
   render() {

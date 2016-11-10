@@ -122,7 +122,11 @@ export default class DeviceBinding extends Component {
     }
     return 'Continue';
   }
-
+ close() {
+    let responseJson = this.props.url.chlngJson;
+    this.setState({ showCamera: false });
+    Events.trigger('showPreviousChallenge');
+  }
   render() {
     console.log(JSON.stringify(this.props.url));
     return (
@@ -132,8 +136,9 @@ export default class DeviceBinding extends Component {
           backgroundColor={Skin.main.STATUS_BAR_BG}
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
-          <Title
-            close={0}>
+           <Title onClose={() => {
+            this.close();
+          } }>
             Device Binding
           </Title>
         </View>
