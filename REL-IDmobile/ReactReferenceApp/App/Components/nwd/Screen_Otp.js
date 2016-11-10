@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid,Platform } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -26,6 +26,7 @@ class AccessCode extends Component {
       barCodeFlag: true,
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
+      isPoped:false,
     }
     //this.barCodeFlag = true;
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
@@ -37,6 +38,14 @@ class AccessCode extends Component {
   componentDidMount() {
     if (Platform.OS === 'android' && Platform.Version >= 23)
       this.checkCameraPermission();
+  }
+  componentWillUpdate(){
+    
+    if(this.state.isPoped){
+       this.state.showCamera = true;
+      this.state.isPoped = false;
+    }
+      
   }
 
   async requestCameraPermission() {
@@ -96,6 +105,8 @@ class AccessCode extends Component {
     }
     return 'NEXT';
   }
+  
+  
 
   checkAccessCode() {
     let vkey = this.state.accessCode;
@@ -103,6 +114,7 @@ class AccessCode extends Component {
       let responseJson = this.props.url.chlngJson;
       this.setState({ showCamera: false });
       responseJson.chlng_resp[0].response = vkey;
+      this.state.isPoped = true;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       alert('Enter Access Code');

@@ -33,6 +33,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                           didFinishLaunchingWithOptions:launchOptions];
   return YES;
 //  NSURL *jsCodeLocation;
 //    #ifdef React_Dev
@@ -62,6 +65,8 @@
 //  
 //  
 //  return YES;
+  
+  
 }
 
 
