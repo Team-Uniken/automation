@@ -15,7 +15,7 @@ const {Keyboard, StatusBar, StyleSheet, Text, View, TouchableHighlight, Touchabl
 const {Component} = React;
 
 
-
+var obj;
 
 
 
@@ -40,6 +40,7 @@ class Register extends Component {
   }
 
   componentWillMount() {
+    obj = this;
     this.state.value = 0;
     this.state.randomMinValue = this.getRandomInt(5, 90);
     this.state.randomMaxValue = this.state.randomMinValue + 10;
@@ -62,7 +63,7 @@ class Register extends Component {
   }
 
   componentWillUnmount() {
-    this.keyboardWillShowListener.remove()
+       this.keyboardWillShowListener.remove()
     this.keyboardWillHideListener.remove()
   }
 
@@ -108,14 +109,17 @@ class Register extends Component {
 
   validateAndProcced() {
 
-    if (!(this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.email.length > 0
-        && this.state.confirmEmail.length > 0 && this.state.phoneNumber.length > 0)) {
+    if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
+        && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
       this.showMessage("Error", "All fields are mandatory.", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("Error", "Email is not valid.", false);
       return;
-    } else if (this.state.value < 90) {
+    } else if (!(this.state.email === this.state.confirmEmail)) {
+      this.showMessage("Error", "Enters emails do not match", false);
+      return;
+    }else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
@@ -144,8 +148,10 @@ class Register extends Component {
       // MOB_NUM_ID_STR, mandatory = false        // sholud be there
       // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
       var userMap = {
-        "userId": this.state.firstName + this.state.lastName,
-        "groupName": "clientteam",
+        "firstName":this.state.firstName,
+        "lastName":this.state.lastName,
+        "userId": this.state.email,
+        "groupName": "group1",
         "emailId": this.state.email,
         "mobNum": this.state.phoneNumber,
         "isRELIDZeroEnabled": "true",
@@ -156,8 +162,8 @@ class Register extends Component {
         console.log(response);
         if (response[0].error == 0) {
           var res = JSON.parse(response[0].response);
-          if (res.isError === 'false') {
-            showMessage("Activation Code Sent to",this.state.confirmEmail+"\nPlease check the email for more instruction.", false);
+          if (res.isError == false) {
+        obj.showMessage("Activation Code Sent to",this.state.confirmEmail+"\nPlease check the email for more instruction.", true);
           } else {
             alert(res.errorMessage);
           }
@@ -178,10 +184,13 @@ class Register extends Component {
       msg,
       [{
         text: 'OK',
+      onPress: () => {
         if(press) {
-          this.props.navigator.pop();
+        obj.props.navigator.pop();
         }
-      }]
+
+        }
+             }]
     )
   }
 

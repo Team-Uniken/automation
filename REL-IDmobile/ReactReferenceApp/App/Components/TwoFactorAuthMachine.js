@@ -54,6 +54,7 @@ let obj;
 let screenId;
 let stepdone = false;
 let onGetAllChallengeEvent;
+
 const {
   Navigator,
   AsyncStorage,
@@ -80,6 +81,7 @@ class TwoFactorAuthMachine extends Component {
     this.isTouchIDPresent = false;
     this.onGetAllChallengeStatus = this.onGetAllChallengeStatus.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
+    
   }
 
   componentWillMount() {
@@ -109,6 +111,7 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
+    
 
 
     if (onGetAllChallengeEvent) {
@@ -310,6 +313,47 @@ class TwoFactorAuthMachine extends Component {
       });
   }
 
+  resetChallenge(){
+    console.log("resetChallenge");
+      ReactRdna.resetChallenge((response) => {
+        if (response[0].error === 0) {
+        challengeJson = saveChallengeJson;
+        currentIndex = 0;
+        challengeJsonArr = saveChallengeJson.chlng;
+        console.log('immediate response is' + response[0].error);
+        var allScreens = obj.stateNavigator.getCurrentRoutes(0);
+        
+        for(var i = 0; i < allScreens.length; i++){
+        var screen = allScreens[i];
+        if(screen.id === 'checkuser'){
+        var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+        obj.stateNavigator.popToRoute(mySelectedRoute);
+        return;
+        }
+              var chlngJson1;
+              chlngJson1 = saveChallengeJson;
+              const nextChlngName = chlngJson1.chlng[0].chlng_name;
+              const chlngJson = chlngJson1.chlng[0];
+                console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+                //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+                 obj.stateNavigator.push({
+                  id:nextChlngName,
+                  title: nextChlngName,
+                  url: {
+                    chlngJson,
+                    screenId: nextChlngName,
+                  },
+                });
+        
+        
+        }
+        } else {
+        console.log('immediate response is' + response[0].error);
+        alert(response[0].error);
+        }
+        });
+    
+  }
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
@@ -393,7 +437,7 @@ class TwoFactorAuthMachine extends Component {
 
         const chlngJson = res.pArgs.response.ResponseData;
 
-        //     chlngJson ={ "chlng":[{"chlng_name":"secqa","chlng_idx":1,"chlng_info":[{"key":"Prompt label","value":"Secret Question"},{"key":"Response label","value":"Secret Answer"},{"key":"Description","value":"Choose your secret question and then provide answer"},{"key":"Reading","value":"Set secret question and answer"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"","response":""},{"challenge":"","response":""},{"challenge":"","response":""}],"chlng_type":2,"chlng_prompt":[["what is your petname","what is the name of your mother","what is the name of your father","what is the name of your sister","what is the name of your brother"],["what is your school name","what is your school address","what is the name of your school principal","what is the name of your class teacher","what is your school bus number"],["what is your office name","what is your office address","what is the name of your office manager","what is your office team name","what is your office team count"]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":3,"chlngs_per_batch":1},{"chlng_name":"pass","chlng_idx":2,"chlng_info":[{"key":"Response label","value":"Password"},{"key":"description","value":"Enter password of length 8-10 characters"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"password","response":""}],"chlng_type":1,"chlng_prompt":[[]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1},{"chlng_name":"tbacred","chlng_idx":3,"chlng_info":[{"key":"Label","value":"Additional Authentication"}],"attempts_left":3,"max_attempts_count":0,"chlng_resp":[{"challenge":"WeChat","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"},{"challenge":"WhatsApp","response":"HGGVHJ66576567FUF6576YFUYVTUHKJBJKB7Y"}],"chlng_type":2,"chlng_prompt":[[{"credType":"facebook","isRegistered":false},{"credType":"Wechat","isRegistered":false},{"credType":"WhatsApp","isRegistered":false},{"credType":"gmail","isRegistered":true}]],"chlng_response_validation":false,"challenge_response_policy":[],"chlng_cipher_spec":["MD5"],"chlng_cipher_salt":"","sub_chlng_count":1,"chlngs_per_batch":1}]};
+
 
         for (var i = 0; i < chlngJson.chlng.length; i++) {
           if (chlngJson.chlng[i].chlng_name === 'tbacred')
@@ -558,19 +602,21 @@ class TwoFactorAuthMachine extends Component {
       currentIndex--;
       obj.stateNavigator.pop();
     } else {
-      var chlngJson;
-      chlngJson = saveChallengeJson;
-      const nextChlngName = chlngJson.chlng[0].chlng_name;
-        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-        //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-         obj.stateNavigator.push({
-          id:nextChlngName,
-          title: nextChlngName,
-          url: {
-            chlngJson,
-            screenId: nextChlngName,
-          },
-        });
+//      var chlngJson;
+//      chlngJson = saveChallengeJson;
+//      const nextChlngName = chlngJson.chlng[0].chlng_name;
+//        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+//        //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+//         obj.stateNavigator.push({
+//          id:nextChlngName,
+//          title: nextChlngName,
+//          url: {
+//            chlngJson,
+//            screenId: nextChlngName,
+//          },
+//        });
+      
+      obj.resetChallenge();
     }
   }
 
