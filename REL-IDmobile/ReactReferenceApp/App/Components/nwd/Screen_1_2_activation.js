@@ -209,18 +209,10 @@ class Activation extends Component {
       <Text
       onPress={() => {
       Alert.alert(
-        'Alert Title',
-        'My Alert Msg',
+        'Message',
+        'Feature coming soon',
         [
-          {
-        text: 'Ask me later',
-        onPress: () => console.log('Ask me later pressed')
-          },
-          {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel'
-          },
+          
           {
         text: 'OK',
         onPress: () => console.log('OK Pressed')
