@@ -41,11 +41,15 @@ let savedUserName;
 let gotNotification = false;
 let appalive = false;
 
-const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform,
+const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform,BackAndroid,
   //Push notification code
   PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
+
+BackAndroid.addEventListener('hardwareBackPress', function() {
+ return true;
+});
 
 /*
  Class Load
