@@ -14,7 +14,6 @@ import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
 import KeyboardSpacer from 'react-native-keyboard-spacer'
-
 class Activation extends Component {
 
   constructor(props) {
@@ -192,6 +191,7 @@ class Activation extends Component {
   render() {
 
     return (
+        <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
@@ -279,6 +279,7 @@ class Activation extends Component {
         </View>
         <KeyboardSpacer topSpacing={-45} />
       </View>
+        </MainActivation>
     );
   }
 }

@@ -205,6 +205,7 @@ class AccessCode extends Component {
   render() {
 
     return (
+        <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
@@ -291,6 +292,7 @@ class AccessCode extends Component {
         </View>
         <KeyboardSpacer topSpacing={-45} />
       </View>
+        </MainActivation>
     );
   }
 }

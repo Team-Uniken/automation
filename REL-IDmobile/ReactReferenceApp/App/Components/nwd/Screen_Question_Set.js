@@ -203,6 +203,7 @@ export default class QuestionSet extends Component {
      */
 
     return (
+        <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
@@ -270,6 +271,7 @@ export default class QuestionSet extends Component {
         </View>
 
       </View>
+        </MainActivation>
     );
 
 

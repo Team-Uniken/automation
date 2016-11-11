@@ -138,6 +138,7 @@ export default class DeviceBinding extends Component {
   render() {
     console.log(JSON.stringify(this.props.url));
     return (
+        <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
@@ -177,7 +178,7 @@ export default class DeviceBinding extends Component {
           </View>
         </View>
       </View>
-
+  </MainActivation>
     );
   }
 }

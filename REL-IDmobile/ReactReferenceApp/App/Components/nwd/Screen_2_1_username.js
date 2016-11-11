@@ -28,7 +28,6 @@ import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-
 /*
   INSTANCES
  */
@@ -182,6 +181,7 @@ class UserLogin extends Component {
   }
   render() {
     return (
+            <MainActivation>
       <View style={Skin.layout0.wrap.container}>
         <View style={Skin.layout0.top.container}>
          <Title onClose={() => {
@@ -216,6 +216,7 @@ class UserLogin extends Component {
             onPress={this.checkUsername.bind(this)} />
         </View>
       </View>
+            </MainActivation>
       );
   }
 }

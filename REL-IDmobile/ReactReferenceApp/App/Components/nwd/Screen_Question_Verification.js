@@ -150,6 +150,7 @@ export default class QuestionVerification extends Component {
     // );
 
     return (
+        <MainActivation>
       <View style={Skin.layout1.content.wrap}>
             
         <View style={Skin.layout0.top.container}>
@@ -190,6 +191,7 @@ export default class QuestionVerification extends Component {
           </View>
         </View>
       </View>
+        </MainActivation>
     );
   }
 }

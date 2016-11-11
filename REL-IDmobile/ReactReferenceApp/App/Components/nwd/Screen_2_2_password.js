@@ -33,7 +33,7 @@ import Title from '../view/title';
 let responseJson;
 let chlngJson;
 let nextChlngName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,ScrollView } = ReactNative;
+const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,ScrollView,BackAndroid } = ReactNative;
 
 const {Component} = React;
 
@@ -80,9 +80,14 @@ class PasswordVerification extends Component {
     }
   }
 
-  componentDidMount(){
-    dismissKeyboard();
+  componentDidMount() {
+     dismissKeyboard();
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
   }
+
 
 
 
@@ -142,6 +147,7 @@ class PasswordVerification extends Component {
   }
   render() {
     return (
+        <MainActivation>
       <View style={[Skin.layout1.wrap,{flex:1}]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
       <View style={{ justifyContent: 'center' }}>
         <View style={Skin.layout1.title.wrap}>
@@ -188,6 +194,7 @@ class PasswordVerification extends Component {
           </View>
       </View>
       </View>
+        </MainActivation>
     );
   }
 }

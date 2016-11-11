@@ -155,6 +155,7 @@ export default class PasswordSet extends Component {
     
     
     return (
+        <MainActivation>
       <View style={Skin.layout1.wrap}>
       <StatusBar
       backgroundColor={Skin.main.STATUS_BAR_BG}
@@ -220,6 +221,7 @@ export default class PasswordSet extends Component {
       </View>
       <KeyboardSpacer topSpacing={-40}/>
       </View>
+        </MainActivation>
       );
     
   }

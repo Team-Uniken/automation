@@ -100,6 +100,7 @@ export default class DeviceName extends Component {
   
   render() {
     return (
+        <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
@@ -145,6 +146,7 @@ export default class DeviceName extends Component {
           </View>
         </View>
       </View>
+        </MainActivation>
     );
   }
 }
