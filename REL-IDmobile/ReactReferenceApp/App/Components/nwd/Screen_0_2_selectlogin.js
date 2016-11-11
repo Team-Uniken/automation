@@ -22,7 +22,7 @@ const errors = {
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-const {Text, View,Platform,
+const {Text, View,Platform,BackAndroid,
   AsyncStorage, } = ReactNative;
 const {Component} = React;
 
@@ -68,6 +68,12 @@ class SelectLogin extends Component {
     obj = this;
   }
   
+   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            return true;
+        }.bind(this));
+  }
+
   //Facebook login code
   doFacebookLogin() {
     $this = this;

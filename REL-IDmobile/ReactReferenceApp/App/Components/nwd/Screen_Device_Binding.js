@@ -31,6 +31,7 @@ const {
   StyleSheet,
   AsyncStorage,
   StatusBar,
+  BackAndroid,
 } = ReactNative;
 
 const {
@@ -126,6 +127,13 @@ export default class DeviceBinding extends Component {
     let responseJson = this.props.url.chlngJson;
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
+  }
+
+   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
   }
   render() {
     console.log(JSON.stringify(this.props.url));

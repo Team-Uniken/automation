@@ -25,7 +25,7 @@ import Title from '../view/title';
  */
 let responseJson;
 const {Component} = React;
-const {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, } = ReactNative;
+const {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, BackAndroid,} = ReactNative;
 
 export default class QuestionVerification extends Component {
 
@@ -104,6 +104,12 @@ export default class QuestionVerification extends Component {
     Events.trigger('showPreviousChallenge');
   }
 
+   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
+  }
   render() {
     // return (
     //   <MainActivation navigator={ this.props.navigator }>

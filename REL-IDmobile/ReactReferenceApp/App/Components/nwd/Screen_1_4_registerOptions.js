@@ -627,6 +627,7 @@ const {
   Alert,
   AlertIOS,
   Platform,
+  BackAndroid,
 } = ReactNative;
 const {Component} = React;
 
@@ -1012,6 +1013,13 @@ class Register extends Component {
         respo[0].response = " ";
       }
     }
+  }
+
+        componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            return true;
+        }.bind(this));
+
   }
 
   render() {

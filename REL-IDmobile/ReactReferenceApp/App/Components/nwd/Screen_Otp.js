@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid,Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid,Platform,BackAndroid } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -36,6 +36,10 @@ class AccessCode extends Component {
   }
 
   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
     if (Platform.OS === 'android' && Platform.Version >= 23)
       this.checkCameraPermission();
   }

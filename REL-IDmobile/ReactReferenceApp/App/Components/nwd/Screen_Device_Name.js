@@ -27,7 +27,7 @@ import MainActivation from '../MainActivation';
 
 let activationResSubscription;
 
-const {View, Text, TextInput, TouchableHighlight, StatusBar, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, } = ReactNative;
+const {View, Text, TextInput, TouchableHighlight, StatusBar, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage,BackAndroid, } = ReactNative;
 
 const {Component} = React;
 
@@ -45,8 +45,11 @@ export default class DeviceName extends Component {
   }
 
   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
     this.state.deviceName = this.props.url.chlngJson.chlng_resp[0].response;
-
     if (!(this.state.deviceName) || this.state.deviceName.length <= 0) {
       this.state.deviceName = "tempByApplication";
     }
@@ -93,6 +96,8 @@ export default class DeviceName extends Component {
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
+
+  
   render() {
     return (
       <View style={Skin.layout1.wrap}>
