@@ -52,7 +52,7 @@ class First extends Component {
   //    BackAndroid.addEventListener('hardwareBackPress', function() {
   //     // this.props.navigator.pop();
   //    alert('working');
-  //           return true;
+  //           return false;
   //       }.bind(this));
   // }
   selectReg() {
