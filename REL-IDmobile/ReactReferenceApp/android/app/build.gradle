@@ -135,27 +135,24 @@ android {
 
 dependencies {
     compile project(':react-native-camera')
-
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
     compile(name: 'app-sdk-debug', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     compile project(':ExtraDimensions')
-
     compile project(':react-native-push-notification')
-    compile ('com.google.android.gms:play-services-gcm:9.2.1') {
+    compile('com.google.android.gms:play-services-gcm:9.2.1') {
         force = true;
     }
-
     compile project(':react-native-system-notification')
     // <- Add this line
-    compile ('com.android.support:appcompat-v7:24.1.1' ){
+    compile('com.android.support:appcompat-v7:24.1.1') {
         force = true;
     }
     compile 'com.facebook.react:react-native:+'
     //compile 'com.google.android.gms:play-services-gcm:9.2.1'
-
+    compile 'com.google.code.gson:gson:2.8.0'
 }
 //
 //configurations.all {

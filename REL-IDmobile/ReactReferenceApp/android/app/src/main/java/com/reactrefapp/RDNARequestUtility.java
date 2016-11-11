@@ -77,6 +77,24 @@ public class RDNARequestUtility extends ReactContextBaseJavaModule {
 
     }
 
+//    @ReactMethod
+//    public void doHTTPPostRequest(String url, String jsonString, Callback callback){
+//        Logger.d(TAG , "----- url "+url);
+//        if(isNetworkAvailable(reactContext)){
+//            new NetworkHttpPostTask(proxyHNIP, proxyPort,jsonString, callback).execute(url);
+//        } else {
+//            WritableMap errorMap = Arguments.createMap();
+//            errorMap.putInt("error", 1);
+//            errorMap.putString("response", "Please check your network connection");
+//
+//            WritableArray writableArray = Arguments.createArray();
+//            writableArray.pushMap(errorMap);
+//
+//            callback.invoke(writableArray);
+//        }
+//
+//    }
+
     private boolean isNetworkAvailable(Context context) {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;

@@ -31,41 +31,41 @@ let deviceHolderList;
 let devicesResponse;
 const FAKE_BOOK_DATA = [];
 const styles = StyleSheet.create({
-	backTextWhite: {
-		color: '#FFF'
-	},
-	rowFront: {
-    padding:10,
-		alignItems: 'flex-start',
-		borderBottomColor: Skin.colors.DIVIDER_COLOR,
-		borderBottomWidth: 1,
+  backTextWhite: {
+    color: '#FFF'
+  },
+  rowFront: {
+    padding: 10,
+    alignItems: 'flex-start',
+    borderBottomColor: Skin.colors.DIVIDER_COLOR,
+    borderBottomWidth: 1,
     backgroundColor: 'white',
     flexDirection: 'column',
-	},
-	rowBack: {
-		alignItems: 'center',
-		backgroundColor: '#DDD',
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		paddingLeft: 15,
-	},
-	backRightBtn: {
-		alignItems: 'center',
-		bottom: 0,
-		justifyContent: 'center',
-		position: 'absolute',
-		top: 0,
-		width: 75
-	},
-	backRightBtnLeft: {
-		backgroundColor: 'blue',
-		right: 75
-	},
-	backRightBtnRight: {
-		backgroundColor: 'red',
-		right: 0
-	},
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: '#DDD',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+  },
+  backRightBtn: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75
+  },
+  backRightBtnLeft: {
+    backgroundColor: 'blue',
+    right: 75
+  },
+  backRightBtnRight: {
+    backgroundColor: 'red',
+    right: 0
+  },
   modalwrap: {
     height: 130,
     flexDirection: 'column',
@@ -365,18 +365,22 @@ export default class DeviceMgmtScene extends Component {
     }
   }
 
-  renderHiddenRow(rowData, secId, rowId, rowMap){
+  renderHiddenRow(rowData, secId, rowId, rowMap) {
     return (
-        <View style={styles.rowBack}>
-									<TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={ () => {rowMap[`${secId}${rowId}`].closeRow();
-                                                                                                            this.onEditPressed(rowData)} }>
+      <View style={styles.rowBack}>
+        <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={ () => {
+          rowMap[`${secId}${rowId}`].closeRow();
+          this.onEditPressed(rowData)
+        } }>
 										<Text style={styles.backTextWhite}>Edit</Text>
-									</TouchableOpacity>
-									<TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={ () => {rowMap[`${secId}${rowId}`].closeRow();
-                                                                                                             this.onDeletePressed(rowData) }}>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnRight]} onPress={ () => {
+          rowMap[`${secId}${rowId}`].closeRow();
+          this.onDeletePressed(rowData)
+        } }>
 										<Text style={styles.backTextWhite}>Delete</Text>
-									</TouchableOpacity>
-				</View>
+        </TouchableOpacity>
+      </View>
     )
   }
 
@@ -394,27 +398,27 @@ export default class DeviceMgmtScene extends Component {
     }
 
     return (
-            <View style={styles.rowFront}>
-            <Text style={styles.itemTitle}>
-              {devicename}
-            </Text>
-            <View style={styles.itemRow}>
-              <Text style={styles.leftLabels}>Status: </Text>
-              <Text style={styles.rightLabels}>{status}</Text>
-            </View>
-            <View style={styles.itemRow}>
-              <Text style={styles.leftLabels}>Created: </Text>
-              <Text style={styles.rightLabels}>{createdTs}</Text>
-            </View>
-            <View style={styles.itemRow}>
-              <Text style={styles.leftLabels}>Last Access: </Text>
-              <Text style={styles.rightLabels}>{lastAccessedTs}</Text>
-            </View>
-            <View style={styles.itemRow}>
-              <Text style={styles.leftLabels}>Binding: </Text>
-              <Text style={styles.rightLabels}>{deviceBinding}</Text>
-            </View>
-           </View>
+      <View style={styles.rowFront}>
+        <Text style={styles.itemTitle}>
+          {devicename}
+        </Text>
+        <View style={styles.itemRow}>
+          <Text style={styles.leftLabels}>Status: </Text>
+          <Text style={styles.rightLabels}>{status}</Text>
+        </View>
+        <View style={styles.itemRow}>
+          <Text style={styles.leftLabels}>Created: </Text>
+          <Text style={styles.rightLabels}>{createdTs}</Text>
+        </View>
+        <View style={styles.itemRow}>
+          <Text style={styles.leftLabels}>Last Access: </Text>
+          <Text style={styles.rightLabels}>{lastAccessedTs}</Text>
+        </View>
+        <View style={styles.itemRow}>
+          <Text style={styles.leftLabels}>Binding: </Text>
+          <Text style={styles.rightLabels}>{deviceBinding}</Text>
+        </View>
+      </View>
     );
   }
 
@@ -444,13 +448,13 @@ export default class DeviceMgmtScene extends Component {
         >
         <View style={styles.listViewWrap}>
           <SwipeListView
-            style={{marginBottom:1}}
-						dataSource={this.ds.cloneWithRows(this.state.dataSource)}
-						renderRow={this.renderRow.bind(this)}
-            renderHiddenRow = {this.renderHiddenRow.bind(this)}
+            style={{ marginBottom: 1 }}
+            dataSource={this.ds.cloneWithRows(this.state.dataSource) }
+            renderRow={this.renderRow.bind(this) }
+            renderHiddenRow = {this.renderHiddenRow.bind(this) }
             rightOpenValue={-150}
             disableRightSwipe={true}
-					/>
+            />
         </View>
         <Modal
           style={styles.modalwrap}
