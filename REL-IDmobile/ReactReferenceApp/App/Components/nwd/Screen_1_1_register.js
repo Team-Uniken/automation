@@ -156,12 +156,12 @@ class Register extends Component {
       // MOB_NUM_ID_STR, mandatory = false        // sholud be there
       // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
       var userMap = {
-        "firstName":this.state.firstName,
-        "lastName":this.state.lastName,
-        "userId": this.state.email,
+        "firstName":this.state.firstName.trim(),
+        "lastName":this.state.lastName.trim(),
+        "userId": this.state.email.trim(),
         "groupName": "group1",
-        "emailId": this.state.email,
-        "mobNum": this.state.phoneNumber,
+        "emailId": this.state.email.trim(),
+        "mobNum": this.state.phoneNumber.trim(),
         "isRELIDZeroEnabled": "true",
         "username": "gmuser",
         "password": hash.sha256().update("uniken123$").digest('hex'),
@@ -169,14 +169,20 @@ class Register extends Component {
       RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         if (response[0].error == 0) {
-          var res = JSON.parse(response[0].response);
+        var res;
+        try{
+          res = JSON.parse(response[0].response);
+        }catch(e){
+            obj.showMessage("Error","Invalid response.Please try again", false);
+        return;
+        }
           if (res.isError == false) {
         obj.showMessage("Activation Code Sent to",this.state.confirmEmail+"\nPlease check the email for more instruction.", true);
           } else {
             alert(res.errorMessage);
           }
         } else {
-          alert('Error');
+          alert('Please try again');
         }
 
       })
