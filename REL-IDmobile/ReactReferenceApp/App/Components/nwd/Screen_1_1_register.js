@@ -11,7 +11,7 @@ import Input from '../view/input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-const {Keyboard, StatusBar, StyleSheet, Text, View, TouchableHighlight, TouchableOpacity, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
+const {Keyboard, StatusBar, StyleSheet, Text, View,BackAndroid, TouchableHighlight, TouchableOpacity, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 const {Component} = React;
 
 
@@ -37,6 +37,14 @@ class Register extends Component {
     };
 
     this.close = this.close.bind(this);
+  }
+
+
+   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+           this.close();
+            return true;
+        }.bind(this));
   }
 
   componentWillMount() {

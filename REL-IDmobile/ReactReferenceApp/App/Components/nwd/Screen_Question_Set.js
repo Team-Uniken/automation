@@ -30,6 +30,7 @@ const {
   StyleSheet,
   StatusBar,
   InteractionManager,
+  BackAndroid,
 } = ReactNative;
 
 const {Component} = React;
@@ -94,6 +95,10 @@ export default class QuestionSet extends Component {
   }
 
   componentDidMount() {
+        BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
     // console.log('----- QuestionSet - componentDidMount');
     // console.log(this.props);
     const prompts = [
@@ -186,6 +191,8 @@ export default class QuestionSet extends Component {
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
+
+
 
   render() {
 

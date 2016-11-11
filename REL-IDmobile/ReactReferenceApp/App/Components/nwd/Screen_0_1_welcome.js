@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import ReactNative, { View, Text, } from 'react-native'
+import ReactNative, { View, Text, BackAndroid} from 'react-native'
 
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
@@ -30,7 +30,6 @@ class First extends Component {
     closeStateMachine() {
     console.log('---------- closeStateMachine ' );
      // obj.props.navigator.pop();
-      
       var allScreens =obj.props.navigator.getCurrentRoutes(-1);
       
       for(var i = 0; i < allScreens.length; i++){
@@ -48,6 +47,14 @@ class First extends Component {
     obj=this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
   }
+
+  //  componentDidMount() {
+  //    BackAndroid.addEventListener('hardwareBackPress', function() {
+  //     // this.props.navigator.pop();
+  //    alert('working');
+  //           return true;
+  //       }.bind(this));
+  // }
   selectReg() {
     console.log('doNavigation:');
     this.props.navigator.push({

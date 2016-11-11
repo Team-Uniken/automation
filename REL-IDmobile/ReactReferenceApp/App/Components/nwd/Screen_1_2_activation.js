@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, Platform, PermissionsAndroid} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, Platform,BackAndroid, PermissionsAndroid} from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -34,8 +34,13 @@ class Activation extends Component {
   }
 
   componentDidMount() {
-    if (Platform.OS === 'android' && Platform.Version >= 23)
+    if (Platform.OS === 'android' && Platform.Version >= 23){
       this.checkCameraPermission();
+    }
+      BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
   }
 
   async requestCameraPermission() {

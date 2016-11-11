@@ -38,7 +38,7 @@ let nextChlngName;
 let obj;
 let statusMessage;
 let savedUserName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, } = ReactNative;
+const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,BackAndroid } = ReactNative;
 
 const {Component} = React;
 
@@ -61,6 +61,10 @@ class UserLogin extends Component {
 
   componentDidMount() {
     obj = this;
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
   }
 
   componentWillMount() {

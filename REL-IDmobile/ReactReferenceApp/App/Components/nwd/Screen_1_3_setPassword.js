@@ -33,6 +33,7 @@ const {
   AsyncStorage,
   StatusBar,
   ScrollView,
+  BackAndroid,
 } = ReactNative;
 
 const {Component} = React;
@@ -143,6 +144,13 @@ export default class PasswordSet extends Component {
     Events.trigger('showPreviousChallenge');
   }
   
+
+   componentDidMount() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
+            this.close();
+            return true;
+        }.bind(this));
+  }
   render() {
     
     
