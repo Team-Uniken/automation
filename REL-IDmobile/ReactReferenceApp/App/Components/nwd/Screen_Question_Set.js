@@ -108,8 +108,8 @@ export default class QuestionSet extends Component {
       'Where were you when you had your first alcoholic drink (or cigarette)?',
       'When you were young, what did you want to be when you grew up?',
     ];
-    //const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
-    const { data, sectionIds } = this.renderListViewData(prompts);
+    const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+    //const { data, sectionIds } = this.renderListViewData(prompts);
     this.setState({
       dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
     });
