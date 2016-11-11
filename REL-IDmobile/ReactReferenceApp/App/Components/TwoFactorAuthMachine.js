@@ -192,12 +192,15 @@ class TwoFactorAuthMachine extends Component {
          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
          // this.props.navigator.pop();
           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          
           AsyncStorage.getItem('userId').then((value) => {
+            Events.trigger('showLoader', true);
             ReactRdna.getAllChallenges(value, (response) => {
               if (response) {
                 console.log('getAllChallenges immediate response is' + response[0].error);
               } else {
                 console.log('s immediate response is' + response[0].error);
+               Events.trigger('hideLoader', true);
               }
             })
           }).done();

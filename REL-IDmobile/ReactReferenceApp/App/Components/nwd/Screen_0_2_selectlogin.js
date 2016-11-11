@@ -7,6 +7,7 @@ import LoginTypeButton from '../view/logintypebutton';
 import PasswordVerification from './Screen_2_2_password';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
+import MainActivation from '../MainActivation';
 
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
@@ -159,6 +160,7 @@ class SelectLogin extends Component {
   }
 
   checkValidityOfAccessToken(){
+     Events.trigger('showLoader', true);
     $this = this;
     AccessToken.getCurrentAccessToken().then((data)=>{
       if(data){
@@ -193,6 +195,7 @@ class SelectLogin extends Component {
   //Facebook login code
   facebookResponseCallback(error, result) {
     if (error) {
+       Events.trigger('hideLoader', true);
       return (result)
     } else {
       //fill response in challenge
@@ -330,6 +333,7 @@ class SelectLogin extends Component {
   render() {
     if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify){
       return (
+        <MainActivation>
         <View style={Skin.layout0.wrap.container}>
         <View style={Skin.layout0.top.container}>
         <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
@@ -351,6 +355,7 @@ class SelectLogin extends Component {
         />
         </View>
         </View>
+        </MainActivation>
         );
     }
     else {
