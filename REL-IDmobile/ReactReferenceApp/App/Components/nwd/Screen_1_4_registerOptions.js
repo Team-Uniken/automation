@@ -637,6 +637,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      devbind:true,
       device: false,
       touchid: false,
       wechat: false,
@@ -702,9 +703,13 @@ class Register extends Component {
       AsyncStorage.setItem("ERPasswd", "empty");
     }
   }
+
+  selectMakePermanent(){
+  
+  }
+
   selectfb() {
     if (this.state.wechat.length == 0) {
-
       this.doFacebookLogin();
     } else {
       this.setState({ wechat: '' });
@@ -1024,6 +1029,17 @@ class Register extends Component {
 
   render() {
     var indents = [];
+
+    indents.push(
+          <Checkbox
+            onSelect={this.selectMakePermanent.bind(this) }
+            selected={this.state.devbind}
+            labelSide={"right"}
+            >
+            Make Device Permanent
+          </Checkbox>
+        );
+
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
 
@@ -1050,6 +1066,7 @@ class Register extends Component {
         }
       }
     }
+
     if (this.props.url.touchCred.isTouch == false) {
       if (Platform.OS === 'android') {
         indents.push(
