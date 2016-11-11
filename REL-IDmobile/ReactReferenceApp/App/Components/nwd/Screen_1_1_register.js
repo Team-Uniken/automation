@@ -40,12 +40,12 @@ class Register extends Component {
   }
 
 
-   componentDidMount() {
-     BackAndroid.addEventListener('hardwareBackPress', function() {
-           this.close();
-            return true;
-        }.bind(this));
-  }
+  //  componentDidMount() {
+  //    BackAndroid.addEventListener('hardwareBackPress', function() {
+  //          this.close();
+  //           return true;
+  //       }.bind(this));
+  // }
 
   componentWillMount() {
     obj = this;
