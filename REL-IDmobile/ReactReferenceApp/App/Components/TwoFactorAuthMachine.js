@@ -698,6 +698,7 @@ class TwoFactorAuthMachine extends Component {
         } else {
           console.log('immediate response is' + response[0].error);
           alert(response[0].error);
+             Events.trigger('hideLoader', true);
         }
       });
     }).done();
