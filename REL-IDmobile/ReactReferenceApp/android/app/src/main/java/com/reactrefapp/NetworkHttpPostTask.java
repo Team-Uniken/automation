@@ -7,16 +7,18 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -34,15 +36,24 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
   private int proxyPort = -1;
   Callback callback;
   int errorCode = 0;
-  ReadableMap map;
+  String jsonPostData;
 
   public NetworkHttpPostTask(String proxyHNIP, int proxyPort, ReadableMap map,Callback callback){
     this.callback = callback;
     this.proxyHNIP = proxyHNIP;
     this.proxyPort = proxyPort;
-    this.map=map;
+    try {
+      this.jsonPostData = new JSONObject(map.toString()).get("NativeMap").toString();
+    }
+    catch (Exception e){}
   }
 
+  public NetworkHttpPostTask(String proxyHNIP, int proxyPort, String jsonPostData,Callback callback){
+    this.callback = callback;
+    this.proxyHNIP = proxyHNIP;
+    this.proxyPort = proxyPort;
+    this.jsonPostData = jsonPostData;
+  }
 
   @Override
   protected void onPreExecute() {
@@ -53,10 +64,17 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
   protected String doInBackground(String... params) {
     String response;
     try {
-      HashMap<String, String> hashMap=new HashMap<String,String>();
-      hashMap.put("userId",map.getString("userId"));
-
-      response = performPostCall(params[0],hashMap);
+      if(jsonPostData!=null) {
+       // HashMap<String, String> postData = new ObjectMapper().readValue(jsonPostData, HashMap.class);
+        Gson gson = new Gson();
+        Type stringStringMap = new TypeToken<HashMap<String, String>>(){}.getType();
+        HashMap<String,String> postData = gson.fromJson(jsonPostData, stringStringMap);
+        response = performPostCall(params[0], postData);
+      }
+      else{
+        errorCode =1;
+        response = "Request data is invalid";
+      }
     } catch (Exception e) {
       e.printStackTrace();
       errorCode = 1;

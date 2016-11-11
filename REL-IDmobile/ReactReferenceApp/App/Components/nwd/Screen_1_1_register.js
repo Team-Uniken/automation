@@ -11,7 +11,7 @@ import Input from '../view/input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-const {Keyboard, StatusBar, StyleSheet, Text, View,BackAndroid, TouchableHighlight, TouchableOpacity, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
+const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, TouchableOpacity, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 const {Component} = React;
 
 
@@ -40,6 +40,7 @@ class Register extends Component {
   }
 
 
+
   //  componentDidMount() {
   //    BackAndroid.addEventListener('hardwareBackPress', function() {
   //          this.close();
@@ -63,7 +64,7 @@ class Register extends Component {
 
   keyboardWillShow(e) {
     this.setState({ keyboardVisible: true })
-  //Alert.alert('yes')
+    //Alert.alert('yes')
   }
 
   keyboardWillHide(e) {
@@ -71,7 +72,7 @@ class Register extends Component {
   }
 
   componentWillUnmount() {
-       this.keyboardWillShowListener.remove()
+    this.keyboardWillShowListener.remove()
     this.keyboardWillHideListener.remove()
   }
 
@@ -118,7 +119,7 @@ class Register extends Component {
   validateAndProcced() {
 
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
-        && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
+      && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
       this.showMessage("Error", "All fields are mandatory.", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
@@ -127,7 +128,7 @@ class Register extends Component {
     } else if (!(this.state.email === this.state.confirmEmail)) {
       this.showMessage("Error", "Enters emails do not match", false);
       return;
-    }else if (this.state.value < 90) {
+    } else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
@@ -141,13 +142,14 @@ class Register extends Component {
 
 
   registerUser() {
-    
+
 
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
       //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
 
       var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/addNewUser.htm";
+      console.log("---Register ---baseUrl =" + baseUrl)
 
       // USER_ID_STR, mandatory = true          // will be email Id
       // GROUP_NAME_STR, mandatory = true       // Hardcode
@@ -156,8 +158,8 @@ class Register extends Component {
       // MOB_NUM_ID_STR, mandatory = false        // sholud be there
       // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
       var userMap = {
-        "firstName":this.state.firstName.trim(),
-        "lastName":this.state.lastName.trim(),
+        "firstName": this.state.firstName.trim(),
+        "lastName": this.state.lastName.trim(),
         "userId": this.state.email.trim(),
         "groupName": "group1",
         "emailId": this.state.email.trim(),
@@ -166,18 +168,21 @@ class Register extends Component {
         "username": "gmuser",
         "password": hash.sha256().update("uniken123$").digest('hex'),
       };
+
+      console.log("---Register ---Usermap =" + JSON.stringify(userMap));
+
       RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         if (response[0].error == 0) {
-        var res;
-        try{
-          res = JSON.parse(response[0].response);
-        }catch(e){
-            obj.showMessage("Error","Invalid response.Please try again", false);
-        return;
-        }
+          var res;
+          try {
+            res = JSON.parse(response[0].response);
+          } catch (e) {
+            obj.showMessage("Error", "Invalid response.Please try again", false);
+            return;
+          }
           if (res.isError == false) {
-        obj.showMessage("Activation Code Sent to",this.state.confirmEmail+"\nPlease check the email for more instruction.", true);
+            obj.showMessage("Activation Code Sent to", this.state.confirmEmail + "\nPlease check the email for more instruction.", true);
           } else {
             alert(res.errorMessage);
           }
@@ -198,13 +203,13 @@ class Register extends Component {
       msg,
       [{
         text: 'OK',
-      onPress: () => {
-        if(press) {
-        obj.props.navigator.pop();
-        }
+        onPress: () => {
+          if (press) {
+            obj.props.navigator.pop();
+          }
 
         }
-             }]
+      }]
     )
   }
 
@@ -221,8 +226,8 @@ class Register extends Component {
           barStyle={'default'} />
         <View style={Skin.layout1.title.wrap}>
           <Title onClose={() => {
-                            this.close();
-                          }}>
+            this.close();
+          } }>
             Registration
           </Title>
         </View>
@@ -240,10 +245,10 @@ class Register extends Component {
                   autoCorrect={false}
                   autoComplete={false}
                   autoCapitalize={true}
-                  onChange={this.onFirstNameChange.bind(this)}
+                  onChange={this.onFirstNameChange.bind(this) }
                   onSubmitEditing={() => {
-                                     this.refs.lastname.focus();
-                                   }} />
+                    this.refs.lastname.focus();
+                  } } />
                 <Input
                   placeholder={'Last Name'}
                   ref={'lastname'}
@@ -254,10 +259,10 @@ class Register extends Component {
                   autoCorrect={false}
                   autoComplete={false}
                   autoCapitalize={true}
-                  onChange={this.onLastNameChange.bind(this)}
+                  onChange={this.onLastNameChange.bind(this) }
                   onSubmitEditing={() => {
-                                     this.refs.email.focus();
-                                   }} />
+                    this.refs.email.focus();
+                  } } />
                 <Input
                   placeholder={'Email'}
                   ref={'email'}
@@ -268,10 +273,10 @@ class Register extends Component {
                   autoCorrect={false}
                   autoCapitalize={false}
                   autoComplete={false}
-                  onChange={this.onEmailChange.bind(this)}
+                  onChange={this.onEmailChange.bind(this) }
                   onSubmitEditing={() => {
-                                     this.refs.confirmEmail.focus();
-                                   }} />
+                    this.refs.confirmEmail.focus();
+                  } } />
                 <Input
                   placeholder={'Confirm Email'}
                   ref={'confirmEmail'}
@@ -281,10 +286,10 @@ class Register extends Component {
                   autoCorrect={false}
                   autoCapitalize={false}
                   autoComplete={false}
-                  onChange={this.onConfirmEmailChange.bind(this)}
+                  onChange={this.onConfirmEmailChange.bind(this) }
                   onSubmitEditing={() => {
-                                     this.refs.phoneNumber.focus();
-                                   }} />
+                    this.refs.phoneNumber.focus();
+                  } } />
                 <Input
                   placeholder={'Phone Number'}
                   ref={'phoneNumber'}
@@ -294,7 +299,7 @@ class Register extends Component {
                   autoCorrect={false}
                   autoCapitalize={false}
                   autoComplete={false}
-                  onChange={this.onPhoneNumberChange.bind(this)} />
+                  onChange={this.onPhoneNumberChange.bind(this) } />
                 <Text style={Skin.layout1.content.slider.text}>
                   Slide to prove your human
                 </Text>
@@ -305,16 +310,16 @@ class Register extends Component {
                   maximumValue={100}
                   minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                   maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
-                  onValueChange={(value) => this.setState({ value: value })} />
+                  onValueChange={(value) => this.setState({ value: value }) } />
                 <Checkbox
-                  onSelect={this.selectCheckbox.bind(this)}
+                  onSelect={this.selectCheckbox.bind(this) }
                   selected={this.state.check}
                   labelSide={"right"}
                   labelStyle={{
-                                color: Skin.colors.BUTTON_BG_COLOR,
-                                textDecorationLine: 'underline',
-                              }}
-                  onLabelPress={() => Linking.openURL("https://www.google.com")}>
+                    color: Skin.colors.BUTTON_BG_COLOR,
+                    textDecorationLine: 'underline',
+                  }}
+                  onLabelPress={() => Linking.openURL("https://www.google.com") }>
                   Terms and Conditions
                 </Checkbox>
               </View>
@@ -325,12 +330,12 @@ class Register extends Component {
           <View style={Skin.layout1.bottom.container}>
             <Button
               label={Skin.text['1']['1'].submit_button}
-              onPress={this.validateAndProcced.bind(this)} />
+              onPress={this.validateAndProcced.bind(this) } />
           </View>
         </View>
         <KeyboardSpacer topSpacing={-55} />
       </View>
-      );
+    );
   }
 }
 
