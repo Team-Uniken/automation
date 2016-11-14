@@ -116,6 +116,13 @@ class Register extends Component {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
+  
+  
+ validatePhoneNumber(phone) {
+    var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+  return regex.test(phone)
+ }
+  
 
   validateAndProcced() {
 
@@ -124,12 +131,12 @@ class Register extends Component {
       this.showMessage("Error", "All fields are mandatory.", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
-      this.showMessage("Error", "Email is not valid.", false);
+      this.showMessage("Error", "Enter valid Email ID", false);
       return;
     } else if (!(this.state.email === this.state.confirmEmail)) {
       this.showMessage("Error", "Enters emails do not match", false);
       return;
-    } else if (this.state.value < 90) {
+    }else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
@@ -296,7 +303,7 @@ Events.trigger('showLoader', true);
                 <Input
                   placeholder={'Phone Number'}
                   ref={'phoneNumber'}
-                  keyboardType={'default'}
+                  keyboardType={'phone-pad'}
                   enablesReturnKeyAutomatically={true}
                   autoFocus={false}
                   autoCorrect={false}
