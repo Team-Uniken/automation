@@ -10,6 +10,7 @@ import hash from 'hash.js';
 import Input from '../view/input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import MainActivation from '../MainActivation';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, TouchableOpacity, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 const {Component} = React;
@@ -170,9 +171,10 @@ class Register extends Component {
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
-
+Events.trigger('showLoader', true);
       RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
+        Events.trigger('hideLoader', true);
         if (response[0].error == 0) {
           var res;
           try {
@@ -219,6 +221,7 @@ class Register extends Component {
 
   render() {
     return (
+      <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
           style={Skin.layout1.statusbar}
@@ -335,6 +338,7 @@ class Register extends Component {
         </View>
         <KeyboardSpacer topSpacing={-55} />
       </View>
+      </MainActivation>
     );
   }
 }
