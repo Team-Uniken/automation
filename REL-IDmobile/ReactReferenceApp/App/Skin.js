@@ -424,7 +424,7 @@ module.exports.layout0 = {
       fontSize: 80,
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
-      fontFamily: ICON_FONT,
+         fontFamily: ICON_FONT,
     },
     subtitle: {
       //width: VIEW_WIDTH,
@@ -435,7 +435,7 @@ module.exports.layout0 = {
     //backgroundColor: PRIMARY,
     },
     prompt: {
-      height: 70,
+
       textAlign: 'center',
       color: LIGHT_TEXT_COLOR,
       fontSize: 15,
