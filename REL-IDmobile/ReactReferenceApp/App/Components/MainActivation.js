@@ -538,10 +538,7 @@ class MainActivation extends Component {
 
                 <TouchableWithoutFeedback onPress={this.dismiss}>
               <View style={Skin.activationStyle.container} onPress={this.dismiss}>
-                <StatusBar
-                backgroundColor={Skin.main.STATUS_BAR_BG}
-                barStyle={'light-content'}
-              />
+               
              
                 <View style={[,{opacity:1,height:Skin.SCREEN_HEIGHT, width:Skin.SCREEN_WIDTH}]}>
                     {this.props.children}
