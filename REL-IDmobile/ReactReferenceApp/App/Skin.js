@@ -520,10 +520,10 @@ module.exports.layout1 = {
       color: TITLE_TEXT_COLOR,
       fontSize: 19,
       textAlign: 'center',
-      width: 260,
+      width: SCREEN_WIDTH-100,
       paddingTop: 12,
-    //backgroundColor: TITLE_BG_COLOR
-    //backgroundColor: "rgba(80,188,28,1)"
+//    backgroundColor: TITLE_BG_COLOR
+//    backgroundColor: "rgba(80,188,28,1)"
     }
   },
   content: {
