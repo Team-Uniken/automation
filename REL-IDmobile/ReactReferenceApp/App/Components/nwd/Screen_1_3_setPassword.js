@@ -96,11 +96,13 @@ export default class PasswordSet extends Component {
   }
   
   onPasswordChange(event) {
-    this.setState({ password: event.nativeEvent.text });
+    this.setState({ password: event.nativeEvent.text.trim() });
+    this.state.password = event.nativeEvent.text.trim();
   }
   
   onConfirmPasswordChange(event) {
-    this.setState({ cPassword: event.nativeEvent.text });
+    this.setState({ cPassword: event.nativeEvent.text.trim() });
+    this.state.cPassword = event.nativeEvent.text.trim();
   }
   
   setPassword() {
@@ -187,6 +189,7 @@ export default class PasswordSet extends Component {
       autoCapitalize={false}
       ref={'password'}
       placeholder={'Enter Password'}
+      value={this.state.password}
       secureTextEntry={true}
       blurOnSubmit={false}
       onChange={this.onPasswordChange.bind(this) }
@@ -202,6 +205,7 @@ export default class PasswordSet extends Component {
       returnKeyType={'done'}
       secureTextEntry={true}
       ref={'cPassword'}
+      value={this.state.cPassword}
       keyboardType={'default'}
       placeholder={'Confirm Password'}
       onChange={this.onConfirmPasswordChange.bind(this) }
