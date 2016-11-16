@@ -21,7 +21,7 @@ const{Component} =  React;
 
 
 
-class Tital extends Component {
+class Margin extends Component {
 
   render() {
     return (  
@@ -34,4 +34,4 @@ class Tital extends Component {
 
 }
 
-module.exports = Tital;
+module.exports = Margin;

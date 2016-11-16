@@ -36,7 +36,7 @@ let nextChlngName;
 let obj;
 let statusMessage;
 let savedUserName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,BackAndroid } = ReactNative;
+const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,BackAndroid,StatusBar } = ReactNative;
 
 const {Component} = React;
 
@@ -182,6 +182,10 @@ class UserLogin extends Component {
     return (
             <MainActivation>
       <View style={Skin.layout0.wrap.container}>
+      <StatusBar
+      style={Skin.layout1.statusbar}
+      backgroundColor={Skin.main.STATUS_BAR_BG}
+      barStyle={'default'} />
         <View style={Skin.layout0.top.container}>
          <Title onClose={() => {
       this.close();

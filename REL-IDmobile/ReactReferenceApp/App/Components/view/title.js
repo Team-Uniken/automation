@@ -12,7 +12,7 @@ const {
 } = ReactNative;
 const {Component} = React;
 
-class Tital extends Component {  render() {
+class Title extends Component {  render() {
     if (this.props.close == 0) {
       return (
       <View style={[Skin.layout1.title.container,{marginTop: (Platform.OS === 'ios') ? 20 : 0,}]}>
@@ -34,4 +34,4 @@ class Tital extends Component {  render() {
 }
 
 
-module.exports = Tital;
+module.exports = Title;

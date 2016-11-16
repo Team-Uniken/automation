@@ -6,7 +6,7 @@ import Skin from '../../Skin';
 const {View, TextInput, Alert} = ReactNative;
 const {Component} = React;
 
-class Button extends Component {
+class Input extends Component {
   constructor(props) {
     super(props);
     this.state = { hasFocus: false };
@@ -46,6 +46,7 @@ class Button extends Component {
            autoCorrect={this.props.autoCorrect}
            autoCapitalize={this.props.autoCapitalize}
            keyboardAppearance={'light'}
+           value={this.props.value}
            enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}
            />
          </View>
@@ -53,7 +54,7 @@ class Button extends Component {
   }
 }
 
-module.exports = Button;
+module.exports = Input;
 /*
 <View 
         //ref={this.props.ref}

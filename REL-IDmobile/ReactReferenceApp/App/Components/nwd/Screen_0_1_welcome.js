@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import ReactNative, { View, Text, BackAndroid} from 'react-native'
+import ReactNative, { View, Text, BackAndroid,StatusBar} from 'react-native'
 
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
@@ -76,6 +76,10 @@ class First extends Component {
   render() {
     return (
       <View style={Skin.layout0.wrap.container}>
+      <StatusBar
+      style={Skin.layout1.statusbar}
+      backgroundColor={Skin.main.STATUS_BAR_BG}
+      barStyle={'default'} />
         <View style={Skin.layout0.top.container}>
           <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
