@@ -61,7 +61,8 @@ const {
   Alert,
   DeviceEventEmitter,
   Platform,
-  Text
+  Text,
+  InteractionManager
 } = ReactNative;
 
 const {Component} = React;
