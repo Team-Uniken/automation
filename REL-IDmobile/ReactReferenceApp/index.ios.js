@@ -96,7 +96,7 @@ class ReactRefApp extends Component {
     let id = route.id;
 
     if (id === 'Load') {
-      //  id = 'Accounts'
+      // id = 'Accounts'
 
       // id = 'UserLogin';
       // id = 'Activation';
