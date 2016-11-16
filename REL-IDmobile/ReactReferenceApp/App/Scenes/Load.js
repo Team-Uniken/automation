@@ -41,6 +41,8 @@ let savedUserName;
 let gotNotification = false;
 let appalive = false;
 
+console.log = function() {}
+
 const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform,BackAndroid,
   //Push notification code
   PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
@@ -78,6 +80,7 @@ class Load extends Component {
   //Push notification code
 
   componentWillMount() {
+    console.log('test logs');
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
