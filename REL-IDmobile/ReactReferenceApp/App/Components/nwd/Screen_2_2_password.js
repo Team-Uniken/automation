@@ -17,7 +17,6 @@ import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import TouchID from 'react-native-touch-id';
 
-import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
 var constant = require('../Constants');
@@ -33,7 +32,7 @@ import Title from '../view/title';
 let responseJson;
 let chlngJson;
 let nextChlngName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,ScrollView,BackAndroid } = ReactNative;
+const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,ScrollView,BackAndroid,StatusBar } = ReactNative;
 
 const {Component} = React;
 
@@ -149,6 +148,11 @@ class PasswordVerification extends Component {
     return (
         <MainActivation>
       <View style={[Skin.layout1.wrap,{flex:1}]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
+      <StatusBar
+      style={Skin.layout1.statusbar}
+      backgroundColor={Skin.main.STATUS_BAR_BG}
+      barStyle={'default'} />
+
       <View style={{ justifyContent: 'center' }}>
         <View style={Skin.layout1.title.wrap}>
              <Title onClose={() => {

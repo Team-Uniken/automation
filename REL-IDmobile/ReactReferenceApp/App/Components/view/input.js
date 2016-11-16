@@ -46,6 +46,7 @@ class Input extends Component {
            autoCorrect={this.props.autoCorrect}
            autoCapitalize={this.props.autoCapitalize}
            keyboardAppearance={'light'}
+           value={this.props.value}
            enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}
            />
          </View>

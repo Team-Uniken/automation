@@ -62,7 +62,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      devbind:true,
+      devbind: true,
       device: false,
       touchid: false,
       wechat: false,
@@ -129,8 +129,8 @@ class Register extends Component {
     }
   }
 
-  selectMakePermanent(){
-  
+  selectMakePermanent() {
+
   }
 
   selectfb() {
@@ -165,9 +165,9 @@ class Register extends Component {
   }
 
   onUpdateChallengeResponseStatus(e) {
-  
+
     const res = JSON.parse(e.response);
-    
+
     Events.trigger('hideLoader', true);
 
 
@@ -268,33 +268,33 @@ class Register extends Component {
     });
   }
 
-  checkValidityOfAccessToken(){
+  checkValidityOfAccessToken() {
     $this = this;
-    AccessToken.getCurrentAccessToken().then((data)=>{
-      if(data){
-        var callback = function(error,result){
-          if(error){
+    AccessToken.getCurrentAccessToken().then((data) => {
+      if (data) {
+        var callback = function (error, result) {
+          if (error) {
             $this.doFacebookLogin();
-          }else{
-            $this.facebookResponseCallback(null,result)
+          } else {
+            $this.facebookResponseCallback(null, result)
           }
         }
 
         var config = {
-              httpMethod: 'GET',
-              version: 'v2.5',
-              accessToken: data.accessToken.toString()
+          httpMethod: 'GET',
+          version: 'v2.5',
+          accessToken: data.accessToken.toString()
         }
 
         var request = new GraphRequest(
-              '/me',
-              config,
-              callback
+          '/me',
+          config,
+          callback
         );
 
-         new GraphRequestManager().addRequest(request).start();
+        new GraphRequestManager().addRequest(request).start();
       }
-      else{
+      else {
         $this.doFacebookLogin();
       }
     });
@@ -302,7 +302,7 @@ class Register extends Component {
 
   //Facebook login code
   doFacebookLogin() {
-     Events.trigger('showLoader', true);
+    Events.trigger('showLoader', true);
     $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       (result, error) => {
@@ -339,7 +339,7 @@ class Register extends Component {
 
   //Facebook login code
   facebookResponseCallback(error, result) {
-     Events.trigger('hideLoader', true);
+    Events.trigger('hideLoader', true);
     if (error) {
       return (result)
     } else {
@@ -417,16 +417,16 @@ class Register extends Component {
       );
 
 
-          AsyncStorage.getItem('userId').then((value) => {
-            Events.trigger('showLoader', true);
+      AsyncStorage.getItem('userId').then((value) => {
+        Events.trigger('showLoader', true);
         ReactRdna.updateChallenges(JSON.stringify(this.props.url.chlngJson), value, (response) => {
           if (response[0].error === 0) {
             console.log('immediate response is' + response[0].error);
           } else {
-           Events.trigger('hideLoader', true);
+            Events.trigger('hideLoader', true);
             console.log('immediate response is' + response[0].error);
             alert(response[0].error);
-          
+
           }
         });
       }).done();
@@ -454,10 +454,10 @@ class Register extends Component {
     }
   }
 
-        componentDidMount() {
-     BackAndroid.addEventListener('hardwareBackPress', function() {
-            return true;
-        }.bind(this));
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      return true;
+    }.bind(this));
 
   }
 
@@ -465,14 +465,14 @@ class Register extends Component {
     var indents = [];
 
     indents.push(
-          <Checkbox
-            onSelect={this.selectMakePermanent.bind(this) }
-            selected={this.state.devbind}
-            labelSide={"right"}
-            >
-            Make Device Permanent
-          </Checkbox>
-        );
+      <Checkbox
+        onSelect={this.selectMakePermanent.bind(this) }
+        selected={this.state.devbind}
+        labelSide={"right"}
+        >
+        Make Device Permanent
+      </Checkbox>
+    );
 
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
@@ -480,8 +480,6 @@ class Register extends Component {
       var promts;
       if (chlng.chlng_prompt[0].length > 0) {
         promts = JSON.parse(chlng.chlng_prompt[0]);
-
-
 
         if (promts.is_registered == false) {
           indents.push(
@@ -536,36 +534,36 @@ class Register extends Component {
 
     return (
       <MainActivation>
-      <View style={Skin.layout1.wrap}>
-        <StatusBar
-          style={Skin.layout1.statusbar}
-          backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'}
-          />
-        <View style={Skin.layout1.title.wrap}>
-          <Title onClose={() => { this.close(); } }
-            >Registration</Title>
-        </View>
-        <ScrollView style={Skin.layout1.content.scrollwrap}>
-          <View style={Skin.layout1.content.wrap}>
-            <View style={Skin.layout1.content.container}>
-              {indents}
-              <Margin
-                space={16}/>
+        <View style={Skin.layout1.wrap}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'}
+            />
+          <View style={Skin.layout1.title.wrap}>
+            <Title onClose={() => { this.close(); } }
+              >Registration</Title>
+          </View>
+          <ScrollView style={Skin.layout1.content.scrollwrap}>
+            <View style={Skin.layout1.content.wrap}>
+              <View style={Skin.layout1.content.container}>
+                {indents}
+                <Margin
+                  space={16}/>
+              </View>
+            </View>
+          </ScrollView>
+          <View
+            style={Skin.layout1.bottom.wrap}>
+            <View style={Skin.layout1.bottom.container}>
+              <Button
+                label={Skin.text['1']['1'].submit_button}
+                onPress={this.doUpdate.bind(this) }
+                />
             </View>
           </View>
-        </ScrollView>
-        <View
-          style={Skin.layout1.bottom.wrap}>
-          <View style={Skin.layout1.bottom.container}>
-            <Button
-              label={Skin.text['1']['1'].submit_button}
-              onPress={this.doUpdate.bind(this) }
-              />
-          </View>
-        </View>
-        <KeyboardSpacer topSpacing={-55}/>
-      </View >
+          <KeyboardSpacer topSpacing={-55}/>
+        </View >
       </MainActivation>
     );
   }

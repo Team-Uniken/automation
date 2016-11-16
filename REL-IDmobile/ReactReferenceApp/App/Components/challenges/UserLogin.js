@@ -19,7 +19,6 @@ import dismissKeyboard from 'dismissKeyboard';
 import PatternLock from '../../Scenes/PatternLock'
 import TouchID from 'react-native-touch-id';
 
-import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
 var constant = require('../Constants');
