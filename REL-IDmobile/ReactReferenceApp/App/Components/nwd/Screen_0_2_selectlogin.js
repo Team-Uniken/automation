@@ -8,6 +8,7 @@ import PasswordVerification from './Screen_2_2_password';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
 import MainActivation from '../MainActivation';
+import Title from '../view/title';
 
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
@@ -23,8 +24,9 @@ const errors = {
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-const {Text, View, Platform, BackAndroid,
-  AsyncStorage, } = ReactNative;
+
+const {Text, View,Platform,BackAndroid,
+  AsyncStorage, StatusBar} = ReactNative;
 const {Component} = React;
 
 var obj;
@@ -333,32 +335,48 @@ class SelectLogin extends Component {
         break;
     }
   }
+ 
+  close() {
+    Events.trigger('showPreviousChallenge');
+  }
 
   render() {
     if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify) {
       return (
         <MainActivation>
-          <View style={Skin.layout0.wrap.container}>
-            <View style={Skin.layout0.top.container}>
-              <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
-                {Skin.icon.logo}
-              </Text>
-              <Text style={Skin.layout0.top.subtitle}>
-                {Skin.text['0']['2'].subtitle}
-              </Text>
-              <Text style={Skin.layout0.top.prompt}>
-                {Skin.text['0']['2'].prompt}
-              </Text>
-            </View>
-            <View style={Skin.layout0.bottom.container}>
-              <GridView
-                style={{ flex: 1 }}
-                items={this.state.dataSource}
-                itemsPerRow={LOGIN_TYPE_PER_ROW}
-                renderItem={this.renderItem}
-                />
-            </View>
-          </View>
+        <View style={Skin.layout0.wrap.container}>
+        <StatusBar
+        style={Skin.layout1.statusbar}
+        backgroundColor={Skin.main.STATUS_BAR_BG}
+        barStyle={'default'} />
+        <View style={Skin.layout1.title.wrap}>
+        <Title onClose={() => {
+        this.close();
+        } }>
+        
+        </Title>
+        </View>
+        <View style={Skin.layout0.top.container}>
+        <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+        {Skin.icon.logo}
+        </Text>
+        <Text style={Skin.layout0.top.subtitle}>
+        {Skin.text['0']['2'].subtitle}
+        </Text>
+        <Text style={Skin.layout0.top.prompt}>
+        {Skin.text['0']['2'].prompt}
+        </Text>
+        </View>
+        <View style={height=10}></View>
+        <View style={Skin.layout0.bottom.container}>
+        <GridView
+        style={{flex:1}}
+        items={this.state.dataSource}
+        itemsPerRow={LOGIN_TYPE_PER_ROW}
+        renderItem={this.renderItem}
+        />
+        </View>
+        </View>
         </MainActivation>
       );
     }
