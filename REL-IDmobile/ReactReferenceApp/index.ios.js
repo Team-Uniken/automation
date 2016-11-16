@@ -46,6 +46,7 @@ import Screen_1_1_register from './App/Components/nwd/Screen_1_1_register';
 import Screen_1_2_activation from './App/Components/nwd/Screen_1_2_activation';
 import Screen_1_3_setPassword from './App/Components/nwd/Screen_1_3_setPassword';
 import Screen_1_4_registerOptions from './App/Components/nwd/Screen_1_4_registerOptions';
+import Screen_3_1_deals from './App/Components/nwd/Screen_3_1_deals';
 
 
 import Appointment from './App/Components/Appointment';
@@ -95,7 +96,8 @@ class ReactRefApp extends Component {
     let id = route.id;
 
     if (id === 'Load') {
-      // id = 'Accounts'
+      //  id = 'Accounts'
+
       // id = 'UserLogin';
       // id = 'Activation';
       // id = "PasswordSet";
@@ -115,7 +117,8 @@ class ReactRefApp extends Component {
       // id = 'Screen_1_1_register'
       // id =  'Screen_1_2_activation'
       //id = 'Screen_1_4_registerOptions'
-    // id = 'Screen_1_3_setPassword'
+      // id = 'Screen_1_3_setPassword'
+      id = 'Screen_3_1_deals'
     }
 
     // MAIN SCENES
@@ -189,6 +192,12 @@ class ReactRefApp extends Component {
                 rdna={route.DnaObject} />);
     } else if (id === 'Screen_1_4_registerOptions') {
       return (<Screen_1_4_registerOptions
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'Screen_3_1_deals') {
+      return (<Screen_3_1_deals
                 navigator={nav}
                 url={route.url}
                 title={route.title}

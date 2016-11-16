@@ -115,7 +115,7 @@ const main = {
 
 const admin = { MENU_TITLE: 'NWD',MENU_FONT: 'Times New Roman' }
 
-const list = { LIST_HEADER_COLOR: '#3b3b3b', }
+const list = module.exports.list = { listHeaderColor: '#3b3b3b' }
 
 const BACKGROUND_COLOR = '#fff';
 const BUTTON_BACKGROUND_COLOR = PRIMARY
@@ -134,7 +134,12 @@ const INPUT_BG_COLOR = '#f1f1f1'
 const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
 const INPUT_TEXT_COLOR = '#2C2C2C'
 const INPUT_BD_COLOR = '#d92a2e'
-
+const BOTTOM_MENU_BG = '#b72e2d'
+const BOTTOM_MENU_COLOR = '#fff'
+const BOTTOM_MENU_UNDERLAY = '#a73834'
+const BOTTOM_MENU_SELECT_BG = '#d92a2e'
+const BOTTOM_MENU_SELECT_COLOR = '#ffffff'
+const BOTTOM_MENU_SELECT_UNDERLAY = '#a73834'
 const APPROVE_BUTTON_COLOR = '#92D050';
 const REJECT_BUTTON_COLOR = '#800000';
 const FRAUD_BUTTON_COLOR = '#212121';
@@ -646,26 +651,154 @@ module.exports.layout1 = {
   }
 }
 
-module.exports.layout2 = Object.assign(module.exports.layout1, {
-
+const layout2 = module.exports.layout2 = Object.assign(module.exports.layout1, {
 })
 
+const navbar = module.exports.navbar = {
+  title: {
+    color: '#ffffff'
+  },
+  bgcolor: BUTTON_BG_COLOR,
+  statusBar: {
+    tint: BUTTON_BG_COLOR,
+  }
+}
 
-
-
-/*
-const baseline = StyleSheet.create({
-  base:{
-          alignItems: 'center',
-          height: 48,
-          width: VIEW_WIDTH,
-          borderRadius: 8,
-          marginTop: 16,
-          backgroundColor: BUTTON_BG_COLOR,
+const layout3 = module.exports.layout3 = {
+  bbgcolor: '#ffffff',
+  split: {
+    bottom: {
+      flex: 1,
+      backgroundColor: '#ffffff',
+    },
+    top: {
+      wrap: {
+        flex: 1,
+      },
+      bg: {
+        //height: SCREEN_HEIGHT,
+        //width: SCREEN_WIDTH,
+        resizeMode: 'cover',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: null,
+        height: null,
       }
-})
+    }
+  },
+  listheader: {
+    wrap: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    text: {
+      color: '#000000', //list.listHeaderColor,
+      paddingBottom: 5,
+      paddingTop: 10,
+      backgroundColor: BACKGROUND_COLOR,
+    },
+    rowwrap: {
+      width: SCREEN_WIDTH * 4 / 5,
+    },
+  },
+  row: {
+    rowwrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    icon: {
+      fontFamily: ICON_FONT,
+      fontSize: 20,
+    },
+    iconwrap: {
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 10,
+      paddingRight: 20,
+    },
+    namewrap: {
+      flex: 3,
+    //backgroundColor: 'red',
+    },
+    nametext: {
+      fontSize: 14,
+      color: PRIMARY_TEXT,
+      paddingTop: 3,
+    },
+    numtext: {
+      fontSize: 12,
+      color: ('rgba(' + PRIMARY_TEXT_RGB + ',0.54)'),
+      paddingTop: 3,
+    },
+    totalwrap: {
+      flex: 2,
+      flexDirection: 'column',
+    //backgroundColor: 'red',
+    },
+    totaltext: {
+      fontSize: 18,
+      textAlign: 'right',
+      flex: 1,
+    //backgroundColor: 'lightblue',
+    },
+  },
+  botmenu: {
+    color: {
+      hover: BOTTOM_MENU_SELECT_COLOR,
+      nohover: BOTTOM_MENU_COLOR
+    },
+    boxwrap: {
+      flexDirection: 'column',
+      marginTop: -10,
+      flex: 1,
+    },
+    bar: {
+      hover: {
+        backgroundColor: 'transparent',
+        height: 10
+      },
+      nohover: {
+        backgroundColor: 'transparent',
+        height: 10
+      }
+    },
+    box: {
+      underlay: BOTTOM_MENU_UNDERLAY,
+      hover: {
+        flex: 1,
+        backgroundColor: BOTTOM_MENU_SELECT_BG,
+      },
+      nohover: {
+        backgroundColor: BOTTOM_MENU_BG,
+        flex: 1,
+      }
+    },
+    wrap: {
+      flexDirection: 'row',
+      height: 74,
+    },
+    inboxwrap: {
+      flex: 1,
+      flexDirection: 'column'
+    },
+    icon: {
+      fontFamily: ICON_FONT,
+      fontSize: 30,
+      marginTop: 10,
+      color: BOTTOM_MENU_COLOR,
+      flex: 2,
+      textAlign: 'center'
+    },
+    title: {
+      fontSize: 13,
+      color: BOTTOM_MENU_COLOR,
+      flex: 1,
+      textAlign: 'center'
+    }
+  }
+}
 
-*/
 
 
 const customeStyle = StyleSheet.create({
