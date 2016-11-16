@@ -17,7 +17,6 @@ import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import TouchID from 'react-native-touch-id';
 
-import PasscodeAuth from 'react-native-passcode-auth';
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
 var constant = require('../Constants');

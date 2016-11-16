@@ -121,7 +121,7 @@ class Activation extends Component {
 
         if ("key" in res && "value" in res) { }
         else {
-          alert('Error to scan QR code ');
+          alert('Invalid QR code');
           setTimeout(function () {
             $this.state.barCodeFlag = true;
           }, 2000);
@@ -129,7 +129,7 @@ class Activation extends Component {
         }
 
       } catch (e) {
-        alert('Error to scan QR code ');
+        alert('Invalid QR code');
         setTimeout(function () {
           $this.state.barCodeFlag = true;
         }, 2000);
@@ -165,7 +165,7 @@ class Activation extends Component {
       }
     } else {
       // Events.trigger('hideLoader', true);
-      alert('Error to scan QR code ');
+      alert('Invalid QR code');
       setTimeout(function () {
         $this.state.barCodeFlag = true;
       }, 2000);

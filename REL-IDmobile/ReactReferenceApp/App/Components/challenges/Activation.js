@@ -141,7 +141,7 @@ var QRCodeScreen = React.createClass({
       }
     } else {
       Events.trigger('hideLoader', true);
-      alert('Error to scan QR code ');
+      alert('Invalid QR code');
       setTimeout(function () {
         $this.setState({ showCamera: true });
       }, 2000);

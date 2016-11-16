@@ -32,6 +32,7 @@ class Register extends Component {
       confirmEmail: '',
       phoneNumber: '',
       value: this.props.value,
+      resetSlider: false,
       randomMinValue: 1,
       randomMaxValue: 90,
       keyboardVisible: false,
@@ -125,16 +126,14 @@ class Register extends Component {
   
 
   validateAndProcced() {
-
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
       && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
-      this.showMessage("Error", "All fields are mandatory.", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("Error", "Enter valid Email ID", false);
       return;
     } else if (!(this.state.email === this.state.confirmEmail)) {
-      this.showMessage("Error", "Enters emails do not match", false);
+      this.showMessage("Error", "Entered emails do not match", false);
       return;
     }else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
@@ -143,15 +142,11 @@ class Register extends Component {
       this.registerUser();
     } else {
       this.showMessage("Error", "Accept Terms and Conditions", false);
-
     }
-
   }
 
 
   registerUser() {
-
-
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
       //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
@@ -188,15 +183,24 @@ Events.trigger('showLoader', true);
             res = JSON.parse(response[0].response);
           } catch (e) {
             obj.showMessage("Error", "Invalid response.Please try again", false);
+            this.setState({ resetSlider: true, value: 0 }, () => {
+              this.state.resetSlider = false;
+            });
             return;
           }
           if (res.isError == false) {
             obj.showMessage("Activation Code Sent to", this.state.confirmEmail + "\nPlease check the email for more instruction.", true);
           } else {
             alert(res.errorMessage);
+            this.setState({ resetSlider: true, value: 0 }, () => {
+              this.state.resetSlider = false;
+            });
           }
         } else {
           alert('Please try again');
+          this.setState({ resetSlider: true, value: 0 }, () => {
+            this.state.resetSlider = false;
+          });
         }
 
       })
@@ -314,10 +318,12 @@ Events.trigger('showLoader', true);
                   Slide to prove your human
                 </Text>
                 <Slider
+                  ref={'slider'}
                   style={Skin.layout1.content.slider.base}
                   {...this.props}
                   minimumValue={0}
                   maximumValue={100}
+                  value={this.state.resetSlider ? 0 : null}
                   minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                   maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
                   onValueChange={(value) => this.setState({ value: value }) } />
