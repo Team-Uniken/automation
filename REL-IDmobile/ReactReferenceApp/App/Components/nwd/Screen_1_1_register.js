@@ -105,7 +105,14 @@ class Register extends Component {
   }
 
   onPhoneNumberChange(event) {
+    
+    if(obj.validatePhoneNumber(event.nativeEvent.text) && event.nativeEvent.text.length<=10)
     this.setState({ phoneNumber: event.nativeEvent.text });
+    else{
+      if( event.nativeEvent.text.length==0)
+        this.setState({ phoneNumber: event.nativeEvent.text });
+      this.setState.phoneNumber = this.setState.phoneNumber;
+    }
   }
 
 
@@ -121,7 +128,10 @@ class Register extends Component {
   
  validatePhoneNumber(phone) {
     var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-  return regex.test(phone)
+   
+   var reg = /^\d+$/;
+ // return regex.test(phone)
+   return reg.test(phone)
  }
   
 
@@ -307,12 +317,15 @@ Events.trigger('showLoader', true);
                 <Input
                   placeholder={'Phone Number'}
                   ref={'phoneNumber'}
-                  keyboardType={'phone-pad'}
+                  keyboardType={'numbers-and-punctuation'}
                   enablesReturnKeyAutomatically={true}
                   autoFocus={false}
                   autoCorrect={false}
                   autoCapitalize={false}
                   autoComplete={false}
+                  returnKeyType={"done"}
+                  value={this.state.phoneNumber}
+      
                   onChange={this.onPhoneNumberChange.bind(this) } />
                 <Text style={Skin.layout1.content.slider.text}>
                   Slide to prove your human
