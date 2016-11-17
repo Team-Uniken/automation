@@ -38,6 +38,7 @@ class PatternLock extends Component {
   constructor(props) {
     super(props);
     this.mode = this.props.mode;
+    this.clearTimers = null;
     this.currentPattern = "";
     if (this.mode == "set") {
       this.state = {
@@ -59,6 +60,7 @@ class PatternLock extends Component {
     this.decryptUserData = this.decryptUserData.bind(this);
     this.encryptUserData = this.encryptUserData.bind(this);
     this.onGetPattern = this.onGetPattern.bind(this);
+    this.startTicker = this.startTicker.bind(this);
     this.tick = this.tick.bind(this);
     this.tickerEnd = this.tickerEnd.bind(this);
     if (this.mode == "verify")
@@ -251,11 +253,17 @@ class PatternLock extends Component {
       tickerFunction(timeLeft);
     }
 
-    function tickerEnd() {
+    function clearTimers(){
       clearInterval(tickInterval);
       clearTimeout(tickerTimeout);
+    }
+
+    function tickerEnd() {
+      clearTimers();
       tickerEndFunction();
     }
+    
+    this.clearTimers = clearTimers;
 
     tickInterval = setInterval(tick, 1000);
   }
@@ -301,6 +309,10 @@ class PatternLock extends Component {
   close() {
     this.refs["patternView"].clearPattern();
     if (this.mode === "verify") {
+      if(this.clearTimers){
+        this.clearTimers();
+      }
+      
       this.props.navigator.pop();
     } else {
       if (this.state.screen === "set") {
