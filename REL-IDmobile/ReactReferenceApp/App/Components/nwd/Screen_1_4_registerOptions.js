@@ -305,9 +305,9 @@ class Register extends Component {
     Events.trigger('showLoader', true);
     $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
-      (result, error) => {
+      function (result) {
         if (result.isCancelled) {
-
+          Events.trigger('hideLoader', true);
         } else {
           AccessToken.getCurrentAccessToken().then((data) => {
 
@@ -333,6 +333,9 @@ class Register extends Component {
             new GraphRequestManager().addRequest($this.profileRequest).start();
           }).done();
         }
+      },
+      function (error) {
+        Events.trigger('hideLoader', true);
       }).done();
   }
 
