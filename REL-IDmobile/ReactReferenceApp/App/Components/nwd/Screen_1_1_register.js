@@ -329,7 +329,7 @@ class Register extends Component {
 
                     onChange={this.onPhoneNumberChange.bind(this) } />
                   <Text style={Skin.layout1.content.slider.text}>
-                    Slide to prove your human
+      Slide to prove you{"'"}re human
                   </Text>
                   <Slider
                     ref={'slider'}
