@@ -1327,8 +1327,8 @@ const PatternLockStyle = StyleSheet.create({
     marginTop: 16,
   },
   errorMsg: {
-    fontSize: 16,
-    color: TEXT_COLOR,
+    fontSize: 15,
+    color: BUTTON_BG_COLOR,
     textAlign: 'center',
     textAlignVertical: 'center',
     margin: 16,

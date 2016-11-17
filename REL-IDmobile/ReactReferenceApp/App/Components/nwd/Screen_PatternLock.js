@@ -11,18 +11,22 @@ import MainActivation from '../../Components/MainActivation';
 
 import PatternView from '../PatternView';
 import dismissKeyboard from 'dismissKeyboard';
+import Title from '../view/title';
+import Events from 'react-native-simple-events';
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 const {
-    View,
-    TouchableHighlight,
-    Text,
-    Platform,
-    AsyncStorage,
+  View,
+  TouchableHighlight,
+  Text,
+  Platform,
+  AsyncStorage,
+  StatusBar,
+  BackAndroid
 } = ReactNative;
 
-const{
+const {
   Component
 } = React;
 
@@ -35,161 +39,169 @@ class PatternLock extends Component {
     super(props);
     this.mode = this.props.mode;
     this.currentPattern = "";
-    if(this.mode == "set"){
-      this.state =  {
-        screen:"set",
-        enable:true,
+    if (this.mode == "set") {
+      this.state = {
+        screen: "set",
+        enable: true,
       };
     }
-    else{
+    else {
       this.state = {
-        screen:"verify",
-        enable:true,
-        attempts:MAX_ATTEMPTS,
-        countDown:0,
+        screen: "verify",
+        enable: true,
+        attempts: MAX_ATTEMPTS,
+        countDown: 0,
       };
     }
 
-    this.onDataEncrypted=this.onDataEncrypted.bind(this);
-    this.onDataDecrypted=this.onDataDecrypted.bind(this);
-    this.decryptUserData =this.decryptUserData.bind(this);
+    this.onDataEncrypted = this.onDataEncrypted.bind(this);
+    this.onDataDecrypted = this.onDataDecrypted.bind(this);
+    this.decryptUserData = this.decryptUserData.bind(this);
     this.encryptUserData = this.encryptUserData.bind(this);
     this.onGetPattern = this.onGetPattern.bind(this);
     this.tick = this.tick.bind(this);
     this.tickerEnd = this.tickerEnd.bind(this);
-    if(this.mode == "verify")
-       this.msg = "Attempts left " + MAX_ATTEMPTS;
-    else{
-       this.msg = "Pattern should atleast be of 4 dots";
+    if (this.mode == "verify")
+      this.msg = "Attempts left " + MAX_ATTEMPTS;
+    else {
+      this.msg = "Pattern should atleast be of 4 dots";
     }
     this.operationMsg = "";
   }
 
   componentWillMount() {
-     dismissKeyboard();
-     if(this.mode === "verify"){
-       this.operationMsg = "Provide pattern to login";
-     }
-     else if(this.mode === "set"){
-       if(this.state.screen === "set"){
-          this.operationMsg = "Provide unlock pattern";
-       }
-       else{
-          this.operationMsg = "Confirm unlock pattern";
-       }
-     }
-  }
-   
-  onSubmit(){
-      this.refs["patternView"].getPatternString();
+    dismissKeyboard();
+    if (this.mode === "verify") {
+      this.operationMsg = "Provide pattern to login";
+    }
+    else if (this.mode === "set") {
+      if (this.state.screen === "set") {
+        this.operationMsg = "Provide unlock pattern";
+      }
+      else {
+        this.operationMsg = "Confirm unlock pattern";
+      }
+    }
   }
 
-  onGetPattern(result){
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      this.close();
+      return true;
+    }.bind(this));
+  }
+
+  onSubmit() {
+    this.refs["patternView"].getPatternString();
+  }
+
+  onGetPattern(result) {
     var pattern = result.pattern;
     var patternSize = result.size;
 
-    if(!this.isEmpty(pattern)){
-        if(this.mode == "verify"){
-          this.currentPattern = pattern;
-          try{
-            AsyncStorage.getItem("ERPasswd").then((data)=> {
-              try{
-                if(data!=null && data!=undefined){
-                  this.decryptUserData(data,pattern);
-                }
+    if (!this.isEmpty(pattern)) {
+      if (this.mode == "verify") {
+        this.currentPattern = pattern;
+        try {
+          AsyncStorage.getItem("ERPasswd").then((data) => {
+            try {
+              if (data != null && data != undefined) {
+                this.decryptUserData(data, pattern);
               }
-              catch(e){
-                console.log("unable to  get userData");
-              }
-            }).done();
-          }catch(e){}
-        }
-      
-        if(this.mode == "set"){
-          if(this.state.screen === "set"){
-            if(patternSize >= MIN_DOTS){
-              this.currentPattern = pattern;
-              this.refs["patternView"].clearPattern();
-              this.operationMsg = "Confirm unlock pattern";
-              this.setState({
-                screen: "confirm",
-              });
             }
-            else{
-              alert("Pattern should atleast be of 4 dots");
+            catch (e) {
+              console.log("unable to  get userData");
             }
+          }).done();
+        } catch (e) { }
+      }
+
+      if (this.mode == "set") {
+        if (this.state.screen === "set") {
+          if (patternSize >= MIN_DOTS) {
+            this.currentPattern = pattern;
+            this.refs["patternView"].clearPattern();
+            this.operationMsg = "Confirm unlock pattern";
+            this.state.screen = "confirm";
+            this.setState({
+              screen: "confirm",
+            });
           }
-          else{
-            if(this.state.screen === "confirm"){
-                if(this.currentPattern === pattern){
-                  AsyncStorage.getItem('RPasswd').then((value) => {
-                      this.encryptUserData(null,value,pattern);
-                  }).done();
-                }
-                else{
-                  alert("Confirm pattern does not match");
-                }
-            }
+          else {
+            alert("Pattern should atleast be of 4 dots");
           }
         }
+        else {
+          if (this.state.screen === "confirm") {
+            if (this.currentPattern === pattern) {
+              AsyncStorage.getItem('RPasswd').then((value) => {
+                this.encryptUserData(null, value, pattern);
+              }).done();
+            }
+            else {
+              alert("Confirm pattern does not match");
+            }
+          }
+        }
+      }
     }
-    else{
+    else {
       alert("Pattern cannot be empty");
     }
   }
 
 
 
-  onDataEncrypted(status){
+  onDataEncrypted(status) {
     //alert(JSON.stringify(status));
-     if(status.error == 0){
-       if(this.mode == "set"){
-          try{
-             AsyncStorage.setItem("ERPasswd",status.response);
-             this.props.onSetPattern(this.props.data);
-          }
-          catch(error){
-              console.log("PatternLock -- unnable to save userData");
-          }
-       }
-     }
+    if (status.error == 0) {
+      if (this.mode == "set") {
+        try {
+          AsyncStorage.setItem("ERPasswd", status.response);
+          this.props.onSetPattern(this.props.data);
+        }
+        catch (error) {
+          console.log("PatternLock -- unnable to save userData");
+        }
+      }
+    }
   }
 
-  onDataDecrypted(status){
-     if(status.error == 0){
-       if(this.mode === "verify"){
-          var userDataStr = status.response;
-          //alert("Password: " + userDataStr);
-          //try{
-            //var userData = JSON.parse(userDataStr);
+  onDataDecrypted(status) {
+    if (status.error == 0) {
+      if (this.mode === "verify") {
+        var userDataStr = status.response;
+        //alert("Password: " + userDataStr);
+        //try{
+        //var userData = JSON.parse(userDataStr);
 
-           // if(userData.pattern === this.currentPattern){
-              // alert("pattern matched");
-              this.msg ="";
-              var resp = {
-                password:userDataStr,
-                data:this.props.data
-              }
+        // if(userData.pattern === this.currentPattern){
+        // alert("pattern matched");
+        this.msg = "";
+        var resp = {
+          password: userDataStr,
+          data: this.props.data
+        }
 
-              this.props.onUnlock(resp);
-           // }
-            //else{
-             // this.refs["patternView"].clearPattern();
-             // this.wrongAttempt();
-            //}
-         // }
-          // catch(e){
-          //   this.refs["patternView"].clearPattern();
-          //   this.wrongAttempt();
-          // }
-       }
-     }else{
-       this.refs["patternView"].clearPattern();
-       this.wrongAttempt();
-     }
+        this.props.onUnlock(resp);
+        // }
+        //else{
+        // this.refs["patternView"].clearPattern();
+        // this.wrongAttempt();
+        //}
+        // }
+        // catch(e){
+        //   this.refs["patternView"].clearPattern();
+        //   this.wrongAttempt();
+        // }
+      }
+    } else {
+      this.refs["patternView"].clearPattern();
+      this.wrongAttempt();
+    }
   }
 
-  encryptUserData(userid,password,pattern){
+  encryptUserData(userid, password, pattern) {
     //  var data = {
     //    "userid":userid,
     //    "password":password,
@@ -197,27 +209,27 @@ class PatternLock extends Component {
     //  };
 
     //  var dataStr = JSON.stringify(data);
-     
-     ReactRdna.encryptDataPacket(password,pattern,this.onDataEncrypted);
+
+    ReactRdna.encryptDataPacket(password, pattern, this.onDataEncrypted);
   }
 
-  decryptUserData(data,pattern){
-    ReactRdna.decryptDataPacket(data,pattern,this.onDataDecrypted);
+  decryptUserData(data, pattern) {
+    ReactRdna.decryptDataPacket(data, pattern, this.onDataDecrypted);
   }
 
   isEmpty(str) {
     return (!str || 0 === str.length);
   }
 
-  startTicker(duration,tickerFunction,tickerEndFunction){
+  startTicker(duration, tickerFunction, tickerEndFunction) {
     var timeLeft = duration;
-    var tickInterval,tickerTimeout;
+    var tickInterval, tickerTimeout;
     var flag = true;
     var now = null;
 
-    function tick(){
-      if(flag){
-        tickerTimeout = setTimeout(tickerEnd,duration*1000);
+    function tick() {
+      if (flag) {
+        tickerTimeout = setTimeout(tickerEnd, duration * 1000);
         flag = false;
       }
 
@@ -225,118 +237,139 @@ class PatternLock extends Component {
       if (now != null) {
         temp = Date.now();
         //alert((temp - now));
-        var timeDiff  = (temp - now) 
+        var timeDiff = (temp - now)
         if (timeDiff > 1500) {
           clearTimeout(tickerTimeout);
-          timeLeft = timeLeft - Math.round(timeDiff/1000);
+          timeLeft = timeLeft - Math.round(timeDiff / 1000);
           tickerTimeout = setTimeout(tickerEnd, (timeLeft * 1000));
         }
       }
-    
+
       now = temp == null ? Date.now() : temp;
 
       timeLeft = timeLeft - 1;
       tickerFunction(timeLeft);
     }
 
-    function tickerEnd(){
+    function tickerEnd() {
       clearInterval(tickInterval);
       clearTimeout(tickerTimeout);
       tickerEndFunction();
     }
-     
-    tickInterval = setInterval(tick,1000);
+
+    tickInterval = setInterval(tick, 1000);
   }
 
-  wrongAttempt(){
-    if(this.state.attempts <= 1){
+  wrongAttempt() {
+    if (this.state.attempts <= 1) {
       alert("Max wrong attempts reached, try again in 60 seconds");
       this.refs["patternView"].disableInput();
-      this.startTicker(60,this.tick,this.tickerEnd);
+      this.startTicker(60, this.tick, this.tickerEnd);
     }
-    else{
+    else {
       alert("Please enter a valid pattern");
       var attemptsLeft = this.state.attempts - 1;
       this.msg = "Attempts left " + attemptsLeft;
       this.setState({
-        attempts:attemptsLeft
+        attempts: attemptsLeft
       });
     }
   }
 
-  tick(timeLeft){
-     this.msg = "Try again in " + timeLeft + " seconds";
-     this.setState({
-       countDown:timeLeft
-     }); 
+  tick(timeLeft) {
+    this.msg = "Try again in " + timeLeft + " seconds";
+    this.setState({
+      countDown: timeLeft
+    });
   }
 
-  tickerEnd(){
+  tickerEnd() {
     this.msg = "Attempts left " + MAX_ATTEMPTS;
     this.setState({
-       attempts:MAX_ATTEMPTS
+      attempts: MAX_ATTEMPTS
     });
 
     this.refs["patternView"].enableInput();
   }
 
-  setErrMsgUsingNativeProps(val){
+  setErrMsgUsingNativeProps(val) {
     this.refs["error"].setNativeProps({
-      text:val
+      text: val
     });
+  }
+
+  close() {
+    this.refs["patternView"].clearPattern();
+    if (this.mode === "verify") {
+      this.props.navigator.pop();
+    } else {
+      if (this.state.screen === "set") {
+        this.props.navigator.pop();
+      } else if (this.state.screen === "confirm") {
+        this.state.screen = "set";
+        this.setState({ screen: "set" });
+      }
+    }
+  }
+
+  componentWillUpdate() {
+    if (this.mode === "set") {
+      if (this.state.screen === "set") {
+        this.operationMsg = "Provide unlock pattern";
+      }
+      else {
+        this.operationMsg = "Confirm unlock pattern";
+      }
+    }
   }
 
   render() {
     var submitBtnText = "Submit";
-    if(this.mode == "set" && this.state.screen == "set"){
+    if (this.mode == "set" && this.state.screen == "set") {
       submitBtnText = "Continue";
     }
 
-    // if(this.state.invalidPattern == true){
-    //   this.msg = "Invalid Pattern";
-    // }
-
-    //<Text style={Skin.PatternLockStyle.errorMsg}>{this.msg}</Text>
-
-      //  <TouchableHighlight
-      //         onPress={this.onSubmit.bind(this)}
-      //         underlayColor={Skin.colors.REPPLE_COLOR}
-      //         style={Skin.PatternLockStyle.button}>
-      //         <Text style={Skin.activationStyle.buttontext}>
-      //           {submitBtnText}
-      //         </Text>
-      //       </TouchableHighlight>
-
-      // {this.mode === "set"?<TouchableHighlight
-      //          onPress={this.onSubmit.bind(this)}
-      //          underlayColor={Skin.colors.REPPLE_COLOR}
-      //          style={Skin.PatternLockStyle.button}>
-      //          <Text style={Skin.activationStyle.buttontext}>
-      //            {submitBtnText}
-      //          </Text>
-      //         </TouchableHighlight>:{}}
-
-    if(Platform.OS == "android"){
+    if (Platform.OS == "android") {
       return (
-        <View style={Skin.PatternLockStyle.patternLockParentContainer}>
-          <View style={Skin.PatternLockStyle.patternLockChildContainer}>
-            
-            <Text style={Skin.layout0.top.subtitle}>{this.operationMsg}</Text>
+        <View style={[Skin.layout1.wrap, { flex: 1 }]}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
+          <View style={{ justifyContent: 'center' }}>
+            <View style={Skin.layout1.title.wrap}>
+              <Title onClose={() => {
+                this.close();
+              } }>
+              </Title>
+            </View>
+          </View>
+          <View style={Skin.layout1.content.wrap}>
+            <View style={Skin.layout1.content.container}>
+              <View style={Skin.layout1.content.top.container}>
+                <View style={Skin.PatternLockStyle.patternLockParentContainer}>
+                  <View style={Skin.PatternLockStyle.patternLockChildContainer}>
 
-            <PatternView 
-            ref="patternView"
-            style={Skin.PatternLockStyle.patternlockview}
-            enablePatternDetection={true}  
-            pathColor="#929292" circleColor="#d92a2e" dotColor="#929292" 
-            gridRows='3' gridColumns='3' onGetPattern = {this.onGetPattern.bind(this)}/>
+                    <Text style={Skin.layout0.top.subtitle}>{this.operationMsg}</Text>
 
-            <Text ref="error" style={Skin.layout0.top.attempt}>{this.msg}</Text>
-              
+                    <PatternView
+                      ref="patternView"
+                      style={Skin.PatternLockStyle.patternlockview}
+                      enablePatternDetection={true}
+                      pathColor="#929292" circleColor="#d92a2e" dotColor="#929292"
+                      gridRows='3' gridColumns='3' onGetPattern = {this.onGetPattern.bind(this) }/>
+
+                    <Text ref="error" style={Skin.PatternLockStyle.errorMsg}>{this.msg}</Text>
+
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       );
     }
-    else{
+    else {
       return (<View/>);
     }
   }

@@ -32,7 +32,7 @@ import Title from '../view/title';
 let responseJson;
 let chlngJson;
 let nextChlngName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,ScrollView,BackAndroid,StatusBar } = ReactNative;
+const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackAndroid, StatusBar } = ReactNative;
 
 const {Component} = React;
 
@@ -80,11 +80,11 @@ class PasswordVerification extends Component {
   }
 
   componentDidMount() {
-     dismissKeyboard();
-     BackAndroid.addEventListener('hardwareBackPress', function() {
-            this.close();
-            return true;
-        }.bind(this));
+    dismissKeyboard();
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      this.close();
+      return true;
+    }.bind(this));
   }
 
 
@@ -138,67 +138,68 @@ class PasswordVerification extends Component {
     dismissKeyboard();
     return false;
   }
- 
-     close() {
+
+  close() {
     let responseJson = this.props.url.chlngJson;
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
+  
   render() {
     return (
-        <MainActivation>
-      <View style={[Skin.layout1.wrap,{flex:1}]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
-      <StatusBar
-      style={Skin.layout1.statusbar}
-      backgroundColor={Skin.main.STATUS_BAR_BG}
-      barStyle={'default'} />
+      <MainActivation>
+        <View style={[Skin.layout1.wrap, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this) }>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
 
-      <View style={{ justifyContent: 'center' }}>
-        <View style={Skin.layout1.title.wrap}>
-             <Title onClose={() => {
-      this.close();
-      }}>
-      </Title>
-        </View>
-          <View style={Skin.layout1.content.wrap}>
-            <View style={Skin.layout0.top.container}>
-              <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
-                {Skin.icon.logo}
-              </Text>
-              <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
+          <View style={{ justifyContent: 'center' }}>
+            <View style={Skin.layout1.title.wrap}>
+              <Title onClose={() => {
+                this.close();
+              } }>
+              </Title>
             </View>
-            <View style={Skin.layout0.bottom.container}>
+            <View style={Skin.layout1.content.wrap}>
+              <View style={Skin.layout0.top.container}>
+                <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+                  {Skin.icon.logo}
+                </Text>
+                <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
+              </View>
+              <View style={Skin.layout0.bottom.container}>
 
-              <Text style={Skin.layout0.top.attempt}>
-                Attempt left {this.props.url.chlngJson.attempts_left}
-              </Text>
+                <Text style={Skin.layout0.top.attempt}>
+                  Attempt left {this.props.url.chlngJson.attempts_left}
+                </Text>
 
-              <Input
-                ref='inputPassword'
-                returnKeyType={ 'next' }
-                secureTextEntry
-                placeholder={Skin.text['2']['2'].textinput_placeholder }
-                value={ this.state.inputPassword }
-                onSubmitEditing={ this.checkPassword.bind(this) }
-                onChange={ this.onPasswordChange.bind(this) }
-                enablesReturnKeyAutomatically={true}
-                autoFocus={false}
-                autoCorrect={false}
-                autoComplete={false}
-                autoCapitalize={false}
-                />
+                <Input
+                  ref='inputPassword'
+                  returnKeyType={ 'next' }
+                  secureTextEntry
+                  placeholder={Skin.text['2']['2'].textinput_placeholder }
+                  value={ this.state.inputPassword }
+                  onSubmitEditing={ this.checkPassword.bind(this) }
+                  onChange={ this.onPasswordChange.bind(this) }
+                  enablesReturnKeyAutomatically={true}
+                  autoFocus={false}
+                  autoCorrect={false}
+                  autoComplete={false}
+                  autoCapitalize={false}
+                  />
 
-              <Button
-                label={Skin.text['2']['1'].submit_button}
-                onPress={ this.checkPassword.bind(this) }/>
+                <Button
+                  label={Skin.text['2']['1'].submit_button}
+                  onPress={ this.checkPassword.bind(this) }/>
 
-              <Text style={Skin.baseline.text_link_no_underline}
-                onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
+                <Text style={Skin.baseline.text_link_no_underline}
+                  onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
+              </View>
             </View>
           </View>
-      </View>
-      </View>
-        </MainActivation>
+        </View>
+      </MainActivation>
     );
   }
 }

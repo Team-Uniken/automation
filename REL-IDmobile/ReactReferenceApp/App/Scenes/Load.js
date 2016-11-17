@@ -567,13 +567,14 @@ class Load extends Component {
 
       let currentAgentInfo = currentProfile.RelId;
       let currentGatewayHost = currentProfile.Host;
-      var currentGatewayPort;
-      if (Platform.OS === 'ios') {
-        currentGatewayPort = currentProfile.Port;
-      } else {
-        currentGatewayPort = parseInt(currentProfile.Port);
+      var currentGatewayPort = currentProfile.Port;
+      if(Number.isInteger(currentGatewayPort)){
+        currentGatewayPort = Math.abs(currentGatewayPort);
+      }else{
+        alert("Invalid gateway port");
+        return;
       }
-
+      
       ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
