@@ -105,11 +105,11 @@ class Register extends Component {
   }
 
   onPhoneNumberChange(event) {
-    
-    if(obj.validatePhoneNumber(event.nativeEvent.text) && event.nativeEvent.text.length<=10)
-    this.setState({ phoneNumber: event.nativeEvent.text });
-    else{
-      if( event.nativeEvent.text.length==0)
+
+    if (obj.validatePhoneNumber(event.nativeEvent.text) && event.nativeEvent.text.length <= 10)
+      this.setState({ phoneNumber: event.nativeEvent.text });
+    else {
+      if (event.nativeEvent.text.length == 0)
         this.setState({ phoneNumber: event.nativeEvent.text });
       this.setState.phoneNumber = this.setState.phoneNumber;
     }
@@ -124,20 +124,21 @@ class Register extends Component {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
-  
-  
- validatePhoneNumber(phone) {
+
+
+  validatePhoneNumber(phone) {
     var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-   
-   var reg = /^\d+$/;
- // return regex.test(phone)
-   return reg.test(phone)
- }
-  
+
+    var reg = /^\d+$/;
+    // return regex.test(phone)
+    return reg.test(phone)
+  }
+
 
   validateAndProcced() {
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
       && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
+      this.showMessage("Error", "All fields are mandatory", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("Error", "Enter valid Email ID", false);
@@ -145,7 +146,7 @@ class Register extends Component {
     } else if (!(this.state.email === this.state.confirmEmail)) {
       this.showMessage("Error", "Entered emails do not match", false);
       return;
-    }else if (this.state.value < 90) {
+    } else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
@@ -183,7 +184,7 @@ class Register extends Component {
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
-Events.trigger('showLoader', true);
+      Events.trigger('showLoader', true);
       RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         Events.trigger('hideLoader', true);
@@ -243,127 +244,127 @@ Events.trigger('showLoader', true);
   render() {
     return (
       <MainActivation>
-      <View style={Skin.layout1.wrap}>
-        <StatusBar
-          style={Skin.layout1.statusbar}
-          backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'} />
-        <View style={Skin.layout1.title.wrap}>
-          <Title onClose={() => {
-            this.close();
-          } }>
-            Registration
-          </Title>
-        </View>
-        <ScrollView style={Skin.layout1.content.scrollwrap}>
-          <View style={Skin.layout1.content.wrap}>
-            <View style={Skin.layout1.content.container}>
-              <View>
-                <Input
-                  placeholder={'First Name'}
-                  ref={'firstname'}
-                  keyboardType={'default'}
-                  returnKeyType={'next'}
-                  enablesReturnKeyAutomatically={true}
-                  autoFocus={true}
-                  autoCorrect={false}
-                  autoComplete={false}
-                  autoCapitalize={true}
-                  onChange={this.onFirstNameChange.bind(this) }
-                  onSubmitEditing={() => {
-                    this.refs.lastname.focus();
-                  } } />
-                <Input
-                  placeholder={'Last Name'}
-                  ref={'lastname'}
-                  keyboardType={'default'}
-                  returnKeyType={'next'}
-                  enablesReturnKeyAutomatically={true}
-                  autoFocus={false}
-                  autoCorrect={false}
-                  autoComplete={false}
-                  autoCapitalize={true}
-                  onChange={this.onLastNameChange.bind(this) }
-                  onSubmitEditing={() => {
-                    this.refs.email.focus();
-                  } } />
-                <Input
-                  placeholder={'Email'}
-                  ref={'email'}
-                  keyboardType={'email-address'}
-                  returnKeyType={'next'}
-                  enablesReturnKeyAutomatically={true}
-                  autoFocus={false}
-                  autoCorrect={false}
-                  autoCapitalize={false}
-                  autoComplete={false}
-                  onChange={this.onEmailChange.bind(this) }
-                  onSubmitEditing={() => {
-                    this.refs.confirmEmail.focus();
-                  } } />
-                <Input
-                  placeholder={'Confirm Email'}
-                  ref={'confirmEmail'}
-                  keyboardType={'email-address'}
-                  enablesReturnKeyAutomatically={true}
-                  autoFocus={false}
-                  autoCorrect={false}
-                  autoCapitalize={false}
-                  autoComplete={false}
-                  onChange={this.onConfirmEmailChange.bind(this) }
-                  onSubmitEditing={() => {
-                    this.refs.phoneNumber.focus();
-                  } } />
-                <Input
-                  placeholder={'Phone Number'}
-                  ref={'phoneNumber'}
-                  keyboardType={'numbers-and-punctuation'}
-                  enablesReturnKeyAutomatically={true}
-                  autoFocus={false}
-                  autoCorrect={false}
-                  autoCapitalize={false}
-                  autoComplete={false}
-                  returnKeyType={"done"}
-                  value={this.state.phoneNumber}
-      
-                  onChange={this.onPhoneNumberChange.bind(this) } />
-                <Text style={Skin.layout1.content.slider.text}>
-                  Slide to prove your human
-                </Text>
-                <Slider
-                  ref={'slider'}
-                  style={Skin.layout1.content.slider.base}
-                  {...this.props}
-                  minimumValue={0}
-                  maximumValue={100}
-                  value={this.state.resetSlider ? 0 : null}
-                  minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
-                  maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
-                  onValueChange={(value) => this.setState({ value: value }) } />
-                <Checkbox
-                  onSelect={this.selectCheckbox.bind(this) }
-                  selected={this.state.check}
-                  labelSide={"right"}
-                  labelStyle={{
-                    color: Skin.colors.BUTTON_BG_COLOR,
-                    textDecorationLine: 'underline',
-                  }}
-                  onLabelPress={() => Linking.openURL("https://www.google.com") }>
-                  Terms and Conditions
-                </Checkbox>
+        <View style={Skin.layout1.wrap}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
+          <View style={Skin.layout1.title.wrap}>
+            <Title onClose={() => {
+              this.close();
+            } }>
+              Registration
+            </Title>
+          </View>
+          <ScrollView style={Skin.layout1.content.scrollwrap}>
+            <View style={Skin.layout1.content.wrap}>
+              <View style={Skin.layout1.content.container}>
+                <View>
+                  <Input
+                    placeholder={'First Name'}
+                    ref={'firstname'}
+                    keyboardType={'default'}
+                    returnKeyType={'next'}
+                    enablesReturnKeyAutomatically={true}
+                    autoFocus={true}
+                    autoCorrect={false}
+                    autoComplete={false}
+                    autoCapitalize={true}
+                    onChange={this.onFirstNameChange.bind(this) }
+                    onSubmitEditing={() => {
+                      this.refs.lastname.focus();
+                    } } />
+                  <Input
+                    placeholder={'Last Name'}
+                    ref={'lastname'}
+                    keyboardType={'default'}
+                    returnKeyType={'next'}
+                    enablesReturnKeyAutomatically={true}
+                    autoFocus={false}
+                    autoCorrect={false}
+                    autoComplete={false}
+                    autoCapitalize={true}
+                    onChange={this.onLastNameChange.bind(this) }
+                    onSubmitEditing={() => {
+                      this.refs.email.focus();
+                    } } />
+                  <Input
+                    placeholder={'Email'}
+                    ref={'email'}
+                    keyboardType={'email-address'}
+                    returnKeyType={'next'}
+                    enablesReturnKeyAutomatically={true}
+                    autoFocus={false}
+                    autoCorrect={false}
+                    autoCapitalize={false}
+                    autoComplete={false}
+                    onChange={this.onEmailChange.bind(this) }
+                    onSubmitEditing={() => {
+                      this.refs.confirmEmail.focus();
+                    } } />
+                  <Input
+                    placeholder={'Confirm Email'}
+                    ref={'confirmEmail'}
+                    keyboardType={'email-address'}
+                    enablesReturnKeyAutomatically={true}
+                    autoFocus={false}
+                    autoCorrect={false}
+                    autoCapitalize={false}
+                    autoComplete={false}
+                    onChange={this.onConfirmEmailChange.bind(this) }
+                    onSubmitEditing={() => {
+                      this.refs.phoneNumber.focus();
+                    } } />
+                  <Input
+                    placeholder={'Phone Number'}
+                    ref={'phoneNumber'}
+                    keyboardType={'numbers-and-punctuation'}
+                    enablesReturnKeyAutomatically={true}
+                    autoFocus={false}
+                    autoCorrect={false}
+                    autoCapitalize={false}
+                    autoComplete={false}
+                    returnKeyType={"done"}
+                    value={this.state.phoneNumber}
+
+                    onChange={this.onPhoneNumberChange.bind(this) } />
+                  <Text style={Skin.layout1.content.slider.text}>
+                    Slide to prove your human
+                  </Text>
+                  <Slider
+                    ref={'slider'}
+                    style={Skin.layout1.content.slider.base}
+                    {...this.props}
+                    minimumValue={0}
+                    maximumValue={100}
+                    value={this.state.resetSlider ? 0 : null}
+                    minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
+                    maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
+                    onValueChange={(value) => this.setState({ value: value }) } />
+                  <Checkbox
+                    onSelect={this.selectCheckbox.bind(this) }
+                    selected={this.state.check}
+                    labelSide={"right"}
+                    labelStyle={{
+                      color: Skin.colors.BUTTON_BG_COLOR,
+                      textDecorationLine: 'underline',
+                    }}
+                    onLabelPress={() => Linking.openURL("https://www.google.com") }>
+                    Terms and Conditions
+                  </Checkbox>
+                </View>
               </View>
             </View>
+          </ScrollView>
+          <View style={Skin.layout1.bottom.wrap}>
+            <View style={Skin.layout1.bottom.container}>
+              <Button
+                label={Skin.text['1']['1'].submit_button}
+                onPress={this.validateAndProcced.bind(this) } />
+            </View>
           </View>
-        </ScrollView>
-        <View style={Skin.layout1.bottom.wrap}>
-          <View style={Skin.layout1.bottom.container}>
-            <Button
-              label={Skin.text['1']['1'].submit_button}
-              onPress={this.validateAndProcced.bind(this) } />
-          </View>
+          <KeyboardSpacer topSpacing={-55} />
         </View>
-        <KeyboardSpacer topSpacing={-55} />
-      </View>
       </MainActivation>
     );
   }
