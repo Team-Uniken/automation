@@ -209,47 +209,31 @@ class PatternLock extends Component {
     return (!str || 0 === str.length);
   }
 
-  startTimer(duration,tickerFunction,tickerEndFunction) {
-    var start = Date.now(),
-        diff,
-        minutes,
-        seconds;
-    function timer() {
-        // get the number of seconds that have elapsed since 
-        // startTimer() was called
-        diff = duration - (((Date.now() - start) / 1000) | 0);
-
-        // does the same job as parseInt truncates the float
-        minutes = (diff / 60) | 0;
-        seconds = (diff % 60) | 0;
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        tickerFunction(seconds,minutes);
-
-        if (diff <= 0) {
-            // add one second so that the count down starts at the full duration
-            // example 05:00 not 04:59
-            start = Date.now() + 1000;
-            tickerEndFunction();
-        }
-    };
-    // we don't want to wait a full second before the timer starts
-    timer();
-    setInterval(timer, 1000);
-  }
-
   startTicker(duration,tickerFunction,tickerEndFunction){
     var timeLeft = duration;
     var tickInterval,tickerTimeout;
     var flag = true;
+    var now = null;
 
     function tick(){
       if(flag){
         tickerTimeout = setTimeout(tickerEnd,duration*1000);
         flag = false;
       }
+
+      var temp = null;
+      if (now != null) {
+        temp = Date.now();
+        //alert((temp - now));
+        var timeDiff  = (temp - now) 
+        if (timeDiff > 1500) {
+          clearTimeout(tickerTimeout);
+          timeLeft = timeLeft - Math.round(timeDiff/1000);
+          tickerTimeout = setTimeout(tickerEnd, (timeLeft * 1000));
+        }
+      }
+    
+      now = temp == null ? Date.now() : temp;
 
       timeLeft = timeLeft - 1;
       tickerFunction(timeLeft);
