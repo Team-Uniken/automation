@@ -302,7 +302,7 @@ class Register extends Component {
 
   //Facebook login code
   doFacebookLogin() {
-    Events.trigger('showLoader', true);
+   // Events.trigger('showLoader', true);
     $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
