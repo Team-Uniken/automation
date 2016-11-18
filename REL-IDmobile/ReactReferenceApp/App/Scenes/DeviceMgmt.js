@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     color: '#FFF'
   },
   rowFront: {
+    marginTop:8,
     padding: 10,
     alignItems: 'flex-start',
     borderBottomColor: Skin.colors.DIVIDER_COLOR,
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   rowBack: {
+     marginTop:8,
     alignItems: 'center',
     backgroundColor: '#DDD',
     flex: 1,

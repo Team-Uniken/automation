@@ -9,6 +9,7 @@ const {
   Text,
   View,
   Platform,
+  TouchableHighlight,
 } = ReactNative;
 const {Component} = React;
 
@@ -23,7 +24,12 @@ class Title extends Component {  render() {
     else {
       return (
       <View style={[Skin.layout1.title.container,{marginTop: (Platform.OS === 'ios') ? 20 : 0,}]}>
-          <Text style={Skin.layout1.title.button} onPress={this.props.onClose }>{Skin.icon.close}</Text>
+              <TouchableHighlight
+              style={Skin.layout1.title.crosshighlight}
+               onPress={this.props.onClose }
+                underlayColor={Skin.colors.REPPLE_COLOR}>
+               <Text style={Skin.layout1.title.button}>{Skin.icon.close}</Text>
+                </TouchableHighlight>
           <Text style={Skin.layout1.title.base}>{this.props.children}</Text>
           <Text style={Skin.layout1.title.button}></Text>
         </View>
