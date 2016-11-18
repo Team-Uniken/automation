@@ -29,6 +29,9 @@ public class WebViewBridgeManager extends ReactWebViewManager {
     public static final int COMMAND_INJECT_BRIDGE_SCRIPT = 100;
     public static final int COMMAND_SEND_TO_BRIDGE = 101;
     public static final int COMMAND_SET_PROXY = 102;
+    public static final int COMMAND_GO_BACK = 103;
+    public static final int COMMAND_GO_FORWARD = 104;
+    public static final int COMMAND_RELOAD = 105;
 
     private boolean initializedBridge;
 
@@ -54,6 +57,9 @@ public class WebViewBridgeManager extends ReactWebViewManager {
         commandsMap.put("injectBridgeScript", COMMAND_INJECT_BRIDGE_SCRIPT);
         commandsMap.put("sendToBridge", COMMAND_SEND_TO_BRIDGE);
         commandsMap.put("setProxy", COMMAND_SET_PROXY);
+        commandsMap.put("goBack", COMMAND_GO_BACK);
+        commandsMap.put("reload", COMMAND_RELOAD);
+        commandsMap.put("goForward", COMMAND_GO_FORWARD);
 
         return commandsMap;
     }
@@ -71,6 +77,22 @@ public class WebViewBridgeManager extends ReactWebViewManager {
                 break;
             case COMMAND_SET_PROXY:
                 Log.d(REACT_CLASS, "----- command setProxy");
+                break;
+            case COMMAND_GO_BACK:
+                Log.d(REACT_CLASS, "----- command goBack");
+                if(root.canGoBack()){
+                    root.goBack();
+                }
+                break;
+            case COMMAND_GO_FORWARD:
+                Log.d(REACT_CLASS, "----- command goForward");
+                if(root.canGoForward()){
+                    root.goForward();
+                }
+                break;
+            case COMMAND_RELOAD:
+                Log.d(REACT_CLASS, "----- command reload");
+                root.reload();
                 break;
             default:
                 //do nothing!!!!

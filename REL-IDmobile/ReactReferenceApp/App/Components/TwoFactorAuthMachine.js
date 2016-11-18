@@ -434,7 +434,7 @@ class TwoFactorAuthMachine extends Component {
           if (arrTba.length > 0) {
             AsyncStorage.getItem('ERPasswd').then((value) => {
 
-              if (value) {
+              if (value && value!=="empty") {
                 this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
               } else {
                 if (Platform.OS === "android") {

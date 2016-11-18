@@ -124,6 +124,7 @@ export default class PasswordSet extends Component {
           // }
         } else {
           alert('Password and Confirm Password do not match');
+          this.setState({password:"",cPassword:""});
         }
       } else {
         alert('Please enter confirm password ');
