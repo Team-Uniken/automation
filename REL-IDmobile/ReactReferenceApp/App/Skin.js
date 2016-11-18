@@ -516,6 +516,11 @@ module.exports.layout1 = {
       fontFamily: ICON_FONT,
     //backgroundColor: "rgba(165,255,250,1)" 
     },
+    crosshighlight: {
+      width:48,
+      height:48,
+    //backgroundColor: "rgba(165,255,250,1)" 
+    },
     base: {
       color: TITLE_TEXT_COLOR,
       fontSize: 19,
