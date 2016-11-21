@@ -104,13 +104,21 @@ class Activation extends Component {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
-      this.setState({ showCamera: false });
+      this. hideCamera();
+      this.setState({ activatonCode:'' });
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       alert('Enter Activation Code');
     }
   }
+  
+  hideCamera(){
+    if(Platform.OS === 'android'){
+     this.setState({ showCamera: false });
+    }
+  }
+  
 
   onQRScanSuccess(result) {
     var $this = this;
@@ -142,12 +150,13 @@ class Activation extends Component {
       if (obtainedVfKey === vfKey) {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
-
-        $this.setState({ showCamera: false });
+        if(Platform.OS === 'android'){
+          $this. hideCamera();
+        }
         let responseJson = $this.props.url.chlngJson;
         $this.barCodeFlag = false;
 
-
+        $this.setState({ activatonCode:'' });
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(() => {
           Events.trigger('showNextChallenge', {
@@ -184,7 +193,7 @@ class Activation extends Component {
 
   close() {
     let responseJson = this.props.url.chlngJson;
-    this.setState({ showCamera: false });
+      this. hideCamera();
     Events.trigger('showPreviousChallenge');
   }
 
@@ -215,6 +224,7 @@ class Activation extends Component {
             <View style={Skin.layout1.content.wrap}>
               {this.renderIf(this.state.showCamera,
                 <Camera
+                  captureAudio={false}           
                   onBarCodeRead={this._onBarCodeRead}
                   type={Camera.constants.Type.back}
                   aspect={Camera.constants.Aspect.fill}
@@ -232,24 +242,25 @@ class Activation extends Component {
                     <View style={Skin.layout1.content.camera.boxwrap}>
                       <View style={Skin.layout1.content.camera.box} />
                     </View>
-                    <View style={Skin.layout1.content.enterWrap}>
-                      <Input
-                        placeholder={'or Enter Numeric Code'}
-                        ref={'activationCode'}
-                        autoFocus={false}
-                        autoCorrect={false}
-                        autoComplete={false}
-                        autoCapitalize={true}
-                        secureTextEntry={true}
-                        styleInput={Skin.layout1.content.code.input}
-                        returnKeyType={"next"}
-                        placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-                        onChange={this.onActivationCodeChange.bind(this) }
-                        onSubmitEditing={this.checkActivationCode.bind(this) } />
-                    </View>
+                 
                   </View>
                 </Camera>
               ) }
+            <View style={Skin.layout1.content.enterWrap}>
+            <Input
+            placeholder={'or Enter Numeric Code'}
+            ref={'activationCode'}
+            autoFocus={false}
+            autoCorrect={false}
+            autoComplete={false}
+            autoCapitalize={true}
+            secureTextEntry={true}
+            styleInput={Skin.layout1.content.code.input}
+            returnKeyType={"next"}
+            placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+            onChange={this.onActivationCodeChange.bind(this) }
+            onSubmitEditing={this.checkActivationCode.bind(this) } />
+            </View>
             </View>
           </View>
         </ScrollView>

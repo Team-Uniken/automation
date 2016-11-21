@@ -116,7 +116,8 @@ class AccessCode extends Component {
     let vkey = this.state.accessCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
-      this.setState({ showCamera: false });
+      this.setState({ accessCode: '' });
+      this. hideCamera();
       responseJson.chlng_resp[0].response = vkey;
       this.state.isPoped = true;
       Events.trigger('showNextChallenge', { response: responseJson });
@@ -157,12 +158,13 @@ class AccessCode extends Component {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
 
-        $this.setState({ showCamera: false });
+        $this. hideCamera();
         let responseJson = $this.props.url.chlngJson;
         $this.barCodeFlag = false;
 
 
         responseJson.chlng_resp[0].response = aCode;
+        $this.setState({ accessCode: '' });
         setTimeout(() => {
           Events.trigger('showNextChallenge', {
             response: responseJson
@@ -198,8 +200,14 @@ class AccessCode extends Component {
 
   close() {
     let responseJson = this.props.url.chlngJson;
-    this.setState({ showCamera: false });
+      this. hideCamera();
     Events.trigger('showPreviousChallenge');
+  }
+  
+  hideCamera(){
+    if(Platform.OS === 'android'){
+    this.setState({ showCamera: false });
+    }
   }
 
   render() {
@@ -229,6 +237,7 @@ class AccessCode extends Component {
             <View style={Skin.layout1.content.wrap}>
               {this.renderIf(this.state.showCamera,
                 <Camera
+                  captureAudio={false}
                   onBarCodeRead={this._onBarCodeRead}
                   type={Camera.constants.Type.back}
                   aspect={Camera.constants.Aspect.fill}
@@ -245,24 +254,26 @@ class AccessCode extends Component {
                     <View style={Skin.layout1.content.camera.boxwrap}>
                       <View style={Skin.layout1.content.camera.box} />
                     </View>
-                    <View style={Skin.layout1.content.enterWrap}>
-                      <Input
-                        placeholder={'or Enter Numeric Code'}
-                        ref={'accessCode'}
-                        autoFocus={false}
-                        autoCorrect={false}
-                        autoComplete={false}
-                        autoCapitalize={true}
-                        secureTextEntry={true}
-                        styleInput={Skin.layout1.content.code.input}
-                        returnKeyType={"next"}
-                        placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-                        onChange={this.onAccessCodeChange.bind(this) }
-                        onSubmitEditing={this.checkAccessCode.bind(this) } />
-                    </View>
+                    
                   </View>
                 </Camera>
               ) }
+            <View style={Skin.layout1.content.enterWrap}>
+            <Input
+            placeholder={'or Enter Numeric Code'}
+            ref={'accessCode'}
+            autoFocus={false}
+            autoCorrect={false}
+            autoComplete={false}
+            autoCapitalize={true}
+            secureTextEntry={true}
+            value={this.state.accessCode}
+            styleInput={Skin.layout1.content.code.input}
+            returnKeyType={"next"}
+            placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+            onChange={this.onAccessCodeChange.bind(this) }
+            onSubmitEditing={this.checkAccessCode.bind(this) } />
+            </View>
             </View>
           </View>
         </ScrollView>
