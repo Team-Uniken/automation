@@ -13,6 +13,7 @@ import BottomMenu from './view/bottomMenu';
 import NavButton from './NavButton';
 import Drawer from 'react-native-drawer';
 import Modal from 'react-native-simple-modal';
+import Events from 'react-native-simple-events';
 var {DeviceEventEmitter} = require('react-native');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 let getCredentialSubscriptions;
@@ -139,6 +140,7 @@ export default class Main extends Component {
    * @return {null}
    */
   toggleDrawer() {
+    console.log('in Main toggleDrawer')
     if (this.state.drawerState.open) {
       this.drawer.close();
     } else {
@@ -155,7 +157,13 @@ export default class Main extends Component {
       this.onGetCredentialsStatus.bind(this)
     );
   }
-
+  componentDidMount(){
+    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+  }
+  componentWillUnmount() { 
+    Events.rm('toggleDrawer', 'toggleDrawerID') 
+  }
+  
   onGetCredentialsStatus(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
@@ -171,6 +179,43 @@ export default class Main extends Component {
    *
    * @return {JSX}
    */
+  
+  buildNavBar(){
+    if (this.props.defaultNav){
+      return ( 
+        <NavigationBar
+          title={{ title: this.props.navBar.title, tintColor: Skin.main.TITLE_COLOR}}
+          tintColor={Skin.main.NAVBAR_BG}
+          statusBar={{ tintColor: Skin.main.STATUS_BAR_BG, style: 'light-content' }}
+          rightButton={
+            <NavButton
+                left={false}
+                icon={this.state.navBar.right.icon}
+                title={this.state.navBar.right.text}
+                tint={this.state.navBar.tint}
+                iconStyle={this.state.navBar.right.iconStyle}
+                textStyle={this.state.navBar.right.iconStyle}
+                handler={this.state.navBar.right.handler}
+                toggleDrawer={this.toggleDrawer}
+              />
+          }
+          leftButton={
+            <NavButton
+              left
+              icon={this.state.navBar.left.icon}
+              title={this.state.navBar.left.text}
+              tint={this.state.navBar.tint}
+              iconStyle={this.state.navBar.left.iconStyle}
+              textStyle={this.state.navBar.left.iconStyle}
+              handler={this.state.navBar.left.handler}
+              toggleDrawer={this.toggleDrawer}
+            />
+          }
+        />
+      )
+    }
+  }
+  
   render() {
     return (
       <Drawer
@@ -206,32 +251,7 @@ export default class Main extends Component {
         openDrawerOffset={() => 70}
         closedDrawerOffset={() => 0}
         panOpenMask={0.2}>
-        {/*
-
-                                    <NavigationBar
-                                      title={{ title: this.props.navBar.title, tintColor: Skin.main.TITLE_COLOR}}
-                                      tintColor={Skin.main.NAVBAR_BG}
-                                      statusBar={{ tintColor: Skin.main.STATUS_BAR_BG, style: 'light-content' }}
-                                      rightButton={<NavButton
-                                        left={false}
-                                        icon={this.state.navBar.right.icon}
-                                        title={this.state.navBar.right.text}
-                                        tint={this.state.navBar.tint}
-                                        iconStyle={this.state.navBar.right.iconStyle}
-                                        textStyle={this.state.navBar.right.iconStyle}
-                                        handler={this.state.navBar.right.handler}
-                                        toggleDrawer={this.toggleDrawer}
-                                      />}
-                                      leftButton={<NavButton
-                                        left
-                                        icon={this.state.navBar.left.icon}
-                                        title={this.state.navBar.left.text}
-                                        tint={this.state.navBar.tint}
-                                        iconStyle={this.state.navBar.left.iconStyle}
-                                        textStyle={this.state.navBar.left.iconStyle}
-                                        handler={this.state.navBar.left.handler}
-                                        toggleDrawer={this.toggleDrawer}
-                                      />}/>*/}
+        {this.buildNavBar()}
         {this.props.children}
         <BottomMenu
           navigator={this.props.navigator}
@@ -333,6 +353,7 @@ Main.propTypes = {
  * @type {Object}
  */
 Main.defaultProps = {
+  defaultNav: true,
   drawerState: {
     open: false,
     disabled: false,

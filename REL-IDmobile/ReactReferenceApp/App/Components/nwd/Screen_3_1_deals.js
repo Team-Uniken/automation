@@ -3,6 +3,7 @@ import ReactNative, { View, Text, ListView, Image } from 'react-native'
 import Skin from '../../Skin';
 import Main from '../../Components/Main';
 import ListItem from '../../Components/ListItem';
+import Events from 'react-native-simple-events'
 import NavBar from '../view/navbar.js'
 import { FormattedCurrency } from 'react-native-globalize';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -71,12 +72,9 @@ class Screen_3_1_deals extends Component {
 
   cleanRowData(rowData) {
     const cleanData = {
-      title: (rowData.nickname === '') ? rowData.accountName : rowData.nickname,
+      title: rowData.title,
       icon: this.props.icons[rowData.accountType],
       iconcolor: this.props.iconcolor[rowData.accountType],
-      acctnum: rowData.accountID,
-      total: rowData.accountBalance,
-      totalcolor: (rowData.accountBalance > 0) ? Skin.colors.POSITIVE_ACCENT : Skin.colors.SECONDARY_TEXT,
     }
     return cleanData;
   }
@@ -108,21 +106,25 @@ class Screen_3_1_deals extends Component {
    * @return {JSX}              JSX of the row
    */
   renderSectionHeader(sectionData, sectionId) {
-    return (
-      <View style={Skin.layout3.listheader.wrap}>
-        <View style={Skin.layout3.listheader.rowwrap}>
-          <Text style={Skin.layout3.listheader.text}>
-            {this.props.headers[sectionId]}
-          </Text>
-        </View>
-      </View>
-      );
+    return (<View></View>);
   }
 
   renderRow(rowData) {
     const cleanData = this.cleanRowData(rowData);
     return (
-      <ListItem>
+      <ListItem
+        wrapstyle={{
+          flex:1,
+          alignItems: 'center'
+        }}
+        rowstyle={{
+          backgroundColor: Skin.colors.TEXT_COLOR,
+          paddingTop: 0,
+          paddingBottom: 0,
+          width: Skin.magicwidth,
+          marginBottom:0,
+        }}
+        >
         <View style={Skin.layout3.row.rowwrap}>
           <View style={Skin.layout3.row.iconwrap}>
             <Text style={[Skin.layout3.row.icon, {
@@ -133,36 +135,29 @@ class Screen_3_1_deals extends Component {
           </View>
           <View style={Skin.layout3.row.namewrap}>
             <Text
-              numberOfLines={1}
+              numberOfLines={2}
               style={Skin.layout3.row.nametext}>
               {cleanData.title}
             </Text>
-            <Text
-              numberOfLines={1}
-              style={Skin.layout3.row.numtext}>
-              {cleanData.acctnum}
-            </Text>
-          </View>
-          <View style={Skin.layout3.row.totalwrap}>
-            <View style={{ flex: 1 }}>
-              <FormattedCurrency
-                value={cleanData.total}
-                currency="USD"
-                style={[Skin.layout3.row.totaltext, {
-                         color: cleanData.totalcolor
-                       }]} />
-            </View>
+            <View style={Skin.layout3.row.border}>
+        </View>
           </View>
         </View>
+        
       </ListItem>
       );
+  }
+  triggerDrawer(){
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
   }
   render() {
     return (
       <Main
         drawerState={this.props.drawerState}
         bottomMenu={this.props.menuState}
-        navigator={this.props.navigator}>
+        navigator={this.props.navigator}
+        defaultNav={false}>
         <View style={[Skin.layout3.split.top.wrap, {
                        justifyContent: 'space-between'
                      }]}>
@@ -179,7 +174,22 @@ class Screen_3_1_deals extends Component {
               source={require('../../img/purse.png')}
               style={Skin.layout3.split.top.bg} />
           </View>
-          <NavBar tintColor={'transparent'} />
+          <NavBar 
+            tintColor={'transparent'} 
+            statusBarTint={'transparent'}
+            title={'Deals'}
+            right={''}
+            left={{
+              icon:Skin.icon.user,
+              iconStyle:{
+                fontSize:35,
+                paddingLeft:17,
+                width: 100,
+                color: '#ffffff',
+              },
+              handler:this.triggerDrawer
+            }}  
+          />
           <View style={{
                          flex: 1,
                          flexDirection: 'column',
@@ -208,6 +218,7 @@ class Screen_3_1_deals extends Component {
         </View>
         <View style={Skin.layout3.split.bottom}>
           <ListView
+            contentContainerStyle={{paddingTop:12}}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
             renderSectionHeader={this.renderSectionHeader.bind(this)} />
@@ -252,25 +263,25 @@ Screen_3_1_deals.defaultProps = {
   startDate: '',
   endDate: '',
   icons: {
-    1: '\ue2f7',
-    2: '\ue277',
-    3: '\ue285',
+    1: Skin.icon.store,
+    2: Skin.icon.gift,
+    3: Skin.icon.timer,
   },
   iconcolor: {
-    1: Skin.colors.DIVIDER_COLOR,
-    2: Skin.colors.POSITIVE_ACCENT,
-    3: Skin.colors.ACCENT,
+    1: Skin.colors.POSITIVE_ACCENT,
+    2: Skin.colors.ACCENT,
+    3: Skin.colors.NEGATIVE_ACCENT,
   },
   response: {
     0: {
       error: 0,
       response: '{"accountList":[ \
-                  {"accountID":"2144","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":15565.32,"accountType":1}, \
-                  {"accountID":"3146","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":3039.00,"accountType":2}, \
-                  {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":-4074.52,"accountType":3}, \
-                  {"accountID":"1445","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":243.22,"accountType":2}, \
-                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":1357.98,"accountType":2}, \
-                  {"accountID":"9447","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-403.12,"accountType":3}], \
+                  {"title":"25% off in-store jeans purchase at Express","accountType":1},\
+                  {"title":"25% off in-store purchase at Dong Liang","accountType":1},\
+                  {"title":"10% off purchase at Philip Le Bac","accountType":2},\
+                  {"title":"5% off any purchase at Mian Hua Tian","accountType":2},\
+                  {"title":"10% off in-store purchase at Brocade Country (29:57min)","accountType":3}\
+                 ], \
               "error":"", \
               "status":"success" \
             }',

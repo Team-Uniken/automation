@@ -35,6 +35,7 @@ const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
 };
+module.exports.magicwidth = (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*52/75 : SCREEN_WIDTH-32
 
 // Open Links
 const open = {
@@ -54,8 +55,9 @@ const PRIMARY = '#e9e9e9'; // '#03A9F4';// 03A9F4
 
 const LIGHT_PRIMARY = '#BCE0F2'; // '#B3e5FC';//
 const TEXT_COLOR = '#FFFFFF';
-const ACCENT = '#f18F01';
-const POSITIVE_ACCENT = '#92D050';
+const ACCENT = '#fdbf2c';
+const POSITIVE_ACCENT = '#6cb939';
+const NEGATIVE_ACCENT = '#d9292d';
 const PRIMARY_TEXT = '#212121';
 
 const SECONDARY_TEXT = '#727272';
@@ -157,6 +159,7 @@ module.exports.icon = {
   temporary: '\ue8b5',
   permanent: '\ue000',
   hamburger: '\ue5d2',
+  user: '\ue7ff',
   settings: '\ue8b8',
   logo: '\ue92e',
   wechat: '\ue935',
@@ -165,7 +168,10 @@ module.exports.icon = {
   touchid: '\ue90d',
   close: '\ue5cd',
   check: '\ue5ca',
-  pattern: 'P'
+  pattern: 'P',
+  store: '\ue563',
+  gift: '\ue8b1',
+  timer: '\ue425',
 };
 
 // Titles
@@ -195,6 +201,7 @@ const colors = {
   TEXT_COLOR_RGB,
   ACCENT,
   POSITIVE_ACCENT,
+  NEGATIVE_ACCENT,
   PRIMARY_TEXT,
   PRIMARY_TEXT_RGB,
   SECONDARY_TEXT,
@@ -245,8 +252,8 @@ text = {
           },
           'pattern': {
             key: 'pattern',
-            label: 'Pattern'
-          },
+              label: 'Pattern'
+            },
           'password': {
             key: 'password',
             label: 'Password'
@@ -277,7 +284,7 @@ text = {
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
     USERNAME_BUTTON_TEXT: 'LOGIN',
     LINK_1_TEXT: 'Branches',
-    LINK_1_ICON: 't',
+    LINK_1_ICON:  ' t',
     LINK_1_LINK: '',
     LINK_2_TEXT: 'Help',
     LINK_2_ICON: '\ue050',
@@ -296,7 +303,7 @@ module.exports.baseline = {
         alignItems: 'center',
         justifyContent: 'center',
         height: 42,
-        width: 260,
+        width: 260,  
         borderRadius: 8,
         marginBottom: 27,
         backgroundColor: BUTTON_BG_COLOR,
@@ -308,7 +315,7 @@ module.exports.baseline = {
         color: BUTTON_TEXT_COLOR,
         textAlign: 'center',
         textAlignVertical: 'center',
-      }
+      }  
     }).text,
     underlayColor: BUTTON_UNDERLAY_COLOR,
     activeOpacity: 0.8,
@@ -403,15 +410,15 @@ module.exports.baseline = {
     fontSize: 12,
     textAlign: 'center'
   }
-}
+}  
 
-
+  
 
 
 module.exports.layout0 = {
-  wrap: {
+  wrap: {  
     container: {
-      flex: 1,
+      flex: 1,  
       justifyContent: "center",
     },
   },
@@ -421,7 +428,7 @@ module.exports.layout0 = {
       justifyContent: "flex-end",
       alignItems: "center"
     },
-    icon: {
+    icon: {  
       //marginTop: (SCREEN_HEIGHT - 100) / 8,
       //width: SCREEN_WIDTH,
       color: LOGO_COLOR,
@@ -430,7 +437,7 @@ module.exports.layout0 = {
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
          fontFamily: ICON_FONT,
-    },
+    },  
     subtitle: {
       //width: VIEW_WIDTH,
       textAlign: 'center',
@@ -440,12 +447,12 @@ module.exports.layout0 = {
     //backgroundColor: PRIMARY,
     },
     prompt: {
-
+  
       textAlign: 'center',
       color: LIGHT_TEXT_COLOR,
       fontSize: 15,
     //backgroundColor: DARK_PRIMARY,
-    },
+    },  
     attempt: {
       marginBottom: 10,
       marginTop: 60,
@@ -463,7 +470,7 @@ module.exports.layout0 = {
     loginbutton: {
       subtitle: {
         color: BLACK_TEXT_COLOR,
-        marginTop: 0,
+        marginTop: 0,  
         textAlign: 'center',
       },
       base: {
@@ -473,7 +480,7 @@ module.exports.layout0 = {
         marginBottom: 3,
         textAlign: 'center',
         marginLeft: 10,
-        marginRight: 10,
+        marginRight: 10,  
       },
       icon: {
         fontFamily: ICON_FONT,
@@ -485,11 +492,11 @@ module.exports.layout0 = {
         height: 110,
       }
     }
-  }
+  }  
 }
 
 
-
+  
 module.exports.layout1 = {
   wrap: {
     flex: 1,
@@ -709,27 +716,32 @@ const layout3 = module.exports.layout3 = {
     },
     icon: {
       fontFamily: ICON_FONT,
-      fontSize: 20,
+      fontSize: 27,
     },
     iconwrap: {
-      paddingTop: 10,
-      paddingBottom: 10,
-      paddingLeft: 10,
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 5,
       paddingRight: 20,
     },
     namewrap: {
       flex: 3,
+      paddingTop: 7,
     //backgroundColor: 'red',
     },
     nametext: {
-      fontSize: 14,
+      fontSize: 13,
       color: PRIMARY_TEXT,
-      paddingTop: 3,
+      minHeight:40,
     },
     numtext: {
       fontSize: 12,
       color: ('rgba(' + PRIMARY_TEXT_RGB + ',0.54)'),
       paddingTop: 3,
+    },
+    border:{
+      height:1, 
+      backgroundColor:'#eae9e9'
     },
     totalwrap: {
       flex: 2,
@@ -750,17 +762,17 @@ const layout3 = module.exports.layout3 = {
     },
     boxwrap: {
       flexDirection: 'column',
-      marginTop: -10,
+      marginTop: 0,
       flex: 1,
     },
     bar: {
       hover: {
         backgroundColor: 'transparent',
-        height: 10
+        height: 0
       },
       nohover: {
         backgroundColor: 'transparent',
-        height: 10
+        height: 0
       }
     },
     box: {
@@ -776,7 +788,8 @@ const layout3 = module.exports.layout3 = {
     },
     wrap: {
       flexDirection: 'row',
-      height: 74,
+      height: 66,
+      
     },
     inboxwrap: {
       flex: 1,
@@ -784,8 +797,8 @@ const layout3 = module.exports.layout3 = {
     },
     icon: {
       fontFamily: ICON_FONT,
-      fontSize: 30,
-      marginTop: 10,
+      fontSize: 28,
+      marginTop: 7,
       color: BOTTOM_MENU_COLOR,
       flex: 2,
       textAlign: 'center'
