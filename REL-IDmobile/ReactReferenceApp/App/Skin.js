@@ -63,7 +63,7 @@ const DIVIDER_COLOR = '#b6b6b6';
 const NAV_BAR_TINT = '#FFFFFF'
 const MENU_TXT_COLOR = '#2579A2';
 const ICON_COLOR = '#FFFFFF';
-
+const STOCK = '#439DCF';
 
 const PRIMARY_RGB = hexToRgb(PRIMARY).r + ',' + hexToRgb(PRIMARY).g + ',' + hexToRgb(PRIMARY).b;
 const DARK_PRIMARY_RGB = hexToRgb(DARK_PRIMARY).r + ',' + hexToRgb(DARK_PRIMARY).g + ',' + hexToRgb(DARK_PRIMARY).b;
@@ -74,7 +74,7 @@ const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + '
 const load = {
   OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
 
-  OVERLAY_SPINNER_COLOR: '#d92a2e',
+  OVERLAY_SPINNER_COLOR:STOCK,
   BG_COLOR_RGB: '255,255,255',
   BG_COLOR_OPACITY: '0.9',
   LOAD_SEQUENCE_TEXT_COLOR: '#3b3b3b'
@@ -98,7 +98,7 @@ const login = {
 }
 
 const main = {
-  STATUS_BAR_BG: '#3b3b3b',
+  STATUS_BAR_BG: '#107BB5',
   BACKGROUND_COLOR: '#F9F9F9',
   BOTTOM_MENU_BG: '#3b3b3b',
   BOTTOM_MENU_COLOR: '#B0B0B0',
@@ -113,9 +113,11 @@ const main = {
   TITLE_COLOR: '#ffffff'
 }
 
-const admin = { MENU_TITLE: 'NWD',MENU_FONT: 'Times New Roman' }
+const admin = { MENU_TITLE: 'REL-ID',MENU_FONT: 'Times New Roman' }
 
 const list = { LIST_HEADER_COLOR: '#3b3b3b', }
+
+
 
 const BACKGROUND_COLOR = '#fff';
 const BUTTON_BACKGROUND_COLOR = PRIMARY
@@ -125,15 +127,15 @@ const TITLE_COLOR = TITLE_TEXT_COLOR
 const TITLE_BG_COLOR = '#ffffff'
 const BLACK_TEXT_COLOR = '#000'
 const ERROR_TEXT_COLOR = '#CC0000'
-const BUTTON_BG_COLOR = '#d92a2e'
+const BUTTON_BG_COLOR = STOCK
 const BUTTON_TEXT_COLOR = '#ffffff'
 const BUTTON_UNDERLAY_COLOR = '#000000'
-const LOGO_COLOR = '#d92a2e'
+const LOGO_COLOR = STOCK
 const LIGHT_TEXT_COLOR = '#929292'
 const INPUT_BG_COLOR = '#f1f1f1'
 const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
 const INPUT_TEXT_COLOR = '#2C2C2C'
-const INPUT_BD_COLOR = '#d92a2e'
+const INPUT_BD_COLOR = STOCK
 
 const APPROVE_BUTTON_COLOR = '#92D050';
 const REJECT_BUTTON_COLOR = '#800000';
@@ -217,13 +219,13 @@ text = {
     test: 'test',
     '0': {
       '1': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to REL-IDmobile',
         need_to_register_button: 'I need to register',
         already_member: 'I\'m already a member',
         prompt: '',
       },
       '2': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to REL-IDmobile',
         prompt: 'Select a login',
         credTypes: {
           'facebook': {
@@ -259,11 +261,11 @@ text = {
     },
     '2': {
       '1': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to REL-IDmobile',
         submit_button: 'Submit',
       },
       '2': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to REL-IDmobile',
         submit_button: 'Submit',
         textinput_placeholder: 'Enter Password',
       }

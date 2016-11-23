@@ -57,8 +57,8 @@ class AccessCode extends Component {
       const granted = await PermissionsAndroid.requestPermission(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          'title': 'NWD App Camera Permission',
-          'message': 'NWD App needs access to your camera ' +
+          'title': 'REL-IDmobile App Camera Permission',
+          'message': 'REL-IDmobile App needs access to your camera ' +
           'so you can scan the QR Code.'
         }
       )
