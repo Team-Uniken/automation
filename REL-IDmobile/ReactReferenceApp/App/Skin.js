@@ -155,7 +155,7 @@ module.exports.icon = {
   permanent: '\ue000',
   hamburger: '\ue5d2',
   settings: '\ue8b8',
-  logo: '\ue92e',
+  logo: 'c',
   wechat: '\ue935',
   facebook: '\ue932',
   password: '\ue7ff',
