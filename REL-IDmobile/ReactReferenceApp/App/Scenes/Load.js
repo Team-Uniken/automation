@@ -630,6 +630,10 @@ class Load extends Component {
     console.log(this.props.navigator.state);
     return (
       <View style={styles.container}>
+
+        <StatusBar
+          backgroundColor='#000'
+          />
         <Image
           source={require('../img/ic_welcome.png')}
           style={styles.bg} />
