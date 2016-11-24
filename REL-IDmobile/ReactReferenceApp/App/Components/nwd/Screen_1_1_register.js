@@ -269,7 +269,7 @@ class Register extends Component {
         <WebViewAndroid
         style={{height: 200}}
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'https://www.google.co.in/search?q=fb&oq=fb&aqs=chrome..69i57.1113j0j7&sourceid=chrome&es_sm=93&ie=UTF-8' }}
+          source={{ uri: 'http://api.relid.uniken.com/' }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
