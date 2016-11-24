@@ -486,6 +486,16 @@ module.exports.layout0 = {
 
 
 module.exports.layout1 = {
+  termandcondition: {
+  backgroundColor: '#fff',
+    position: 'absolute',
+    top: 40,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    width: SCREEN_WIDTH-40,
+    height: SCREEN_HEIGHT-120,
+  },
   wrap: {
     flex: 1,
   //justifyContent: "center",
