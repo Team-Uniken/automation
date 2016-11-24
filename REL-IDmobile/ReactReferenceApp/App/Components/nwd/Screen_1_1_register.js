@@ -349,7 +349,7 @@ class Register extends Component {
                       color: Skin.colors.BUTTON_BG_COLOR,
                       textDecorationLine: 'underline',
                     }}
-                    onLabelPress={() => Linking.openURL("https://www.google.com") }>
+                    onLabelPress={() => Linking.openURL("http://api.relid.uniken.com/") }>
                     Terms and Conditions
                   </Checkbox>
                 </View>
