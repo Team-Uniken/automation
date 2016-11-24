@@ -9,6 +9,7 @@ console.disableYellowBox = true;
 
 // Main Scenes
 import AccountsScene from './App/Scenes/Accounts';
+import Demo from './App/Components/demo';
 import PayBillsScene from './App/Scenes/PayBills';
 import ContactScene from './App/Scenes/Contact';
 import DepositsScene from './App/Scenes/Deposits';
@@ -163,6 +164,12 @@ class ReactRefApp extends Component {
                 title={route.title}
                 rdna={route.DnaObject} />);
     // LOAD SCENES
+    } else if (id === 'demo') {
+      return (<Demo
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     }else if (id === 'Screen_0_1_welcome') {
       return (<Screen_0_1_welcome
                 navigator={nav}

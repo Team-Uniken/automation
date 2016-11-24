@@ -3,6 +3,10 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
+import Modal from 'react-native-simple-modal';
+import WebViewAndroid from '../../android_native_modules/nativewebview';
+
+
 import Title from '../view/title';
 import Button from '../view/button';
 import Checkbox from '../view/checkbox';
@@ -12,7 +16,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import MainActivation from '../MainActivation';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, TouchableOpacity, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
+const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, Platform, TouchableOpacity, WebView, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 const {Component} = React;
 
 
@@ -25,6 +29,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       check: false,
       firstName: '',
       lastName: '',
@@ -117,7 +122,14 @@ class Register extends Component {
 
 
   close() {
-    this.props.navigator.pop();
+    if (this.state.open) {
+      this.setState({
+        open: false
+      });
+    } else {
+      this.props.navigator.pop();
+    }
+
   }
 
   validateEmail(email) {
@@ -237,6 +249,40 @@ class Register extends Component {
     )
   }
 
+  getWebView() {
+    if (Platform.OS === 'ios') {
+      return (
+        <WebView
+          automaticallyAdjustContentInsets={false}
+          source={{ uri: 'http://api.relid.uniken.com/' }}
+          javaScriptEnable
+          domStorageEnabled
+          decelerationRate="normal"
+          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
+          onLoad={() => { console.log('loaded') } }
+          scalesPageToFit={true}
+             scrollEnabled={true}
+          />
+      );
+    } else {
+      return (
+        <WebViewAndroid
+        style={{height: 200}}
+          automaticallyAdjustContentInsets={false}
+          source={{ uri: 'https://www.google.co.in/search?q=fb&oq=fb&aqs=chrome..69i57.1113j0j7&sourceid=chrome&es_sm=93&ie=UTF-8' }}
+          javaScriptEnable
+          domStorageEnabled
+          decelerationRate="normal"
+          //onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          onLoad={() => { console.log('loaded') } }
+          scalesPageToFit={false}
+          scrollEnabled={true}
+          javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
+          />
+      );
+    }
+  }
+
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
@@ -329,7 +375,7 @@ class Register extends Component {
 
                     onChange={this.onPhoneNumberChange.bind(this) } />
                   <Text style={Skin.layout1.content.slider.text}>
-      Slide to prove you{"'"}re human
+                    Slide to prove you{"'"}re human
                   </Text>
                   <Slider
                     ref={'slider'}
@@ -349,7 +395,9 @@ class Register extends Component {
                       color: Skin.colors.BUTTON_BG_COLOR,
                       textDecorationLine: 'underline',
                     }}
-                    onLabelPress={() => Linking.openURL("http://api.relid.uniken.com/") }>
+                    onLabelPress={() => this.setState({
+                      open: true
+                    }) }>
                     Terms and Conditions
                   </Checkbox>
                 </View>
@@ -365,6 +413,19 @@ class Register extends Component {
           </View>
           <KeyboardSpacer topSpacing={-55} />
         </View>
+        <Modal
+          style={Skin.layout1.termandcondition}
+          offset={0}
+          open={this.state.open}
+          modalDidOpen={() => console.log('modal did open') }
+          modalDidClose={() => this.setState({
+            open: false
+          }) }>
+
+          <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
+            {this.getWebView() }
+          </View>
+        </Modal>
       </MainActivation>
     );
   }
