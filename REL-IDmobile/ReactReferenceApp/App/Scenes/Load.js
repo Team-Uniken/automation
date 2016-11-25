@@ -422,38 +422,38 @@ class Load extends Component {
 
   }
   _handleAppStateChange(currentAppState) {
-//    console.log('_handleAppStateChange');
-//    console.log(currentAppState);
-//
-//    if (currentAppState == 'background') {
-//      console.log('App State Change background:');
-//
-//      ReactRdna.pauseRuntime((response) => {
-//        if (response) {
-//          if (response[0].error == 0) {
-//            AsyncStorage.setItem("savedContext", response[0].response);
-//          }
-//          console.log('Immediate response is ' + response[0].error);
-//        } else {
-//          console.log('No response.');
-//        }
-//      })
-//    } else if (currentAppState == 'active') {
-//      console.log('App State Change active:');
-//      AsyncStorage.getItem("savedContext").then((value) => {
-//        if (value != null) {
-//          ReactRdna.resumeRuntime(value, null, (response) => {
-//            if (response) {
-//              console.log('Immediate response is ' + response[0].error);
-//            } else {
-//              console.log('No response.');
-//            }
-//          })
-//        }
-//      }).done();
-//    } else if (currentAppState === 'inactive') {
-//      console.log('App State Change Inactive');
-//    }
+    //    console.log('_handleAppStateChange');
+    //    console.log(currentAppState);
+    //
+    //    if (currentAppState == 'background') {
+    //      console.log('App State Change background:');
+    //
+    //      ReactRdna.pauseRuntime((response) => {
+    //        if (response) {
+    //          if (response[0].error == 0) {
+    //            AsyncStorage.setItem("savedContext", response[0].response);
+    //          }
+    //          console.log('Immediate response is ' + response[0].error);
+    //        } else {
+    //          console.log('No response.');
+    //        }
+    //      })
+    //    } else if (currentAppState == 'active') {
+    //      console.log('App State Change active:');
+    //      AsyncStorage.getItem("savedContext").then((value) => {
+    //        if (value != null) {
+    //          ReactRdna.resumeRuntime(value, null, (response) => {
+    //            if (response) {
+    //              console.log('Immediate response is ' + response[0].error);
+    //            } else {
+    //              console.log('No response.');
+    //            }
+    //          })
+    //        }
+    //      }).done();
+    //    } else if (currentAppState === 'inactive') {
+    //      console.log('App State Change Inactive');
+    //    }
   }
 
 
@@ -614,15 +614,26 @@ class Load extends Component {
 
   doNavigation() {
     console.log('doNavigation:');
-    this.props.navigator.push({
-      id: "Screen_0_1_welcome",
-      //id: "Screen_0_2_selectlogin",
-      title: "nextChlngName",
-      url: {
-        "chlngJson": chlngJson,
-        "screenId": nextChlngName
+    AsyncStorage.getItem('skipwelcome').then((value) => {
+      if (value === "true") {
+        this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+      } else {
+        this.props.navigator.push({
+          id: "Screen_0_1_welcome",
+          //id: "Screen_0_2_selectlogin",
+          title: "nextChlngName",
+          url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName
+          }
+        });
       }
-    });
+
+    }).done();
+
+
+
+
   }
 
   render() {

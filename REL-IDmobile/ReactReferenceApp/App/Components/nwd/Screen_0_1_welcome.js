@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import ReactNative, { View, Text, BackAndroid,StatusBar} from 'react-native'
+import ReactNative, { View, Text,AsyncStorage, BackAndroid,StatusBar} from 'react-native'
 
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
