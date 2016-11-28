@@ -120,9 +120,9 @@ class ReactRefApp extends Component {
       // id = 'Screen_1_2_activation'
       // id = 'Screen_1_4_registerOptions'
       // id = 'Screen_1_3_setPassword'
-      id = 'Screen_3_1_deals'
-    // id = 'Screen_3_2_history'
-    // id = 'Screen_3_3_locations'
+      // id = 'Screen_3_1_deals'
+      // id = 'Screen_3_2_history'
+      // id = 'Screen_3_3_locations'
     }
 
     // MAIN SCENES
