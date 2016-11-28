@@ -3,11 +3,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 133,
+					"line": 135,
 					"ch": 32
 				},
 				"to": {
-					"line": 133,
+					"line": 135,
 					"ch": 53
 				}
 			},
@@ -18,12 +18,12 @@
 		{
 			"range": {
 				"from": {
-					"line": 241,
+					"line": 248,
 					"ch": 22
 				},
 				"to": {
-					"line": 241,
-					"ch": 24
+					"line": 248,
+					"ch": 22
 				}
 			},
 			"editWith": "dropdown",
@@ -35,11 +35,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 247,
+					"line": 254,
 					"ch": 5
 				},
 				"to": {
-					"line": 247,
+					"line": 254,
 					"ch": 3
 				}
 			},
@@ -52,11 +52,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 248,
+					"line": 255,
 					"ch": 3
 				},
 				"to": {
-					"line": 248,
+					"line": 255,
 					"ch": 1
 				}
 			},
@@ -69,11 +69,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 277,
+					"line": 284,
 					"ch": 17
 				},
 				"to": {
-					"line": 277,
+					"line": 284,
 					"ch": 23
 				}
 			},
@@ -85,11 +85,11 @@
 		{
 			"range": {
 				"from": {
-					"line": 279,
+					"line": 286,
 					"ch": 19
 				},
 				"to": {
-					"line": 279,
+					"line": 286,
 					"ch": 17
 				}
 			},
@@ -102,257 +102,257 @@
 		{
 			"range": {
 				"from": {
-					"line": 298,
+					"line": 305,
 					"ch": 21
 				},
 				"to": {
-					"line": 298,
+					"line": 305,
+					"ch": 19
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "FlexDirection",
+			"type": "string",
+			"name": "FlexDirection"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 306,
+					"ch": 18
+				},
+				"to": {
+					"line": 306,
+					"ch": 24
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "AlignItems",
+			"type": "string",
+			"name": "AlignItems"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 317,
+					"ch": 9
+				},
+				"to": {
+					"line": 317,
+					"ch": 7
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 412,
+					"ch": 3
+				},
+				"to": {
+					"line": 412,
+					"ch": 1
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 414,
+					"ch": 2
+				},
+				"to": {
+					"line": 414,
+					"ch": 0
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "AlignItems",
+			"type": "string",
+			"name": "AlignItems"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 418,
+					"ch": 11
+				},
+				"to": {
+					"line": 418,
+					"ch": 9
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "FlexDirection",
+			"type": "string",
+			"name": "FlexDirection"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 420,
+					"ch": 16
+				},
+				"to": {
+					"line": 420,
+					"ch": 14
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 421,
+					"ch": 25
+				},
+				"to": {
+					"line": 421,
+					"ch": 31
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 427,
+					"ch": 18
+				},
+				"to": {
+					"line": 427,
+					"ch": 20
+				}
+			},
+			"type": "number",
+			"name": "PaddingTop"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 430,
+					"ch": 13
+				},
+				"to": {
+					"line": 430,
+					"ch": 11
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 437,
+					"ch": 18
+				},
+				"to": {
+					"line": 437,
+					"ch": 20
+				}
+			},
+			"type": "number",
+			"name": "PaddingTop"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 439,
+					"ch": 8
+				},
+				"to": {
+					"line": 439,
+					"ch": 6
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 449,
+					"ch": 2
+				},
+				"to": {
+					"line": 449,
+					"ch": 0
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 454,
+					"ch": 8
+				},
+				"to": {
+					"line": 454,
+					"ch": 6
+				}
+			},
+			"editWith": "colorPicker",
+			"type": "string",
+			"name": "BackgroundColor"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 459,
+					"ch": 24
+				},
+				"to": {
+					"line": 459,
+					"ch": 29
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 472,
+					"ch": 23
+				},
+				"to": {
+					"line": 472,
+					"ch": 21
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "JustifyContent",
+			"type": "string",
+			"name": "JustifyContent"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 482,
 					"ch": 26
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "FlexDirection",
-			"type": "string",
-			"name": "FlexDirection"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 299,
-					"ch": 18
 				},
 				"to": {
-					"line": 299,
-					"ch": 27
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "AlignItems",
-			"type": "string",
-			"name": "AlignItems"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 310,
-					"ch": 25
-				},
-				"to": {
-					"line": 310,
-					"ch": 42
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 405,
-					"ch": 25
-				},
-				"to": {
-					"line": 405,
-					"ch": 34
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 407,
-					"ch": 20
-				},
-				"to": {
-					"line": 407,
-					"ch": 28
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "AlignItems",
-			"type": "string",
-			"name": "AlignItems"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 411,
-					"ch": 20
-				},
-				"to": {
-					"line": 411,
-					"ch": 25
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "FlexDirection",
-			"type": "string",
-			"name": "FlexDirection"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 413,
-					"ch": 22
-				},
-				"to": {
-					"line": 413,
-					"ch": 37
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "JustifyContent",
-			"type": "string",
-			"name": "JustifyContent"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 414,
-					"ch": 25
-				},
-				"to": {
-					"line": 414,
-					"ch": 46
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 420,
-					"ch": 18
-				},
-				"to": {
-					"line": 420,
-					"ch": 20
-				}
-			},
-			"type": "number",
-			"name": "PaddingTop"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 423,
-					"ch": 25
-				},
-				"to": {
-					"line": 423,
-					"ch": 46
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 430,
-					"ch": 18
-				},
-				"to": {
-					"line": 430,
-					"ch": 20
-				}
-			},
-			"type": "number",
-			"name": "PaddingTop"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 432,
-					"ch": 25
-				},
-				"to": {
-					"line": 432,
-					"ch": 44
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 442,
-					"ch": 25
-				},
-				"to": {
-					"line": 442,
-					"ch": 46
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 447,
-					"ch": 25
-				},
-				"to": {
-					"line": 447,
-					"ch": 45
-				}
-			},
-			"editWith": "colorPicker",
-			"type": "string",
-			"name": "BackgroundColor"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 452,
+					"line": 482,
 					"ch": 24
-				},
-				"to": {
-					"line": 452,
-					"ch": 34
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "JustifyContent",
-			"type": "string",
-			"name": "JustifyContent"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 465,
-					"ch": 24
-				},
-				"to": {
-					"line": 465,
-					"ch": 36
-				}
-			},
-			"editWith": "dropdown",
-			"dropdownOptions": "JustifyContent",
-			"type": "string",
-			"name": "JustifyContent"
-		},
-		{
-			"range": {
-				"from": {
-					"line": 475,
-					"ch": 27
-				},
-				"to": {
-					"line": 475,
-					"ch": 48
 				}
 			},
 			"editWith": "colorPicker",
@@ -362,12 +362,12 @@
 		{
 			"range": {
 				"from": {
-					"line": 487,
-					"ch": 25
+					"line": 494,
+					"ch": 5
 				},
 				"to": {
-					"line": 487,
-					"ch": 46
+					"line": 494,
+					"ch": 3
 				}
 			},
 			"editWith": "colorPicker",
@@ -377,12 +377,12 @@
 		{
 			"range": {
 				"from": {
-					"line": 491,
-					"ch": 25
+					"line": 498,
+					"ch": 2
 				},
 				"to": {
-					"line": 491,
-					"ch": 45
+					"line": 498,
+					"ch": 0
 				}
 			},
 			"editWith": "colorPicker",

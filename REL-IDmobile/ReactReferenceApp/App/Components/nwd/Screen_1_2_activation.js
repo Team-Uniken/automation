@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, Platform,BackAndroid, PermissionsAndroid} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, Platform, BackAndroid, PermissionsAndroid } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -29,17 +29,17 @@ class Activation extends Component {
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
     this.checkCameraPermission = this.checkCameraPermission.bind(this);
     this.requestCameraPermission = this.requestCameraPermission.bind(this);
-    // this.barCodeScanFlag = true;
+  // this.barCodeScanFlag = true;
   }
 
   componentDidMount() {
-    if (Platform.OS === 'android' && Platform.Version >= 23){
+    if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.checkCameraPermission();
     }
-      BackAndroid.addEventListener('hardwareBackPress', function() {
-            this.close();
-            return true;
-        }.bind(this));
+    BackAndroid.addEventListener('hardwareBackPress', function() {
+      this.close();
+      return true;
+    }.bind(this));
   }
 
   async requestCameraPermission() {
@@ -49,7 +49,7 @@ class Activation extends Component {
         {
           'title': 'NWD App Camera Permission',
           'message': 'NWD App needs access to your camera ' +
-          'so you can scan the QR Code.'
+            'so you can scan the QR Code.'
         }
       )
       if (granted) {
@@ -63,7 +63,7 @@ class Activation extends Component {
       } else {
         console.log("Camera permission denied")
       }
-    } catch (err) {
+    } catch ( err ) {
       console.warn(err)
     }
   }
@@ -73,9 +73,7 @@ class Activation extends Component {
       .then(response => {
         //response is an object mapping type to permission
         if (response) {
-          this.setState({
-            cameraPermission: response,
-          });
+          this.setState({ cameraPermission: response, });
         } else {
           this.requestCameraPermission();
         }
@@ -127,18 +125,18 @@ class Activation extends Component {
       try {
         res = JSON.parse(result);
 
-        if ("key" in res && "value" in res) { }
-        else {
+        if ("key" in res && "value" in res) {
+        } else {
           alert('Invalid QR code');
-          setTimeout(function () {
+          setTimeout(function() {
             $this.state.barCodeFlag = true;
           }, 2000);
           return;
         }
 
-      } catch (e) {
+      } catch ( e ) {
         alert('Invalid QR code');
-        setTimeout(function () {
+        setTimeout(function() {
           $this.state.barCodeFlag = true;
         }, 2000);
         return;
@@ -168,14 +166,14 @@ class Activation extends Component {
 
         alert('Verification code does not match');
         // this.barCodeFlag = true;
-        setTimeout(function () {
+        setTimeout(function() {
           $this.state.barCodeFlag = true;
         }, 2000);
       }
     } else {
       // Events.trigger('hideLoader', true);
       alert('Invalid QR code');
-      setTimeout(function () {
+      setTimeout(function() {
         $this.state.barCodeFlag = true;
       }, 2000);
       //  setTimeout(function() {
@@ -192,14 +190,32 @@ class Activation extends Component {
   }
 
   close() {
+
     let responseJson = this.props.url.chlngJson;
       this. hideCamera();
     Events.trigger('showPreviousChallenge');
+  /*
+      Alert.alert('clicked')
+      console.log('navigator')
+      console.log(this.props)
+      //this.props.navigator.pop()
+      console.log('doNavigation:');
+      this.props.navigator.push({
+        id: "Screen_0_1_welcome",
+        //id: "Screen_0_2_selectlogin",
+        title: "nextChlngName",
+        url: {
+          "chlngJson": chlngJson,
+          "screenId": nextChlngName
+        }
+      });
+  */
   }
 
   render() {
 
     return (
+<<<<<<< HEAD
         <MainActivation>
       <View style={Skin.layout1.wrap}>
         <StatusBar
@@ -262,36 +278,92 @@ class Activation extends Component {
             onSubmitEditing={this.checkActivationCode.bind(this) } />
             </View>
             </View>
+=======
+      <MainActivation>
+        <View style={Skin.layout1.wrap}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
+          <View style={Skin.layout1.title.wrap}>
+            <Title onClose={() => {
+                              this.close();
+                            }}>
+              Activation
+            </Title>
+>>>>>>> feature/deals3
           </View>
-        </ScrollView>
-        <View style={Skin.layout1.bottom.wrap}>
-          <View style={Skin.layout1.bottom.container}>
-            <Button
-              label={Skin.text['1']['1'].submit_button}
-              onPress={this.checkActivationCode.bind(this) } />
-            <Text
-              onPress={() => {
-                Alert.alert(
-                  'Message',
-                  'Feature coming soon',
-                  [
-
-                    {
-                      text: 'OK',
-                      onPress: () => console.log('OK Pressed')
-                    },
-                  ]
-                )
-              } }
-              style={Skin.layout1.bottom.footertext}>
-              Resend Activation Code
-            </Text>
+          <ScrollView
+            style={Skin.layout1.content.scrollwrap}
+            contentContainerStyle={{ flex: 1 }}>
+            <View style={{
+                           backgroundColor: '#000000',
+                           flex: 1,
+                           marginBottom: 12
+                         }}>
+              <View style={Skin.layout1.content.wrap}>
+                {this.renderIf(this.state.showCamera,
+                   <Camera
+                     onBarCodeRead={this._onBarCodeRead}
+                     type={Camera.constants.Type.back}
+                     aspect={Camera.constants.Aspect.fill}
+                     style={Skin.layout1.content.camera.wrap}>
+                     <View style={Skin.layout1.content.container}>
+                       <Text style={[Skin.layout1.content.camera.prompt, {
+                                      marginTop: 10
+                                    }]}>
+                         {"Step 1: Verify Code " +
+                          this.props.url.chlngJson.chlng_resp[0].challenge}
+                       </Text>
+                       <Text style={Skin.layout1.content.camera.prompt}>
+                         Step 2: Scan QR Code
+                       </Text>
+                       <View style={Skin.layout1.content.camera.boxwrap}>
+                         <View style={Skin.layout1.content.camera.box} />
+                       </View>
+                       <View style={Skin.layout1.content.enterWrap}>
+                         <Input
+                           placeholder={'or Enter Numeric Code'}
+                           ref={'activationCode'}
+                           autoFocus={false}
+                           autoCorrect={false}
+                           autoComplete={false}
+                           autoCapitalize={true}
+                           secureTextEntry={true}
+                           styleInput={Skin.layout1.content.code.input}
+                           returnKeyType={"next"}
+                           placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+                           onChange={this.onActivationCodeChange.bind(this)}
+                           onSubmitEditing={this.checkActivationCode.bind(this)} />
+                       </View>
+                     </View>
+                   </Camera>
+                 )}
+              </View>
+            </View>
+          </ScrollView>
+          <View style={Skin.layout1.bottom.wrap}>
+            <View style={Skin.layout1.bottom.container}>
+              <Button
+                label={Skin.text['1']['1'].submit_button}
+                onPress={this.checkActivationCode.bind(this)} />
+              <Text
+                onPress={() => {
+                           Alert.alert(
+                             'Message',
+                             'Feature coming soon',
+                             [{text: 'OK',onPress: () => console.log('OK Pressed')},]
+                           )
+                         }}
+                style={Skin.layout1.bottom.footertext}>
+                Resend Activation Code
+              </Text>
+            </View>
           </View>
+          <KeyboardSpacer topSpacing={-45} />
         </View>
-        <KeyboardSpacer topSpacing={-45} />
-      </View>
-        </MainActivation>
-    );
+      </MainActivation>
+      );
   }
 }
 
