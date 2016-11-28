@@ -664,8 +664,14 @@ const layout2 = module.exports.layout2 = Object.assign(module.exports.layout1, {
 const navbar = module.exports.navbar = {
   title: {
     color: TITLE_TEXT_COLOR,
+    style: {
+      fontSize: 18,
+    }
   },
-  bgcolor: BUTTON_BG_COLOR,
+  base: {
+    height: 57
+  },
+  bgcolor: BACKGROUND_COLOR,
   icon: {
     color: BUTTON_BG_COLOR,
   },

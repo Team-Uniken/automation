@@ -114,17 +114,16 @@ class Screen_3_1_deals extends Component {
     return (
       <ListItem
         wrapstyle={{
-          flex:1,
-          alignItems: 'center'
-        }}
+                     flex: 1,
+                     alignItems: 'center'
+                   }}
         rowstyle={{
-          backgroundColor: Skin.colors.TEXT_COLOR,
-          paddingTop: 0,
-          paddingBottom: 0,
-          width: Skin.magicwidth,
-          marginBottom:0,
-        }}
-        >
+                    backgroundColor: Skin.colors.TEXT_COLOR,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    width: Skin.magicwidth,
+                    marginBottom: 0,
+                  }}>
         <View style={Skin.layout3.row.rowwrap}>
           <View style={Skin.layout3.row.iconwrap}>
             <Text style={[Skin.layout3.row.icon, {
@@ -140,14 +139,13 @@ class Screen_3_1_deals extends Component {
               {cleanData.title}
             </Text>
             <View style={Skin.layout3.row.border}>
-        </View>
+            </View>
           </View>
         </View>
-        
       </ListItem>
       );
   }
-  triggerDrawer(){
+  triggerDrawer() {
     console.log('trigger')
     Events.trigger('toggleDrawer')
   }
@@ -168,28 +166,28 @@ class Screen_3_1_deals extends Component {
                          top: 0,
                          bottom: 0,
                          right: 0,
-                         backgroundColor: '#ffae00',
+                         backgroundColor: '#000000',
                        }}>
             <Image
               source={require('../../img/purse.png')}
               style={Skin.layout3.split.top.bg} />
           </View>
-          <NavBar 
-            tintColor={'transparent'} 
+          <NavBar
+            tintColor={'transparent'}
             statusBarTint={'transparent'}
             title={'Deals'}
+            titleTint={'#ffffff'}
             right={''}
             left={{
-              icon:Skin.icon.user,
-              iconStyle:{
-                fontSize:35,
-                paddingLeft:17,
-                width: 100,
-                color: '#ffffff',
-              },
-              handler:this.triggerDrawer
-            }}  
-          />
+                    icon: Skin.icon.user,
+                    iconStyle: {
+                      fontSize: 35,
+                      paddingLeft: 17,
+                      width: 100,
+                      color: '#ffffff',
+                    },
+                    handler: this.triggerDrawer
+                  }} />
           <View style={{
                          flex: 1,
                          flexDirection: 'column',
@@ -218,7 +216,7 @@ class Screen_3_1_deals extends Component {
         </View>
         <View style={Skin.layout3.split.bottom}>
           <ListView
-            contentContainerStyle={{paddingTop:12}}
+            contentContainerStyle={{ paddingTop: 12 }}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
             renderSectionHeader={this.renderSectionHeader.bind(this)} />

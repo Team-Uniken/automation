@@ -16,8 +16,10 @@ class NavBar extends Component {
       <NavigationBar
         title={{
                  title: this.props.title,
-                 tintColor: Skin.navbar.title.color,
+                 style: this.props.titleStyle,
+                 tintColor: this.props.titleTint,
                }}
+        style={this.props.style ? this.props.style : Skin.navbar.base}
         tintColor={this.props.tintColor ? this.props.tintColor : Skin.navbar.bgcolor}
         statusBar={{
                      tintColor: this.props.statusBarTint || Skin.navbar.statusBar.tint,
@@ -47,6 +49,8 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   title: PropTypes.string,
+  titleTint: PropTypes.string,
+  titleStyle: PropTypes.object,
   visible: PropTypes.bool,
   tint: PropTypes.string,
   left: PropTypes.object,
@@ -56,7 +60,9 @@ NavBar.propTypes = {
 NavBar.defaultProps = {
   toggleDrawer: () => {
   },
-  title: 'title',
+  title: '',
+  titleStyle: Skin.navbar.title.style,
+  titleTint: Skin.TITLE_COLOR,
   visible: true,
   tint: '#000000',
   left: {

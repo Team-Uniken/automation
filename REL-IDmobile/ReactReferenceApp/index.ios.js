@@ -48,6 +48,7 @@ import Screen_1_3_setPassword from './App/Components/nwd/Screen_1_3_setPassword'
 import Screen_1_4_registerOptions from './App/Components/nwd/Screen_1_4_registerOptions';
 import Screen_3_1_deals from './App/Components/nwd/Screen_3_1_deals';
 import Screen_3_2_history from './App/Components/nwd/Screen_3_2_history';
+import Screen_3_3_locations from './App/Components/nwd/Screen_3_3_locations';
 
 
 import Appointment from './App/Components/Appointment';
@@ -116,11 +117,12 @@ class ReactRefApp extends Component {
       // id = 'QuestionVerification';
       // id = 'Contact';
       // id = 'Screen_1_1_register'
-      // id =  'Screen_1_2_activation'
+      // id = 'Screen_1_2_activation'
       // id = 'Screen_1_4_registerOptions'
       // id = 'Screen_1_3_setPassword'
-      // id = 'Screen_3_1_deals',
-      id = 'Screen_3_2_history'
+      id = 'Screen_3_1_deals'
+    // id = 'Screen_3_2_history'
+    // id = 'Screen_3_3_locations'
     }
 
     // MAIN SCENES
@@ -206,6 +208,12 @@ class ReactRefApp extends Component {
                 rdna={route.DnaObject} />);
     } else if (id === 'Screen_3_2_history') {
       return (<Screen_3_2_history
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'Screen_3_3_locations') {
+      return (<Screen_3_3_locations
                 navigator={nav}
                 url={route.url}
                 title={route.title}
