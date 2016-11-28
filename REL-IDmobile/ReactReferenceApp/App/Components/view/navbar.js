@@ -9,6 +9,8 @@ class NavBar extends Component {
     super(props);
   }
 
+  //tintColor={[Skin.navbar.bgcolor, this.props.tintColor]}
+
   render() {
     return (
       <NavigationBar
@@ -16,10 +18,10 @@ class NavBar extends Component {
                  title: this.props.title,
                  tintColor: Skin.navbar.title.color,
                }}
-        tintColor={[Skin.navbar.bgcolor, this.props.tintColor]}
+        tintColor={this.props.tintColor ? this.props.tintColor : Skin.navbar.bgcolor}
         statusBar={{
                      tintColor: this.props.statusBarTint || Skin.navbar.statusBar.tint,
-                     style: 'light-content'
+                     style: Skin.navbar.statusBar.light ? 'light-content' : 'default',
                    }}
         rightButton={<NavButton
                        left={false}

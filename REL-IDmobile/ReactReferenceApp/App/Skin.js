@@ -35,7 +35,7 @@ const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
 };
-module.exports.magicwidth = (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*52/75 : SCREEN_WIDTH-32
+module.exports.magicwidth = (SCREEN_WIDTH > 350) ? SCREEN_WIDTH * 52 / 75 : SCREEN_WIDTH - 32
 
 // Open Links
 const open = {
@@ -252,8 +252,8 @@ text = {
           },
           'pattern': {
             key: 'pattern',
-              label: 'Pattern'
-            },
+            label: 'Pattern'
+          },
           'password': {
             key: 'password',
             label: 'Password'
@@ -284,7 +284,7 @@ text = {
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
     USERNAME_BUTTON_TEXT: 'LOGIN',
     LINK_1_TEXT: 'Branches',
-    LINK_1_ICON:  ' t',
+    LINK_1_ICON: ' t',
     LINK_1_LINK: '',
     LINK_2_TEXT: 'Help',
     LINK_2_ICON: '\ue050',
@@ -303,7 +303,7 @@ module.exports.baseline = {
         alignItems: 'center',
         justifyContent: 'center',
         height: 42,
-        width: 260,  
+        width: 260,
         borderRadius: 8,
         marginBottom: 27,
         backgroundColor: BUTTON_BG_COLOR,
@@ -315,7 +315,7 @@ module.exports.baseline = {
         color: BUTTON_TEXT_COLOR,
         textAlign: 'center',
         textAlignVertical: 'center',
-      }  
+      }
     }).text,
     underlayColor: BUTTON_UNDERLAY_COLOR,
     activeOpacity: 0.8,
@@ -410,15 +410,15 @@ module.exports.baseline = {
     fontSize: 12,
     textAlign: 'center'
   }
-}  
+}
 
-  
+
 
 
 module.exports.layout0 = {
-  wrap: {  
+  wrap: {
     container: {
-      flex: 1,  
+      flex: 1,
       justifyContent: "center",
     },
   },
@@ -428,7 +428,7 @@ module.exports.layout0 = {
       justifyContent: "flex-end",
       alignItems: "center"
     },
-    icon: {  
+    icon: {
       //marginTop: (SCREEN_HEIGHT - 100) / 8,
       //width: SCREEN_WIDTH,
       color: LOGO_COLOR,
@@ -436,8 +436,8 @@ module.exports.layout0 = {
       fontSize: 80,
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
-         fontFamily: ICON_FONT,
-    },  
+      fontFamily: ICON_FONT,
+    },
     subtitle: {
       //width: VIEW_WIDTH,
       textAlign: 'center',
@@ -447,12 +447,12 @@ module.exports.layout0 = {
     //backgroundColor: PRIMARY,
     },
     prompt: {
-  
+
       textAlign: 'center',
       color: LIGHT_TEXT_COLOR,
       fontSize: 15,
     //backgroundColor: DARK_PRIMARY,
-    },  
+    },
     attempt: {
       marginBottom: 10,
       marginTop: 60,
@@ -470,7 +470,7 @@ module.exports.layout0 = {
     loginbutton: {
       subtitle: {
         color: BLACK_TEXT_COLOR,
-        marginTop: 0,  
+        marginTop: 0,
         textAlign: 'center',
       },
       base: {
@@ -480,7 +480,7 @@ module.exports.layout0 = {
         marginBottom: 3,
         textAlign: 'center',
         marginLeft: 10,
-        marginRight: 10,  
+        marginRight: 10,
       },
       icon: {
         fontFamily: ICON_FONT,
@@ -492,11 +492,11 @@ module.exports.layout0 = {
         height: 110,
       }
     }
-  }  
+  }
 }
 
 
-  
+
 module.exports.layout1 = {
   wrap: {
     flex: 1,
@@ -532,10 +532,10 @@ module.exports.layout1 = {
       color: TITLE_TEXT_COLOR,
       fontSize: 19,
       textAlign: 'center',
-      width: SCREEN_WIDTH-100,
+      width: SCREEN_WIDTH - 100,
       paddingTop: 12,
-//    backgroundColor: TITLE_BG_COLOR
-//    backgroundColor: "rgba(80,188,28,1)"
+    //    backgroundColor: TITLE_BG_COLOR
+    //    backgroundColor: "rgba(80,188,28,1)"
     }
   },
   content: {
@@ -663,11 +663,15 @@ const layout2 = module.exports.layout2 = Object.assign(module.exports.layout1, {
 
 const navbar = module.exports.navbar = {
   title: {
-    color: '#ffffff'
+    color: TITLE_TEXT_COLOR,
   },
   bgcolor: BUTTON_BG_COLOR,
+  icon: {
+    color: BUTTON_BG_COLOR,
+  },
   statusBar: {
-    tint: BUTTON_BG_COLOR,
+    tint: BACKGROUND_COLOR,
+    light: false,
   }
 }
 
@@ -693,6 +697,9 @@ const layout3 = module.exports.layout3 = {
         height: null,
       }
     }
+  },
+  navbar: {
+    backgroundColor: BACKGROUND_COLOR,
   },
   listheader: {
     wrap: {
@@ -726,33 +733,38 @@ const layout3 = module.exports.layout3 = {
     },
     namewrap: {
       flex: 3,
-      paddingTop: 7,
-    //backgroundColor: 'red',
+      padding: 7,
     },
     nametext: {
       fontSize: 13,
       color: PRIMARY_TEXT,
-      minHeight:40,
+      minHeight: 10,
     },
     numtext: {
-      fontSize: 12,
+      fontSize: 10,
       color: ('rgba(' + PRIMARY_TEXT_RGB + ',0.54)'),
-      paddingTop: 3,
+      paddingTop: 0,
     },
-    border:{
-      height:1, 
-      backgroundColor:'#eae9e9'
+    border: {
+      height: 1,
+      backgroundColor: '#eae9e9'
     },
     totalwrap: {
       flex: 2,
-      flexDirection: 'column',
-    //backgroundColor: 'red',
+      padding: 7,
     },
-    totaltext: {
-      fontSize: 18,
+    baltext: {
+      fontSize: 16,
       textAlign: 'right',
       flex: 1,
-    //backgroundColor: 'lightblue',
+      color: '#000000'
+    },
+    ptstext: {
+      fontSize: 12,
+      textAlign: 'right',
+      paddingTop: 9,
+      flex: 1,
+      color: ('rgba(' + PRIMARY_TEXT_RGB + ',0.54)'),
     },
   },
   botmenu: {
@@ -789,7 +801,7 @@ const layout3 = module.exports.layout3 = {
     wrap: {
       flexDirection: 'row',
       height: 66,
-      
+
     },
     inboxwrap: {
       flex: 1,
