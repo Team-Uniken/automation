@@ -82,17 +82,17 @@ BottomMenu.defaultProps = {
     1: {
       icon: '\ue227',
       title: 'DEALS',
-      link: 'Accounts',
+      link: 'Screen_3_1_deals',
     },
     2: {
       icon: '\ue8b3',
       title: 'HISTORY',
-      link: 'HISTORY',
+      link: 'Screen_3_2_history',
     },
     3: {
       icon: '\ue8b4',
       title: 'LOCATIONS',
-      link: 'Locations',
+      link: 'Screen_3_3_locations',
     }
   },
   active: 1

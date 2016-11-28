@@ -19,16 +19,9 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 */
 // const ReactRdna = React.NativeModules.ReactRdnaModule;
 const RDNARequestUtility = ReactNative.NativeModules.RDNARequestUtility;
-const {
-    View,
-    Text,
-    StyleSheet,
-    ListView,
-} = ReactNative;
+const {View, Text, StyleSheet, ListView, } = ReactNative;
 
-const{
- Component
-} = React;
+const {Component} = React;
 
 
 let self;
@@ -37,11 +30,7 @@ const headers = {
   2: 'Personal Checking',
   3: 'Credit Cards',
 };
-const icons = {
-  1: '\ue2f7',
-  2: '\ue277',
-  3: '\ue285',
-};
+const icons = { 1: '\ue2f7',2: '\ue277',3: '\ue285', };
 const iconcolor = {
   1: Skin.colors.DIVIDER_COLOR,
   2: Skin.colors.POSITIVE_ACCENT,
@@ -57,72 +46,69 @@ export default class AccountsScene extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
-    this.state = {
-      dataSource: ds.cloneWithRowsAndSections([]),
-    };
+    this.state = { dataSource: ds.cloneWithRowsAndSections([]), };
     self = this;
   }
 
-    /**
-     * Creates the self object for reference later
-     * @return {null}
-     */
+  /**
+   * Creates the self object for reference later
+   * @return {null}
+   */
   componentDidMount() {
     this.getMyNotifications();
     this.getAccountDetails();
   }
-  
-  
-  getMyNotifications(){
-    
+
+
+  getMyNotifications() {
+
     var recordCount = "0";
     var startIndex = "1";
     var enterpriseID = "";
     var startDate = "";
     var endDate = "";
-    ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
-                               
-                               console.log('----- NotificationMgmt.getMyNotifications.response ');
-                               console.log(response);
-                               
-                               if (response[0].error !== 0) {
-                               console.log('----- ----- response is not 0');
-                               //                               if (NotificationObtianedResponse !== undefined) {
-                               //                               // If error occurred reload last response
-                               //
-                               //                                                              }
-                               }
-                               
-                               });
+    ReactRdna.getNotifications(recordCount, startIndex, enterpriseID, startDate, endDate, (response) => {
+
+      console.log('----- NotificationMgmt.getMyNotifications.response ');
+      console.log(response);
+
+      if (response[0].error !== 0) {
+        console.log('----- ----- response is not 0');
+      //                               if (NotificationObtianedResponse !== undefined) {
+      //                               // If error occurred reload last response
+      //
+      //                                                              }
+      }
+
+    });
   }
-  
-  
+
+
 
   /**
    * Retrieves the account data in a json format
    * @return {[type]} [description]
    */
   getAccountDetails() {
-//    RDNARequestUtility.doHTTPGetRequest('http://apisdkdev.uniken.com:8080/APIBanking/getAccounts.jsp?userid=10',
-//      (response) => {
-        /*
-            REAL DATA
-         "{
-           "accountList":[
-            {"accountID":44,"accountName":"CANDEMOACT10_01","accountBalance":5565,"accountType":1},
-            {"accountID":45,"accountName":"CANDEMOACT10_02","accountBalance":24322,"accountType":1},
-            {"accountID":46,"accountName":"CANDEMOACT10_03","accountBalance":30039,"accountType":1},
-            {"accountID":47,"accountName":"CANDEMOACT10_04","accountBalance":40074,"accountType":1}
-           ],
-           "error":"",
-           "status":"success"
-          }
-        */
-       var response = {
-          0: {
-            error: 0,
-            response:
-              '{"accountList":[ \
+    //    RDNARequestUtility.doHTTPGetRequest('http://apisdkdev.uniken.com:8080/APIBanking/getAccounts.jsp?userid=10',
+    //      (response) => {
+    /*
+        REAL DATA
+     "{
+       "accountList":[
+        {"accountID":44,"accountName":"CANDEMOACT10_01","accountBalance":5565,"accountType":1},
+        {"accountID":45,"accountName":"CANDEMOACT10_02","accountBalance":24322,"accountType":1},
+        {"accountID":46,"accountName":"CANDEMOACT10_03","accountBalance":30039,"accountType":1},
+        {"accountID":47,"accountName":"CANDEMOACT10_04","accountBalance":40074,"accountType":1}
+       ],
+       "error":"",
+       "status":"success"
+      }
+    */
+    var response = {
+      0: {
+        error: 0,
+        response: '{"accountList":[ \
                   {"accountID":"2144","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":15565.32,"accountType":1}, \
                   {"accountID":"3146","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":3039.00,"accountType":2}, \
                   {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":-4074.52,"accountType":3}, \
@@ -132,30 +118,30 @@ export default class AccountsScene extends Component {
               "error":"", \
               "status":"success" \
             }',
-          },
-        };
-        if (response[0].error === 0) {
-          const responseJson = JSON.parse(response[0].response);
-          if (responseJson.status === 'success') {
-            const accts = responseJson.accountList;
-            const { data, sectionIds } = self.renderListViewData(accts.sort(self.compare));
-            self.setState({
-              dataSource: self.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
-            });
-            return { data };
-          } else {
-            alert(responseJson.status);
-          }
-        } else {
-          alert(response[0].response);
-        }
-//      }
-//    );
+      },
+    };
+    if (response[0].error === 0) {
+      const responseJson = JSON.parse(response[0].response);
+      if (responseJson.status === 'success') {
+        const accts = responseJson.accountList;
+        const {data, sectionIds} = self.renderListViewData(accts.sort(self.compare));
+        self.setState({
+          dataSource: self.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
+        });
+        return { data };
+      } else {
+        alert(responseJson.status);
+      }
+    } else {
+      alert(response[0].response);
+    }
+  //      }
+  //    );
   }
 
-    /**
-     * Basic sorting function for map calls
-     */
+  /**
+   * Basic sorting function for map calls
+   */
   compare(a, b) {
     if (a.accountName < b.accountName) {
       return -1;
@@ -175,17 +161,17 @@ export default class AccountsScene extends Component {
       total: rowData.accountBalance,
       totalcolor: (rowData.accountBalance > 0) ? Skin.colors.POSITIVE_ACCENT : Skin.colors.SECONDARY_TEXT,
     };
-        // <Text style={{color: iconcolor[rowData.accountType]}}>{icons[rowData.accountType]}</Text>
+    // <Text style={{color: iconcolor[rowData.accountType]}}>{icons[rowData.accountType]}</Text>
     return cleanData;
   }
 
-    /**
-     * Splits the account data blob into sections and data rows
-     * @param  {object} accounts object with accounts information
-     * @return {object}          Object with both the data and the sectionIds
-     */
+  /**
+   * Splits the account data blob into sections and data rows
+   * @param  {object} accounts object with accounts information
+   * @return {object}          Object with both the data and the sectionIds
+   */
   renderListViewData(accounts) {
-    const data = {};
+    const data = { };
     const sectionIds = [];
     accounts.map((account) => {
       const section = account.accountType;
@@ -196,20 +182,22 @@ export default class AccountsScene extends Component {
       data[section].push(account);
       return account;
     });
-    return { data, sectionIds };
+    return { data,sectionIds };
   }
 
 
-    /**
-     * Creates the section header for the various account types
-     * @param  {object} data      The data blob of rows
-     * @param  {string} sectionId The id of section being applied to this row
-     * @return {JSX}              JSX of the row
-     */
+  /**
+   * Creates the section header for the various account types
+   * @param  {object} data      The data blob of rows
+   * @param  {string} sectionId The id of section being applied to this row
+   * @return {JSX}              JSX of the row
+   */
   renderSectionHeader(data, sectionId) {
     return (
-      <ListSectionHeader>{headers[sectionId]}</ListSectionHeader>
-    );
+      <ListSectionHeader>
+        {headers[sectionId]}
+      </ListSectionHeader>
+      );
   }
 
   renderRow(rowData) {
@@ -218,62 +206,73 @@ export default class AccountsScene extends Component {
       <ListItem>
         <View style={styles.rowwrap}>
           <View style={styles.iconwrap}>
-            <Text style={[styles.icon, { color: cleanData.iconcolor }]}>{cleanData.icon}</Text>
+            <Text style={[styles.icon, {
+                           color: cleanData.iconcolor
+                         }]}>
+              {cleanData.icon}
+            </Text>
           </View>
           <View style={styles.namewrap}>
-            <Text numberOfLines={1} style={styles.nametext}>{cleanData.title}</Text>
-            <Text numberOfLines={1} style={styles.numtext}>{cleanData.acctnum}</Text>
+            <Text
+              numberOfLines={1}
+              style={styles.nametext}>
+              {cleanData.title}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={styles.numtext}>
+              {cleanData.acctnum}
+            </Text>
           </View>
           <View style={styles.totalwrap}>
             <View style={{ flex: 1 }}>
               <FormattedCurrency
                 value={cleanData.total}
                 currency="USD"
-                style={[styles.totaltext, { color: cleanData.totalcolor }]}
-              />
+                style={[styles.totaltext, {
+                         color: cleanData.totalcolor
+                       }]} />
             </View>
           </View>
         </View>
       </ListItem>
-    );
+      );
   }
 
   render() {
     return (
       <Main
         drawerState={{
-          open: false,
-          disabled: false,
-        }}
+                       open: false,
+                       disabled: false,
+                     }}
         navBar={{
-          title: 'Accounts',
-          visible: true,
-          tint: Skin.main.NAVBAR_TINT,
-          left: {
-            text: '',
-            icon: '\ue20e',
-            iconStyle: {
-              fontSize: 30,
-              marginLeft: 8,
-            },
-            textStyle: {},
-          },
-        }}
-        bottomMenu={{
-          visible: true,
-          active: 1,
-        }}
-        navigator={this.props.navigator}
-      >
-        <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+                  title: 'Accounts',
+                  visible: true,
+                  tint: Skin.main.NAVBAR_TINT,
+                  left: {
+                    text: '',
+                    icon: '\ue20e',
+                    iconStyle: {
+                      fontSize: 30,
+                      marginLeft: 8,
+                    },
+                    textStyle: {},
+                  },
+                }}
+        bottomMenu={{ visible: true,active: 1, }}
+        navigator={this.props.navigator}>
+        <View style={{
+                       flex: 1,
+                       backgroundColor: Skin.main.BACKGROUND_COLOR
+                     }}>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
-            renderSectionHeader={this.renderSectionHeader}
-          />
+            renderSectionHeader={this.renderSectionHeader} />
         </View>
       </Main>
-    );
+      );
   }
 
 }
@@ -295,7 +294,6 @@ const styles = StyleSheet.create({
   },
   namewrap: {
     flex: 3,
-        // backgroundColor:'red'
   },
   nametext: {
     fontSize: 14,
@@ -310,12 +308,10 @@ const styles = StyleSheet.create({
   totalwrap: {
     flex: 2,
     flexDirection: 'column',
-        // backgroundColor: 'red'
   },
   totaltext: {
     fontSize: 18,
     textAlign: 'right',
     flex: 1,
-        //backgroundColor:'lightblue'
   },
 });

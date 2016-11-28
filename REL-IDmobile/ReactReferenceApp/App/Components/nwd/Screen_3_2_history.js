@@ -219,7 +219,7 @@ Screen_3_2_history.defaultProps = {
   },
   menuState: {
     visible: true,
-    active: 1,
+    active: 2,
   },
   recordCount: '0',
   startIndex: '1',
