@@ -42,14 +42,14 @@ let appalive = false;
 
 console.log = function() {}
 
-const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform,BackAndroid,
+const {StatusBar, Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid,
   //Push notification code
   PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
 
 BackAndroid.addEventListener('hardwareBackPress', function() {
- return true;
+  return true;
 });
 
 /*
@@ -426,7 +426,7 @@ class Load extends Component {
     console.log(currentAppState);
 
     if (currentAppState == 'background') {
-       console.log('App State Change background:');
+      console.log('App State Change background:');
 
       ReactRdna.pauseRuntime((response) => {
         if (response) {
@@ -439,7 +439,7 @@ class Load extends Component {
         }
       })
     } else if (currentAppState == 'active') {
-       console.log('App State Change active:');
+      console.log('App State Change active:');
       AsyncStorage.getItem("savedContext").then((value) => {
         if (value != null) {
           ReactRdna.resumeRuntime(value, null, (response) => {
@@ -568,7 +568,7 @@ class Load extends Component {
       let currentAgentInfo = currentProfile.RelId;
       let currentGatewayHost = currentProfile.Host;
       var currentGatewayPort = currentProfile.Port;
-      if(Platform.OS === 'android'){
+      if (Platform.OS === 'android') {
         currentGatewayPort = parseInt(currentGatewayPort);
       }
       // if(Number.isInteger(currentGatewayPort)){
@@ -577,7 +577,7 @@ class Load extends Component {
       //   alert("Invalid gateway port");
       //   return;
       // }
-      
+
       ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
@@ -630,10 +630,7 @@ class Load extends Component {
     console.log(this.props.navigator.state);
     return (
       <View style={styles.container}>
-
-        <StatusBar
-          backgroundColor='#000'
-          />
+        <StatusBar backgroundColor='#000' />
         <Image
           source={require('../img/ic_welcome.png')}
           style={styles.bg} />
