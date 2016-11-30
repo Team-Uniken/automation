@@ -945,7 +945,7 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.relidzero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
 				PRODUCT_NAME = ReactRefApp;
 				PROVISIONING_PROFILE = "777be214-2a11-4bac-b06b-774c431ab8bf";
 			};
@@ -960,6 +960,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F78S5YW242;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -991,9 +992,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.relidzero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "777be214-2a11-4bac-b06b-774c431ab8bf";
+				PROVISIONING_PROFILE = "99a28b70-1d63-4f69-bc27-45b5887f16e1";
+				PROVISIONING_PROFILE_SPECIFIER = "NWD Distribution InHouse Profile";
 			};
 			name = Release;
 		};
