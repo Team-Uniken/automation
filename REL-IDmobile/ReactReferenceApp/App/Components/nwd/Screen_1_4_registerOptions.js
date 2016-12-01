@@ -63,6 +63,7 @@ class Register extends Component {
     super(props);
     this.state = {
       devbind: true,
+       welcome: true,
       device: false,
       touchid: false,
       wechat: false,
@@ -131,6 +132,14 @@ class Register extends Component {
 
   selectMakePermanent() {
 
+  }
+
+  selectskipwelcome() {
+  if (this.state.welcome === false) {
+      this.setState({ welcome: true });
+    } else {
+      this.setState({ welcome: false });
+    }
   }
 
   selectfb() {
@@ -410,6 +419,12 @@ class Register extends Component {
 
 
   doUpdate() {
+    if (this.state.welcome == true) {
+  AsyncStorage.setItem("skipwelcome", "true");
+    }else{
+  AsyncStorage.setItem("skipwelcome", "false");
+    }
+
 
 
     if (this.state.facebook == true) {
@@ -534,7 +549,15 @@ class Register extends Component {
         // lable="Enable TouchID Login"/>);
       }
     }
-
+    indents.push(
+      <Checkbox
+        onSelect={this.selectskipwelcome.bind(this) }
+        selected={this.state.welcome}
+        labelSide={"right"}
+        >
+        Skip welcome screen
+      </Checkbox>
+    );
     return (
       <MainActivation>
         <View style={Skin.layout1.wrap}>
@@ -573,4 +596,5 @@ class Register extends Component {
 }
 
 module.exports = Register;
+
 

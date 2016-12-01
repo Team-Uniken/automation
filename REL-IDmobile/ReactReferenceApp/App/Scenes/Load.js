@@ -40,16 +40,16 @@ let savedUserName;
 let gotNotification = false;
 let appalive = false;
 
-console.log = function() {}
+console.log = function () { }
 
-const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform,BackAndroid,
+const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar,
   //Push notification code
   PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
 
-BackAndroid.addEventListener('hardwareBackPress', function() {
- return true;
+BackAndroid.addEventListener('hardwareBackPress', function () {
+  return true;
 });
 
 /*
@@ -131,10 +131,10 @@ class Load extends Component {
 
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
-      //                               if (NotificationObtianedResponse !== undefined) {
-      //                               // If error occurred reload last response
-      //
-      //                                                              }
+        //                               if (NotificationObtianedResponse !== undefined) {
+        //                               // If error occurred reload last response
+        //
+        //                                                              }
       }
 
     });
@@ -151,12 +151,12 @@ class Load extends Component {
 
       PushNotification.configure({
         // (optional) Called when Token is generated (iOS and Android)
-        onRegister: function(token) {
+        onRegister: function (token) {
           console.log('TOKEN:', token);
           ReactRdna.setDevToken(JSON.stringify(token));
         },
         // (required) Called when a remote or local notification is opened or received
-        onNotification: function(notification) {
+        onNotification: function (notification) {
           console.log('NOTIFICATION:', notification);
           gotNotification = true;
 
@@ -166,14 +166,14 @@ class Load extends Component {
 
           // Obj.getMyNotifications();
 
-        /**
-              * Notification.create({ 
-              subject:'RelidZeroTesting',
-              message: 'test messg' }).then(function(notification) {
-            console.log(notification);
-            console.log(notification.message);
-          });
-              */
+          /**
+                * Notification.create({ 
+                subject:'RelidZeroTesting',
+                message: 'test messg' }).then(function(notification) {
+              console.log(notification);
+              console.log(notification.message);
+            });
+                */
         },
 
         // ANDROID ONLY: (optional) GCM Sender ID.
@@ -215,7 +215,7 @@ class Load extends Component {
       onResumeCompletedListener.remove();
     }
 
-    onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function(e) {
+    onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
       appalive = false;
       console.log('On Pause Completed:');
       console.log('immediate response is' + e.response);
@@ -227,7 +227,7 @@ class Load extends Component {
       }
     });
 
-    onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function(e) {
+    onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function (e) {
       console.log('On Resume Completed:');
       console.log('immediate response is' + e.response);
       responseJson = JSON.parse(e.response);
@@ -258,7 +258,7 @@ class Load extends Component {
       }
     });
 
-    onInitCompletedListener = DeviceEventEmitter.addListener('onInitializeCompleted', function(e) {
+    onInitCompletedListener = DeviceEventEmitter.addListener('onInitializeCompleted', function (e) {
       onInitCompletedListener.remove();
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
@@ -422,63 +422,63 @@ class Load extends Component {
 
   }
   _handleAppStateChange(currentAppState) {
-    console.log('_handleAppStateChange');
-    console.log(currentAppState);
-
-    if (currentAppState == 'background') {
-       console.log('App State Change background:');
-
-      ReactRdna.pauseRuntime((response) => {
-        if (response) {
-          if (response[0].error == 0) {
-            AsyncStorage.setItem("savedContext", response[0].response);
-          }
-          console.log('Immediate response is ' + response[0].error);
-        } else {
-          console.log('No response.');
-        }
-      })
-    } else if (currentAppState == 'active') {
-       console.log('App State Change active:');
-      AsyncStorage.getItem("savedContext").then((value) => {
-        if (value != null) {
-          ReactRdna.resumeRuntime(value, null, (response) => {
-            if (response) {
-              console.log('Immediate response is ' + response[0].error);
-            } else {
-              console.log('No response.');
-            }
-          })
-        }
-      }).done();
-    } else if (currentAppState === 'inactive') {
-      console.log('App State Change Inactive');
-    }
+    //    console.log('_handleAppStateChange');
+    //    console.log(currentAppState);
+    //
+    //    if (currentAppState == 'background') {
+    //      console.log('App State Change background:');
+    //
+    //      ReactRdna.pauseRuntime((response) => {
+    //        if (response) {
+    //          if (response[0].error == 0) {
+    //            AsyncStorage.setItem("savedContext", response[0].response);
+    //          }
+    //          console.log('Immediate response is ' + response[0].error);
+    //        } else {
+    //          console.log('No response.');
+    //        }
+    //      })
+    //    } else if (currentAppState == 'active') {
+    //      console.log('App State Change active:');
+    //      AsyncStorage.getItem("savedContext").then((value) => {
+    //        if (value != null) {
+    //          ReactRdna.resumeRuntime(value, null, (response) => {
+    //            if (response) {
+    //              console.log('Immediate response is ' + response[0].error);
+    //            } else {
+    //              console.log('No response.');
+    //            }
+    //          })
+    //        }
+    //      }).done();
+    //    } else if (currentAppState === 'inactive') {
+    //      console.log('App State Change Inactive');
+    //    }
   }
 
 
   doInitialize() {
     this.newDoInitialize();
-  //    AsyncStorage.getItem("passwd").then((value) => {
-  //                                        if(value){
-  //                                        if(value === "empty"){
-  //                                        //PROCEED NORMAL WAY.
-  //                                        this.newDoInitialize();
-  //                                        }else{
-  //                                        savedUserName = value;
-  //                                        //SHOW FINGER PRINT ALERT AND PROCEED
-  //                                        if(Platform.OS === 'ios'){
-  //                                        console.log("ios touch");
-  //                                        this._verifyTouchIdSupport();
-  //                                        }else{
-  //                                        this.newDoInitialize();
-  //                                        };
-  ////
-  //                                        }
-  //                                        }else{
-  //                                        this.newDoInitialize();
-  //                                        }
-  //                                        }).done();
+    //    AsyncStorage.getItem("passwd").then((value) => {
+    //                                        if(value){
+    //                                        if(value === "empty"){
+    //                                        //PROCEED NORMAL WAY.
+    //                                        this.newDoInitialize();
+    //                                        }else{
+    //                                        savedUserName = value;
+    //                                        //SHOW FINGER PRINT ALERT AND PROCEED
+    //                                        if(Platform.OS === 'ios'){
+    //                                        console.log("ios touch");
+    //                                        this._verifyTouchIdSupport();
+    //                                        }else{
+    //                                        this.newDoInitialize();
+    //                                        };
+    ////
+    //                                        }
+    //                                        }else{
+    //                                        this.newDoInitialize();
+    //                                        }
+    //                                        }).done();
   }
   //  
   //  _isSupported = () => {
@@ -568,7 +568,7 @@ class Load extends Component {
       let currentAgentInfo = currentProfile.RelId;
       let currentGatewayHost = currentProfile.Host;
       var currentGatewayPort = currentProfile.Port;
-      if(Platform.OS === 'android'){
+      if (Platform.OS === 'android') {
         currentGatewayPort = parseInt(currentGatewayPort);
       }
       // if(Number.isInteger(currentGatewayPort)){
@@ -577,14 +577,14 @@ class Load extends Component {
       //   alert("Invalid gateway port");
       //   return;
       // }
-      
+
       ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
-        // alert(response[0].error);
+          // alert(response[0].error);
         } else {
           console.log('immediate response is' + response[0].error);
-        // alert(response[0].error);
+          // alert(response[0].error);
         }
       })
     });
@@ -614,15 +614,26 @@ class Load extends Component {
 
   doNavigation() {
     console.log('doNavigation:');
-    this.props.navigator.push({
-      id: "Screen_0_1_welcome",
-      //id: "Screen_0_2_selectlogin",
-      title: "nextChlngName",
-      url: {
-        "chlngJson": chlngJson,
-        "screenId": nextChlngName
+    AsyncStorage.getItem('skipwelcome').then((value) => {
+      if (value === "true") {
+        this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+      } else {
+        this.props.navigator.push({
+          id: "Screen_0_1_welcome",
+          //id: "Screen_0_2_selectlogin",
+          title: "nextChlngName",
+          url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName
+          }
+        });
       }
-    });
+
+    }).done();
+
+
+
+
   }
 
   render() {
@@ -635,10 +646,10 @@ class Load extends Component {
           backgroundColor='#000'
           />
         <Image
-          source={require('../img/ic_welcome.png')}
+          source={require('../img/ic_welcome.png') }
           style={styles.bg} />
       </View>
-      );
+    );
   }
 }
 var styles = StyleSheet.create({
@@ -664,3 +675,4 @@ var styles = StyleSheet.create({
 
 
 module.exports = Load;
+
