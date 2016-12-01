@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, Platform,BackAndroid, PermissionsAndroid} from 'react-native';
+import { StyleSheet, View, Text,AsyncStorage, TouchableOpacity, StatusBar, ScrollView, Alert, Platform,BackAndroid, PermissionsAndroid} from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -13,7 +13,9 @@ import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-import KeyboardSpacer from 'react-native-keyboard-spacer'
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import Main from '../Main';
+
 class Activation extends Component {
 
   constructor(props) {
@@ -33,6 +35,8 @@ class Activation extends Component {
   }
 
   componentDidMount() {
+    AsyncStorage.removeItem(Main.dnaUserName,null);
+
     if (Platform.OS === 'android' && Platform.Version >= 23){
       this.checkCameraPermission();
     }

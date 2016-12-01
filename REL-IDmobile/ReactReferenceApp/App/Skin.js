@@ -115,7 +115,7 @@ const main = {
   TITLE_COLOR: '#ffffff'
 }
 
-const admin = { MENU_TITLE: 'NWD',MENU_FONT: 'Times New Roman' }
+const admin = { MENU_TITLE: 'NWD', MENU_FONT: 'Times New Roman' }
 
 const list = module.exports.list = { listHeaderColor: '#3b3b3b' }
 
@@ -384,7 +384,7 @@ module.exports.baseline = {
       borderWidth: 2,
       borderColor: BUTTON_BG_COLOR,
       borderRadius: 0,
-    //backgroundColor: "rgb(248,231,28)"
+      //backgroundColor: "rgb(248,231,28)"
     },
     container: {
       flex: 1,
@@ -429,14 +429,14 @@ module.exports.layout0 = {
     color: BUTTON_BG_COLOR,
     fontSize: 15,
   },
-    devname: {
-      paddingLeft:8,
-      borderWidth: 0,
-      width: 260,
-       fontSize: 18,
-      backgroundColor: INPUT_BG_COLOR,
-         color: INPUT_PLACEHOLDER_COLOR,
-    },
+  devname: {
+    paddingLeft: 8,
+    borderWidth: 0,
+    width: 260,
+    fontSize: 18,
+    backgroundColor: INPUT_BG_COLOR,
+    color: INPUT_PLACEHOLDER_COLOR,
+  },
   top: {
     container: {
       flex: 46,
@@ -459,14 +459,14 @@ module.exports.layout0 = {
       color: BLACK_TEXT_COLOR,
       fontSize: 20,
       height: 32,
-    //backgroundColor: PRIMARY,
+      //backgroundColor: PRIMARY,
     },
     prompt: {
 
       textAlign: 'center',
       color: LIGHT_TEXT_COLOR,
       fontSize: 15,
-    //backgroundColor: DARK_PRIMARY,
+      //backgroundColor: DARK_PRIMARY,
     },
     attempt: {
       marginBottom: 10,
@@ -514,19 +514,19 @@ module.exports.layout0 = {
 
 module.exports.layout1 = {
   termandcondition: {
-  backgroundColor: '#fff',
+    backgroundColor: '#fff',
     position: 'absolute',
     top: 40,
     bottom: 0,
     left: 0,
     right: 0,
-    width: SCREEN_WIDTH-40,
-    height: SCREEN_HEIGHT-120,
+    width: SCREEN_WIDTH - 40,
+    height: SCREEN_HEIGHT - 120,
   },
   wrap: {
     flex: 1,
-  //justifyContent: "center",
-  //alignItems: 'center',
+    //justifyContent: "center",
+    //alignItems: 'center',
   },
   statusbar: {},
   title: {
@@ -535,14 +535,14 @@ module.exports.layout1 = {
       //flex: 12,
       minHeight: 76,
       zIndex: 100,
-    //alignItems: 'center',
+      //alignItems: 'center',
     },
     container: {
       flex: 1,
       flexDirection: 'row',
       marginTop: 26,
       justifyContent: "space-between",
-    //backgroundColor: "rgba(255,186,186,1)"
+      //backgroundColor: "rgba(255,186,186,1)"
     },
     button: {
       width: 50,
@@ -551,12 +551,12 @@ module.exports.layout1 = {
       paddingTop: 15,
       color: BUTTON_BG_COLOR,
       fontFamily: ICON_FONT,
-    //backgroundColor: "rgba(165,255,250,1)" 
+      //backgroundColor: "rgba(165,255,250,1)" 
     },
     crosshighlight: {
-      width:48,
-      height:48,
-    //backgroundColor: "rgba(165,255,250,1)" 
+      width: 48,
+      height: 48,
+      //backgroundColor: "rgba(165,255,250,1)" 
     },
     base: {
       color: TITLE_TEXT_COLOR,
@@ -564,25 +564,25 @@ module.exports.layout1 = {
       textAlign: 'center',
       width: SCREEN_WIDTH - 100,
       paddingTop: 12,
-    //    backgroundColor: TITLE_BG_COLOR
-    //    backgroundColor: "rgba(80,188,28,1)"
+      //    backgroundColor: TITLE_BG_COLOR
+      //    backgroundColor: "rgba(80,188,28,1)"
     }
   },
   content: {
     scrollwrap: {
       flex: 66,
       flexDirection: 'column',
-    //backgroundColor: "rgba(10,20,132,1)",
+      //backgroundColor: "rgba(10,20,132,1)",
     },
     wrap: {
       flex: 1,
       alignItems: 'center',
-    //backgroundColor: "rgba(203,255,132,1)",
+      //backgroundColor: "rgba(203,255,132,1)",
     },
     container: {
       width: 260,
       flex: 1,
-    //backgroundColor: "rgba(203,45,102,1)",
+      //backgroundColor: "rgba(203,45,102,1)",
     },
     camera: {
       prompt: {
@@ -596,7 +596,7 @@ module.exports.layout1 = {
         width: SCREEN_WIDTH,
         flex: 1,
         alignItems: 'center',
-      //backgroundColor: "rgba(203,45,102,1)",
+        //backgroundColor: "rgba(203,45,102,1)",
       },
       boxwrap: {
         flex: 75,
@@ -632,7 +632,7 @@ module.exports.layout1 = {
       container: {
         flex: 53,
         justifyContent: "flex-end",
-      //backgroundColor: '#00ff00'
+        //backgroundColor: '#00ff00'
       },
       text: {
         fontSize: 21,
@@ -645,7 +645,7 @@ module.exports.layout1 = {
       container: {
         flex: 47,
         justifyContent: "flex-start",
-      //backgroundColor: '#00ffff'
+        //backgroundColor: '#00ffff'
       },
     },
     slider: {
@@ -669,12 +669,12 @@ module.exports.layout1 = {
       bottom: 0,
       left: 0,
       alignItems: 'center',
-    //backgroundColor: "rgba(155,199,255,1)"
+      //backgroundColor: "rgba(155,199,255,1)"
     },
     container: {
       width: 260,
       paddingTop: 5,
-    //backgroundColor: "rgba(50,107,180,1)"
+      //backgroundColor: "rgba(50,107,180,1)"
     },
     button: {
 
@@ -1465,7 +1465,7 @@ const coreStyle = StyleSheet.create({
     width: 160,
     marginLeft: leftrid,
     color: TEXT_COLOR,
-  //backgroundColor: 'rgba(70,0,0,0.5)',
+    //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_d: {
     position: 'absolute',
@@ -1473,7 +1473,7 @@ const coreStyle = StyleSheet.create({
     width: 160,
     marginLeft: 62 + leftrid,
     color: DARK_PRIMARY,
-  //backgroundColor: 'rgba(70,0,0,0.5)',
+    //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_relid_wrap: {
     alignItems: 'center',
@@ -1486,7 +1486,7 @@ const coreStyle = StyleSheet.create({
     width: 160,
     color: TEXT_COLOR,
     backgroundColor: 'transparent',
-  //backgroundColor: 'rgba(0,100,0,0.5)',
+    //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   load_text_wrap: {
     top: 450,
@@ -1502,7 +1502,7 @@ const coreStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     alignItems: 'center',
-  //backgroundColor: 'rgba(100,100,0,0.5)',
+    //backgroundColor: 'rgba(100,100,0,0.5)',
   },
 });
 
@@ -1723,12 +1723,12 @@ const leftrid = 0;
 const loadStyle = StyleSheet.create({
   rid_wrap: {
     alignItems: 'center',
-  //backgroundColor: 'rgba(50,250,250,0.5)',
+    //backgroundColor: 'rgba(50,250,250,0.5)',
   },
   rid_center: {
     height: 120,
     width: 120,
-  //backgroundColor: 'rgba(0,50,200,0.8)',
+    //backgroundColor: 'rgba(0,50,200,0.8)',
   },
   logo_rid: {
     fontFamily: 'icomoon',
@@ -1739,21 +1739,21 @@ const loadStyle = StyleSheet.create({
     marginLeft: 31 + leftrid,
     marginTop: 31,
     color: '#ffffff',
-  //backgroundColor: 'rgba(70,0,0,0.5)',
+    //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_r: {
     position: 'absolute',
     fontSize: 120,
     marginLeft: leftrid,
     color: '#FFFFFF',
-  //backgroundColor: 'rgba(70,0,0,0.5)',
+    //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_d: {
     position: 'absolute',
     fontSize: 120,
     marginLeft: 62 + leftrid,
     color: '#ffffff',
-  //backgroundColor: 'rgba(70,0,0,0.5)',
+    //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   relid_wrap: {
     alignItems: 'center',
@@ -1769,7 +1769,7 @@ const loadStyle = StyleSheet.create({
     flex: 1,
     color: '#FFFFFF',
     backgroundColor: 'transparent',
-  //backgroundColor: 'rgba(0,100,0,0.5)',
+    //backgroundColor: 'rgba(0,100,0,0.5)',
   },
   text_wrap: {
     top: SCREEN_HEIGHT / 3,
@@ -1790,9 +1790,9 @@ const loadStyle = StyleSheet.create({
     fontSize: 20,
     position: 'absolute',
     fontWeight: 'bold',
-  //textAlign: 'center',
-  //alignItems: 'center',
-  //backgroundColor: 'rgba(100,100,0,0.5)',
+    //textAlign: 'center',
+    //alignItems: 'center',
+    //backgroundColor: 'rgba(100,100,0,0.5)',
   },
 });
 
@@ -1878,7 +1878,7 @@ const controlStyle = StyleSheet.create({
   container: {
     backgroundColor: '#1c1c1c',
     flex: 1,
-  //color: '#ffffff',
+    //color: '#ffffff',
   },
   shadow: {
     width: 300,

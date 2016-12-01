@@ -90,6 +90,15 @@ class Register extends Component {
   }
 
   componentWillMount() {
+    AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
+      if (userPrefs) {
+        try {
+          userPrefs = JSON.parse(userPrefs);
+          this.setState({ modalInitValue:Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label});
+        }
+        catch (e) { }
+      }
+    });
     // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
     //   if (userPrefs) {
     //     try {
@@ -134,28 +143,28 @@ class Register extends Component {
     // }
 
     AsyncStorage.getItem('devname').then((value) => {
-      
-                                
-      if (value!=null) {
+
+
+      if (value != null) {
         this.setState({ devname: value });
         this.setState({ devnameopacity: 1 });
       } else {
         this.setState({ devnameopacity: 0 });
       }
-     
+
 
     }).done();
 
-    
-    AsyncStorage.getItem('rememberuser').then((value) => {
-                                              if(value==null || value === 'empty' ){
-                                               obj.setState({ rememberusername: '' });
-                                              }else{
-                                                 obj.setState({ rememberusername: '\u2714' });
-                                              }
-                                        });
 
-    
+    AsyncStorage.getItem('rememberuser').then((value) => {
+      if (value == null || value === 'empty') {
+        obj.setState({ rememberusername: '' });
+      } else {
+        obj.setState({ rememberusername: '\u2714' });
+      }
+    });
+
+
   }
 
   close() {
@@ -213,16 +222,16 @@ class Register extends Component {
   selectrememberusername() {
     if (this.state.rememberusername.length == 0) {
       this.setState({ rememberusername: '\u2714' });
-      
-       AsyncStorage.getItem('userId').then((value) => {
-                                     AsyncStorage.setItem("rememberuser", value);
-                                           
-                                           });
-      
-      
-      
-      
-      
+
+      AsyncStorage.getItem('userId').then((value) => {
+        AsyncStorage.setItem("rememberuser", value);
+
+      });
+
+
+
+
+
     } else {
       this.setState({ rememberusername: '' });
       AsyncStorage.setItem("rememberuser", 'empty');
@@ -558,10 +567,7 @@ class Register extends Component {
       AsyncStorage.setItem("skipwelcome", "false");
     }
 
-
-
     if (this.state.facebook == true) {
-
       subscriptions = DeviceEventEmitter.addListener(
         'onUpdateChallengeStatus',
         this.onUpdateChallengeResponseStatus.bind(this)
@@ -692,16 +698,16 @@ class Register extends Component {
         Skip welcome screen
       </Checkbox>
     );
-    
+
     indents.push(
-                 <Checkbox
-                 onSelect={this.selectrememberusername.bind(this) }
-                 selected={this.state.rememberusername}
-                 labelSide={"right"}
-                 >
-                 Remember Username
-                 </Checkbox>
-                 );
+      <Checkbox
+        onSelect={this.selectrememberusername.bind(this) }
+        selected={this.state.rememberusername}
+        labelSide={"right"}
+        >
+        Remember Username
+      </Checkbox>
+    );
 
     return (
       <MainActivation>
@@ -735,9 +741,7 @@ class Register extends Component {
                   } } />
                 <Margin
                   space={16}/>
-
-
-                <Text  style={[Skin.layout0.devname, { opacity:this.state.devnameopacity}]}>
+                <Text  style={[Skin.layout0.devname, { opacity: this.state.devnameopacity }]}>
                   {this.state.devname}
                 </Text>
               </View>
