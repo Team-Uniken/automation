@@ -32,20 +32,26 @@ const {
   InteractionManager,
   AsyncStorage,
   StatusBar,
+  Platform,
   ScrollView,
   BackAndroid,
 } = ReactNative;
 
 const {Component} = React;
 
-export default class PasswordSet extends Component {
+export default class UpdatePasswordSet extends Component {
   constructor(props) {
     super(props);
     this.state = {
       password: '',
       cPassword: '',
       userID: '',
+      erpasswd: false,
     };
+
+    this.close = this.close.bind(this);
+    this.onSetPattern = this.onSetPattern.bind(this);
+    this.setPassword = this.setPassword.bind(this);
     /*
      this._props = {
      url: {
@@ -81,13 +87,24 @@ export default class PasswordSet extends Component {
      };
      */
   }
-  componentWillMount() {
 
+  componentWillMount() {
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
-  }
 
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      if (value) {
+        try {
+          value = JSON.parse(value);
+          if (value.ERPasswd && value.ERPasswd !== 'empty') {
+            this.state.erpasswd = true;
+          }
+        }
+        catch (e) { }
+      }
+    }).done();
+  }
 
   validatePassword(textval) {
     // var passwordregex = /^[0-9]/;
@@ -105,6 +122,12 @@ export default class PasswordSet extends Component {
     this.state.cPassword = event.nativeEvent.text.trim();
   }
 
+  onSetPattern(data) {
+    let responseJson = data.chlngJson;
+    responseJson.chlng_resp[0].response = data.pw;
+    Events.trigger('showNextChallenge', { response: responseJson });
+  }
+
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
@@ -113,12 +136,27 @@ export default class PasswordSet extends Component {
       if (cpw.length > 0) {
         if (pw === cpw) {
           //  if(this.validatePassword(pw)){
-          Main.dnaPasswd = pw;
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
-          let responseJson = this.props.url.chlngJson;
-          responseJson.chlng_resp[0].response = pw;
           dismissKeyboard();
-          Events.trigger('showNextChallenge', { response: responseJson });
+          // Main.dnaPasswd = pw;
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), (error) => {
+            if (Platform.OS == 'ios' && this.state.erpasswd) {
+              this.encrypytPasswdiOS();
+              let responseJson = this.props.url.chlngJson;
+              responseJson.chlng_resp[0].response = pw;
+              Events.trigger('showNextChallenge', { response: responseJson });
+            } else if (Platform.OS == 'android' && this.state.erpasswd) {
+              this.props.navigator.push(
+                {
+                  id: 'pattern',
+                  data: { chlngJson: this.props.url.chlngJson, pw },
+                  onSetPattern: this.onSetPattern
+                });
+            } else {
+              let responseJson = this.props.url.chlngJson;
+              responseJson.chlng_resp[0].response = pw;
+              Events.trigger('showNextChallenge', { response: responseJson });
+            }
+          });
           // }else{
           // alert('Invalide Password');
           // }
@@ -142,22 +180,39 @@ export default class PasswordSet extends Component {
   }
 
   close() {
-    let responseJson = this.props.url.chlngJson;
-    this.setState({ showCamera: false });
-    Events.trigger('showPreviousChallenge');
+    this.props.parentnav.pop();
+    BackAndroid.removeEventListener('hardwareBackPress', this.close);
+    return true;
   }
-  
 
+  encrypytPasswdiOS() {
+
+    if (Platform.OS === 'ios') {
+
+      AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+        if (value) {
+          try {
+            value = JSON.parse(value);
+            ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
+              if (response) {
+                console.log('immediate response of encrypt data packet is is' + response[0].error);
+                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }));
+                obj.setState({ touchid: true });
+              } else {
+                console.log('immediate response is' + response[0].response);
+              }
+            });
+          } catch (e) { }
+        }
+      }).done();
+    }
+  }
 
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
-      this.close();
-      return true;
-    }.bind(this));
+    BackAndroid.addEventListener('hardwareBackPress', this.close);
   }
+
   render() {
-
-
     return (
       <MainActivation>
         <View style={Skin.layout1.wrap}>
@@ -181,7 +236,6 @@ export default class PasswordSet extends Component {
                   <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
                 </View>
                 <View style={Skin.layout1.content.bottom.container}>
-
                   <Input
                     returnKeyType={'next'}
                     keyboardType={'default'}
@@ -212,7 +266,6 @@ export default class PasswordSet extends Component {
                     placeholder={'Confirm Password'}
                     onChange={this.onConfirmPasswordChange.bind(this) }
                     onSubmitEditing={this.setPassword.bind(this) }
-
                     />
                 </View>
               </View>
@@ -233,4 +286,4 @@ export default class PasswordSet extends Component {
   }
 }
 
-module.exports = PasswordSet;
+module.exports = UpdatePasswordSet;

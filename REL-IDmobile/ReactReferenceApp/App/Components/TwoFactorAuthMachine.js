@@ -114,7 +114,7 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
-    
+
 
 
     if (onGetAllChallengeEvent) {
@@ -190,10 +190,10 @@ class TwoFactorAuthMachine extends Component {
             Web.proxy = pPort;
             // AsyncStorage.setItem("Proxy",""+pPort);
           }
-         // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-         // this.props.navigator.pop();
+          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          // this.props.navigator.pop();
           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-          
+
           AsyncStorage.getItem('userId').then((value) => {
             Events.trigger('showLoader', true);
             ReactRdna.getAllChallenges(value, (response) => {
@@ -201,7 +201,7 @@ class TwoFactorAuthMachine extends Component {
                 console.log('getAllChallenges immediate response is' + response[0].error);
               } else {
                 console.log('s immediate response is' + response[0].error);
-               Events.trigger('hideLoader', true);
+                Events.trigger('hideLoader', true);
               }
             })
           }).done();
@@ -303,45 +303,45 @@ class TwoFactorAuthMachine extends Component {
       });
   }
 
-  resetChallenge(){
+  resetChallenge() {
     console.log("resetChallenge");
-      ReactRdna.resetChallenge((response) => {
-        if (response[0].error === 0) {
+    ReactRdna.resetChallenge((response) => {
+      if (response[0].error === 0) {
         challengeJson = saveChallengeJson;
         currentIndex = 0;
         challengeJsonArr = saveChallengeJson.chlng;
         console.log('immediate response is' + response[0].error);
         var allScreens = obj.stateNavigator.getCurrentRoutes(-1);
-        
-        for(var i = 0; i < allScreens.length; i++){
-        var screen = allScreens[i];
-        if(screen.id === 'checkuser'){
-        var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
-        obj.stateNavigator.popToRoute(mySelectedRoute);
-        return;
+
+        for (var i = 0; i < allScreens.length; i++) {
+          var screen = allScreens[i];
+          if (screen.id === 'checkuser') {
+            var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+            obj.stateNavigator.popToRoute(mySelectedRoute);
+            return;
+          }
+          var chlngJson1;
+          chlngJson1 = saveChallengeJson;
+          const nextChlngName = chlngJson1.chlng[0].chlng_name;
+          const chlngJson = chlngJson1.chlng[0];
+          console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+          //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          obj.stateNavigator.push({
+            id: nextChlngName,
+            title: nextChlngName,
+            url: {
+              chlngJson,
+              screenId: nextChlngName,
+            },
+          });
+
         }
-              var chlngJson1;
-              chlngJson1 = saveChallengeJson;
-              const nextChlngName = chlngJson1.chlng[0].chlng_name;
-              const chlngJson = chlngJson1.chlng[0];
-                console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-                //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-                 obj.stateNavigator.push({
-                  id:nextChlngName,
-                  title: nextChlngName,
-                  url: {
-                    chlngJson,
-                    screenId: nextChlngName,
-                  },
-                });
-        
-        }
-        } else {
+      } else {
         console.log('immediate response is' + response[0].error);
         alert(response[0].error);
-        }
-        });
-    
+      }
+    });
+
   }
 
   canShowNextChallenge() {
@@ -368,15 +368,15 @@ class TwoFactorAuthMachine extends Component {
     // alert("response = "+ JSON.stringify(args));
 
     //const i = challengeJsonArr.indexOf(currentIndex);
-   //challengeJsonArr[i] = args.response;
+    //challengeJsonArr[i] = args.response;
     currentIndex++;
     var result = this.canShowNextChallenge();
     if (result.challenge) {
       if (result.show === false) {
         while ((result = this.canShowNextChallenge())
-                && result.show === false
-                && result.challenge
-              ) {
+          && result.show === false
+          && result.challenge
+        ) {
           if (result.challenge.chlng_name === 'devbind') {
             result.challenge.chlng_resp[0].response = 'true';
           }
@@ -416,6 +416,9 @@ class TwoFactorAuthMachine extends Component {
   }
 
   onGetAllChallengeStatus(e) {
+    if (onGetAllChallengeEvent) {
+      onGetAllChallengeEvent.remove();
+    }
     var $this = this;
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
@@ -426,37 +429,44 @@ class TwoFactorAuthMachine extends Component {
         var arrTba = new Array();
         const chlngJson = res.pArgs.response.ResponseData;
         for (var i = 0; i < chlngJson.chlng.length; i++) {
+          if (chlngJson.chlng[i].chlng_name === 'secqa') {
+            Main.enableUpdateSecqaOption = true;
+          }
+
           if (chlngJson.chlng[i].chlng_name === 'tbacred')
             arrTba.push(chlngJson.chlng[i]);
         }
         if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
 
           if (arrTba.length > 0) {
-            AsyncStorage.getItem('ERPasswd').then((value) => {
-
-              if (value && value!=="empty") {
-                this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
-              } else {
-                if (Platform.OS === "android") {
-                  this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } });
-                } else {
-                  this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } } });
-                }
+            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+              if (value) {
+                try {
+                  value = JSON.parse(value);
+                  if (value.ERPasswd && value.ERPasswd !== "empty") {
+                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
+                  } else {
+                    if (Platform.OS === "android") {
+                      this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } });
+                    } else {
+                      this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } } });
+                    }
+                  }
+                } catch (e) { }
               }
 
             }).done();
           } else {
-             Events.trigger('closeStateMachine');
+            Events.trigger('closeStateMachine');
             InteractionManager.runAfterInteractions(() => {
               this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-              });
-            
+            });
           }
         } else {
-           Events.trigger('closeStateMachine');
+          Events.trigger('closeStateMachine');
           InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-            });
+          });
         }
 
         //        //var arrChlng = chlngJson.chlng;
@@ -611,20 +621,20 @@ class TwoFactorAuthMachine extends Component {
       currentIndex--;
       obj.stateNavigator.pop();
     } else {
-//      var chlngJson;
-//      chlngJson = saveChallengeJson;
-//      const nextChlngName = chlngJson.chlng[0].chlng_name;
-//        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-//        //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-//         obj.stateNavigator.push({
-//          id:nextChlngName,
-//          title: nextChlngName,
-//          url: {
-//            chlngJson,
-//            screenId: nextChlngName,
-//          },
-//        });
-      
+      //      var chlngJson;
+      //      chlngJson = saveChallengeJson;
+      //      const nextChlngName = chlngJson.chlng[0].chlng_name;
+      //        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+      //        //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+      //         obj.stateNavigator.push({
+      //          id:nextChlngName,
+      //          title: nextChlngName,
+      //          url: {
+      //            chlngJson,
+      //            screenId: nextChlngName,
+      //          },
+      //        });
+
       obj.resetChallenge();
     }
   }
@@ -702,7 +712,7 @@ class TwoFactorAuthMachine extends Component {
         } else {
           console.log('immediate response is' + response[0].error);
           alert(response[0].error);
-             Events.trigger('hideLoader', true);
+          Events.trigger('hideLoader', true);
         }
       });
     }).done();

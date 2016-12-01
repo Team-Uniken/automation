@@ -15,15 +15,18 @@ import Skin from '../Skin';
 // Secondary Scenes
 
 // SECURITY SCENES
-import Activation from './challenges/Activation';
-import UpdatePasswordSet from './challenges/UpdatePasswordSet';
-import Otp from './challenges/Otp';
-import QuestionSet from './challenges/UpdateQuestionSet';
-import QuestionVerification from './challenges/QuestionVerification';
-import UserLogin from './challenges/UserLogin';
-import DeviceBinding from './challenges/DeviceBinding';
-import DeviceName from './challenges/DeviceName';
-import PasswordVerification from './challenges/PasswordVerification';
+import PatternLock from './nwd/Screen_PatternLock';
+import SelectLogin from './nwd/Screen_0_2_selectlogin';
+import AccessCode from './nwd/Screen_Otp';
+import Activation from './nwd/Screen_1_2_activation';
+import UpdatePasswordSet from './nwd/Screen_Update_Password';
+import PostLoginAccessCode from './nwd/Screen_PostLogin_Otp';
+import UpdateQuestionSet from './nwd/Screen_Update_Question';
+import PostLoginQuestionVerification from './nwd/Screen_PostLogin_Question_Verification';
+import UserLogin from './nwd/Screen_2_1_username';
+import DeviceBinding from './nwd/Screen_Device_Binding';
+import DeviceName from './nwd/Screen_Device_Name';
+import PostLoginPasswordVerification from './nwd/Screen_PostLogin_password';
 import ScreenHider from './challenges/ScreenHider';
 
 // COMPONENTS
@@ -52,7 +55,7 @@ const {
   Platform,
 } = ReactNative;
 
-const{Component}=React;
+const {Component} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -62,18 +65,18 @@ class UpdateAuthMachine extends Component {
   constructor(props) {
     super(props);
     console.log('---------- Update Machine param ');
+    this.renderScene = this.renderScene.bind(this);
   }
 
   componentWillMount() {
     obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
-    if(saveChallengeJson==null){
-    saveChallengeJson=this.props.url.chlngJson;
+    if (saveChallengeJson == null) {
+      saveChallengeJson = this.props.url.chlngJson;
     }
-    if(challengeJson.length==0)
-    {
-      challengeJson=saveChallengeJson;
+    if (challengeJson.length == 0) {
+      challengeJson = saveChallengeJson;
     }
     challengeJsonArr = challengeJson.chlng;
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
@@ -86,7 +89,7 @@ class UpdateAuthMachine extends Component {
   }
 
   componentDidMount() {
-       screenId = 'Main';
+    screenId = 'Main';
     // this.props.screenId;
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
@@ -96,7 +99,7 @@ class UpdateAuthMachine extends Component {
     console.log('----- UpdateAuthMachine unmounted');
   }
 
-  onErrorOccured(response){
+  onErrorOccured(response) {
     console.log("-------- Error occurred ");
     if (response.ResponseData) {
       let chlngJson = response.ResponseData;
@@ -154,65 +157,58 @@ class UpdateAuthMachine extends Component {
           console.log('UpdateAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const pPort = res.pArgs.pxyDetails.port;
           if (pPort > 0) {
-            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {});
+            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           }
-            alert(res.pArgs.response.StatusMsg);
-        
-          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-          
+          alert(res.pArgs.response.StatusMsg);
+          this.props.navigator.pop();
+
         }
       } else {
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
-              onPress: () => {
-                        var chlngJson;
-          if(res.pArgs.response.ResponseData==null){
-          chlngJson = saveChallengeJson;
-          }else{
-          chlngJson = res.pArgs.response.ResponseData;
-          }
-                                         
-                                        
-                              const currentChlng = challengeJsonArr[--currentIndex];
-                                         for(var i = 0; i < chlngJson.chlng.length; i++){
-                                         var chlng = chlngJson.chlng[i];
-                                         if(chlng.chlng_name === currentChlng.chlng_name){
-                                         
-                                         }else{
-                                         chlngJson.chlng.splice(i, 1);
-                                         i--;
-                                         }
-                                         }
-                                         
-      
-                                         
-
-          const nextChlngName = chlngJson.chlng[0].chlng_name;
-          if (chlngJson != null) {
-            console.log('UpdateAuthMachine - onUpdateChallengeResponseStatus - chlngJson != null');
-            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-            this.props.navigator.push({
-              id: 'UpdateMachine',
-              title: nextChlngName,
-              url: {
-                chlngJson,
-                screenId: nextChlngName,
-              },
-            });
-          }
+            onPress: () => {
+              var chlngJson;
+              if (res.pArgs.response.ResponseData == null) {
+                chlngJson = saveChallengeJson;
+              } else {
+                chlngJson = res.pArgs.response.ResponseData;
+              }
 
 
-              },
+              const currentChlng = challengeJsonArr[--currentIndex];
+              for (var i = 0; i < chlngJson.chlng.length; i++) {
+                var chlng = chlngJson.chlng[i];
+                if (chlng.chlng_name === currentChlng.chlng_name) {
+
+                } else {
+                  chlngJson.chlng.splice(i, 1);
+                  i--;
+                }
+              }
+
+              const nextChlngName = chlngJson.chlng[0].chlng_name;
+              if (chlngJson != null) {
+                console.log('UpdateAuthMachine - onUpdateChallengeResponseStatus - chlngJson != null');
+                //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+                this.props.navigator.push({
+                  id: 'UpdateMachine',
+                  title: nextChlngName,
+                  url: {
+                    chlngJson,
+                    screenId: nextChlngName,
+                  },
+                });
+              }
+            },
             style: 'cancel',
           }]
         );
       }
     } else {
       console.log(e);
-      alert('Internal system error occurred.'+res.errCode);
+      alert('Internal system error occurred.' + res.errCode);
     }
   }
 
@@ -230,13 +226,13 @@ class UpdateAuthMachine extends Component {
 
 
   showNextChallenge(args) {
-    
+
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
 
     const i = challengeJsonArr.indexOf(currentIndex);
     challengeJsonArr[i] = args.response;
-    currentIndex ++;
+    currentIndex++;
     if (obj.hasNextChallenge()) {
       // Show Next challenge screen
       const currentChlng = obj.getCurrentChallenge();
@@ -270,16 +266,20 @@ class UpdateAuthMachine extends Component {
       return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
-        return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
+        //return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
       }
-      return (<UpdatePasswordSet navigator={nav} url={route.url} title={route.title} />);
+      else {
+        return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} url={route.url} title={route.title} />);
+      }
     } else if (id === 'otp') {
       return (<Otp navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
-        return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
+        //return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
       }
-      return (<QuestionSet navigator={nav} url={route.url} title={route.title} />);
+      else {
+        return (<UpdateQuestionSet navigator={nav} parentnav={this.props.navigator} url={route.url} title={route.title} />);
+      }
     } else if (id === 'devname') {
       //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       return (<DeviceName navigator={nav} url={route.url} title={route.title} />);
@@ -288,6 +288,8 @@ class UpdateAuthMachine extends Component {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
+    } else if (id === 'pattern') {
+      return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>Error</Text>);
   }
@@ -295,7 +297,7 @@ class UpdateAuthMachine extends Component {
   render() {
     return (
       <Navigator
-        ref={(ref) => { this.stateNavigator = ref; return ref; }}
+        ref={(ref) => { this.stateNavigator = ref; return ref; } }
         renderScene={this.renderScene}
         initialRoute={{
           id: this.props.url.screenId,
@@ -326,7 +328,7 @@ class UpdateAuthMachine extends Component {
             return config;
           }
         }
-      />
+        />
     );
   }
 
@@ -341,7 +343,7 @@ class UpdateAuthMachine extends Component {
   showPreviousChallenge() {
     console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
-      currentIndex --;
+      currentIndex--;
       obj.stateNavigator.pop();
     }
   }

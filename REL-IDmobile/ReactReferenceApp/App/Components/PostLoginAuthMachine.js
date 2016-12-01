@@ -16,15 +16,20 @@ import Main from './Main';
 // Secondary Scenes
 
 // SECURITY SCENES
-import Activation from './challenges/Activation';
-import PasswordSet from './challenges/PasswordSet';
-import PostLoginAccessCode from './challenges/PostLoginAccessCode';
-import QuestionSet from './challenges/QuestionSet';
-import PostLoginQuestionVerification from './challenges/PostLoginQuestionVerification';
-import UserLogin from './challenges/UserLogin';
-import DeviceBinding from './challenges/DeviceBinding';
-import DeviceName from './challenges/DeviceName';
-import PostLoginPasswordVerification from './challenges/PostLoginPasswordVerification';
+// SECURITY SCENES
+
+import PatternLock from './nwd/Screen_PatternLock';
+import SelectLogin from './nwd/Screen_0_2_selectlogin';
+import AccessCode from './nwd/Screen_Otp';
+import Activation from './nwd/Screen_1_2_activation';
+import PasswordSet from './nwd/Screen_1_3_setPassword';
+import PostLoginAccessCode from './nwd/Screen_PostLogin_Otp';
+import QuestionSet from './nwd/Screen_Question_Set';
+import PostLoginQuestionVerification from './nwd/Screen_PostLogin_Question_Verification';
+import UserLogin from './nwd/Screen_2_1_username';
+import DeviceBinding from './nwd/Screen_Device_Binding';
+import DeviceName from './nwd/Screen_Device_Name';
+import PostLoginPasswordVerification from './nwd/Screen_PostLogin_password';
 import ScreenHider from './challenges/ScreenHider';
 
 // COMPONENTS
@@ -56,9 +61,9 @@ const {
   Platform,
 } = ReactNative;
 
-const{
+const {
   Component
-} =  React;
+} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -76,12 +81,11 @@ class PostLoginAuthMachine extends Component {
     obj = this;
     currentIndex = 0;
     challengeJson = this.props.url.chlngJson;
-    if(saveChallengeJson==null){
-    saveChallengeJson=this.props.url.chlngJson;
+    if (saveChallengeJson == null) {
+      saveChallengeJson = this.props.url.chlngJson;
     }
-    if(challengeJson.length==0)
-    {
-      challengeJson=saveChallengeJson;
+    if (challengeJson.length == 0) {
+      challengeJson = saveChallengeJson;
     }
     challengeJsonArr = challengeJson.chlng;
 
@@ -94,7 +98,7 @@ class PostLoginAuthMachine extends Component {
       this.onCheckChallengeResponseStatus.bind(this)
     );
 
-    if(onGetAllChallengeEvent){
+    if (onGetAllChallengeEvent) {
       onGetAllChallengeEvent.remove();
     }
 
@@ -103,8 +107,8 @@ class PostLoginAuthMachine extends Component {
       this.onGetAllChallengeStatus.bind(this)
     );
 
-     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
 
   componentDidMount() {
@@ -115,7 +119,7 @@ class PostLoginAuthMachine extends Component {
     console.log('----- PostLoginAuthMachine unmounted');
   }
 
-  onErrorOccured(response){
+  onErrorOccured(response) {
     console.log("-------- Error occurred ");
     if (response.ResponseData) {
       let chlngJson = response.ResponseData;
@@ -225,13 +229,13 @@ class PostLoginAuthMachine extends Component {
 
 
   showNextChallenge(args) {
-    
+
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
-   // alert("response = "+ JSON.stringify(args));
+    // alert("response = "+ JSON.stringify(args));
     const i = challengeJsonArr.indexOf(currentIndex);
     challengeJsonArr[i] = args.response;
-    currentIndex ++;
+    currentIndex++;
     if (obj.hasNextChallenge()) {
       // Show Next challenge screen
       const currentChlng = obj.getCurrentChallenge();
@@ -321,7 +325,7 @@ class PostLoginAuthMachine extends Component {
             return config;
           }
         }
-      />
+        />
     );
   }
 
@@ -336,7 +340,7 @@ class PostLoginAuthMachine extends Component {
   showPreviousChallenge() {
     console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
-      currentIndex --;
+      currentIndex--;
       obj.stateNavigator.pop();
     }
   }
@@ -362,56 +366,61 @@ class PostLoginAuthMachine extends Component {
 
   }
 
-  onGetAllChallengeStatus(e){
+  onGetAllChallengeStatus(e) {
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
     console.log(res);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-   
-   
-        
+
         const chlngJson = res.pArgs.response.ResponseData;
-        
+
         //var arrChlng = chlngJson.chlng;
         var selectedChlng;
         var status = 0;
-        for(var i = 0; i < chlngJson.chlng.length; i++){
+        for (var i = 0; i < chlngJson.chlng.length; i++) {
           var chlng = chlngJson.chlng[i];
-          if(chlng.chlng_name === challengeName){
-            
-          }else{
+          if (chlng.chlng_name === challengeName) {
+
+          } else {
             chlngJson.chlng.splice(i, 1);
             i--;
           }
         }
-      
-        const nextChlngName = chlngJson.chlng[0].chlng_name;
-        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
         
+        console.log("PostAuth ------ getAllChallenges ---  " + JSON.stringify(chlngJson));
+        if(chlngJson.chlng.length > 0){
+           const nextChlngName = chlngJson.chlng[0].chlng_name;
+           this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        }
+        else{
+          alert("Challenge not configured");
+          this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+        }
       } else {
         alert(res.pArgs.response.StatusMsg);
       }
-    }else {
+    } else {
       alert('Something went wrong');
       // If error occurred reload devices list with previous response
     }
     
   }
-  
-  getChallengesByName(chlngName){
+
+  getChallengesByName(chlngName) {
     challengeName = chlngName;
     Events.trigger('showLoader', true);
     AsyncStorage.getItem('userId').then((value) => {
-                                        ReactRdna.getAllChallenges(value,(response) => {
-                                                                   if (response) {
-                                                                   console.log('getAllChallenges immediate response is'+response[0].error);
-                                                                   }else{
-                                                                   console.log('s immediate response is'+response[0].error);
-                                                                   }
-                                                                   })
-                                        }).done();
+      ReactRdna.getAllChallenges(value, (response) => {
+        if (response) {
+          console.log('getAllChallenges immediate response is' + response[0].error);
+        } else {
+          console.log('s immediate response is' + response[0].error);
+        }
+      })
+    }).done();
   }
 
   callCheckChallenge() {

@@ -6,7 +6,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
-import Main from '../../Components/Main';
+import Main from '../Main';
 import MainActivation from '../../Components/MainActivation';
 
 import PatternView from '../PatternView';
@@ -74,7 +74,10 @@ class PatternLock extends Component {
   componentWillMount() {
     dismissKeyboard();
     if (this.mode === "verify") {
-      this.operationMsg = "Provide pattern to login";
+      if (this.props.operationMsg)
+        this.operationMsg = this.props.operationMsg;
+      else
+        this.operationMsg = "Provide pattern to login";
     }
     else if (this.mode === "set") {
       if (this.state.screen === "set") {
@@ -105,10 +108,13 @@ class PatternLock extends Component {
       if (this.mode == "verify") {
         this.currentPattern = pattern;
         try {
-          AsyncStorage.getItem("ERPasswd").then((data) => {
+          AsyncStorage.getItem(Main.dnaUserName).then((data) => {
             try {
-              if (data != null && data != undefined) {
-                this.decryptUserData(data, pattern);
+              if(data){
+                data = JSON.parse(data);
+                if (data.ERPasswd) {
+                  this.decryptUserData(data.ERPasswd, pattern);
+                }
               }
             }
             catch (e) {
@@ -121,13 +127,26 @@ class PatternLock extends Component {
       if (this.mode == "set") {
         if (this.state.screen === "set") {
           if (patternSize >= MIN_DOTS) {
-            this.currentPattern = pattern;
-            this.refs["patternView"].clearPattern();
-            this.operationMsg = "Confirm unlock pattern";
-            this.state.screen = "confirm";
-            this.setState({
-              screen: "confirm",
-            });
+            if (this.props.disableConfirmation === true) {
+              this.currentPattern = pattern;
+              AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+                if (value) {
+                  try{
+                    value = JSON.parse(value);
+                    this.encryptUserData(null, value.RPasswd, pattern);
+                  }catch(e){}
+                }
+              }).done();
+            }
+            else {
+              this.currentPattern = pattern;
+              this.refs["patternView"].clearPattern();
+              this.operationMsg = "Confirm unlock pattern";
+              this.state.screen = "confirm";
+              this.setState({
+                screen: "confirm",
+              });
+            }
           }
           else {
             alert("Pattern should atleast be of 4 dots");
@@ -136,8 +155,13 @@ class PatternLock extends Component {
         else {
           if (this.state.screen === "confirm") {
             if (this.currentPattern === pattern) {
-              AsyncStorage.getItem('RPasswd').then((value) => {
-                this.encryptUserData(null, value, pattern);
+              AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+                if(value){
+                  try{
+                   value = JSON.parse(value);
+                   this.encryptUserData(null, value.RPasswd, pattern);
+                  }catch(e){}
+                }
               }).done();
             }
             else {
@@ -159,7 +183,7 @@ class PatternLock extends Component {
     if (status.error == 0) {
       if (this.mode == "set") {
         try {
-          AsyncStorage.setItem("ERPasswd", status.response);
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ERPasswd:status.response}),null);
           this.props.onSetPattern(this.props.data);
         }
         catch (error) {
@@ -253,7 +277,7 @@ class PatternLock extends Component {
       tickerFunction(timeLeft);
     }
 
-    function clearTimers(){
+    function clearTimers() {
       clearInterval(tickInterval);
       clearTimeout(tickerTimeout);
     }
@@ -262,7 +286,7 @@ class PatternLock extends Component {
       clearTimers();
       tickerEndFunction();
     }
-    
+
     this.clearTimers = clearTimers;
 
     tickInterval = setInterval(tick, 1000);
@@ -309,14 +333,20 @@ class PatternLock extends Component {
   close() {
     this.refs["patternView"].clearPattern();
     if (this.mode === "verify") {
-      if(this.clearTimers){
+      if (this.clearTimers) {
         this.clearTimers();
       }
-      
-      this.props.navigator.pop();
+
+      if (this.props.onClose)
+        this.props.onClose();
+      else
+        this.props.navigator.pop();
     } else {
       if (this.state.screen === "set") {
-        this.props.navigator.pop();
+        if (this.props.onClose)
+          this.props.onClose();
+        else
+          this.props.navigator.pop();
       } else if (this.state.screen === "confirm") {
         this.state.screen = "set";
         this.setState({ screen: "set" });

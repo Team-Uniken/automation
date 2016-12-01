@@ -13,6 +13,8 @@ import Margin from '../view/margin';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
 import MainActivation from '../MainActivation';
+import ModalPicker from 'react-native-modal-picker'
+import Main from '../Main';
 
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
@@ -63,7 +65,7 @@ class Register extends Component {
     super(props);
     this.state = {
       devbind: true,
-       welcome: true,
+      welcome: true,
       device: false,
       touchid: false,
       wechat: false,
@@ -72,39 +74,66 @@ class Register extends Component {
       pattern: false,
       facebook: false,
       refresh: false,
+      defaultLogin: "",
+      modalInitValue: "Select Default Login",
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.checkValidityOfAccessToken = this.checkValidityOfAccessToken.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
     this.close = this.close.bind(this);
+    this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
   }
 
   componentWillMount() {
+    // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
+    //   if (userPrefs) {
+    //     try {
+    //       userPrefs = JSON.parse(userPrefs);
+    //       if (userPrefs.defaultLogin === 'none') {
+    //         this.setState({
+    //           defaultLogin: "none",
+    //           modalInitValue: "None"
+    //         });
+    //       }
+    //       else {
+    //         alert(userPrefs.defaultLogin);
+    //         this.setState({
+    //           defaultLogin: value.defaultLogin,
+    //           modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label
+    //         });
+    //       }
+    //     }
+    //     catch (e) { }
+    //   }
+    // });
+
     obj = this;
-    var isCheck = false;
-    for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
-      var chlng = this.props.url.chlngJson.chlng[i];
-      if (chlng.chlng_prompt[0].length > 0) {
-        var promts = JSON.parse(chlng.chlng_prompt[0]);
+    /** Uncomment if you want to go to DashBoard if all tbacreds are registered */
+    // var isCheck = false;
+    // for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
+    //   var chlng = this.props.url.chlngJson.chlng[i];
+    //   if (chlng.chlng_prompt[0].length > 0) {
+    //     var promts = JSON.parse(chlng.chlng_prompt[0]);
 
-        if (promts.is_registered == false) {
-          isCheck = true;
-          break;
-        }
-      }
-    }
+    //     if (promts.is_registered == false) {
+    //       isCheck = true;
+    //       break;
+    //     }
+    //   }
+    // }
 
-    if (isCheck == false) {
-      if (this.props.url.touchCred.isTouch == true) {
-        this.doNavigateDashBoard();
-      }
-    }
+    // if (isCheck == false) {
+    //   if (this.props.url.touchCred.isTouch == true) {
+    //     this.doNavigateDashBoard();
+    //   }
+    // }
   }
 
   close() {
     this.doNavigateDashBoard();
   }
+
   selectdevice() {
     if (this.state.device.length == 0) {
       this.setState({ device: true });
@@ -117,7 +146,7 @@ class Register extends Component {
       this._clickHandler();
     } else {
       this.setState({ touchid: false });
-      AsyncStorage.setItem("ERPasswd", "empty");
+      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
   }
 
@@ -126,7 +155,7 @@ class Register extends Component {
       this.doPatternSet();
     } else {
       this.setState({ pattern: false });
-      AsyncStorage.setItem("ERPasswd", "empty");
+      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
   }
 
@@ -135,7 +164,7 @@ class Register extends Component {
   }
 
   selectskipwelcome() {
-  if (this.state.welcome === false) {
+    if (this.state.welcome === false) {
       this.setState({ welcome: true });
     } else {
       this.setState({ welcome: false });
@@ -171,6 +200,67 @@ class Register extends Component {
   onSetPattern(data) {
     this.props.navigator.pop();
     this.setState({ pattern: true });
+  }
+
+  getLoginOptions() {
+    let index = 0;
+
+    let data = [
+      {
+        key: 'title',
+        section: true,
+        label: 'Default Login Options'
+      },
+      {
+        key: 'none',
+        label: 'None'
+      },
+      Skin.text['0']['2'].credTypes['password']
+    ];
+
+    for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
+      var chlng = this.props.url.chlngJson.chlng[i];
+
+      var promts;
+      if (chlng.chlng_prompt[0].length > 0) {
+        promts = JSON.parse(chlng.chlng_prompt[0]);
+
+        if (promts.is_registered == true) {
+          data.push({
+            key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
+          });
+        } else {
+          if (this.state[promts.cred_type] === true) {
+            data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
+          }
+        }
+      }
+    }
+
+    if (this.props.url.touchCred.isTouch == true) {
+      if (Platform.OS === 'android') {
+        data.push(Skin.text['0']['2'].credTypes['pattern']);
+      } else {
+        data.push(Skin.text['0']['2'].credTypes['touchid']);
+      }
+    } else if (this.state.pattern) {
+      data.push(Skin.text['0']['2'].credTypes['pattern']);
+    } else if (this.state.touchid) {
+      data.push(Skin.text['0']['2'].credTypes['touchid']);
+    }
+
+    return data
+  }
+
+  changeDefaultLogin(option) {
+    this.setState({ defaultLogin: option.key })
+  }
+
+  saveDefaultLoginPrefs() {
+    if (this.state.defaultLogin) {
+      var data = JSON.stringify({ defaultLogin: this.state.defaultLogin });
+      AsyncStorage.mergeItem(Main.dnaUserName, data, null);
+    }
   }
 
   onUpdateChallengeResponseStatus(e) {
@@ -216,6 +306,7 @@ class Register extends Component {
           // alert(res.pArgs.response.StatusMsg);
 
           // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+          this.saveDefaultLoginPrefs();
           obj.doNavigateDashBoard();
 
         }
@@ -311,7 +402,7 @@ class Register extends Component {
 
   //Facebook login code
   doFacebookLogin() {
-   // Events.trigger('showLoader', true);
+    // Events.trigger('showLoader', true);
     $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
@@ -386,7 +477,7 @@ class Register extends Component {
   authenticate() {
     return TouchID.authenticate()
       .then(success => {
-        //      AlertIOS.alert('Authenticated Successfully');
+        //AlertIOS.alert('Authenticated Successfully');
         obj.encrypytPasswdiOS();
       })
       .catch(error => {
@@ -401,18 +492,21 @@ class Register extends Component {
   encrypytPasswdiOS() {
 
     if (Platform.OS === 'ios') {
-
-      AsyncStorage.getItem('RPasswd').then((value) => {
-        ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
-          if (response) {
-            console.log('immediate response of encrypt data packet is is' + response[0].error);
-            AsyncStorage.setItem("ERPasswd", response[0].response);
-            obj.setState({ touchid: true });
-          } else {
-            console.log('immediate response is' + response[0].response);
-          }
-        })
-
+      AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+        if (value) {
+          try {
+            value = JSON.parse(value);
+            ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
+              if (response) {
+                console.log('immediate response of encrypt data packet is is' + response[0].error);
+                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }), null);
+                obj.setState({ touchid: true });
+              } else {
+                console.log('immediate response is' + response[0].response);
+              }
+            });
+          } catch (e) { }
+        }
       }).done();
     }
   }
@@ -420,9 +514,9 @@ class Register extends Component {
 
   doUpdate() {
     if (this.state.welcome == true) {
-  AsyncStorage.setItem("skipwelcome", "true");
-    }else{
-  AsyncStorage.setItem("skipwelcome", "false");
+      AsyncStorage.setItem("skipwelcome", "true");
+    } else {
+      AsyncStorage.setItem("skipwelcome", "false");
     }
 
 
@@ -449,6 +543,7 @@ class Register extends Component {
         });
       }).done();
     } else {
+      this.saveDefaultLoginPrefs();
       this.doNavigateDashBoard();
     }
   }
@@ -576,6 +671,23 @@ class Register extends Component {
                 {indents}
                 <Margin
                   space={16}/>
+                <Text style={Skin.layout0.smalltext}>
+                  Default Login Credential
+                </Text>
+                <ModalPicker
+                  data={this.getLoginOptions() }
+                  style={Skin.baseline.select.base}
+                  selectStyle={Skin.baseline.select.select}
+                  selectTextStyle={Skin.baseline.select.selectText}
+                  initValue={this.state.modalInitValue}
+                  onChange={(option) => {
+                    this.changeDefaultLogin(option)
+                  } } />
+                   <Margin
+                  space={16}/>
+                   <Text  style={Skin.layout0.devname}>
+                  deviceName
+                </Text>
               </View>
             </View>
           </ScrollView>

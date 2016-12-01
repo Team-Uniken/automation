@@ -58,8 +58,7 @@ class PasswordVerification extends Component {
     var pw = this.state.inputPassword;
     if (pw.length > 0) {
       Main.dnaPasswd = pw;
-      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
-
+      AsyncStorage.mergeItem(Main.dnaUserName,JSON.stringify({RPasswd:pw}),null);
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
       Events.trigger('showNextChallenge', {
@@ -145,7 +144,7 @@ class PasswordVerification extends Component {
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
-
+  
   render() {
     return (
       <MainActivation>

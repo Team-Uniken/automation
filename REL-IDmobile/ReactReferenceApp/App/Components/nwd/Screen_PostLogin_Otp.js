@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, Platform,BackAndroid, PermissionsAndroid} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid,Platform,BackAndroid } from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -13,17 +13,20 @@ import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-import KeyboardSpacer from 'react-native-keyboard-spacer'
-class Activation extends Component {
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
+
+class AccessCode extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      activatonCode: '',
+      accessCode: '',
       showCamera: true,
       barCodeFlag: true,
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
+      isPoped:false,
     }
     //this.barCodeFlag = true;
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
@@ -33,13 +36,20 @@ class Activation extends Component {
   }
 
   componentDidMount() {
-    if (Platform.OS === 'android' && Platform.Version >= 23){
-      this.checkCameraPermission();
-    }
-      BackAndroid.addEventListener('hardwareBackPress', function() {
+     BackAndroid.addEventListener('hardwareBackPress', function() {
             this.close();
             return true;
         }.bind(this));
+    if (Platform.OS === 'android' && Platform.Version >= 23)
+      this.checkCameraPermission();
+  }
+  componentWillUpdate(){
+    
+    if(this.state.isPoped){
+       this.state.showCamera = true;
+      this.state.isPoped = false;
+    }
+      
   }
 
   async requestCameraPermission() {
@@ -89,8 +99,8 @@ class Activation extends Component {
     }
   }
 
-  onActivationCodeChange(e) {
-    this.setState({ activatonCode: e.nativeEvent.text });
+  onAccessCodeChange(e) {
+    this.setState({ accessCode: e.nativeEvent.text });
   }
 
   btnText() {
@@ -99,26 +109,22 @@ class Activation extends Component {
     }
     return 'NEXT';
   }
+  
+  
 
-  checkActivationCode() {
-    let vkey = this.state.activatonCode;
+  checkAccessCode() {
+    let vkey = this.state.accessCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
+      this.setState({ accessCode: '' });
       this. hideCamera();
-      this.setState({ activatonCode:'' });
       responseJson.chlng_resp[0].response = vkey;
+      this.state.isPoped = true;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
-      alert('Enter Activation Code');
+      alert('Enter Access Code');
     }
   }
-  
-  hideCamera(){
-    if(Platform.OS === 'android'){
-     this.setState({ showCamera: false });
-    }
-  }
-  
 
   onQRScanSuccess(result) {
     var $this = this;
@@ -143,6 +149,7 @@ class Activation extends Component {
         }, 2000);
         return;
       }
+
       var vfKey = res.key;
       var aCode = res.value;
       var exp = res.expiry;
@@ -150,14 +157,14 @@ class Activation extends Component {
       if (obtainedVfKey === vfKey) {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
-        if(Platform.OS === 'android'){
-          $this. hideCamera();
-        }
+
+        $this. hideCamera();
         let responseJson = $this.props.url.chlngJson;
         $this.barCodeFlag = false;
 
-        $this.setState({ activatonCode:'' });
+
         responseJson.chlng_resp[0].response = aCode;
+        $this.setState({ accessCode: '' });
         setTimeout(() => {
           Events.trigger('showNextChallenge', {
             response: responseJson
@@ -192,26 +199,15 @@ class Activation extends Component {
   }
 
   close() {
-
     let responseJson = this.props.url.chlngJson;
       this. hideCamera();
     Events.trigger('showPreviousChallenge');
-  /*
-      Alert.alert('clicked')
-      console.log('navigator')
-      console.log(this.props)
-      //this.props.navigator.pop()
-      console.log('doNavigation:');
-      this.props.navigator.push({
-        id: "Screen_0_1_welcome",
-        //id: "Screen_0_2_selectlogin",
-        title: "nextChlngName",
-        url: {
-          "chlngJson": chlngJson,
-          "screenId": nextChlngName
-        }
-      });
-  */
+  }
+  
+  hideCamera(){
+    if(Platform.OS === 'android'){
+    this.setState({ showCamera: false });
+    }
   }
 
   render() {
@@ -227,7 +223,7 @@ class Activation extends Component {
           <Title onClose={() => {
             this.close();
           } }>
-            Activation
+            Access Code
           </Title>
         </View>
         <ScrollView
@@ -241,7 +237,7 @@ class Activation extends Component {
             <View style={Skin.layout1.content.wrap}>
               {this.renderIf(this.state.showCamera,
                 <Camera
-                  captureAudio={false}           
+                  captureAudio={false}
                   onBarCodeRead={this._onBarCodeRead}
                   type={Camera.constants.Type.back}
                   aspect={Camera.constants.Aspect.fill}
@@ -250,8 +246,7 @@ class Activation extends Component {
                     <Text style={[Skin.layout1.content.camera.prompt, {
                       marginTop: 10
                     }]}>
-                      {"Step 1: Verify Code " +
-                        this.props.url.chlngJson.chlng_resp[0].challenge}
+                      {"Step 1: Verify Code " + this.props.url.chlngJson.chlng_resp[0].challenge}
                     </Text>
                     <Text style={Skin.layout1.content.camera.prompt}>
                       Step 2: Scan QR Code
@@ -259,24 +254,25 @@ class Activation extends Component {
                     <View style={Skin.layout1.content.camera.boxwrap}>
                       <View style={Skin.layout1.content.camera.box} />
                     </View>
-                 
+                    
                   </View>
                 </Camera>
               ) }
             <View style={Skin.layout1.content.enterWrap}>
             <Input
             placeholder={'or Enter Numeric Code'}
-            ref={'activationCode'}
+            ref={'accessCode'}
             autoFocus={false}
             autoCorrect={false}
             autoComplete={false}
             autoCapitalize={true}
             secureTextEntry={true}
+            value={this.state.accessCode}
             styleInput={Skin.layout1.content.code.input}
             returnKeyType={"next"}
             placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-            onChange={this.onActivationCodeChange.bind(this) }
-            onSubmitEditing={this.checkActivationCode.bind(this) } />
+            onChange={this.onAccessCodeChange.bind(this) }
+            onSubmitEditing={this.checkAccessCode.bind(this) } />
             </View>
             </View>
           </View>
@@ -285,7 +281,7 @@ class Activation extends Component {
           <View style={Skin.layout1.bottom.container}>
             <Button
               label={Skin.text['1']['1'].submit_button}
-              onPress={this.checkActivationCode.bind(this) } />
+              onPress={this.checkAccessCode.bind(this) } />
             <Text
               onPress={() => {
                 Alert.alert(
@@ -301,7 +297,7 @@ class Activation extends Component {
                 )
               } }
               style={Skin.layout1.bottom.footertext}>
-              Resend Activation Code
+              Resend Access Code
             </Text>
           </View>
         </View>
@@ -313,12 +309,12 @@ class Activation extends Component {
 }
 
 
-Activation.propTypes = {
+AccessCode.propTypes = {
   onSucess: React.PropTypes.func,
   onCancel: React.PropTypes.func,
 }
 
-Activation.getDefaultProps = {
+AccessCode.getDefaultProps = {
   url: {
     chlngJson: {
       chlng_resp: [{
@@ -328,6 +324,6 @@ Activation.getDefaultProps = {
   }
 }
 
-module.exports = Activation;
+module.exports = AccessCode;
 
 

@@ -422,6 +422,23 @@ module.exports.layout0 = {
       justifyContent: "center",
     },
   },
+  smalltext: {
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: 'left',
+    color: BUTTON_BG_COLOR,
+    fontSize: 15,
+  },
+    devname: {
+      paddingTop:12,
+      paddingLeft:8,
+      borderWidth: 0,
+      height: 48,
+      width: 260,
+       fontSize: 18,
+      backgroundColor: INPUT_BG_COLOR,
+         color: INPUT_PLACEHOLDER_COLOR,
+    },
   top: {
     container: {
       flex: 46,

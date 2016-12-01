@@ -8,6 +8,7 @@ import PasswordVerification from './Screen_2_2_password';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
 import MainActivation from '../MainActivation';
+import Main from '../Main';
 import Title from '../view/title';
 
 const errors = {
@@ -25,7 +26,7 @@ const errors = {
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-const {Text, View,Platform,BackAndroid,
+const {Text, View, Platform, BackAndroid,
   AsyncStorage, StatusBar} = ReactNative;
 const {Component} = React;
 
@@ -69,9 +70,21 @@ class SelectLogin extends Component {
 
   componentWillMount() {
     obj = this;
+    var $this = this;
+        AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
+          Events.trigger("hideLoader", true);
+          if (userPrefs) {
+            try {
+              userPrefs = JSON.parse(userPrefs);
+              $this.loginWith(userPrefs.defaultLogin);
+            }
+            catch (e) { }
+          }
+        });
   }
 
   componentDidMount() {
+    Events.trigger('showLoader', true);
     BackAndroid.addEventListener('hardwareBackPress', function () {
       return true;
     }.bind(this));
@@ -149,16 +162,21 @@ class SelectLogin extends Component {
 
   async checkForRegisteredCredsAndShow(option) {
     var ret = false;
-    await AsyncStorage.getItem('ERPasswd').then((value) => {
-      if (value == null || value === 'empty') {
-        this.state.isRegistered = false;
-        this.fillAdditionalLoginOptions();
-        this.setState({ refresh: !this.state.refresh });
-      }
-      else {
-        this.state.isRegistered = true;
-        this.fillAdditionalLoginOptions();
-        this.setState({ refresh: !this.state.refresh });
+    await AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      if (value) {
+        try {
+          value = JSON.parse(value);
+          if (value.ERPasswd == null || value.ERPasswd === 'empty') {
+            this.state.isRegistered = false;
+            this.fillAdditionalLoginOptions();
+            this.setState({ refresh: !this.state.refresh });
+          }
+          else {
+            this.state.isRegistered = true;
+            this.fillAdditionalLoginOptions();
+            this.setState({ refresh: !this.state.refresh });
+          }
+        } catch (e) { }
       }
     }).done();
 
@@ -243,15 +261,18 @@ class SelectLogin extends Component {
 
 
   onTouchIDVerificationDone() {
-    AsyncStorage.getItem('ERPasswd').then((value) => {
-      ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value, (response) => {
-        if (response) {
-          console.log('immediate response of encrypt data packet is is' + response[0].error);
-          obj.onDoPasswordCheckChallenge(response[0].response);
-        } else {
-          console.log('immediate response is' + response[0].response);
-        }
-      });
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      try {
+        value = JSON.parse(value);
+        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
+          if (response) {
+            console.log('immediate response of encrypt data packet is is' + response[0].error);
+            obj.onDoPasswordCheckChallenge(response[0].response);
+          } else {
+            console.log('immediate response is' + response[0].response);
+          }
+        });
+      } catch (e) { }
     }).done();
 
   }
@@ -335,7 +356,7 @@ class SelectLogin extends Component {
         break;
     }
   }
- 
+
   close() {
     Events.trigger('showPreviousChallenge');
   }
@@ -344,39 +365,39 @@ class SelectLogin extends Component {
     if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify) {
       return (
         <MainActivation>
-        <View style={Skin.layout0.wrap.container}>
-        <StatusBar
-        style={Skin.layout1.statusbar}
-        backgroundColor={Skin.main.STATUS_BAR_BG}
-        barStyle={'default'} />
-        <View style={Skin.layout1.title.wrap}>
-        <Title onClose={() => {
-        this.close();
-        } }>
-        
-        </Title>
-        </View>
-        <View style={Skin.layout0.top.container}>
-        <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
-        {Skin.icon.logo}
-        </Text>
-        <Text style={Skin.layout0.top.subtitle}>
-        {Skin.text['0']['2'].subtitle}
-        </Text>
-        <Text style={Skin.layout0.top.prompt}>
-        {Skin.text['0']['2'].prompt}
-        </Text>
-        </View>
-        <View style={height=10}></View>
-        <View style={Skin.layout0.bottom.container}>
-        <GridView
-        style={{flex:1}}
-        items={this.state.dataSource}
-        itemsPerRow={LOGIN_TYPE_PER_ROW}
-        renderItem={this.renderItem}
-        />
-        </View>
-        </View>
+          <View style={Skin.layout0.wrap.container}>
+            <StatusBar
+              style={Skin.layout1.statusbar}
+              backgroundColor={Skin.main.STATUS_BAR_BG}
+              barStyle={'default'} />
+            <View style={Skin.layout1.title.wrap}>
+              <Title onClose={() => {
+                this.close();
+              } }>
+
+              </Title>
+            </View>
+            <View style={Skin.layout0.top.container}>
+              <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+                {Skin.icon.logo}
+              </Text>
+              <Text style={Skin.layout0.top.subtitle}>
+                {Skin.text['0']['2'].subtitle}
+              </Text>
+              <Text style={Skin.layout0.top.prompt}>
+                {Skin.text['0']['2'].prompt}
+              </Text>
+            </View>
+            <View style={height = 10}></View>
+            <View style={Skin.layout0.bottom.container}>
+              <GridView
+                style={{ flex: 1 }}
+                items={this.state.dataSource}
+                itemsPerRow={LOGIN_TYPE_PER_ROW}
+                renderItem={this.renderItem}
+                />
+            </View>
+          </View>
         </MainActivation>
       );
     }
