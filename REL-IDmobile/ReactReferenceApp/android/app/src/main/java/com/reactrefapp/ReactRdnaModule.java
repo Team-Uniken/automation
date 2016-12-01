@@ -158,6 +158,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                         WritableMap params = Arguments.createMap();
                         params.putString("response", rdnaStatusGetConfig);
 
+
                         context
                                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("onConfigReceived", params);
