@@ -12,6 +12,8 @@ import Skin from '../../Skin';
  CALLED
  */
 import Main from '../Main';
+import Load from '../../Scenes/Load';
+
 import MainActivation from '../MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
@@ -187,7 +189,9 @@ class UserLogin extends Component {
       backgroundColor={Skin.main.STATUS_BAR_BG}
       barStyle={'default'} />
         <View style={Skin.layout0.top.container}>
-         <Title onClose={() => {
+         <Title 
+         close={Load.opacity}
+         onClose={() => {
       this.close();
       }}>
       </Title>

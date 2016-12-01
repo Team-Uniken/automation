@@ -23,6 +23,7 @@ const reason = 'Please validate your Touch Id';
 /*
  Instantiaions
  */
+
 let initSuc = false;
 let isRunAfterInteractions = false;
 let initCount = 0;
@@ -614,8 +615,10 @@ class Load extends Component {
     console.log('doNavigation:');
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value === "true") {
+            Load.opacity=0;
         this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
       } else {
+           Load.opacity=1;
         this.props.navigator.push({
           id: "Screen_0_1_welcome",
           //id: "Screen_0_2_selectlogin",
