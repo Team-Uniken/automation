@@ -217,6 +217,8 @@
 		654F81CB1CC9FAD5009E6168 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		654F81D81CC9FAE3009E6168 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		654F81DB1CC9FB26009E6168 /* ReactRefAppTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactRefAppTests.m; sourceTree = "<group>"; };
+		6555DE201DED7AAC0044E5EF /* ReactRefApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ReactRefApp.entitlements; sourceTree = "<group>"; };
+		6555DE211DED7AAF0044E5EF /* ReactRefAppDeveloper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ReactRefAppDeveloper.entitlements; sourceTree = "<group>"; };
 		656227EB1CB50B2300AD7F6C /* gothic_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothic_0.TTF; sourceTree = "<group>"; };
 		656228041CB50BEA00AD7F6C /* RDNARequestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNARequestUtility.h; sourceTree = "<group>"; };
 		656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDNARequestUtility.m; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
+				6555DE201DED7AAC0044E5EF /* ReactRefApp.entitlements */,
 				654F81C51CC9FAD5009E6168 /* AppDelegate.h */,
 				654F81C61CC9FAD5009E6168 /* AppDelegate.m */,
 				654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */,
@@ -512,6 +515,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6555DE211DED7AAF0044E5EF /* ReactRefAppDeveloper.entitlements */,
 				1A7F21EE1DBEC10800D90531 /* Frameworks */,
 				654B80D11DBE0C620052D415 /* Bolts.framework */,
 				6511E1131DBA5E4C00BBBB89 /* api-sdk */,
@@ -589,9 +593,19 @@
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					65127DF91D795B4000FB36E1 = {
 						DevelopmentTeam = 2S999FKG5P;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -892,6 +906,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
 				DEAD_CODE_STRIPPING = NO;
@@ -930,7 +945,7 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.relidzero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
 				PRODUCT_NAME = ReactRefApp;
 				PROVISIONING_PROFILE = "777be214-2a11-4bac-b06b-774c431ab8bf";
 			};
@@ -941,9 +956,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F78S5YW242;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -975,9 +992,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.relidzero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "777be214-2a11-4bac-b06b-774c431ab8bf";
+				PROVISIONING_PROFILE = "99a28b70-1d63-4f69-bc27-45b5887f16e1";
+				PROVISIONING_PROFILE_SPECIFIER = "NWD Distribution InHouse Profile";
 			};
 			name = Release;
 		};
@@ -986,6 +1004,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = ReactRefAppDeveloper.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				DEAD_CODE_STRIPPING = NO;
@@ -1033,6 +1052,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = ReactRefAppDeveloper.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				DEAD_CODE_STRIPPING = YES;

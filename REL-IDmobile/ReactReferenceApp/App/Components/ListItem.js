@@ -1,32 +1,17 @@
-/*
-  ALWAYS NEED
-*/
-'use strict';
-
-var ReactNative = require('react-native');
-var React = require('react');
-var Skin = require('../Skin');
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-
-/*
-  CALLED
-*/
-
-/* 
-  Instantiaions
-*/
-var {
+import ReactNative, {
 	View,
 	Text,
 	Navigator,
 	TextInput,
 	TouchableHighlight,
 	StyleSheet
-} = ReactNative;
+} from 'react-native'
+import React, { Component, PropTypes } from 'react'
+import Skin from '../Skin';
 
+const SCREEN_WIDTH = require('Dimensions').get('window').width;
+const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 
-const{Component}=React;
 
 class ListItem extends Component{
 	constructor(props){
@@ -34,25 +19,31 @@ class ListItem extends Component{
 	}
 	render() {
 		return (
-			<View style={styles.wrap}>
-				<View style={styles.rowwrap}>{this.props.children}</View>
+			<View style={this.props.wrapstyle}>
+				<View style={this.props.rowstyle}>{this.props.children}</View>
 			</View>
 		);
 	}
 }
 
-module.exports = ListItem;
+ListItem.propTypes = {
+  wrapstyle: PropTypes.object,
+  rowstyle: PropTypes.object,
+}
 
-var styles = StyleSheet.create({
-	wrap:{
+ListItem.defaultProps={
+	wrapstyle:{
 		flex:1,
 		alignItems: 'center'
 	},
-	rowwrap:{
+	rowstyle:{
 		backgroundColor: Skin.colors.TEXT_COLOR,
-		padding: 8,
-		width: (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*4/5 : SCREEN_WIDTH-32,
-		marginBottom:2
+		paddingTop: 5,
+        paddingBottom: 5,
+		width: (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*52/75 : SCREEN_WIDTH-32,
+		marginBottom:0,
 	}
+}
+  
+module.exports = ListItem;
 
-});

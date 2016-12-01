@@ -35,6 +35,7 @@ const max = {
   width: (SCREEN_WIDTH > MAX_WIDTH) ? MAX_WIDTH : SCREEN_WIDTH,
   height: (SCREEN_HEIGHT > MAX_HEIGHT) ? MAX_HEIGHT : SCREEN_HEIGHT,
 };
+module.exports.magicwidth = (SCREEN_WIDTH > 350) ? SCREEN_WIDTH * 52 / 75 : SCREEN_WIDTH - 32
 
 // Open Links
 const open = {
@@ -54,8 +55,9 @@ const PRIMARY = '#e9e9e9'; // '#03A9F4';// 03A9F4
 
 const LIGHT_PRIMARY = '#BCE0F2'; // '#B3e5FC';//
 const TEXT_COLOR = '#FFFFFF';
-const ACCENT = '#f18F01';
-const POSITIVE_ACCENT = '#92D050';
+const ACCENT = '#fdbf2c';
+const POSITIVE_ACCENT = '#6cb939';
+const NEGATIVE_ACCENT = '#d9292d';
 const PRIMARY_TEXT = '#212121';
 
 const SECONDARY_TEXT = '#727272';
@@ -115,7 +117,7 @@ const main = {
 
 const admin = { MENU_TITLE: 'NWD',MENU_FONT: 'Times New Roman' }
 
-const list = { LIST_HEADER_COLOR: '#3b3b3b', }
+const list = module.exports.list = { listHeaderColor: '#3b3b3b' }
 
 const BACKGROUND_COLOR = '#fff';
 const BUTTON_BACKGROUND_COLOR = PRIMARY
@@ -134,7 +136,12 @@ const INPUT_BG_COLOR = '#f1f1f1'
 const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
 const INPUT_TEXT_COLOR = '#2C2C2C'
 const INPUT_BD_COLOR = '#d92a2e'
-
+const BOTTOM_MENU_BG = '#b72e2d'
+const BOTTOM_MENU_COLOR = '#fff'
+const BOTTOM_MENU_UNDERLAY = '#a73834'
+const BOTTOM_MENU_SELECT_BG = '#d92a2e'
+const BOTTOM_MENU_SELECT_COLOR = '#ffffff'
+const BOTTOM_MENU_SELECT_UNDERLAY = '#a73834'
 const APPROVE_BUTTON_COLOR = '#92D050';
 const REJECT_BUTTON_COLOR = '#800000';
 const FRAUD_BUTTON_COLOR = '#212121';
@@ -152,6 +159,7 @@ module.exports.icon = {
   temporary: '\ue8b5',
   permanent: '\ue000',
   hamburger: '\ue5d2',
+  user: '\ue7ff',
   settings: '\ue8b8',
   logo: '\ue92e',
   wechat: '\ue935',
@@ -160,7 +168,10 @@ module.exports.icon = {
   touchid: '\ue90d',
   close: '\ue5cd',
   check: '\ue5ca',
-  pattern: 'P'
+  pattern: 'P',
+  store: '\ue563',
+  gift: '\ue8b1',
+  timer: '\ue425',
 };
 
 // Titles
@@ -190,6 +201,7 @@ const colors = {
   TEXT_COLOR_RGB,
   ACCENT,
   POSITIVE_ACCENT,
+  NEGATIVE_ACCENT,
   PRIMARY_TEXT,
   PRIMARY_TEXT_RGB,
   SECONDARY_TEXT,
@@ -272,7 +284,7 @@ text = {
     PASSWORD_BUTTON_TEXT: 'SUBMIT',
     USERNAME_BUTTON_TEXT: 'LOGIN',
     LINK_1_TEXT: 'Branches',
-    LINK_1_ICON: 't',
+    LINK_1_ICON: ' t',
     LINK_1_LINK: '',
     LINK_2_TEXT: 'Help',
     LINK_2_ICON: '\ue050',
@@ -424,7 +436,7 @@ module.exports.layout0 = {
       fontSize: 80,
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
-         fontFamily: ICON_FONT,
+      fontFamily: ICON_FONT,
     },
     subtitle: {
       //width: VIEW_WIDTH,
@@ -535,10 +547,10 @@ module.exports.layout1 = {
       color: TITLE_TEXT_COLOR,
       fontSize: 19,
       textAlign: 'center',
-      width: SCREEN_WIDTH-100,
+      width: SCREEN_WIDTH - 100,
       paddingTop: 12,
-//    backgroundColor: TITLE_BG_COLOR
-//    backgroundColor: "rgba(80,188,28,1)"
+    //    backgroundColor: TITLE_BG_COLOR
+    //    backgroundColor: "rgba(80,188,28,1)"
     }
   },
   content: {
@@ -661,26 +673,178 @@ module.exports.layout1 = {
   }
 }
 
-module.exports.layout2 = Object.assign(module.exports.layout1, {
-
+const layout2 = module.exports.layout2 = Object.assign(module.exports.layout1, {
 })
 
+const navbar = module.exports.navbar = {
+  title: {
+    color: TITLE_TEXT_COLOR,
+    style: {
+      fontSize: 18,
+    }
+  },
+  base: {
+    height: 57
+  },
+  bgcolor: BACKGROUND_COLOR,
+  icon: {
+    color: BUTTON_BG_COLOR,
+  },
+  statusBar: {
+    tint: BACKGROUND_COLOR,
+    light: false,
+  }
+}
 
-
-
-/*
-const baseline = StyleSheet.create({
-  base:{
-          alignItems: 'center',
-          height: 48,
-          width: VIEW_WIDTH,
-          borderRadius: 8,
-          marginTop: 16,
-          backgroundColor: BUTTON_BG_COLOR,
+const layout3 = module.exports.layout3 = {
+  bbgcolor: '#ffffff',
+  split: {
+    bottom: {
+      flex: 1,
+      backgroundColor: '#ffffff',
+    },
+    top: {
+      wrap: {
+        flex: 1,
+      },
+      bg: {
+        //height: SCREEN_HEIGHT,
+        //width: SCREEN_WIDTH,
+        resizeMode: 'cover',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: null,
+        height: null,
       }
-})
+    }
+  },
+  navbar: {
+    backgroundColor: BACKGROUND_COLOR,
+  },
+  listheader: {
+    wrap: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    text: {
+      color: '#000000', //list.listHeaderColor,
+      paddingBottom: 5,
+      paddingTop: 10,
+      backgroundColor: BACKGROUND_COLOR,
+    },
+    rowwrap: {
+      width: SCREEN_WIDTH * 4 / 5,
+    },
+  },
+  row: {
+    rowwrap: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    icon: {
+      fontFamily: ICON_FONT,
+      fontSize: 27,
+    },
+    iconwrap: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 5,
+      paddingRight: 20,
+    },
+    namewrap: {
+      flex: 3,
+      padding: 7,
+    },
+    nametext: {
+      fontSize: 13,
+      color: PRIMARY_TEXT,
+      minHeight: 10,
+    },
+    numtext: {
+      fontSize: 10,
+      color: ('rgba(' + PRIMARY_TEXT_RGB + ',0.54)'),
+      paddingTop: 0,
+    },
+    border: {
+      height: 1,
+      backgroundColor: '#eae9e9'
+    },
+    totalwrap: {
+      flex: 2,
+      padding: 7,
+    },
+    baltext: {
+      fontSize: 16,
+      textAlign: 'right',
+      flex: 1,
+      color: '#000000'
+    },
+    ptstext: {
+      fontSize: 12,
+      textAlign: 'right',
+      paddingTop: 9,
+      flex: 1,
+      color: ('rgba(' + PRIMARY_TEXT_RGB + ',0.54)'),
+    },
+  },
+  botmenu: {
+    color: {
+      hover: BOTTOM_MENU_SELECT_COLOR,
+      nohover: BOTTOM_MENU_COLOR
+    },
+    boxwrap: {
+      flexDirection: 'column',
+      marginTop: 0,
+      flex: 1,
+    },
+    bar: {
+      hover: {
+        backgroundColor: 'transparent',
+        height: 0
+      },
+      nohover: {
+        backgroundColor: 'transparent',
+        height: 0
+      }
+    },
+    box: {
+      underlay: BOTTOM_MENU_UNDERLAY,
+      hover: {
+        flex: 1,
+        backgroundColor: BOTTOM_MENU_SELECT_BG,
+      },
+      nohover: {
+        backgroundColor: BOTTOM_MENU_BG,
+        flex: 1,
+      }
+    },
+    wrap: {
+      flexDirection: 'row',
+      height: 66,
 
-*/
+    },
+    inboxwrap: {
+      flex: 1,
+      flexDirection: 'column'
+    },
+    icon: {
+      fontFamily: ICON_FONT,
+      fontSize: 28,
+      marginTop: 7,
+      color: BOTTOM_MENU_COLOR,
+      flex: 2,
+      textAlign: 'center'
+    },
+    title: {
+      fontSize: 13,
+      color: BOTTOM_MENU_COLOR,
+      flex: 1,
+      textAlign: 'center'
+    }
+  }
+}
+
 
 
 const customeStyle = StyleSheet.create({
