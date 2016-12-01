@@ -430,10 +430,8 @@ module.exports.layout0 = {
     fontSize: 15,
   },
     devname: {
-      paddingTop:12,
       paddingLeft:8,
       borderWidth: 0,
-      height: 48,
       width: 260,
        fontSize: 18,
       backgroundColor: INPUT_BG_COLOR,

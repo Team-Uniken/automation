@@ -76,6 +76,10 @@ class Register extends Component {
       refresh: false,
       defaultLogin: "",
       modalInitValue: "Select Default Login",
+      devname: "Device Name",
+      devnameopacity: 0,
+
+
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -128,6 +132,15 @@ class Register extends Component {
     //     this.doNavigateDashBoard();
     //   }
     // }
+    AsyncStorage.getItem('devname').then((value) => {
+      if (value.length > 0) {
+        this.setState({ devname: value });
+        this.setState({ devnameopacity: 1 });
+      } else {
+        this.setState({ devnameopacity: 0 });
+      }
+
+    }).done();
   }
 
   close() {
@@ -683,10 +696,12 @@ class Register extends Component {
                   onChange={(option) => {
                     this.changeDefaultLogin(option)
                   } } />
-                   <Margin
+                <Margin
                   space={16}/>
-                   <Text  style={Skin.layout0.devname}>
-                  deviceName
+
+
+                <Text  style={[Skin.layout0.devname, { opacity:this.state.devnameopacity}]}>
+                  {this.state.devname}
                 </Text>
               </View>
             </View>
