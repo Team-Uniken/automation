@@ -70,21 +70,20 @@ class SelectLogin extends Component {
 
   componentWillMount() {
     obj = this;
-    var $this = this;
-        AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
-          Events.trigger("hideLoader", true);
-          if (userPrefs) {
-            try {
-              userPrefs = JSON.parse(userPrefs);
-              $this.loginWith(userPrefs.defaultLogin);
-            }
-            catch (e) { }
-          }
-        });
-  }
+      }
 
   componentDidMount() {
-    Events.trigger('showLoader', true);
+    var $this = this;
+    AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
+                                                if (userPrefs) {
+                                                try {
+                                                userPrefs = JSON.parse(userPrefs);
+                                                $this.loginWith(userPrefs.defaultLogin);
+                                                }
+                                                catch (e) { }
+                                                }
+                                                });
+
     BackAndroid.addEventListener('hardwareBackPress', function () {
       return true;
     }.bind(this));
