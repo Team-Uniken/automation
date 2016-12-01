@@ -30,7 +30,7 @@ import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
 /*
-  INSTANCES
+ INSTANCES
  */
 let responseJson;
 let chlngJson;
@@ -38,7 +38,7 @@ let nextChlngName;
 let obj;
 let statusMessage;
 let savedUserName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS,BackAndroid,StatusBar } = ReactNative;
+const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, BackAndroid, StatusBar } = ReactNative;
 
 const {Component} = React;
 
@@ -61,13 +61,14 @@ class UserLogin extends Component {
 
   componentDidMount() {
     obj = this;
-     BackAndroid.addEventListener('hardwareBackPress', function() {
-            this.close();
-            return true;
-        }.bind(this));
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      this.close();
+      return true;
+    }.bind(this));
   }
 
   componentWillMount() {
+    obj = this;
     constant.USER_SESSION = "NO";
     AsyncStorage.setItem("isPwdSet", "empty");
     if (Platform.OS == "android") {
@@ -81,13 +82,29 @@ class UserLogin extends Component {
             Main.isPatternEnabled = false;
           }
         }).done();
-      } catch ( e ) {}
+      } catch (e) { }
     } else {
       this.locked = false;
     }
 
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+
+    AsyncStorage.getItem('rememberuser').then((value) => {
+      if (value == null || value === 'empty') {
+
+      } else {
+        obj.setState({ inputUsername: value });
+        obj.checkUsername();
+      }
+
+    });
+
+
   }
+
+
+
+
 
   _verifyTouchIdSupport() {
     TouchID.isSupported()
@@ -132,7 +149,7 @@ class UserLogin extends Component {
     Main.dnaUserName = savedUserName;
     InteractionManager.runAfterInteractions(() => {
       this.props.navigator.push(
-        { id: "Activation",title: nextChlngName,url: chlngJson }
+        { id: "Activation", title: nextChlngName, url: chlngJson }
       );
     });
   }
@@ -177,54 +194,54 @@ class UserLogin extends Component {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
 
-    close() {
+  close() {
     Events.trigger('closeStateMachine');
   }
   render() {
     return (
-            <MainActivation>
-      <View style={Skin.layout0.wrap.container}>
-      <StatusBar
-      style={Skin.layout1.statusbar}
-      backgroundColor={Skin.main.STATUS_BAR_BG}
-      barStyle={'default'} />
-        <View style={Skin.layout0.top.container}>
-         <Title 
-         close={Load.opacity}
-         onClose={() => {
-      this.close();
-      }}>
-      </Title>
-          <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
-            {Skin.icon.logo}
-          </Text>
-          <Text style={Skin.layout0.top.subtitle}>
-            {Skin.text['2']['1'].subtitle}
-          </Text>
-          <Text style={Skin.layout0.top.prompt}>
-            {Skin.text['2']['1'].prompt}
-          </Text>
+      <MainActivation>
+        <View style={Skin.layout0.wrap.container}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
+          <View style={Skin.layout0.top.container}>
+            <Title
+              close={Load.opacity}
+              onClose={() => {
+                this.close();
+              } }>
+            </Title>
+            <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+              {Skin.icon.logo}
+            </Text>
+            <Text style={Skin.layout0.top.subtitle}>
+              {Skin.text['2']['1'].subtitle}
+            </Text>
+            <Text style={Skin.layout0.top.prompt}>
+              {Skin.text['2']['1'].prompt}
+            </Text>
+          </View>
+          <View style={Skin.layout0.bottom.container}>
+            <Input
+              ref='inputUsername'
+              returnKeyType={'next'}
+              keyboardType={'email-address'}
+              placeholder={'Username'}
+              autoFocus={true}
+              autoCorrect={false}
+              autoCapitalize={false}
+              autoComplete={false}
+              value={this.state.inputUsername}
+              onSubmitEditing={this.checkUsername.bind(this) }
+              onChange={this.onUsernameChange.bind(this) } />
+            <Button
+              label={Skin.text['2']['1'].submit_button}
+              onPress={this.checkUsername.bind(this) } />
+          </View>
         </View>
-        <View style={Skin.layout0.bottom.container}>
-          <Input
-            ref='inputUsername'
-            returnKeyType={'next'}
-            keyboardType={'email-address'}
-            placeholder={'Username'}
-            autoFocus={true}
-            autoCorrect={false}
-            autoCapitalize={false}
-            autoComplete={false}
-            value={this.state.inputUsername}
-            onSubmitEditing={this.checkUsername.bind(this)}
-            onChange={this.onUsernameChange.bind(this)} />
-          <Button
-            label={Skin.text['2']['1'].submit_button}
-            onPress={this.checkUsername.bind(this)} />
-        </View>
-      </View>
-            </MainActivation>
-      );
+      </MainActivation>
+    );
   }
 }
 
