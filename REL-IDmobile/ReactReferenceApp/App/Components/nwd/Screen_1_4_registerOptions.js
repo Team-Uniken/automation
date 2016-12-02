@@ -726,7 +726,7 @@ class Register extends Component {
               <View style={Skin.layout1.content.container}>
                 {indents}
                 <Margin
-                  space={16}/>
+                  space={4}/>
                 <Text style={Skin.layout0.smalltext}>
                   Default Login Credential
                 </Text>
@@ -740,10 +740,15 @@ class Register extends Component {
                     this.changeDefaultLogin(option)
                   } } />
                 <Margin
-                  space={16}/>
+                  space={4}/>
+                <Text style={Skin.layout0.smalltext}>
+                  Device Name
+                </Text>
                 <Text  style={[Skin.layout0.devname, { opacity: this.state.devnameopacity }]}>
                   {this.state.devname}
                 </Text>
+            <Margin
+            space={8}/>
               </View>
             </View>
           </ScrollView>
