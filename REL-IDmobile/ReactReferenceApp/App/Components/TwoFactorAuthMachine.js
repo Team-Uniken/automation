@@ -336,6 +336,7 @@ class TwoFactorAuthMachine extends Component {
             id: nextChlngName,
             title: nextChlngName,
             url: {
+              reset:true,
               chlngJson,
               screenId: nextChlngName,
             },

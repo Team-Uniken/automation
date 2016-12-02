@@ -93,18 +93,14 @@ class UserLogin extends Component {
       if (value == null || value === 'empty') {
 
       } else {
-        obj.setState({ inputUsername: value });
-        obj.checkUsername();
+        if(this.props.url.reset){}
+        else{
+         obj.setState({ inputUsername: value });
+         obj.checkUsername();
+        }
       }
-
     });
-
-
   }
-
-
-
-
 
   _verifyTouchIdSupport() {
     TouchID.isSupported()

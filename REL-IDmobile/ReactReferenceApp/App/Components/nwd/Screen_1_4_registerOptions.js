@@ -739,7 +739,7 @@ class Register extends Component {
                   } } />
                 <Margin
                   space={4}/>
-                <Text style={Skin.layout0.smalltext}>
+                <Text style={[Skin.layout0.smalltext, { opacity: this.state.devnameopacity }]}>
                   Device Name
                 </Text>
                 <Text  style={[Skin.layout0.devname, { opacity: this.state.devnameopacity }]}>

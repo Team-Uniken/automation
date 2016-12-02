@@ -110,7 +110,7 @@ class PatternLock extends Component {
         try {
           AsyncStorage.getItem(Main.dnaUserName).then((data) => {
             try {
-              if(data){
+              if (data) {
                 data = JSON.parse(data);
                 if (data.ERPasswd) {
                   this.decryptUserData(data.ERPasswd, pattern);
@@ -131,10 +131,10 @@ class PatternLock extends Component {
               this.currentPattern = pattern;
               AsyncStorage.getItem(Main.dnaUserName).then((value) => {
                 if (value) {
-                  try{
+                  try {
                     value = JSON.parse(value);
                     this.encryptUserData(null, value.RPasswd, pattern);
-                  }catch(e){}
+                  } catch (e) { }
                 }
               }).done();
             }
@@ -156,11 +156,11 @@ class PatternLock extends Component {
           if (this.state.screen === "confirm") {
             if (this.currentPattern === pattern) {
               AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-                if(value){
-                  try{
-                   value = JSON.parse(value);
-                   this.encryptUserData(null, value.RPasswd, pattern);
-                  }catch(e){}
+                if (value) {
+                  try {
+                    value = JSON.parse(value);
+                    this.encryptUserData(null, value.RPasswd, pattern);
+                  } catch (e) { }
                 }
               }).done();
             }
@@ -183,7 +183,7 @@ class PatternLock extends Component {
     if (status.error == 0) {
       if (this.mode == "set") {
         try {
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ERPasswd:status.response}),null);
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: status.response }), null);
           this.props.onSetPattern(this.props.data);
         }
         catch (error) {
@@ -391,6 +391,8 @@ class PatternLock extends Component {
               <View style={Skin.layout1.content.top.container}>
                 <View style={Skin.PatternLockStyle.patternLockParentContainer}>
                   <View style={Skin.PatternLockStyle.patternLockChildContainer}>
+                    <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+                    <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
 
                     <Text style={Skin.layout0.top.subtitle}>{this.operationMsg}</Text>
 
@@ -402,7 +404,6 @@ class PatternLock extends Component {
                       gridRows='3' gridColumns='3' onGetPattern = {this.onGetPattern.bind(this) }/>
 
                     <Text ref="error" style={Skin.PatternLockStyle.errorMsg}>{this.msg}</Text>
-
                   </View>
                 </View>
               </View>
