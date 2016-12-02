@@ -419,7 +419,7 @@ class ControlPanel extends Component {
               ]
           }
 
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); } }  style={styles.touch}><Text style={styles.menuItem}>Change Pin</Text>
+          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); } }  style={styles.touch}><Text style={styles.menuItem}>Change Password</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
