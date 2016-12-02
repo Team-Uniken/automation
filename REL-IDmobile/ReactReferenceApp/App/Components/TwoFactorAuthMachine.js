@@ -54,6 +54,7 @@ let obj;
 let screenId;
 let stepdone = false;
 let onGetAllChallengeEvent;
+let mode = "normal";
 
 const {
   Navigator,
@@ -77,7 +78,7 @@ class TwoFactorAuthMachine extends Component {
     console.log('---------- Machine param ');
     this.onCheckChallengeResponseStatus = this.onCheckChallengeResponseStatus.bind(this);
     this.initiateForgotPasswordFlow = this.initiateForgotPasswordFlow.bind(this);
-    this.mode = "normal";
+    this.mode = mode;
     this.renderScene = this.renderScene.bind(this);
     this.isTouchIDPresent = false;
     this.onGetAllChallengeStatus = this.onGetAllChallengeStatus.bind(this);
@@ -307,6 +308,8 @@ class TwoFactorAuthMachine extends Component {
   }
 
   resetChallenge() {
+    mode = "normal"
+    this.mode = mode;
     console.log("resetChallenge");
     ReactRdna.resetChallenge((response) => {
       if (response[0].error === 0) {
@@ -522,9 +525,9 @@ class TwoFactorAuthMachine extends Component {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         var tbacredChallenge = this.getTBACreds();
         return (<SelectLogin navigator={nav} url={route.url} title={route.title} tbacred ={tbacredChallenge}/>);
-      } else if (challengeOperation == 1) {
+      } else{
         if(this.mode === "forgotPassword"){
-           return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} mode="forgotPassowrd" url={route.url} title={route.title} />);
+           return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
         }
         
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
@@ -550,7 +553,7 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'RegisterOption') {
       return (<RegisterOption navigator={nav} parentnav={obj.props.navigator} url={route.url} title={route.title} />);
     } else if (id === 'pattern') {
-      return (<PatternLock navigator={nav} mode={route.mode} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>Error</Text>);
   }
@@ -690,7 +693,8 @@ class TwoFactorAuthMachine extends Component {
   }
 
   initiateForgotPasswordFlow() {
-    this.mode = "forgotPassword";
+    mode = "forgotPassword";
+    this.mode = mode;
     Events.rm('forgotPassowrd', 'forgotPassword');
     onForgotPasswordSubscription = DeviceEventEmitter.addListener(
       'onForgotPasswordStatus',
