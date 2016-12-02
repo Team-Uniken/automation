@@ -180,7 +180,12 @@ export default class UpdatePasswordSet extends Component {
   }
 
   close() {
-    this.props.parentnav.pop();
+    if(this.props.mode === "forgotPassword"){
+      Events.trigger("resetChallenge",null);
+    }else{
+     this.props.parentnav.pop();
+    }
+    
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
     return true;
   }

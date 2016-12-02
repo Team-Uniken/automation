@@ -18,7 +18,7 @@ import Main from './Main';
 import Activation from './nwd/Screen_1_2_activation';
 import AccessCode from './nwd/Screen_Otp';
 import PasswordSet from './nwd/Screen_1_3_setPassword';
-import UpdatePasswordSet from './challenges/UpdatePasswordSet';
+import UpdatePasswordSet from './nwd/Screen_Update_Password';
 import Otp from './nwd/Screen_1_2_activation';
 import QuestionSet from './nwd/Screen_Question_Set';
 import QuestionVerification from './nwd/Screen_Question_Verification';
@@ -85,6 +85,7 @@ class TwoFactorAuthMachine extends Component {
     this.showFirstChallenge = this.showFirstChallenge.bind(this);
     this.canShowNextChallenge = this.canShowNextChallenge.bind(this);
     this.showNextChallenge = this.showNextChallenge.bind(this);
+    this.resetChallenge = this.resetChallenge.bind(this);
   }
 
   componentWillMount() {
@@ -114,6 +115,7 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
+    Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
 
 
 
@@ -170,6 +172,7 @@ class TwoFactorAuthMachine extends Component {
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     Events.rm('showCurrentChallenge', 'showCurrentChallenge');
+    Events.rm('resetChallenge', 'resetChallenge');
 
     console.log(res);
 
@@ -520,10 +523,11 @@ class TwoFactorAuthMachine extends Component {
         var tbacredChallenge = this.getTBACreds();
         return (<SelectLogin navigator={nav} url={route.url} title={route.title} tbacred ={tbacredChallenge}/>);
       } else if (challengeOperation == 1) {
+        if(this.mode === "forgotPassword"){
+           return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} mode="forgotPassowrd" url={route.url} title={route.title} />);
+        }
+        
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
-      }
-      else {
-        return (<UpdatePasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {
       return (<AccessCode navigator={nav} url={route.url} title={route.title} />);

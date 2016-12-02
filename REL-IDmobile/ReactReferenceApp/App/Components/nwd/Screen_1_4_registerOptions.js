@@ -78,8 +78,6 @@ class Register extends Component {
       modalInitValue: "Select Default Login",
       devname: "Device Name",
       devnameopacity: 0,
-
-
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);

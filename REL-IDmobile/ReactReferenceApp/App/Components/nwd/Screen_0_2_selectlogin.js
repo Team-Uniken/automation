@@ -39,7 +39,6 @@ const {
   GraphRequest,
   GraphRequestManager,
   AccessToken,
-
 } = FBSDK;
 
 
@@ -70,19 +69,21 @@ class SelectLogin extends Component {
 
   componentWillMount() {
     obj = this;
-      }
+  }
 
   componentDidMount() {
     var $this = this;
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
-                                                if (userPrefs) {
-                                                try {
-                                                userPrefs = JSON.parse(userPrefs);
-                                                $this.loginWith(userPrefs.defaultLogin);
-                                                }
-                                                catch (e) { }
-                                                }
-                                                });
+      if (userPrefs) {
+        try {
+          userPrefs = JSON.parse(userPrefs);
+          if (userPrefs.defaultLogin &&
+            userPrefs.defaultLogin !== 'facebook')
+            $this.loginWith(userPrefs.defaultLogin);
+        }
+        catch (e) { }
+      }
+    });
 
     BackAndroid.addEventListener('hardwareBackPress', function () {
       return true;
@@ -373,7 +374,6 @@ class SelectLogin extends Component {
               <Title onClose={() => {
                 this.close();
               } }>
-
               </Title>
             </View>
             <View style={Skin.layout0.top.container}>
@@ -383,6 +383,8 @@ class SelectLogin extends Component {
               <Text style={Skin.layout0.top.subtitle}>
                 {Skin.text['0']['2'].subtitle}
               </Text>
+               <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
+                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
               <Text style={Skin.layout0.top.prompt}>
                 {Skin.text['0']['2'].prompt}
               </Text>

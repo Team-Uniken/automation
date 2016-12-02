@@ -168,13 +168,10 @@ class PasswordVerification extends Component {
                   {Skin.icon.logo}
                 </Text>
                 <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
+                <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
+                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
               </View>
               <View style={Skin.layout0.bottom.container}>
-
-                <Text style={Skin.layout0.top.attempt}>
-                  Attempt left {this.props.url.chlngJson.attempts_left}
-                </Text>
-
                 <Input
                   ref='inputPassword'
                   returnKeyType={ 'next' }
@@ -189,10 +186,13 @@ class PasswordVerification extends Component {
                   autoComplete={false}
                   autoCapitalize={false}
                   />
-
+                  <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
+                  Attempt left {this.props.url.chlngJson.attempts_left}
+                </Text>
                 <Button
                   label={Skin.text['2']['1'].submit_button}
                   onPress={ this.checkPassword.bind(this) }/>
+                  
 
                 <Text style={Skin.baseline.text_link_no_underline}
                   onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
