@@ -229,7 +229,7 @@ export default class UpdatePasswordSet extends Component {
             <Title onClose={() => {
               this.close();
             } }>
-              Registration
+              {this.props.mode === "forgotPassword"?"Registration":"Change Password"}
             </Title>
           </View>
           <ScrollView style={Skin.layout1.content.scrollwrap}>

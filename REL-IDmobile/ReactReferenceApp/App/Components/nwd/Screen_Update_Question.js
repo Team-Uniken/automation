@@ -213,7 +213,7 @@ export default class UpdateQuestionSet extends Component {
             <Title onClose={() => {
               this.close();
             } }>
-              Activation
+              Change Secret Question
             </Title>
 
           </View>
