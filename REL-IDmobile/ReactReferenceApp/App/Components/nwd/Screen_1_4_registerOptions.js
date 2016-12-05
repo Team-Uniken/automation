@@ -65,7 +65,7 @@ class Register extends Component {
     super(props);
     this.state = {
       devbind: true,
-      welcome: true,
+      welcome: false,
       device: false,
       touchid: false,
       wechat: false,
@@ -92,11 +92,25 @@ class Register extends Component {
       if (userPrefs) {
         try {
           userPrefs = JSON.parse(userPrefs);
-          this.setState({ modalInitValue:Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label});
+          this.setState({ modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label });
         }
         catch (e) { }
       }
     });
+
+
+    AsyncStorage.getItem('skipwelcome').then((value) => {
+      if (value === "false") {
+        this.setState({ welcomescreen: '' });
+              this.setState({ welcome: false });
+
+      } else {
+        this.setState({ welcomescreen: '\u2714' });
+              this.setState({ welcome: true });
+
+      }
+    }).done();
+
     // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
     //   if (userPrefs) {
     //     try {
@@ -745,8 +759,8 @@ class Register extends Component {
                 <Text  style={[Skin.layout0.devname, { opacity: this.state.devnameopacity }]}>
                   {this.state.devname}
                 </Text>
-            <Margin
-            space={8}/>
+                <Margin
+                  space={8}/>
               </View>
             </View>
           </ScrollView>
