@@ -258,7 +258,7 @@ class Register extends Component {
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
-          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
+//          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
           onLoad={() => { console.log('loaded') } }
           scalesPageToFit={true}
              scrollEnabled={true}
