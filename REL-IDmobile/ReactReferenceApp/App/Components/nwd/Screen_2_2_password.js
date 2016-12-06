@@ -141,9 +141,13 @@ class PasswordVerification extends Component {
   }
 
   close() {
-    let responseJson = this.props.url.chlngJson;
-    this.setState({ showCamera: false });
-    Events.trigger('showPreviousChallenge');
+    if(this.props.onBack){
+      this.props.onBack();
+    }else{
+      let responseJson = this.props.url.chlngJson;
+      this.setState({ showCamera: false });
+      Events.trigger('showPreviousChallenge');
+    }
   }
 
   render() {

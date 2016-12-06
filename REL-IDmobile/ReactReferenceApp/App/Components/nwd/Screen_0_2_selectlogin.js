@@ -63,6 +63,7 @@ class SelectLogin extends Component {
     this.checkForRegisteredCredsAndShow = this.checkForRegisteredCredsAndShow.bind(this);
     this.doPatternLogin = this.doPatternLogin.bind(this);
     this.onPatternUnlock = this.onPatternUnlock.bind(this);
+    this.goBackToSelectLogin = this.goBackToSelectLogin.bind(this);
 
     this.checkForRegisteredCredsAndShow();
   }
@@ -361,6 +362,11 @@ class SelectLogin extends Component {
     Events.trigger('showPreviousChallenge');
   }
 
+  goBackToSelectLogin(){
+//  this.state.showPasswordVerify
+    this.setState({showPasswordVerify:false});
+  }
+  
   render() {
     if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify) {
       return (
@@ -403,7 +409,7 @@ class SelectLogin extends Component {
       );
     }
     else {
-      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} />);
+      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.goBackToSelectLogin}/>);
     }
   }
 }
