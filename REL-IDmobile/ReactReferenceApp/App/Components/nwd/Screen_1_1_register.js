@@ -122,14 +122,14 @@ class Register extends Component {
 
 
   close() {
-    if (this.state.open) {
-      this.setState({
-        open: false
-      });
-    } else {
-      this.props.navigator.pop();
-    }
-
+//    if (this.state.open) {
+//      this.setState({
+//        open: false
+//      });
+//    } else {
+//      this.props.navigator.pop();
+//    }
+Events.trigger('closeStateMachine');
   }
 
   validateEmail(email) {
