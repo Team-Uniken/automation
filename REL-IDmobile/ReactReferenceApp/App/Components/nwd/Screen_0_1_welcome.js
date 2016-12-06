@@ -70,7 +70,26 @@ class First extends Component {
 
   register() {
     console.log('doNavigation:');
-    this.props.navigator.push({ id: "Screen_1_1_register" });
+//    this.props.navigator.push({ id: "Screen_1_1_register" });
+    
+//    this.props.navigator.push({
+//                              id: "Screen_1_1_register",
+//                              title: "nextChlngName",
+//                              url: {
+//                              "chlngJson": this.props.url.chlngJson,
+//                              "screenId": this.props.url.screenId
+//                              }
+//                              });
+    
+    this.props.navigator.push({
+                              id: "Machine",
+                              //id: "Screen_0_2_selectlogin",
+                              title: "SelfRegister",
+                              url: {
+                              "chlngJson": this.props.url.chlngJson,
+                              "screenId": "SelfRegister"
+                              }
+                              });
   }
 
   render() {

@@ -15,6 +15,7 @@ import Main from './Main';
 // Secondary Scenes
 
 // SECURITY SCENES
+import SelfRegister from './nwd/Screen_1_1_register';
 import Activation from './nwd/Screen_1_2_activation';
 import AccessCode from './nwd/Screen_Otp';
 import PasswordSet from './nwd/Screen_1_3_setPassword';
@@ -519,7 +520,12 @@ class TwoFactorAuthMachine extends Component {
 
     if (id === 'checkuser') {
       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
-    } else if (id === 'actcode') {
+    }
+    else if (id === 'SelfRegister') {
+      stepdone = false;
+      return (<SelfRegister navigator={nav} url={route.url} title={route.title} />);
+    }
+    else if (id === 'actcode') {
       stepdone = false;
       return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {

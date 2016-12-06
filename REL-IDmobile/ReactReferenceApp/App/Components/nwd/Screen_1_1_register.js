@@ -5,7 +5,7 @@ import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import Modal from 'react-native-simple-modal';
 import WebViewAndroid from '../../android_native_modules/nativewebview';
-
+import Main from '../Main';
 
 import Title from '../view/title';
 import Button from '../view/button';
@@ -22,7 +22,7 @@ const {Component} = React;
 
 var obj;
 
-
+var responseJson;
 
 class Register extends Component {
 
@@ -241,13 +241,38 @@ class Register extends Component {
         text: 'OK',
         onPress: () => {
           if (press) {
-            obj.props.navigator.pop();
+//            obj.props.navigator.pop();
+       obj.checkUsername();
+       
           }
 
         }
       }]
     )
   }
+  
+  checkUsername() {
+    this.state.progress = 0;
+    var un = this.state.confirmEmail;
+    //    this.setState({ isLoaderVisible: true});
+    if (un.length > 0) {
+      savedUserName = un;
+      AsyncStorage.setItem("userId", un);
+      AsyncStorage.setItem("RUserId", un);
+      Main.dnaUserName = un;
+      responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = un;
+      Events.trigger('showNextChallenge', { response: responseJson });
+      
+    } else {
+      dismissKeyboard();
+      AsyncStorage.setItem("userId", "empty");
+      InteractionManager.runAfterInteractions(() => {
+                                              alert('Please enter a valid username');
+                                              });
+    }
+  }
+  
 
   getWebView() {
     if (Platform.OS === 'ios') {
