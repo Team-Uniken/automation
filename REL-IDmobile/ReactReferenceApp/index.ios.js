@@ -35,6 +35,8 @@ import UserLogin from './App/Components/challenges/UserLogin';
 import DeviceBinding from './App/Components/challenges/DeviceBinding';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
 
+import RegisterOptionScene from './App/Components/nwd/Screen_1_4_registerOptionsDashboard';
+
 // COMPONENTS
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -341,6 +343,13 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
+    }else if(id === 'RegisterOptionScene'){
+      return (<RegisterOptionScene
+              navigator={nav}
+              url={route.url}
+              title={route.title}
+              rdna={route.DnaObject} />);
+      
     }
 
     return (<Text>

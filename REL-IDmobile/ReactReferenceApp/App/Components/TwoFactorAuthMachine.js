@@ -198,7 +198,7 @@ class TwoFactorAuthMachine extends Component {
           // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           // this.props.navigator.pop();
           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-
+          if(Constants.USER_T0 === 'YES'){
           AsyncStorage.getItem('userId').then((value) => {
             Events.trigger('showLoader', true);
             ReactRdna.getAllChallenges(value, (response) => {
@@ -210,6 +210,9 @@ class TwoFactorAuthMachine extends Component {
               }
             })
           }).done();
+          }else{
+            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          }
 
         }
       } else {

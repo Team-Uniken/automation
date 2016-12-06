@@ -70,6 +70,8 @@ class UserLogin extends Component {
   componentWillMount() {
     obj = this;
     constant.USER_SESSION = "NO";
+    constant.USER_T0 = "NO";
+
     AsyncStorage.setItem("isPwdSet", "empty");
     if (Platform.OS == "android") {
       try {

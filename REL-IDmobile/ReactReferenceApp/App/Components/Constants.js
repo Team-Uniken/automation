@@ -5,4 +5,5 @@ module.exports = {
   DEVICE_ACTIVE : "Active",
   DEVICE_UPDATE : "Update",
   USER_SESSION : "NO",
+  USER_T0:"NO",
 };

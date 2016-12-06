@@ -15,6 +15,7 @@ import Input from '../view/input';
 import Title from '../view/title';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Main from '../Main';
+var constant = require('../Constants');
 
 class Activation extends Component {
 
@@ -36,6 +37,7 @@ class Activation extends Component {
 
   componentDidMount() {
     AsyncStorage.removeItem(Main.dnaUserName,null);
+    constant.USER_T0 = "YES";
 
     if (Platform.OS === 'android' && Platform.Version >= 23){
       this.checkCameraPermission();

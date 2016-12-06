@@ -28,6 +28,7 @@ let onGetNotifications;
 let eventGetPostLoginChallenges;
 let challengeName;
 let onGetAllChallengeEvent;
+let onGetAllChallengeSettingEvent;
 /*
  INSTANCES
  */
@@ -40,6 +41,7 @@ var {
   AsyncStorage,
   Alert,
   ScrollView,
+  Platform,
 } = ReactNative;
 
 const {
@@ -50,6 +52,7 @@ var styles = Skin.controlStyle;
 var Obj;
 
 class ControlPanel extends Component {
+ 
   constructor(props) {
     super(props);
     console.log(props);
@@ -123,6 +126,9 @@ class ControlPanel extends Component {
       'onGetNotifications',
       this.onGetNotificationsDetails.bind(this)
     );
+    
+   
+
   }
 
 
@@ -367,7 +373,104 @@ class ControlPanel extends Component {
       return jsx;
     }
   }
+  
+  
+  
+  getAllChallenges(){
+    
+    if (onGetAllChallengeSettingEvent) {
+      onGetAllChallengeSettingEvent.remove();
+    }
+    onGetAllChallengeSettingEvent = DeviceEventEmitter.addListener(
+                                                                   'onGetAllChallengeStatus',
+                                                                   this.onGetAllChallengeSettingStatus.bind(this)
+                                                                   );
+    
+    AsyncStorage.getItem('userId').then((value) => {
+                                        ReactRdna.getAllChallenges(value, (response) => {
+                                                                   if (response) {
+                                                                   console.log('getAllChallenges immediate response is' + response[0].error);
+                                                                   } else {
+                                                                   console.log('s immediate response is' + response[0].error);
+                                                                   }
+                                                                   })
+                                        }).done();
+    
+  }
+  
+  
+  onGetAllChallengeSettingStatus(e) {
+    if (onGetAllChallengeEvent) {
+      onGetAllChallengeEvent.remove();
+    }
+    var $this = this;
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+        var arrTba = new Array();
+        const chlngJson = res.pArgs.response.ResponseData;
+        for (var i = 0; i < chlngJson.chlng.length; i++) {
+          if (chlngJson.chlng[i].chlng_name === 'secqa') {
+            Main.enableUpdateSecqaOption = true;
+          }
+          
+          if (chlngJson.chlng[i].chlng_name === 'tbacred')
+            arrTba.push(chlngJson.chlng[i]);
+        }
+        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
+          
+       
+          
+          if (arrTba.length > 0) {
+            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+                                                        if (value) {
+                                                        try {
+                                                        value = JSON.parse(value);
+                                                        if (value.ERPasswd && value.ERPasswd !== "empty") {
+                                                        Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
+                                                        } else {
+                                                        if (Platform.OS === "android") {
+                                                        Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } , sceneConfig: Navigator.SceneConfigs.PushFromRight});
+                                                        } else {
+                                                        Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } } , sceneConfig: Navigator.SceneConfigs.PushFromRight});
+                                                        }
+                                                        }
+                                                        } catch (e) { }
+                                                        }
+                                                        
+                                                        }).done();
+          } else {
+            Events.trigger('closeStateMachine');
+            InteractionManager.runAfterInteractions(() => {
+                                                   // this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+                                                    });
+          }
+        } else {
+          Events.trigger('closeStateMachine');
+          InteractionManager.runAfterInteractions(() => {
+                                                  //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+                                                  });
+        }
+        
+      
+        
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    } else {
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
 
+  }
+
+  
+
+  
+  
   render() {
 
 
@@ -436,9 +539,14 @@ class ControlPanel extends Component {
 
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Legal Info</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
+            
+            <TouchableHighlight onPress={() => { this.props.toggleDrawer();this.getAllChallenges(); } } style={styles.touch}><Text style={styles.menuItem}>Setting</Text>
+            </TouchableHighlight><View style={styles.menuBorder}></View>
 
           <TouchableHighlight onPress={this.showLogOffAlert.bind(this) }  style={styles.touch}><Text style={styles.menuItem}>Logout</Text>
           </TouchableHighlight>
+            
+           
         </ScrollView>
 
       </View>
