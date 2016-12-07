@@ -175,6 +175,7 @@ class Screen_3_1_deals extends Component {
           <NavBar
             tintColor={'transparent'}
             statusBarTint={'transparent'}
+            statusBarLight={'light-content'}
             title={'Deals'}
             titleTint={'#ffffff'}
             right={''}

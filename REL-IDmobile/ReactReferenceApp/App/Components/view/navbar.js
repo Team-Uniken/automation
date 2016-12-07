@@ -23,7 +23,7 @@ class NavBar extends Component {
         tintColor={this.props.tintColor ? this.props.tintColor : Skin.navbar.bgcolor}
         statusBar={{
                      tintColor: this.props.statusBarTint || Skin.navbar.statusBar.tint,
-                     style: Skin.navbar.statusBar.light ? 'light-content' : 'default',
+                     style: this.props.statusBarLight || (Skin.navbar.statusBar.light ? 'light-content' : 'default'),
                    }}
         rightButton={<NavButton
                        left={false}
