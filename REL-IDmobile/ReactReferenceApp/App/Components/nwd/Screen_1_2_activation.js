@@ -244,6 +244,12 @@ class Activation extends Component {
             flex: 1,
             marginBottom: 12
           }}>
+            <Text style={[Skin.layout1.content.camera.prompt, {
+                          marginTop: 10
+                          }]}>
+            {"Step 1: Verify Code " +
+            this.props.url.chlngJson.chlng_resp[0].challenge+"\nStep 2: Scan QR Code"}
+            </Text>
             <View style={Skin.layout1.content.wrap}>
               {this.renderIf(this.state.showCamera,
                 <Camera
@@ -253,15 +259,7 @@ class Activation extends Component {
                   aspect={Camera.constants.Aspect.fill}
                   style={Skin.layout1.content.camera.wrap}>
                   <View style={Skin.layout1.content.container}>
-                    <Text style={[Skin.layout1.content.camera.prompt, {
-                      marginTop: 10
-                    }]}>
-                      {"Step 1: Verify Code " +
-                        this.props.url.chlngJson.chlng_resp[0].challenge}
-                    </Text>
-                    <Text style={Skin.layout1.content.camera.prompt}>
-                      Step 2: Scan QR Code
-                    </Text>
+                   
                     <View style={Skin.layout1.content.camera.boxwrap}>
                       <View style={Skin.layout1.content.camera.box} />
                     </View>

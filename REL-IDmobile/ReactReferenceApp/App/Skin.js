@@ -589,11 +589,11 @@ module.exports.layout1 = {
     },
     camera: {
       prompt: {
-        flex: 5,
         textAlign: 'center',
         color: '#ffffff',
         fontSize: 18,
         minHeight: 24,
+      height:48,
       },
       wrap: {
         width: SCREEN_WIDTH,
