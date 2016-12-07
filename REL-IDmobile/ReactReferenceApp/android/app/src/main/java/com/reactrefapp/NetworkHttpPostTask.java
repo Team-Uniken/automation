@@ -200,7 +200,7 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
         conn = (HttpURLConnection) url.openConnection();
       }
 
-      conn.setConnectTimeout(15000);
+     // conn.setConnectTimeout(15000);
       conn.setRequestMethod("POST");
       conn.setDoInput(true);
       conn.setDoOutput(true);
