@@ -36,7 +36,7 @@
   
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
-  return YES;
+//  return YES;
 //  NSURL *jsCodeLocation;
 //    #ifdef React_Dev
 //    jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.86:8081/index.ios.bundle?platform=ios&dev=true"];
@@ -59,12 +59,12 @@
 //  /*
 //   ADDED TO REMOVE LAUNCH WHITE SCREEN FLASH
 //   */
-//  UIView* launchScreenView = [[[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil] objectAtIndex:0];
-//  launchScreenView.frame = self.window.bounds;
-//  rootView.loadingView = launchScreenView;
-//  
-//  
-//  return YES;
+  UIView* launchScreenView = [[[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil] objectAtIndex:0];
+  launchScreenView.frame = self.window.bounds;
+  rootView.loadingView = launchScreenView;
+  
+  
+  return YES;
   
   
 }
