@@ -15,6 +15,7 @@ import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import erelid from '../../erelid.json';
 import TouchId from 'react-native-smart-touch-id'
+import Web from './Web';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var PushNotification = require('react-native-push-notification');
 //import Notification from 'react-native-system-notification';
@@ -231,6 +232,12 @@ class Load extends Component {
       console.log('immediate response is' + e.response);
       responseJson = JSON.parse(e.response);
       if (responseJson.errCode == 0) {
+        const pPort = responseJson.pArgs.pxyDetails.port;
+          if (pPort > 0) {
+            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
+            Web.proxy = pPort;
+            // AsyncStorage.setItem("Proxy",""+pPort);
+        }
         appalive = true;
         console.log('Resume Successfull');
         if (gotNotification == true) {

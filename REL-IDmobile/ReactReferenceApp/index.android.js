@@ -36,7 +36,9 @@ import PasswordVerification from './App/Components/challenges/PasswordVerificati
 
 import RegisterOptionScene from './App/Components/nwd/Screen_1_4_registerOptionsDashboard';
 import PatternLock from './App/Components/nwd/Screen_PatternLock';
-
+import Screen_3_1_deals from './App/Components/nwd/Screen_3_1_deals';
+import Screen_3_2_history from './App/Components/nwd/Screen_3_2_history';
+import Screen_3_3_locations from './App/Components/nwd/Screen_3_3_locations';
 
 
 // COMPONENTS
@@ -200,6 +202,24 @@ class ReactRefApp extends Component {
                 rdna={route.DnaObject} />);
     } else if (id === 'Screen_1_4_registerOptions') {
       return (<Screen_1_4_registerOptions
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    }else if (id === 'Screen_3_1_deals') {
+      return (<Screen_3_1_deals
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'Screen_3_2_history') {
+      return (<Screen_3_2_history
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+    } else if (id === 'Screen_3_3_locations') {
+      return (<Screen_3_3_locations
                 navigator={nav}
                 url={route.url}
                 title={route.title}

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ReactNative, { View, Text, ListView, Image, MapView } from 'react-native'
+import ReactNative, { View, Text, ListView, Image, MapView ,PermissionsAndroid,Platform} from 'react-native'
 import Skin from '../../Skin';
 import Main from '../../Components/Main';
 import ListItem from '../../Components/ListItem';
@@ -21,13 +21,27 @@ class Screen_3_3_locations extends Component {
       lastPosition: 'unknown',
       lat: '',
       lon: '',
+      locationPermissionAndroid:false,
+      showMap:true,
     }
+     this.requestLocationPermission = this.requestLocationPermission.bind(this);
+     this.getCurrentPosition = this.getCurrentPosition.bind(this);
   }
 
   componentDidMount() {
     console.log('in did mount')
     console.log(navigator);
-    navigator.geolocation.getCurrentPosition(
+
+    if (Platform.OS === 'android' && Platform.Version >= 23){
+      this.checkLocationPermission();
+    }
+
+    if(Platform.OS === "ios" || (Platform.OS === "android" && this.state.locationPermissionAndroid))
+      this.getCurrentPosition();
+  }
+
+  getCurrentPosition(){
+     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position)
         var initialPosition = JSON.stringify(position);
@@ -72,6 +86,47 @@ class Screen_3_3_locations extends Component {
       var lastPosition = JSON.stringify(position);
       this.setState({ lastPosition });
     });
+  }
+
+ async requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.requestPermission(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'NWD App Camera Permission',
+          'message': 'NWD App needs access to your camera ' +
+          'so you can scan the QR Code.'
+        }
+      )
+      if (granted) {
+        this.setState({
+          locationPermissionAndroid: granted,
+          showMap: false
+        }, () => {
+          this.getCurrentPosition();
+          this.setState({ showMap: true });
+        });
+        console.log("You can use the camera")
+      } else {
+        console.log("Camera permission denied")
+      }
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
+  checkLocationPermission() {
+    PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+      .then(response => {
+        //response is an object mapping type to permission
+        if (response) {
+          this.setState({
+            locationPermissionAndroid: response,
+          },()=>{this.getCurrentPosition();});
+        } else {
+          this.requestLocationPermission();
+        }
+      });
   }
 
   componentWillUnmount() {

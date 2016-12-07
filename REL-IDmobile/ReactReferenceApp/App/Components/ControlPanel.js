@@ -10,11 +10,13 @@ var Skin = require('../Skin');
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 var constant = require('./Constants');
+
 /*
  CALLED
  */
 import Events from 'react-native-simple-events';
 import Main from './Main';
+import Web from '../Scenes/Web';
 var styles = Skin.loadStyle;
 
 //var Menu = require('./Menu');
@@ -46,6 +48,8 @@ var {
 const {
   Component
 } = React;
+
+const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
 var styles = Skin.controlStyle;
 var Obj;
@@ -112,6 +116,12 @@ class ControlPanel extends Component {
         console.log('LogOff Successfull');
         chlngJson = responseJson.pArgs.response.ResponseData;
         nextChlngName = chlngJson.chlng[0].chlng_name
+        const pPort = responseJson.pArgs.pxyDetails.port;
+          if (pPort > 0) {
+            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
+            Web.proxy = pPort;
+            // AsyncStorage.setItem("Proxy",""+pPort);
+        }
         Obj.doNavigation();
         // Obj.popToLoadView();
       } else {
@@ -125,9 +135,6 @@ class ControlPanel extends Component {
       'onGetNotifications',
       this.onGetNotificationsDetails.bind(this)
     );
-    
-   
-
   }
 
 
