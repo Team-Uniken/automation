@@ -593,7 +593,7 @@ module.exports.layout1 = {
         textAlign: 'center',
         color: '#ffffff',
         fontSize: 18,
-        minHeight: 20,
+        minHeight: 24,
       },
       wrap: {
         width: SCREEN_WIDTH,
