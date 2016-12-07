@@ -739,7 +739,7 @@ class Register extends Component {
             />
           <View style={Skin.layout1.title.wrap}>
             <Title onClose={() => { this.close(); } }
-              >Registration</Title>
+              >Profile & Settings</Title>
           </View>
           <ScrollView style={Skin.layout1.content.scrollwrap}>
             <View style={Skin.layout1.content.wrap}>
