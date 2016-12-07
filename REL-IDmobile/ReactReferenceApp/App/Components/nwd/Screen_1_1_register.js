@@ -206,7 +206,7 @@ Events.trigger('closeStateMachine');
             res = JSON.parse(response[0].response);
           } catch (e) {
             obj.showMessage("Error", "Invalid response.Please try again", false);
-            this.setState({ resetSlider: true, value: 0 }, () => {
+            this.setState({ value: true, value: 0 }, () => {
               this.state.resetSlider = false;
             });
             return;
@@ -221,6 +221,7 @@ Events.trigger('closeStateMachine');
           }
         } else {
           alert('Please try again');
+            
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
           });
@@ -408,7 +409,7 @@ Events.trigger('closeStateMachine');
                     {...this.props}
                     minimumValue={0}
                     maximumValue={100}
-                    value={this.state.resetSlider ? 0 : null}
+                    value={this.state.value}
                     minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                     maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
                     onValueChange={(value) => this.setState({ value: value }) } />
