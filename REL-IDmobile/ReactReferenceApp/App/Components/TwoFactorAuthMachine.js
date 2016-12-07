@@ -364,6 +364,7 @@ class TwoFactorAuthMachine extends Component {
       ) {
         if (currChallenge.chlng_name === 'devname') {
           var name = currChallenge.chlng_resp[0].response;
+          if(name!=null)
           AsyncStorage.setItem("devname",name);
         }
         return { show: false, challenge: currChallenge };
