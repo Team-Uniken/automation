@@ -28,7 +28,6 @@ let onGetNotifications;
 let eventGetPostLoginChallenges;
 let challengeName;
 let onGetAllChallengeEvent;
-let onGetAllChallengeSettingEvent;
 /*
  INSTANCES
  */
@@ -378,10 +377,10 @@ class ControlPanel extends Component {
   
   getAllChallenges(){
     
-    if (onGetAllChallengeSettingEvent) {
-      onGetAllChallengeSettingEvent.remove();
+    if (onGetAllChallengeEvent) {
+      onGetAllChallengeEvent.remove();
     }
-    onGetAllChallengeSettingEvent = DeviceEventEmitter.addListener(
+    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
                                                                    'onGetAllChallengeStatus',
                                                                    this.onGetAllChallengeSettingStatus.bind(this)
                                                                    );
@@ -505,9 +504,8 @@ class ControlPanel extends Component {
             <Text style={styles.menuItem}>Alerts</Text>
           </TouchableHighlight>
           <View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight }); } } style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
+           <TouchableHighlight onPress={() => { this.props.toggleDrawer();this.getAllChallenges(); } } style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
+            </TouchableHighlight><View style={styles.menuBorder}></View>
 
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Device Managment</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
@@ -540,8 +538,7 @@ class ControlPanel extends Component {
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Legal Info</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
             
-            <TouchableHighlight onPress={() => { this.props.toggleDrawer();this.getAllChallenges(); } } style={styles.touch}><Text style={styles.menuItem}>Setting</Text>
-            </TouchableHighlight><View style={styles.menuBorder}></View>
+           
 
           <TouchableHighlight onPress={this.showLogOffAlert.bind(this) }  style={styles.touch}><Text style={styles.menuItem}>Logout</Text>
           </TouchableHighlight>
