@@ -78,6 +78,8 @@ class Register extends Component {
       modalInitValue: "Select Default Login",
       devname: "Device Name",
       devnameopacity: 0,
+      initFacebookState:true,
+      isFacebookRegisteredWithServer:false,
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -102,11 +104,11 @@ class Register extends Component {
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value === "false") {
         this.setState({ welcomescreen: '' });
-              this.setState({ welcome: false });
+        this.setState({ welcome: false });
 
       } else {
         this.setState({ welcomescreen: '\u2714' });
-              this.setState({ welcome: true });
+        this.setState({ welcome: true });
 
       }
     }).done();
@@ -579,7 +581,7 @@ class Register extends Component {
       AsyncStorage.setItem("skipwelcome", "false");
     }
 
-    if (this.state.facebook == true) {
+    if (this.state.facebook != this.state.isFacebookRegisteredWithServer) {
       subscriptions = DeviceEventEmitter.addListener(
         'onUpdateChallengeStatus',
         this.onUpdateChallengeResponseStatus.bind(this)
@@ -595,7 +597,6 @@ class Register extends Component {
             Events.trigger('hideLoader', true);
             console.log('immediate response is' + response[0].error);
             alert(response[0].error);
-
           }
         });
       }).done();
@@ -606,9 +607,9 @@ class Register extends Component {
   }
 
   doNavigateDashBoard() {
-   // this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
-    
-     this.props.navigator.pop(0);
+    // this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+
+    this.props.navigator.pop(0);
   }
 
   selectCheckBox(args) {
@@ -620,8 +621,8 @@ class Register extends Component {
         this.setState({ facebook: false });
         var temp = this.props.url.chlngJson.chlng;
         var respo = temp[0].chlng_resp;
-        respo[0].challenge = " ";
-        respo[0].response = " ";
+        respo[0].challenge = "facebook";
+        respo[0].response = "";
       }
     }
   }
@@ -652,57 +653,62 @@ class Register extends Component {
       var promts;
       if (chlng.chlng_prompt[0].length > 0) {
         promts = JSON.parse(chlng.chlng_prompt[0]);
-
-        if (promts.is_registered == false) {
-          indents.push(
-            <Checkbox
-              onSelect={() => { this.selectCheckBox(promts.cred_type) } }
-              selected={this.state[promts.cred_type]}
-              labelSide={"right"}
-              >
-              {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
-            </Checkbox>
-          );
-          // <CheckBox
-          // value={this.state[promts[0].credType]}
-          // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
-          // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+        
+        if(this.state.initFacebookState === true){
+           this.state[promts.cred_type] = promts.is_registered;
+           this.state.isFacebookRegisteredWithServer = promts.is_registered;
+           this.state.initFacebookState=false;
         }
-      }
-    }
-
-    if (this.props.url.touchCred.isTouch == false) {
-      if (Platform.OS === 'android') {
+        
         indents.push(
           <Checkbox
-            onSelect={this.selectpattern.bind(this) }
-            selected={this.state.pattern}
+            onSelect={() => { this.selectCheckBox(promts.cred_type) } }
+            selected={this.state[promts.cred_type]}
             labelSide={"right"}
             >
-            Enable Pattern Login
+            {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
           </Checkbox>
         );
         // <CheckBox
-        // value={this.state.pattern}
-        // onSelect={this.selectpattern.bind(this) }
-        // lable="Enable Pattern Login"/>);
-      } else {
-        indents.push(
-          <Checkbox
-            onSelect={this.selecttouchid.bind(this) }
-            selected={this.state.touchid}
-            labelSide={"right"}
-            >
-            Enable TouchID Login
-          </Checkbox>
-        );
-
-        // <CheckBox
-        // value={this.state.touchid}
-        // onSelect={this.selecttouchid.bind(this) }
-        // lable="Enable TouchID Login"/>);
+        // value={this.state[promts[0].credType]}
+        // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
+        // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
       }
     }
+
+    if (Platform.OS === 'android') {
+      this.state.pattern = this.props.url.touchCred.isTouch;
+      indents.push(
+        <Checkbox
+          onSelect={this.selectpattern.bind(this) }
+          selected={this.state.pattern}
+          labelSide={"right"}
+          >
+          Enable Pattern Login
+        </Checkbox>
+      );
+      // <CheckBox
+      // value={this.state.pattern}
+      // onSelect={this.selectpattern.bind(this) }
+      // lable="Enable Pattern Login"/>);
+    } else {
+      this.state.touchid = this.props.url.touchCred.isTouch;
+      indents.push(
+        <Checkbox
+          onSelect={this.selecttouchid.bind(this) }
+          selected={this.state.touchid}
+          labelSide={"right"}
+          >
+          Enable TouchID Login
+        </Checkbox>
+      );
+
+      // <CheckBox
+      // value={this.state.touchid}
+      // onSelect={this.selecttouchid.bind(this) }
+      // lable="Enable TouchID Login"/>);
+    }
+
     indents.push(
       <Checkbox
         onSelect={this.selectskipwelcome.bind(this) }

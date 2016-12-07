@@ -35,6 +35,8 @@ import DeviceBinding from './App/Components/challenges/DeviceBinding';
 import PasswordVerification from './App/Components/challenges/PasswordVerification';
 
 import RegisterOptionScene from './App/Components/nwd/Screen_1_4_registerOptionsDashboard';
+import PatternLock from './App/Components/nwd/Screen_PatternLock';
+
 
 
 // COMPONENTS
@@ -327,6 +329,8 @@ class ReactRefApp extends Component {
                 title={route.title}
                 rdna={route.DnaObject} />);
 
+    }else if (id === 'pattern') {
+      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>
       Error
