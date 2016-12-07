@@ -100,40 +100,46 @@ class ReactRefApp extends Component {
     let id = route.id;
 
     if (id === 'Load') {
-      // id = 'Accounts'
+      id = 'Accounts'
 
-      // id = 'UserLogin';
-      // id = 'Activation';
-      // id = "PasswordSet";
-      // id = 'PasswordVerification';
-      // id = 'FindBranch';
-      // id = 'ConnectionProfile';
-      // id = 'Device';
-      // id = 'PayBills';
-      // id = 'QuestionSet';
-      // id = 'DevBind';
-      // id = 'Deposits';
-      // id = 'ActivateNewDevice';
-      // id = 'SecureWebView';
-      // id = 'QuestionSet';
-      // id = 'QuestionVerification';
-      // id = 'Contact';
-      // id = 'Screen_1_1_register'
-      // id = 'Screen_1_2_activation'
-      // id = 'Screen_1_4_registerOptions'
-      // id = 'Screen_1_3_setPassword'
-      // id = 'Screen_3_1_deals'
-      // id = 'Screen_3_2_history'
-      // id = 'Screen_3_3_locations'
+    // id = 'UserLogin';
+    // id = 'Activation';
+    // id = "PasswordSet";
+    // id = 'PasswordVerification';
+    // id = 'FindBranch';
+    // id = 'ConnectionProfile';
+    // id = 'Device';
+    // id = 'PayBills';
+    // id = 'QuestionSet';
+    // id = 'DevBind';
+    // id = 'Deposits';
+    // id = 'ActivateNewDevice';
+    // id = 'SecureWebView';
+    // id = 'QuestionSet';
+    // id = 'QuestionVerification';
+    // id = 'Contact';
+    // id = 'Screen_1_1_register'
+    // id = 'Screen_1_2_activation'
+    // id = 'Screen_1_4_registerOptions'
+    // id = 'Screen_1_3_setPassword'
+    // id = 'Screen_3_1_deals'
+    // id = 'Screen_3_2_history'
+    // id = 'Screen_3_3_locations'
     }
 
     // MAIN SCENES
     if (id === 'Main' || id === 'Accounts') {
-      return (<AccountsScene
+      return (<Screen_3_1_deals
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
+    /*
+    return (<AccountsScene
+              navigator={nav}
+              url={route.url}
+              title={route.title}
+              rdna={route.DnaObject} />);*/
     } else if (id === 'PayBills') {
       return (<PayBillsScene
                 navigator={nav}
@@ -343,13 +349,13 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    }else if(id === 'RegisterOptionScene'){
+    } else if (id === 'RegisterOptionScene') {
       return (<RegisterOptionScene
-              navigator={nav}
-              url={route.url}
-              title={route.title}
-              rdna={route.DnaObject} />);
-      
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+
     }
 
     return (<Text>
