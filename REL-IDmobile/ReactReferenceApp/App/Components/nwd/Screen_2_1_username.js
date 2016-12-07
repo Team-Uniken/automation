@@ -1,46 +1,25 @@
 'use strict';
 
-/*
- ALWAYS NEED
- */
-import React from 'react';
-import ReactNative from 'react-native';
+import React, { Component, PropTypes } from 'react';
 import Skin from '../../Skin';
-
-
-/*
- CALLED
- */
 import Main from '../Main';
 import Load from '../../Scenes/Load';
-
 import MainActivation from '../MainActivation';
-import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
-import PatternLock from '../../Scenes/PatternLock'
 import TouchID from 'react-native-touch-id';
-
-import TouchId from 'react-native-smart-touch-id'
-const reason = 'Please validate your Touch Id';
-var constant = require('../Constants');
-
+import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackAndroid, StatusBar } from 'react-native'
 import Button from '../view/button';
-import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-/*
- INSTANCES
- */
+
+const constant = require('../Constants');
 let responseJson;
 let chlngJson;
 let nextChlngName;
 let obj;
 let statusMessage;
 let savedUserName;
-const {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, BackAndroid, StatusBar } = ReactNative;
-
-const {Component} = React;
 
 
 class UserLogin extends Component {
@@ -53,19 +32,13 @@ class UserLogin extends Component {
       login_button_text: 'Login',
       loginAttempts: 5,
       passAttempts: 5,
-      Challenge: this.props.url.chlngJson,
+      challenge: this.props.url.chlngJson,
       failureMessage: '',
       isLoaderVisible: false,
     };
   }
 
-  componentDidMount() {
-    obj = this;
-    BackAndroid.addEventListener('hardwareBackPress', function () {
-      this.close();
-      return true;
-    }.bind(this));
-  }
+
 
   componentWillMount() {
     obj = this;
@@ -84,7 +57,7 @@ class UserLogin extends Component {
             Main.isPatternEnabled = false;
           }
         }).done();
-      } catch (e) { }
+      } catch ( e ) {}
     } else {
       this.locked = false;
     }
@@ -95,13 +68,21 @@ class UserLogin extends Component {
       if (value == null || value === 'empty') {
 
       } else {
-        if(this.props.url.reset){}
-        else{
-         obj.setState({ inputUsername: value });
-         obj.checkUsername();
+        if (this.props.url.reset) {
+        } else {
+          obj.setState({ inputUsername: value });
+          obj.checkUsername();
         }
       }
     });
+  }
+
+  componentDidMount() {
+    obj = this;
+    BackAndroid.addEventListener('hardwareBackPress', function() {
+      this.close();
+      return true;
+    }.bind(this));
   }
 
   _verifyTouchIdSupport() {
@@ -123,7 +104,7 @@ class UserLogin extends Component {
 
   checkUsername() {
     this.state.progress = 0;
-    var un = this.state.inputUsername;
+    let un = this.state.inputUsername;
     //    this.setState({ isLoaderVisible: true});
     if (un.length > 0) {
       savedUserName = un;
@@ -147,7 +128,7 @@ class UserLogin extends Component {
     Main.dnaUserName = savedUserName;
     InteractionManager.runAfterInteractions(() => {
       this.props.navigator.push(
-        { id: "Activation", title: nextChlngName, url: chlngJson }
+        { id: "Activation",title: nextChlngName,url: chlngJson }
       );
     });
   }
@@ -207,8 +188,8 @@ class UserLogin extends Component {
             <Title
               close={Load.opacity}
               onClose={() => {
-                this.close();
-              } }>
+                         this.close();
+                       }}>
             </Title>
             <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
               {Skin.icon.logo}
@@ -225,22 +206,39 @@ class UserLogin extends Component {
               ref='inputUsername'
               returnKeyType={'next'}
               keyboardType={'email-address'}
-              placeholder={'Username'}
+              placeholder={'Enter e-mail'}
               autoFocus={true}
               autoCorrect={false}
               autoCapitalize={false}
               autoComplete={false}
               value={this.state.inputUsername}
-              onSubmitEditing={this.checkUsername.bind(this) }
-              onChange={this.onUsernameChange.bind(this) } />
+              onSubmitEditing={this.checkUsername.bind(this)}
+              onChange={this.onUsernameChange.bind(this)} />
             <Button
               label={Skin.text['2']['1'].submit_button}
-              onPress={this.checkUsername.bind(this) } />
+              onPress={this.checkUsername.bind(this)} />
           </View>
         </View>
       </MainActivation>
-    );
+      );
   }
 }
+
+UserLogin.propTypes = {
+  url: PropTypes.Object,
+  navigator: PropTypes.Array,
+}
+
+UserLogin.getDefaultProps = {
+  url: {
+    chlngJson: {
+      chlng_resp: [{
+        challenge: 'ABCDEFG'
+      }]
+    }
+  },
+  navigator: []
+}
+
 
 module.exports = UserLogin;
