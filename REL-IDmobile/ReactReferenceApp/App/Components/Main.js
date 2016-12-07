@@ -187,18 +187,18 @@ export default class Main extends Component {
           title={{ title: this.props.navBar.title, tintColor: Skin.main.TITLE_COLOR}}
           tintColor={Skin.main.NAVBAR_BG}
           statusBar={{ tintColor: Skin.main.STATUS_BAR_BG, style: 'light-content' }}
-          rightButton={
-            <NavButton
-                left={false}
-                icon={this.state.navBar.right.icon}
-                title={this.state.navBar.right.text}
-                tint={this.state.navBar.tint}
-                iconStyle={this.state.navBar.right.iconStyle}
-                textStyle={this.state.navBar.right.iconStyle}
-                handler={this.state.navBar.right.handler}
-                toggleDrawer={this.toggleDrawer}
-              />
-          }
+          // rightButton={
+          //   <NavButton
+          //       left={false}
+          //       icon={this.state.navBar.right.icon}
+          //       title={this.state.navBar.right.text}
+          //       tint={this.state.navBar.tint}
+          //       iconStyle={this.state.navBar.right.iconStyle}
+          //       textStyle={this.state.navBar.right.iconStyle}
+          //       handler={this.state.navBar.right.handler}
+          //       toggleDrawer={this.toggleDrawer}
+          //     />
+          // }
           leftButton={
             <NavButton
               left
