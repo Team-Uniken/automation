@@ -85,6 +85,7 @@ class RegisterOptionScene extends Component {
       initTouchAndPatternState: true,
       initFacebookState: true,
       isFacebookRegisteredWithServer: false,
+      initDefaultLoginValue: true,
       open: false
     };
 
@@ -221,7 +222,6 @@ class RegisterOptionScene extends Component {
         }
       });
 
-
       AsyncStorage.getItem('skipwelcome').then((value) => {
         if (value === "false") {
           this.setState({ welcomescreen: '' });
@@ -337,7 +337,9 @@ class RegisterOptionScene extends Component {
     } else {
       if (this.state.defaultLogin === 'touchid') {
         this.state.defaultLogin = "none"
-        this.state.modalInitValue = "Select Default Login";
+        this.setState({ modalInitValue: null }, () => {
+          this.setState({ modalInitValue: "Select Default Login" });
+        });
       }
       this.setState({ touchid: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
@@ -350,8 +352,11 @@ class RegisterOptionScene extends Component {
     } else {
       if (this.state.defaultLogin === 'pattern') {
         this.state.defaultLogin = "none"
-        this.state.modalInitValue = "Select Default Login";
+        this.setState({ modalInitValue: null }, () => {
+          this.setState({ modalInitValue: "Select Default Login" });
+        });
       }
+
       this.setState({ pattern: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
@@ -430,10 +435,11 @@ class RegisterOptionScene extends Component {
         if (chlng.chlng_prompt[0].length > 0) {
           promts = JSON.parse(chlng.chlng_prompt[0]);
 
-          if (promts.is_registered == true) {
+          if (promts.is_registered == true && this.state.initDefaultLoginValue == true) {
             data.push({
               key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
             });
+            this.state.initDefaultLoginValue = false;
           } else {
             if (this.state[promts.cred_type] === true) {
               data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
@@ -763,7 +769,9 @@ class RegisterOptionScene extends Component {
         this.state.facebook = false;
         if (this.state.defaultLogin === 'facebook') {
           this.state.defaultLogin = "none"
-          this.state.modalInitValue = "Select Default Login";
+          this.setState({ modalInitValue: null }, () => {
+            this.setState({ modalInitValue: "Select Default Login" });
+          });
         }
 
         this.setState({ facebook: false });
