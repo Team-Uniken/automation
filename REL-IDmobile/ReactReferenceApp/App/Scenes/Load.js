@@ -6,6 +6,8 @@
 import ReactNative from 'react-native';
 import React from 'react';
 import Skin from '../Skin';
+import Events from 'react-native-simple-events';
+
 /*
  CALLED
  */
@@ -41,6 +43,7 @@ let onResumeCompletedListener;
 let savedUserName;
 let gotNotification = false;
 let appalive = false;
+let obj1;
 
 console.log = function () { }
 
@@ -78,7 +81,33 @@ class Load extends Component {
 
   //Push notification code
 
+
+    closeStateMachine() {
+    console.log('---------- closeStateMachine ' );
+      var allScreens =obj1.props.navigator.getCurrentRoutes(-1);
+      for(var i = 0; i < allScreens.length; i++){
+        var screen = allScreens[i];
+        if(screen.id === 'Screen_0_1_welcome'){
+          var mySelectedRoute = obj1.props.navigator.getCurrentRoutes()[i];
+          obj1.props.navigator.popToRoute(mySelectedRoute);
+          return;
+        }
+      }
+       obj1.props.navigator.push({
+          id: "Screen_0_1_welcome",
+          //id: "Screen_0_2_selectlogin",
+          title: "nextChlngName",
+          url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName
+          }
+        });
+  }
+
   componentWillMount() {
+    obj1=this;
+        Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
+
     console.log('test logs');
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
@@ -622,10 +651,8 @@ class Load extends Component {
     console.log('doNavigation:');
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value === "true") {
-            Load.opacity=0;
         this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
       } else {
-           Load.opacity=1;
         this.props.navigator.push({
           id: "Screen_0_1_welcome",
           //id: "Screen_0_2_selectlogin",

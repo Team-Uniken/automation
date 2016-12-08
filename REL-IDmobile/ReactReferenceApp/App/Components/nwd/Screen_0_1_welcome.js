@@ -27,25 +27,25 @@ if (SCREEN_HEIGHT <= 426) {
 
 class First extends Component {
 
-    closeStateMachine() {
-    console.log('---------- closeStateMachine ' );
-     // obj.props.navigator.pop();
-      var allScreens =obj.props.navigator.getCurrentRoutes(-1);
+  //   closeStateMachine() {
+  //   console.log('---------- closeStateMachine ' );
+  //    // obj.props.navigator.pop();
+  //     var allScreens =obj.props.navigator.getCurrentRoutes(-1);
       
-      for(var i = 0; i < allScreens.length; i++){
-        var screen = allScreens[i];
-        if(screen.id === 'Screen_0_1_welcome'){
-          var mySelectedRoute = obj.props.navigator.getCurrentRoutes()[i];
-          obj.props.navigator.popToRoute(mySelectedRoute);
-          return;
-        }
-      }
+  //     for(var i = 0; i < allScreens.length; i++){
+  //       var screen = allScreens[i];
+  //       if(screen.id === 'Screen_0_1_welcome'){
+  //         var mySelectedRoute = obj.props.navigator.getCurrentRoutes()[i];
+  //         obj.props.navigator.popToRoute(mySelectedRoute);
+  //         return;
+  //       }
+  //     }
    
-  }
+  // }
 
   componentWillMount() {
     obj=this;
-    Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
+  //  Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
   }
 
   //  componentDidMount() {

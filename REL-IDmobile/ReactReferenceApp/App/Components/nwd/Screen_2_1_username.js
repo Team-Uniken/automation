@@ -186,7 +186,6 @@ class UserLogin extends Component {
             barStyle={'default'} />
           <View style={Skin.layout0.top.container}>
             <Title
-              close={Load.opacity}
               onClose={() => {
                          this.close();
                        }}>
