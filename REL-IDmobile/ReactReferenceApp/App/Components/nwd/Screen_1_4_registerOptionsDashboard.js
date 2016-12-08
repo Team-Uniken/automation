@@ -54,12 +54,14 @@ const {
   Alert,
   AlertIOS,
   Platform,
+  InteractionManager,
   BackAndroid,
 } = ReactNative;
 const {Component} = React;
 
 var obj;
-class Register extends Component {
+let onGetAllChallengeEventx;
+class RegisterOptionScene extends Component {
 
   constructor(props) {
     super(props);
@@ -78,40 +80,197 @@ class Register extends Component {
       modalInitValue: "Select Default Login",
       devname: "Device Name",
       devnameopacity: 0,
-      initFacebookState:true,
-      isFacebookRegisteredWithServer:false,
+      url: null,
+      showOptions: false,
+      initTouchAndPatternState: true,
+      initFacebookState: true,
+      isFacebookRegisteredWithServer: false,
+      open: false
     };
 
+    this.isTouchIDPresent = true;
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.checkValidityOfAccessToken = this.checkValidityOfAccessToken.bind(this);
+    this.onGetAllChallengeStatus = this.onGetAllChallengeStatus.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
     this.close = this.close.bind(this);
     this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
+    this.renderIf = this.renderIf.bind(this);
+    this.isTouchPresent = this.isTouchPresent.bind(this);
+  }
+
+  onGetAllChallengeStatus(e) {
+    if (onGetAllChallengeEventx) {
+      onGetAllChallengeEventx.remove();
+    }
+    var $this = this;
+    Events.trigger('hideLoader', true);
+    this.state.showOptions = true;
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+        var arrTba = new Array();
+        const chlngJson = res.pArgs.response.ResponseData;
+        for (var i = 0; i < chlngJson.chlng.length; i++) {
+          if (chlngJson.chlng[i].chlng_name === 'secqa') {
+            Main.enableUpdateSecqaOption = true;
+          }
+
+          if (chlngJson.chlng[i].chlng_name === 'tbacred')
+            arrTba.push(chlngJson.chlng[i]);
+        }
+
+        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
+
+          if (arrTba.length > 0) {
+            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+              if (value) {
+                try {
+                  value = JSON.parse(value);
+                  if (value.ERPasswd && value.ERPasswd !== "empty") {
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
+                  } else {
+                    if (Platform.OS === "android") {
+                      this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } };
+                      this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } });
+                    } else {
+                      this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } };
+                      this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } } });
+                    }
+                  }
+
+                  // this.forceUpdate();
+                } catch (e) { }
+              }
+            }).done();
+          } else {
+            this.props.navigator.pop();
+          }
+        } else {
+          this.props.navigator.pop();
+        }
+
+        //        //var arrChlng = chlngJson.chlng;
+        //        var selectedChlng;
+        //        var status = 0;
+        //        for(var i = 0; i < chlngJson.chlng.length; i++){
+        //          var chlng = chlngJson.chlng[i];
+        //          if(chlng.chlng_name === challengeName){
+        //
+        //          }else{
+        //            chlngJson.chlng.splice(i, 1);
+        //            i--;
+        //          }
+        //        }
+        //
+        //        const nextChlngName = chlngJson.chlng[0].chlng_name;
+        //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    } else {
+      alert('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
+  }
+
+  isTouchPresent() {
+    var $this = this;
+    TouchID.isSupported()
+      .then((supported) => {
+        // Success code
+        console.log('TouchID is supported.');
+        $this.isTouchIDPresent = false;
+      })
+      .catch((error) => {
+        // Failure code
+        console.log(error);
+        $this.isTouchIDPresent = true;
+      });
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      return true;
+    }.bind(this));
+
+    InteractionManager.runAfterInteractions(() => {
+
+      Events.trigger('showLoader', true);
+      ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
+        if (response) {
+          console.log('getAllChallenges immediate response is' + response[0].error);
+        } else {
+          console.log('s immediate response is' + response[0].error);
+          Events.trigger('hideLoader', true);
+        }
+      });
+
+      AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
+        if (userPrefs) {
+          try {
+            userPrefs = JSON.parse(userPrefs);
+            this.state.defaultLogin = userPrefs.defaultLogin;
+            this.setState({ modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label });
+          }
+          catch (e) { }
+        }
+      });
+
+
+      AsyncStorage.getItem('skipwelcome').then((value) => {
+        if (value === "false") {
+          this.setState({ welcomescreen: '' });
+          this.setState({ welcome: false });
+
+        } else {
+          this.setState({ welcomescreen: '\u2714' });
+          this.setState({ welcome: true });
+        }
+      }).done();
+
+
+      AsyncStorage.getItem('devname').then((value) => {
+
+
+        if (value != null) {
+          this.setState({ devname: value });
+          this.setState({ devnameopacity: 1 });
+        } else {
+          this.setState({ devnameopacity: 0 });
+        }
+
+
+      }).done();
+
+
+      AsyncStorage.getItem('rememberuser').then((value) => {
+        if (value == null || value === 'empty') {
+          obj.setState({ rememberusername: '' });
+        } else {
+          obj.setState({ rememberusername: '\u2714' });
+        }
+      });
+    });
   }
 
   componentWillMount() {
-    AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
-      if (userPrefs) {
-        try {
-          userPrefs = JSON.parse(userPrefs);
-          this.setState({ modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label });
-        }
-        catch (e) { }
-      }
-    });
+    if (Platform.OS === "ios")
+      this.isTouchPresent();
 
+    if (onGetAllChallengeEventx) {
+      onGetAllChallengeEventx.remove();
+    }
 
-    AsyncStorage.getItem('skipwelcome').then((value) => {
-      if (value === "false") {
-        this.setState({ welcomescreen: '' });
-        this.setState({ welcome: false });
+    onGetAllChallengeEventx = DeviceEventEmitter.addListener(
+      'onGetAllChallengeStatus',
+      this.onGetAllChallengeStatus
+    );
 
-      } else {
-        this.setState({ welcomescreen: '\u2714' });
-        this.setState({ welcome: true });
-
-      }
-    }).done();
 
     // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
     //   if (userPrefs) {
@@ -138,8 +297,8 @@ class Register extends Component {
     obj = this;
     /** Uncomment if you want to go to DashBoard if all tbacreds are registered */
     // var isCheck = false;
-    // for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
-    //   var chlng = this.props.url.chlngJson.chlng[i];
+    // for (var i = 0; i < this.state.url.chlngJson.chlng.length; i++) {
+    //   var chlng = this.state.url.chlngJson.chlng[i];
     //   if (chlng.chlng_prompt[0].length > 0) {
     //     var promts = JSON.parse(chlng.chlng_prompt[0]);
 
@@ -151,32 +310,12 @@ class Register extends Component {
     // }
 
     // if (isCheck == false) {
-    //   if (this.props.url.touchCred.isTouch == true) {
+    //   if (this.state.url.touchCred.isTouch == true) {
     //     this.doNavigateDashBoard();
     //   }
     // }
+    //-----------
 
-    AsyncStorage.getItem('devname').then((value) => {
-
-
-      if (value != null) {
-        this.setState({ devname: value });
-        this.setState({ devnameopacity: 1 });
-      } else {
-        this.setState({ devnameopacity: 0 });
-      }
-
-
-    }).done();
-
-
-    AsyncStorage.getItem('rememberuser').then((value) => {
-      if (value == null || value === 'empty') {
-        obj.setState({ rememberusername: '' });
-      } else {
-        obj.setState({ rememberusername: '\u2714' });
-      }
-    });
 
 
   }
@@ -196,6 +335,10 @@ class Register extends Component {
     if (this.state.touchid === false) {
       this._clickHandler();
     } else {
+      if (this.state.defaultLogin === 'touchid') {
+        this.state.defaultLogin = "none"
+        this.state.modalInitValue = "Select Default Login";
+      }
       this.setState({ touchid: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
@@ -205,6 +348,10 @@ class Register extends Component {
     if (this.state.pattern === false) {
       this.doPatternSet();
     } else {
+      if (this.state.defaultLogin === 'pattern') {
+        this.state.defaultLogin = "none"
+        this.state.modalInitValue = "Select Default Login";
+      }
       this.setState({ pattern: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
@@ -227,7 +374,7 @@ class Register extends Component {
       this.doFacebookLogin();
     } else {
       this.setState({ wechat: '' });
-      var temp = this.props.url.chlngJson.chlng;
+      var temp = this.state.url.chlngJson.chlng;
       var respo = temp[0].chlng_resp;
       respo[0].challenge = " ";
       respo[0].response = " ";
@@ -241,11 +388,6 @@ class Register extends Component {
         AsyncStorage.setItem("rememberuser", value);
 
       });
-
-
-
-
-
     } else {
       this.setState({ rememberusername: '' });
       AsyncStorage.setItem("rememberuser", 'empty');
@@ -280,41 +422,44 @@ class Register extends Component {
       Skin.text['0']['2'].credTypes['password']
     ];
 
-    for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
-      var chlng = this.props.url.chlngJson.chlng[i];
+    if (this.state.url) {
+      for (var i = 0; i < this.state.url.chlngJson.chlng.length; i++) {
+        var chlng = this.state.url.chlngJson.chlng[i];
 
-      var promts;
-      if (chlng.chlng_prompt[0].length > 0) {
-        promts = JSON.parse(chlng.chlng_prompt[0]);
+        var promts;
+        if (chlng.chlng_prompt[0].length > 0) {
+          promts = JSON.parse(chlng.chlng_prompt[0]);
 
-        if (promts.is_registered == true) {
-          data.push({
-            key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
-          });
-        } else {
-          if (this.state[promts.cred_type] === true) {
-            data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
+          if (promts.is_registered == true) {
+            data.push({
+              key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
+            });
+          } else {
+            if (this.state[promts.cred_type] === true) {
+              data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
+            }
           }
         }
       }
-    }
 
-    if (this.props.url.touchCred.isTouch == true) {
-      if (Platform.OS === 'android') {
+      if (this.state.url.touchCred.isTouch == true) {
+        if (Platform.OS === 'android') {
+          data.push(Skin.text['0']['2'].credTypes['pattern']);
+        } else {
+          data.push(Skin.text['0']['2'].credTypes['touchid']);
+        }
+      } else if (this.state.pattern) {
         data.push(Skin.text['0']['2'].credTypes['pattern']);
-      } else {
+      } else if (this.state.touchid) {
         data.push(Skin.text['0']['2'].credTypes['touchid']);
       }
-    } else if (this.state.pattern) {
-      data.push(Skin.text['0']['2'].credTypes['pattern']);
-    } else if (this.state.touchid) {
-      data.push(Skin.text['0']['2'].credTypes['touchid']);
     }
 
     return data
   }
 
   changeDefaultLogin(option) {
+    this.state.defaultLogin = option.key;
     this.setState({ defaultLogin: option.key })
   }
 
@@ -326,9 +471,7 @@ class Register extends Component {
   }
 
   onUpdateChallengeResponseStatus(e) {
-
     const res = JSON.parse(e.response);
-
     Events.trigger('hideLoader', true);
 
 
@@ -514,7 +657,7 @@ class Register extends Component {
 
       this.setState({ facebook: true });
 
-      var temp = this.props.url.chlngJson.chlng;
+      var temp = this.state.url.chlngJson.chlng;
       var respo = temp[0].chlng_resp;
 
       var promts = JSON.parse(temp[0].chlng_prompt[0]);
@@ -590,13 +733,14 @@ class Register extends Component {
 
       AsyncStorage.getItem('userId').then((value) => {
         Events.trigger('showLoader', true);
-        ReactRdna.updateChallenges(JSON.stringify(this.props.url.chlngJson), value, (response) => {
+        ReactRdna.updateChallenges(JSON.stringify(this.state.url.chlngJson), value, (response) => {
           if (response[0].error === 0) {
             console.log('immediate response is' + response[0].error);
           } else {
             Events.trigger('hideLoader', true);
             console.log('immediate response is' + response[0].error);
             alert(response[0].error);
+
           }
         });
       }).done();
@@ -607,9 +751,7 @@ class Register extends Component {
   }
 
   doNavigateDashBoard() {
-    // this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
-
-    this.props.navigator.pop(0);
+    this.props.navigator.pop();
   }
 
   selectCheckBox(args) {
@@ -618,176 +760,208 @@ class Register extends Component {
         this.doFacebookLogin();
         //this.checkValidityOfAccessToken();
       } else {
+        this.state.facebook = false;
+        if (this.state.defaultLogin === 'facebook') {
+          this.state.defaultLogin = "none"
+          this.state.modalInitValue = "Select Default Login";
+        }
+
         this.setState({ facebook: false });
-        var temp = this.props.url.chlngJson.chlng;
+        var temp = this.state.url.chlngJson.chlng;
         var respo = temp[0].chlng_resp;
-        respo[0].challenge = "facebook";
-        respo[0].response = "";
+        respo[0].challenge = " ";
+        respo[0].response = " ";
       }
     }
   }
 
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
-      return true;
-    }.bind(this));
-
+  renderIf(condition, elements) {
+    if (condition) {
+      return elements;
+    }
   }
 
   render() {
-    var indents = [];
+    if (this.state.url) {
+      var indents = [];
 
-    indents.push(
-      <Checkbox
-        onSelect={this.selectMakePermanent.bind(this) }
-        selected={this.state.devbind}
-        labelSide={"right"}
-        >
-        Make Device Permanent
-      </Checkbox>
-    );
+      indents.push(
+        <Checkbox
+          onSelect={this.selectMakePermanent.bind(this) }
+          selected={this.state.devbind}
+          labelSide={"right"}
+          >
+          Make Device Permanent
+        </Checkbox>
+      );
 
-    for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
-      var chlng = this.props.url.chlngJson.chlng[i];
+      for (var i = 0; i < this.state.url.chlngJson.chlng.length; i++) {
+        var chlng = this.state.url.chlngJson.chlng[i];
 
-      var promts;
-      if (chlng.chlng_prompt[0].length > 0) {
-        promts = JSON.parse(chlng.chlng_prompt[0]);
-        
-        if(this.state.initFacebookState === true){
-           this.state[promts.cred_type] = promts.is_registered;
-           this.state.isFacebookRegisteredWithServer = promts.is_registered;
-           this.state.initFacebookState=false;
+        var promts;
+        if (chlng.chlng_prompt[0].length > 0) {
+          promts = JSON.parse(chlng.chlng_prompt[0]);
+
+          if (this.state.initFacebookState === true) {
+            this.state[promts.cred_type] = promts.is_registered;
+            this.state.isFacebookRegisteredWithServer = promts.is_registered;
+            this.state.initFacebookState = false;
+          }
+
+          indents.push(
+            <Checkbox
+              onSelect={() => { this.selectCheckBox(promts.cred_type) } }
+              selected={this.state[promts.cred_type]}
+              labelSide={"right"}
+              >
+              {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
+            </Checkbox>
+          );
+          // <CheckBox
+          // value={this.state[promts[0].credType]}
+          // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
+          // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
         }
-        
+      }
+
+      if (this.state.initTouchAndPatternState) {
+        this.state.pattern = this.state.url.touchCred.isTouch;
+        this.state.touchid = this.state.url.touchCred.isTouch;
+        this.state.initTouchAndPatternState = false;
+      }
+
+      if (Platform.OS === 'android') {
         indents.push(
           <Checkbox
-            onSelect={() => { this.selectCheckBox(promts.cred_type) } }
-            selected={this.state[promts.cred_type]}
+            onSelect={this.selectpattern.bind(this) }
+            selected={this.state.pattern}
             labelSide={"right"}
             >
-            {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
+            Enable Pattern Login
           </Checkbox>
         );
         // <CheckBox
-        // value={this.state[promts[0].credType]}
-        // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
-        // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+        // value={this.state.pattern}
+        // onSelect={this.selectpattern.bind(this) }
+        // lable="Enable Pattern Login"/>);
+      } else {
+        if (this.isTouchIDPresent === false) {
+          indents.push(
+            <Checkbox
+              onSelect={this.selecttouchid.bind(this) }
+              selected={this.state.touchid}
+              labelSide={"right"}
+              >
+              Enable TouchID Login
+            </Checkbox>
+          );
+        }
+
+        // <CheckBox
+        // value={this.state.touchid}
+        // onSelect={this.selecttouchid.bind(this) }
+        // lable="Enable TouchID Login"/>);
       }
-    }
 
-    if (Platform.OS === 'android') {
-      this.state.pattern = this.props.url.touchCred.isTouch;
       indents.push(
         <Checkbox
-          onSelect={this.selectpattern.bind(this) }
-          selected={this.state.pattern}
+          onSelect={this.selectskipwelcome.bind(this) }
+          selected={this.state.welcome}
           labelSide={"right"}
           >
-          Enable Pattern Login
-        </Checkbox>
-      );
-      // <CheckBox
-      // value={this.state.pattern}
-      // onSelect={this.selectpattern.bind(this) }
-      // lable="Enable Pattern Login"/>);
-    } else {
-      this.state.touchid = this.props.url.touchCred.isTouch;
-      indents.push(
-        <Checkbox
-          onSelect={this.selecttouchid.bind(this) }
-          selected={this.state.touchid}
-          labelSide={"right"}
-          >
-          Enable TouchID Login
+          Skip welcome screen
         </Checkbox>
       );
 
-      // <CheckBox
-      // value={this.state.touchid}
-      // onSelect={this.selecttouchid.bind(this) }
-      // lable="Enable TouchID Login"/>);
+      indents.push(
+        <Checkbox
+          onSelect={this.selectrememberusername.bind(this) }
+          selected={this.state.rememberusername}
+          labelSide={"right"}
+          >
+          Remember Username
+        </Checkbox>
+      );
     }
-
-    indents.push(
-      <Checkbox
-        onSelect={this.selectskipwelcome.bind(this) }
-        selected={this.state.welcome}
-        labelSide={"right"}
-        >
-        Skip welcome screen
-      </Checkbox>
-    );
-
-    indents.push(
-      <Checkbox
-        onSelect={this.selectrememberusername.bind(this) }
-        selected={this.state.rememberusername}
-        labelSide={"right"}
-        >
-        Remember Username
-      </Checkbox>
-    );
 
     return (
-      <MainActivation>
-        <View style={Skin.layout1.wrap}>
-          <StatusBar
-            style={Skin.layout1.statusbar}
-            backgroundColor={Skin.main.STATUS_BAR_BG}
-            barStyle={'default'}
-            />
-          <View style={Skin.layout1.title.wrap}>
-            <Title onClose={() => { this.close(); } }
-              >Profile & Settings</Title>
-          </View>
-          <ScrollView style={Skin.layout1.content.scrollwrap}>
-            <View style={Skin.layout1.content.wrap}>
-              <View style={Skin.layout1.content.container}>
-                {indents}
-                <Margin
-                  space={4}/>
-                <Text style={Skin.layout0.smalltext}>
-                  Default Login Credential
-                </Text>
-                <ModalPicker
-                  data={this.getLoginOptions() }
-                  style={Skin.baseline.select.base}
-                  selectStyle={Skin.baseline.select.select}
-                  selectTextStyle={Skin.baseline.select.selectText}
-                  initValue={this.state.modalInitValue}
-                  onChange={(option) => {
-                    this.changeDefaultLogin(option)
-                  } } />
-                <Margin
-                  space={4}/>
-                <Text style={[Skin.layout0.smalltext, { opacity: this.state.devnameopacity }]}>
-                  Device Name
-                </Text>
-                <Text  style={[Skin.layout0.devname, { opacity: this.state.devnameopacity }]}>
-                  {this.state.devname}
-                </Text>
-                <Margin
-                  space={8}/>
-              </View>
-            </View>
-          </ScrollView>
-          <View
-            style={Skin.layout1.bottom.wrap}>
-            <View style={Skin.layout1.bottom.container}>
-              <Button
-                label={Skin.text['1']['1'].submit_button}
-                onPress={this.doUpdate.bind(this) }
-                />
-            </View>
-          </View>
-          <KeyboardSpacer topSpacing={-55}/>
-        </View >
-      </MainActivation>
+      <Main
+        ref={'main'}
+        drawerState={{
+          open: false,
+          disabled: true,
+        }}
+        navBar={{
+          title: 'Profile & Settings',
+          visible: true,
+          tint: Skin.main.NAVBAR_TINT,
+          left: {
+            text: 'Back',
+            icon: '',
+            iconStyle: {},
+            textStyle: {},
+            handler: this.props.navigator.pop,
+          },
+        }}
+        bottomMenu={{
+          visible: false,
+        }}
+        navigator={this.props.navigator}
+        >
+        <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+          <MainActivation>
+            {this.renderIf(this.state.showOptions,
+              <View style={[Skin.layout1.wrap, { marginTop: 20 }]}>
+                <ScrollView style={Skin.layout1.content.scrollwrap}>
+                  <View style={Skin.layout1.content.wrap}>
+                    <View style={Skin.layout1.content.container}>
+                      {indents}
+                      <Margin
+                        space={4}/>
+                      <Text style={Skin.layout0.smalltext}>
+                        Default Login Credential
+                      </Text>
+                      <ModalPicker
+                        data={this.getLoginOptions() }
+                        style={Skin.baseline.select.base}
+                        selectStyle={Skin.baseline.select.select}
+                        selectTextStyle={Skin.baseline.select.selectText}
+                        initValue={this.state.modalInitValue}
+                        onChange={(option) => {
+                          this.changeDefaultLogin(option)
+                        } } />
+                      <Margin
+                        space={4}/>
+                      <Text style={[Skin.layout0.smalltext, { opacity: this.state.devnameopacity }]}>
+                        Device Name
+                      </Text>
+                      <Text  style={[Skin.layout0.devname, { opacity: this.state.devnameopacity }]}>
+                        {this.state.devname}
+                      </Text>
+                      <Margin
+                        space={8}/>
+                    </View>
+                  </View>
+                </ScrollView>
+                <View
+                  style={Skin.layout1.bottom.wrap}>
+                  <View style={Skin.layout1.bottom.container}>
+                    <Button
+                      label={Skin.text['1']['1'].submit_button}
+                      onPress={this.doUpdate.bind(this) }
+                      />
+                  </View>
+                </View>
+                <KeyboardSpacer topSpacing={-55}/>
+              </View >
+            ) }
+          </MainActivation>
+        </View>
+      </Main>
     );
   }
 }
 
-module.exports = Register;
+module.exports = RegisterOptionScene;
 
 
