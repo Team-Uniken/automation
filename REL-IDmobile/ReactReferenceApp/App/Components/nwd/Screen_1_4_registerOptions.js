@@ -102,11 +102,11 @@ class Register extends Component {
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value === "false") {
         this.setState({ welcomescreen: '' });
-              this.setState({ welcome: false });
+        this.setState({ welcome: false });
 
       } else {
         this.setState({ welcomescreen: '\u2714' });
-              this.setState({ welcome: true });
+        this.setState({ welcome: true });
 
       }
     }).done();
@@ -194,6 +194,13 @@ class Register extends Component {
     if (this.state.touchid === false) {
       this._clickHandler();
     } else {
+      if (this.state.defaultLogin === 'touchid') {
+        this.state.defaultLogin = "none"
+        this.setState({ modalInitValue: null }, () => {
+          this.setState({ modalInitValue: "Select Default Login" });
+        });
+      }
+
       this.setState({ touchid: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
@@ -203,6 +210,13 @@ class Register extends Component {
     if (this.state.pattern === false) {
       this.doPatternSet();
     } else {
+      if (this.state.defaultLogin === 'pattern') {
+        this.state.defaultLogin = "none"
+        this.setState({ modalInitValue: null }, () => {
+          this.setState({ modalInitValue: "Select Default Login" });
+        });
+      }
+
       this.setState({ pattern: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
@@ -615,6 +629,13 @@ class Register extends Component {
         this.doFacebookLogin();
         //this.checkValidityOfAccessToken();
       } else {
+        if (this.state.defaultLogin === 'facebook') {
+          this.state.defaultLogin = "none"
+          this.setState({ modalInitValue: null }, () => {
+            this.setState({ modalInitValue: "Select Default Login" });
+          });
+        }
+
         this.setState({ facebook: false });
         var temp = this.props.url.chlngJson.chlng;
         var respo = temp[0].chlng_resp;
