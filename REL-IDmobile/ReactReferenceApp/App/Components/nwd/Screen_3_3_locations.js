@@ -93,9 +93,8 @@ class Screen_3_3_locations extends Component {
       const granted = await PermissionsAndroid.requestPermission(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          'title': 'NWD App Camera Permission',
-          'message': 'NWD App needs access to your camera ' +
-          'so you can scan the QR Code.'
+          'title': 'NWD App Location Permission',
+          'message': 'NWD App needs access to your location '
         }
       )
       if (granted) {
@@ -106,9 +105,9 @@ class Screen_3_3_locations extends Component {
           this.getCurrentPosition();
           this.setState({ showMap: true });
         });
-        console.log("You can use the camera")
+        console.log("You can use the location")
       } else {
-        console.log("Camera permission denied")
+        console.log("Location permission denied")
       }
     } catch (err) {
       console.warn(err)
