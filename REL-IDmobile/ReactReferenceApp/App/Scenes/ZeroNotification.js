@@ -103,7 +103,9 @@ var SampleRow = React.createClass({
                                   var amount = bodyarray[3];
                                   var font=22;
                             
-                                  
+                                  if (typeof amount == "undefined") {
+                                  amount = '';
+                                  }else{
                                   if(amount.length>0 && amount.length<=5)
                                   {
                                   
@@ -131,6 +133,7 @@ var SampleRow = React.createClass({
                                   font=9;
                                   }else{
                                   font=11;
+                                  }
                                   }
                                   }
                                   
