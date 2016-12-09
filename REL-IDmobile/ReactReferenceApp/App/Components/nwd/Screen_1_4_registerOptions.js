@@ -650,15 +650,16 @@ class Register extends Component {
   render() {
     var indents = [];
 
-    indents.push(
-      <Checkbox
-        onSelect={this.selectMakePermanent.bind(this) }
-        selected={this.state.devbind}
-        labelSide={"right"}
-        >
-        Make Device Permanent
-      </Checkbox>
-    );
+    // Commented to hide make Permanent checkbox as suggested by James
+    // indents.push(
+    //   <Checkbox
+    //     onSelect={this.selectMakePermanent.bind(this) }
+    //     selected={this.state.devbind}
+    //     labelSide={"right"}
+    //     >
+    //     Make Device Permanent
+    //   </Checkbox>
+    // );
 
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
