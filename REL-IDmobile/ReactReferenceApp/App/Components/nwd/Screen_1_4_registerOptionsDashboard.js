@@ -791,16 +791,17 @@ class RegisterOptionScene extends Component {
   render() {
     if (this.state.url) {
       var indents = [];
-
-      indents.push(
-        <Checkbox
-          onSelect={this.selectMakePermanent.bind(this) }
-          selected={this.state.devbind}
-          labelSide={"right"}
-          >
-          Make Device Permanent
-        </Checkbox>
-      );
+      
+      // Commented to hide make Permanent checkbox as suggested by James
+      // indents.push(
+      //   <Checkbox
+      //     onSelect={this.selectMakePermanent.bind(this) }
+      //     selected={this.state.devbind}
+      //     labelSide={"right"}
+      //     >
+      //     Make Device Permanent
+      //   </Checkbox>
+      // );
 
       for (var i = 0; i < this.state.url.chlngJson.chlng.length; i++) {
         var chlng = this.state.url.chlngJson.chlng[i];

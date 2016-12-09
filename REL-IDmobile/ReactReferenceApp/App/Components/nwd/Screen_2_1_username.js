@@ -65,7 +65,7 @@ class UserLogin extends Component {
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 
     AsyncStorage.getItem('rememberuser').then((value) => {
-      if (value == null || value === 'empty') {
+      if (value == undefined || value == null || value === 'empty') {
 
       } else {
         if (this.props.url.reset) {

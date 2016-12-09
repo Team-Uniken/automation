@@ -253,11 +253,6 @@ class Register extends Component {
         AsyncStorage.setItem("rememberuser", value);
 
       });
-
-
-
-
-
     } else {
       this.setState({ rememberusername: '' });
       AsyncStorage.setItem("rememberuser", 'empty');
