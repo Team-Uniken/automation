@@ -45,22 +45,22 @@ class UserLogin extends Component {
     constant.USER_SESSION = "NO";
     constant.USER_T0 = "NO";
 
-    AsyncStorage.setItem("isPwdSet", "empty");
-    if (Platform.OS == "android") {
-      try {
-        AsyncStorage.getItem("userData").then((value) => {
-          if (value) {
-            this.setState({ pattern: true, });
+    // AsyncStorage.setItem("isPwdSet", "empty");
+    // if (Platform.OS == "android") {
+    //   try {
+    //     AsyncStorage.getItem("userData").then((value) => {
+    //       if (value) {
+    //         this.setState({ pattern: true, });
 
-            Main.isPatternEnabled = true;
-          } else {
-            Main.isPatternEnabled = false;
-          }
-        }).done();
-      } catch ( e ) {}
-    } else {
-      this.locked = false;
-    }
+    //         Main.isPatternEnabled = true;
+    //       } else {
+    //         Main.isPatternEnabled = false;
+    //       }
+    //     }).done();
+    //   } catch ( e ) {}
+    // } else {
+    //   this.locked = false;
+    // }
 
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 

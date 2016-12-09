@@ -363,8 +363,21 @@ class ControlPanel extends Component {
   doNavigation() {
     console.log('doNavigation:');
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
-    this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-
+     AsyncStorage.getItem('skipwelcome').then((value) => {
+      if (value!=null && value!=undefined && value === "true") {
+        this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+      } else {
+        this.props.navigator.push({
+          id: "Screen_0_1_welcome",
+          //id: "Screen_0_2_selectlogin",
+          title: "nextChlngName",
+          url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName
+          }
+        });
+      }
+    }).done();
   }
 
   popToLoadView() {

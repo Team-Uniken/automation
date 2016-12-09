@@ -108,10 +108,6 @@ class TwoFactorAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
-    subscriptions = DeviceEventEmitter.addListener(
-      'onCheckChallengeResponseStatus',
-      this.onCheckChallengeResponseStatus
-    );
 
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
@@ -170,7 +166,8 @@ class TwoFactorAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    subscriptions.remove();
+    if(subscriptions)
+      subscriptions.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     Events.rm('showCurrentChallenge', 'showCurrentChallenge');
@@ -724,6 +721,13 @@ class TwoFactorAuthMachine extends Component {
   }
 
   callCheckChallenge() {
+    if(subscriptions){
+      subscriptions.remove();
+    }
+    subscriptions = DeviceEventEmitter.addListener(
+      'onCheckChallengeResponseStatus',
+      this.onCheckChallengeResponseStatus
+    );
     console.log("checkChallenge" + JSON.stringify(challengeJson));
     console.log("callCheckChallenge ----- show loader");
     Events.trigger('showLoader', true);

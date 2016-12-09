@@ -106,7 +106,7 @@ class Load extends Component {
 
   componentWillMount() {
     obj1=this;
-        Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
+    Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
 
     console.log('test logs');
     if (Platform.OS === 'ios') {
@@ -665,10 +665,6 @@ class Load extends Component {
       }
 
     }).done();
-
-
-
-
   }
 
   render() {

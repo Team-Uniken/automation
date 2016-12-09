@@ -391,7 +391,6 @@ class RegisterOptionScene extends Component {
 
       AsyncStorage.getItem('userId').then((value) => {
         AsyncStorage.setItem("rememberuser", value);
-
       });
     } else {
       this.setState({ rememberusername: '' });
