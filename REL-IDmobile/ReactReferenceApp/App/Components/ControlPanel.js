@@ -553,7 +553,7 @@ class ControlPanel extends Component {
 
           <TouchableHighlight onPress={() => { 
                                          this.props.toggleDrawer(); 
-                                            var openSiteURL = "https://www.google.co.in/"
+                                            var openSiteURL = 'https://www.google.co.in/'
                                             if(Platform.OS === 'android'){
                                               IntentAndroid.canOpenURL(openSiteURL, (supported) => {
                                               if (!supported) {
@@ -564,7 +564,7 @@ class ControlPanel extends Component {
                                               });
                                             }
                                             else{
-                                               this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url:{openSiteURL} }); 
+                                               this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url:'https://www.google.co.in/' }); 
                                             }
                                           }     
                                        }  
