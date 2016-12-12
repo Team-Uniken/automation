@@ -43,6 +43,7 @@ var {
   Alert,
   ScrollView,
   Platform,
+  IntentAndroid,
 } = ReactNative;
 
 const {
@@ -550,7 +551,25 @@ class ControlPanel extends Component {
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241' }); } }  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' }); } }  style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
+          <TouchableHighlight onPress={() => { 
+                                         this.props.toggleDrawer(); 
+                                            var openSiteURL = "https://www.google.co.in/"
+                                            if(Platform.OS === 'android'){
+                                              IntentAndroid.canOpenURL(openSiteURL, (supported) => {
+                                              if (!supported) {
+                                                  console.log('Can\'t handle url: ' + openSiteURL);
+                                                } else {
+                                                  IntentAndroid.openURL(openSiteURL);
+                                                }
+                                              });
+                                            }
+                                            else{
+                                               this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url:{openSiteURL} }); 
+                                            }
+                                          }     
+                                       }  
+                              style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
+
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Send App Feedback', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Send App Feedback</Text>
