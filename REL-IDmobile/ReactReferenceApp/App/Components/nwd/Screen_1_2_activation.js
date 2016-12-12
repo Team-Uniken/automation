@@ -120,9 +120,9 @@ class Activation extends Component {
   }
   
   hideCamera(){
-    if(Platform.OS === 'android'){
+   // if(Platform.OS === 'android'){
      this.setState({ showCamera: false });
-    }
+   // }
   }
   
 
