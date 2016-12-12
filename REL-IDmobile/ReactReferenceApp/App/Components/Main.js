@@ -22,6 +22,7 @@ const {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleShe
 const {Component} = React;
 
 let _toggleDrawer;
+let eventToggleDrawer =false;
 
 /*
   Instantiaions
@@ -158,10 +159,25 @@ export default class Main extends Component {
     );
   }
   componentDidMount(){
+    console.log("eventToggleDrawer = " + eventToggleDrawer);
+    if(eventToggleDrawer === true){
+       Events.rm('toggleDrawer', 'toggleDrawerID')
+    }
+    
+    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+    eventToggleDrawer = true;
+  }
+
+  componentDidUpdate(){
+    if(eventToggleDrawer === true){
+       Events.rm('toggleDrawer', 'toggleDrawerID')
+    }
+
     Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
   }
+
   componentWillUnmount() { 
-    Events.rm('toggleDrawer', 'toggleDrawerID') 
+    //Events.rm('toggleDrawer', 'toggleDrawerID') 
   }
   
   onGetCredentialsStatus(domainUrl) {
@@ -179,6 +195,10 @@ export default class Main extends Component {
    *
    * @return {JSX}
    */
+
+  getDrawerState(){
+    return this.state.drawerState.open;
+  }
   
   buildNavBar(){
     if (this.props.defaultNav){
@@ -220,6 +240,7 @@ export default class Main extends Component {
     return (
       <Drawer
         ref={(c) => {
+               console.log("Drawer  = " + c);
                this.drawer = c;
              }}
         type="static"

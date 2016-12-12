@@ -132,6 +132,11 @@ class Screen_3_3_locations extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
+  }
+
   render() {
     //console.log(this.props);
     return (

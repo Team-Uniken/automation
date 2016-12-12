@@ -134,11 +134,16 @@ class ReactRefApp extends Component {
 
     // MAIN SCENES
     if (id === 'Main' || id === 'Accounts') {
-      return (<AccountsScene
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
+      return (<Screen_3_1_deals
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
+      // return (<AccountsScene
+      //   navigator={nav}
+      //   url={route.url}
+      //   title={route.title}
+      //   rdna={route.DnaObject} />);
     } else if (id === 'PayBills') {
       return (<PayBillsScene
         navigator={nav}
