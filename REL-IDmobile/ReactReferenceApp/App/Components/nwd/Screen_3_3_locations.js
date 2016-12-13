@@ -160,6 +160,7 @@ class Screen_3_3_locations extends Component {
                   },
                   handler: this.triggerDrawer
                 }} />
+        <View style={{height:1,backgroundColor:Skin.main.TITLE_COLOR}}/>
         <View style={{
                        flex: 1,
                        backgroundColor: Skin.colors.BACK_GRAY
