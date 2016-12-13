@@ -191,6 +191,11 @@ class PatternLock extends Component {
         }
       }
     }
+    else{
+      this.state.screen = "set";
+      alert("Could not register pattern");
+      this.close();
+    }
   }
 
   onDataDecrypted(status) {
