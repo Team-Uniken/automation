@@ -54,6 +54,7 @@ const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtil
 
 var styles = Skin.controlStyle;
 var Obj;
+var securePortalUrl;
 
 class ControlPanel extends Component {
 
@@ -103,6 +104,19 @@ class ControlPanel extends Component {
     constant.USER_SESSION = "YES";
     AsyncStorage.setItem("isPwdSet", "empty");
     Obj = this;
+    
+    AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+                         currentProfile = JSON.parse(currentProfile);
+                         //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
+                         
+                        securePortalUrl = "http://" + currentProfile.Host + "/demoapp/relid.html";
+                         console.log("---Register ---securePortalUrl =" + securePortalUrl)
+                         
+                       
+                         
+                         }).done();
+
+    
 
     Events.on('cancelOperation', 'cancelOperation', this.cancelOperation);
 
@@ -548,7 +562,7 @@ class ControlPanel extends Component {
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241' }); } }  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
+          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' }); } }  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
           <TouchableHighlight onPress={() => { 
