@@ -111,8 +111,8 @@ const main = {
   BOTTOM_MENU_HIGHLIGHT_COLOR_RGB: '176,176,176',
   BOTTOM_MENU_HIGHLIGHT_OPACITY: '1',
   NAVBAR_TINT: '#ffffff',
-  NAVBAR_BG: '#3b3b3b',
-  TITLE_COLOR: '#ffffff'
+  NAVBAR_BG: '#ffffff',
+  TITLE_COLOR: '#d92a2e'
 }
 
 const admin = { MENU_TITLE: 'NWD', MENU_FONT: 'Times New Roman' }

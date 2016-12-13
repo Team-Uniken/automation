@@ -169,6 +169,7 @@ class Screen_3_2_history extends Component {
         <NavBar
           title={'History'}
           right={''}
+          titleTint={Skin.main.TITLE_COLOR}
           tintColor={'#ffffff'}
           left={{
                   icon: Skin.icon.user,
@@ -180,6 +181,7 @@ class Screen_3_2_history extends Component {
                   },
                   handler: this.triggerDrawer
                 }} />
+        <View style={{height:1,backgroundColor:Skin.main.TITLE_COLOR}}/>
         <View style={Skin.layout3.split.bottom}>
           <ListView
             contentContainerStyle={{ paddingTop: 12 }}

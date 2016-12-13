@@ -147,6 +147,8 @@ class Screen_3_3_locations extends Component {
         defaultNav={false}>
         <NavBar
           title={'Locations'}
+          titleTint={Skin.main.TITLE_COLOR}
+          tintColor={'#ffffff'}
           right={''}
           left={{
                   icon: Skin.icon.user,

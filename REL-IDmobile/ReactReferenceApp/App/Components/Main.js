@@ -8,7 +8,8 @@ import Skin from '../Skin';
   CALLED
 */
 import ControlPanel from './ControlPanel';
-import NavigationBar from 'react-native-navbar';
+//import NavigationBar from 'react-native-navbar';
+import NavigationBar from './view/navbar.js'
 import BottomMenu from './view/bottomMenu';
 import NavButton from './NavButton';
 import Drawer from 'react-native-drawer';
@@ -203,10 +204,11 @@ export default class Main extends Component {
   buildNavBar(){
     if (this.props.defaultNav){
       return ( 
-        <NavigationBar
-          title={{ title: this.props.navBar.title, tintColor: Skin.main.TITLE_COLOR}}
+        [<NavigationBar
+          title={this.props.navBar.title}
+          titleTint={Skin.main.TITLE_COLOR}
           tintColor={Skin.main.NAVBAR_BG}
-          statusBar={{ tintColor: Skin.main.STATUS_BAR_BG, style: 'light-content' }}
+          //tintColor={'transparent'}
           // rightButton={
           //   <NavButton
           //       left={false}
@@ -219,20 +221,11 @@ export default class Main extends Component {
           //       toggleDrawer={this.toggleDrawer}
           //     />
           // }
-          leftButton={
-            <NavButton
-              left
-              icon={this.state.navBar.left.icon}
-              title={this.state.navBar.left.text}
-              tint={this.state.navBar.tint}
-              iconStyle={this.state.navBar.left.iconStyle}
-              textStyle={this.state.navBar.left.iconStyle}
-              handler={this.state.navBar.left.handler}
-              toggleDrawer={this.toggleDrawer}
-            />
-          }
-        />
-      )
+          right={''}
+          left={this.props.navBar.left}
+        />,
+       <View style={{height:1,backgroundColor:Skin.main.TITLE_COLOR}}/>]
+      );
     }
   }
   
