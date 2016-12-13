@@ -254,7 +254,19 @@ class TwoFactorAuthMachine extends Component {
       }
     } else {
       console.log(e);
-      alert('Internal system error occurred.' + res.errCode);
+    //  alert('Internal system error occurred.' + res.errCode);
+      Alert.alert(
+                  'Error',
+                  'Internal system error occurred.', [{
+                                                 text: 'OK',
+                                                 onPress: () => {
+                                                       Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
+                                                      obj.resetChallenge();                                  },
+                                                 style: 'cancel',
+                                                 }]
+                  );
+
+      
     }
   }
 
