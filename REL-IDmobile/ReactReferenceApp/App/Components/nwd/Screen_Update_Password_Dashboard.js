@@ -150,7 +150,7 @@ export default class UpdatePasswordSet extends Component {
                   id: 'pattern',
                   data: { chlngJson: this.props.url.chlngJson, pw },
                   onSetPattern: this.onSetPattern,
-                  mode:"set"
+                  mode: "set"
                 });
             } else {
               let responseJson = this.props.url.chlngJson;
@@ -181,12 +181,12 @@ export default class UpdatePasswordSet extends Component {
   }
 
   close() {
-    if(this.props.mode === "forgotPassword"){
-      Events.trigger("resetChallenge",null);
-    }else{
-     this.props.parentnav.pop();
+    if (this.props.mode === "forgotPassword") {
+      Events.trigger("resetChallenge", null);
+    } else {
+      this.props.parentnav.pop();
     }
-    
+
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
@@ -220,92 +220,88 @@ export default class UpdatePasswordSet extends Component {
 
   render() {
     return (
-            <Main
-            ref={'main'}
-            drawerState={{
-            open: false,
-            disabled: true,
-            }}
-            navBar={{
-            title: 'Change Password',
-            visible: true,
-            tint: Skin.main.NAVBAR_TINT,
-            left: {
+      <Main
+        ref={'main'}
+        drawerState={{
+          open: false,
+          disabled: true,
+        }}
+        navBar={{
+          title: 'Change Password',
+          visible: true,
+          tint: Skin.main.NAVBAR_TINT,
+          left: {
             text: 'Back',
             icon: '',
             iconStyle: {},
             textStyle: {},
             handler: this.props.parentnav.pop,
-            },
-            }}
-            bottomMenu={{
-            visible: false,
-            }}
-            navigator={this.props.navigator}
-            >
-            <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-      <MainActivation>
-        <View style={Skin.layout1.wrap}>
-          
-          <View style={Skin.layout1.title.wrap}>
-           
-          </View>
-          <ScrollView style={Skin.layout1.content.scrollwrap}>
-            <View style={Skin.layout1.content.wrap}>
-              <View style={Skin.layout1.content.container}>
-                <View style={Skin.layout1.content.top.container}>
-                  <Text style={[Skin.layout1.content.top.text, {}]}>Your username is</Text>
-                  <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>{this.state.Username}</Text>
-                  <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
-                </View>
-                <View style={Skin.layout1.content.bottom.container}>
-                  <Input
-                    returnKeyType={'next'}
-                    keyboardType={'default'}
-                    autoFocus={true}
-                    autoCorrect={false}
-                    autoComplete={false}
-                    autoCapitalize={false}
-                    ref={'password'}
-                    placeholder={'Enter Password'}
-                    value={this.state.password}
-                    secureTextEntry={true}
-                    blurOnSubmit={false}
-                    onChange={this.onPasswordChange.bind(this) }
-                    onSubmitEditing={() => { this.refs.cPassword.focus(); } }
-                    marginBottom={12}
-                    />
+          },
+        }}
+        bottomMenu={{
+          visible: false,
+        }}
+        navigator={this.props.navigator}
+        >
+        <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+          <MainActivation>
+            <View style={[Skin.layout1.wrap,{marginTop:20}]}>
+              <ScrollView style={Skin.layout1.content.scrollwrap}>
+                <View style={Skin.layout1.content.wrap}>
+                  <View style={Skin.layout1.content.container}>
+                    <View style={Skin.layout1.content.top.container}>
+                      <Text style={[Skin.layout1.content.top.text, {}]}>Your username is</Text>
+                      <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>{this.state.Username}</Text>
+                      <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
+                    </View>
+                    <View style={Skin.layout1.content.bottom.container}>
+                      <Input
+                        returnKeyType={'next'}
+                        keyboardType={'default'}
+                        autoFocus={true}
+                        autoCorrect={false}
+                        autoComplete={false}
+                        autoCapitalize={false}
+                        ref={'password'}
+                        placeholder={'Enter Password'}
+                        value={this.state.password}
+                        secureTextEntry={true}
+                        blurOnSubmit={false}
+                        onChange={this.onPasswordChange.bind(this) }
+                        onSubmitEditing={() => { this.refs.cPassword.focus(); } }
+                        marginBottom={12}
+                        />
 
-                  <Input
-                    autoFocus={false}
-                    autoComplete={false}
-                    autoCorrect={false}
-                    autoCapitalize={false}
-                    returnKeyType={'done'}
-                    secureTextEntry={true}
-                    ref={'cPassword'}
-                    value={this.state.cPassword}
-                    keyboardType={'default'}
-                    placeholder={'Confirm Password'}
-                    onChange={this.onConfirmPasswordChange.bind(this) }
-                    onSubmitEditing={this.setPassword.bind(this) }
-                    />
+                      <Input
+                        autoFocus={false}
+                        autoComplete={false}
+                        autoCorrect={false}
+                        autoCapitalize={false}
+                        returnKeyType={'done'}
+                        secureTextEntry={true}
+                        ref={'cPassword'}
+                        value={this.state.cPassword}
+                        keyboardType={'default'}
+                        placeholder={'Confirm Password'}
+                        onChange={this.onConfirmPasswordChange.bind(this) }
+                        onSubmitEditing={this.setPassword.bind(this) }
+                        />
+                    </View>
+                  </View>
+                </View>
+              </ScrollView>
+              <View style={Skin.layout1.bottom.wrap}>
+                <View style={Skin.layout1.bottom.container}>
+                  <Button style={Skin.layout1.bottom.button}
+                    onPress={this.setPassword.bind(this) }
+                    label={Skin.text['1']['1'].submit_button}/>
                 </View>
               </View>
+              <KeyboardSpacer topSpacing={-55}/>
             </View>
-          </ScrollView>
-          <View style={Skin.layout1.bottom.wrap}>
-            <View style={Skin.layout1.bottom.container}>
-              <Button style={Skin.layout1.bottom.button}
-                onPress={this.setPassword.bind(this) }
-                label={Skin.text['1']['1'].submit_button}/>
-            </View>
-          </View>
-          <KeyboardSpacer topSpacing={30}/>
+          </MainActivation>
         </View>
-      </MainActivation>
-            </View>
-            </Main>
+      </Main>
     );
 
   }
