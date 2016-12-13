@@ -19,7 +19,7 @@ import PatternLock from './nwd/Screen_PatternLock';
 import SelectLogin from './nwd/Screen_0_2_selectlogin';
 import AccessCode from './nwd/Screen_Otp';
 import Activation from './nwd/Screen_1_2_activation';
-import UpdatePasswordSet from './nwd/Screen_Update_Password';
+import UpdatePasswordSet from './nwd/Screen_Update_Password_Dashboard';
 import PostLoginAccessCode from './nwd/Screen_PostLogin_Otp';
 import UpdateQuestionSet from './nwd/Screen_Update_Question';
 import PostLoginQuestionVerification from './nwd/Screen_PostLogin_Question_Verification';
