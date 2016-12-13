@@ -405,10 +405,6 @@ export default class NotificationMgmtScene extends Component {
   
   onUpdateNotificationDetails(e) {
     const res = JSON.parse(e.response);
-    
-    
-    
-    
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
