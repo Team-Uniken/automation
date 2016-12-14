@@ -398,7 +398,7 @@ export default class NotificationMgmtScene extends Component {
                     dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
                     });
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
     }
   }
   
@@ -438,7 +438,7 @@ export default class NotificationMgmtScene extends Component {
         
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
   }

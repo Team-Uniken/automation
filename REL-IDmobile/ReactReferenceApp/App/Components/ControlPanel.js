@@ -199,7 +199,7 @@ class ControlPanel extends Component {
         alert(res.pArgs.response.StatusMsg);
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
   }
@@ -239,10 +239,14 @@ class ControlPanel extends Component {
         }
 
       } else {
+        if(res.pArgs.response.StatusMsg == 'User not active or present'){
+          
+        }
+        else
         alert(res.pArgs.response.StatusMsg);
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
   }
@@ -347,7 +351,7 @@ class ControlPanel extends Component {
         alert(res.pArgs.response.StatusMsg);
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
   }
@@ -495,7 +499,7 @@ class ControlPanel extends Component {
         alert(res.pArgs.response.StatusMsg);
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
 

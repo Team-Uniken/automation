@@ -210,7 +210,7 @@ export default class DeviceMgmtScene extends Component {
       });
       this.setState({ deviceCount: devicesList.length });
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
     }
   }
 
@@ -226,7 +226,7 @@ export default class DeviceMgmtScene extends Component {
         this.onGetRegistredDeviceDetails(devicesResponse);
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
       this.onGetRegistredDeviceDetails(devicesResponse);
     }

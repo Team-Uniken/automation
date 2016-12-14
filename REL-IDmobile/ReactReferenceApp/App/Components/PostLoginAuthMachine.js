@@ -403,7 +403,7 @@ class PostLoginAuthMachine extends Component {
         alert(res.pArgs.response.StatusMsg);
       }
     } else {
-      alert('Something went wrong');
+      console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
     
