@@ -7,10 +7,10 @@
   ],
   "Profiles": [
     {
-      "Name": "52.76.168.31",
-      "Host": "52.76.168.31",
-      "Port": "443",
-      "RelId": "52.76.168.31"
+      "Name": "apisdkdev.uniken.com",
+      "Host": "54.179.148.241",
+      "Port": "4443",
+      "RelId": "apisdkdev.uniken.com"
     }
   ]
 }
