@@ -240,7 +240,9 @@ class ControlPanel extends Component {
 
       } else {
         if(res.pArgs.response.StatusMsg == 'User not active or present'){
-          
+          console.log('User not active or present');
+        }else if(res.pArgs.response.StatusMsg == 'User is not active or is not present'){
+          console.log('User is not active or is not present');
         }
         else
         alert(res.pArgs.response.StatusMsg);
