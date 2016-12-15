@@ -311,12 +311,12 @@ class TwoFactorAuthMachine extends Component {
       .then((supported) => {
         // Success code
         console.log('TouchID is supported.');
-        $this.isTouchIDPresent = false;
+        $this.isTouchIDPresent = true;
       })
       .catch((error) => {
         // Failure code
         console.log(error);
-        $this.isTouchIDPresent = true;
+        $this.isTouchIDPresent = false;
       });
   }
 
@@ -469,13 +469,10 @@ class TwoFactorAuthMachine extends Component {
                 try {
                   value = JSON.parse(value);
                   if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
+                        this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true , "isSupported":$this.isTouchIDPresent} } });
+                    
                   } else {
-                    if (Platform.OS === "android") {
-                      this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } });
-                    } else {
-                      this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } } });
-                    }
+                      this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false,"isSupported":$this.isTouchIDPresent} } });
                   }
                 } catch (e) { }
               }

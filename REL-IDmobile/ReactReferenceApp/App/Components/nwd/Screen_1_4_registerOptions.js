@@ -702,6 +702,7 @@ class Register extends Component {
         // onSelect={this.selectpattern.bind(this) }
         // lable="Enable Pattern Login"/>);
       } else {
+        if( this.props.url.touchCred.isSupported == true){
         indents.push(
           <Checkbox
             onSelect={this.selecttouchid.bind(this) }
@@ -711,6 +712,7 @@ class Register extends Component {
             Enable TouchID Login
           </Checkbox>
         );
+        }
 
         // <CheckBox
         // value={this.state.touchid}

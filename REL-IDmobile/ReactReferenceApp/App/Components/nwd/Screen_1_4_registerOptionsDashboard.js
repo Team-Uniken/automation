@@ -131,16 +131,13 @@ class RegisterOptionScene extends Component {
                 try {
                   value = JSON.parse(value);
                   if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } };
-                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } } });
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported":$this.isTouchIDPresent } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported":$this.isTouchIDPresent } } });
                   } else {
-                    if (Platform.OS === "android") {
-                      this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } };
-                      this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } } });
-                    } else {
-                      this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } };
-                      this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } } });
-                    }
+                    
+                      this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch":false, "isSupported":$this.isTouchIDPresent  } };
+                      this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch":false , "isSupported":$this.isTouchIDPresent } } });
+                    
                   }
 
                   // this.forceUpdate();
@@ -185,12 +182,12 @@ class RegisterOptionScene extends Component {
       .then((supported) => {
         // Success code
         console.log('TouchID is supported.');
-        $this.isTouchIDPresent = false;
+        $this.isTouchIDPresent = true;
       })
       .catch((error) => {
         // Failure code
         console.log(error);
-        $this.isTouchIDPresent = true;
+        $this.isTouchIDPresent = false;
       });
   }
 
@@ -451,6 +448,7 @@ class RegisterOptionScene extends Component {
         if (Platform.OS === 'android') {
           data.push(Skin.text['0']['2'].credTypes['pattern']);
         } else {
+          
           data.push(Skin.text['0']['2'].credTypes['touchid']);
         }
       } else if (this.state.pattern) {
@@ -853,7 +851,7 @@ class RegisterOptionScene extends Component {
         // onSelect={this.selectpattern.bind(this) }
         // lable="Enable Pattern Login"/>);
       } else {
-        if (this.isTouchIDPresent === false) {
+        if (this.isTouchIDPresent === true) {
           indents.push(
             <Checkbox
               onSelect={this.selecttouchid.bind(this) }
