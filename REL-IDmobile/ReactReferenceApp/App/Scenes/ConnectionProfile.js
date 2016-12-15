@@ -269,7 +269,7 @@ class ConnectionProfileScene extends Component {
           tint: Skin.colors.TEXT_COLOR,
           left: {
             text: 'Back',
-            icon: 'x',
+            icon: '',
             iconStyle: {},
             textStyle: {},
             handler: () => {
@@ -316,7 +316,7 @@ class ConnectionProfileScene extends Component {
               marginTop: -2,
               fontFamily: Skin.font.ICON_FONT,
             }}>
-              {'\ue069'}
+              {'\u002b'}
             </Text>
           </TouchableHighlight>
         </View>
