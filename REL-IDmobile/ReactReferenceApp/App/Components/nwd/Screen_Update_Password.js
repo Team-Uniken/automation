@@ -138,7 +138,7 @@ export default class UpdatePasswordSet extends Component {
           //  if(this.validatePassword(pw)){
           dismissKeyboard();
           // Main.dnaPasswd = pw;
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), (error) => {
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }),null).then((error) => {
             if (Platform.OS == 'ios' && this.state.erpasswd) {
               this.encrypytPasswdiOS();
               let responseJson = this.props.url.chlngJson;
@@ -157,7 +157,7 @@ export default class UpdatePasswordSet extends Component {
               responseJson.chlng_resp[0].response = pw;
               Events.trigger('showNextChallenge', { response: responseJson });
             }
-          });
+          }).done();
           // }else{
           // alert('Invalide Password');
           // }
