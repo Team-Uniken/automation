@@ -399,7 +399,6 @@ class ControlPanel extends Component {
 
 
   getAllChallenges() {
-
     if (onGetAllChallengeEvent) {
       onGetAllChallengeEvent.remove();
     }
@@ -443,9 +442,6 @@ class ControlPanel extends Component {
             arrTba.push(chlngJson.chlng[i]);
         }
         if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
-
-
-
           if (arrTba.length > 0) {
             AsyncStorage.getItem(Main.dnaUserName).then((value) => {
               if (value) {
@@ -476,9 +472,6 @@ class ControlPanel extends Component {
             //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
           });
         }
-
-
-
       } else {
         alert(res.pArgs.response.StatusMsg);
       }

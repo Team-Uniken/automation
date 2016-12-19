@@ -52,6 +52,8 @@ export default class UpdatePasswordSet extends Component {
     this.close = this.close.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
     this.setPassword = this.setPassword.bind(this);
+    this.onPatternClose = this.onPatternClose.bind(this);
+    this.onPostForgotPassword = this.onPostForgotPassword.bind(this);
     /*
      this._props = {
      url: {
@@ -104,6 +106,8 @@ export default class UpdatePasswordSet extends Component {
         catch (e) { }
       }
     }).done();
+
+     Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
   }
 
   validatePassword(textval) {
@@ -123,9 +127,32 @@ export default class UpdatePasswordSet extends Component {
   }
 
   onSetPattern(data) {
-    let responseJson = data.chlngJson;
-    responseJson.chlng_resp[0].response = data.pw;
-    Events.trigger('showNextChallenge', { response: responseJson });
+     Events.trigger('finishForgotPasswordFlow',null);
+  }
+
+  onPatternClose() {
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
+     Events.trigger('finishForgotPasswordFlow',null);
+  }
+
+  onPostForgotPassword() {
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
+      if (Platform.OS == 'ios' && this.state.erpasswd) {
+        this.encrypytPasswdiOS();
+         Events.trigger('finishForgotPasswordFlow',null);
+      } else if (Platform.OS == 'android' && this.state.erpasswd) {
+        this.props.navigator.push(
+          {
+            id: 'pattern',
+            data: '',
+            onSetPattern: this.onSetPattern,
+            onClose: this.onPatternClose,
+            mode: "set"
+          });
+      } else {
+         Events.trigger('finishForgotPasswordFlow',null);
+      }
+    }).done();
   }
 
   setPassword() {
@@ -138,26 +165,9 @@ export default class UpdatePasswordSet extends Component {
           //  if(this.validatePassword(pw)){
           dismissKeyboard();
           // Main.dnaPasswd = pw;
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }),null).then((error) => {
-            if (Platform.OS == 'ios' && this.state.erpasswd) {
-              this.encrypytPasswdiOS();
-              let responseJson = this.props.url.chlngJson;
-              responseJson.chlng_resp[0].response = pw;
-              Events.trigger('showNextChallenge', { response: responseJson });
-            } else if (Platform.OS == 'android' && this.state.erpasswd) {
-              this.props.navigator.push(
-                {
-                  id: 'pattern',
-                  data: { chlngJson: this.props.url.chlngJson, pw },
-                  onSetPattern: this.onSetPattern,
-                  mode:"set"
-                });
-            } else {
-              let responseJson = this.props.url.chlngJson;
-              responseJson.chlng_resp[0].response = pw;
-              Events.trigger('showNextChallenge', { response: responseJson });
-            }
-          }).done();
+          let responseJson = this.props.url.chlngJson;
+          responseJson.chlng_resp[0].response = pw;
+          Events.trigger('showNextChallenge', { response: responseJson });
           // }else{
           // alert('Invalide Password');
           // }
@@ -181,12 +191,12 @@ export default class UpdatePasswordSet extends Component {
   }
 
   close() {
-    if(this.props.mode === "forgotPassword"){
-      Events.trigger("resetChallenge",null);
-    }else{
-     this.props.parentnav.pop();
+    if (this.props.mode === "forgotPassword") {
+      Events.trigger('resetChallenge',null);
+    } else {
+      this.props.parentnav.pop();
     }
-    
+
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
@@ -230,7 +240,7 @@ export default class UpdatePasswordSet extends Component {
             <Title onClose={() => {
               this.close();
             } }>
-              {this.props.mode === "forgotPassword"?"Registration":"Change Password"}
+              {this.props.mode === "forgotPassword" ? "Registration" : "Change Password"}
             </Title>
           </View>
           <ScrollView style={Skin.layout1.content.scrollwrap}>

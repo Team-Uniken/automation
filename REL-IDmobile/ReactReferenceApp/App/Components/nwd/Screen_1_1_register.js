@@ -122,14 +122,14 @@ class Register extends Component {
 
 
   close() {
-//    if (this.state.open) {
-//      this.setState({
-//        open: false
-//      });
-//    } else {
-//      this.props.navigator.pop();
-//    }
-Events.trigger('closeStateMachine');
+    //    if (this.state.open) {
+    //      this.setState({
+    //        open: false
+    //      });
+    //    } else {
+    //      this.props.navigator.pop();
+    //    }
+    Events.trigger('closeStateMachine');
   }
 
   validateEmail(email) {
@@ -221,7 +221,7 @@ Events.trigger('closeStateMachine');
           }
         } else {
           alert('Please try again');
-            
+
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
           });
@@ -242,16 +242,16 @@ Events.trigger('closeStateMachine');
         text: 'OK',
         onPress: () => {
           if (press) {
-//            obj.props.navigator.pop();
-       obj.checkUsername();
-       
+            //            obj.props.navigator.pop();
+            obj.checkUsername();
+
           }
 
         }
       }]
     )
   }
-  
+
   checkUsername() {
     this.state.progress = 0;
     var un = this.state.confirmEmail;
@@ -264,16 +264,16 @@ Events.trigger('closeStateMachine');
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = un;
       Events.trigger('showNextChallenge', { response: responseJson });
-      
+
     } else {
       dismissKeyboard();
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
-                                              alert('Please enter a valid username');
-                                              });
+        alert('Please enter a valid username');
+      });
     }
   }
-  
+
 
   getWebView() {
     if (Platform.OS === 'ios') {
@@ -284,16 +284,16 @@ Events.trigger('closeStateMachine');
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
-//          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
+          //          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
           onLoad={() => { console.log('loaded') } }
           scalesPageToFit={true}
-             scrollEnabled={true}
+          scrollEnabled={true}
           />
       );
     } else {
       return (
         <WebViewAndroid
-        style={{height: 200}}
+          style={{ height: 200 }}
           automaticallyAdjustContentInsets={false}
           source={{ uri: 'http://api.relid.uniken.com/' }}
           javaScriptEnable

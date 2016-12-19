@@ -615,7 +615,7 @@ class Register extends Component {
   }
 
   doNavigateDashBoard() {
-    this.props.parentnav.push({ id: 'Main', title: 'DashBoard', url: '' });
+    this.props.parentnav.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
   }
 
   selectCheckBox(args) {

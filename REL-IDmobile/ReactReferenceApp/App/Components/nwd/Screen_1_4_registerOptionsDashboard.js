@@ -754,7 +754,7 @@ class RegisterOptionScene extends Component {
   }
 
   doNavigateDashBoard() {
-    this.props.navigator.pop();
+    this.props.navigator.popToTop();
   }
 
   selectCheckBox(args) {

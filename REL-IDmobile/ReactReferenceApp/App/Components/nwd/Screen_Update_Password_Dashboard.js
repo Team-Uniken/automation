@@ -52,6 +52,8 @@ export default class UpdatePasswordSet extends Component {
     this.close = this.close.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
     this.setPassword = this.setPassword.bind(this);
+    this.onPostUpdate = this.onPostUpdate.bind(this);
+    this.onPatternClose = this.onPatternClose.bind(this);
     /*
      this._props = {
      url: {
@@ -89,6 +91,7 @@ export default class UpdatePasswordSet extends Component {
   }
 
   componentWillMount() {
+    Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
@@ -123,9 +126,33 @@ export default class UpdatePasswordSet extends Component {
   }
 
   onSetPattern(data) {
-    let responseJson = data.chlngJson;
-    responseJson.chlng_resp[0].response = data.pw;
-    Events.trigger('showNextChallenge', { response: responseJson });
+    this.close();
+  }
+
+  onPatternClose(){
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
+    this.close();
+  }
+
+  onPostUpdate() {
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
+      if (Platform.OS == 'ios' && this.state.erpasswd) {
+        this.encrypytPasswdiOS();
+        this.close();
+      } else if (Platform.OS == 'android' && this.state.erpasswd) {
+        this.props.navigator.push(
+          {
+            id: 'pattern',
+            data: '',
+            onSetPattern: this.onSetPattern,
+            onClose:this.onPatternClose,
+            mode: "set"
+          });
+      }
+      else{
+        this.close();
+      }
+    }).done();
   }
 
   setPassword() {
@@ -138,26 +165,9 @@ export default class UpdatePasswordSet extends Component {
           //  if(this.validatePassword(pw)){
           dismissKeyboard();
           // Main.dnaPasswd = pw;
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }),null).then((error) => {
-            if (Platform.OS == 'ios' && this.state.erpasswd) {
-              this.encrypytPasswdiOS();
-              let responseJson = this.props.url.chlngJson;
-              responseJson.chlng_resp[0].response = pw;
-              Events.trigger('showNextChallenge', { response: responseJson });
-            } else if (Platform.OS == 'android' && this.state.erpasswd) {
-              this.props.navigator.push(
-                {
-                  id: 'pattern',
-                  data: { chlngJson: this.props.url.chlngJson, pw },
-                  onSetPattern: this.onSetPattern,
-                  mode: "set"
-                });
-            } else {
-              let responseJson = this.props.url.chlngJson;
-              responseJson.chlng_resp[0].response = pw;
-              Events.trigger('showNextChallenge', { response: responseJson });
-            }
-          }).done();
+          let responseJson = this.props.url.chlngJson;
+          responseJson.chlng_resp[0].response = pw;
+          Events.trigger('showNextChallenge', { response: responseJson });
           // }else{
           // alert('Invalide Password');
           // }
@@ -184,7 +194,7 @@ export default class UpdatePasswordSet extends Component {
     if (this.props.mode === "forgotPassword") {
       Events.trigger("resetChallenge", null);
     } else {
-      this.props.parentnav.pop();
+      Events.trigger('closeUpdateMachine',null);
     }
 
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
@@ -235,7 +245,7 @@ export default class UpdatePasswordSet extends Component {
             icon: '',
             iconStyle: {},
             textStyle: {},
-            handler: this.props.parentnav.pop,
+            handler: this.close,
           },
         }}
         bottomMenu={{
@@ -245,7 +255,7 @@ export default class UpdatePasswordSet extends Component {
         >
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
-            <View style={[Skin.layout1.wrap,{marginTop:20}]}>
+            <View style={[Skin.layout1.wrap, { marginTop: 20 }]}>
               <ScrollView style={Skin.layout1.content.scrollwrap}>
                 <View style={Skin.layout1.content.wrap}>
                   <View style={Skin.layout1.content.container}>

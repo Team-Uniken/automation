@@ -237,7 +237,6 @@ class SelectLogin extends Component {
     this.onDoPasswordCheckChallenge(args.password);
   }
 
-
   _clickHandler() {
     console.log(TouchID);
     TouchID.isSupported()
@@ -246,7 +245,6 @@ class SelectLogin extends Component {
         passcodeAuth();
       });
   }
-
 
   authenticate() {
     return TouchID.authenticate()
@@ -258,8 +256,6 @@ class SelectLogin extends Component {
         AlertIOS.alert(error.message);
       });
   }
-
-
 
   onTouchIDVerificationDone() {
     AsyncStorage.getItem(Main.dnaUserName).then((value) => {
@@ -275,7 +271,6 @@ class SelectLogin extends Component {
         });
       } catch (e) { }
     }).done();
-
   }
 
   onDoPasswordCheckChallenge(args) {
@@ -296,6 +291,7 @@ class SelectLogin extends Component {
     this.props.navigator.push({
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
+      onClose:null,
       mode: 'verify'
     });
   }

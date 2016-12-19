@@ -66,6 +66,8 @@ class UpdateAuthMachine extends Component {
     super(props);
     console.log('---------- Update Machine param ');
     this.renderScene = this.renderScene.bind(this);
+    this.onPostUpdate = this.onPostUpdate.bind(this);
+    this.closeUpdateMachine = this.closeUpdateMachine.bind(this);
   }
 
   componentWillMount() {
@@ -82,10 +84,28 @@ class UpdateAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
+    if(subscriptions){
+      subscriptions.remove();
+    }
     subscriptions = DeviceEventEmitter.addListener(
       'onUpdateChallengeStatus',
       this.onUpdateChallengeResponseStatus.bind(this)
     );
+    Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
+    Events.on('closeUpdateMachine', 'closeUpdateMachine', this.closeUpdateMachine);
+  }
+
+  onPostUpdate(){
+     this.closeUpdateMachine();
+  }
+
+  closeUpdateMachine(){
+    this.props.navigator.popToTop();
+    Events.rm('onPostUpdate', 'onPostUpdate');
+    Events.rm('closeUpdateMachine', 'closeUpdateMachine');
+    if(subscriptions){
+      subscriptions.remove();
+    }
   }
 
   componentDidMount() {
@@ -119,8 +139,6 @@ class UpdateAuthMachine extends Component {
       }
     }
   }
-
- 
 
   onUpdateChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
@@ -160,8 +178,8 @@ class UpdateAuthMachine extends Component {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           }
           alert(res.pArgs.response.StatusMsg);
-          this.props.navigator.pop();
-
+          //this.props.navigator.popToRoute({ id: 'Main', title: 'DashBoard', url: '' });
+          Events.trigger('onPostUpdate',null);
         }
       } else {
         Alert.alert(
@@ -175,7 +193,6 @@ class UpdateAuthMachine extends Component {
               } else {
                 chlngJson = res.pArgs.response.ResponseData;
               }
-
 
               const currentChlng = challengeJsonArr[--currentIndex];
               for (var i = 0; i < chlngJson.chlng.length; i++) {
@@ -289,7 +306,7 @@ class UpdateAuthMachine extends Component {
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
     } else if (id === 'pattern') {
-      return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>Error</Text>);
   }

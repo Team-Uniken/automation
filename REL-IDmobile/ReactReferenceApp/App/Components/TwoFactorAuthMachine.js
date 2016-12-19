@@ -78,6 +78,9 @@ class TwoFactorAuthMachine extends Component {
     super(props);
     console.log('---------- Machine param ');
     this.onCheckChallengeResponseStatus = this.onCheckChallengeResponseStatus.bind(this);
+    this.onForgotPasswordStatus = this.onForgotPasswordStatus.bind(this);
+    this.onPostForgotPassword = this.onPostForgotPassword.bind(this);
+    this.finishForgotPasswordFlow = this.finishForgotPasswordFlow.bind(this);
     this.initiateForgotPasswordFlow = this.initiateForgotPasswordFlow.bind(this);
     this.mode = mode;
     this.renderScene = this.renderScene.bind(this);
@@ -125,7 +128,6 @@ class TwoFactorAuthMachine extends Component {
       'onGetAllChallengeStatus',
       this.onGetAllChallengeStatus
     );
-
   }
 
   componentDidMount() {
@@ -166,7 +168,7 @@ class TwoFactorAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if(subscriptions)
+    if (subscriptions)
       subscriptions.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
@@ -195,22 +197,25 @@ class TwoFactorAuthMachine extends Component {
           // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           // this.props.navigator.pop();
           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-          if(Constants.USER_T0 === 'YES'){
-          AsyncStorage.getItem('userId').then((value) => {
-            Events.trigger('showLoader', true);
-            ReactRdna.getAllChallenges(value, (response) => {
-              if (response) {
-                console.log('getAllChallenges immediate response is' + response[0].error);
-              } else {
-                console.log('s immediate response is' + response[0].error);
-                Events.trigger('hideLoader', true);
-              }
-            })
-          }).done();
-          }else{
-            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          if (Constants.USER_T0 === 'YES') {
+            AsyncStorage.getItem('userId').then((value) => {
+              Events.trigger('showLoader', true);
+              ReactRdna.getAllChallenges(value, (response) => {
+                if (response) {
+                  console.log('getAllChallenges immediate response is' + response[0].error);
+                } else {
+                  console.log('s immediate response is' + response[0].error);
+                  Events.trigger('hideLoader', true);
+                }
+              })
+            }).done();
+          } else {
+            if (this.mode === "forgotPassword") {
+              Events.trigger('onPostForgotPassword', null);
+            } else {
+              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+            }
           }
-
         }
       } else {
 
@@ -254,19 +259,20 @@ class TwoFactorAuthMachine extends Component {
       }
     } else {
       console.log(e);
-    //  alert('Internal system error occurred.' + res.errCode);
+      //  alert('Internal system error occurred.' + res.errCode);
       Alert.alert(
-                  'Error',
-                  'Internal system error occurred.', [{
-                                                 text: 'OK',
-                                                 onPress: () => {
-                                                       Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
-                                                      obj.resetChallenge();                                  },
-                                                 style: 'cancel',
-                                                 }]
-                  );
+        'Error',
+        'Internal system error occurred.', [{
+          text: 'OK',
+          onPress: () => {
+            Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
+            obj.resetChallenge();
+          },
+          style: 'cancel',
+        }]
+      );
 
-      
+
     }
   }
 
@@ -275,7 +281,7 @@ class TwoFactorAuthMachine extends Component {
       onForgotPasswordSubscription.remove();
     }
 
-    this.onCheckChallengeResponseStatus(e);
+    this.onCheckChallengeResponseStatus(res);
   }
 
 
@@ -321,6 +327,10 @@ class TwoFactorAuthMachine extends Component {
   }
 
   resetChallenge() {
+    if (this.mode === "forgotPassword") {
+      Events.rm('onPostForgotPassword', 'onPostForgotPassword');
+      Events.rm('finishForgotPasswordFlow', 'finishForgotPasswordFlow');
+    }
     mode = "normal"
     this.mode = mode;
     console.log("resetChallenge");
@@ -349,7 +359,7 @@ class TwoFactorAuthMachine extends Component {
             id: nextChlngName,
             title: nextChlngName,
             url: {
-              reset:true,
+              reset: true,
               chlngJson,
               screenId: nextChlngName,
             },
@@ -373,8 +383,8 @@ class TwoFactorAuthMachine extends Component {
       ) {
         if (currChallenge.chlng_name === 'devname') {
           var name = currChallenge.chlng_resp[0].response;
-          if(name!=null)
-          AsyncStorage.setItem("devname",name);
+          if (name != null)
+            AsyncStorage.setItem("devname", name);
         }
         return { show: false, challenge: currChallenge };
       }
@@ -469,10 +479,10 @@ class TwoFactorAuthMachine extends Component {
                 try {
                   value = JSON.parse(value);
                   if (value.ERPasswd && value.ERPasswd !== "empty") {
-                        this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true , "isSupported":$this.isTouchIDPresent} } });
-                    
+                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
+
                   } else {
-                      this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false,"isSupported":$this.isTouchIDPresent} } });
+                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
                   }
                 } catch (e) { }
               }
@@ -481,13 +491,13 @@ class TwoFactorAuthMachine extends Component {
           } else {
             Events.trigger('closeStateMachine');
             InteractionManager.runAfterInteractions(() => {
-              this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
             });
           }
         } else {
           Events.trigger('closeStateMachine');
           InteractionManager.runAfterInteractions(() => {
-            this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+            this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
           });
         }
 
@@ -542,11 +552,11 @@ class TwoFactorAuthMachine extends Component {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         var tbacredChallenge = this.getTBACreds();
         return (<SelectLogin navigator={nav} url={route.url} title={route.title} tbacred ={tbacredChallenge}/>);
-      } else{
-        if(this.mode === "forgotPassword"){
-           return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
+      } else {
+        if (this.mode === "forgotPassword") {
+          return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
         }
-        
+
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {
@@ -570,7 +580,7 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'RegisterOption') {
       return (<RegisterOption navigator={nav} parentnav={obj.props.navigator} url={route.url} title={route.title} />);
     } else if (id === 'pattern') {
-      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
     }
     return (<Text>Error</Text>);
   }
@@ -709,14 +719,26 @@ class TwoFactorAuthMachine extends Component {
 
   }
 
+  onPostForgotPassword() {
+    this.finishForgotPasswordFlow();
+  }
+
+  finishForgotPasswordFlow() {
+    this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+    Events.rm('onPostForgotPassword', 'onPostForgotPassword');
+    Events.rm('finishForgotPasswordFlow', 'finishForgotPasswordFlow');
+  }
+
   initiateForgotPasswordFlow() {
     mode = "forgotPassword";
     this.mode = mode;
     Events.rm('forgotPassowrd', 'forgotPassword');
     onForgotPasswordSubscription = DeviceEventEmitter.addListener(
       'onForgotPasswordStatus',
-      this.onCheckChallengeResponseStatus
+      this.onForgotPasswordStatus
     );
+    Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
+    Events.on('finishForgotPasswordFlow', 'finishForgotPasswordFlow', this.finishForgotPasswordFlow);
     console.log("initiateForgotPasswordFlow ----- show loader");
     Events.trigger('showLoader', true);
     ReactRdna.forgotPassword(Main.dnaUserName, (response) => {
@@ -730,7 +752,7 @@ class TwoFactorAuthMachine extends Component {
   }
 
   callCheckChallenge() {
-    if(subscriptions){
+    if (subscriptions) {
       subscriptions.remove();
     }
     subscriptions = DeviceEventEmitter.addListener(
