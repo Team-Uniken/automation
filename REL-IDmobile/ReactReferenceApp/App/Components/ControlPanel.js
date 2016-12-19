@@ -63,6 +63,10 @@ class ControlPanel extends Component {
     console.log(props);
 
     this.getPostLoginChallenges = this.getPostLoginChallenges.bind(this);
+    this.logOff = this.logOff.bind(this);
+    this.onLogOff = this.onLogOff.bind(this);
+    this.showLogOffAlert = this.showLogOffAlert.bind(this);
+    this.doNavigation = this.doNavigation.bind(this);
     //this.getMyNotifications();
   }
 
@@ -74,75 +78,18 @@ class ControlPanel extends Component {
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
         {
-          text: 'OK', onPress: () => AsyncStorage.getItem('userId').then((value) => {
-            ReactRdna.logOff(value, (response) => {
-              if (response) {
-                console.log('immediate response is' + response[0].error);
-              } else {
-                console.log('immediate response is' + response[0].error);
-              }
-            })
-          }).done()
+          text: 'OK', onPress:this.logOff
         },
       ]
-    )
-  }
-
-  doLogOff() {
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.logOff(value, (response) => {
-        if (response) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-        }
-      })
-    }).done();
+    );
   }
 
   componentDidMount() {
     constant.USER_SESSION = "YES";
     AsyncStorage.setItem("isPwdSet", "empty");
     Obj = this;
-    
-    AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
-                         currentProfile = JSON.parse(currentProfile);
-                         //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
-                         
-                        securePortalUrl = "http://" + currentProfile.Host + "/demoapp/relid.html";
-                         console.log("---Register ---securePortalUrl =" + securePortalUrl)
-                         
-                       
-                         
-                         }).done();
-
-    
-
     Events.on('cancelOperation', 'cancelOperation', this.cancelOperation);
 
-    if (eventLogOff) {
-      eventLogOff.remove();
-    }
-    eventLogOff = DeviceEventEmitter.addListener('onLogOff', function (e) {
-      eventLogOff.remove();
-      console.log('immediate response is' + e.response);
-      var responseJson = JSON.parse(e.response);
-      if (responseJson.errCode == 0) {
-        console.log('LogOff Successfull');
-        chlngJson = responseJson.pArgs.response.ResponseData;
-        nextChlngName = chlngJson.chlng[0].chlng_name
-        const pPort = responseJson.pArgs.pxyDetails.port;
-        if (pPort > 0) {
-          RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
-          Web.proxy = pPort;
-          // AsyncStorage.setItem("Proxy",""+pPort);
-        }
-        Obj.doNavigation();
-        // Obj.popToLoadView();
-      } else {
-        alert('Failed to Log-Off with Error ' + responseJson.errCode);
-      }
-    });
     if (onGetNotifications) {
       onGetNotifications.remove();
     }
@@ -152,7 +99,41 @@ class ControlPanel extends Component {
     );
   }
 
+  logOff() {
+    if (eventLogOff) {
+      eventLogOff.remove();
+    }
+    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    ReactRdna.logOff(Main.dnaUserName, (response) => {
+      if (response) {
+        console.log('immediate response is' + response[0].error);
+      } else {
+        console.log('immediate response is' + response[0].error);
+      }
+    });
+  }
 
+  onLogOff(e) {
+    if (eventLogOff) {
+      eventLogOff.remove();
+    }
+
+    console.log('immediate response is' + e.response);
+    var responseJson = JSON.parse(e.response);
+    if (responseJson.errCode == 0) {
+      console.log('LogOff Successfull');
+      chlngJson = responseJson.pArgs.response.ResponseData;
+      nextChlngName = chlngJson.chlng[0].chlng_name
+      const pPort = responseJson.pArgs.pxyDetails.port;
+      if (pPort > 0) {
+        RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
+        Web.proxy = pPort;
+      }
+      this.doNavigation();
+    } else {
+      alert('Failed to Log-Off with Error ' + responseJson.errCode);
+    }
+  }
 
   componentWillUnmount() {
     Events.rm('cancelOperation', 'cancelOperation');
@@ -170,6 +151,7 @@ class ControlPanel extends Component {
       }
     }
   }
+
   onGetPostLoginChallenges(status) {
     Events.trigger('hideLoader', true);
     const res = JSON.parse(status.response);
@@ -239,13 +221,13 @@ class ControlPanel extends Component {
         }
 
       } else {
-        if(res.pArgs.response.StatusMsg == 'User not active or present'){
+        if (res.pArgs.response.StatusMsg == 'User not active or present') {
           console.log('User not active or present');
-        }else if(res.pArgs.response.StatusMsg == 'User is not active or is not present'){
+        } else if (res.pArgs.response.StatusMsg == 'User is not active or is not present') {
           console.log('User is not active or is not present');
         }
         else
-        alert(res.pArgs.response.StatusMsg);
+          alert(res.pArgs.response.StatusMsg);
       }
     } else {
       console.log('Something went wrong');
@@ -384,8 +366,8 @@ class ControlPanel extends Component {
   doNavigation() {
     console.log('doNavigation:');
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
-     AsyncStorage.getItem('skipwelcome').then((value) => {
-      if (value!=null && value!=undefined && value === "true") {
+    AsyncStorage.getItem('skipwelcome').then((value) => {
+      if (value != null && value != undefined && value === "true") {
         this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
       } else {
         this.props.navigator.push({
@@ -571,24 +553,24 @@ class ControlPanel extends Component {
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' }); } }  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
-          <TouchableHighlight onPress={() => { 
-                                         this.props.toggleDrawer(); 
-                                            var openSiteURL = 'https://www.google.co.in/'
-                                            if(Platform.OS === 'android'){
-                                              IntentAndroid.canOpenURL(openSiteURL, (supported) => {
-                                              if (!supported) {
-                                                  console.log('Can\'t handle url: ' + openSiteURL);
-                                                } else {
-                                                  IntentAndroid.openURL(openSiteURL);
-                                                }
-                                              });
-                                            }
-                                            else{
-                                               this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url:'https://www.google.co.in/' }); 
-                                            }
-                                          }     
-                                       }  
-                              style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
+          <TouchableHighlight onPress={() => {
+            this.props.toggleDrawer();
+            var openSiteURL = 'https://www.google.co.in/'
+            if (Platform.OS === 'android') {
+              IntentAndroid.canOpenURL(openSiteURL, (supported) => {
+                if (!supported) {
+                  console.log('Can\'t handle url: ' + openSiteURL);
+                } else {
+                  IntentAndroid.openURL(openSiteURL);
+                }
+              });
+            }
+            else {
+              this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' });
+            }
+          }
+          }
+            style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
 
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
