@@ -141,13 +141,13 @@ class PasswordVerification extends Component {
   }
 
   close() {
-    // if(this.props.onBack){
-    //   this.props.onBack();
-    // }else{
-    //   let responseJson = this.props.url.chlngJson;
+     if(this.props.onBack){
+      this.props.onBack();
+    }else{
+      let responseJson = this.props.url.chlngJson;
       this.setState({ showCamera: false });
       Events.trigger('showPreviousChallenge');
-   // }
+    }
   }
 
   render() {

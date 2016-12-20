@@ -359,7 +359,6 @@ class SelectLogin extends Component {
   }
 
   goBackToSelectLogin(){
-//  this.state.showPasswordVerify
     this.setState({showPasswordVerify:false});
   }
   
@@ -405,7 +404,7 @@ class SelectLogin extends Component {
       );
     }
     else {
-      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.goBackToSelectLogin}/>);
+      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.state.dataSource.length > 0?this.goBackToSelectLogin:null}/>);
     }
   }
 }
