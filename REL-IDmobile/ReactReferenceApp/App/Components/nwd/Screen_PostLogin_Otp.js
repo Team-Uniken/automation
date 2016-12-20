@@ -34,6 +34,12 @@ class AccessCode extends Component {
     this.requestCameraPermission = this.requestCameraPermission.bind(this);
     // this.barCodeScanFlag = true;
   }
+  
+  componentWillMount(){
+     if (Platform.OS === 'android' && Platform.Version >= 23){
+        this.state.showCamera = false;
+     }
+  }
 
   componentDidMount() {
      BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -43,13 +49,13 @@ class AccessCode extends Component {
     if (Platform.OS === 'android' && Platform.Version >= 23)
       this.checkCameraPermission();
   }
+
   componentWillUpdate(){
     
     if(this.state.isPoped){
        this.state.showCamera = true;
       this.state.isPoped = false;
     }
-      
   }
 
   async requestCameraPermission() {
@@ -62,7 +68,8 @@ class AccessCode extends Component {
           'so you can scan the QR Code.'
         }
       )
-      if (granted) {
+
+      if (granted) {       
         this.setState({
           cameraPermission: granted,
           showCamera: false
@@ -80,10 +87,12 @@ class AccessCode extends Component {
 
   checkCameraPermission() {
     PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.CAMERA)
-      .then(response => {
+      .then((response) => {
         //response is an object mapping type to permission
         if (response) {
+                 
           this.setState({
+            showCamera:true,
             cameraPermission: response,
           });
         } else {

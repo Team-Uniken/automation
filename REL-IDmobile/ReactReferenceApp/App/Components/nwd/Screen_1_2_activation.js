@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text,AsyncStorage, TouchableOpacity, StatusBar, ScrollView, Alert, Platform,BackAndroid, PermissionsAndroid} from 'react-native';
+import { StyleSheet, View, Text, AsyncStorage, TouchableOpacity, StatusBar, ScrollView, Alert, Platform, BackAndroid, PermissionsAndroid} from 'react-native';
 
 //const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
 
@@ -35,17 +35,23 @@ class Activation extends Component {
     // this.barCodeScanFlag = true;
   }
 
+  componentWillMount() {
+    if (Platform.OS === 'android' && Platform.Version >= 23) {
+      this.state.showCamera = false;
+    }
+  }
+
   componentDidMount() {
-    AsyncStorage.removeItem(Main.dnaUserName,null);
+    AsyncStorage.removeItem(Main.dnaUserName, null);
     constant.USER_T0 = "YES";
 
-    if (Platform.OS === 'android' && Platform.Version >= 23){
+    if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.checkCameraPermission();
     }
-      BackAndroid.addEventListener('hardwareBackPress', function() {
-            this.close();
-            return true;
-        }.bind(this));
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      this.close();
+      return true;
+    }.bind(this));
   }
 
   async requestCameraPermission() {
@@ -80,6 +86,7 @@ class Activation extends Component {
         //response is an object mapping type to permission
         if (response) {
           this.setState({
+            showCamera:true,
             cameraPermission: response,
           });
         } else {
@@ -110,21 +117,21 @@ class Activation extends Component {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
-      this. hideCamera();
-      this.setState({ activatonCode:'' });
+      this.hideCamera();
+      this.setState({ activatonCode: '' });
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       alert('Enter Activation Code');
     }
   }
-  
-  hideCamera(){
-   // if(Platform.OS === 'android'){
-     this.setState({ showCamera: false });
-   // }
+
+  hideCamera() {
+    // if(Platform.OS === 'android'){
+    this.setState({ showCamera: false });
+    // }
   }
-  
+
 
   onQRScanSuccess(result) {
     var $this = this;
@@ -156,13 +163,13 @@ class Activation extends Component {
       if (obtainedVfKey === vfKey) {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
-        if(Platform.OS === 'android'){
-          $this. hideCamera();
+        if (Platform.OS === 'android') {
+          $this.hideCamera();
         }
         let responseJson = $this.props.url.chlngJson;
         $this.barCodeFlag = false;
 
-        $this.setState({ activatonCode:'' });
+        $this.setState({ activatonCode: '' });
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(() => {
           Events.trigger('showNextChallenge', {
@@ -200,118 +207,118 @@ class Activation extends Component {
   close() {
 
     let responseJson = this.props.url.chlngJson;
-      this. hideCamera();
+    this.hideCamera();
     Events.trigger('showPreviousChallenge');
-  /*
-      Alert.alert('clicked')
-      console.log('navigator')
-      console.log(this.props)
-      //this.props.navigator.pop()
-      console.log('doNavigation:');
-      this.props.navigator.push({
-        id: "Screen_0_1_welcome",
-        //id: "Screen_0_2_selectlogin",
-        title: "nextChlngName",
-        url: {
-          "chlngJson": chlngJson,
-          "screenId": nextChlngName
-        }
-      });
-  */
+    /*
+        Alert.alert('clicked')
+        console.log('navigator')
+        console.log(this.props)
+        //this.props.navigator.pop()
+        console.log('doNavigation:');
+        this.props.navigator.push({
+          id: "Screen_0_1_welcome",
+          //id: "Screen_0_2_selectlogin",
+          title: "nextChlngName",
+          url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName
+          }
+        });
+    */
   }
 
   render() {
 
     return (
-        <MainActivation>
-      <View style={Skin.layout1.wrap}>
-        <StatusBar
-          style={Skin.layout1.statusbar}
-          backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'} />
-        <View style={Skin.layout1.title.wrap}>
-          <Title onClose={() => {
-            this.close();
-          } }>
-            Activation
-          </Title>
-        </View>
-        <ScrollView
-          style={Skin.layout1.content.scrollwrap}
-          contentContainerStyle={{ flex: 1 }}>
-          <View style={{
-            backgroundColor: '#000000',
-            flex: 1,
-            marginBottom: 12
-          }}>
-            <Text style={[Skin.layout1.content.camera.prompt, {
-                          marginTop: 10
-                          }]}>
-            {"Step 1: Verify Code " +
-            this.props.url.chlngJson.chlng_resp[0].challenge+"\nStep 2: Scan QR Code"}
-            </Text>
-            <View style={Skin.layout1.content.wrap}>
-              {this.renderIf(this.state.showCamera,
-                <Camera
-                  captureAudio={false}           
-                  onBarCodeRead={this._onBarCodeRead}
-                  type={Camera.constants.Type.back}
-                  aspect={Camera.constants.Aspect.fill}
-                  style={Skin.layout1.content.camera.wrap}>
-                  <View style={Skin.layout1.content.container}>
-                   
-                    <View style={Skin.layout1.content.camera.boxwrap}>
-                      <View style={Skin.layout1.content.camera.box} />
-                    </View>
-                 
-                  </View>
-                </Camera>
-              ) }
-            <View style={Skin.layout1.content.enterWrap}>
-            <Input
-            placeholder={'or Enter Numeric Code'}
-            ref={'activationCode'}
-            autoFocus={false}
-            autoCorrect={false}
-            autoComplete={false}
-            autoCapitalize={true}
-            secureTextEntry={true}
-            styleInput={Skin.layout1.content.code.input}
-            returnKeyType={"next"}
-            placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-            onChange={this.onActivationCodeChange.bind(this) }
-            onSubmitEditing={this.checkActivationCode.bind(this) } />
-            </View>
-            </View>
+      <MainActivation>
+        <View style={Skin.layout1.wrap}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
+          <View style={Skin.layout1.title.wrap}>
+            <Title onClose={() => {
+              this.close();
+            } }>
+              Activation
+            </Title>
           </View>
-        </ScrollView>
-        <View style={Skin.layout1.bottom.wrap}>
-          <View style={Skin.layout1.bottom.container}>
-            <Button
-              label={Skin.text['1']['1'].submit_button}
-              onPress={this.checkActivationCode.bind(this) } />
-            <Text
-              onPress={() => {
-                Alert.alert(
-                  'Message',
-                  'Feature coming soon',
-                  [
+          <ScrollView
+            style={Skin.layout1.content.scrollwrap}
+            contentContainerStyle={{ flex: 1 }}>
+            <View style={{
+              backgroundColor: '#000000',
+              flex: 1,
+              marginBottom: 12
+            }}>
+              <Text style={[Skin.layout1.content.camera.prompt, {
+                marginTop: 10
+              }]}>
+                {"Step 1: Verify Code " +
+                  this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
+              </Text>
+              <View style={Skin.layout1.content.wrap}>
+                {this.renderIf(this.state.showCamera,
+                  <Camera
+                    captureAudio={false}
+                    onBarCodeRead={this._onBarCodeRead}
+                    type={Camera.constants.Type.back}
+                    aspect={Camera.constants.Aspect.fill}
+                    style={Skin.layout1.content.camera.wrap}>
+                    <View style={Skin.layout1.content.container}>
 
-                    {
-                      text: 'OK',
-                      onPress: () => console.log('OK Pressed')
-                    },
-                  ]
-                )
-              } }
-              style={Skin.layout1.bottom.footertext}>
-              Resend Activation Code
-            </Text>
+                      <View style={Skin.layout1.content.camera.boxwrap}>
+                        <View style={Skin.layout1.content.camera.box} />
+                      </View>
+
+                    </View>
+                  </Camera>
+                ) }
+                <View style={Skin.layout1.content.enterWrap}>
+                  <Input
+                    placeholder={'or Enter Numeric Code'}
+                    ref={'activationCode'}
+                    autoFocus={false}
+                    autoCorrect={false}
+                    autoComplete={false}
+                    autoCapitalize={true}
+                    secureTextEntry={true}
+                    styleInput={Skin.layout1.content.code.input}
+                    returnKeyType={"next"}
+                    placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+                    onChange={this.onActivationCodeChange.bind(this) }
+                    onSubmitEditing={this.checkActivationCode.bind(this) } />
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+          <View style={Skin.layout1.bottom.wrap}>
+            <View style={Skin.layout1.bottom.container}>
+              <Button
+                label={Skin.text['1']['1'].submit_button}
+                onPress={this.checkActivationCode.bind(this) } />
+              <Text
+                onPress={() => {
+                  Alert.alert(
+                    'Message',
+                    'Feature coming soon',
+                    [
+
+                      {
+                        text: 'OK',
+                        onPress: () => console.log('OK Pressed')
+                      },
+                    ]
+                  )
+                } }
+                style={Skin.layout1.bottom.footertext}>
+                Resend Activation Code
+              </Text>
+            </View>
           </View>
+          <KeyboardSpacer topSpacing={-45} />
         </View>
-        <KeyboardSpacer topSpacing={-45} />
-      </View>
-        </MainActivation>
+      </MainActivation>
     );
   }
 }

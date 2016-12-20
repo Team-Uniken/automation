@@ -35,6 +35,12 @@ class AccessCode extends Component {
     // this.barCodeScanFlag = true;
   }
 
+  componentWillMount(){
+     if (Platform.OS === 'android' && Platform.Version >= 23){
+        this.state.showCamera = false;
+     }
+  }
+
   componentDidMount() {
      BackAndroid.addEventListener('hardwareBackPress', function() {
             this.close();
@@ -43,13 +49,13 @@ class AccessCode extends Component {
     if (Platform.OS === 'android' && Platform.Version >= 23)
       this.checkCameraPermission();
   }
+
   componentWillUpdate(){
     
     if(this.state.isPoped){
        this.state.showCamera = true;
       this.state.isPoped = false;
     }
-      
   }
 
   async requestCameraPermission() {
@@ -84,6 +90,7 @@ class AccessCode extends Component {
         //response is an object mapping type to permission
         if (response) {
           this.setState({
+            showCamera:true,
             cameraPermission: response,
           });
         } else {
