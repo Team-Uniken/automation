@@ -15,6 +15,7 @@ import Input from '../view/input';
 import Title from '../view/title';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Main from '../Main';
+var dismissKeyboard = require('react-native-dismiss-keyboard');
 var constant = require('../Constants');
 
 class Activation extends Component {
@@ -314,7 +315,7 @@ class Activation extends Component {
             returnKeyType={"next"}
             placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
             onChange={this.onActivationCodeChange.bind(this) }
-            onSubmitEditing={this.checkActivationCode.bind(this) } />
+            onSubmitEditing={()=>{dismissKeyboard();this.checkActivationCode(); }}/>
             </View>
             </View>
             </View>

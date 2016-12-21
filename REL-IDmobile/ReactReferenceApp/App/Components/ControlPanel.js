@@ -44,6 +44,7 @@ var {
   ScrollView,
   Platform,
   IntentAndroid,
+  InteractionManager,
 } = ReactNative;
 
 const {
@@ -207,7 +208,9 @@ class ControlPanel extends Component {
               return;
             }
           }
-          this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
+          InteractionManager.runAfterInteractions(()=>{
+            this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
+          });
         } else if (this.isNotificationScreenPresent() == 1) {
           Events.trigger('showNotification', e);
           Alert.alert(

@@ -51,7 +51,6 @@ class AccessCode extends Component {
   }
 
   componentWillUpdate(){
-    
     if(this.state.isPoped){
        this.state.showCamera = true;
       this.state.isPoped = false;
