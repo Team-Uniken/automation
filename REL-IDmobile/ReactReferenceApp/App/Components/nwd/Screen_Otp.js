@@ -27,6 +27,8 @@ class AccessCode extends Component {
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
       isPoped:false,
+      camHeight:null,
+      initCamHeightIsSet:false,
     }
     //this.barCodeFlag = true;
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
@@ -126,7 +128,6 @@ class AccessCode extends Component {
       this.setState({ accessCode: '' });
       this. hideCamera();
       responseJson.chlng_resp[0].response = vkey;
-      this.state.isPoped = true;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
       alert('Enter Access Code');
@@ -212,9 +213,20 @@ class AccessCode extends Component {
   }
   
   hideCamera(){
-  //  if(Platform.OS === 'android'){
+    if(Platform.OS === 'android'){
     this.setState({ showCamera: false });
-   // }
+      this.state.isPoped = true;
+    }
+  }
+  
+  measureView(event) {
+    console.log('event peroperties: ', event);
+    if(this.state.initCamHeightIsSet === false){
+      this.state.initCamHeightIsSet = true;
+    this.setState({
+                  camHeight: event.nativeEvent.layout.height
+                  });
+    }
   }
 
   render() {
@@ -246,15 +258,17 @@ class AccessCode extends Component {
                           }]}>
             {"Step 1: Verify Code " + this.props.url.chlngJson.chlng_resp[0].challenge+"\nStep 2: Scan QR Code"}
             </Text>
-            <View style={Skin.layout1.content.wrap}>
+            <View style={{flex:1}}>
+            <View style={[Skin.layout1.content.wrap,{flex:80}]}>
           
               {this.renderIf(this.state.showCamera,
                 <Camera
                   captureAudio={false}
+                  onLayout={(event) => this.measureView(event)}
                   onBarCodeRead={this._onBarCodeRead}
                   type={Camera.constants.Type.back}
                   aspect={Camera.constants.Aspect.fill}
-                  style={Skin.layout1.content.camera.wrap}>
+                             style={[Skin.layout1.content.camera.wrap,this.state.camHeight!=null?{height:this.state.camHeight}:{}]}>
                   <View style={Skin.layout1.content.container}>
                    
                     <View style={Skin.layout1.content.camera.boxwrap}>
@@ -264,7 +278,9 @@ class AccessCode extends Component {
                   </View>
                 </Camera>
               ) }
-            <View style={Skin.layout1.content.enterWrap}>
+            
+            </View>
+            <View style={[{flex:20,alignItems:'center',justifyContent:'center',marginTop:10}]}>
             <Input
             placeholder={'or Enter Numeric Code'}
             ref={'accessCode'}

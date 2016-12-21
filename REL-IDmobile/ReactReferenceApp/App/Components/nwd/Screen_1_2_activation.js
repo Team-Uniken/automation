@@ -27,6 +27,9 @@ class Activation extends Component {
       barCodeFlag: true,
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
+    isPoped:false,
+    camHeight:null,
+    initCamHeightIsSet:false,
     }
     //this.barCodeFlag = true;
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
@@ -52,6 +55,14 @@ class Activation extends Component {
       this.close();
       return true;
     }.bind(this));
+  }
+  
+  componentWillUpdate(){
+    
+    if(this.state.isPoped){
+      this.state.showCamera = true;
+      this.state.isPoped = false;
+    }
   }
 
   async requestCameraPermission() {
@@ -126,11 +137,23 @@ class Activation extends Component {
     }
   }
 
-  hideCamera() {
-    // if(Platform.OS === 'android'){
-    this.setState({ showCamera: false });
-    // }
+  hideCamera(){
+    if(Platform.OS === 'android'){
+      this.setState({ showCamera: false });
+      this.state.isPoped = true;
+    }
   }
+  
+  measureView(event) {
+    console.log('event peroperties: ', event);
+    if(this.state.initCamHeightIsSet === false){
+      this.state.initCamHeightIsSet = true;
+      this.setState({
+                    camHeight: event.nativeEvent.layout.height
+                    });
+    }
+  }
+
 
 
   onQRScanSuccess(result) {
@@ -257,14 +280,15 @@ class Activation extends Component {
                 {"Step 1: Verify Code " +
                   this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
               </Text>
-              <View style={Skin.layout1.content.wrap}>
+               <View style={{flex:1}}>
+              <View style={[Skin.layout1.content.wrap,{flex:80}]}>
                 {this.renderIf(this.state.showCamera,
                   <Camera
                     captureAudio={false}
                     onBarCodeRead={this._onBarCodeRead}
                     type={Camera.constants.Type.back}
                     aspect={Camera.constants.Aspect.fill}
-                    style={Skin.layout1.content.camera.wrap}>
+                    style={[Skin.layout1.content.camera.wrap,this.state.camHeight!=null?{height:this.state.camHeight}:{}]}>
                     <View style={Skin.layout1.content.container}>
 
                       <View style={Skin.layout1.content.camera.boxwrap}>
@@ -274,22 +298,25 @@ class Activation extends Component {
                     </View>
                   </Camera>
                 ) }
-                <View style={Skin.layout1.content.enterWrap}>
-                  <Input
-                    placeholder={'or Enter Numeric Code'}
-                    ref={'activationCode'}
-                    autoFocus={false}
-                    autoCorrect={false}
-                    autoComplete={false}
-                    autoCapitalize={true}
-                    secureTextEntry={true}
-                    styleInput={Skin.layout1.content.code.input}
-                    returnKeyType={"next"}
-                    placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-                    onChange={this.onActivationCodeChange.bind(this) }
-                    onSubmitEditing={this.checkActivationCode.bind(this) } />
-                </View>
+            
               </View>
+            
+            <View style={[{flex:20,alignItems:'center',justifyContent:'center',marginTop:10}]}>
+            <Input
+            placeholder={'or Enter Numeric Code'}
+            ref={'activationCode'}
+            autoFocus={false}
+            autoCorrect={false}
+            autoComplete={false}
+            autoCapitalize={true}
+            secureTextEntry={true}
+            styleInput={Skin.layout1.content.code.input}
+            returnKeyType={"next"}
+            placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+            onChange={this.onActivationCodeChange.bind(this) }
+            onSubmitEditing={this.checkActivationCode.bind(this) } />
+            </View>
+            </View>
             </View>
           </ScrollView>
           <View style={Skin.layout1.bottom.wrap}>
