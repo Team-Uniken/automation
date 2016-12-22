@@ -280,7 +280,8 @@ class Activation extends Component {
                 position: 'absolute',
                 top: 10,
                 zIndex: 1,
-                width: Skin.SCREEN_WIDTH
+                width: Skin.SCREEN_WIDTH,
+                backgroundColor:'transparent'
               }]}>
                 {"Step 1: Verify Code " +
                   this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
