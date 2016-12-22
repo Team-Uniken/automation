@@ -614,8 +614,6 @@ module.exports.layout1 = {
         borderColor: BUTTON_BG_COLOR,
         flex: 60,
         alignSelf: 'center',
-        //flexDirection:'row',
-        maxHeight: 260,
       }
     },
     code: {
