@@ -28,9 +28,9 @@ class Activation extends Component {
       barCodeFlag: true,
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
-    isPoped:false,
-    camHeight:null,
-    initCamHeightIsSet:false,
+      isPoped: false,
+      camHeight: null,
+      initCamHeightIsSet: false,
     }
     //this.barCodeFlag = true;
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
@@ -57,10 +57,10 @@ class Activation extends Component {
       return true;
     }.bind(this));
   }
-  
-  componentWillUpdate(){
-    
-    if(this.state.isPoped){
+
+  componentWillUpdate() {
+
+    if (this.state.isPoped) {
       this.state.showCamera = true;
       this.state.isPoped = false;
     }
@@ -98,7 +98,7 @@ class Activation extends Component {
         //response is an object mapping type to permission
         if (response) {
           this.setState({
-            showCamera:true,
+            showCamera: true,
             cameraPermission: response,
           });
         } else {
@@ -138,20 +138,20 @@ class Activation extends Component {
     }
   }
 
-  hideCamera(){
-    if(Platform.OS === 'android'){
+  hideCamera() {
+    if (Platform.OS === 'android') {
       this.setState({ showCamera: false });
       this.state.isPoped = true;
     }
   }
-  
+
   measureView(event) {
     console.log('event peroperties: ', event);
-    if(this.state.initCamHeightIsSet === false){
+    if (this.state.initCamHeightIsSet === false) {
       this.state.initCamHeightIsSet = true;
       this.setState({
-                    camHeight: event.nativeEvent.layout.height
-                    });
+        camHeight: event.nativeEvent.layout.height
+      });
     }
   }
 
@@ -275,49 +275,50 @@ class Activation extends Component {
               flex: 1,
               marginBottom: 12
             }}>
+
               <Text style={[Skin.layout1.content.camera.prompt, {
-                marginTop: 10
+                position: 'absolute',
+                top: 10,
+                zIndex: 1,
+                width: Skin.SCREEN_WIDTH
               }]}>
                 {"Step 1: Verify Code " +
                   this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
               </Text>
-               <View style={{flex:1}}>
-              <View style={[Skin.layout1.content.wrap,{flex:80}]}>
+
+              <View style={[Skin.layout1.content.wrap, { flex: 1, zIndex: 0 }]}>
                 {this.renderIf(this.state.showCamera,
                   <Camera
                     captureAudio={false}
+                    onLayout={(event) => this.measureView(event) }
                     onBarCodeRead={this._onBarCodeRead}
                     type={Camera.constants.Type.back}
                     aspect={Camera.constants.Aspect.fill}
-                    style={[Skin.layout1.content.camera.wrap,this.state.camHeight!=null?{height:this.state.camHeight}:{}]}>
-                    <View style={Skin.layout1.content.container}>
-
-                      <View style={Skin.layout1.content.camera.boxwrap}>
-                        <View style={Skin.layout1.content.camera.box} />
-                      </View>
-
+                    style={[Skin.layout1.content.camera.wrap, this.state.camHeight != null ? { height: this.state.camHeight } : {}]}>
+                    <View style={{ flex: 20 }}/>
+                    <View style={[Skin.layout1.content.camera.box, { flex: 60, width: Skin.SCREEN_WIDTH - 100 }]}>
                     </View>
+                    <View style={{ flex: 20 }}/>
                   </Camera>
                 ) }
-            
+
               </View>
-            
-            <View style={[{flex:20,alignItems:'center',justifyContent:'center',marginTop:10}]}>
-            <Input
-            placeholder={'or Enter Numeric Code'}
-            ref={'activationCode'}
-            autoFocus={false}
-            autoCorrect={false}
-            autoComplete={false}
-            autoCapitalize={true}
-            secureTextEntry={true}
-            styleInput={Skin.layout1.content.code.input}
-            returnKeyType={"next"}
-            placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-            onChange={this.onActivationCodeChange.bind(this) }
-            onSubmitEditing={()=>{dismissKeyboard();this.checkActivationCode(); }}/>
-            </View>
-            </View>
+
+              <View style={[{ width: Skin.SCREEN_WIDTH, position: 'absolute', alignItems: 'center', justifyContent: 'center', bottom: 0 }]}>
+                <Input
+                  placeholder={'or Enter Numeric Code'}
+                  ref={'activationCode'}
+                  autoFocus={false}
+                  autoCorrect={false}
+                  autoComplete={false}
+                  autoCapitalize={true}
+                  secureTextEntry={true}
+                  styleInput={Skin.layout1.content.code.input}
+                  returnKeyType={"next"}
+                  placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
+                  onChange={this.onActivationCodeChange.bind(this) }
+                  onSubmitEditing={() => { dismissKeyboard(); this.checkActivationCode(); } }/>
+              </View>
             </View>
           </ScrollView>
           <View style={Skin.layout1.bottom.wrap}>

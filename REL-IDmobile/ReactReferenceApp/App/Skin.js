@@ -599,10 +599,11 @@ module.exports.layout1 = {
         width: SCREEN_WIDTH,
         flex: 1,
         alignItems: 'center',
+        justifyContent:'center'
         //backgroundColor: "rgba(203,45,102,1)",
       },
       boxwrap: {
-        flex: 75,
+        flex: 60,
         //backgroundColor: '#ffaaff',
         flexDirection: 'column',
         //alignItems: 'center',
@@ -611,8 +612,7 @@ module.exports.layout1 = {
       box: {
         borderWidth: 2,
         borderColor: BUTTON_BG_COLOR,
-        width: 260,
-        flex: 1,
+        flex: 60,
         alignSelf: 'center',
         //flexDirection:'row',
         maxHeight: 260,
