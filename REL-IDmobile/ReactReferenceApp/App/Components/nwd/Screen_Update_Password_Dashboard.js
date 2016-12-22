@@ -39,6 +39,9 @@ const {
 
 const {Component} = React;
 
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
+var obj;
 export default class UpdatePasswordSet extends Component {
   constructor(props) {
     super(props);
@@ -91,6 +94,8 @@ export default class UpdatePasswordSet extends Component {
   }
 
   componentWillMount() {
+    
+    obj = this;
     Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
