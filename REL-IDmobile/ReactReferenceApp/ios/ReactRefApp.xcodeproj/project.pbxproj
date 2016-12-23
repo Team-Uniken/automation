@@ -18,9 +18,9 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		55271D501DD07F980072ABB9 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A36B3561DC0641D0062FA5F /* libRCTCamera.a */; };
+		55E725851E00251D00DCBC30 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E725841E00251D00DCBC30 /* libapi-sdk.a */; };
+		55E725861E00251D00DCBC30 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E725841E00251D00DCBC30 /* libapi-sdk.a */; };
 		5797D192178A4FEB996EFD7F /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
-		6511E1181DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */; };
-		6511E1191DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */; };
 		65127DFB1D795B4000FB36E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		65127DFC1D795B4000FB36E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		65127DFD1D795B4000FB36E1 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -142,6 +142,13 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RCTCamera;
 		};
+		55E7258D1E00252C00DCBC30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55E725871E00252B00DCBC30 /* api-sdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6573EF001BA40E250085584E;
+			remoteInfo = "api-sdk";
+		};
 		65281C2E1D6C34EA00F15ACE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */;
@@ -198,8 +205,9 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		2EADB2464F484FCB911B1B07 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
-		6511E1151DBA5E4C00BBBB89 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		55E725821E00251D00DCBC30 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		55E725841E00251D00DCBC30 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		55E725871E00252B00DCBC30 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../../Android-SVN/openssl/api-sdk/build/ios/React_sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
 		65127E1B1D795B4000FB36E1 /* ReactRefAppDeveloper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefAppDeveloper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		654B80D11DBE0C620052D415 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -249,7 +257,6 @@
 				65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				6511E1181DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */,
 				654B80D71DBE0C620052D415 /* FBSDKCoreKit.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -257,6 +264,7 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				55E725851E00251D00DCBC30 /* libapi-sdk.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				654B80DB1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */,
 				654B80D51DBE0C620052D415 /* Bolts.framework in Frameworks */,
@@ -279,7 +287,7 @@
 				65127E041D795B4000FB36E1 /* libReact.a in Frameworks */,
 				65127E051D795B4000FB36E1 /* libRCTActionSheet.a in Frameworks */,
 				654B80D81DBE0C620052D415 /* FBSDKCoreKit.framework in Frameworks */,
-				6511E1191DBA5E4C00BBBB89 /* libapi-sdk.a in Frameworks */,
+				55E725861E00251D00DCBC30 /* libapi-sdk.a in Frameworks */,
 				65127E061D795B4000FB36E1 /* libRCTGeolocation.a in Frameworks */,
 				65127E071D795B4000FB36E1 /* libRCTImage.a in Frameworks */,
 				65127E081D795B4000FB36E1 /* libRCTLinking.a in Frameworks */,
@@ -379,30 +387,38 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6511E1131DBA5E4C00BBBB89 /* api-sdk */ = {
+		55E725801E00251D00DCBC30 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
-				6511E1141DBA5E4C00BBBB89 /* include */,
-				6511E1161DBA5E4C00BBBB89 /* libs */,
+				55E725811E00251D00DCBC30 /* include */,
+				55E725831E00251D00DCBC30 /* libs */,
 			);
 			name = "api-sdk";
-			path = "../../../../client/api-sdk.out/react_iOS/release/api-sdk";
+			path = "../../../../Android-SVN/openssl/api-sdk.out/react_iOS/release/api-sdk";
 			sourceTree = "<group>";
 		};
-		6511E1141DBA5E4C00BBBB89 /* include */ = {
+		55E725811E00251D00DCBC30 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				6511E1151DBA5E4C00BBBB89 /* RDNA.h */,
+				55E725821E00251D00DCBC30 /* RDNA.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		6511E1161DBA5E4C00BBBB89 /* libs */ = {
+		55E725831E00251D00DCBC30 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				6511E1171DBA5E4C00BBBB89 /* libapi-sdk.a */,
+				55E725841E00251D00DCBC30 /* libapi-sdk.a */,
 			);
 			path = libs;
+			sourceTree = "<group>";
+		};
+		55E725881E00252B00DCBC30 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55E7258E1E00252C00DCBC30 /* libapi-sdk.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		65281C2B1D6C34EA00F15ACE /* Products */ = {
@@ -515,10 +531,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				55E725871E00252B00DCBC30 /* api-sdk.xcodeproj */,
+				55E725801E00251D00DCBC30 /* api-sdk */,
 				6555DE211DED7AAF0044E5EF /* ReactRefAppDeveloper.entitlements */,
 				1A7F21EE1DBEC10800D90531 /* Frameworks */,
 				654B80D11DBE0C620052D415 /* Bolts.framework */,
-				6511E1131DBA5E4C00BBBB89 /* api-sdk */,
 				6582FD681D9526890075C15D /* libstdc++.tbd */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
@@ -594,6 +611,9 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = F78S5YW242;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -602,6 +622,9 @@
 					65127DF91D795B4000FB36E1 = {
 						DevelopmentTeam = 2S999FKG5P;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -621,6 +644,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 55E725881E00252B00DCBC30 /* Products */;
+					ProjectRef = 55E725871E00252B00DCBC30 /* api-sdk.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -752,6 +779,13 @@
 			fileType = archive.ar;
 			path = libRCTCamera.a;
 			remoteRef = 1A36B3551DC0641D0062FA5F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55E7258E1E00252C00DCBC30 /* libapi-sdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libapi-sdk.a";
+			remoteRef = 55E7258D1E00252C00DCBC30 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */ = {
@@ -910,6 +944,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = F78S5YW242;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -947,7 +982,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "777be214-2a11-4bac-b06b-774c431ab8bf";
+				PROVISIONING_PROFILE = "1df609cf-8bbf-4d5f-ae1a-da2a80ddcd22";
+				PROVISIONING_PROFILE_SPECIFIER = "NWD Distribution InHouse Profile";
 			};
 			name = Debug;
 		};
@@ -994,7 +1030,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "99a28b70-1d63-4f69-bc27-45b5887f16e1";
+				PROVISIONING_PROFILE = "1df609cf-8bbf-4d5f-ae1a-da2a80ddcd22";
 				PROVISIONING_PROFILE_SPECIFIER = "NWD Distribution InHouse Profile";
 			};
 			name = Release;
@@ -1008,6 +1044,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 2S999FKG5P;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1043,7 +1080,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.PushNotificationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fca1d93a-88c9-4361-abda-9cbb867f3a96";
+				PROVISIONING_PROFILE = "720933cd-cb55-4d49-9759-20124cce8dfb";
+				PROVISIONING_PROFILE_SPECIFIER = "push notification dev profile";
 			};
 			name = Debug;
 		};
@@ -1056,6 +1094,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2S999FKG5P;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1087,7 +1126,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.PushNotificationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fca1d93a-88c9-4361-abda-9cbb867f3a96";
+				PROVISIONING_PROFILE = "720933cd-cb55-4d49-9759-20124cce8dfb";
+				PROVISIONING_PROFILE_SPECIFIER = "push notification dev profile";
 			};
 			name = Release;
 		};
