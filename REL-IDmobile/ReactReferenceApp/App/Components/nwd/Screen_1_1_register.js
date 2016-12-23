@@ -328,7 +328,7 @@ class Register extends Component {
               Registration
             </Title>
           </View>
-          <ScrollView style={Skin.layout1.content.scrollwrap}>
+          <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true} keyboardDismissMode='on-drag'>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
                 <View>
