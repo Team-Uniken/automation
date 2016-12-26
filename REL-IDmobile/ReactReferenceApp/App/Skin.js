@@ -46,6 +46,8 @@ const open = {
 // Called
 const {StyleSheet, Dimensions, PixelRatio} = ReactNative;
 const {Component} = React;
+const THEME_COLOR = '#d92a2e'; // '#0277BD'; //
+
 
 
 // Colors
@@ -76,7 +78,7 @@ const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + '
 const load = {
   OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
 
-  OVERLAY_SPINNER_COLOR: '#d92a2e',
+  OVERLAY_SPINNER_COLOR: THEME_COLOR,
   BG_COLOR_RGB: '255,255,255',
   BG_COLOR_OPACITY: '0.9',
   LOAD_SEQUENCE_TEXT_COLOR: '#3b3b3b'
@@ -112,7 +114,7 @@ const main = {
   BOTTOM_MENU_HIGHLIGHT_OPACITY: '1',
   NAVBAR_TINT: '#ffffff',
   NAVBAR_BG: '#ffffff',
-  TITLE_COLOR: '#d92a2e'
+  TITLE_COLOR: THEME_COLOR
 }
 
 const admin = { MENU_TITLE: 'NWD', MENU_FONT: 'Times New Roman' }
@@ -127,19 +129,22 @@ const TITLE_COLOR = TITLE_TEXT_COLOR
 const TITLE_BG_COLOR = '#ffffff'
 const BLACK_TEXT_COLOR = '#000'
 const ERROR_TEXT_COLOR = '#CC0000'
-const BUTTON_BG_COLOR = '#d92a2e'
+const BUTTON_BG_COLOR = THEME_COLOR
 const BUTTON_TEXT_COLOR = '#ffffff'
 const BUTTON_UNDERLAY_COLOR = '#000000'
-const LOGO_COLOR = '#d92a2e'
+const BLACK = '#000000'
+const WHITE = '#FFFFFF'
+
+const LOGO_COLOR = THEME_COLOR
 const LIGHT_TEXT_COLOR = '#929292'
 const INPUT_BG_COLOR = '#f1f1f1'
 const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
 const INPUT_TEXT_COLOR = '#2C2C2C'
-const INPUT_BD_COLOR = '#d92a2e'
+const INPUT_BD_COLOR = THEME_COLOR
 const BOTTOM_MENU_BG = '#b72e2d'
 const BOTTOM_MENU_COLOR = '#fff'
 const BOTTOM_MENU_UNDERLAY = '#a73834'
-const BOTTOM_MENU_SELECT_BG = '#d92a2e'
+const BOTTOM_MENU_SELECT_BG = THEME_COLOR
 const BOTTOM_MENU_SELECT_COLOR = '#ffffff'
 const BOTTOM_MENU_SELECT_UNDERLAY = '#a73834'
 const APPROVE_BUTTON_COLOR = '#92D050';
@@ -517,7 +522,7 @@ module.exports.layout0 = {
 
 module.exports.layout1 = {
   termandcondition: {
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     position: 'absolute',
     top: 40,
     bottom: 0,
@@ -590,7 +595,7 @@ module.exports.layout1 = {
     camera: {
       prompt: {
         textAlign: 'center',
-        color: '#ffffff',
+        color: WHITE,
         fontSize: 18,
         minHeight: 24,
       height:48,
@@ -625,7 +630,7 @@ module.exports.layout1 = {
         backgroundColor: 'rgba(100,100,100,0.5)',
         marginBottom: 0,
         flex: 1,
-        color: '#ffffff'
+        color: WHITE
       },
       placeholderTextColor: 'rgba(255,255,255,0.8)',
     },
@@ -637,7 +642,7 @@ module.exports.layout1 = {
       },
       text: {
         fontSize: 21,
-        color: '#000000',
+        color:BLACK,
         textAlign: 'center',
         marginBottom: 22,
       }
@@ -713,11 +718,11 @@ const navbar = module.exports.navbar = {
 }
 
 const layout3 = module.exports.layout3 = {
-  bbgcolor: '#ffffff',
+  bbgcolor: WHITE,
   split: {
     bottom: {
       flex: 1,
-      backgroundColor: '#ffffff',
+      backgroundColor:WHITE,
     },
     top: {
       wrap: {
@@ -744,7 +749,7 @@ const layout3 = module.exports.layout3 = {
       alignItems: 'center',
     },
     text: {
-      color: '#000000', //list.listHeaderColor,
+      color:BLACK, //list.listHeaderColor,
       paddingBottom: 5,
       paddingTop: 10,
       backgroundColor: BACKGROUND_COLOR,
@@ -794,7 +799,7 @@ const layout3 = module.exports.layout3 = {
       fontSize: 16,
       textAlign: 'right',
       flex: 1,
-      color: '#000000'
+      color:BLACK
     },
     ptstext: {
       fontSize: 12,
@@ -937,8 +942,8 @@ const customeStyle = StyleSheet.create({
     marginBottom: 16,
     marginLeft: SCREEN_WIDTH / 2 - 140,
     borderWidth: 1,
-    borderColor: "#fff",
-    backgroundColor: '#fff',
+    borderColor: WHITE,
+    backgroundColor:WHITE,
     borderRadius: 30,
   },
   roundcornerbutton: {
@@ -948,7 +953,7 @@ const customeStyle = StyleSheet.create({
     marginBottom: 16,
     marginLeft: SCREEN_WIDTH / 2 - 140,
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: WHITE,
     borderRadius: 30,
     backgroundColor: BUTTON_BACKGROUND_COLOR,
   },
@@ -960,7 +965,7 @@ const customeStyle = StyleSheet.create({
     marginLeft: SCREEN_WIDTH / 2 - 140,
     borderWidth: 1,
     borderColor: BORDER_COLOR,
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     borderRadius: 30,
   },
   note: {
@@ -1034,13 +1039,13 @@ const customeStyle = StyleSheet.create({
   div: {
     marginTop: 16,
     width: SCREEN_WIDTH,
-    backgroundColor: '#000',
+    backgroundColor:BLACK,
     height: 1,
     opacity: 0.6,
   },
   div1: {
     width: SCREEN_WIDTH,
-    backgroundColor: '#000',
+    backgroundColor:BLACK,
     height: 1,
     opacity: 0.6,
   },
@@ -1074,7 +1079,7 @@ const questionrow = StyleSheet.create({
   },
   questyle: {
     fontSize: 16,
-    color: '#fff',
+    color: WHITE,
     opacity: 1,
     height: 40,
     marginTop: 6,
@@ -1089,7 +1094,7 @@ const AccountActivationStep = StyleSheet.create({
   header: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
+    color: WHITE,
     opacity: 1,
     marginTop: 16,
     width: SCREEN_WIDTH,
@@ -1099,7 +1104,7 @@ const AccountActivationStep = StyleSheet.create({
   },
   compulsory_chlng_name: {
     fontSize: 16,
-    color: '#fff',
+    color:WHITE,
     opacity: 1,
     marginTop: 4,
     width: SCREEN_WIDTH,
@@ -1109,7 +1114,7 @@ const AccountActivationStep = StyleSheet.create({
   },
   optional_chlng_name: {
     fontSize: 16,
-    color: '#fff',
+    color:WHITE,
     opacity: 1,
     marginLeft: 16,
     textAlign: 'left',
@@ -1117,13 +1122,13 @@ const AccountActivationStep = StyleSheet.create({
   },
   seprator: {
     width: SCREEN_WIDTH,
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     height: 2,
     opacity: 1,
   },
   title: {
     fontSize: 24,
-    color: '#fff',
+    color: WHITE,
     opacity: 1,
     height: 40,
     marginTop: 8,
@@ -1138,7 +1143,7 @@ const AccountActivationStep = StyleSheet.create({
 
 const appointmentrow = StyleSheet.create({
   customerow: {
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     width: SCREEN_WIDTH,
   },
   row: {
@@ -1202,7 +1207,7 @@ const appointmentrow = StyleSheet.create({
   },
   div1: {
     width: SCREEN_WIDTH,
-    backgroundColor: '#000',
+    backgroundColor: BLACK,
     height: 1,
     opacity: 0.6,
   },
@@ -1211,7 +1216,7 @@ const appointmentrow = StyleSheet.create({
 
 const notification = StyleSheet.create({
   customerow: {
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     width: SCREEN_WIDTH - 32,
     marginTop: 20,
     marginLeft: 16,
@@ -1320,7 +1325,7 @@ const notification = StyleSheet.create({
 
   buttontext: {
     fontSize: SCREEN_WIDTH <= 320 ? 18 : 20,
-    color: '#FFF',
+    color: WHITE,
     textAlign: 'center',
     opacity: 1,
   },
@@ -1433,7 +1438,7 @@ const addappointment = StyleSheet.create({
     height: SCREEN_HEIGHT,
   },
   branchstyle: {
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     position: 'absolute',
     top: 0,
     bottom: 0,
@@ -1551,7 +1556,7 @@ const PatternLockStyle = StyleSheet.create({
 
 const ConnectionProfile = StyleSheet.create({
   branchstyle: {
-    backgroundColor: '#fff',
+    backgroundColor:WHITE,
     position: 'absolute',
     top: SCREEN_HEIGHT / 2 - 350 / 2,
     left: SCREEN_WIDTH / 2 - 300 / 2,
@@ -1739,21 +1744,21 @@ const loadStyle = StyleSheet.create({
     fontSize: 89,
     marginLeft: 31 + leftrid,
     marginTop: 31,
-    color: '#ffffff',
+    color: WHITE,
     //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_r: {
     position: 'absolute',
     fontSize: 120,
     marginLeft: leftrid,
-    color: '#FFFFFF',
+    color:WHITE,
     //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_d: {
     position: 'absolute',
     fontSize: 120,
     marginLeft: 62 + leftrid,
-    color: '#ffffff',
+    color:WHITE,
     //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   relid_wrap: {
@@ -1768,7 +1773,7 @@ const loadStyle = StyleSheet.create({
     marginLeft: 47,
     width: 170,
     flex: 1,
-    color: '#FFFFFF',
+    color:WHITE,
     backgroundColor: 'transparent',
     //backgroundColor: 'rgba(0,100,0,0.5)',
   },
@@ -1879,7 +1884,6 @@ const controlStyle = StyleSheet.create({
   container: {
     backgroundColor: '#1c1c1c',
     flex: 1,
-    //color: '#ffffff',
   },
   shadow: {
     width: 300,
@@ -1890,7 +1894,7 @@ const controlStyle = StyleSheet.create({
     }
   },
   menuItem: {
-    color: '#ffffff',
+    color:WHITE,
     fontFamily: CORE_FONT,
     marginTop: 15,
     marginBottom: 15,
@@ -1905,7 +1909,7 @@ const controlStyle = StyleSheet.create({
     paddingLeft: 20
   },
   controlHeader: {
-    color: '#ffffff',
+    color:WHITE,
     fontFamily: admin.MENU_FONT,
     paddingTop: 30,
     fontSize: 30,
