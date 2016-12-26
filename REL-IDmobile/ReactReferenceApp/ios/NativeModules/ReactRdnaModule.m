@@ -26,6 +26,8 @@ RDNAIWACreds *rdnaIWACredsObj;
   CLLocationManager *locationManagerObject;
   BOOL isRDNAIntilized;
   NSMutableDictionary *jsonDictionary;
+  int i;
+  
   
 }
 @end
@@ -348,6 +350,8 @@ RCT_EXPORT_METHOD (checkChallenges:(NSString *)challengeRequestString
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
   int errorID = 0;
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setValue:userID forKey:@"userName"];
   errorID = [rdnaObject checkChallenges:challengeRequestString forUserID:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -509,6 +513,7 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 
 - (int)onInitializeCompleted:(NSString *)status {
   NSLog(@"init success");
+  i =0;
   [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onInitializeCompleted"
                                                             body:@{@"response":status}];
   return 0;
@@ -598,16 +603,23 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 }
 
 - (RDNAIWACreds *)getCredentials:(NSString *)domainUrl{
-  
-  
   rdnaIWACredsObj  = [[RDNAIWACreds alloc] init];
- 
+  if (i==0) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *name = [defaults valueForKey:@"userName"];
+    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
+                                                              body:@{@"response":name}];
+    i++;
+  }else{
+
     [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
                                                               body:@{@"response":domainUrl}];
+  }
   semaphore = dispatch_semaphore_create(0);
   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+   return rdnaIWACredsObj;
   
-  return rdnaIWACredsObj;
+
 }
 
 

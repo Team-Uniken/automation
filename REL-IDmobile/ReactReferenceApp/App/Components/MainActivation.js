@@ -7,7 +7,7 @@
 import ReactNative from 'react-native';
 import React,{Component} from 'react';
 import Skin from '../Skin';
-
+import Main from './Main';
 /*
   CALLED
 */
@@ -33,11 +33,13 @@ const {
   TouchableWithoutFeedback,
   StyleSheet,
   TextInput,
+  AsyncStorage,
 
 } = ReactNative;
 
 let obj;
 let getCredentialSubscriptions;
+let passwordSubscriptions;
 class MainActivation extends Component {
   constructor(props) {
     super(props);
@@ -87,6 +89,35 @@ class MainActivation extends Component {
     this.open();
   }
 
+  onpasswordSubscriptions(e){
+    let uName = e.response;
+    AsyncStorage.getItem(e.response).then((value) => {
+                                                try {
+                                                value = JSON.parse(value);
+                                          ReactRdna.setCredentials(uName,value.RPasswd,true,(response) => {
+                                                                   if (response) {
+                                                                   console.log('immediate response is'+response[0].error);
+                                                                   }else{
+                                                                   console.log('immediate response is'+response[0].error);
+                                                                   }
+                                                                   });
+//                                                ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
+//                                                                            if (response) {
+//                                                                            console.log('immediate response of encrypt data packet is is' + response[0].error);
+//                                                                            ReactRdna.setCredentials(uName,response[0].response,true,(response) => {
+//                                                                                                     if (response) {
+//                                                                                                     console.log('immediate response is'+response[0].error);
+//                                                                                                     }else{
+//                                                                                                     console.log('immediate response is'+response[0].error);
+//                                                                                                     }
+//                                                                                                     });
+//                                                                            } else {
+//                                                                            console.log('immediate response is' + response[0].response);
+//                                                                            }
+//                                                                            });
+                                                } catch (e) { }
+                                                }).done();
+  }
   checkCreds() {
     
     const user = this.state.userName;
@@ -140,10 +171,14 @@ class MainActivation extends Component {
     if(getCredentialSubscriptions){
       getCredentialSubscriptions.remove();
     }
+    if(passwordSubscriptions){
+      passwordSubscriptions.remove();
+    }
     getCredentialSubscriptions  = DeviceEventEmitter.addListener(
                                                                  'onGetCredentials',
                                                                  this.onGetCredentialsStatus.bind(this)
                                                                  );
+    passwordSubscriptions = DeviceEventEmitter.addListener('getpasswordSubscriptions',this.onpasswordSubscriptions.bind(this));
    
       if(constant.USER_SESSION === "YES"){
         this.setState({isSettingButtonHide: 0});
