@@ -344,6 +344,9 @@ class ControlPanel extends Component {
   }
 
   getChallengesByName(chlngName) {
+    
+    if(Main.isConnected){
+      
     if (onGetAllChallengeEvent) {
       onGetAllChallengeEvent.remove();
     }
@@ -364,6 +367,16 @@ class ControlPanel extends Component {
         }
       })
     }).done();
+    }else{
+      
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK' }
+                   ]
+                  );
+    }
   }
 
   doNavigation() {

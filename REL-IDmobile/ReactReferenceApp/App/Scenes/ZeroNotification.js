@@ -315,7 +315,18 @@ export default class NotificationMgmtScene extends Component {
       NotificationObtianedResponse = this.props.url.data;
       this.onGetNotificationsDetails(NotificationObtianedResponse);
     }else{
-      this.getMyNotifications();
+      if(Main.isConnected){
+        this.getMyNotifications();
+      }else{
+        
+        Alert.alert(
+                    '',
+                    'Please check your internet connection',
+                    [
+                     { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+                     ]
+                    );
+      }
     }
     if(onUpdateNotification){
       onUpdateNotification.remove();

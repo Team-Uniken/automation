@@ -198,15 +198,27 @@ class RegisterOptionScene extends Component {
 
     InteractionManager.runAfterInteractions(() => {
 
-      Events.trigger('showLoader', true);
-      ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
-        if (response) {
-          console.log('getAllChallenges immediate response is' + response[0].error);
-        } else {
-          console.log('s immediate response is' + response[0].error);
-          Events.trigger('hideLoader', true);
-        }
-      });
+                                            if(Main.isConnected){
+                                            Events.trigger('showLoader', true);
+                                            ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
+                                                                       if (response) {
+                                                                       console.log('getAllChallenges immediate response is' + response[0].error);
+                                                                       } else {
+                                                                       console.log('s immediate response is' + response[0].error);
+                                                                       Events.trigger('hideLoader', true);
+                                                                       }
+                                                                       });
+                                            }else{
+                                            
+                                            Alert.alert(
+                                                        '',
+                                                        'Please check your internet connection',
+                                                        [
+                                                         { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+                                                         ]
+                                                        );
+                                            }
+      
 
       AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
         if (userPrefs) {
@@ -728,6 +740,8 @@ class RegisterOptionScene extends Component {
     }
 
     if (this.state.facebook != this.state.isFacebookRegisteredWithServer) {
+      
+      if(Main.isConnected){
       subscriptions = DeviceEventEmitter.addListener(
         'onUpdateChallengeStatus',
         this.onUpdateChallengeResponseStatus.bind(this)
@@ -747,6 +761,17 @@ class RegisterOptionScene extends Component {
           }
         });
       }).done();
+    }else{
+      
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK' }
+                   ]
+                  );
+    }
+
     } else {
       this.saveDefaultLoginPrefs();
       this.doNavigateDashBoard();

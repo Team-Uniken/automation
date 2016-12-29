@@ -387,6 +387,8 @@ class UpdateAuthMachine extends Component {
   }
 
   callUpdateChallenge() {
+    if(Main.isConnected){
+
     Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
@@ -399,6 +401,9 @@ class UpdateAuthMachine extends Component {
         }
       });
     }).done();
+  }else{
+    alert("Please check your internet connection");
+  }
   }
 }
 

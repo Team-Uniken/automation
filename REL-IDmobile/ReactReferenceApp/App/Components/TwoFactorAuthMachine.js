@@ -730,6 +730,8 @@ class TwoFactorAuthMachine extends Component {
   }
 
   initiateForgotPasswordFlow() {
+    
+     if(Main.isConnected){
     mode = "forgotPassword";
     this.mode = mode;
     Events.rm('forgotPassowrd', 'forgotPassword');
@@ -749,9 +751,16 @@ class TwoFactorAuthMachine extends Component {
         alert(response[0].error);
       }
     });
+       
+     }else{
+       alert("Please check your internet connection");
+     }
   }
 
   callCheckChallenge() {
+    
+    if(Main.isConnected){
+
     if (subscriptions) {
       subscriptions.remove();
     }
@@ -774,6 +783,10 @@ class TwoFactorAuthMachine extends Component {
         }
       });
     }).done();
+    
+    }else{
+      alert("Please check your internet connection");
+    }
   }
 }
 

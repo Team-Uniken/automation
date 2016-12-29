@@ -16,7 +16,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import MainActivation from '../MainActivation';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, Platform, TouchableOpacity, WebView, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
+const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, Platform, TouchableOpacity, WebView, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking,NetInfo, } = ReactNative;
 const {Component} = React;
 
 
@@ -162,7 +162,13 @@ class Register extends Component {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
-      this.registerUser();
+      
+      if(Main.isConnected){
+        this.registerUser();
+      }else{
+        this.showMessage("Error", "Please check your internet connection", false);
+      }
+      
     } else {
       this.showMessage("Error", "Accept Terms and Conditions", false);
     }

@@ -172,7 +172,18 @@ export default class DeviceMgmtScene extends Component {
   }
 
   componentDidMount() {
+    if(Main.isConnected){
     this.getRegisteredDeviceDetails();
+    }else{
+    
+    Alert.alert(
+                '',
+                'Please check your internet connection',
+                [
+                 { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+                 ]
+                );
+    }
   }
 
   getRegisteredDeviceDetails() {
@@ -276,15 +287,28 @@ export default class DeviceMgmtScene extends Component {
   }
 
   deleteDevice(deviceHolder) {
-    const device = deviceHolder.device;
-    this.toggleDeviceStatus(device);
-    console.log('------- old ' + deviceHolderList[deviceHolder.index].device
-      .status + ' new ' + device.status);
-    obj.setState({
-      dataSource: deviceHolderList,
-    });
-
-    this.updateDeviceDetails();
+    
+    if(Main.isConnected){
+      const device = deviceHolder.device;
+      this.toggleDeviceStatus(device);
+      console.log('------- old ' + deviceHolderList[deviceHolder.index].device
+                  .status + ' new ' + device.status);
+      obj.setState({
+                   dataSource: deviceHolderList,
+                   });
+      
+      this.updateDeviceDetails();
+    }else{
+      
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK'}
+                   ]
+                  );
+    }
+    
   }
 
   isDeviceDeleted(device) {
@@ -292,23 +316,36 @@ export default class DeviceMgmtScene extends Component {
   }
 
   updateDeviceDetails() {
-    console.log('----- DeviceMgmt.updateDeviceDetails');
-    console.log('----- ----- devicesList: ' + JSON.stringify(devicesList));
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.updateDeviceDetails(value, JSON.stringify(devicesList), (response) => {
-        console.log('----- ----- AsyncStorage -> ReactRdna.updateDeviceDetails.response:');
-        console.log(response);
-
-        if (response[0].error !== 0) {
-          console.log('----- ----- response is not 0');
-          if (devicesResponse !== undefined) {
-            console.log('----- ----- response is not 0');
-            // If error occurred reload last response
-            this.onGetRegistredDeviceDetails(devicesResponse);
-          }
-        }
-      });
-    }).done();
+    
+    if(Main.isConnected){
+      console.log('----- DeviceMgmt.updateDeviceDetails');
+      console.log('----- ----- devicesList: ' + JSON.stringify(devicesList));
+      AsyncStorage.getItem('userId').then((value) => {
+                                          ReactRdna.updateDeviceDetails(value, JSON.stringify(devicesList), (response) => {
+                                                                        console.log('----- ----- AsyncStorage -> ReactRdna.updateDeviceDetails.response:');
+                                                                        console.log(response);
+                                                                        
+                                                                        if (response[0].error !== 0) {
+                                                                        console.log('----- ----- response is not 0');
+                                                                        if (devicesResponse !== undefined) {
+                                                                        console.log('----- ----- response is not 0');
+                                                                        // If error occurred reload last response
+                                                                        this.onGetRegistredDeviceDetails(devicesResponse);
+                                                                        }
+                                                                        }
+                                                                        });
+                                          }).done();
+    }else{
+      
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK' }
+                   ]
+                  );
+    }
+    
   }
 
   renderListViewData(devices) {

@@ -424,6 +424,9 @@ class PostLoginAuthMachine extends Component {
   }
 
   callCheckChallenge() {
+    
+     if(Main.isConnected){
+
     console.log("onCheckChallengeResponse ----- show loader");
     Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
@@ -437,6 +440,9 @@ class PostLoginAuthMachine extends Component {
         }
       });
     }).done();
+     }else{
+       alert("Please check your internet connection");
+     }
   }
 }
 
