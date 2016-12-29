@@ -527,7 +527,7 @@ class ControlPanel extends Component {
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Device Managment</Text>
+          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Device Management</Text>
           </TouchableHighlight><View style={styles.menuBorder}></View>
 
           <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Notifications</Text>
