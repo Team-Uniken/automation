@@ -29,6 +29,9 @@ import java.util.concurrent.Semaphore;
  */
 public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
+    int i;
+    String uName;
+
     Handler uiHandler;
     Semaphore lock = new Semaphore(0,true);
     RDNA.RDNAIWACreds rdnaiwaCreds = null;
@@ -78,7 +81,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onInitializeCompleted(String rdnaStatusInit) {
-
+                i=0;
                 Logger.d(TAG, "------- "+rdnaStatusInit);
                 WritableMap params = Arguments.createMap();
                 params.putString("response", rdnaStatusInit);
@@ -267,18 +270,34 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             @Override
             public RDNA.RDNAIWACreds getCredentials(final String domainUrl) {
                 Logger.d(TAG, "-------- getCredentials " + domainUrl);
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        WritableMap params = Arguments.createMap();
-                        params.putString("response", domainUrl);
 
-                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("onGetCredentials", params);
-                    }
-                };
+                if(i==0){
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            WritableMap params = Arguments.createMap();
+                            params.putString("response", uName);
+                            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                    .emit("getpasswordSubscription", params);
+                        }
+                    };
 
-                callOnMainThread(runnable);
+                    callOnMainThread(runnable);
+                    i++;
+                }else{
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            WritableMap params = Arguments.createMap();
+                            params.putString("response", domainUrl);
+                            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                    .emit("onGetCredentials", params);
+                        }
+                    };
+                    callOnMainThread(runnable);
+                }
+
+
 
                 try {
                     lock.acquire();
@@ -420,6 +439,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void checkChallenges(String challengeRequestArray, String userID, Callback callback){
+        uName=userID;
         Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
         Logger.d(TAG , "----- userID " + userID);
         int error = rdnaObj.checkChallenges(challengeRequestArray, userID);
