@@ -59,7 +59,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   RDNA *rdna;
   localbridgeDispatcher = _bridge;
   [self initParams];
-  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:rdnaClientCallbacks GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil AppContext:self];
+  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil AppContext:self];
   rdnaObject = rdna;
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -162,7 +162,7 @@ RCT_EXPORT_METHOD (resumeRuntime:(NSString *)state
   int errorID = 0;
   RDNA *rdna;
   rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
-  errorID = [RDNA resumeRuntime:&rdna SavedState:state Callbacks:rdnaClientCallbacks ProxySettings:proxySettings AppContext:self];
+  errorID = [RDNA resumeRuntime:&rdna SavedState:state Callbacks:self ProxySettings:proxySettings AppContext:self];
   rdnaObject = rdna;
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];

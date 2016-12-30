@@ -724,6 +724,8 @@ class TwoFactorAuthMachine extends Component {
   }
 
   finishForgotPasswordFlow() {
+    mode = "normal"
+    this.mode = mode;
     this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
     Events.rm('onPostForgotPassword', 'onPostForgotPassword');
     Events.rm('finishForgotPasswordFlow', 'finishForgotPasswordFlow');
