@@ -334,7 +334,7 @@ class Register extends Component {
               Registration
             </Title>
           </View>
-          <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true} keyboardDismissMode='on-drag'>
+          <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
                 <View>
@@ -404,8 +404,8 @@ class Register extends Component {
                     autoComplete={false}
                     returnKeyType={"done"}
                     value={this.state.phoneNumber}
-
                     onChange={this.onPhoneNumberChange.bind(this) } />
+                    
                   <Text style={Skin.layout1.content.slider.text}>
                     Slide to prove you{"'"}re human
                   </Text>
