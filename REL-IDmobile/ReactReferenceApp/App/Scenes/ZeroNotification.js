@@ -305,7 +305,21 @@ var SampleRow = React.createClass({
 
 
 export default class NotificationMgmtScene extends Component {
-  
+  constructor(props) {
+    super(props);
+    obj = this;
+    var ds = new ListView.DataSource({
+                                     sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
+                                     rowHasChanged: (r1, r2) => r1 !== r2
+                                     
+                                     });
+    notification=[];                               
+    var data= this.renderListViewData(notification.sort(compare));
+    this.state = {
+    dataSource:  ds.cloneWithRows(data)
+    };
+  }
+
   componentWillMount() {
     
     obj = this;
@@ -315,18 +329,7 @@ export default class NotificationMgmtScene extends Component {
       NotificationObtianedResponse = this.props.url.data;
       this.onGetNotificationsDetails(NotificationObtianedResponse);
     }else{
-      if(Main.isConnected){
         this.getMyNotifications();
-      }else{
-        
-        Alert.alert(
-                    '',
-                    'Please check your internet connection',
-                    [
-                     { text: 'OK', onPress: () => this.props.navigator.pop(0) }
-                     ]
-                    );
-      }
     }
     if(onUpdateNotification){
       onUpdateNotification.remove();
@@ -345,44 +348,64 @@ export default class NotificationMgmtScene extends Component {
     obj.onGetNotificationsDetails(args);
   }
   getMyNotifications(){
-    
-    var recordCount = "0";
-    var startIndex = "1";
-    var enterpriseID = "";
-    var startDate = "";
-    var endDate = "";
-    ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
-                               
-                               console.log('----- NotificationMgmt.getMyNotifications.response ');
-                               console.log(response);
-                               
-                               if (response[0].error !== 0) {
-                               console.log('----- ----- response is not 0');
-                               if (NotificationObtianedResponse !== undefined) {
-                               // If error occurred reload last response
-                               this.onGetNotifications(NotificationObtianedResponse);
-                               }
-                               }
-                               
-                               });
+    if(Main.isConnected){
+      var recordCount = "0";
+      var startIndex = "1";
+      var enterpriseID = "";
+      var startDate = "";
+      var endDate = "";
+      ReactRdna.getNotifications(recordCount,startIndex,enterpriseID,startDate,endDate,(response)=>{
+                                
+                                console.log('----- NotificationMgmt.getMyNotifications.response ');
+                                console.log(response);
+                                
+                                if (response[0].error !== 0) {
+                                console.log('----- ----- response is not 0');
+                                if (NotificationObtianedResponse !== undefined) {
+                                // If error occurred reload last response
+                                this.onGetNotifications(NotificationObtianedResponse);
+                                }
+                                }
+                                
+                                });
+    }else{
+        
+        Alert.alert(
+                    '',
+                    'Please check your internet connection',
+                    [
+                     { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+                     ]
+                    );
+      }
   }
   
   updateNotificationDetails(notificationId, action){
     console.log('----- NotificationMgmt.updateNotificationDetails');
-    
-    ReactRdna.updateNotification(notificationId, action, (response) => {
-                                 console.log('ReactRdna.updateNotificationDetails.response:');
-                                 console.log(response);
-                                 
-                                 if (response[0].error !== 0) {
-                                 console.log('----- ----- response is not 0');
-                                 if (NotificationObtianedResponse !== undefined) {
-                                 console.log('----- ----- response is not 0');
-                                 // If error occurred reload last response
-                                 this.onGetNotifications(NotificationObtianedResponse);
-                                 }
-                                 }
-                                 });
+    if(Main.isConnected){
+      ReactRdna.updateNotification(notificationId, action, (response) => {
+                                  console.log('ReactRdna.updateNotificationDetails.response:');
+                                  console.log(response);
+                                  
+                                  if (response[0].error !== 0) {
+                                  console.log('----- ----- response is not 0');
+                                  if (NotificationObtianedResponse !== undefined) {
+                                  console.log('----- ----- response is not 0');
+                                  // If error occurred reload last response
+                                  this.onGetNotifications(NotificationObtianedResponse);
+                                  }
+                                  }
+                                  });
+    }
+    else{
+       Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK' }
+                   ]
+                  );
+    }
   }
   componentWillUnmount() {
     Events.rm('showNotification', 'showNotification');
@@ -452,22 +475,6 @@ export default class NotificationMgmtScene extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-  }
-  
-  
-  
-  constructor(props) {
-    super(props);
-    obj = this;
-    var ds = new ListView.DataSource({
-                                     sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
-                                     rowHasChanged: (r1, r2) => r1 !== r2
-                                     
-                                     });
-    var data= this.renderListViewData(notification.sort(compare));
-    this.state = {
-    dataSource:  ds.cloneWithRows(data)
-    };
   }
   
   renderListViewData(s) {

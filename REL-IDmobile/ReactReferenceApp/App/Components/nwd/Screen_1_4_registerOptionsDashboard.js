@@ -131,13 +131,13 @@ class RegisterOptionScene extends Component {
                 try {
                   value = JSON.parse(value);
                   if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported":$this.isTouchIDPresent } };
-                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported":$this.isTouchIDPresent } } });
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
                   } else {
-                    
-                      this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch":false, "isSupported":$this.isTouchIDPresent  } };
-                      this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch":false , "isSupported":$this.isTouchIDPresent } } });
-                    
+
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
+
                   }
 
                   // this.forceUpdate();
@@ -198,27 +198,27 @@ class RegisterOptionScene extends Component {
 
     InteractionManager.runAfterInteractions(() => {
 
-                                            if(Main.isConnected){
-                                            Events.trigger('showLoader', true);
-                                            ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
-                                                                       if (response) {
-                                                                       console.log('getAllChallenges immediate response is' + response[0].error);
-                                                                       } else {
-                                                                       console.log('s immediate response is' + response[0].error);
-                                                                       Events.trigger('hideLoader', true);
-                                                                       }
-                                                                       });
-                                            }else{
-                                            
-                                            Alert.alert(
-                                                        '',
-                                                        'Please check your internet connection',
-                                                        [
-                                                         { text: 'OK', onPress: () => this.props.navigator.pop(0) }
-                                                         ]
-                                                        );
-                                            }
-      
+      if (Main.isConnected) {
+        Events.trigger('showLoader', true);
+        ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
+          if (response) {
+            console.log('getAllChallenges immediate response is' + response[0].error);
+          } else {
+            console.log('s immediate response is' + response[0].error);
+            Events.trigger('hideLoader', true);
+          }
+        });
+      } else {
+
+        Alert.alert(
+          '',
+          'Please check your internet connection',
+          [
+            { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+          ]
+        );
+      }
+
 
       AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
         if (userPrefs) {
@@ -460,7 +460,7 @@ class RegisterOptionScene extends Component {
         if (Platform.OS === 'android') {
           data.push(Skin.text['0']['2'].credTypes['pattern']);
         } else {
-          
+
           data.push(Skin.text['0']['2'].credTypes['touchid']);
         }
       } else if (this.state.pattern) {
@@ -740,37 +740,37 @@ class RegisterOptionScene extends Component {
     }
 
     if (this.state.facebook != this.state.isFacebookRegisteredWithServer) {
-      
-      if(Main.isConnected){
-      subscriptions = DeviceEventEmitter.addListener(
-        'onUpdateChallengeStatus',
-        this.onUpdateChallengeResponseStatus.bind(this)
-      );
+
+      if (Main.isConnected) {
+        subscriptions = DeviceEventEmitter.addListener(
+          'onUpdateChallengeStatus',
+          this.onUpdateChallengeResponseStatus.bind(this)
+        );
 
 
-      AsyncStorage.getItem('userId').then((value) => {
-        Events.trigger('showLoader', true);
-        ReactRdna.updateChallenges(JSON.stringify(this.state.url.chlngJson), value, (response) => {
-          if (response[0].error === 0) {
-            console.log('immediate response is' + response[0].error);
-          } else {
-            Events.trigger('hideLoader', true);
-            console.log('immediate response is' + response[0].error);
-            alert(response[0].error);
+        AsyncStorage.getItem('userId').then((value) => {
+          Events.trigger('showLoader', true);
+          ReactRdna.updateChallenges(JSON.stringify(this.state.url.chlngJson), value, (response) => {
+            if (response[0].error === 0) {
+              console.log('immediate response is' + response[0].error);
+            } else {
+              Events.trigger('hideLoader', true);
+              console.log('immediate response is' + response[0].error);
+              alert(response[0].error);
 
-          }
-        });
-      }).done();
-    }else{
-      
-      Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK' }
-                   ]
-                  );
-    }
+            }
+          });
+        }).done();
+      } else {
+
+        Alert.alert(
+          '',
+          'Please check your internet connection',
+          [
+            { text: 'OK' }
+          ]
+        );
+      }
 
     } else {
       this.saveDefaultLoginPrefs();
@@ -814,7 +814,7 @@ class RegisterOptionScene extends Component {
   render() {
     if (this.state.url) {
       var indents = [];
-      
+
       // Commented to hide make Permanent checkbox as suggested by James
       // indents.push(
       //   <Checkbox
