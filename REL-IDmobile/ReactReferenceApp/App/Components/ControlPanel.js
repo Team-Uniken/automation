@@ -79,7 +79,7 @@ class ControlPanel extends Component {
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
         {
-          text: 'OK', onPress:this.logOff
+          text: 'OK', onPress: this.logOff
         },
       ]
     );
@@ -208,7 +208,7 @@ class ControlPanel extends Component {
               return;
             }
           }
-          InteractionManager.runAfterInteractions(()=>{
+          InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
           });
         } else if (this.isNotificationScreenPresent() == 1) {
@@ -253,26 +253,36 @@ class ControlPanel extends Component {
   }
 
   getMyNotifications() {
+    if (Main.isConnected) {
+      var recordCount = "0";
+      var startIndex = "1";
+      var enterpriseID = "";
+      var startDate = "";
+      var endDate = "";
+      ReactRdna.getNotifications(recordCount, startIndex, enterpriseID, startDate, endDate, (response) => {
 
-    var recordCount = "0";
-    var startIndex = "1";
-    var enterpriseID = "";
-    var startDate = "";
-    var endDate = "";
-    ReactRdna.getNotifications(recordCount, startIndex, enterpriseID, startDate, endDate, (response) => {
+        console.log('----- NotificationMgmt.getMyNotifications.response ');
+        console.log(response);
 
-      console.log('----- NotificationMgmt.getMyNotifications.response ');
-      console.log(response);
+        if (response[0].error !== 0) {
+          console.log('----- ----- response is not 0');
+          //                               if (NotificationObtianedResponse !== undefined) {
+          //                               // If error occurred reload last response
+          //
+          //                                                              }
+        }
 
-      if (response[0].error !== 0) {
-        console.log('----- ----- response is not 0');
-        //                               if (NotificationObtianedResponse !== undefined) {
-        //                               // If error occurred reload last response
-        //
-        //                                                              }
-      }
+      });
+    } else {
 
-    });
+      Alert.alert(
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+        ]
+      );
+    }
   }
 
   getPostLoginChallenges(useCaseName, challengeToBeUpdated) {
@@ -344,38 +354,38 @@ class ControlPanel extends Component {
   }
 
   getChallengesByName(chlngName) {
-    
-    if(Main.isConnected){
-      
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
-    }
 
-    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-      'onGetAllChallengeStatus',
-      this.onGetAllChallengeStatus.bind(this)
-    );
+    if (Main.isConnected) {
 
-    challengeName = chlngName;
-    Events.trigger('showLoader', true);
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.getAllChallenges(value, (response) => {
-        if (response) {
-          console.log('getAllChallenges immediate response is' + response[0].error);
-        } else {
-          console.log('s immediate response is' + response[0].error);
-        }
-      })
-    }).done();
-    }else{
-      
+      if (onGetAllChallengeEvent) {
+        onGetAllChallengeEvent.remove();
+      }
+
+      onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+        'onGetAllChallengeStatus',
+        this.onGetAllChallengeStatus.bind(this)
+      );
+
+      challengeName = chlngName;
+      Events.trigger('showLoader', true);
+      AsyncStorage.getItem('userId').then((value) => {
+        ReactRdna.getAllChallenges(value, (response) => {
+          if (response) {
+            console.log('getAllChallenges immediate response is' + response[0].error);
+          } else {
+            console.log('s immediate response is' + response[0].error);
+          }
+        })
+      }).done();
+    } else {
+
       Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK' }
-                   ]
-                  );
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK' }
+        ]
+      );
     }
   }
 
@@ -497,11 +507,7 @@ class ControlPanel extends Component {
     }
 
   }
-
-
-
-
-
+  
   render() {
 
 
