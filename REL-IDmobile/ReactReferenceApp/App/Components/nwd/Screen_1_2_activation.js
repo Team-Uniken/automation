@@ -278,7 +278,7 @@ class Activation extends Component {
 
               <Text style={[Skin.layout1.content.camera.prompt, {
                 position: 'absolute',
-                top: 10,
+                top: 20,
                 zIndex: 1,
                 width: Skin.SCREEN_WIDTH,
                 backgroundColor:'transparent'
@@ -348,7 +348,7 @@ class Activation extends Component {
               </Text>
             </View>
           </View>
-          <KeyboardSpacer topSpacing={-45} />
+          <KeyboardSpacer topSpacing={-55} />
         </View>
       </MainActivation>
     );
