@@ -314,8 +314,10 @@ class Activation extends Component {
                   autoComplete={false}
                   autoCapitalize={true}
                   secureTextEntry={true}
-                  styleInput={Skin.layout1.content.code.input}
+                    styleInputView={[{ width: Skin.SCREEN_WIDTH-100}]}
+                   styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}
+            
                   placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
                   onChange={this.onActivationCodeChange.bind(this) }
                   onSubmitEditing={() => { dismissKeyboard(); this.checkActivationCode(); } }/>
