@@ -25,14 +25,7 @@ import Web from './App/Scenes/Web';
 import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
 // SECURITY SCENES
-import Activation from './App/Components/challenges/Activation';
-import PasswordSet from './App/Components/challenges/PasswordSet';
-import Otp from './App/Components/challenges/Otp';
-import QuestionSet from './App/Components/challenges/QuestionSet';
-import QuestionVerification from './App/Components/challenges/QuestionVerification';
-import UserLogin from './App/Components/challenges/UserLogin';
-import DeviceBinding from './App/Components/challenges/DeviceBinding';
-import PasswordVerification from './App/Components/challenges/PasswordVerification';
+
 
 import RegisterOptionScene from './App/Components/nwd/Screen_1_4_registerOptionsDashboard';
 import PatternLock from './App/Components/nwd/Screen_PatternLock';
@@ -44,13 +37,7 @@ import Screen_3_3_locations from './App/Components/nwd/Screen_3_3_locations';
 // COMPONENTS
 
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-// import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
-// import SelectLogin from './App/Components/nwd/selectlogin';
-// import Register from './App/Components/nwd/register';
-// import Register14 from './App/Components/nwd/register14';
-// import SetPassword from './App/Components/nwd/setpassword';
-// import CheckUser from './App/Components/nwd/checkuser';
-// import VerifyPassword from './App/Components/nwd/verifypassword';
+
 
 
 import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
@@ -108,30 +95,6 @@ class ReactRefApp extends Component {
 
   renderScene(route, nav) {
     let id = route.id;
-
-    if (id === 'Load') {
-      // id = 'Accounts'
-      // id = 'UserLogin';
-      // id = 'Activation';
-      // id = "PasswordSet";
-      // id = 'PasswordVerification';
-      // id = 'FindBranch';
-      // id = 'ConnectionProfile';
-      // id = 'Device';
-      // id = 'PayBills';
-      // id = 'QuestionSet';
-      // id = 'DevBind';
-      // id = 'Deposits';
-      // id = 'ActivateNewDevice';
-      // id = 'SecureWebView';
-      // id = 'QuestionSet';
-      // id = 'QuestionVerification';
-      // id = 'Contact';
-      //id = 'Screen_1_1_register'
-      //id = 'Screen_1_4_registerOptions'
-      //id = 'Screen_1_3_setPassword'
-    }
-
     // MAIN SCENES
     if (id === 'Main' || id === 'Accounts') {
       return (<Screen_3_1_deals
@@ -279,31 +242,7 @@ class ReactRefApp extends Component {
         navigate />);
 
       // SECURITY SCENES
-    } else if (id === 'Activation') {
-      return (<Activation
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'PasswordSet') {
-      return (<PasswordSet
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'UserLogin') {
-      return (<UserLogin
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'PasswordVerification') {
-      return (<PasswordVerification
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'Machine') {
+    }else if (id === 'Machine') {
       return (<Machine
         navigator={nav}
         url={route.url}
@@ -325,23 +264,7 @@ class ReactRefApp extends Component {
         url={route.url}
         title={route.title}
         rdna={route.DnaObject} />);
-    } else if (id === 'QuestionSet') {
-      return (<QuestionSet
-        navigator={nav}
-        url={route.url}
-        title={route.title} />);
-    } else if (id === 'QuestionVerification') {
-      return (<QuestionVerification
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'DevBind') {
-      return (<DeviceBinding
-        navigator={nav}
-        url={route.url}
-        title={route.title} />);
-    } else if (id === 'NotificationMgmt') {
+    }else if (id === 'NotificationMgmt') {
       return (<NotificationMgmtScene
         navigator={nav}
         url={route.url}

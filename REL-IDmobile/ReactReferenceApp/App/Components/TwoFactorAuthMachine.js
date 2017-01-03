@@ -28,7 +28,7 @@ import DeviceBinding from './nwd/Screen_Device_Binding';
 import DeviceName from './nwd/Screen_Device_Name';
 import PasswordVerification from './nwd/Screen_2_2_password';
 import PatternLock from './nwd/Screen_PatternLock';
-import ScreenHider from './challenges/ScreenHider';
+import ScreenHider from '../Scenes/ScreenHider';
 import SelectLogin from './nwd/Screen_0_2_selectlogin';
 
 
