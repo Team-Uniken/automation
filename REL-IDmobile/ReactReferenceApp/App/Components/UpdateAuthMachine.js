@@ -182,6 +182,12 @@ class UpdateAuthMachine extends Component {
           Events.trigger('onPostUpdate',null);
         }
       } else {
+        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
+           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
+
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{

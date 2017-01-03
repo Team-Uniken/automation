@@ -15,6 +15,7 @@ import Input from '../view/input';
 import Title from '../view/title';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 var dismissKeyboard = require('react-native-dismiss-keyboard');
+var obj;
 
 class AccessCode extends Component {
 
@@ -39,6 +40,7 @@ class AccessCode extends Component {
   }
 
   componentWillMount() {
+    obj = this;
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.state.showCamera = false;
     }
@@ -103,9 +105,9 @@ class AccessCode extends Component {
   }
 
   _onBarCodeRead(result) {
-    if (this.state.barCodeFlag === true) {
-      this.state.barCodeFlag = false;
-      this.onQRScanSuccess(result.data);
+    if (obj.state.barCodeFlag === true) {
+      obj.state.barCodeFlag = false;
+      obj.onQRScanSuccess(result.data);
     }
   }
 
@@ -146,7 +148,7 @@ class AccessCode extends Component {
         else {
           alert('Invalid QR code');
           setTimeout(function () {
-            $this.state.barCodeFlag = true;
+            obj.state.barCodeFlag = true;
           }, 2000);
           return;
         }
@@ -154,7 +156,7 @@ class AccessCode extends Component {
       } catch (e) {
         alert('Invalid QR code');
         setTimeout(function () {
-          $this.state.barCodeFlag = true;
+          obj.state.barCodeFlag = true;
         }, 2000);
         return;
       }
@@ -169,8 +171,7 @@ class AccessCode extends Component {
 
         $this.hideCamera();
         let responseJson = $this.props.url.chlngJson;
-        $this.barCodeFlag = false;
-
+        obj.state.barCodeFlag = false;
 
         responseJson.chlng_resp[0].response = aCode;
         $this.setState({ accessCode: '' });
@@ -185,14 +186,14 @@ class AccessCode extends Component {
         alert('Verification code does not match');
         // this.barCodeFlag = true;
         setTimeout(function () {
-          $this.state.barCodeFlag = true;
+          obj.state.barCodeFlag = true;
         }, 2000);
       }
     } else {
       // Events.trigger('hideLoader', true);
       alert('Invalid QR code');
       setTimeout(function () {
-        $this.state.barCodeFlag = true;
+        obj.state.barCodeFlag = true;
       }, 2000);
       //  setTimeout(function() {
       //   $this.setState({ showCamera: true });

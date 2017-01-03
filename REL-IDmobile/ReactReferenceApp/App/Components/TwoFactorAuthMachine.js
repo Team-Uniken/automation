@@ -218,7 +218,11 @@ class TwoFactorAuthMachine extends Component {
           }
         }
       } else {
-
+        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
+           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
         AsyncStorage.getItem("isPwdSet").then((flag) => {
           if (flag === "YES") {
             AsyncStorage.setItem("passwd", "empty");
@@ -260,6 +264,7 @@ class TwoFactorAuthMachine extends Component {
     } else {
       console.log(e);
       //  alert('Internal system error occurred.' + res.errCode);
+
       Alert.alert(
         'Error',
         'Internal system error occurred.', [{
@@ -271,8 +276,6 @@ class TwoFactorAuthMachine extends Component {
           style: 'cancel',
         }]
       );
-
-
     }
   }
 
@@ -518,6 +521,12 @@ class TwoFactorAuthMachine extends Component {
         //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
 
       } else {
+        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
+           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
+
         alert(res.pArgs.response.StatusMsg);
       }
     } else {

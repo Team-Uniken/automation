@@ -17,7 +17,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Main from '../Main';
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var constant = require('../Constants');
-
+var obj;
 class Activation extends Component {
 
   constructor(props) {
@@ -40,6 +40,7 @@ class Activation extends Component {
   }
 
   componentWillMount() {
+    obj = this;
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.state.showCamera = false;
     }
@@ -108,9 +109,9 @@ class Activation extends Component {
   }
 
   _onBarCodeRead(result) {
-    if (this.state.barCodeFlag === true) {
-      this.state.barCodeFlag = false;
-      this.onQRScanSuccess(result.data);
+    if (obj.state.barCodeFlag === true) {
+      obj.state.barCodeFlag = false;
+      obj.onQRScanSuccess(result.data);
     }
   }
 
@@ -155,8 +156,6 @@ class Activation extends Component {
     }
   }
 
-
-
   onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
@@ -168,7 +167,7 @@ class Activation extends Component {
         else {
           alert('Invalid QR code');
           setTimeout(function () {
-            $this.state.barCodeFlag = true;
+            obj.state.barCodeFlag = true;
           }, 2000);
           return;
         }
@@ -176,7 +175,7 @@ class Activation extends Component {
       } catch (e) {
         alert('Invalid QR code');
         setTimeout(function () {
-          $this.state.barCodeFlag = true;
+          obj.state.barCodeFlag = true;
         }, 2000);
         return;
       }
@@ -191,11 +190,13 @@ class Activation extends Component {
           $this.hideCamera();
         }
         let responseJson = $this.props.url.chlngJson;
-        $this.barCodeFlag = false;
+        obj.state.barCodeFlag = false;
 
         $this.setState({ activatonCode: '' });
         responseJson.chlng_resp[0].response = aCode;
+        
         setTimeout(() => {
+          console.log("Activation ------ showNext");
           Events.trigger('showNextChallenge', {
             response: responseJson
           });
@@ -206,7 +207,7 @@ class Activation extends Component {
         alert('Verification code does not match');
         // this.barCodeFlag = true;
         setTimeout(function () {
-          $this.state.barCodeFlag = true;
+          obj.state.barCodeFlag = true;
         }, 2000);
       }
     } else {
@@ -354,7 +355,6 @@ class Activation extends Component {
     );
   }
 }
-
 
 Activation.propTypes = {
   onSucess: React.PropTypes.func,

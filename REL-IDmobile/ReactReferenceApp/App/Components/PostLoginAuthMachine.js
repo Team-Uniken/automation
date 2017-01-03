@@ -178,6 +178,11 @@ class PostLoginAuthMachine extends Component {
           this.getChallengesByName(this.props.challengesToBeUpdated[0]);
         }
       } else {
+         if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
+           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
@@ -400,6 +405,11 @@ class PostLoginAuthMachine extends Component {
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
       } else {
+        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
+           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
         alert(res.pArgs.response.StatusMsg);
       }
     } else {
