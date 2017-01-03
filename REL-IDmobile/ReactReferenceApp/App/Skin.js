@@ -16,17 +16,42 @@ const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
 const LANGUAGE = 'en'
 
-const VIEW_WIDTH = SCREEN_WIDTH - 50;
-const SCREEN_HEIGHT_RATIO = 1;
-if (SCREEN_HEIGHT <= 426) {
-  SCREEN_HEIGHT_RATIO = 0.5
-} else if (SCREEN_HEIGHT <= 470) {
-  SCREEN_HEIGHT_RATIO = 1
-} else if (SCREEN_HEIGHT < 640) {
-  SCREEN_HEIGHT_RATIO = 1.5
-} else {
-  SCREEN_HEIGHT_RATIO = 2
+
+
+const BLACK = '#000000'
+const WHITE = '#FFFFFF'
+//////customization changes for NWD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const THEME_COLOR = '#d92a2e';
+const CLIENT_TITLE_TEXT='New World CLUB'
+const SPINNER_COLOR = THEME_COLOR
+const LOGO = '\ue92e'
+const LOGO_COLOR = THEME_COLOR
+
+const INPUT_BD_COLOR = THEME_COLOR
+const INPUT_BG_COLOR = '#f1f1f1'
+const INPUT_TEXT_COLOR = '#2C2C2C'
+
+const BUTTON_BG_COLOR = THEME_COLOR
+const BUTTON_TEXT_COLOR = WHITE
+const BUTTON_UNDERLAY_COLOR = BLACK
+
+const BOTTOM_MENU_SELECT_BG = THEME_COLOR
+
+const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const load = {
+  OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
+  OVERLAY_SPINNER_COLOR: SPINNER_COLOR,
+  BG_COLOR_RGB: '255,255,255',
+  BG_COLOR_OPACITY: '0.9',
+  LOAD_SEQUENCE_TEXT_COLOR: '#3b3b3b'
 }
+
+const VIEW_WIDTH = SCREEN_WIDTH - 50;
+
 
 const PLACEHOLDER_TEXT_COLOR_RGB = 'rgba(59,59,59,0.5)' //255,255,255,0.7
 const DEV_BIND_ICON_TEXT_COLOR_RGB = 'rgba(0,0,0,0.5)' //255,255,255,0.7
@@ -46,7 +71,6 @@ const open = {
 // Called
 const {StyleSheet, Dimensions, PixelRatio} = ReactNative;
 const {Component} = React;
-const THEME_COLOR = '#d92a2e'; // '#0277BD'; //
 
 
 
@@ -75,14 +99,7 @@ const LIGHT_PRIMARY_RGB = hexToRgb(LIGHT_PRIMARY).r + ',' + hexToRgb(LIGHT_PRIMA
 const PRIMARY_TEXT_RGB = hexToRgb(PRIMARY_TEXT).r + ',' + hexToRgb(PRIMARY_TEXT).g + ',' + hexToRgb(PRIMARY_TEXT).b;
 const TEXT_COLOR_RGB = hexToRgb(TEXT_COLOR).r + ',' + hexToRgb(TEXT_COLOR).g + ',' + hexToRgb(TEXT_COLOR).b;
 
-const load = {
-  OVERLAY_BG_RGB: 'rgba(255,255,255,1)',
 
-  OVERLAY_SPINNER_COLOR: THEME_COLOR,
-  BG_COLOR_RGB: '255,255,255',
-  BG_COLOR_OPACITY: '0.9',
-  LOAD_SEQUENCE_TEXT_COLOR: '#3b3b3b'
-}
 const login = {
   TEXT_INPUT_BG_RGB: '231,231,231',
   TEXT_INPUT_BG_OPACITY: '1',
@@ -117,7 +134,7 @@ const main = {
   TITLE_COLOR: THEME_COLOR
 }
 
-const admin = { MENU_TITLE: 'NWD', MENU_FONT: 'Times New Roman' }
+const admin = { MENU_TITLE: CLIENT_TITLE_TEXT, MENU_FONT: 'Times New Roman' }
 
 const list = module.exports.list = { listHeaderColor: '#3b3b3b' }
 
@@ -129,22 +146,14 @@ const TITLE_COLOR = TITLE_TEXT_COLOR
 const TITLE_BG_COLOR = '#ffffff'
 const BLACK_TEXT_COLOR = '#000'
 const ERROR_TEXT_COLOR = '#CC0000'
-const BUTTON_BG_COLOR = THEME_COLOR
-const BUTTON_TEXT_COLOR = '#ffffff'
-const BUTTON_UNDERLAY_COLOR = '#000000'
-const BLACK = '#000000'
-const WHITE = '#FFFFFF'
 
-const LOGO_COLOR = THEME_COLOR
+
+
+
 const LIGHT_TEXT_COLOR = '#929292'
-const INPUT_BG_COLOR = '#f1f1f1'
-const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
-const INPUT_TEXT_COLOR = '#2C2C2C'
-const INPUT_BD_COLOR = THEME_COLOR
 const BOTTOM_MENU_BG = '#b72e2d'
 const BOTTOM_MENU_COLOR = '#fff'
 const BOTTOM_MENU_UNDERLAY = '#a73834'
-const BOTTOM_MENU_SELECT_BG = THEME_COLOR
 const BOTTOM_MENU_SELECT_COLOR = '#ffffff'
 const BOTTOM_MENU_SELECT_UNDERLAY = '#a73834'
 const APPROVE_BUTTON_COLOR = '#92D050';
@@ -154,6 +163,7 @@ const FRAUD_BUTTON_COLOR = '#212121';
 const CORE_FONT = 'Century Gothic';
 const ICON_FONT = 'icomoon';
 
+const LOGO_FONT = 'logo';
 
 // Speeds
 const SPEED = 0.4; // 0.8
@@ -166,7 +176,7 @@ module.exports.icon = {
   hamburger: '\ue5d2',
   user: '\ue7ff',
   settings: '\ue8b8',
-  logo: '\ue92e',
+  logo: LOGO,
   wechat: '\ue935',
   facebook: '\ue932',
   password: '\ue7ff',
@@ -234,13 +244,13 @@ text = {
     test: 'test',
     '0': {
       '1': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
         need_to_register_button: 'I need to register',
         already_member: 'I\'m already a member',
         prompt: '',
       },
       '2': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
         prompt: 'Select a login',
         credTypes: {
           'facebook': {
@@ -276,11 +286,11 @@ text = {
     },
     '2': {
       '1': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
         submit_button: 'Submit',
       },
       '2': {
-        subtitle: 'Welcome to New World CLUB',
+        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
         submit_button: 'Submit',
         textinput_placeholder: 'Enter Password',
       }
@@ -439,9 +449,9 @@ module.exports.layout0 = {
     borderWidth: 0,
     width: 260,
     fontSize: 18,
-    minHeight:48,
-    paddingTop:12,
-    paddingBottom:12,
+    minHeight: 48,
+    paddingTop: 12,
+    paddingBottom: 12,
     backgroundColor: INPUT_BG_COLOR,
     color: INPUT_PLACEHOLDER_COLOR,
   },
@@ -459,7 +469,7 @@ module.exports.layout0 = {
       fontSize: 80,
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
-      fontFamily: ICON_FONT,
+      fontFamily:  ICON_FONT,
     },
     subtitle: {
       //width: VIEW_WIDTH,
@@ -522,7 +532,7 @@ module.exports.layout0 = {
 
 module.exports.layout1 = {
   termandcondition: {
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     position: 'absolute',
     top: 40,
     bottom: 0,
@@ -598,13 +608,13 @@ module.exports.layout1 = {
         color: WHITE,
         fontSize: 18,
         minHeight: 24,
-      height:48,
+        height: 48,
       },
       wrap: {
         width: SCREEN_WIDTH,
         flex: 1,
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent: 'center'
         //backgroundColor: "rgba(203,45,102,1)",
       },
       boxwrap: {
@@ -642,7 +652,7 @@ module.exports.layout1 = {
       },
       text: {
         fontSize: 21,
-        color:BLACK,
+        color: BLACK,
         textAlign: 'center',
         marginBottom: 22,
       }
@@ -722,7 +732,7 @@ const layout3 = module.exports.layout3 = {
   split: {
     bottom: {
       flex: 1,
-      backgroundColor:WHITE,
+      backgroundColor: WHITE,
     },
     top: {
       wrap: {
@@ -749,7 +759,7 @@ const layout3 = module.exports.layout3 = {
       alignItems: 'center',
     },
     text: {
-      color:BLACK, //list.listHeaderColor,
+      color: BLACK, //list.listHeaderColor,
       paddingBottom: 5,
       paddingTop: 10,
       backgroundColor: BACKGROUND_COLOR,
@@ -799,7 +809,7 @@ const layout3 = module.exports.layout3 = {
       fontSize: 16,
       textAlign: 'right',
       flex: 1,
-      color:BLACK
+      color: BLACK
     },
     ptstext: {
       fontSize: 12,
@@ -943,7 +953,7 @@ const customeStyle = StyleSheet.create({
     marginLeft: SCREEN_WIDTH / 2 - 140,
     borderWidth: 1,
     borderColor: WHITE,
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     borderRadius: 30,
   },
   roundcornerbutton: {
@@ -965,7 +975,7 @@ const customeStyle = StyleSheet.create({
     marginLeft: SCREEN_WIDTH / 2 - 140,
     borderWidth: 1,
     borderColor: BORDER_COLOR,
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     borderRadius: 30,
   },
   note: {
@@ -1039,13 +1049,13 @@ const customeStyle = StyleSheet.create({
   div: {
     marginTop: 16,
     width: SCREEN_WIDTH,
-    backgroundColor:BLACK,
+    backgroundColor: BLACK,
     height: 1,
     opacity: 0.6,
   },
   div1: {
     width: SCREEN_WIDTH,
-    backgroundColor:BLACK,
+    backgroundColor: BLACK,
     height: 1,
     opacity: 0.6,
   },
@@ -1104,7 +1114,7 @@ const AccountActivationStep = StyleSheet.create({
   },
   compulsory_chlng_name: {
     fontSize: 16,
-    color:WHITE,
+    color: WHITE,
     opacity: 1,
     marginTop: 4,
     width: SCREEN_WIDTH,
@@ -1114,7 +1124,7 @@ const AccountActivationStep = StyleSheet.create({
   },
   optional_chlng_name: {
     fontSize: 16,
-    color:WHITE,
+    color: WHITE,
     opacity: 1,
     marginLeft: 16,
     textAlign: 'left',
@@ -1122,7 +1132,7 @@ const AccountActivationStep = StyleSheet.create({
   },
   seprator: {
     width: SCREEN_WIDTH,
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     height: 2,
     opacity: 1,
   },
@@ -1143,7 +1153,7 @@ const AccountActivationStep = StyleSheet.create({
 
 const appointmentrow = StyleSheet.create({
   customerow: {
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     width: SCREEN_WIDTH,
   },
   row: {
@@ -1216,7 +1226,7 @@ const appointmentrow = StyleSheet.create({
 
 const notification = StyleSheet.create({
   customerow: {
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     width: SCREEN_WIDTH - 32,
     marginTop: 20,
     marginLeft: 16,
@@ -1438,7 +1448,7 @@ const addappointment = StyleSheet.create({
     height: SCREEN_HEIGHT,
   },
   branchstyle: {
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     position: 'absolute',
     top: 0,
     bottom: 0,
@@ -1556,7 +1566,7 @@ const PatternLockStyle = StyleSheet.create({
 
 const ConnectionProfile = StyleSheet.create({
   branchstyle: {
-    backgroundColor:WHITE,
+    backgroundColor: WHITE,
     position: 'absolute',
     top: SCREEN_HEIGHT / 2 - 350 / 2,
     left: SCREEN_WIDTH / 2 - 300 / 2,
@@ -1751,14 +1761,14 @@ const loadStyle = StyleSheet.create({
     position: 'absolute',
     fontSize: 120,
     marginLeft: leftrid,
-    color:WHITE,
+    color: WHITE,
     //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   logo_d: {
     position: 'absolute',
     fontSize: 120,
     marginLeft: 62 + leftrid,
-    color:WHITE,
+    color: WHITE,
     //backgroundColor: 'rgba(70,0,0,0.5)',
   },
   relid_wrap: {
@@ -1773,7 +1783,7 @@ const loadStyle = StyleSheet.create({
     marginLeft: 47,
     width: 170,
     flex: 1,
-    color:WHITE,
+    color: WHITE,
     backgroundColor: 'transparent',
     //backgroundColor: 'rgba(0,100,0,0.5)',
   },
@@ -1894,7 +1904,7 @@ const controlStyle = StyleSheet.create({
     }
   },
   menuItem: {
-    color:WHITE,
+    color: WHITE,
     fontFamily: CORE_FONT,
     marginTop: 15,
     marginBottom: 15,
@@ -1909,7 +1919,7 @@ const controlStyle = StyleSheet.create({
     paddingLeft: 20
   },
   controlHeader: {
-    color:WHITE,
+    color: WHITE,
     fontFamily: admin.MENU_FONT,
     paddingTop: 30,
     fontSize: 30,
@@ -2115,7 +2125,6 @@ const collection = {
   transforms,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  SCREEN_HEIGHT_RATIO,
   PLACEHOLDER_TEXT_COLOR_RGB,
   DEV_BIND_ICON_TEXT_COLOR_RGB,
   DEV_BIND_TYPE_TEXT_COLOR_RGB,
