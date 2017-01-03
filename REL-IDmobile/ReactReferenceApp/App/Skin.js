@@ -23,6 +23,7 @@ const WHITE = '#FFFFFF'
 //////customization changes for NWD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const THEME_COLOR = '#d92a2e';
 const CLIENT_TITLE_TEXT='New World CLUB'
+const DASHBOARD_MENU_TITLE='NWD'
 const SPINNER_COLOR = THEME_COLOR
 const LOGO = '\ue92e'
 const LOGO_COLOR = THEME_COLOR
@@ -134,7 +135,7 @@ const main = {
   TITLE_COLOR: THEME_COLOR
 }
 
-const admin = { MENU_TITLE: CLIENT_TITLE_TEXT, MENU_FONT: 'Times New Roman' }
+const admin = { MENU_TITLE: DASHBOARD_MENU_TITLE, MENU_FONT: 'Times New Roman' }
 
 const list = module.exports.list = { listHeaderColor: '#3b3b3b' }
 

@@ -27,7 +27,7 @@ import UserLogin from './nwd/Screen_2_1_username';
 import DeviceBinding from './nwd/Screen_Device_Binding';
 import DeviceName from './nwd/Screen_Device_Name';
 import PostLoginPasswordVerification from './nwd/Screen_PostLogin_password';
-import ScreenHider from './challenges/ScreenHider';
+import ScreenHider from '../Scenes/ScreenHider';
 
 // COMPONENTS
 import buildStyleInterpolator from 'buildStyleInterpolator';
