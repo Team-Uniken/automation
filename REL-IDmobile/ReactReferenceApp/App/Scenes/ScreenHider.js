@@ -2,7 +2,7 @@
 
 
 import React, { Component } from 'react';
-import Skin from '../../Skin';
+import Skin from '../Skin';
 import Events from 'react-native-simple-events';
 import { AppRegistry, Text, TouchableOpacity, View, TouchableHighlight,
 } from 'react-native';
