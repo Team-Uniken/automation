@@ -90,10 +90,13 @@ class PatternLock extends Component {
   }
 
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
-      this.close();
-      return true;
-    }.bind(this));
+    BackAndroid.addEventListener('hardwareBackPress', this.close)
+  }
+
+
+
+  componentWillUnmount(){
+    BackAndroid.removeEventListener('hardwareBackPress',this.close);
   }
 
   onSubmit() {
@@ -335,7 +338,8 @@ class PatternLock extends Component {
   }
 
   close() {
-    this.refs["patternView"].clearPattern();
+    if(this.refs["patternView"])
+      this.refs["patternView"].clearPattern();
     if (this.mode === "verify") {
       if (this.clearTimers) {
         this.clearTimers();
