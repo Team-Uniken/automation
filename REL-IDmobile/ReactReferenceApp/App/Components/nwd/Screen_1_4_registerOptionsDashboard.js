@@ -456,17 +456,14 @@ class RegisterOptionScene extends Component {
         }
       }
 
-      if (this.state.url.touchCred.isTouch == true) {
-        if (Platform.OS === 'android') {
+      if (Platform.OS === 'android') {
+        if (this.state.pattern) {
           data.push(Skin.text['0']['2'].credTypes['pattern']);
-        } else {
-
+        }
+      } else {
+        if (this.state.touchid) {
           data.push(Skin.text['0']['2'].credTypes['touchid']);
         }
-      } else if (this.state.pattern) {
-        data.push(Skin.text['0']['2'].credTypes['pattern']);
-      } else if (this.state.touchid) {
-        data.push(Skin.text['0']['2'].credTypes['touchid']);
       }
     }
 
