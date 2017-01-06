@@ -6,7 +6,7 @@ import com.android.build.OutputFile
 
 //project.ext.set("envConfigFiles", ["nwdDebug": ".env.nwd","sandpDebug":".env.sandp"])
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", ]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -116,6 +116,12 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
       }
+        releaseStock {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
         releaseSandP {
             storeFile file("reactandroid.jks")
             storePassword "uniken123\$"
@@ -135,6 +141,13 @@ android {
         nwd{
             applicationId 'com.reactrefapp'
             signingConfig signingConfigs.releaseNwd
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+
+
+        }
+        stock{
+            applicationId 'com.reactrefapp.stock'
+            signingConfig signingConfigs.releaseStock
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
 
 

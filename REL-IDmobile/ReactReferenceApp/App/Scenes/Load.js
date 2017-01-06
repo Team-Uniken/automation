@@ -17,15 +17,16 @@ import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-var nwd = require("../../Connection_profiles/nwderelid.json"); 
-var snp =  require("../../Connection_profiles/snperelid.json"); 
 
 if(Config.ENV=='sandp'){
- var erelid= snp;
- var welcome=require('../img/s_p.png')
+ var erelid= require("../../Connection_profiles/snp.json");
+ var welcome=require('../img/sandp.png')
 }else if(Config.ENV=='nwd'){
- var erelid= nwd;
-  var welcome=require('../img/ic_welcome.png')
+ var erelid= require("../../Connection_profiles/nwd.json");
+  var welcome=require('../img/nwd.png')
+}else if(Config.ENV=='stock'){
+ var erelid= require("../../Connection_profiles/stock.json");
+ var welcome=require('../img/stock.png')
 }
 
 

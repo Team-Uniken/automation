@@ -27,11 +27,11 @@ import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 // SECURITY SCENES
 
 
-import RegisterOptionScene from './App/Components/nwd/Screen_1_4_registerOptionsDashboard';
-import PatternLock from './App/Components/nwd/Screen_PatternLock';
-import Screen_3_1_deals from './App/Components/nwd/Screen_3_1_deals';
-import Screen_3_2_history from './App/Components/nwd/Screen_3_2_history';
-import Screen_3_3_locations from './App/Components/nwd/Screen_3_3_locations';
+import RegisterOptionScene from './App/Components/PostLogin/Screen_1_4_registerOptionsDashboard';
+import PatternLock from './App/Components/Challenges/Screen_PatternLock';
+import Screen_3_1_deals from './App/Components/Challenges/Screen_3_1_deals';
+import Screen_3_2_history from './App/Components/Challenges/Screen_3_2_history';
+import Screen_3_3_locations from './App/Components/Challenges/Screen_3_3_locations';
 
 
 // COMPONENTS
@@ -40,20 +40,20 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
 
-import Screen_0_1_welcome from './App/Components/nwd/Screen_0_1_welcome';
-import Screen_0_2_selectlogin from './App/Components/nwd/Screen_0_2_selectlogin';
-import Screen_1_1_register from './App/Components/nwd/Screen_1_1_register';
-import Screen_1_2_activation from './App/Components/nwd/Screen_1_2_activation';
-import Screen_1_3_setPassword from './App/Components/nwd/Screen_1_3_setPassword';
-import Screen_1_4_registerOptions from './App/Components/nwd/Screen_1_4_registerOptions';
+import Screen_0_1_welcome from './App/Components/Challenges/Screen_0_1_welcome';
+import Screen_0_2_selectlogin from './App/Components/Challenges/Screen_0_2_selectlogin';
+import Screen_1_1_register from './App/Components/Challenges/Screen_1_1_register';
+import Screen_1_2_activation from './App/Components/Challenges/Screen_1_2_activation';
+import Screen_1_3_setPassword from './App/Components/Challenges/Screen_1_3_setPassword';
+import Screen_1_4_registerOptions from './App/Components/Challenges/Screen_1_4_registerOptions';
 
 
 import Appointment from './App/Components/Appointment';
 import AddAppointment from './App/Components/AddAppointment';
 //import SecureChat from './App/Components/secure_chat/Navigation';
-import Machine from './App/Components/TwoFactorAuthMachine';
-import UpdateMachine from './App/Components/UpdateAuthMachine';
-import PostLoginAuthMachine from './App/Components/PostLoginAuthMachine';
+import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';
+import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';
+import PostLoginAuthMachine from './App/Components/StateMachine/PostLoginAuthMachine';
 import { FormattedWrapper } from 'react-native-globalize';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 //let buildStyleInterpolator = require('buildStyleInterpolator');
