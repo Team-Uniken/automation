@@ -111,16 +111,16 @@ android {
 
     signingConfigs {
         releaseNwd {
-            storeFile file("flavour.jks")
-            storePassword "uniken"
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
             keyAlias "uniken"
-            keyPassword "uniken"
+            keyPassword "uniken123\$"
       }
         releaseSandP {
-            storeFile file("flavour.jks")
-            storePassword "uniken"
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
             keyAlias "uniken"
-            keyPassword "uniken"
+            keyPassword "uniken123\$"
         }
     }
 

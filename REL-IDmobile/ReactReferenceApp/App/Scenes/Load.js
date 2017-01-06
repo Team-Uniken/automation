@@ -17,8 +17,8 @@ import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-var nwd = require("../../nwderelid.json"); 
-var snp =  require("../../snperelid.json"); 
+var nwd = require("../../Connection_profiles/nwderelid.json"); 
+var snp =  require("../../Connection_profiles/snperelid.json"); 
 
 if(Config.ENV=='sandp'){
  var erelid= snp;
