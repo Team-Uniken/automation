@@ -11,6 +11,7 @@ import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     public void onCreate() {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Log.e("Main",BuildConfig.THEME_COLOR);
         //Code for facebook key hash
 //        try {
 //            PackageInfo info = getPackageManager().getPackageInfo(
@@ -66,6 +68,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new ReactNativeConfigPackage(),
               new RDNAReactPackage(),
               new ExtraDimensionsPackage(MainActivity.currentActivity),
               new ReactNativePushNotificationPackage(),

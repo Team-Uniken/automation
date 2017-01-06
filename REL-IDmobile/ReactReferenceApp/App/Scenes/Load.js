@@ -8,6 +8,7 @@ import React from 'react';
 import Skin from '../Skin';
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
+
 /*
  CALLED
  */
@@ -15,7 +16,20 @@ import TouchID from 'react-native-touch-id';
 import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-import erelid from '../../erelid.json';
+
+var nwd = require("../../nwderelid.json"); 
+var snp =  require("../../snperelid.json"); 
+
+if(Config.ENV=='sandp'){
+ var erelid= snp;
+ var welcome=require('../img/s_p.png')
+}else if(Config.ENV=='nwd'){
+ var erelid= nwd;
+  var welcome=require('../img/ic_welcome.png')
+}
+
+
+//import erelid from '../../erelid.json';
 import TouchId from 'react-native-smart-touch-id'
 import Web from './Web';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
@@ -677,7 +691,7 @@ class Load extends Component {
       <View style={styles.container}>
         <StatusBar backgroundColor='#000' />
         <Image
-          source={require('../img/ic_welcome.png')}
+          source={welcome}
           style={styles.bg} />
       </View>
     );

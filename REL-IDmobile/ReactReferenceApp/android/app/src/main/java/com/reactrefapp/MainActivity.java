@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.facebook.react.ReactActivity;
 
@@ -20,6 +21,8 @@ public class MainActivity extends ReactActivity {
        // _askForOverlayPermission();
         super.onCreate(savedInstanceState, persistentState);
         currentActivity = this;
+
+
     }
 
     @Override

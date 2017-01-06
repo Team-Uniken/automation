@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "android-dev": "ENVFILE=env.dev react-native run-android",
+    "android-nwd": "ENVFILE=env.nwd react-native run-android",
+    "android-sandp": "ENVFILE=env.sandp react-native run-android"
   },
   "dependencies": {
     "@exponent/react-native-navigator": "^0.4.2",
