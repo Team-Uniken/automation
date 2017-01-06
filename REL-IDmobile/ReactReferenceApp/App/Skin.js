@@ -5,6 +5,7 @@
 // ALWAYS NEED
 'use strict';
 
+import Config from 'react-native-config'
 
 const React = require('react');
 const ReactNative = require('react-native');
@@ -21,24 +22,26 @@ const LANGUAGE = 'en'
 const BLACK = '#000000'
 const WHITE = '#FFFFFF'
 //////customization changes for NWD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const THEME_COLOR = '#d92a2e';
-const CLIENT_TITLE_TEXT='New World CLUB'
-const DASHBOARD_MENU_TITLE='NWD'
-const SPINNER_COLOR = THEME_COLOR
-const LOGO = '\ue92e'
-const LOGO_COLOR = THEME_COLOR
+const THEME_COLOR = Config.THEME_COLOR
+const CLIENT_TITLE_TEXT= Config.CLIENT_TITLE_TEXT
+const DASHBOARD_MENU_TITLE=Config.DASHBOARD_MENU_TITLE
+const SPINNER_COLOR = Config.SPINNER_COLOR
+const LOGO = Config.LOGO
+const LOGO_COLOR = Config.LOGO_COLOR
 
-const INPUT_BD_COLOR = THEME_COLOR
-const INPUT_BG_COLOR = '#f1f1f1'
-const INPUT_TEXT_COLOR = '#2C2C2C'
+const INPUT_BD_COLOR = Config.INPUT_BD_COLOR
+const INPUT_BG_COLOR = Config.INPUT_BG_COLOR
+const INPUT_TEXT_COLOR = Config.INPUT_TEXT_COLOR
 
-const BUTTON_BG_COLOR = THEME_COLOR
-const BUTTON_TEXT_COLOR = WHITE
-const BUTTON_UNDERLAY_COLOR = BLACK
+const BUTTON_BG_COLOR = Config.BUTTON_BG_COLOR
+const BUTTON_TEXT_COLOR = Config.BUTTON_TEXT_COLOR
+const BUTTON_UNDERLAY_COLOR = Config.BUTTON_UNDERLAY_COLOR
 
-const BOTTOM_MENU_SELECT_BG = THEME_COLOR
+const BOTTOM_MENU_SELECT_BG = Config.BOTTOM_MENU_SELECT_BG
 
-const INPUT_PLACEHOLDER_COLOR = "rgba(158,158,158,1)"
+const INPUT_PLACEHOLDER_COLOR = Config.INPUT_PLACEHOLDER_COLOR
+
+const LOAD_SCREEN_IMAGE = Config.LOAD_SCREEN_IMAGE
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -162,9 +165,8 @@ const REJECT_BUTTON_COLOR = '#800000';
 const FRAUD_BUTTON_COLOR = '#212121';
 // Fonts
 const CORE_FONT = 'Century Gothic';
-const ICON_FONT = 'icomoon';
-
-const LOGO_FONT = 'logo';
+const ICON_FONT = Config.ICON_FONT;
+const LOGO_FONT = Config.LOGO_FONT;
 
 // Speeds
 const SPEED = 0.4; // 0.8
@@ -470,7 +472,7 @@ module.exports.layout0 = {
       fontSize: 80,
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
-      fontFamily:  ICON_FONT,
+      fontFamily:LOGO_FONT,
     },
     subtitle: {
       //width: VIEW_WIDTH,
@@ -2158,6 +2160,7 @@ const collection = {
     ICON_FONT,
     CORE_FONT,
   },
+  LOAD_SCREEN_IMAGE,
 };
 
 module.exports = Object.assign(module.exports, collection);

@@ -25,15 +25,7 @@ import LoadScene from './App/Scenes/Load';
 import Web from './App/Scenes/Web';
 import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
-// SECURITY SCENES
-import Activation from './App/Components/challenges/Activation';
-import PasswordSet from './App/Components/challenges/PasswordSet';
-import Otp from './App/Components/challenges/Otp';
-import QuestionSet from './App/Components/challenges/QuestionSet';
-import QuestionVerification from './App/Components/challenges/QuestionVerification';
-import UserLogin from './App/Components/challenges/UserLogin';
-import DeviceBinding from './App/Components/challenges/DeviceBinding';
-import PasswordVerification from './App/Components/challenges/PasswordVerification';
+
 
 import RegisterOptionScene from './App/Components/nwd/Screen_1_4_registerOptionsDashboard';
 
@@ -281,30 +273,6 @@ class ReactRefApp extends Component {
                 navigate />);
 
     // SECURITY SCENES
-    } else if (id === 'Activation') {
-      return (<Activation
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'PasswordSet') {
-      return (<PasswordSet
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'UserLogin') {
-      return (<UserLogin
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'PasswordVerification') {
-      return (<PasswordVerification
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
     } else if (id === 'Machine') {
       return (<Machine
                 navigator={nav}

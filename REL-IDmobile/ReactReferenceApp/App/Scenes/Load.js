@@ -7,7 +7,7 @@ import ReactNative from 'react-native';
 import React from 'react';
 import Skin from '../Skin';
 import Events from 'react-native-simple-events';
-
+import Config from 'react-native-config';
 /*
  CALLED
  */
@@ -45,7 +45,8 @@ let gotNotification = false;
 let appalive = false;
 let obj1;
 
-console.log = function () { }
+
+//console.log = function () { }
 
 const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar,PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
@@ -105,6 +106,7 @@ class Load extends Component {
   }
 
   componentWillMount() {
+    
     obj1=this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
 
@@ -668,13 +670,14 @@ class Load extends Component {
   }
 
   render() {
+    
     console.log('************ Load Render');
     console.log(this.props.navigator.state);
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor='#000' />
         <Image
-          source={require('../img/ic_welcome.png') }
+          source={require('../img/ic_welcome.png')}
           style={styles.bg} />
       </View>
     );
