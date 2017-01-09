@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import ReactNative, { View, Text, ListView, Image, MapView ,PermissionsAndroid,Platform} from 'react-native'
-import Skin from '../../Skin';
-import Main from '../../Components/Main';
-import ListItem from '../../Components/ListItem';
+import Skin from '../../../Skin';
+import Main from './Main/main';
+import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'
-import NavBar from '../view/navbar.js'
+import NavBar from '../../view/navbar.js'
 
 
 

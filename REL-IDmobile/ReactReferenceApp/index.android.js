@@ -29,9 +29,14 @@ import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
 import RegisterOptionScene from './App/Components/PostLogin/Screen_1_4_registerOptionsDashboard';
 import PatternLock from './App/Components/Challenges/Screen_PatternLock';
-import Screen_3_1_deals from './App/Components/Challenges/Screen_3_1_deals';
-import Screen_3_2_history from './App/Components/Challenges/Screen_3_2_history';
-import Screen_3_3_locations from './App/Components/Challenges/Screen_3_3_locations';
+import Screen_3_1_deals from './App/Components/Dashboard/NWD/Screen_3_1_deals';
+import Screen_3_2_history from './App/Components/Dashboard/NWD/Screen_3_2_history';
+import Screen_3_3_locations from './App/Components/Dashboard/NWD/Screen_3_3_locations';
+
+
+//Dashboard
+import Dashboard from './App/Components/Dashboard/dashboard';
+
 
 
 // COMPONENTS
@@ -96,17 +101,18 @@ class ReactRefApp extends Component {
   renderScene(route, nav) {
     let id = route.id;
     // MAIN SCENES
-    if (id === 'Main' || id === 'Accounts') {
-      return (<Screen_3_1_deals
+    if (id === 'Main') {
+      return (<Dashboard
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-      // return (<AccountsScene
-      //   navigator={nav}
-      //   url={route.url}
-      //   title={route.title}
-      //   rdna={route.DnaObject} />);
+    } else if (id === 'Accounts') {
+     return (<Screen_3_1_deals
+                navigator={nav}
+                url={route.url}
+                title={route.title}
+                rdna={route.DnaObject} />);
     } else if (id === 'PayBills') {
       return (<PayBillsScene
         navigator={nav}
