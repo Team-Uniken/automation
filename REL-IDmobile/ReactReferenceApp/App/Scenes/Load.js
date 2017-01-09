@@ -15,18 +15,22 @@ import Config from 'react-native-config';
 import TouchID from 'react-native-touch-id';
 import MainActivation from '../Components/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
+
+import Setting from '../Components/view/setting';
+
+
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-if(Config.ENV=='sandp'){
- var erelid= require("../../Connection_profiles/snp.json");
- var welcome=require('../img/sandp.png')
-}else if(Config.ENV=='nwd'){
- var erelid= require("../../Connection_profiles/nwd.json");
-  var welcome=require('../img/nwd.png')
-}else if(Config.ENV=='stock'){
- var erelid= require("../../Connection_profiles/stock.json");
- var welcome=require('../img/stock.png')
+if (Config.ENV == 'sandp') {
+  var erelid = require("../../Connection_profiles/snp.json");
+  var welcome = require('../img/sandp.png')
+} else if (Config.ENV == 'nwd') {
+  var erelid = require("../../Connection_profiles/nwd.json");
+  var welcome = require('../img/nwd.png')
+} else if (Config.ENV == 'stock') {
+  var erelid = require("../../Connection_profiles/stock.json");
+  var welcome = require('../img/stock.png')
 }
 
 
@@ -63,7 +67,7 @@ let obj1;
 
 //console.log = function () { }
 
-const {Text, View, Animated, InteractionManager, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar,PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
+const {Text, View, Animated, InteractionManager,Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
 
@@ -98,31 +102,31 @@ class Load extends Component {
   //Push notification code
 
 
-    closeStateMachine() {
-    console.log('---------- closeStateMachine ' );
-      var allScreens =obj1.props.navigator.getCurrentRoutes(-1);
-      for(var i = 0; i < allScreens.length; i++){
-        var screen = allScreens[i];
-        if(screen.id === 'Screen_0_1_welcome'){
-          var mySelectedRoute = obj1.props.navigator.getCurrentRoutes()[i];
-          obj1.props.navigator.popToRoute(mySelectedRoute);
-          return;
-        }
+  closeStateMachine() {
+    console.log('---------- closeStateMachine ');
+    var allScreens = obj1.props.navigator.getCurrentRoutes(-1);
+    for (var i = 0; i < allScreens.length; i++) {
+      var screen = allScreens[i];
+      if (screen.id === 'Screen_0_1_welcome') {
+        var mySelectedRoute = obj1.props.navigator.getCurrentRoutes()[i];
+        obj1.props.navigator.popToRoute(mySelectedRoute);
+        return;
       }
-       obj1.props.navigator.push({
-          id: "Screen_0_1_welcome",
-          //id: "Screen_0_2_selectlogin",
-          title: "nextChlngName",
-          url: {
-            "chlngJson": chlngJson,
-            "screenId": nextChlngName
-          }
-        });
+    }
+    obj1.props.navigator.push({
+      id: "Screen_0_1_welcome",
+      //id: "Screen_0_2_selectlogin",
+      title: "nextChlngName",
+      url: {
+        "chlngJson": chlngJson,
+        "screenId": nextChlngName
+      }
+    });
   }
 
   componentWillMount() {
-    
-    obj1=this;
+
+    obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
 
     console.log('test logs');
@@ -279,10 +283,10 @@ class Load extends Component {
       responseJson = JSON.parse(e.response);
       if (responseJson.errCode == 0) {
         const pPort = responseJson.pArgs.pxyDetails.port;
-          if (pPort > 0) {
-            RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
-            Web.proxy = pPort;
-            // AsyncStorage.setItem("Proxy",""+pPort);
+        if (pPort > 0) {
+          RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
+          Web.proxy = pPort;
+          // AsyncStorage.setItem("Proxy",""+pPort);
         }
         appalive = true;
         console.log('Resume Successfull');
@@ -474,38 +478,38 @@ class Load extends Component {
 
   }
   _handleAppStateChange(currentAppState) {
-        console.log('_handleAppStateChange');
-        console.log(currentAppState);
-    
-        if (currentAppState == 'background') {
-          console.log('App State Change background:');
-    
-          ReactRdna.pauseRuntime((response) => {
+    console.log('_handleAppStateChange');
+    console.log(currentAppState);
+
+    if (currentAppState == 'background') {
+      console.log('App State Change background:');
+
+      ReactRdna.pauseRuntime((response) => {
+        if (response) {
+          if (response[0].error == 0) {
+            AsyncStorage.setItem("savedContext", response[0].response);
+          }
+          console.log('Immediate response is ' + response[0].error);
+        } else {
+          console.log('No response.');
+        }
+      })
+    } else if (currentAppState == 'active') {
+      console.log('App State Change active:');
+      AsyncStorage.getItem("savedContext").then((value) => {
+        if (value != null) {
+          ReactRdna.resumeRuntime(value, null, (response) => {
             if (response) {
-              if (response[0].error == 0) {
-                AsyncStorage.setItem("savedContext", response[0].response);
-              }
               console.log('Immediate response is ' + response[0].error);
             } else {
               console.log('No response.');
             }
           })
-        } else if (currentAppState == 'active') {
-          console.log('App State Change active:');
-          AsyncStorage.getItem("savedContext").then((value) => {
-            if (value != null) {
-              ReactRdna.resumeRuntime(value, null, (response) => {
-                if (response) {
-                  console.log('Immediate response is ' + response[0].error);
-                } else {
-                  console.log('No response.');
-                }
-              })
-            }
-          }).done();
-        } else if (currentAppState === 'inactive') {
-          console.log('App State Change Inactive');
         }
+      }).done();
+    } else if (currentAppState === 'inactive') {
+      console.log('App State Change Inactive');
+    }
   }
 
 
@@ -647,16 +651,14 @@ class Load extends Component {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
     if (isRunAfterInteractions) {
       if (initCount === initSuccess) {
-        Obj.doNavigation();
+          Obj.doNavigation();
       } else if (initCount === initError) {
         Alert.alert(
           'Error',
           initErrorMsg, [
             {
               text: 'Connection Profiles',
-              onPress: () => this.props.navigator.push({
-                id: "ConnectionProfile"
-              })
+              onPress: () => this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight })
             },
           ]
         )
@@ -680,20 +682,32 @@ class Load extends Component {
           }
         });
       }
-
     }).done();
   }
 
   render() {
-    
     console.log('************ Load Render');
     console.log(this.props.navigator.state);
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor='#000' />
+
         <Image
           source={welcome}
           style={styles.bg} />
+        <Setting
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            backgroundColor: Config.THEME_COLOR,
+            height: 50,
+            width: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderTopRightRadius: 20,
+          }}
+          onPress={() => this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
       </View>
     );
   }
