@@ -18,8 +18,8 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		1AFFCC711D88E1CE00D1223B /* ubs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AFFCC701D88E1CE00D1223B /* ubs.png */; };
+		65079DDB1E216EE4005D9A11 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65079DDA1E216EE4005D9A11 /* libapi-sdk.a */; };
 		65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
-		65281C751D6C544C00F15ACE /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C741D6C544C00F15ACE /* libapi-sdk.a */; };
 		654F81611CC9129C009E6168 /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
 		654F81CF1CC9FAD5009E6168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		654F81D01CC9FAD5009E6168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
@@ -152,9 +152,9 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		1AFFCC701D88E1CE00D1223B /* ubs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ubs.png; sourceTree = "<group>"; };
+		65079DD81E216EE4005D9A11 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		65079DDA1E216EE4005D9A11 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
-		65281C721D6C544C00F15ACE /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		65281C741D6C544C00F15ACE /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		654F815F1CC9129C009E6168 /* ReactRdnaModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactRdnaModule.h; sourceTree = "<group>"; };
 		654F81601CC9129C009E6168 /* ReactRdnaModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactRdnaModule.m; sourceTree = "<group>"; };
 		654F81C51CC9FAD5009E6168 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -172,6 +172,7 @@
 		656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelIDRequestInterceptor.m; sourceTree = "<group>"; };
 		6567FBCA1CC1122F00AC6A04 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; name = App; path = ../App; sourceTree = "<group>"; };
 		6567FBCC1CC1127B00AC6A04 /* index.ios.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
+		6570703E1E218F5B00C3E5EA /* ReactRefApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ReactRefApp.entitlements; sourceTree = "<group>"; };
 		658339921D6C79080090F4D6 /* RCTTouchId.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTouchId.xcodeproj; path = "../node_modules/react-native-smart-touch-id/ios/RCTTouchId/RCTTouchId.xcodeproj"; sourceTree = "<group>"; };
 		658339A31D6C79140090F4D6 /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -195,11 +196,11 @@
 				65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
-				65281C751D6C544C00F15ACE /* libapi-sdk.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
+				65079DDB1E216EE4005D9A11 /* libapi-sdk.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -274,6 +275,31 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		65079DD61E216EE4005D9A11 /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				65079DD71E216EE4005D9A11 /* include */,
+				65079DD91E216EE4005D9A11 /* libs */,
+			);
+			path = "api-sdk";
+			sourceTree = "<group>";
+		};
+		65079DD71E216EE4005D9A11 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				65079DD81E216EE4005D9A11 /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		65079DD91E216EE4005D9A11 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				65079DDA1E216EE4005D9A11 /* libapi-sdk.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
 		65281C2B1D6C34EA00F15ACE /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,34 +308,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65281C701D6C544C00F15ACE /* api-sdk */ = {
-			isa = PBXGroup;
-			children = (
-				65281C711D6C544C00F15ACE /* include */,
-				65281C731D6C544C00F15ACE /* libs */,
-			);
-			path = "api-sdk";
-			sourceTree = "<group>";
-		};
-		65281C711D6C544C00F15ACE /* include */ = {
-			isa = PBXGroup;
-			children = (
-				65281C721D6C544C00F15ACE /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		65281C731D6C544C00F15ACE /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				65281C741D6C544C00F15ACE /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
+				6570703E1E218F5B00C3E5EA /* ReactRefApp.entitlements */,
 				654F81C51CC9FAD5009E6168 /* AppDelegate.h */,
 				654F81C61CC9FAD5009E6168 /* AppDelegate.m */,
 				654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */,
@@ -397,8 +399,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				65079DD61E216EE4005D9A11 /* api-sdk */,
 				1AFFCC701D88E1CE00D1223B /* ubs.png */,
-				65281C701D6C544C00F15ACE /* api-sdk */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
 				6567FBCC1CC1127B00AC6A04 /* index.ios.js */,
@@ -475,7 +477,15 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 2S999FKG5P;
+						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -774,9 +784,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 2S999FKG5P;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -797,9 +809,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.PushNotificationTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relidverify.ubs.demo;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "fca1d93a-88c9-4361-abda-9cbb867f3a96";
+				PROVISIONING_PROFILE = "b41911ea-611f-4b8d-9018-63bf7401371f";
+				PROVISIONING_PROFILE_SPECIFIER = Uniken_WildCard_dev;
 			};
 			name = Debug;
 		};
@@ -808,8 +821,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Prakash Salvi (Y8LMH76PR3)";
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEVELOPMENT_TEAM = 2S999FKG5P;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -830,9 +845,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.PushNotificationTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relidverify.ubs.demo;
 				PRODUCT_NAME = ReactRefApp;
-				PROVISIONING_PROFILE = "fca1d93a-88c9-4361-abda-9cbb867f3a96";
+				PROVISIONING_PROFILE = "b41911ea-611f-4b8d-9018-63bf7401371f";
+				PROVISIONING_PROFILE_SPECIFIER = "push notification dev profile";
 			};
 			name = Release;
 		};

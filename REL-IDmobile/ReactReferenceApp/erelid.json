@@ -15,8 +15,8 @@
 "Profiles": [
 
 {
-"Name": "REL-ID-Verify",
-"Host": "52.74.188.241",
+"Name": "UBS REL-ID",
+"Host": "52.74.38.238",
 "Port": "443",
 "RelId": "default"
 }
