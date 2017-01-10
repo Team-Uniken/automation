@@ -65,7 +65,7 @@ let appalive = false;
 let obj1;
 
 
-//console.log = function () { }
+console.log = function () { }
 
 const {Text, View, Animated, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
