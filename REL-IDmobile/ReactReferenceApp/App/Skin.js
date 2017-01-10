@@ -123,7 +123,7 @@ const login = {
 }
 
 const main = {
-  STATUS_BAR_BG: '#3b3b3b',
+  STATUS_BAR_BG:Config.STATUS_BAR_BG,
   BACKGROUND_COLOR: '#F9F9F9',
   BOTTOM_MENU_BG: '#3b3b3b',
   BOTTOM_MENU_COLOR: '#B0B0B0',

@@ -67,7 +67,7 @@ let obj1;
 
 //console.log = function () { }
 
-const {Text, View, Animated, InteractionManager,Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
+const {Text, View, Animated, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
 
@@ -651,14 +651,14 @@ class Load extends Component {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
     if (isRunAfterInteractions) {
       if (initCount === initSuccess) {
-          Obj.doNavigation();
+        Obj.doNavigation();
       } else if (initCount === initError) {
         Alert.alert(
           'Error',
           initErrorMsg, [
             {
               text: 'Connection Profiles',
-              onPress: () => this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight })
+              onPress: () => this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
             },
           ]
         )
@@ -690,8 +690,7 @@ class Load extends Component {
     console.log(this.props.navigator.state);
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor='#000' />
-
+        <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
         <Image
           source={welcome}
           style={styles.bg} />
@@ -707,7 +706,7 @@ class Load extends Component {
             justifyContent: 'center',
             borderTopRightRadius: 20,
           }}
-          onPress={() => this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
+          onPress={() => this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
       </View>
     );
   }

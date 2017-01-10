@@ -1,10 +1,14 @@
 
 import React, { Component } from 'react';
-import ReactNative, { View, Text, BackAndroid,StatusBar} from 'react-native'
+import ReactNative, { View, Text,Navigator, BackAndroid,StatusBar} from 'react-native'
 
 import Skin from '../../Skin';
 import Events from 'react-native-simple-events';
 import Button from '../view/button';
+import Config from 'react-native-config';
+
+import Setting from '../view/setting';
+
 
 
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
@@ -100,6 +104,7 @@ class First extends Component {
       backgroundColor={Skin.main.STATUS_BAR_BG}
       barStyle={'default'} />
         <View style={Skin.layout0.top.container}>
+       
           <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
             {Skin.icon.logo}
           </Text>
@@ -117,7 +122,21 @@ class First extends Component {
           <Button
             label={Skin.text['0']['1'].already_member}
             onPress={this.selectReg.bind(this)} />
+                <Setting
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            backgroundColor: Config.THEME_COLOR,
+            height: 50,
+            width: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderTopRightRadius: 20,
+          }}
+          onPress={() => this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
         </View>
+       
       </View>
       );
   }

@@ -16,7 +16,7 @@ class Setting extends Component {
       <TouchableHighlight
         activeOpacity={1.0}
         style={[this.props.style]}
-        underlayColor={Skin.colors.DARK_PRIMARY}
+        underlayColor='#fff'
         onPress={this.props.onPress}          >
         <View>
           <Text
