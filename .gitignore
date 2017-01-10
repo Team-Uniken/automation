@@ -12,7 +12,8 @@ TODOs.md
 /REL-IDmobile/ReactReferenceApp/android/app/app.iml
 /REL-IDmobile/ReactReferenceApp/android/app/BUCK
 /REL-IDmobile/ReactReferenceApp/ios/api-sdk
-/REL-IDmobile/ReactReferenceApp/node_modules
+/REL-IDmobile/ReactReferenceApp/node_modules/*
+!/REL-IDmobile/ReactReferenceApp/node_modules/react-native-camera
 
 # Xcode
 #
