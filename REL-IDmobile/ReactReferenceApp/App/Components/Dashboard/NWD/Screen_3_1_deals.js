@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import ReactNative, { View, Text, ListView, Image } from 'react-native'
 import Skin from '../../../Skin';
-import Main from './Main/main';
+import Main from '../../Main';
+import ControlPanel from './ControlPannel/ControlPanel';
+
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events';
 import NavBar from '../../view/navbar.js'
@@ -57,7 +59,7 @@ class Screen_3_1_deals extends Component {
       alert(response[0].response);
     }
 
-    return { }
+    return {}
   }
 
   compare(a, b) {
@@ -85,7 +87,7 @@ class Screen_3_1_deals extends Component {
    * @return {object}          Object with both the data and the sectionIds
    */
   renderListViewData(accounts) {
-    const data = { };
+    const data = {};
     const sectionIds = [];
     accounts.map((account) => {
       const section = account.accountType;
@@ -96,7 +98,7 @@ class Screen_3_1_deals extends Component {
       data[section].push(account);
       return account;
     });
-    return { data,sectionIds };
+    return { data, sectionIds };
   }
 
   /**
@@ -114,21 +116,21 @@ class Screen_3_1_deals extends Component {
     return (
       <ListItem
         wrapstyle={{
-                     flex: 1,
-                     alignItems: 'center'
-                   }}
+          flex: 1,
+          alignItems: 'center'
+        }}
         rowstyle={{
-                    backgroundColor: Skin.colors.TEXT_COLOR,
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                    width: Skin.magicwidth,
-                    marginBottom: 0,
-                  }}>
+          backgroundColor: Skin.colors.TEXT_COLOR,
+          paddingTop: 0,
+          paddingBottom: 0,
+          width: Skin.magicwidth,
+          marginBottom: 0,
+        }}>
         <View style={Skin.layout3.row.rowwrap}>
           <View style={Skin.layout3.row.iconwrap}>
             <Text style={[Skin.layout3.row.icon, {
-                           color: cleanData.iconcolor
-                         }]}>
+              color: cleanData.iconcolor
+            }]}>
               {cleanData.icon}
             </Text>
           </View>
@@ -143,7 +145,7 @@ class Screen_3_1_deals extends Component {
           </View>
         </View>
       </ListItem>
-      );
+    );
   }
   triggerDrawer() {
     console.log('trigger')
@@ -152,24 +154,25 @@ class Screen_3_1_deals extends Component {
   render() {
     return (
       <Main
+        controlPanel={ControlPanel}
         drawerState={this.props.drawerState}
         bottomMenu={this.props.menuState}
         navigator={this.props.navigator}
         defaultNav={false}>
         <View style={[Skin.layout3.split.top.wrap, {
-                       justifyContent: 'space-between'
-                     }]}>
+          justifyContent: 'space-between'
+        }]}>
           <View style={{
-                         position: 'absolute',
-                         flex: 1,
-                         left: 0,
-                         top: 0,
-                         bottom: 0,
-                         right: 0,
-                         backgroundColor: '#000000',
-                       }}>
+            position: 'absolute',
+            flex: 1,
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            backgroundColor: '#000000',
+          }}>
             <Image
-              source={require('../../../img/purse.png')}
+              source={require('../../../img/purse.png') }
               style={Skin.layout3.split.top.bg} />
           </View>
           <NavBar
@@ -180,38 +183,38 @@ class Screen_3_1_deals extends Component {
             titleTint={'#ffffff'}
             right={''}
             left={{
-                    icon: Skin.icon.user,
-                    iconStyle: {
-                      fontSize: 35,
-                      paddingLeft: 17,
-                      width: 100,
-                      color: '#ffffff',
-                    },
-                    handler: this.triggerDrawer
-                  }} />
+              icon: Skin.icon.user,
+              iconStyle: {
+                fontSize: 35,
+                paddingLeft: 17,
+                width: 100,
+                color: '#ffffff',
+              },
+              handler: this.triggerDrawer
+            }} />
           <View style={{
-                         flex: 1,
-                         flexDirection: 'column',
-                         alignItems: 'flex-end',
-                         justifyContent: 'flex-end',
-                       }}>
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+          }}>
             <Text style={{
-                           color: '#ffffff',
-                           fontSize: 20,
-                           textTransform: 'uppercase',
-                           textAlign: 'right',
-                           paddingRight: 15,
-                         }}>
+              color: '#ffffff',
+              fontSize: 20,
+              textTransform: 'uppercase',
+              textAlign: 'right',
+              paddingRight: 15,
+            }}>
               Member Points
             </Text>
             <Text style={{
-                           color: '#ffffff',
-                           fontSize: 50,
-                           textAlign: 'right',
-                           paddingRight: 15,
-                           paddingBottom: 20,
-                         }}>
-              1,088
+              color: '#ffffff',
+              fontSize: 50,
+              textAlign: 'right',
+              paddingRight: 15,
+              paddingBottom: 20,
+            }}>
+              1, 088
             </Text>
           </View>
         </View>
@@ -219,8 +222,8 @@ class Screen_3_1_deals extends Component {
           <ListView
             contentContainerStyle={{ paddingTop: 12 }}
             dataSource={this.state.dataSource}
-            renderRow={this.renderRow.bind(this)}
-            renderSectionHeader={this.renderSectionHeader.bind(this)} />
+            renderRow={this.renderRow.bind(this) }
+            renderSectionHeader={this.renderSectionHeader.bind(this) } />
         </View>
       </Main>
     )

@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import ReactNative, { View, Text, ListView, Image } from 'react-native'
 import Skin from '../../../Skin';
-import Main from './Main/main';
+import Main from '../../Main';
 import ListItem from '../../ListItem';
 import Events from 'react-native-simple-events'
 import NavBar from '../../view/navbar.js'
 import { FormattedCurrency } from 'react-native-globalize';
 
 import Config from 'react-native-config'
+
+
+import ControlPanel from './ControlPannel/ControlPanel';
 
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -156,10 +159,15 @@ class HomePage extends Component {
   render() {
     return (
       <Main
+        controlPanel={ControlPanel}
         drawerState={this.props.drawerState}
         bottomMenu={this.props.menuState}
         navigator={this.props.navigator}
-        defaultNav={false}>
+        defaultNav={false}
+        bottomMenu={{
+          visible: false,
+        }}
+        >
         <View style={[Skin.layout3.split.top.wrap, {
           justifyContent: 'space-between'
         }]}>
@@ -174,10 +182,10 @@ class HomePage extends Component {
           }}>
 
             <Text style={{
-              color:Config.THEME_COLOR ,
+              color: Config.THEME_COLOR,
               fontSize: 24,
-                textAlign: 'center',
-              marginTop:Skin.SCREEN_HEIGHT/2-30
+              textAlign: 'center',
+              marginTop: Skin.SCREEN_HEIGHT / 2 - 30
             }}>
               Welcome to {Skin.admin.MENU_TITLE}
             </Text>
@@ -200,6 +208,7 @@ class HomePage extends Component {
               },
               handler: this.triggerDrawer
             }} />
+
 
         </View>
       </Main>

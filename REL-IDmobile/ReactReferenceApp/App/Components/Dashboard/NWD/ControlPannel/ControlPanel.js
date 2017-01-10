@@ -15,7 +15,7 @@ var constant = require('../../../Constants');
  CALLED
  */
 import Events from 'react-native-simple-events';
-import Main from '../Main/main';
+import Main from '../../../Main';
 import Web from '../../../../Scenes/Web';
 var styles = Skin.loadStyle;
 
@@ -507,7 +507,7 @@ class ControlPanel extends Component {
     }
 
   }
-  
+
   render() {
 
 

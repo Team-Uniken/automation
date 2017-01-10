@@ -7,7 +7,6 @@ import Skin from '../Skin';
 /*
   CALLED
 */
-import ControlPanel from './ControlPanel';
 //import NavigationBar from 'react-native-navbar';
 import NavigationBar from './view/navbar.js'
 import BottomMenu from './view/bottomMenu';
@@ -237,10 +236,10 @@ export default class Main extends Component {
                this.drawer = c;
              }}
         type="static"
-        content={<ControlPanel
+        content={this.props.controlPanel!=null && this.props.controlPanel!=undefined ?<this.props.controlPanel
                    toggleDrawer={this.toggleDrawer}
                    closeDrawer={this.closeDrawer}
-                   navigator={this.props.navigator} />}
+                   navigator={this.props.navigator} />:null}
         acceptDoubleTap
         onOpen={() => {
                   this.setState({

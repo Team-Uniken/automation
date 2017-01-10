@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactNative, { View, Text, ListView, Image } from 'react-native'
 import Skin from '../../../Skin';
-import Main from './Main/main';
+import Main from '../../Main';
+import ControlPanel from './ControlPannel/ControlPanel';
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'
 import NavBar from '../../view/navbar.js'
@@ -57,7 +58,7 @@ class Screen_3_2_history extends Component {
       alert(response[0].response);
     }
 
-    return { }
+    return {}
   }
 
   cleanRowData(rowData) {
@@ -77,7 +78,7 @@ class Screen_3_2_history extends Component {
    * @return {object}          Object with both the data and the sectionIds
    */
   renderListViewData(accounts) {
-    const data = { };
+    const data = {};
     const sectionIds = [];
     accounts.map((account) => {
       const section = account.accountType;
@@ -88,7 +89,7 @@ class Screen_3_2_history extends Component {
       data[section].push(account);
       return account;
     });
-    return { data,sectionIds };
+    return { data, sectionIds };
   }
 
   /**
@@ -106,16 +107,16 @@ class Screen_3_2_history extends Component {
     return (
       <ListItem
         wrapstyle={{
-                     flex: 1,
-                     alignItems: 'center'
-                   }}
+          flex: 1,
+          alignItems: 'center'
+        }}
         rowstyle={{
-                    backgroundColor: Skin.colors.TEXT_COLOR,
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                    width: Skin.magicwidth,
-                    marginBottom: 0,
-                  }}>
+          backgroundColor: Skin.colors.TEXT_COLOR,
+          paddingTop: 0,
+          paddingBottom: 0,
+          width: Skin.magicwidth,
+          marginBottom: 0,
+        }}>
         <View style={Skin.layout3.row.rowwrap}>
           <View style={Skin.layout3.row.namewrap}>
             <Text
@@ -150,7 +151,7 @@ class Screen_3_2_history extends Component {
         </View>
         <View style={Skin.layout3.row.border} />
       </ListItem>
-      );
+    );
   }
 
 
@@ -162,6 +163,7 @@ class Screen_3_2_history extends Component {
   render() {
     return (
       <Main
+        controlPanel={ControlPanel}
         drawerState={this.props.drawerState}
         bottomMenu={this.props.menuState}
         navigator={this.props.navigator}
@@ -172,22 +174,22 @@ class Screen_3_2_history extends Component {
           titleTint={Skin.main.TITLE_COLOR}
           tintColor={'#ffffff'}
           left={{
-                  icon: Skin.icon.user,
-                  iconStyle: {
-                    fontSize: 35,
-                    paddingLeft: 17,
-                    width: 100,
-                    color: Skin.navbar.icon.color,
-                  },
-                  handler: this.triggerDrawer
-                }} />
-        <View style={{height:1,backgroundColor:Skin.main.TITLE_COLOR}}/>
+            icon: Skin.icon.user,
+            iconStyle: {
+              fontSize: 35,
+              paddingLeft: 17,
+              width: 100,
+              color: Skin.navbar.icon.color,
+            },
+            handler: this.triggerDrawer
+          }} />
+        <View style={{ height: 1, backgroundColor: Skin.main.TITLE_COLOR }}/>
         <View style={Skin.layout3.split.bottom}>
           <ListView
             contentContainerStyle={{ paddingTop: 12 }}
             dataSource={this.state.dataSource}
-            renderRow={this.renderRow.bind(this)}
-            renderSectionHeader={this.renderSectionHeader.bind(this)} />
+            renderRow={this.renderRow.bind(this) }
+            renderSectionHeader={this.renderSectionHeader.bind(this) } />
         </View>
       </Main>
     )

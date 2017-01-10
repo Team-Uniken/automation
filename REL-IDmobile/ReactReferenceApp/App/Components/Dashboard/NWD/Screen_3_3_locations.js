@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import ReactNative, { View, Text, ListView, Image, MapView ,PermissionsAndroid,Platform} from 'react-native'
+import ReactNative, { View, Text, ListView, Image, MapView, PermissionsAndroid, Platform} from 'react-native'
 import Skin from '../../../Skin';
-import Main from './Main/main';
+import Main from '../../Main';
+import ControlPanel from './ControlPannel/ControlPanel';
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'
 import NavBar from '../../view/navbar.js'
@@ -21,27 +22,27 @@ class Screen_3_3_locations extends Component {
       lastPosition: 'unknown',
       lat: '',
       lon: '',
-      locationPermissionAndroid:false,
-      showMap:true,
+      locationPermissionAndroid: false,
+      showMap: true,
     }
-     this.requestLocationPermission = this.requestLocationPermission.bind(this);
-     this.getCurrentPosition = this.getCurrentPosition.bind(this);
+    this.requestLocationPermission = this.requestLocationPermission.bind(this);
+    this.getCurrentPosition = this.getCurrentPosition.bind(this);
   }
 
   componentDidMount() {
     console.log('in did mount')
     console.log(navigator);
 
-    if (Platform.OS === 'android' && Platform.Version >= 23){
+    if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.checkLocationPermission();
     }
 
-    if(Platform.OS === "ios" || (Platform.OS === "android" && this.state.locationPermissionAndroid))
+    if (Platform.OS === "ios" || (Platform.OS === "android" && this.state.locationPermissionAndroid))
       this.getCurrentPosition();
   }
 
-  getCurrentPosition(){
-     navigator.geolocation.getCurrentPosition(
+  getCurrentPosition() {
+    navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position)
         var initialPosition = JSON.stringify(position);
@@ -58,27 +59,27 @@ class Screen_3_3_locations extends Component {
 
         fetch(
           'https://maps.googleapis.com/maps/api/place/textsearch/json?location=' + lat + ',' + lon + '&radius=5000&query=ATMs&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
-        //'https://maps.googleapis.com/maps/api/directions/json?origin=41.13694,-73.359778&destination=41.13546,-73.35997&mode=driver&sensor=true&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
+          //'https://maps.googleapis.com/maps/api/directions/json?origin=41.13694,-73.359778&destination=41.13546,-73.35997&mode=driver&sensor=true&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
         )
           .then(
-            (response) => response.text()
-        )
+          (response) => response.text()
+          )
           .then(
-            (responseText) => {
-              //console.log(responseText);
-            }
-        )
+          (responseText) => {
+            //console.log(responseText);
+          }
+          )
           .catch(
-            (error) => {
-              console.warn(error);
-            }
-        );
+          (error) => {
+            console.warn(error);
+          }
+          );
       },
       (error) => {
         alert(error)
       },
       //(error) => alert(error.message),
-      { enableHighAccuracy: false,timeout: 20000,maximumAge: 1000 }
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
     );
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -88,7 +89,7 @@ class Screen_3_3_locations extends Component {
     });
   }
 
- async requestLocationPermission() {
+  async requestLocationPermission() {
     try {
       const granted = await PermissionsAndroid.requestPermission(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -121,7 +122,7 @@ class Screen_3_3_locations extends Component {
         if (response) {
           this.setState({
             locationPermissionAndroid: response,
-          },()=>{this.getCurrentPosition();});
+          }, () => { this.getCurrentPosition(); });
         } else {
           this.requestLocationPermission();
         }
@@ -141,8 +142,9 @@ class Screen_3_3_locations extends Component {
     //console.log(this.props);
     return (
       <Main
-        drawerState={{ open: false,disabled: false }}
-        bottomMenu={{ visible: true,active: 3, }}
+        controlPanel={ControlPanel}
+        drawerState={{ open: false, disabled: false }}
+        bottomMenu={{ visible: true, active: 3, }}
         navigator={this.props.navigator}
         defaultNav={false}>
         <NavBar
@@ -151,30 +153,30 @@ class Screen_3_3_locations extends Component {
           tintColor={'#ffffff'}
           right={''}
           left={{
-                  icon: Skin.icon.user,
-                  iconStyle: {
-                    fontSize: 35,
-                    paddingLeft: 17,
-                    width: 100,
-                    color: Skin.navbar.icon.color,
-                  },
-                  handler: this.triggerDrawer
-                }} />
-        <View style={{height:1,backgroundColor:Skin.main.TITLE_COLOR}}/>
+            icon: Skin.icon.user,
+            iconStyle: {
+              fontSize: 35,
+              paddingLeft: 17,
+              width: 100,
+              color: Skin.navbar.icon.color,
+            },
+            handler: this.triggerDrawer
+          }} />
+        <View style={{ height: 1, backgroundColor: Skin.main.TITLE_COLOR }}/>
         <View style={{
-                       flex: 1,
-                       backgroundColor: Skin.colors.BACK_GRAY
-                     }}>
+          flex: 1,
+          backgroundColor: Skin.colors.BACK_GRAY
+        }}>
           <MapView
             style={{
-                     flex: 1,
-                     width: Skin.SCREEN_WIDTH
-                   }}
+              flex: 1,
+              width: Skin.SCREEN_WIDTH
+            }}
             showsUserLocation={true}
             followUserLocation={true} />
         </View>
       </Main>
-      );
+    );
   }
 }
 
