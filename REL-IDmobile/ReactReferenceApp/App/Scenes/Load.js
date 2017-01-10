@@ -227,7 +227,7 @@ class Load extends Component {
         },
 
         // ANDROID ONLY: (optional) GCM Sender ID.
-        senderID: "379127486882",
+        senderID: Config.GCM_SENDER_ID,
 
         /**
          *  // IOS ONLY (optional): default: all - Permissions to register.
