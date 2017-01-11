@@ -178,7 +178,7 @@ module.exports.icon = {
   permanent: '\ue000',
   hamburger: '\ue5d2',
   user: '\ue7ff',
-  settings: '\ue8b8',
+  settings: '\u2699',
   logo: LOGO,
   wechat: '\ue935',
   facebook: '\ue932',
