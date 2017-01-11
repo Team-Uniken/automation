@@ -88,17 +88,6 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
-    defaultConfig {
-        applicationId "com.reactrefapp"
-        minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 39
-        versionName "3.9"
-        multiDexEnabled true
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
-    }
     splits {
         abi {
             reset()
@@ -135,18 +124,30 @@ android {
         sandp{
             applicationId 'com.uniken.sandp'
             signingConfig signingConfigs.releaseSandP
+            minSdkVersion 16
+            targetSdkVersion 24
+            versionCode 20
+            versionName "2.0"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
 
         nwd{
             applicationId 'com.uniken.nwd'
             signingConfig signingConfigs.releaseNwd
+            minSdkVersion 16
+            targetSdkVersion 24
+            versionCode 39
+            versionName "3.9"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
         
         stock{
             applicationId 'com.uniken.stock'
             signingConfig signingConfigs.releaseStock
+            minSdkVersion 16
+            targetSdkVersion 24
+            versionCode 10
+            versionName "1.0"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
     }
@@ -183,7 +184,6 @@ dependencies {
     compile('com.google.android.gms:play-services-gcm:9.2.1') {
         force = true;
     }
-    compile project(':react-native-system-notification')
     // <- Add this line
     compile('com.android.support:appcompat-v7:24.1.1') {
         force = true;

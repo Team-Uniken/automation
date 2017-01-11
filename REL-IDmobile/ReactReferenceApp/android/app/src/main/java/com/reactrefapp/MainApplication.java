@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
-import io.neson.react.notification.NotificationPackage;
+//import io.neson.react.notification.NotificationPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -48,21 +48,20 @@ public class MainApplication extends Application implements ReactApplication {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         Log.e("Main",BuildConfig.THEME_COLOR);
-        //Code for facebook key hash
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "com.reactrefapp",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        } catch (NoSuchAlgorithmException e) {
-//
-//        }
+      //  Code for facebook key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 
 
@@ -80,7 +79,6 @@ public class MainApplication extends Application implements ReactApplication {
               new RDNAReactPackage(),
               new ExtraDimensionsPackage(MainActivity.currentActivity),
               new ReactNativePushNotificationPackage(),
-              new NotificationPackage(MainActivity.currentActivity),
               new FBSDKPackage(getCallbackManager()),
               new RCTCameraPackage()
       );
