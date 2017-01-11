@@ -132,28 +132,23 @@ android {
 
     productFlavors{
         sandp{
-            applicationId 'com.SandPGlobal'
+            applicationId 'com.uniken.sandp'
             signingConfig signingConfigs.releaseSandP
-
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
 
         nwd{
-            applicationId 'com.reactrefapp'
+            applicationId 'com.uniken.nwd'
             signingConfig signingConfigs.releaseNwd
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-
-
         }
+        
         stock{
-            applicationId 'com.reactrefapp.stock'
+            applicationId 'com.uniken.stock'
             signingConfig signingConfigs.releaseStock
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-
-
         }
     }
-
 
     buildTypes {
         release {
@@ -173,9 +168,6 @@ android {
         }
     }
 }
-
-
-
 
 dependencies {
     compile project(':react-native-config')
