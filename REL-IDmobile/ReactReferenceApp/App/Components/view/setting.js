@@ -21,7 +21,7 @@ class Setting extends Component {
         <View>
           <Text
             style={{
-              color: '#FFF',
+              color: '#99A3A4',
               fontSize: 30,
               fontWeight: 'bold',
             }}

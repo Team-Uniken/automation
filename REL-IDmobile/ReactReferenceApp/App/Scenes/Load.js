@@ -699,7 +699,6 @@ class Load extends Component {
             position: 'absolute',
             bottom: 0,
             left: 0,
-            backgroundColor: Config.THEME_COLOR,
             height: 50,
             width: 50,
             alignItems: 'center',

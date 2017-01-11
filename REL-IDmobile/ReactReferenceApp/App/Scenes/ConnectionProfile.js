@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-const {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, } = ReactNative;
+const {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackAndroid} = ReactNative;
 const {Component} = React;
 let CONNECTION_PROFILES_DATA = [];
 let CURRENT_CONNECTION_PROFILES_DATA = [];
@@ -37,6 +37,14 @@ class ConnectionProfileScene extends Component {
   }
 
   componentDidMount() {
+
+    BackAndroid.addEventListener('hardwareBackPress', function() {
+      this.props.navigator.resetTo({
+                id: 'Load'
+              });
+      return true;
+    }.bind(this));
+
     AsyncStorage.getItem("ConnectionProfiles").then((profiles) => {
       CONNECTION_PROFILES_DATA = JSON.parse(profiles);
       this.setState({
@@ -263,6 +271,7 @@ class ConnectionProfileScene extends Component {
           open: false,
           disabled: true,
         }}
+
         navBar={{
           title: 'Connection Profiles',
           visible: true,
