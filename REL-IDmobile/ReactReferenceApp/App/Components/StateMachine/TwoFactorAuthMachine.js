@@ -344,14 +344,19 @@ class TwoFactorAuthMachine extends Component {
         challengeJsonArr = saveChallengeJson.chlng;
         console.log('immediate response is' + response[0].error);
         var allScreens = obj.stateNavigator.getCurrentRoutes(-1);
-
+        var flag = false;
         for (var i = 0; i < allScreens.length; i++) {
           var screen = allScreens[i];
           if (screen.id === 'checkuser') {
-            var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+            var mySelectedRoute = obj.stateNavigator.getCurrentRoutes()[i];
+           // alert(mySelectedRoute);
             obj.stateNavigator.popToRoute(mySelectedRoute);
+            flag = true;
             return;
           }
+        }
+
+        if(flag==false){
           var chlngJson1;
           chlngJson1 = saveChallengeJson;
           const nextChlngName = chlngJson1.chlng[0].chlng_name;
@@ -367,7 +372,6 @@ class TwoFactorAuthMachine extends Component {
               screenId: nextChlngName,
             },
           });
-
         }
       } else {
         console.log('immediate response is' + response[0].error);
@@ -770,8 +774,8 @@ class TwoFactorAuthMachine extends Component {
 
   callCheckChallenge() {
     
-    if(Main.isConnected){
-
+   // if(Main.isConnected){
+    if(true){
     if (subscriptions) {
       subscriptions.remove();
     }
