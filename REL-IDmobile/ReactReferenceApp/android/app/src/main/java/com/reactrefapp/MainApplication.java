@@ -1,9 +1,11 @@
 package com.reactrefapp;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.support.multidex.MultiDex;
 import android.util.Base64;
 import android.util.Log;
 
@@ -33,6 +35,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     protected static CallbackManager getCallbackManager() {
         return mCallbackManager;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     @Override

@@ -94,6 +94,7 @@ android {
         targetSdkVersion 24
         versionCode 39
         versionName "3.9"
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -190,6 +191,7 @@ dependencies {
     compile 'com.facebook.react:react-native:+'
     //compile 'com.google.android.gms:play-services-gcm:9.2.1'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.android.support:multidex:1.0.1'
 }
 //
 //configurations.all {
