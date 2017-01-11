@@ -774,8 +774,7 @@ class TwoFactorAuthMachine extends Component {
 
   callCheckChallenge() {
     
-   // if(Main.isConnected){
-    if(true){
+   if(Main.isConnected){
     if (subscriptions) {
       subscriptions.remove();
     }
