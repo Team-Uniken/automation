@@ -49,8 +49,8 @@ import Screen_3_3_locations from './App/Components/Dashboard/NWD/Screen_3_3_loca
 import Dashboard from './App/Components/Dashboard/dashboard';
 
 
-import Appointment from './App/Components/Appointment';
-import AddAppointment from './App/Components/AddAppointment';
+import Appointment from './App/Scenes/Appointment';
+import AddAppointment from './App/Scenes/AddAppointment';
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';
 import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';

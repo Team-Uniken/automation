@@ -53,8 +53,9 @@ import Screen_1_3_setPassword from './App/Components/Challenges/Screen_1_3_setPa
 import Screen_1_4_registerOptions from './App/Components/Challenges/Screen_1_4_registerOptions';
 
 
-import Appointment from './App/Components/Appointment';
-import AddAppointment from './App/Components/AddAppointment';
+import Appointment from './App/Scenes/Appointment';
+import AddAppointment from './App/Scenes/AddAppointment';
+
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';
 import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';

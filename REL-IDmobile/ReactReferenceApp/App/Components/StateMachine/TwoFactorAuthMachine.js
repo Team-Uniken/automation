@@ -28,7 +28,7 @@ import DeviceBinding from '../Challenges/Screen_Device_Binding';
 import DeviceName from '../Challenges/Screen_Device_Name';
 import PasswordVerification from '../Challenges/Screen_2_2_password';
 import PatternLock from '../Challenges/Screen_PatternLock';
-import ScreenHider from '../../Scenes/ScreenHider';
+import ScreenHider from '../Utils/ScreenHider';
 import SelectLogin from '../Challenges/Screen_0_2_selectlogin';
 
 

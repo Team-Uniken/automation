@@ -13,7 +13,7 @@ import Main from './Main';
  */
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Modal from 'react-native-simple-modal';
-import Loader from './Loader';
+import Loader from './Utils/Loader';
 import Events from 'react-native-simple-events';
 import { InteractionManager } from "react-native";
 var {DeviceEventEmitter} = require('react-native');

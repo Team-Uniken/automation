@@ -30,7 +30,7 @@ import UserLogin from '../Challenges/Screen_2_1_username';
 import DeviceBinding from '../Challenges/Screen_Device_Binding';
 import DeviceName from '../Challenges/Screen_Device_Name';
 import PostLoginPasswordVerification from '../PostLogin/Screen_PostLogin_password';
-import ScreenHider from '../../Scenes/ScreenHider';
+import ScreenHider from '../Utils/ScreenHider';
 
 // COMPONENTS
 import buildStyleInterpolator from 'buildStyleInterpolator';

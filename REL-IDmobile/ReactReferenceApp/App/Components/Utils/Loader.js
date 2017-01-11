@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactNative, { View, Text } from 'react-native';
-import Skin from '../Skin';
+import Skin from '../../Skin';
 
 import Spinner from 'react-native-loading-spinner-overlay';
 
