@@ -43,7 +43,6 @@
     "react-native-permissions": "^0.2.5",
     "react-native-picker-android": "^1.0.3",
     "react-native-progress-bar": "^0.1.2",
-    "react-native-push-notification": "^2.1.0",
     "react-native-simple-events": "^1.0.1",
     "react-native-simple-modal": "^3.0.2",
     "react-native-slider": "^0.8.0",
