@@ -266,6 +266,7 @@ class Load extends Component {
     }
 
     onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
+      Events.trigger("showLoader", true);
       appalive = false;
       console.log('On Pause Completed:');
       console.log('immediate response is' + e.response);
@@ -278,6 +279,7 @@ class Load extends Component {
     });
 
     onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function (e) {
+      Events.trigger("hideLoader", true);
       console.log('On Resume Completed:');
       console.log('immediate response is' + e.response);
       responseJson = JSON.parse(e.response);
@@ -286,7 +288,6 @@ class Load extends Component {
         if (pPort > 0) {
           RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           Web.proxy = pPort;
-          // AsyncStorage.setItem("Proxy",""+pPort);
         }
         appalive = true;
         console.log('Resume Successfull');
@@ -305,12 +306,10 @@ class Load extends Component {
           }
         }
 
-
         AsyncStorage.setItem("savedContext", "");
       } else {
         AsyncStorage.setItem("savedContext", "");
         alert('Failed to Resume with Error ' + responseJson.errCode + '. Please restart application.');
-
       }
     });
 
@@ -483,30 +482,33 @@ class Load extends Component {
 
     if (currentAppState == 'background') {
       console.log('App State Change background:');
-
-      ReactRdna.pauseRuntime((response) => {
-        if (response) {
-          if (response[0].error == 0) {
-            AsyncStorage.setItem("savedContext", response[0].response);
+      if (Config.ENABLE_PAUSE === "true") {
+        ReactRdna.pauseRuntime((response) => {
+          if (response) {
+            if (response[0].error == 0) {
+              AsyncStorage.setItem("savedContext", response[0].response);
+            }
+            console.log('Immediate response is ' + response[0].error);
+          } else {
+            console.log('No response.');
           }
-          console.log('Immediate response is ' + response[0].error);
-        } else {
-          console.log('No response.');
-        }
-      })
+        });
+      }
     } else if (currentAppState == 'active') {
       console.log('App State Change active:');
-      AsyncStorage.getItem("savedContext").then((value) => {
-        if (value != null) {
-          ReactRdna.resumeRuntime(value, null, (response) => {
-            if (response) {
-              console.log('Immediate response is ' + response[0].error);
-            } else {
-              console.log('No response.');
-            }
-          })
-        }
-      }).done();
+      if (Config.ENABLE_PAUSE === "true") {
+        AsyncStorage.getItem("savedContext").then((value) => {
+          if (value != null) {
+            ReactRdna.resumeRuntime(value, null, (response) => {
+              if (response) {
+                console.log('Immediate response is ' + response[0].error);
+              } else {
+                console.log('No response.');
+              }
+            })
+          }
+        }).done();
+      }
     } else if (currentAppState === 'inactive') {
       console.log('App State Change Inactive');
     }
