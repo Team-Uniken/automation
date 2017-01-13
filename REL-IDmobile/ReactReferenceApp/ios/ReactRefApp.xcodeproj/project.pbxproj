@@ -112,10 +112,8 @@
 		65127E141D795B4000FB36E1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C91CC9FAD5009E6168 /* Images.xcassets */; };
 		65127E151D795B4000FB36E1 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
 		65127E161D795B4000FB36E1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 654F81CA1CC9FAD5009E6168 /* Info.plist */; };
-		65209ADD1E23B262009E52F3 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65209ADC1E23B262009E52F3 /* libapi-sdk.a */; };
-		65209ADE1E23B262009E52F3 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65209ADC1E23B262009E52F3 /* libapi-sdk.a */; };
-		65209ADF1E23B262009E52F3 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65209ADC1E23B262009E52F3 /* libapi-sdk.a */; };
-		65209AE01E23B262009E52F3 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65209ADC1E23B262009E52F3 /* libapi-sdk.a */; };
+		65209C2F1E28B70C009E52F3 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65209C2E1E28B662009E52F3 /* libRCTCamera.a */; };
+		65209C301E28B70C009E52F3 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55202FA81E124A7E005286B8 /* libReactNativePermissions.a */; };
 		65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
 		654B80C41DBE0B210052D415 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80B71DBE0A5D0052D415 /* libRCTFBSDK.a */; };
 		654B80C51DBE0B250052D415 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80B71DBE0A5D0052D415 /* libRCTFBSDK.a */; };
@@ -221,9 +219,9 @@
 			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
 			remoteInfo = ReactNativeConfig;
 		};
-		65209B8E1E23C970009E52F3 /* PBXContainerItemProxy */ = {
+		65209C2D1E28B662009E52F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 65209B8A1E23C970009E52F3 /* RCTCamera.xcodeproj */;
+			containerPortal = 65209C291E28B662009E52F3 /* RCTCamera.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RCTCamera;
@@ -294,9 +292,7 @@
 		65079D141E1F7FDD005D9A11 /* sandp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sandp.plist; sourceTree = "<group>"; };
 		65079D161E1F7FE5005D9A11 /* stock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = stock.plist; sourceTree = "<group>"; };
 		65127E1B1D795B4000FB36E1 /* ReactRefAppDeveloper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefAppDeveloper.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		65209ADA1E23B262009E52F3 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		65209ADC1E23B262009E52F3 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
-		65209B8A1E23C970009E52F3 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		65209C291E28B662009E52F3 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		654B80D11DBE0C620052D415 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -340,7 +336,6 @@
 				551E55B91E1BBE8E004F007A /* libReactNativeConfig.a in Frameworks */,
 				654B80C51DBE0B250052D415 /* libRCTFBSDK.a in Frameworks */,
 				6582FD691D9526890075C15D /* libstdc++.tbd in Frameworks */,
-				65209ADE1E23B262009E52F3 /* libapi-sdk.a in Frameworks */,
 				654B80D91DBE0C620052D415 /* FBSDKLoginKit.framework in Frameworks */,
 				6582FD5E1D9525000075C15D /* libRCTTouchId.a in Frameworks */,
 				6582FD661D9525790075C15D /* libTouchID.a in Frameworks */,
@@ -368,6 +363,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65209C2F1E28B70C009E52F3 /* libRCTCamera.a in Frameworks */,
+				65209C301E28B70C009E52F3 /* libReactNativePermissions.a in Frameworks */,
 				552BB7DD1E1BA6430009F274 /* libReactNativeConfig.a in Frameworks */,
 				552BB7A01E1BA0B90009F274 /* libRCTFBSDK.a in Frameworks */,
 				552BB7A11E1BA0B90009F274 /* libstdc++.tbd in Frameworks */,
@@ -382,7 +379,6 @@
 				552BB7AB1E1BA0B90009F274 /* libRCTLinking.a in Frameworks */,
 				552BB7AC1E1BA0B90009F274 /* FBSDKShareKit.framework in Frameworks */,
 				552BB7AD1E1BA0B90009F274 /* libRCTNetwork.a in Frameworks */,
-				65209ADF1E23B262009E52F3 /* libapi-sdk.a in Frameworks */,
 				552BB7AE1E1BA0B90009F274 /* FBSDKLoginKit.framework in Frameworks */,
 				552BB7AF1E1BA0B90009F274 /* Bolts.framework in Frameworks */,
 				552BB7B01E1BA0B90009F274 /* libRCTSettings.a in Frameworks */,
@@ -399,7 +395,6 @@
 				55D3516D1E1E0F7C00806F82 /* libReactNativeConfig.a in Frameworks */,
 				55D3516E1E1E0F7C00806F82 /* libRCTFBSDK.a in Frameworks */,
 				55D3516F1E1E0F7C00806F82 /* libstdc++.tbd in Frameworks */,
-				65209AE01E23B262009E52F3 /* libapi-sdk.a in Frameworks */,
 				55D351701E1E0F7C00806F82 /* FBSDKLoginKit.framework in Frameworks */,
 				55D351711E1E0F7C00806F82 /* libRCTTouchId.a in Frameworks */,
 				55D351721E1E0F7C00806F82 /* libTouchID.a in Frameworks */,
@@ -441,7 +436,6 @@
 				65127E081D795B4000FB36E1 /* libRCTLinking.a in Frameworks */,
 				654B80DC1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */,
 				65127E091D795B4000FB36E1 /* libRCTNetwork.a in Frameworks */,
-				65209ADD1E23B262009E52F3 /* libapi-sdk.a in Frameworks */,
 				654B80DA1DBE0C620052D415 /* FBSDKLoginKit.framework in Frameworks */,
 				654B80D61DBE0C620052D415 /* Bolts.framework in Frameworks */,
 				65127E0B1D795B4000FB36E1 /* libRCTSettings.a in Frameworks */,
@@ -544,35 +538,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65209AD81E23B262009E52F3 /* api-sdk */ = {
+		65209C2A1E28B662009E52F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				65209AD91E23B262009E52F3 /* include */,
-				65209ADB1E23B262009E52F3 /* libs */,
-			);
-			path = "api-sdk";
-			sourceTree = "<group>";
-		};
-		65209AD91E23B262009E52F3 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				65209ADA1E23B262009E52F3 /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		65209ADB1E23B262009E52F3 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				65209ADC1E23B262009E52F3 /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		65209B8B1E23C970009E52F3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65209B8F1E23C970009E52F3 /* libRCTCamera.a */,
+				65209C2E1E28B662009E52F3 /* libRCTCamera.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -659,7 +628,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				65209B8A1E23C970009E52F3 /* RCTCamera.xcodeproj */,
+				65209C291E28B662009E52F3 /* RCTCamera.xcodeproj */,
 				552BB7D71E1BA6260009F274 /* ReactNativeConfig.xcodeproj */,
 				6582FD601D95256E0075C15D /* TouchID.xcodeproj */,
 				6582FD571D9524ED0075C15D /* RCTTouchId.xcodeproj */,
@@ -691,7 +660,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				65209AD81E23B262009E52F3 /* api-sdk */,
 				65079D161E1F7FE5005D9A11 /* stock.plist */,
 				65079D141E1F7FDD005D9A11 /* sandp.plist */,
 				6555DE211DED7AAF0044E5EF /* ReactRefAppDeveloper.entitlements */,
@@ -821,9 +789,19 @@
 					};
 					552BB7971E1BA0B90009F274 = {
 						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					55D351651E1E0F7C00806F82 = {
 						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					65127DF91D795B4000FB36E1 = {
 						DevelopmentTeam = 2S999FKG5P;
@@ -855,8 +833,8 @@
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
 				{
-					ProductGroup = 65209B8B1E23C970009E52F3 /* Products */;
-					ProjectRef = 65209B8A1E23C970009E52F3 /* RCTCamera.xcodeproj */;
+					ProductGroup = 65209C2A1E28B662009E52F3 /* Products */;
+					ProjectRef = 65209C291E28B662009E52F3 /* RCTCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = 654B80B21DBE0A5D0052D415 /* Products */;
@@ -1000,11 +978,11 @@
 			remoteRef = 552BB7DB1E1BA6260009F274 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		65209B8F1E23C970009E52F3 /* libRCTCamera.a */ = {
+		65209C2E1E28B662009E52F3 /* libRCTCamera.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRCTCamera.a;
-			remoteRef = 65209B8E1E23C970009E52F3 /* PBXContainerItemProxy */;
+			remoteRef = 65209C2D1E28B662009E52F3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */ = {
@@ -1490,10 +1468,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.relidzero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "db61cb90-81ec-42ab-aaa7-4b872fcc2ef7";
-				PROVISIONING_PROFILE_SPECIFIER = "REL-IDzero";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
 			};
 			name = Debug;
 		};
@@ -1542,10 +1520,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relid.relidzero;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "db61cb90-81ec-42ab-aaa7-4b872fcc2ef7";
-				PROVISIONING_PROFILE_SPECIFIER = "REL-IDzero";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
 			};
 			name = Release;
 		};

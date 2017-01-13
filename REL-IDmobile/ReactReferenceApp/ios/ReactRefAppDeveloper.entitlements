@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.uniken.PushNotificationTest</string>
+		<string>$(AppIdentifierPrefix)com.uniken.sandp</string>
 	</array>
 </dict>
 </plist>
