@@ -21,7 +21,7 @@ import AccessCode from '../Challenges/Screen_Otp';
 import Activation from '../Challenges/Screen_1_2_activation';
 import UpdatePasswordSet from '../PostLogin/Screen_Update_Password_Dashboard';
 import PostLoginAccessCode from '../PostLogin/Screen_PostLogin_Otp';
-import UpdateQuestionSet from '../Challenges/Screen_Update_Question';
+import UpdateQuestionSet from '../PostLogin/Screen_Update_Question_Dashboard';
 import PostLoginQuestionVerification from '../PostLogin/Screen_PostLogin_Question_Verification';
 import UserLogin from '../Challenges/Screen_2_1_username';
 import DeviceBinding from '../Challenges/Screen_Device_Binding';
