@@ -18,6 +18,7 @@ import { DeviceEventEmitter } from 'react-native';
 
 import Setting from '../Components/view/setting';
 
+import Version from '../Components/view/version';
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -653,7 +654,7 @@ class Load extends Component {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
     if (isRunAfterInteractions) {
       if (initCount === initSuccess) {
-        Obj.doNavigation();
+      //  Obj.doNavigation();
       } else if (initCount === initError) {
         Alert.alert(
           'Error',
@@ -693,6 +694,7 @@ class Load extends Component {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
+        
         <Image
           source={welcome}
           style={styles.bg} />
@@ -708,6 +710,7 @@ class Load extends Component {
             borderTopRightRadius: 20,
           }}
           onPress={() => this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
+        <Version/>
       </View>
     );
   }

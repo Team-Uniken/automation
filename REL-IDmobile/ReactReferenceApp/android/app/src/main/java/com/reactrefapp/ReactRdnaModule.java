@@ -65,6 +65,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         constants.put("GatewayPort", Constants.PORT);
         constants.put("RdnaCipherSpecs", Constants.CYPHER_SPEC);
         constants.put("RdnaCipherSalt", Constants.CYPHER_SALT);
+        constants.put("AppVersion",BuildConfig.VERSION_NAME);
         return constants;
     }
 
