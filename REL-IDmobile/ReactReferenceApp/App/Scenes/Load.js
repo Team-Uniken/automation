@@ -654,7 +654,7 @@ class Load extends Component {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
     if (isRunAfterInteractions) {
       if (initCount === initSuccess) {
-      //  Obj.doNavigation();
+        Obj.doNavigation();
       } else if (initCount === initError) {
         Alert.alert(
           'Error',
