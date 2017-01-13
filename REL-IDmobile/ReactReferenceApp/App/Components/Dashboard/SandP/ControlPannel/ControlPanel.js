@@ -86,6 +86,7 @@ class ControlPanel extends Component {
   }
 
   componentDidMount() {
+    this.getAllChallenges();
     constant.USER_SESSION = "YES";
     AsyncStorage.setItem("isPwdSet", "empty");
     Obj = this;
@@ -401,7 +402,8 @@ class ControlPanel extends Component {
 
 
 
-  getAllChallenges() {
+getAllChallenges() {
+    Events.trigger('showLoader', true);
     if (onGetAllChallengeEvent) {
       onGetAllChallengeEvent.remove();
     }
@@ -410,18 +412,14 @@ class ControlPanel extends Component {
       this.onGetAllChallengeSettingStatus.bind(this)
     );
 
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.getAllChallenges(value, (response) => {
-        if (response) {
-          console.log('getAllChallenges immediate response is' + response[0].error);
-        } else {
-          console.log('s immediate response is' + response[0].error);
-        }
-      })
-    }).done();
-
+    ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
+      if (response) {
+        console.log('getAllChallenges immediate response is' + response[0].error);
+      } else {
+        console.log('s immediate response is' + response[0].error);
+      }
+    });
   }
-
 
   onGetAllChallengeSettingStatus(e) {
     if (onGetAllChallengeEvent) {
@@ -434,56 +432,80 @@ class ControlPanel extends Component {
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-        var arrTba = new Array();
         const chlngJson = res.pArgs.response.ResponseData;
         for (var i = 0; i < chlngJson.chlng.length; i++) {
           if (chlngJson.chlng[i].chlng_name === 'secqa') {
             Main.enableUpdateSecqaOption = true;
           }
-
-          if (chlngJson.chlng[i].chlng_name === 'tbacred')
-            arrTba.push(chlngJson.chlng[i]);
         }
-        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
-          if (arrTba.length > 0) {
-            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-              if (value) {
-                try {
-                  value = JSON.parse(value);
-                  if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
-                  } else {
-                    if (Platform.OS === "android") {
-                      Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
-                    } else {
-                      Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
-                    }
-                  }
-                } catch (e) { }
-              }
-
-            }).done();
-          } else {
-            Events.trigger('closeStateMachine');
-            InteractionManager.runAfterInteractions(() => {
-              // this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-            });
-          }
-        } else {
-          Events.trigger('closeStateMachine');
-          InteractionManager.runAfterInteractions(() => {
-            //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
-          });
-        }
-      } else {
-        alert(res.pArgs.response.StatusMsg);
       }
     } else {
       console.log('Something went wrong');
-      // If error occurred reload devices list with previous response
     }
-
   }
+
+
+  // onGetAllChallengeSettingStatus(e) {
+  //   if (onGetAllChallengeEvent) {
+  //     onGetAllChallengeEvent.remove();
+  //   }
+  //   var $this = this;
+  //   Events.trigger('hideLoader', true);
+  //   const res = JSON.parse(e.response);
+  //   console.log(res);
+  //   if (res.errCode === 0) {
+  //     const statusCode = res.pArgs.response.StatusCode;
+  //     if (statusCode === 100) {
+  //       var arrTba = new Array();
+  //       const chlngJson = res.pArgs.response.ResponseData;
+  //       for (var i = 0; i < chlngJson.chlng.length; i++) {
+  //         if (chlngJson.chlng[i].chlng_name === 'secqa') {
+  //           Main.enableUpdateSecqaOption = true;
+  //         }
+
+  //         if (chlngJson.chlng[i].chlng_name === 'tbacred')
+  //           arrTba.push(chlngJson.chlng[i]);
+  //       }
+  //       if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
+  //         if (arrTba.length > 0) {
+  //           AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+  //             if (value) {
+  //               try {
+  //                 value = JSON.parse(value);
+  //                 if (value.ERPasswd && value.ERPasswd !== "empty") {
+  //                   Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
+  //                 } else {
+  //                   if (Platform.OS === "android") {
+  //                     Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
+  //                   } else {
+  //                     Obj.props.navigator.push({ id: 'RegisterOptionScene', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": $this.isTouchIDPresent } }, sceneConfig: Navigator.SceneConfigs.PushFromRight });
+  //                   }
+  //                 }
+  //               } catch (e) { }
+  //             }
+
+  //           }).done();
+  //         } else {
+  //           Events.trigger('closeStateMachine');
+  //           InteractionManager.runAfterInteractions(() => {
+  //             // this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+  //           });
+  //         }
+  //       } else {
+  //         Events.trigger('closeStateMachine');
+  //         InteractionManager.runAfterInteractions(() => {
+  //           //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+  //         });
+  //       }
+  //     } else {
+  //       alert(res.pArgs.response.StatusMsg);
+  //     }
+  //   } else {
+  //     console.log('Something went wrong');
+  //     // If error occurred reload devices list with previous response
+  //   }
+
+  // }
 
 
 
