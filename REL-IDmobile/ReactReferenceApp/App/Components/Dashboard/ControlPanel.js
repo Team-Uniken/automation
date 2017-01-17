@@ -3,20 +3,24 @@
  ALWAYS NEED
  */
 'use strict';
-import Skin from '../../../../Skin';
 
 var ReactNative = require('react-native');
 var React = require('react');
+import Skin from '../../Skin';
 var SCREEN_WIDTH = require('Dimensions').get('window').width;
 var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-var constant = require('../../../Constants');
+var constant = require('../Constants');
+import Config from 'react-native-config';
 
 /*
  CALLED
  */
 import Events from 'react-native-simple-events';
-import Main from '../../../Main';
-import Web from '../../../../Scenes/Web';
+import Main from '../Main';
+import Web from '../../Scenes/Web';
+
+import MenuItem from '../view/menuitem';
+
 var styles = Skin.loadStyle;
 
 //var Menu = require('./Menu');
@@ -69,6 +73,7 @@ class ControlPanel extends Component {
     this.showLogOffAlert = this.showLogOffAlert.bind(this);
     this.doNavigation = this.doNavigation.bind(this);
     //this.getMyNotifications();
+
   }
 
   showLogOffAlert() {
@@ -355,7 +360,6 @@ class ControlPanel extends Component {
   }
 
   getChallengesByName(chlngName) {
-
     if (Main.isConnected) {
 
       if (onGetAllChallengeEvent) {
@@ -527,7 +531,7 @@ class ControlPanel extends Component {
   //   }
 
   // }
-  
+
   render() {
 
 
@@ -546,81 +550,113 @@ class ControlPanel extends Component {
       <View style={styles.container}>
         <Text style={styles.controlHeader}>{Skin.admin.MENU_TITLE}</Text>
         <ScrollView>
-
-          <View style={styles.menuBorder}></View>
-          <TouchableHighlight
+          <MenuItem
+            visibility={Config.ALERTS}
+            lable="Alerts"
             onPress={() => {
               this.props.toggleDrawer();
-              this.props.navigator.push({
-                id: 'ComingSoon',
-                title: 'Alerts',
-                sceneConfig: Navigator.SceneConfigs.PushFromRight,
-              });
+              this.props.navigator.push({ id: 'ComingSoon', title: 'Alerts', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
             } }
-            style={styles.touch}
-            >
-            <Text style={styles.menuItem}>Alerts</Text>
-          </TouchableHighlight>
-          <View style={styles.menuBorder}></View>
+            />
+          <MenuItem
+            visibility={Config.PROFILE_SETTINGS}
+            lable="Profile & Settings"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            } }
+            />
+          <MenuItem
+            visibility={Config.DEV_MANAGMENT}
+            lable="Device Management"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            } }
+            />
+          <MenuItem
+            visibility={Config.NOTIFICATIONS}
+            lable="Notifications"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            } }
+            />
 
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Profile & Settings</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Device Management</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Notifications</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
           {
             Main.enableUpdateSecqaOption &&
             [
-              <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('secqa'); } }  style={styles.touch}><Text style={styles.menuItem}>Change Secret Question</Text>
-              </TouchableHighlight>, <View style={styles.menuBorder}></View>
+              <MenuItem
+                visibility={Config.CHANGEQUESTION}
+                lable="Change Secret Question"
+                onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('secqa'); } }
+                />
             ]
           }
+          <MenuItem
+            visibility={Config.CHANGEPASSWORD}
+            lable="Change Password"
+            onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); } }
+            />
 
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); } }  style={styles.touch}><Text style={styles.menuItem}>Change Password</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Help & Support</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' }); } }  style={styles.touch}><Text style={styles.menuItem}>Secure Portal</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => {
-            this.props.toggleDrawer();
-            var openSiteURL = 'https://www.google.co.in/'
-            if (Platform.OS === 'android') {
-              IntentAndroid.canOpenURL(openSiteURL, (supported) => {
-                if (!supported) {
-                  console.log('Can\'t handle url: ' + openSiteURL);
-                } else {
-                  IntentAndroid.openURL(openSiteURL);
-                }
-              });
+          <MenuItem
+            visibility={Config.HELP_SUPPORT}
+            lable="Help & Support"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            } }
+            />
+          <MenuItem
+            visibility={Config.SECURE_PORTAL}
+            lable="Secure Portal"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' });
+            } }
+            />
+          <MenuItem
+            visibility={Config.OPEN_PORTAL}
+            lable="Open Portal"
+            onPress={() => {
+              this.props.toggleDrawer();
+              var openSiteURL = 'https://www.google.co.in/'
+              if (Platform.OS === 'android') {
+                IntentAndroid.canOpenURL(openSiteURL, (supported) => {
+                  if (!supported) {
+                    console.log('Can\'t handle url: ' + openSiteURL);
+                  } else {
+                    IntentAndroid.openURL(openSiteURL);
+                  }
+                });
+              }
+              else {
+                this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' });
+              }
             }
-            else {
-              this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' });
             }
-          }
-          }
-            style={styles.touch}><Text style={styles.menuItem}>Open Portal</Text>
-
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Send App Feedback', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Send App Feedback</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-          <TouchableHighlight onPress={() => { this.props.toggleDrawer(); this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, }); } }  style={styles.touch}><Text style={styles.menuItem}>Legal Info</Text>
-          </TouchableHighlight><View style={styles.menuBorder}></View>
-
-
-
-          <TouchableHighlight onPress={this.showLogOffAlert.bind(this) }  style={styles.touch}><Text style={styles.menuItem}>Logout</Text>
-          </TouchableHighlight>
-
-
+            />
+          <MenuItem
+            visibility={Config.SEND_APP_FEEDBACK}
+            lable="Send App Feedback"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'ComingSoon', title: 'Send App Feedback', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            } }
+            />
+          <MenuItem
+            visibility={Config.LEGAL_INFO}
+            lable="Legal Info"
+            onPress={() => {
+              this.props.toggleDrawer();
+              this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            } }
+            />
+          <MenuItem
+            visibility={Config.LOGOUT}
+            lable="Logout"
+            onPress={this.showLogOffAlert.bind(this) }
+            />
         </ScrollView>
 
       </View>

@@ -10,7 +10,7 @@ import { FormattedCurrency } from 'react-native-globalize';
 import Config from 'react-native-config'
 
 
-import ControlPanel from './ControlPannel/ControlPanel';
+import ControlPanel from '../ControlPanel';
 
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
