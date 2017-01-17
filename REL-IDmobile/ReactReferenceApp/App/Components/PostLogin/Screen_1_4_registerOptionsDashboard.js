@@ -441,7 +441,9 @@ class RegisterOptionScene extends Component {
 
         var promts;
         if (chlng.chlng_prompt[0].length > 0) {
-          promts = JSON.parse(chlng.chlng_prompt[0]);
+          var promtsArr = chlng.chlng_prompt[0];
+          for(var j= 0; j< promtsArr.length;j++){
+            promts = JSON.parse(promtsArr[j]);
 
           if (promts.is_registered == true && this.state.initDefaultLoginValue == true) {
             data.push({
@@ -452,6 +454,7 @@ class RegisterOptionScene extends Component {
             if (this.state[promts.cred_type] === true) {
               data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
             }
+          }
           }
         }
       }
@@ -828,7 +831,11 @@ class RegisterOptionScene extends Component {
 
         var promts;
         if (chlng.chlng_prompt[0].length > 0) {
-          promts = JSON.parse(chlng.chlng_prompt[0]);
+          var promtsArr = chlng.chlng_prompt[0];
+          for(var j= 0; j< promtsArr.length;j++){
+            promts = JSON.parse(promtsArr[j]);
+          
+          
 
           if (this.state.initFacebookState === true) {
             this.state[promts.cred_type] = promts.is_registered;
@@ -849,6 +856,7 @@ class RegisterOptionScene extends Component {
           // value={this.state[promts[0].credType]}
           // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
           // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+          }
         }
       }
 

@@ -182,6 +182,7 @@ module.exports.icon = {
   logo: LOGO,
   wechat: '\ue935',
   facebook: '\ue932',
+  iProov: '\ue932',
   password: '\ue7ff',
   touchid: '\ue90d',
   close: '\ue5cd',
@@ -275,6 +276,10 @@ text = {
           'password': {
             key: 'password',
             label: 'Password'
+          },
+          'iProov': {
+          key: 'iProov',
+          label: 'iProov'
           },
         }
       }
