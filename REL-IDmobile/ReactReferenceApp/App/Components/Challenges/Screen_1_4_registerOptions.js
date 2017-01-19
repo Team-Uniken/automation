@@ -290,18 +290,22 @@ class Register extends Component {
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
 
-      var promts;
-      if (chlng.chlng_prompt[0].length > 0) {
-        promts = JSON.parse(chlng.chlng_prompt[0]);
-
-        if (promts.is_registered == true) {
-          data.push({
-            key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
-          });
-        } else {
-          if (this.state[promts.cred_type] === true) {
-            data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
+        var promts;
+        if (chlng.chlng_prompt[0].length > 0) {
+          var promtsArr = chlng.chlng_prompt[0];
+          for(var j= 0; j< promtsArr.length;j++){
+            promts = JSON.parse(promtsArr[j]);
+            if (promts.is_registered == true) {
+              data.push({
+                        key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
+                        });
+            } else {
+              if (this.state[promts.cred_type] === true) {
+                data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
+              }
+            
           }
+        
         }
       }
     }
@@ -666,24 +670,28 @@ class Register extends Component {
 
       var promts;
       if (chlng.chlng_prompt[0].length > 0) {
-        promts = JSON.parse(chlng.chlng_prompt[0]);
+        var promtsArr = chlng.chlng_prompt[0];
+        for(var j= 0; j< promtsArr.length;j++){
+         promts = JSON.parse(promtsArr[j]);
+          if (promts.is_registered == false) {
+            indents.push(
+                         <Checkbox
+                         onSelect={() => { this.selectCheckBox(promts.cred_type) } }
+                         selected={this.state[promts.cred_type]}
+                         labelSide={"right"}
+                         >
+                         {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
+                         </Checkbox>
+                         );
+            // <CheckBox
+            // value={this.state[promts[0].credType]}
+            // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
+            // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
+          }
 
-        if (promts.is_registered == false) {
-          indents.push(
-            <Checkbox
-              onSelect={() => { this.selectCheckBox(promts.cred_type) } }
-              selected={this.state[promts.cred_type]}
-              labelSide={"right"}
-              >
-              {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
-            </Checkbox>
-          );
-          // <CheckBox
-          // value={this.state[promts[0].credType]}
-          // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
-          // lable={"Enable " + Skin.text['0']['2'].credTypes[promts[0].credType].label + " Login"} />);
         }
-      }
+
+              }
     }
 
     if (this.props.url.touchCred.isTouch == false) {
