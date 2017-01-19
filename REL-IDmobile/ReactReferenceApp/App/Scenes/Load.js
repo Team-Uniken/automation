@@ -32,6 +32,9 @@ if (Config.ENV == 'sandp') {
 } else if (Config.ENV == 'stock') {
   var erelid = require("../../Connection_profiles/stock.json");
   var welcome = require('../img/stock.png')
+} else if (Config.ENV == 'ubs') {
+  var erelid = require("../../Connection_profiles/ubs.json");
+  var welcome = require('../img/ubs.png')
 }
 
 

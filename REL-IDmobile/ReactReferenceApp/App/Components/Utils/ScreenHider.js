@@ -3,6 +3,8 @@
 
 import React, { Component } from 'react';
 import Skin from '../../Skin';
+import Loader from './Loader';
+
 import Events from 'react-native-simple-events';
 import { AppRegistry, Text, TouchableOpacity, View, AsyncStorage, TouchableHighlight,
 } from 'react-native';
@@ -58,7 +60,7 @@ class ScreenHider extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}/>
+      <Loader visible={true}/>
     );
   }
 }

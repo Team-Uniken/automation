@@ -13,6 +13,7 @@ import SandPDashbord from './SandP/homepage';
 
 import StockDashbord from './Stock/homepage';
 
+import UbsDashbord from './Ubs/homepage';
 
 
 class Dashboard extends Component {
@@ -37,6 +38,14 @@ class Dashboard extends Component {
     }else if (Config.ENV == 'stock') {
       return (
         <StockDashbord
+          navigator={this.props.navigator}
+                url={this.props.url}
+                title={this.props.title}
+                rdna={this.props.rdna}/>
+      );
+    }else if (Config.ENV == 'ubs') {
+      return (
+        <UbsDashbord
           navigator={this.props.navigator}
                 url={this.props.url}
                 title={this.props.title}

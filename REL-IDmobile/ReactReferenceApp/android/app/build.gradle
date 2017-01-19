@@ -6,7 +6,7 @@ import com.android.build.OutputFile
 
 //project.ext.set("envConfigFiles", ["nwdDebug": ".env.nwd","sandpDebug":".env.sandp"])
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -106,13 +106,19 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
       }
+        releaseSandP {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
         releaseStock {
             storeFile file("reactandroid.jks")
             storePassword "uniken123\$"
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
-        releaseSandP {
+        releaseUbs {
             storeFile file("reactandroid.jks")
             storePassword "uniken123\$"
             keyAlias "uniken"
@@ -144,6 +150,15 @@ android {
         stock{
             applicationId 'com.uniken.stock'
             signingConfig signingConfigs.releaseStock
+            minSdkVersion 16
+            targetSdkVersion 24
+            versionCode 40
+            versionName "4.0"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+        }
+        ubs{
+            applicationId 'com.uniken.ubs'
+            signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
             targetSdkVersion 24
             versionCode 40

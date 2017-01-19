@@ -218,8 +218,8 @@ class TwoFactorAuthMachine extends Component {
           }
         }
       } else {
-        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
-           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+        if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -349,14 +349,14 @@ class TwoFactorAuthMachine extends Component {
           var screen = allScreens[i];
           if (screen.id === 'checkuser') {
             var mySelectedRoute = obj.stateNavigator.getCurrentRoutes()[i];
-           // alert(mySelectedRoute);
+            // alert(mySelectedRoute);
             obj.stateNavigator.popToRoute(mySelectedRoute);
             flag = true;
             return;
           }
         }
 
-        if(flag==false){
+        if (flag == false) {
           var chlngJson1;
           chlngJson1 = saveChallengeJson;
           const nextChlngName = chlngJson1.chlng[0].chlng_name;
@@ -525,8 +525,8 @@ class TwoFactorAuthMachine extends Component {
         //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
 
       } else {
-        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
-           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+        if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -552,6 +552,7 @@ class TwoFactorAuthMachine extends Component {
     }
 
     if (id === 'checkuser') {
+      //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
     }
     else if (id === 'SelfRegister') {
@@ -745,60 +746,60 @@ class TwoFactorAuthMachine extends Component {
   }
 
   initiateForgotPasswordFlow() {
-    
-     if(Main.isConnected){
-    mode = "forgotPassword";
-    this.mode = mode;
-    Events.rm('forgotPassowrd', 'forgotPassword');
-    onForgotPasswordSubscription = DeviceEventEmitter.addListener(
-      'onForgotPasswordStatus',
-      this.onForgotPasswordStatus
-    );
-    Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
-    Events.on('finishForgotPasswordFlow', 'finishForgotPasswordFlow', this.finishForgotPasswordFlow);
-    console.log("initiateForgotPasswordFlow ----- show loader");
-    Events.trigger('showLoader', true);
-    ReactRdna.forgotPassword(Main.dnaUserName, (response) => {
-      if (response[0].error === 0) {
-        console.log('immediate response is' + response[0].error);
-      } else {
-        console.log('immediate response is' + response[0].error);
-        alert(response[0].error);
-      }
-    });
-       
-     }else{
-       alert("Please check your internet connection");
-     }
-  }
 
-  callCheckChallenge() {
-    
-   if(Main.isConnected){
-    if (subscriptions) {
-      subscriptions.remove();
-    }
-    subscriptions = DeviceEventEmitter.addListener(
-      'onCheckChallengeResponseStatus',
-      this.onCheckChallengeResponseStatus
-    );
-    console.log("checkChallenge" + JSON.stringify(challengeJson));
-    console.log("callCheckChallenge ----- show loader");
-    Events.trigger('showLoader', true);
-    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
+    if (Main.isConnected) {
+      mode = "forgotPassword";
+      this.mode = mode;
+      Events.rm('forgotPassowrd', 'forgotPassword');
+      onForgotPasswordSubscription = DeviceEventEmitter.addListener(
+        'onForgotPasswordStatus',
+        this.onForgotPasswordStatus
+      );
+      Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
+      Events.on('finishForgotPasswordFlow', 'finishForgotPasswordFlow', this.finishForgotPasswordFlow);
+      console.log("initiateForgotPasswordFlow ----- show loader");
+      Events.trigger('showLoader', true);
+      ReactRdna.forgotPassword(Main.dnaUserName, (response) => {
         if (response[0].error === 0) {
           console.log('immediate response is' + response[0].error);
         } else {
           console.log('immediate response is' + response[0].error);
           alert(response[0].error);
-          Events.trigger('hideLoader', true);
         }
       });
-    }).done();
-    
-    }else{
+
+    } else {
+      alert("Please check your internet connection");
+    }
+  }
+
+  callCheckChallenge() {
+
+    if (Main.isConnected) {
+      if (subscriptions) {
+        subscriptions.remove();
+      }
+      subscriptions = DeviceEventEmitter.addListener(
+        'onCheckChallengeResponseStatus',
+        this.onCheckChallengeResponseStatus
+      );
+      console.log("checkChallenge" + JSON.stringify(challengeJson));
+      console.log("callCheckChallenge ----- show loader");
+      Events.trigger('showLoader', true);
+      console.log('----- Main.dnaUserName ' + Main.dnaUserName);
+      AsyncStorage.getItem('userId').then((value) => {
+        ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
+          if (response[0].error === 0) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+            alert(response[0].error);
+            Events.trigger('hideLoader', true);
+          }
+        });
+      }).done();
+
+    } else {
       alert("Please check your internet connection");
     }
   }
