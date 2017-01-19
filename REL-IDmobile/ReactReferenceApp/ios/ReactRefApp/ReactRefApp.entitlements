@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.uniken.nwd</string>
+		<string>$(AppIdentifierPrefix)com.uniken.relidverify.ubs.demo</string>
 	</array>
 </dict>
 </plist>
