@@ -213,6 +213,7 @@ class TwoFactorAuthMachine extends Component {
             if (this.mode === "forgotPassword") {
               Events.trigger('onPostForgotPassword', null);
             } else {
+              Main.gotNotification = false;
               this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
             }
           }
@@ -498,12 +499,14 @@ class TwoFactorAuthMachine extends Component {
           } else {
             Events.trigger('closeStateMachine');
             InteractionManager.runAfterInteractions(() => {
+              Main.gotNotification = false;
               this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
             });
           }
         } else {
           Events.trigger('closeStateMachine');
           InteractionManager.runAfterInteractions(() => {
+            Main.gotNotification = false;
             this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
           });
         }
@@ -552,8 +555,11 @@ class TwoFactorAuthMachine extends Component {
     }
 
     if (id === 'checkuser') {
-      //return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
-      return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
+      if (Main.gotNotification === true) {
+        return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
+      } else {
+        return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
+      }
     }
     else if (id === 'SelfRegister') {
       stepdone = false;

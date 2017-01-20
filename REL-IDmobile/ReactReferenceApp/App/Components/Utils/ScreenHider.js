@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Skin from '../../Skin';
 import Loader from './Loader';
+import Main from '../Main';
 
 import Events from 'react-native-simple-events';
 import { AppRegistry, Text, TouchableOpacity, View, AsyncStorage, TouchableHighlight,
@@ -25,6 +26,7 @@ class ScreenHider extends Component {
         if (value) {
           if (value == "empty") {
           } else {
+            Main.dnaUserName = value;
             responseJson = this.props.url.chlngJson;
             responseJson.chlng_resp[0].response = value;
             Events.trigger('showNextChallenge', { response: responseJson });
@@ -33,16 +35,31 @@ class ScreenHider extends Component {
       }).done();
     }
     if (this.props.url.chlngJson.chlng_name == 'pass') {
-      AsyncStorage.getItem("passwd").then((value) => {
+
+      AsyncStorage.getItem("userId").then((value) => {
         if (value) {
           if (value == "empty") {
           } else {
-            responseJson = this.props.url.chlngJson;
-            responseJson.chlng_resp[0].response = value;
-            Events.trigger('showNextChallenge', { response: responseJson });
+            AsyncStorage.getItem(value).then((userinfo) => {
+              if (userinfo) {
+                try {
+                  userinfo = JSON.parse(userinfo);
+                  var RPasswd = userinfo.RPasswd;
+                  if (value == "empty") {
+                  } else {
+                    responseJson = this.props.url.chlngJson;
+                    responseJson.chlng_resp[0].response = RPasswd;
+                    Events.trigger('showNextChallenge', { response: responseJson });
+                  }
+                } catch (e) { }
+              }
+            }).done();
           }
         }
       }).done();
+
+
+
 
 
     }
