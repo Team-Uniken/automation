@@ -179,6 +179,10 @@ class SelectLogin extends Component {
           }
         } catch (e) { }
       }
+      else{
+        this.fillAdditionalLoginOptions();
+        this.setState({ refresh: !this.state.refresh });
+      }
     }).done();
 
     return ret;
