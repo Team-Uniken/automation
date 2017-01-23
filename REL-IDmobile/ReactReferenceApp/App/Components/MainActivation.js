@@ -19,6 +19,7 @@ import { InteractionManager } from "react-native";
 var {DeviceEventEmitter} = require('react-native');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var constant = require('./Constants');
+
 /*
  INSTANCES
  */
@@ -34,8 +35,6 @@ const {
   StyleSheet,
   TextInput,
   AsyncStorage,
-  NetInfo,
-  
 } = ReactNative;
 
 let obj;
@@ -119,6 +118,7 @@ class MainActivation extends Component {
                                           } catch (e) { }
                                           }).done();
   }
+
   checkCreds() {
     
     const user = this.state.userName;
@@ -165,18 +165,8 @@ class MainActivation extends Component {
     obj=this;
     Events.on('hideLoader', 'hideLoader', this.hideLoader);
     Events.on('showLoader', 'showLoader', this.showLoader);
-    
-    NetInfo.isConnected.addEventListener( 'change', this._handleConnectivityChange.bind() );
-    
-    NetInfo.isConnected.fetch().done( (isConnected) =>
-                                     {
-                                     Main.isConnected = isConnected;
-                                     } );
   }
-  
-  
-  
-  
+
   componentWillMount(){
     
     if(getCredentialSubscriptions){
@@ -196,20 +186,8 @@ class MainActivation extends Component {
     }else{
       this.setState({isSettingButtonHide:1.0});
     }
-    
-    
   }
-  
-  componentWillUnmount() {
-    //NetInfo.isConnected.removeEventListener( 'change', this._handleConnectivityChange );
-  }
-  
-  _handleConnectivityChange(isConnected) {
-    
-    Main.isConnected = isConnected;
-  }
-  
-  
+
   hideLoader(args){
     console.log('\n in hideLoader of main activation');
     obj.hideLoaderView();

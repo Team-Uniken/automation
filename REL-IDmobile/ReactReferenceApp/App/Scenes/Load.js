@@ -14,11 +14,11 @@ import Config from 'react-native-config';
  */
 import TouchID from 'react-native-touch-id';
 import MainActivation from '../Components/MainActivation';
+import Main from '../Components/Main';
 import { DeviceEventEmitter } from 'react-native';
-
 import Setting from '../Components/view/setting';
-
 import Version from '../Components/view/version';
+
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -39,7 +39,7 @@ if (Config.ENV == 'sandp') {
 
 
 //import erelid from '../../erelid.json';
-import TouchId from 'react-native-smart-touch-id'
+//import TouchId from 'react-native-smart-touch-id'
 import Web from './Web';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var PushNotification = require('react-native-push-notification');
@@ -71,7 +71,7 @@ let obj1;
 
 console.log = function () { }
 
-const {Text, View, Animated, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
+const {Text, View, Animated, NetInfo, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
 
 const {Component} = React;
 
@@ -141,6 +141,14 @@ class Load extends Component {
     } else {
       //Android push notification listeners to be added here.
     }
+
+    NetInfo.isConnected.addEventListener('change', this._handleConnectivityChange.bind());
+    NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
+  }
+
+
+  _handleConnectivityChange(isConnected) {
+       Main.isConnected = isConnected;
   }
 
   _onNotification(notification) {
@@ -697,7 +705,7 @@ class Load extends Component {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
-        
+
         <Image
           source={welcome}
           style={styles.bg} />
