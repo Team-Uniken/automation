@@ -9,6 +9,8 @@ import Skin from '../Skin';
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
 
+import Main from '../Components/Main';
+
 /*
  CALLED
  */
@@ -152,7 +154,7 @@ class Load extends Component {
   }
 
   _onNotification(notification) {
-
+    Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
     for (var i = 0; i < allScreens.length; i++) {
       var screen = allScreens[i];
@@ -211,6 +213,7 @@ class Load extends Component {
     //push messgage adnorid configure starts
     if (Platform.OS === 'android') {
 
+
       PushNotification.configure({
         // (optional) Called when Token is generated (iOS and Android)
         onRegister: function (token) {
@@ -219,6 +222,8 @@ class Load extends Component {
         },
         // (required) Called when a remote or local notification is opened or received
         onNotification: function (notification) {
+
+          Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
           console.log('NOTIFICATION:', notification);
           gotNotification = true;
 
@@ -682,21 +687,72 @@ class Load extends Component {
 
   doNavigation() {
     console.log('doNavigation:');
-    AsyncStorage.getItem('skipwelcome').then((value) => {
-      if (value === "true") {
-        this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-      } else {
-        this.props.navigator.push({
-          id: "Screen_0_1_welcome",
-          //id: "Screen_0_2_selectlogin",
-          title: "nextChlngName",
-          url: {
-            "chlngJson": chlngJson,
-            "screenId": nextChlngName
+
+    //alert(Main.gotNotification);
+
+    if (Main.gotNotification === true) {
+      AsyncStorage.getItem("userId").then((value) => {
+        if (value) {
+          if (value == "empty") {
+            Main.gotNotification = false;
+            AsyncStorage.getItem('skipwelcome').then((value) => {
+              if (value === "true") {
+                this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+              } else {
+                this.props.navigator.push({
+                  id: "Screen_0_1_welcome",
+                  //id: "Screen_0_2_selectlogin",
+                  title: "nextChlngName",
+                  url: {
+                    "chlngJson": chlngJson,
+                    "screenId": nextChlngName
+                  }
+                });
+              }
+            }).done();
+          } else {
+            this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
           }
-        });
-      }
-    }).done();
+        } else {
+          Main.gotNotification = false;
+          AsyncStorage.getItem('skipwelcome').then((value) => {
+            if (value === "true") {
+              this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+            } else {
+              this.props.navigator.push({
+                id: "Screen_0_1_welcome",
+                //id: "Screen_0_2_selectlogin",
+                title: "nextChlngName",
+                url: {
+                  "chlngJson": chlngJson,
+                  "screenId": nextChlngName
+                }
+              });
+            }
+          }).done();
+        }
+      }).done();
+    } else {
+      Main.gotNotification = false;
+      AsyncStorage.getItem('skipwelcome').then((value) => {
+        if (value === "true") {
+          this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        } else {
+          this.props.navigator.push({
+            id: "Screen_0_1_welcome",
+            //id: "Screen_0_2_selectlogin",
+            title: "nextChlngName",
+            url: {
+              "chlngJson": chlngJson,
+              "screenId": nextChlngName
+            }
+          });
+        }
+      }).done();
+    }
+
+
+
   }
 
   render() {

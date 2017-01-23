@@ -9,7 +9,7 @@
     {
       "Name": "ubsrelidapp",
       "Host": "172.16.0.90",
-      "Port": 4443,
+      "Port": "4443",
       "RelId": "ubsrelidapp"
     }
   ]
