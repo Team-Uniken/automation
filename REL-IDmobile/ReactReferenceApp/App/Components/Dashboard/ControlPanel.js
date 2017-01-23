@@ -473,7 +473,7 @@ class ControlPanel extends Component {
     
     //Calling reset challenge as we are not going to call update imidiately after this.
     //This getAllChallenges call was only for updating menu options
-    ReactRdna.resetChallenge((response) => {//do nothing});
+    ReactRdna.resetChallenge((response) => {/*do nothing*/});
   }
 
 
