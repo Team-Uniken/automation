@@ -91,6 +91,7 @@ class ControlPanel extends Component {
   }
 
   componentDidMount() {
+     //This getAllChallenges call was only for updating menu options
     this.getAllChallenges();
     constant.USER_SESSION = "YES";
     AsyncStorage.setItem("isPwdSet", "empty");
@@ -426,7 +427,9 @@ class ControlPanel extends Component {
       return jsx;
     }
   }
+   
 
+   //This getAllChallenges method is only for updating menu options
   getAllChallenges() {
     Events.trigger('showLoader', true);
     if (onGetAllChallengeEvent) {
@@ -467,6 +470,10 @@ class ControlPanel extends Component {
     } else {
       console.log('Something went wrong');
     }
+    
+    //Calling reset challenge as we are not going to call update imidiately after this.
+    //This getAllChallenges call was only for updating menu options
+    ReactRdna.resetChallenge((response) => {//do nothing});
   }
 
 

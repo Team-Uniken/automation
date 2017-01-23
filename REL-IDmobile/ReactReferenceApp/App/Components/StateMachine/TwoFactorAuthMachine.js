@@ -192,7 +192,6 @@ class TwoFactorAuthMachine extends Component {
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
             Web.proxy = pPort;
-            // AsyncStorage.setItem("Proxy",""+pPort);
           }
           // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           // this.props.navigator.pop();
@@ -238,24 +237,30 @@ class TwoFactorAuthMachine extends Component {
             text: 'OK',
             onPress: () => {
               var chlngJson;
-              if (res.pArgs.response.ResponseData == null) {
-                chlngJson = saveChallengeJson;
-              } else {
-                chlngJson = res.pArgs.response.ResponseData;
-              }
+              // if (res.pArgs.response.ResponseData == null) {
+              //   chlngJson = saveChallengeJson;
+              // } else {
+              //   chlngJson = res.pArgs.response.ResponseData;
+              // }
 
-              const nextChlngName = chlngJson.chlng[0].chlng_name;
-              if (chlngJson != null) {
-                console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-                //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-                this.props.navigator.push({
-                  id: 'Machine',
-                  title: nextChlngName,
-                  url: {
-                    chlngJson,
-                    screenId: nextChlngName,
-                  },
-                });
+              if (res.pArgs.response.ResponseData != null && res.pArgs.response.ResponseData.chlng.length > 0) {
+                chlngJson = res.pArgs.response.ResponseData;
+                const nextChlngName = chlngJson.chlng[0].chlng_name;
+                if (chlngJson != null) {
+                  console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+                  //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+                  this.props.navigator.push({
+                    id: 'Machine',
+                    title: nextChlngName,
+                    url: {
+                      chlngJson,
+                      screenId: nextChlngName,
+                    },
+                  });
+                }
+              }
+              else{
+                this.resetChallenge();
               }
             },
             style: 'cancel',
