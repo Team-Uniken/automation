@@ -8,7 +8,6 @@ import React from 'react';
 import Skin from '../Skin';
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
-
 import Main from '../Components/Main';
 
 /*
@@ -16,7 +15,6 @@ import Main from '../Components/Main';
  */
 import TouchID from 'react-native-touch-id';
 import MainActivation from '../Components/MainActivation';
-import Main from '../Components/Main';
 import { DeviceEventEmitter } from 'react-native';
 import Setting from '../Components/view/setting';
 import Version from '../Components/view/version';
