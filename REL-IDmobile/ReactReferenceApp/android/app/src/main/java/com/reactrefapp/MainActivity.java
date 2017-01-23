@@ -17,12 +17,9 @@ public class MainActivity extends ReactActivity {
     public static Activity currentActivity;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-       // _askForOverlayPermission();
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         currentActivity = this;
-
-
     }
 
     @Override
