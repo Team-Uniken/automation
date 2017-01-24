@@ -11,7 +11,7 @@ import NWDDashboard from './NWD/Screen_3_1_deals';
 
 import SandPDashbord from './SandP/homepage';
 
-import StockDashbord from './Stock/homepage';
+import StockDashbord from './Stock/Screen_3_1_deals';
 
 import UbsDashbord from './Ubs/homepage';
 
