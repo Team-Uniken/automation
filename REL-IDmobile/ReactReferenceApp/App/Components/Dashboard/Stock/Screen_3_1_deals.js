@@ -16,9 +16,9 @@ class Screen_3_1_deals extends Component {
     super(props);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+     // sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
-    this.state = { dataSource: ds.cloneWithRowsAndSections([]), };
+    this.state = { dataSource: ds.cloneWithRows([]), };
   }
 
 
@@ -136,7 +136,7 @@ class Screen_3_1_deals extends Component {
           </View>
           <View style={Skin.layout3.row.namewrap}>
             <Text
-              numberOfLines={2}
+              numberOfLines={3}
               style={Skin.layout3.row.nametext}>
               {cleanData.title}
             </Text>
@@ -172,7 +172,7 @@ class Screen_3_1_deals extends Component {
             backgroundColor: '#000000',
           }}>
             <Image
-              source={require('../../../img/stock_dashboard.png') }
+              source={require('../../../img/stock.png') }
               style={Skin.layout3.split.top.bg} />
           </View>
           <NavBar
@@ -180,7 +180,7 @@ class Screen_3_1_deals extends Component {
             statusBarTint={'transparent'}
             statusBarLight={'light-content'}
             title={'Bank Of Uniken'}
-            titleTint={'#ffffff'}
+            titleTint={'#000000'}
             right={''}
             left={{
               icon: Skin.icon.user,
@@ -188,7 +188,7 @@ class Screen_3_1_deals extends Component {
                 fontSize: 35,
                 paddingLeft: 17,
                 width: 100,
-                color: '#ffffff',
+                color: '#000000',
               },
               handler: this.triggerDrawer
             }} />
@@ -199,7 +199,7 @@ class Screen_3_1_deals extends Component {
             justifyContent: 'flex-end',
           }}>
             <Text style={{
-              color: '#ffffff',
+              color: '#000000',
               fontSize: 20,
               textTransform: 'uppercase',
               textAlign: 'right',
@@ -208,22 +208,25 @@ class Screen_3_1_deals extends Component {
               Redeem Points
             </Text>
             <Text style={{
-              color: '#ffffff',
+              color: '#000000',
               fontSize: 50,
               textAlign: 'right',
               paddingRight: 15,
               paddingBottom: 20,
             }}>
-              5, 430
+              5,430
             </Text>
           </View>
+           <View style={Skin.layout3.row.border}/>
         </View>
+       
         <View style={Skin.layout3.split.bottom}>
           <ListView
-            contentContainerStyle={{ paddingTop: 12 }}
+            scrollEnabled={true}
+            contentContainerStyle={{ paddingTop:20}}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this) }
-            renderSectionHeader={this.renderSectionHeader.bind(this) } />
+           />
         </View>
       </Main>
     )

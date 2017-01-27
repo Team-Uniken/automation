@@ -91,8 +91,8 @@ This method is called when the component will start to load
       const granted = await PermissionsAndroid.requestPermission(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          'title': 'NWD App Camera Permission',
-          'message': 'NWD App needs access to your camera ' +
+          'title': Skin.CLIENT_TITLE_TEXT+' App Camera Permission',
+          'message': Skin.CLIENT_TITLE_TEXT+' App needs access to your camera ' +
           'so you can scan the QR Code.'
         }
       )

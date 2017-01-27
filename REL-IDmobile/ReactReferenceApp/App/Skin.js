@@ -793,12 +793,13 @@ const layout3 = module.exports.layout3 = {
     },
     namewrap: {
       flex: 3,
-      padding: 7,
+      marginBottom:10
     },
     nametext: {
+      flex:1,
       fontSize: 13,
       color: PRIMARY_TEXT,
-      minHeight: 10,
+      marginBottom:5
     },
     numtext: {
       fontSize: 10,

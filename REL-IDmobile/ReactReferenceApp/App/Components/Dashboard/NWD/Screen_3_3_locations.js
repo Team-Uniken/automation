@@ -94,8 +94,8 @@ class Screen_3_3_locations extends Component {
       const granted = await PermissionsAndroid.requestPermission(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          'title': 'NWD App Location Permission',
-          'message': 'NWD App needs access to your location '
+          'title': Skin.CLIENT_TITLE_TEXT+' App Location Permission',
+          'message': Skin.CLIENT_TITLE_TEXT+' App needs access to your location '
         }
       )
       if (granted) {

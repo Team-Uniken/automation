@@ -81,7 +81,6 @@ class ControlPanel extends Component {
     this.showLogOffAlert = this.showLogOffAlert.bind(this);
     this.doNavigation = this.doNavigation.bind(this);
     //this.getMyNotifications();
-
   }
 
   showLogOffAlert() {
@@ -637,8 +636,7 @@ class ControlPanel extends Component {
             lable="Secure Portal"
             onPress={() => {
               this.props.toggleDrawer();
-//              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' });
-            this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://1.1.1.1:1111' });
+              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://'+Main.gatewayHost+'/demoapp/relid.html' });
             } }
             />
           <MenuItem

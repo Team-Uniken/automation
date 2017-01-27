@@ -662,7 +662,9 @@ class Load extends Component {
       //   alert("Invalid gateway port");
       //   return;
       // }
-
+      Main.gatewayHost = currentGatewayHost;
+      Main.gatewayPort = currentGatewayPort;
+      
       ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
