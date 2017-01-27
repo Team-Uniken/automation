@@ -250,7 +250,7 @@ class TwoFactorAuthMachine extends Component {
               // } else {
               //   chlngJson = res.pArgs.response.ResponseData;
               // }
-
+Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
               if (res.pArgs.response.ResponseData != null && res.pArgs.response.ResponseData.chlng.length > 0) {
                 chlngJson = res.pArgs.response.ResponseData;
                 const nextChlngName = chlngJson.chlng[0].chlng_name;
