@@ -41,7 +41,7 @@ import Demo from '../demo';
 import RegisterOption from '../Challenges/Screen_1_4_registerOptions';
 import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';
-
+import { NativeModules, NativeEventEmitter } from 'react-native';
 /*
  Instantiaions
  */
@@ -49,12 +49,15 @@ let saveChallengeJson;
 let challengeJson;
 let challengeJsonArr;
 let currentIndex;
-let subscriptions;
+//let subscriptions;
+let onGetAllChallengeStatusSubscription;
+let onCheckChallengeResponseSubscription;
 let onForgotPasswordSubscription;
+let onForgotPasswordStatusSubscription;
 let obj;
 let screenId;
 let stepdone = false;
-let onGetAllChallengeEvent;
+//let onGetAllChallengeEvent;
 let mode = "normal";
 
 const {
@@ -71,6 +74,9 @@ const {Component} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+const onCheckChallengeResponseStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onForgotPasswordStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
 
 class TwoFactorAuthMachine extends Component {
@@ -120,14 +126,16 @@ class TwoFactorAuthMachine extends Component {
 
 
 
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
 
-    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-      'onGetAllChallengeStatus',
-      this.onGetAllChallengeStatus
-    );
+//    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+//      'onGetAllChallengeStatus',
+//      this.onGetAllChallengeStatus
+//    );
+    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+                                                                                       this.onGetAllChallengeStatus.bind(this));
   }
 
   componentDidMount() {
@@ -168,8 +176,8 @@ class TwoFactorAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if (subscriptions)
-      subscriptions.remove();
+    if (onCheckChallengeResponseSubscription)
+      onCheckChallengeResponseSubscription.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     Events.rm('showCurrentChallenge', 'showCurrentChallenge');
@@ -286,8 +294,8 @@ class TwoFactorAuthMachine extends Component {
   }
 
   onForgotPasswordStatus(res) {
-    if (onForgotPasswordSubscription) {
-      onForgotPasswordSubscription.remove();
+    if (onForgotPasswordStatusSubscription) {
+      onForgotPasswordStatusSubscription.remove();
     }
 
     this.onCheckChallengeResponseStatus(res);
@@ -464,8 +472,8 @@ class TwoFactorAuthMachine extends Component {
   }
 
   onGetAllChallengeStatus(e) {
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
     var $this = this;
     Events.trigger('hideLoader', true);
@@ -762,10 +770,13 @@ class TwoFactorAuthMachine extends Component {
       mode = "forgotPassword";
       this.mode = mode;
       Events.rm('forgotPassowrd', 'forgotPassword');
-      onForgotPasswordSubscription = DeviceEventEmitter.addListener(
-        'onForgotPasswordStatus',
-        this.onForgotPasswordStatus
-      );
+//      onForgotPasswordSubscription = DeviceEventEmitter.addListener(
+//        'onForgotPasswordStatus',
+//        this.onForgotPasswordStatus
+//      );
+      
+      onForgotPasswordStatusSubscription = onForgotPasswordStatusModuleEvt.addListener('onForgotPasswordStatus',
+                                                                                       this.onForgotPasswordStatus.bind(this));
       Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
       Events.on('finishForgotPasswordFlow', 'finishForgotPasswordFlow', this.finishForgotPasswordFlow);
       console.log("initiateForgotPasswordFlow ----- show loader");
@@ -787,13 +798,16 @@ class TwoFactorAuthMachine extends Component {
   callCheckChallenge() {
 
     if (Main.isConnected) {
-      if (subscriptions) {
-        subscriptions.remove();
+      if (onCheckChallengeResponseSubscription) {
+        onCheckChallengeResponseSubscription.remove();
       }
-      subscriptions = DeviceEventEmitter.addListener(
-        'onCheckChallengeResponseStatus',
-        this.onCheckChallengeResponseStatus
-      );
+//      subscriptions = DeviceEventEmitter.addListener(
+//        'onCheckChallengeResponseStatus',
+//        this.onCheckChallengeResponseStatus
+//      );
+      onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
+                                                                                                        this.onCheckChallengeResponseStatus.bind(this)
+                                                                                                        );
       console.log("checkChallenge" + JSON.stringify(challengeJson));
       console.log("callCheckChallenge ----- show loader");
       Events.trigger('showLoader', true);

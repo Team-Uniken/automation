@@ -37,9 +37,12 @@ import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Constants';
+import { NativeModules, NativeEventEmitter } from 'react-native'
+const onCheckChallengeResponseStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
 
-
+//   onGetAllChallengeStatus                                                                                              );
 /*
   Instantiaions
 */
@@ -47,10 +50,11 @@ let saveChallengeJson;
 let challengeJson;
 let challengeJsonArr;
 let currentIndex;
-let subscriptions;
+//let subscriptions;
 let challengeName;
-
-let onGetAllChallengeEvent;
+let onGetAllChallengeStatusSubscription;
+let onCheckChallengeResponseSubscription;
+//let onGetAllChallengeEvent;
 let obj;
 let screenId;
 const {
@@ -93,20 +97,25 @@ class PostLoginAuthMachine extends Component {
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
 
-    subscriptions = DeviceEventEmitter.addListener(
-      'onCheckChallengeResponseStatus',
-      this.onCheckChallengeResponseStatus.bind(this)
-    );
+//    subscriptions = DeviceEventEmitter.addListener(
+//      'onCheckChallengeResponseStatus',
+//      this.onCheckChallengeResponseStatus.bind(this)
+//    );
+     onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
+                                                                                 this.onCheckChallengeResponseStatus.bind(this)
+                                                                                 );
 
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
 
-    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-      'onGetAllChallengeStatus',
-      this.onGetAllChallengeStatus.bind(this)
-    );
+//    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+//      'onGetAllChallengeStatus',
+//      this.onGetAllChallengeStatus.bind(this)
+//    );
 
+     onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+                                                                                        this.onGetAllChallengeStatus.bind(this));
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
@@ -147,7 +156,7 @@ class PostLoginAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    subscriptions.remove();
+    onCheckChallengeResponseSubscription.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     console.log(res);

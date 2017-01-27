@@ -34,7 +34,7 @@ import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Constants';
-
+import { NativeModules, NativeEventEmitter } from 'react-native';
 var Main = require('../Main');
 
 /*
@@ -44,7 +44,8 @@ let saveChallengeJson;
 let challengeJson;
 let challengeJsonArr;
 let currentIndex;
-let subscriptions;
+//let subscriptions;
+let onUpdateChallengeStatusSubscription
 let obj;
 let screenId;
 const {
@@ -59,7 +60,7 @@ const {Component} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
+const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
 class UpdateAuthMachine extends Component {
   constructor(props) {
@@ -84,13 +85,15 @@ class UpdateAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
-    if(subscriptions){
-      subscriptions.remove();
+    if(onUpdateChallengeStatusSubscription){
+      onUpdateChallengeStatusSubscription.remove();
     }
-    subscriptions = DeviceEventEmitter.addListener(
-      'onUpdateChallengeStatus',
-      this.onUpdateChallengeResponseStatus.bind(this)
-    );
+//    subscriptions = DeviceEventEmitter.addListener(
+//      'onUpdateChallengeStatus',
+//      this.onUpdateChallengeResponseStatus.bind(this)
+//    );
+    onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
+                                                                                       this.onUpdateChallengeStatus.bind(this));
     Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
     Events.on('closeUpdateMachine', 'closeUpdateMachine', this.closeUpdateMachine);
   }
@@ -103,8 +106,8 @@ class UpdateAuthMachine extends Component {
     this.props.navigator.popToTop();
     Events.rm('onPostUpdate', 'onPostUpdate');
     Events.rm('closeUpdateMachine', 'closeUpdateMachine');
-    if(subscriptions){
-      subscriptions.remove();
+    if(onUpdateChallengeStatusSubscription){
+      onUpdateChallengeStatusSubscription.remove();
     }
   }
 
@@ -140,13 +143,13 @@ class UpdateAuthMachine extends Component {
     }
   }
 
-  onUpdateChallengeResponseStatus(e) {
+  onUpdateChallengeStatus(e) {
     const res = JSON.parse(e.response);
 
     Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    subscriptions.remove();
+    onUpdateChallengeStatusSubscription.remove();
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     console.log(res);
@@ -213,7 +216,7 @@ class UpdateAuthMachine extends Component {
 
               const nextChlngName = chlngJson.chlng[0].chlng_name;
               if (chlngJson != null) {
-                console.log('UpdateAuthMachine - onUpdateChallengeResponseStatus - chlngJson != null');
+                console.log('UpdateAuthMachine - onUpdateChallengeStatus - chlngJson != null');
                 //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
                 this.props.navigator.push({
                   id: 'UpdateMachine',

@@ -23,9 +23,14 @@ import Main from '../Components/Main';
 import Constants from '../Components/Constants';
 import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import { NativeModules, NativeEventEmitter } from 'react-native';
+const onGetRegistredDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onUpdateDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+
+
 let obj;
-let onUpdateDevice;
-let onGetDevice;
+let onUpdateDeviceDetailsSubscription;
+let onGetRegistredDeviceDetailsSubscription;
 let devicesList;
 let deviceHolderList;
 let devicesResponse;
@@ -161,14 +166,26 @@ export default class DeviceMgmtScene extends Component {
    * @return {null}
    */
   componentWillMount() {
-    onGetDevice = DeviceEventEmitter.addListener(
-      'onGetRegistredDeviceDetails',
-      this.onGetRegistredDeviceDetails.bind(this)
-    );
-    onUpdateDevice = DeviceEventEmitter.addListener(
-      'onUpdateDeviceDetails',
-      this.onUpdateDeviceDetails.bind(this)
-    );
+//    onGetDevice = DeviceEventEmitter.addListener(
+//      'onGetRegistredDeviceDetails',
+//      this.onGetRegistredDeviceDetails.bind(this)
+//    );
+//    onUpdateDevice = DeviceEventEmitter.addListener(
+//      'onUpdateDeviceDetails',
+//      this.onUpdateDeviceDetails.bind(this)
+//    );
+    if(onGetRegistredDeviceDetailsSubscription){
+      onGetRegistredDeviceDetailsSubscription.remove();
+    }
+    if(onUpdateDeviceDetailsSubscription){
+      onUpdateDeviceDetailsSubscription.remove();
+    }
+    
+    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',
+                                                                                       this.onGetRegistredDeviceDetails.bind(this));
+    onUpdateDeviceDetailsSubscription = onUpdateDeviceDetailsModuleEvt.addListener('onUpdateDeviceDetails',
+                                                                                       this.onUpdateDeviceDetails.bind(this));
+    
   }
 
   componentDidMount() {

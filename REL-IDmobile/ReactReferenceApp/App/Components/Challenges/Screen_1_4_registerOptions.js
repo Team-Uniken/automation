@@ -15,7 +15,7 @@ import TouchID from 'react-native-touch-id';
 import MainActivation from '../MainActivation';
 import ModalPicker from 'react-native-modal-picker'
 import Main from '../Main';
-
+import { NativeModules, NativeEventEmitter } from 'react-native';
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
   "LAErrorUserCancel": "Authentication was canceled by the user—for example, the user tapped Cancel in the dialog.",
@@ -32,7 +32,7 @@ let subscriptions;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
+const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 //Facebook login code
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -59,6 +59,7 @@ const {
 const {Component} = React;
 
 var obj;
+let onUpdateChallengeStatusSubscription;
 class Register extends Component {
 
   constructor(props) {
@@ -336,7 +337,7 @@ class Register extends Component {
     }
   }
 
-  onUpdateChallengeResponseStatus(e) {
+  onUpdateChallengeStatus(e) {
 
     const res = JSON.parse(e.response);
 
@@ -346,7 +347,7 @@ class Register extends Component {
     //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    subscriptions.remove();
+    onUpdateChallengeStatusSubscription.remove();
 
     console.log(res);
 
@@ -409,7 +410,7 @@ class Register extends Component {
 
               const nextChlngName = chlngJson.chlng[0].chlng_name;
               if (chlngJson != null) {
-                console.log('UpdateAuthMachine - onUpdateChallengeResponseStatus - chlngJson != null');
+                console.log('UpdateAuthMachine - onUpdateChallengeStatus - chlngJson != null');
                 //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
                 this.props.navigator.push({
                   id: 'UpdateMachine',
@@ -593,10 +594,8 @@ class Register extends Component {
     }
 
     if (this.state.facebook == true) {
-      subscriptions = DeviceEventEmitter.addListener(
-        'onUpdateChallengeStatus',
-        this.onUpdateChallengeResponseStatus.bind(this)
-      );
+      onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
+                                                                                         this.onUpdateChallengeStatus.bind(this));
 
 
       AsyncStorage.getItem('userId').then((value) => {

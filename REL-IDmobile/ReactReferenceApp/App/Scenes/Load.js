@@ -21,7 +21,9 @@ import Version from '../Components/view/version';
 
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
+const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
 if (Config.ENV == 'sandp') {
   var erelid = require("../../Connection_profiles/snp.json");
@@ -44,7 +46,7 @@ import Web from './Web';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 var PushNotification = require('react-native-push-notification');
 //import Notification from 'react-native-system-notification';
-
+import { NativeModules, NativeEventEmitter } from 'react-native'
 const reason = 'Please validate your Touch Id';
 /*
  Instantiaions
@@ -67,6 +69,9 @@ let savedUserName;
 let gotNotification = false;
 let appalive = false;
 let obj1;
+let onInitializeSubscription;
+let onPauseCompletedSubscription;
+let onResumeCompletedSubscription;
 
 
 console.log = function () { }
@@ -148,7 +153,7 @@ class Load extends Component {
 
 
   _handleConnectivityChange(isConnected) {
-       Main.isConnected = isConnected;
+       Main.isConnected = isConnected;    
   }
 
   _onNotification(notification) {
@@ -271,16 +276,19 @@ class Load extends Component {
     AppState.removeEventListener('change', this._handleAppStateChange);
     AppState.addEventListener('change', this._handleAppStateChange);
 
-    if (onPauseCompletedListener !== undefined) {
+    if (onPauseCompletedSubscription !== undefined) {
       console.log("--------------- removing onPauseCompleted");
-      onPauseCompletedListener.remove();
+      onPauseCompletedSubscription.remove();
     }
 
-    if (onResumeCompletedListener !== undefined) {
-      onResumeCompletedListener.remove();
+    if (onResumeCompletedSubscription !== undefined) {
+      onResumeCompletedSubscription.remove();
     }
 
-    onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
+
+     onPauseCompletedSubscription = onPauseCompletedModuleEvt.addListener('onPauseCompleted', function (e) {
+//    onPauseCompletedSubscription.remove();
+//    onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
       Events.trigger("showLoader", true);
       appalive = false;
       console.log('On Pause Completed:');
@@ -293,7 +301,10 @@ class Load extends Component {
       }
     });
 
-    onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function (e) {
+    
+     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
+//    onResumeCompletedSubscription.remove();
+//    onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function (e) {
       Events.trigger("hideLoader", true);
       console.log('On Resume Completed:');
       console.log('immediate response is' + e.response);
@@ -328,8 +339,9 @@ class Load extends Component {
       }
     });
 
-    onInitCompletedListener = DeviceEventEmitter.addListener('onInitializeCompleted', function (e) {
-      onInitCompletedListener.remove();
+    
+     onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
+      onInitializeSubscription.remove();
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
       console.log('immediate response is' + e.response);

@@ -19,6 +19,9 @@ import { InteractionManager } from "react-native";
 var {DeviceEventEmitter} = require('react-native');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var constant = require('./Constants');
+import { NativeModules, NativeEventEmitter } from 'react-native';
+const onGetpasswordModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 /*
  INSTANCES
@@ -38,8 +41,8 @@ const {
 } = ReactNative;
 
 let obj;
-let getCredentialSubscriptions;
-let passwordSubscriptions;
+let onGetCredentialSubscriptions;
+let onGetpasswordSubscriptions;
 class MainActivation extends Component {
   constructor(props) {
     super(props);
@@ -83,13 +86,13 @@ class MainActivation extends Component {
     dismissKeyboard();
   }
   
-  onGetCredentialsStatus(domainUrl)
+  onGetCredentials(domainUrl)
   {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }
   
-  onpasswordSubscriptions(e){
+  onGetpassword(e){
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
                                           try {
@@ -169,17 +172,25 @@ class MainActivation extends Component {
 
   componentWillMount(){
     
-    if(getCredentialSubscriptions){
-      getCredentialSubscriptions.remove();
+    if(onGetCredentialSubscriptions){
+      onGetCredentialSubscriptions.remove();
     }
-    if(passwordSubscriptions){
-      passwordSubscriptions.remove();
+    if(onGetpasswordSubscriptions){
+      onGetpasswordSubscriptions.remove();
     }
-    getCredentialSubscriptions  = DeviceEventEmitter.addListener(
-                                                                 'onGetCredentials',
-                                                                 this.onGetCredentialsStatus.bind(this)
-                                                                 );
-    passwordSubscriptions = DeviceEventEmitter.addListener('getpasswordSubscriptions',this.onpasswordSubscriptions.bind(this));
+//    getCredentialSubscriptions  = DeviceEventEmitter.addListener(
+//                                                                 'onGetCredentials',
+//                                                                 this.onGetCredentialsStatus.bind(this)
+//                                                                 );
+//    passwordSubscriptions = DeviceEventEmitter.addListener('getpasswordSubscriptions',this.onpasswordSubscriptions.bind(this));
+    
+    
+    onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
+                                                                    this.onGetpassword.bind(this));
+    onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
+                                                                         this.onGetCredentials.bind.bind(this));
+    
+    
     
     if(constant.USER_SESSION === "YES"){
       this.setState({isSettingButtonHide: 0});

@@ -16,7 +16,9 @@ import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
 var {DeviceEventEmitter} = require('react-native');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-let getCredentialSubscriptions;
+import { NativeModules, NativeEventEmitter } from 'react-native';
+const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+let onGetCredentialSubscriptions;
 const {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, } = ReactNative;
 
 const {Component} = React;
@@ -89,7 +91,7 @@ export default class Main extends Component {
     this.setState({ open: false });
   }
 
-  onGetCredentialsStatus(domainUrl) {
+  onGetCredentials(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }
@@ -150,13 +152,15 @@ export default class Main extends Component {
   }
 
   componentWillMount() {
-    if (getCredentialSubscriptions) {
-      getCredentialSubscriptions.remove();
+    if (onGetCredentialSubscriptions) {
+      onGetCredentialSubscriptions.remove();
     }
-    getCredentialSubscriptions = DeviceEventEmitter.addListener(
-      'onGetCredentials',
-      this.onGetCredentialsStatus.bind(this)
-    );
+//    getCredentialSubscriptions = DeviceEventEmitter.addListener(
+//      'onGetCredentials',
+//      this.onGetCredentialsStatus.bind(this)
+//    );
+    onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
+                                                                         this.onGetCredentials.bind.bind(this));
   }
   componentDidMount(){
     console.log("eventToggleDrawer = " + eventToggleDrawer);
@@ -180,7 +184,7 @@ export default class Main extends Component {
     //Events.rm('toggleDrawer', 'toggleDrawerID') 
   }
   
-  onGetCredentialsStatus(domainUrl) {
+  onGetCredentials(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }

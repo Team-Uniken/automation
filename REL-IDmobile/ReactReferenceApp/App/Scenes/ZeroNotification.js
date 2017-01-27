@@ -1,10 +1,10 @@
 'use strict';
-//onGetNotifications
-//onUpdateNotification
+
 import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../Skin';
-
+import { NativeModules, NativeEventEmitter } from 'react-native';
+const onUpdateNotificationModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 /*
  CALLED
@@ -47,6 +47,7 @@ let notificationHolderList;
 let notificationResponse;
 let NotificationObtianedResponse;
 let obj;
+let onUpdateNotificationSubscription;
 
 var notification = [];
 
@@ -330,13 +331,16 @@ export default class NotificationMgmtScene extends Component {
     } else {
       this.getMyNotifications();
     }
-    if (onUpdateNotification) {
-      onUpdateNotification.remove();
+    if (onUpdateNotificationSubscription) {
+      onUpdateNotificationSubscription.remove();
     }
-    onUpdateNotification = DeviceEventEmitter.addListener(
-      'onUpdateNotification',
-      this.onUpdateNotificationDetails.bind(this)
-    );
+//    onUpdateNotification = DeviceEventEmitter.addListener(
+//      'onUpdateNotification',
+//      this.onUpdateNotificationDetails.bind(this)
+//    );
+    onUpdateNotificationSubscription = onUpdateNotificationModuleEvt.addListener('onUpdateNotification',
+                                                                                 this.onUpdateNotification.bind(this));
+    
 
   }
 
@@ -438,7 +442,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
 
-  onUpdateNotificationDetails(e) {
+  onUpdateNotification(e) {
     const res = JSON.parse(e.response);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;

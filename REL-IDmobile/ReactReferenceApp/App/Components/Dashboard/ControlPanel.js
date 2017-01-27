@@ -26,14 +26,22 @@ var styles = Skin.loadStyle;
 //var Menu = require('./Menu');
 //var Web = require('./Web');
 var {DeviceEventEmitter} = require('react-native');
+import { NativeModules, NativeEventEmitter } from 'react-native';
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetPostLoginChallengesModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetNotificationsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+
 let chlngJson;
 let nextChlngName;
 var eventLogOff;
-let onGetNotifications;
-let eventGetPostLoginChallenges;
+let onGetNotificationsSubscription;
+let onGetPostLoginChallengesSubscription;
 let challengeName;
 let onGetAllChallengeEvent;
+let onGetAllChallengeStatusSubscription;
+let onLogOffSubscription;
 /*
  INSTANCES
  */
@@ -98,20 +106,23 @@ class ControlPanel extends Component {
     Obj = this;
     Events.on('cancelOperation', 'cancelOperation', this.cancelOperation);
 
-    if (onGetNotifications) {
-      onGetNotifications.remove();
+    if (onGetNotificationsSubscription) {
+      onGetNotificationsSubscription.remove();
     }
-    onGetNotifications = DeviceEventEmitter.addListener(
-      'onGetNotifications',
-      this.onGetNotificationsDetails.bind(this)
-    );
+//    onGetNotifications = DeviceEventEmitter.addListener(
+//      'onGetNotifications',
+//      this.onGetNotificationsDetails.bind(this)
+//    );
+    onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
+                                                                                       this.onGetNotifications.bind(this));
   }
 
   logOff() {
     if (eventLogOff) {
       eventLogOff.remove();
     }
-    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+//    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
     ReactRdna.logOff(Main.dnaUserName, (response) => {
       if (response) {
         console.log('immediate response is' + response[0].error);
@@ -122,8 +133,8 @@ class ControlPanel extends Component {
   }
 
   onLogOff(e) {
-    if (eventLogOff) {
-      eventLogOff.remove();
+    if (onLogOffSubscription) {
+      onLogOffSubscription.remove();
     }
 
     console.log('immediate response is' + e.response);
@@ -194,8 +205,8 @@ class ControlPanel extends Component {
     }
   }
 
-  onGetNotificationsDetails(e) {
-    console.log('----- onGetNotificationsDetails');
+  onGetNotifications(e) {
+    console.log('----- onGetNotifications');
     // NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
     console.log(res);
@@ -293,14 +304,17 @@ class ControlPanel extends Component {
   }
 
   getPostLoginChallenges(useCaseName, challengeToBeUpdated) {
-    if (eventGetPostLoginChallenges) {
-      eventGetPostLoginChallenges.remove();
+    if (onGetPostLoginChallengesSubscription) {
+      onGetPostLoginChallengesSubscription.remove();
     }
 
-    eventGetPostLoginChallenges = DeviceEventEmitter.addListener(
-      'onGetPostLoginChallenges',
-      this.onGetPostLoginChallenges.bind(this)
-    );
+//    eventGetPostLoginChallenges = DeviceEventEmitter.addListener(
+//      'onGetPostLoginChallenges',
+//      this.onGetPostLoginChallenges.bind(this)
+//    );
+    
+    onGetPostLoginChallengesSubscription = onGetPostLoginChallengesModuleEvt.addListener('onGetPostLoginChallenges',
+                                                                                       this.onGetPostLoginChallenges.bind(this));
     challengeName = challengeToBeUpdated;
     console.log("onGetPostLoginChallenges ----- show loader");
     Events.trigger('showLoader', true);
@@ -318,8 +332,8 @@ class ControlPanel extends Component {
   }
 
   onGetAllChallengeStatus(e) {
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
@@ -363,14 +377,16 @@ class ControlPanel extends Component {
   getChallengesByName(chlngName) {
     if (Main.isConnected) {
 
-      if (onGetAllChallengeEvent) {
-        onGetAllChallengeEvent.remove();
+      if (onGetAllChallengeStatusSubscription) {
+        onGetAllChallengeStatusSubscription.remove();
       }
 
-      onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-        'onGetAllChallengeStatus',
-        this.onGetAllChallengeStatus.bind(this)
-      );
+//      onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+//        'onGetAllChallengeStatus',
+//        this.onGetAllChallengeStatus.bind(this)
+//      );
+      onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+                                                                                         this.onGetAllChallengeStatus.bind(this));
 
       challengeName = chlngName;
       Events.trigger('showLoader', true);
@@ -432,13 +448,15 @@ class ControlPanel extends Component {
    //This getAllChallenges method is only for updating menu options
   getAllChallenges() {
     Events.trigger('showLoader', true);
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
-    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-      'onGetAllChallengeStatus',
-      this.onGetAllChallengeSettingStatus.bind(this)
-    );
+//    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+//      'onGetAllChallengeStatus',
+//      this.onGetAllChallengeSettingStatus.bind(this)
+//    );
+      onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+                                                                                         this.onGetAllChallengeSettingStatus.bind(this));
 
     ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
       if (response) {
@@ -450,8 +468,8 @@ class ControlPanel extends Component {
   }
 
   onGetAllChallengeSettingStatus(e) {
-    if (onGetAllChallengeEvent) {
-      onGetAllChallengeEvent.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
     var $this = this;
     Events.trigger('hideLoader', true);
@@ -619,7 +637,8 @@ class ControlPanel extends Component {
             lable="Secure Portal"
             onPress={() => {
               this.props.toggleDrawer();
-              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' });
+//              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://54.179.148.241/demoapp/relid.html' });
+            this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://1.1.1.1:1111' });
             } }
             />
           <MenuItem

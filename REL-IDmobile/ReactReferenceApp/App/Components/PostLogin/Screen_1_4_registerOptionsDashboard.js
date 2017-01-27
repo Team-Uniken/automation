@@ -15,7 +15,7 @@ import TouchID from 'react-native-touch-id';
 import MainActivation from '../MainActivation';
 import ModalPicker from 'react-native-modal-picker'
 import Main from '../Main';
-
+import { NativeModules, NativeEventEmitter } from 'react-native';
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
   "LAErrorUserCancel": "Authentication was canceled by the user—for example, the user tapped Cancel in the dialog.",
@@ -32,6 +32,10 @@ let subscriptions;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+
+//onUpdateChallengeStatus
 
 //Facebook login code
 const FBSDK = require('react-native-fbsdk');
@@ -61,6 +65,9 @@ const {Component} = React;
 
 var obj;
 let onGetAllChallengeEventx;
+let onGetAllChallengeStatusSubscription;
+let onUpdateChallengeStatusSubscription;
+
 class RegisterOptionScene extends Component {
 
   constructor(props) {
@@ -102,8 +109,8 @@ class RegisterOptionScene extends Component {
   }
 
   onGetAllChallengeStatus(e) {
-    if (onGetAllChallengeEventx) {
-      onGetAllChallengeEventx.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
     var $this = this;
     Events.trigger('hideLoader', true);
@@ -273,14 +280,16 @@ class RegisterOptionScene extends Component {
     if (Platform.OS === "ios")
       this.isTouchPresent();
 
-    if (onGetAllChallengeEventx) {
-      onGetAllChallengeEventx.remove();
+    if (onGetAllChallengeStatusSubscription) {
+      onGetAllChallengeStatusSubscription.remove();
     }
 
-    onGetAllChallengeEventx = DeviceEventEmitter.addListener(
-      'onGetAllChallengeStatus',
-      this.onGetAllChallengeStatus
-    );
+//    onGetAllChallengeEventx = DeviceEventEmitter.addListener(
+//      'onGetAllChallengeStatus',
+//      this.onGetAllChallengeStatus
+//    );
+    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+                                                                                       this.onGetAllChallengeStatus.bind(this));
 
 
     // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
@@ -489,7 +498,7 @@ class RegisterOptionScene extends Component {
     }
   }
 
-  onUpdateChallengeResponseStatus(e) {
+  onUpdateChallengeStatus(e) {
     const res = JSON.parse(e.response);
     Events.trigger('hideLoader', true);
 
@@ -497,7 +506,7 @@ class RegisterOptionScene extends Component {
     //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    subscriptions.remove();
+    onUpdateChallengeStatusSubscription.remove();
 
     console.log(res);
 
@@ -560,7 +569,7 @@ class RegisterOptionScene extends Component {
 
               const nextChlngName = chlngJson.chlng[0].chlng_name;
               if (chlngJson != null) {
-                console.log('UpdateAuthMachine - onUpdateChallengeResponseStatus - chlngJson != null');
+                console.log('UpdateAuthMachine - onUpdateChallengeStatus - chlngJson != null');
                 //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
                 this.props.navigator.push({
                   id: 'UpdateMachine',
@@ -746,10 +755,13 @@ class RegisterOptionScene extends Component {
     if (this.state.facebook != this.state.isFacebookRegisteredWithServer) {
 
       if (Main.isConnected) {
-        subscriptions = DeviceEventEmitter.addListener(
-          'onUpdateChallengeStatus',
-          this.onUpdateChallengeResponseStatus.bind(this)
-        );
+//        subscriptions = DeviceEventEmitter.addListener(
+//          'onUpdateChallengeStatus',
+//          this.onUpdateChallengeResponseStatus.bind(this)
+//        );
+//        
+        onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
+                                                                                           this.onUpdateChallengeStatus.bind(this));
 
 
         AsyncStorage.getItem('userId').then((value) => {
