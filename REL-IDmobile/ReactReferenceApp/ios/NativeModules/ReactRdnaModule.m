@@ -39,6 +39,10 @@ RDNAIWACreds *rdnaIWACredsObj;
 
 RCT_EXPORT_MODULE();
 
+- (NSArray<NSString *> *)supportedEvents {
+  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigRecieved",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification"];
+}
+
 -(void)initParams{
   rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
 }
@@ -514,15 +518,17 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 - (int)onInitializeCompleted:(NSString *)status {
   NSLog(@"init success");
   i =0;
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onInitializeCompleted"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onInitializeCompleted"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onInitializeCompleted" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onPauseRuntime:(NSString *)status {
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onPauseCompleted"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onPauseCompleted"
+//                                                            body:@{@"response":status}];
+   [self sendEventWithName:@"onPauseCompleted" body:@{@"response":status}];
   return 0;
 }
 
@@ -530,8 +536,9 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:nil forKey:@"sContext"];
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onResumeCompleted"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onResumeCompleted"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onResumeCompleted" body:@{@"response":status}];
   return 0;
 }
 
@@ -540,8 +547,9 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   rdnaObject = nil;
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:nil forKey:@"sContext"];
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
   return 0;
 }
 
@@ -561,44 +569,50 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 
 - (int)onConfigRecieved:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onConfigRecieved"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onConfigRecieved"
+//                                                            body:@{@"response":status}];
+   [self sendEventWithName:@"onConfigRecieved" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onCheckChallengeResponseStatus:(NSString *) status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onCheckChallengeResponseStatus"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onCheckChallengeResponseStatus"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onCheckChallengeResponseStatus" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onGetAllChallengeStatus:(NSString *) status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetAllChallengeStatus"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetAllChallengeStatus"
+//                                                            body:@{@"response":status}];
+ [self sendEventWithName:@"onGetAllChallengeStatus" body:@{@"response":status}];
   return 0;
 }
 
 
 - (int)onUpdateChallengeStatus:(NSString *) status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateChallengeStatus"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateChallengeStatus"
+//                                                            body:@{@"response":status}];
+   [self sendEventWithName:@"onUpdateChallengeStatus" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onForgotPasswordStatus:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onForgotPasswordStatus"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onForgotPasswordStatus"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onForgotPasswordStatus" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onLogOff: (NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onLogOff"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onLogOff"
+//                                                            body:@{@"response":status}];
+    [self sendEventWithName:@"onLogOff" body:@{@"response":status}];
   return 0;
 }
 
@@ -607,13 +621,15 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   if (i==0) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *name = [defaults valueForKey:@"userName"];
-    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
-                                                              body:@{@"response":name}];
+//    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
+//                                                              body:@{@"response":name}];
+    [self sendEventWithName:@"onGetpassword" body:@{@"response":name}];
     i++;
   }else{
 
-    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
-                                                              body:@{@"response":domainUrl}];
+//    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
+//                                                              body:@{@"response":domainUrl}];
+    [self sendEventWithName:@"onGetCredentials" body:@{@"response":domainUrl}];
   }
   semaphore = dispatch_semaphore_create(0);
   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
@@ -628,29 +644,33 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 
 - (int)onGetPostLoginChallenges:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginChallenges"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginChallenges"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onGetPostLoginChallenges" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onGetRegistredDeviceDetails:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetRegistredDeviceDetails"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetRegistredDeviceDetails"
+//                                                            body:@{@"response":status}];
+    [self sendEventWithName:@"onGetRegistredDeviceDetails" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onUpdateDeviceDetails:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceDetails"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceDetails"
+//                                                            body:@{@"response":status}];
+   [self sendEventWithName:@"onUpdateDeviceDetails" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onUpdateDeviceStatus:(NSString *)status{
   
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceStatus"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceStatus"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onUpdateDeviceStatus" body:@{@"response":status}];
   return 0;
 }
 
@@ -663,15 +683,17 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 }
 
 - (int)onGetNotifications:(NSString *)status{
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetNotifications"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetNotifications"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onGetNotifications" body:@{@"response":status}];
   return 0;
 }
 
 
 - (int)onUpdateNotification:(NSString *)status{
-  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateNotification"
-                                                            body:@{@"response":status}];
+//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateNotification"
+//                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onUpdateNotification" body:@{@"response":status}];
   return 0;
 }
 
@@ -680,8 +702,8 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   NSMutableString *tokenString = [[NSMutableString alloc] init];
   int length = (int)[appDelegate.apnsDeviceToken length];
   char const *bytes = [appDelegate.apnsDeviceToken bytes];
-  for (int i = 0; i < length; i++) {
-    [tokenString appendString:[NSString stringWithFormat:@"%02.2hhx", bytes[i]]];
+  for (int j = 0; j < length; j++) {
+    [tokenString appendString:[NSString stringWithFormat:@"%02.2hhx", bytes[j]]];
   }
   return tokenString;
 }

@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RCTBridgeModule.h"
 #import "RDNA.h"
-@interface ReactRdnaModule : NSObject<RCTBridgeModule,RDNACallbacks>
+#import "RCTEventEmitter.h"
+@interface ReactRdnaModule : RCTEventEmitter<RCTBridgeModule,RDNACallbacks>
 
 
 @end
