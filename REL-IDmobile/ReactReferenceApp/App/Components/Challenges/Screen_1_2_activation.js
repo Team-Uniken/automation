@@ -1,10 +1,12 @@
 'use strict';
 
+/*This class is responsible for displaying the verfication key for the user and accept the activation code, 
+  so that user can proceed with the userId activation process*/
+
+/*Below are the required imports neccessary for this class*/
+
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, AsyncStorage, TouchableOpacity, StatusBar, ScrollView, Alert, Platform, BackAndroid, PermissionsAndroid} from 'react-native';
-
-//const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
-
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import Skin from '../../Skin';
@@ -18,6 +20,8 @@ import Main from '../Main';
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var constant = require('../Constants');
 var obj;
+
+
 class Activation extends Component {
 
   constructor(props) {
@@ -39,6 +43,10 @@ class Activation extends Component {
     // this.barCodeScanFlag = true;
   }
 
+/*
+This is life cycle method of the react native component.
+This method is called when the component will start to load
+*/
   componentWillMount() {
     obj = this;
     if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -46,6 +54,10 @@ class Activation extends Component {
     }
   }
 
+/*
+  This is life cycle method of the react native component.
+  This method is called when the component is Mounted/Loaded.
+*/
   componentDidMount() {
     AsyncStorage.removeItem(Main.dnaUserName, null);
     constant.USER_T0 = "YES";
@@ -59,6 +71,10 @@ class Activation extends Component {
     }.bind(this));
   }
 
+/*
+  This is life cycle method of the react native component.
+  This method is called when the component is Updated.
+*/
   componentWillUpdate() {
 
     if (this.state.isPoped) {
@@ -67,6 +83,9 @@ class Activation extends Component {
     }
   }
 
+/*
+  This method is used to request the camera permission from the user.
+*/ 
   async requestCameraPermission() {
     try {
       const granted = await PermissionsAndroid.requestPermission(
@@ -93,6 +112,9 @@ class Activation extends Component {
     }
   }
 
+/*
+  This method is used to request the camera permission from the user.
+*/
   checkCameraPermission() {
     PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.CAMERA)
       .then(response => {
@@ -108,6 +130,9 @@ class Activation extends Component {
       });
   }
 
+/*
+  This method is a callback obtained after the QRCode has been scan.
+*/
   _onBarCodeRead(result) {
     if (obj.state.barCodeFlag === true) {
       obj.state.barCodeFlag = false;
@@ -115,10 +140,16 @@ class Activation extends Component {
     }
   }
 
+/*
+  This method is a called for every text that is entered in the Activation Code TextInput.
+*/
   onActivationCodeChange(e) {
     this.setState({ activatonCode: e.nativeEvent.text });
   }
 
+/*
+  This method is used to return the tittle of Submit/Next button.
+*/
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
@@ -126,6 +157,10 @@ class Activation extends Component {
     return 'NEXT';
   }
 
+/*
+  This method is used to get the users entered/Scanned QR code value and submit the same as a challenge response.
+  For Empty activation code, Alert dailogue is dispalyed to user.
+*/ 
   checkActivationCode() {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
@@ -138,13 +173,19 @@ class Activation extends Component {
       alert('Enter Activation Code');
     }
   }
-
+/*
+  This method is used to hide the camera which was used to scan QR code.
+*/
   hideCamera() {
     if (Platform.OS === 'android') {
       this.setState({ showCamera: false });
       this.state.isPoped = true;
     }
   }
+
+/*
+  This is a utility method used to set the camera cordinates.
+*/  
 
   measureView(event) {
     console.log('event peroperties: ', event);
@@ -156,6 +197,12 @@ class Activation extends Component {
     }
   }
 
+/*
+  This method is a called from a QRCode scan callback, and checks for
+  the verification key obtined is same as the key which is obtained in the challenge.
+  If the values are mateched, it submit the Activation code as a challenge response.
+  For Invalid verification key, Alert dailogue is dispalyed to user.
+*/
   onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
@@ -223,12 +270,18 @@ class Activation extends Component {
     }
   }
 
+/*
+  This method is used to render the JSX elements.
+*/
   renderIf(condition, jsx) {
     if (condition) {
       return jsx;
     }
   }
 
+/*
+  This method is used to handle the cancel button click of the componenet.
+*/
   close() {
 
     let responseJson = this.props.url.chlngJson;
@@ -252,6 +305,9 @@ class Activation extends Component {
     */
   }
 
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
 
     return (
