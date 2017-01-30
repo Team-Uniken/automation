@@ -159,19 +159,17 @@ class TwoFactorAuthMachine extends Component {
       onGetAllChallengeStatusSubscription.remove();
     }
 
-//    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-//      'onGetAllChallengeStatus',
-//      this.onGetAllChallengeStatus
-//    );
+    //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+    //      'onGetAllChallengeStatus',
+    //      this.onGetAllChallengeStatus
+    //    );
     onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-                                                                                       this.onGetAllChallengeStatus.bind(this));
+      this.onGetAllChallengeStatus.bind(this));
   }
 
   //Setting the initial screen to UserLogin
   componentDidMount() {
     screenId = 'UserLogin';// this.props.screenId;
-    //  Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-    //  Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
 
   //Printing the logs of unmount.
@@ -239,9 +237,7 @@ class TwoFactorAuthMachine extends Component {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
             Web.proxy = pPort;
           }
-          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          // this.props.navigator.pop();
-          //this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
+          
           if (Constants.USER_T0 === 'YES') {
             AsyncStorage.getItem('userId').then((value) => {
               Events.trigger('showLoader', true);
@@ -287,12 +283,8 @@ class TwoFactorAuthMachine extends Component {
             text: 'OK',
             onPress: () => {
               var chlngJson;
-              // if (res.pArgs.response.ResponseData == null) {
-              //   chlngJson = saveChallengeJson;
-              // } else {
-              //   chlngJson = res.pArgs.response.ResponseData;
-              // }
-Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+
+              Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
               if (res.pArgs.response.ResponseData != null && res.pArgs.response.ResponseData.chlng.length > 0) {
                 chlngJson = res.pArgs.response.ResponseData;
                 const nextChlngName = chlngJson.chlng[0].chlng_name;
@@ -309,7 +301,7 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
                   });
                 }
               }
-              else{
+              else {
                 this.resetChallenge();
               }
             },
@@ -319,8 +311,6 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
       }
     } else {
       console.log(e);
-      //  alert('Internal system error occurred.' + res.errCode);
-
       //Show alert as errorCode is not 0 and call resetChallenge 
       Alert.alert(
         'Error',
@@ -366,12 +356,6 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
    * This method searches the  tbacred challenge in challengeJsonArr and returns it.
    */
   getTBACreds() {
-    //added for testing
-    //   var tbacred= {chlng_name:'tbacred',chlng_idx:1,chlng_info:[{key:'Label',value:'AdditionalAuthentication'}],attempts_left:3,max_attempts_count:0,chlng_resp:[{challenge:"",response:""}],chlng_type:2,chlng_prompt:[[{credType:'touchid',isRegistered:false},{credType:'facebook',isRegistered:false},{credType:'password',isRegistered:false},{credType:'wechat',isRegistered:false}]],chlng_response_validation:false,challenge_response_policy:[],chlng_cipher_spec:["MD5"],chlng_cipher_salt:"",sub_chlng_count:1,chlngs_per_batch:1};
-    //   return tbacred;
-    //alert(challengeJsonArr.length);
-
-    //Uncomment this when server is ready
     for (var i = 0; i < challengeJsonArr.length; i++) {
       if (challengeJsonArr[i].chlng_name === 'tbacred')
         return challengeJsonArr[i];
@@ -489,7 +473,7 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
 
   /**
    * This method is called to show next challenge in challenge array on UI.
-   * This method can also be called by triggering showNextChallengeEvent
+   * This method can also be called by triggering showNextChallenge event
    */
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
@@ -631,9 +615,7 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
       }
     } else {
       console.log('Something went wrong');
-      // If error occurred reload devices list with previous response
     }
-
   }
 
 
@@ -738,15 +720,15 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
 
   /**
    * Returns true if next challenge exist based on currentIndex, else returns false 
-   */ 
+   */
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
 
- /**
-  * Shows the first challenge screen, based on challenge array and startIndex.
-  * If challenge at index startIndex is tbacred then it skips the tbacred challenge and shows the next.  
-  */
+  /**
+   * Shows the first challenge screen, based on challenge array and startIndex.
+   * If challenge at index startIndex is tbacred then it skips the tbacred challenge and shows the next.  
+   */
   showFirstChallenge(chlngJson, startIndex) {
     if (chlngJson.chlng && chlngJson.chlng.length > startIndex) {
       const firstChlngName = chlngJson.chlng[startIndex].chlng_name;
@@ -883,13 +865,13 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
       mode = "forgotPassword";
       this.mode = mode;
       Events.rm('forgotPassowrd', 'forgotPassword');
-//      onForgotPasswordSubscription = DeviceEventEmitter.addListener(
-//        'onForgotPasswordStatus',
-//        this.onForgotPasswordStatus
-//      );
-      
+      //      onForgotPasswordSubscription = DeviceEventEmitter.addListener(
+      //        'onForgotPasswordStatus',
+      //        this.onForgotPasswordStatus
+      //      );
+
       onForgotPasswordStatusSubscription = onForgotPasswordStatusModuleEvt.addListener('onForgotPasswordStatus',
-                                                                                       this.onForgotPasswordStatus.bind(this));
+        this.onForgotPasswordStatus.bind(this));
       Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
       Events.on('finishForgotPasswordFlow', 'finishForgotPasswordFlow', this.finishForgotPasswordFlow);
       console.log("initiateForgotPasswordFlow ----- show loader");
@@ -918,13 +900,12 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
       if (onCheckChallengeResponseSubscription) {
         onCheckChallengeResponseSubscription.remove();
       }
-//      subscriptions = DeviceEventEmitter.addListener(
-//        'onCheckChallengeResponseStatus',
-//        this.onCheckChallengeResponseStatus
-//      );
+      //      subscriptions = DeviceEventEmitter.addListener(
+      //        'onCheckChallengeResponseStatus',
+      //        this.onCheckChallengeResponseStatus
+      //      );
       onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
-                                                                                                        this.onCheckChallengeResponseStatus.bind(this)
-                                                                                                        );
+        this.onCheckChallengeResponseStatus.bind(this));
       console.log("checkChallenge" + JSON.stringify(challengeJson));
       console.log("callCheckChallenge ----- show loader");
       Events.trigger('showLoader', true);
