@@ -78,8 +78,37 @@ const onCheckChallengeResponseStatusModuleEvt = new NativeEventEmitter(NativeMod
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onForgotPasswordStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
+/** This class handles the Two Factor Authentication flow , hence TwoFactorAuthMachine.
+    It handles the below listed flows :
+      1)Activation
+      2)Normal Login
+      3)Secondary Device Login
+      4)Forgot Password
 
+    The main responsiblity of this class is to manage challenges, 
+    doing appropriate operation based on status and error codes returned in async callbacks,
+    navigating the UI screens based on challenges, mode(normal,forgotPassowrd) and challengeOperations
+
+    This class exposes some important Events , these events triggers the new flow or ends the flow based on use, please see the list below: 
+       1)showNextChallenge - This event is triggered to show next challenge in challenge array on UI.
+       2)showPreviousChallenge - This event is triggered to show previous challenge in challenge array on UI.
+       3)showCurrentChallenge - This event is triggered to show current challenge (current challenge is detemined by currentIndex)
+                                in challenge array on UI.
+       4)resetChallenge - This event is triggered to reset the state of RDNA, this is triggered when you want 
+                          to start the new flow without ending the current flow properly i.e when you get error. 
+       5)forgotPassowrd - This event triggers the forgot password flow.
+       6)onPostForgotPassword - This is event is triggered by TwoFactorAuthMachine when forgot password flow finishes.
+       7)finishForgotPasswordFlow -  This event should be triggered when you are done with post operations (e.g update data, remove old data) of forgotPassoword flow to 
+                                     allow TwoFactorAuthMachine to do cleanup and redirect to DashBoard. If onPostForgotPassword event is overriden then call this 
+                                     event explicitly. 
+
+    There are also some async callback methods which are called from Native Bridge through EventsEmitters, below is the list of callbacks:
+       1)onCheckChallengeResponseStatus - This is method is called to give resposne of checkChallenge call of RDNA. 
+       2)onForgotPasswordStatus - This is method is called to give resposne of forgotPassoword call of RDNA. 
+       3)onGetAllChallengeStatus - This is method is called to give resposne of getAllChallenges call of RDNA. 
+**/
 class TwoFactorAuthMachine extends Component {
+
   constructor(props) {
     super(props);
     console.log('---------- Machine param ');
@@ -99,6 +128,7 @@ class TwoFactorAuthMachine extends Component {
     this.resetChallenge = this.resetChallenge.bind(this);
   }
 
+  //Setting the initial state of machine and registering events
   componentWillMount() {
     obj = this;
     if (Platform.OS === 'ios') {
@@ -125,7 +155,6 @@ class TwoFactorAuthMachine extends Component {
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
 
 
-
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
     }
@@ -138,16 +167,21 @@ class TwoFactorAuthMachine extends Component {
                                                                                        this.onGetAllChallengeStatus.bind(this));
   }
 
+  //Setting the initial screen to UserLogin
   componentDidMount() {
     screenId = 'UserLogin';// this.props.screenId;
     //  Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     //  Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
 
+  //Printing the logs of unmount.
   componentWillUnmount() {
     console.log('----- TwoFactorAuthMachine unmounted');
   }
 
+
+  //Not used 
+  //Todo: Confirm that it is not used and remove.
   onErrorOccured(response) {
     console.log("-------- Error occurred ");
     if (response.ResponseData) {
@@ -169,6 +203,10 @@ class TwoFactorAuthMachine extends Component {
     }
   }
 
+  /*
+    This is method is callback method, it is called to give resposne of checkChallenge call of RDNA.
+    It is also called from onForgotPasswordStatus callback method as handling of both callbacks are same.
+  */
   onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
     console.log("onCheckChallengeResponse ----- hide loader");
@@ -226,11 +264,15 @@ class TwoFactorAuthMachine extends Component {
           }
         }
       } else {
+
+        //Removing user preference when user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
+
+        //Todo : cleanup
         AsyncStorage.getItem("isPwdSet").then((flag) => {
           if (flag === "YES") {
             AsyncStorage.setItem("passwd", "empty");
@@ -279,6 +321,7 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
       console.log(e);
       //  alert('Internal system error occurred.' + res.errCode);
 
+      //Show alert as errorCode is not 0 and call resetChallenge 
       Alert.alert(
         'Error',
         'Internal system error occurred.', [{
@@ -293,11 +336,16 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+
+  /** 
+   * This method is callback method ,It is called to give resposne of forgotPassoword call of RDNA. 
+   */
   onForgotPasswordStatus(res) {
     if (onForgotPasswordStatusSubscription) {
       onForgotPasswordStatusSubscription.remove();
     }
 
+    //Calling onCheckChallengeResponseStatus as handling is same
     this.onCheckChallengeResponseStatus(res);
   }
 
@@ -313,6 +361,10 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
    public static final String CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
    **/
 
+
+  /**
+   * This method searches the  tbacred challenge in challengeJsonArr and returns it.
+   */
   getTBACreds() {
     //added for testing
     //   var tbacred= {chlng_name:'tbacred',chlng_idx:1,chlng_info:[{key:'Label',value:'AdditionalAuthentication'}],attempts_left:3,max_attempts_count:0,chlng_resp:[{challenge:"",response:""}],chlng_type:2,chlng_prompt:[[{credType:'touchid',isRegistered:false},{credType:'facebook',isRegistered:false},{credType:'password',isRegistered:false},{credType:'wechat',isRegistered:false}]],chlng_response_validation:false,challenge_response_policy:[],chlng_cipher_spec:["MD5"],chlng_cipher_salt:"",sub_chlng_count:1,chlngs_per_batch:1};
@@ -328,6 +380,10 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     return null;
   }
 
+  /**
+   * This method sets the isTouchIDPresent variable to true if touchId is supported on iOS and 
+   * false if not supported 
+   */
   isTouchPresent() {
     var $this = this;
     TouchID.isSupported()
@@ -343,6 +399,11 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
       });
   }
 
+  /**
+   * This method is called to reset the state of RDNA, this is called when you want 
+     to start the new flow without ending the current flow properly i.e when you get error.
+     This method can also be called by triggering resetChallenge event. 
+   */
   resetChallenge() {
     if (this.mode === "forgotPassword") {
       Events.rm('onPostForgotPassword', 'onPostForgotPassword');
@@ -353,6 +414,9 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     console.log("resetChallenge");
     ReactRdna.resetChallenge((response) => {
       if (response[0].error === 0) {
+        /**
+         * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
+         */
         challengeJson = saveChallengeJson;
         currentIndex = 0;
         challengeJsonArr = saveChallengeJson.chlng;
@@ -395,6 +459,11 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
 
   }
 
+
+  /**
+   * This method tells whether next challenge should be shown or skipped.
+   * It returns the object with show flag and challenge.
+   */
   canShowNextChallenge() {
     if (this.hasNextChallenge()) {
       var currChallenge = this.getCurrentChallenge();
@@ -418,6 +487,10 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+  /**
+   * This method is called to show next challenge in challenge array on UI.
+   * This method can also be called by triggering showNextChallengeEvent
+   */
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
@@ -471,6 +544,12 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+  /**
+   * This is method is callback method, it is called to give resposne of getAllChallenges call of RDNA.
+   * The status provides all challenges that can be updated by calling updateChallenge API.
+   * This method parses the response and shows RegisterOption screen (i.e Registration screen for alternative login options) if challeges 
+   * are provided in status else it navigates to Dashboard screen.
+   */
   onGetAllChallengeStatus(e) {
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
@@ -541,6 +620,7 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
         //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
 
       } else {
+        //Removing user preference if user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
@@ -656,10 +736,17 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     );
   }
 
+  /**
+   * Returns true if next challenge exist based on currentIndex, else returns false 
+   */ 
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
 
+ /**
+  * Shows the first challenge screen, based on challenge array and startIndex.
+  * If challenge at index startIndex is tbacred then it skips the tbacred challenge and shows the next.  
+  */
   showFirstChallenge(chlngJson, startIndex) {
     if (chlngJson.chlng && chlngJson.chlng.length > startIndex) {
       const firstChlngName = chlngJson.chlng[startIndex].chlng_name;
@@ -682,10 +769,15 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+  //Todo : Remove if it is not used , as it returns null always
   hasPreviousChallenge() {
     return null;
   }
 
+  /**
+   * This method pops the current screen and decrements the currentIndex, if no more challenge
+   * screen can be poped based on current index , it calls resetChallenge().
+   */
   showPreviousChallenge() {
     console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
@@ -710,6 +802,10 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+  /**
+   * Shows current challenge based onn current index.
+   * Todo : It needs review , as code seem to be buggy.
+   */
   showCurrentChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
@@ -735,27 +831,41 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+  //Todo : Remove if not used, it needs review if its used
   start(json, nav) {
     challengeJson = json;
     currentIndex = 0;
   }
 
+  //Todo : Remove if not used
   stop() {
 
   }
 
+  /**
+   * Returns current challenge based on currentIndex.
+   */
   getCurrentChallenge() {
     return challengeJsonArr[currentIndex];
   }
 
+  // Todo : Remove if not used
   getTotalChallenges() {
 
   }
 
+  /**
+   * This method is called by onPostForgotPassword event that is triggered by TwoFactorAuthMachine when forgot password flow finishes.
+   * Override the onPostForgotPassword event to receive it in other screens and call finishForgotPasswordFlow() explicitly for cleanup.
+   */
   onPostForgotPassword() {
     this.finishForgotPasswordFlow();
   }
 
+  /**
+   * This method is called by TwoFactorAuthMachine to perform cleanup of forgotPassoword flow and navigating to Dashboard.                                   allow TwoFactorAuthMachine to do cleanup and redirect to DashBoard. 
+   * If onPostForgotPassword event is overriden then call this event explicitly. 
+   */
   finishForgotPasswordFlow() {
     mode = "normal"
     this.mode = mode;
@@ -764,6 +874,9 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     Events.rm('finishForgotPasswordFlow', 'finishForgotPasswordFlow');
   }
 
+  /**
+   * This method is called by forgotPassword event to initiate forgotPassword flow.
+   */
   initiateForgotPasswordFlow() {
 
     if (Main.isConnected) {
@@ -795,6 +908,10 @@ Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     }
   }
 
+  /**
+   * This method is called by TwoFactorAuthMachine to submit the challenges with responses.
+   * It calls checkChallenge of Native Bridge which inturn calls checkChallenge of RDNA. 
+   */
   callCheckChallenge() {
 
     if (Main.isConnected) {
