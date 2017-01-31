@@ -356,7 +356,7 @@ RCT_EXPORT_METHOD (checkChallenges:(NSString *)challengeRequestString
   int errorID = 0;
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:userID forKey:@"userName"];
-  errorID = [rdnaObject checkChallenges:challengeRequestString forUserID:userID];
+  errorID = [rdnaObject checkChallengeResponse:challengeRequestString forUserID:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   callback(@[responseArray]);
