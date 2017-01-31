@@ -1,28 +1,50 @@
+/*
+ *Simple self registration screen.
+ */
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
+
+/*
+ Required for this js
+ */
 import Events from 'react-native-simple-events';
 import Modal from 'react-native-simple-modal';
-import WebViewAndroid from '../../android_native_modules/nativewebview';
-import Main from '../Main';
-
-import Title from '../view/title';
-import Button from '../view/button';
-import Checkbox from '../view/checkbox';
 import hash from 'hash.js';
-import Input from '../view/input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import MainActivation from '../MainActivation';
+import {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, Platform, TouchableOpacity, WebView, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, NetInfo, } from 'react-native';
+
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
+import WebViewAndroid from '../android_native_modules/nativewebview';
+import Main from '../Components/Container/Main';
+import MainActivation from '../Components/Container/MainActivation';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-const {Keyboard, StatusBar, StyleSheet, Text, View, BackAndroid, TouchableHighlight, Platform, TouchableOpacity, WebView, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking,NetInfo, } = ReactNative;
-const {Component} = React;
 
 
+/*
+ Custome View
+ */
+import Title from '../Components/view/title';
+import Button from '../Components/view/button';
+import Checkbox from '../Components/view/checkbox';
+import Input from '../Components/view/input';
+
+
+/*
+  INSTANCES
+ */
 var obj;
-
 var responseJson;
+
+
+
 
 class Register extends Component {
 
@@ -45,29 +67,18 @@ class Register extends Component {
 
     this.close = this.close.bind(this);
   }
-
-
-
-  //  componentDidMount() {
-  //    BackAndroid.addEventListener('hardwareBackPress', function() {
-  //          this.close();
-  //           return true;
-  //       }.bind(this));
-  // }
-
+ /*
+   This is life cycle method of the react native component.
+   This method is called when the component will start to load
+   */
   componentWillMount() {
     obj = this;
     this.state.value = 0;
-    this.state.randomMinValue = this.getRandomInt(5, 90);
-    this.state.randomMaxValue = this.state.randomMinValue + 10;
     InteractionManager.runAfterInteractions(() => {
       this.refs.firstname.focus()
     });
-    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
-    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
 
   }
-
 
   keyboardWillShow(e) {
     this.setState({ keyboardVisible: true })
@@ -92,25 +103,24 @@ class Register extends Component {
     }
   }
 
-
+  //onTextchange method for FirstName TextInput
   onFirstNameChange(event) {
     this.setState({ firstName: event.nativeEvent.text });
   }
-
+  //onTextchange method for LastName TextInput
   onLastNameChange(event) {
     this.setState({ lastName: event.nativeEvent.text });
   }
-
+  //onTextchange method for Email TextInput
   onEmailChange(event) {
     this.setState({ email: event.nativeEvent.text });
   }
-
+  //onTextchange method for ConfirmEmail TextInput
   onConfirmEmailChange(event) {
     this.setState({ confirmEmail: event.nativeEvent.text });
   }
-
+  //onTextchange method for PhoneNumber TextInput
   onPhoneNumberChange(event) {
-
     if (obj.validatePhoneNumber(event.nativeEvent.text) && event.nativeEvent.text.length <= 10)
       this.setState({ phoneNumber: event.nativeEvent.text });
     else {
@@ -120,33 +130,25 @@ class Register extends Component {
     }
   }
 
-
+  //use to clear twoFactorAuthMachine navigator
   close() {
-    //    if (this.state.open) {
-    //      this.setState({
-    //        open: false
-    //      });
-    //    } else {
-    //      this.props.navigator.pop();
-    //    }
     Events.trigger('closeStateMachine');
   }
-
+  //check entered email is valid or not
   validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
-
+  //check entered phoneNumber is valid or not
   validatePhoneNumber(phone) {
     var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-
     var reg = /^\d+$/;
     // return regex.test(phone)
     return reg.test(phone)
   }
 
-
+// check all fields are filled with valid data to call registerUser.
   validateAndProcced() {
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
       && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
@@ -174,7 +176,7 @@ class Register extends Component {
     }
   }
 
-
+//RegisterUser on currentProfile.
   registerUser() {
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
@@ -280,7 +282,7 @@ class Register extends Component {
     }
   }
 
-
+//Return platform specific webView to term and Conditions Page.
   getWebView() {
     if (Platform.OS === 'ios') {
       return (
@@ -315,10 +317,9 @@ class Register extends Component {
     }
   }
 
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     return (
       <MainActivation>

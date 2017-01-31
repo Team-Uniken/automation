@@ -11,7 +11,7 @@ import Skin from '../../Skin';
   CALLED
 */
 import dismissKeyboard from 'dismissKeyboard';
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
 import Events from 'react-native-simple-events';
 
 import Margin from '../view/margin';

@@ -6,11 +6,11 @@
 import ReactNative from 'react-native';
 import React from 'react';
 import Skin from '../../Skin';
-import Main from '../Main';
+import Main from '../Container/Main';
 /*
   CALLED
 */
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Events from 'react-native-simple-events';
 import OpenLinks from '../OpenLinks';

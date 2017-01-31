@@ -1,41 +1,56 @@
+/**
+ *  this js is act as a container.
+ * it contain drawer, and child.
+ *this screen use in Dashboard
+ */
+
 'use strict';
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, PropTypes } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../Skin';
 
 /*
-  CALLED
-*/
-//import NavigationBar from 'react-native-navbar';
-import NavigationBar from './view/navbar.js'
-import BottomMenu from './view/bottomMenu';
-import NavButton from './NavButton';
+ Required for this js
+ */
 import Drawer from 'react-native-drawer';
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
-var {DeviceEventEmitter} = require('react-native');
-const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, DeviceEventEmitter } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native';
+
+
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-let onGetCredentialSubscriptions;
-const {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, } = ReactNative;
 
-const {Component} = React;
 
+/*
+ Custome View
+ */
+import NavigationBar from '../view/navbar.js'
+import BottomMenu from '../view/bottomMenu';
+import NavButton from '../NavButton';
+
+/*
+  INSTANCED
+ */
 let _toggleDrawer;
-let eventToggleDrawer =false;
+let eventToggleDrawer = false;
+let onGetCredentialSubscriptions;
+
+
 
 /*
   Instantiaions
 */
 export default class Main extends Component {
 
-  /**
-   * [constructor description]
-   * @param  {[type]} props [description]
-   * @return {[type]}       [description]
-   */
   constructor(props) {
     super(props);
     this.state = {
@@ -49,22 +64,22 @@ export default class Main extends Component {
     this.checkCreds = this.checkCreds.bind(this);
     this.selectedDialogOp = false;
     // this.cancelCreds = ;
-    this.state.navBar = { };
+    this.state.navBar = {};
 
     this.state.navBar.title = this.props.navBar.title || '';
     this.state.navBar.visible = this.props.navBar.visible || true;
     this.state.navBar.tint = this.props.navBar.tint || '#000000';
 
-    this.state.navBar.left = { };
-    this.state.navBar.left = { };
+    this.state.navBar.left = {};
+    this.state.navBar.left = {};
     this.state.navBar.left.text = this.props.navBar.left.text || '';
     this.state.navBar.left.icon = this.props.navBar.left.icon || '';
     this.state.navBar.left.iconStyle = this.props.navBar.left.iconStyle || {};
     this.state.navBar.left.textStyle = this.props.navBar.left.textStyle || {};
     this.state.navBar.left.handler = this.props.navBar.left.handler || this.toggleDrawer;
 
-    this.state.navBar.right = { };
-    this.props.navBar.right = { };
+    this.state.navBar.right = {};
+    this.props.navBar.right = {};
     this.state.navBar.right.text = this.props.navBar.right.text || '';
     this.state.navBar.right.icon = this.props.navBar.right.icon || '';
     this.state.navBar.right.iconStyle = this.props.navBar.right.iconStyle || {};
@@ -83,10 +98,45 @@ export default class Main extends Component {
     _toggleDrawer = this.toggleDrawer;
 
   }
+  /*
+This is life cycle method of the react native component.
+This method is called when the component will start to load
+*/
+  componentWillMount() {
+    if (onGetCredentialSubscriptions) {
+      onGetCredentialSubscriptions.remove();
+    }
+    onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
+      this.onGetCredentials.bind.bind(this));
+  }
+  /*
+ This is life cycle method of the react native component.
+ This method is called when the component is Mounted/Loaded.
+*/
+  componentDidMount() {
+    console.log("eventToggleDrawer = " + eventToggleDrawer);
+    if (eventToggleDrawer === true) {
+      Events.rm('toggleDrawer', 'toggleDrawerID')
+    }
+    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+    eventToggleDrawer = true;
+  }
+  /*
+    This is life cycle method of the react native component.
+    This method is called after the component is Updated.
+  */
+  componentDidUpdate() {
+    if (eventToggleDrawer === true) {
+      Events.rm('toggleDrawer', 'toggleDrawerID')
+    }
+
+    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+  }
+  //to open drawer
   open() {
     this.setState({ open: true });
   }
-
+  //to close drawer
   close() {
     this.setState({ open: false });
   }
@@ -97,7 +147,6 @@ export default class Main extends Component {
   }
 
   checkCreds() {
-
     const user = this.state.userName;
     const pass = this.state.password;
     if (user.length > 0) {
@@ -116,7 +165,6 @@ export default class Main extends Component {
   }
 
   cancelCreds() {
-
     ReactRdna.setCredentials(this.state.userName, this.state.password, false, (response) => {
       if (response) {
         console.log('immediate response is' + response[0].error);
@@ -125,13 +173,17 @@ export default class Main extends Component {
       }
     });
   }
-
+  /*
+    onTextchange method for userName TextInput
+  */
   onUserChange(event) {
     var newstate = this.state;
     newstate.userName = event.nativeEvent.text;
     this.setState(newstate);
   }
-
+  /*
+     onTextchange method for Password TextInput
+   */
   onPasswordChange(event) {
     var newstate = this.state;
     newstate.password = event.nativeEvent.text;
@@ -151,44 +203,10 @@ export default class Main extends Component {
     }
   }
 
-  componentWillMount() {
-    if (onGetCredentialSubscriptions) {
-      onGetCredentialSubscriptions.remove();
-    }
-//    getCredentialSubscriptions = DeviceEventEmitter.addListener(
-//      'onGetCredentials',
-//      this.onGetCredentialsStatus.bind(this)
-//    );
-    onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
-                                                                         this.onGetCredentials.bind.bind(this));
-  }
-  componentDidMount(){
-    console.log("eventToggleDrawer = " + eventToggleDrawer);
-    if(eventToggleDrawer === true){
-       Events.rm('toggleDrawer', 'toggleDrawerID')
-    }
-    
-    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
-    eventToggleDrawer = true;
-  }
-
-  componentDidUpdate(){
-    if(eventToggleDrawer === true){
-       Events.rm('toggleDrawer', 'toggleDrawerID')
-    }
-
-    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
-  }
-
-  componentWillUnmount() { 
-    //Events.rm('toggleDrawer', 'toggleDrawerID') 
-  }
-  
   onGetCredentials(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }
-
   /**
    * Builds the main wrapper elements of the post-login screen.
    * Main----
@@ -200,13 +218,13 @@ export default class Main extends Component {
    * @return {JSX}
    */
 
-  getDrawerState(){
+  getDrawerState() {
     return this.state.drawerState.open;
   }
-  
-  buildNavBar(){
-    if (this.props.defaultNav){
-      return ( 
+  //tool bar 
+  buildNavBar() {
+    if (this.props.defaultNav) {
+      return (
         [<NavigationBar
           title={this.props.navBar.title}
           titleTint={Skin.main.TITLE_COLOR}
@@ -226,41 +244,41 @@ export default class Main extends Component {
           // }
           right={''}
           left={this.props.navBar.left}
-        />,
-       <View style={{height:1,backgroundColor:Skin.main.TITLE_COLOR}}/>]
+          />,
+          <View style={{ height: 1, backgroundColor: Skin.main.TITLE_COLOR }}/>]
       );
     }
   }
-  
+
   render() {
     return (
       <Drawer
         ref={(c) => {
-               console.log("Drawer  = " + c);
-               this.drawer = c;
-             }}
+          console.log("Drawer  = " + c);
+          this.drawer = c;
+        } }
         type="static"
-        content={this.props.controlPanel!=null && this.props.controlPanel!=undefined ?<this.props.controlPanel
-                   toggleDrawer={this.toggleDrawer}
-                   closeDrawer={this.closeDrawer}
-                   navigator={this.props.navigator} />:null}
+        content={this.props.controlPanel != null && this.props.controlPanel != undefined ? <this.props.controlPanel
+          toggleDrawer={this.toggleDrawer}
+          closeDrawer={this.closeDrawer}
+          navigator={this.props.navigator} /> : null}
         acceptDoubleTap
         onOpen={() => {
-                  this.setState({
-                    drawerState: {
-                      open: true,
-                      disabled: this.state.drawerState.disabled
-                    }
-                  });
-                }}
+          this.setState({
+            drawerState: {
+              open: true,
+              disabled: this.state.drawerState.disabled
+            }
+          });
+        } }
         onClose={() => {
-                   this.setState({
-                     drawerState: {
-                       open: false,
-                       disabled: this.state.drawerState.disabled
-                     }
-                   });
-                 }}
+          this.setState({
+            drawerState: {
+              open: false,
+              disabled: this.state.drawerState.disabled
+            }
+          });
+        } }
         captureGestures={false}
         tweenDuration={100}
         panThreshold={0.0}
@@ -268,29 +286,29 @@ export default class Main extends Component {
         openDrawerOffset={() => 70}
         closedDrawerOffset={() => 0}
         panOpenMask={0.2}>
-        {this.buildNavBar()}
+        {this.buildNavBar() }
         {this.props.children}
         <BottomMenu
           navigator={this.props.navigator}
           bottomMenu={this.props.bottomMenu} />
         <Modal
           onPress={() => {
-                     this.setState({ userName: '',password: '',open: false });this.cancelCreds();
-                   }}
+            this.setState({ userName: '', password: '', open: false }); this.cancelCreds();
+          } }
           style={styles.modalwrap}
           overlayOpacity={0.75}
           offset={100}
           open={this.state.open}
-          modalDidOpen={() => console.log('modal did open')}
+          modalDidOpen={() => console.log('modal did open') }
           modalDidClose={() => {
-                           if (this.selectedDialogOp) {
-                             this.selectedDialogOp = false;
-                             this.checkCreds();
-                           } else {
-                             this.selectedDialogOp = false;
-                             this.cancelCreds();
-                           }
-                         }}>
+            if (this.selectedDialogOp) {
+              this.selectedDialogOp = false;
+              this.checkCreds();
+            } else {
+              this.selectedDialogOp = false;
+              this.cancelCreds();
+            }
+          } }>
           <View style={styles.modalTitleWrap}>
             <Text style={styles.modalTitle}>
               401 Authentication
@@ -305,7 +323,7 @@ export default class Main extends Component {
             style={styles.modalInput}
             placeholder={'Enter username'}
             value={this.state.userName}
-            onChange={this.onUserChange.bind(this)}
+            onChange={this.onUserChange.bind(this) }
             placeholderTextColor={Skin.colors.HINT_COLOR} />
           <View style={styles.underline}></View>
           <TextInput
@@ -315,18 +333,18 @@ export default class Main extends Component {
             secureTextEntry
             placeholder={'Enter password'}
             value={this.state.password}
-            onChange={this.onPasswordChange.bind(this)}
+            onChange={this.onPasswordChange.bind(this) }
             placeholderTextColor={Skin.colors.HINT_COLOR} />
           <View style={styles.underline}></View>
           <View style={{
-                         flex: 1,
-                         flexDirection: 'row'
-                       }}>
+            flex: 1,
+            flexDirection: 'row'
+          }}>
             <TouchableHighlight
               onPress={() => {
-                         this.selectedDialogOp = false;
-                         this.setState({ userName: '',password: '',open: false });
-                       }}
+                this.selectedDialogOp = false;
+                this.setState({ userName: '', password: '', open: false });
+              } }
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>
@@ -335,9 +353,9 @@ export default class Main extends Component {
             </TouchableHighlight>
             <TouchableHighlight
               onPress={() => {
-                         this.selectedDialogOp = true;
-                         this.close();
-                       }}
+                this.selectedDialogOp = true;
+                this.close();
+              } }
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>
@@ -347,7 +365,7 @@ export default class Main extends Component {
           </View>
         </Modal>
       </Drawer>
-      );
+    );
   }
 
 }

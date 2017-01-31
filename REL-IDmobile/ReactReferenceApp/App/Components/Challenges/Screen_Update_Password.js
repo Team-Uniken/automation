@@ -6,12 +6,12 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
-import Main from '../Main';
+import Main from '../Container/Main';
 /*
  CALLED
  */
 import Events from 'react-native-simple-events';
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
 import dismissKeyboard from 'dismissKeyboard';
 
 import Button from '../view/button';

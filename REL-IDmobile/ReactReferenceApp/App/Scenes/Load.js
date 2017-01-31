@@ -8,13 +8,13 @@ import React from 'react';
 import Skin from '../Skin';
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
-import Main from '../Components/Main';
+import Main from '../Components/Container/Main';
 
 /*
  CALLED
  */
 import TouchID from 'react-native-touch-id';
-import MainActivation from '../Components/MainActivation';
+import MainActivation from '../Components/Container/MainActivation';
 import { DeviceEventEmitter } from 'react-native';
 import Setting from '../Components/view/setting';
 import Version from '../Components/view/version';
@@ -116,15 +116,15 @@ class Load extends Component {
     var allScreens = obj1.props.navigator.getCurrentRoutes(-1);
     for (var i = 0; i < allScreens.length; i++) {
       var screen = allScreens[i];
-      if (screen.id === 'Screen_0_1_welcome') {
+      if (screen.id === 'Welcome_Screen') {
         var mySelectedRoute = obj1.props.navigator.getCurrentRoutes()[i];
         obj1.props.navigator.popToRoute(mySelectedRoute);
         return;
       }
     }
     obj1.props.navigator.push({
-      id: "Screen_0_1_welcome",
-      //id: "Screen_0_2_selectlogin",
+      id: "Welcome_Screen",
+      //id: "Select_Login",
       title: "nextChlngName",
       url: {
         "chlngJson": chlngJson,
@@ -712,8 +712,8 @@ class Load extends Component {
                 this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
               } else {
                 this.props.navigator.push({
-                  id: "Screen_0_1_welcome",
-                  //id: "Screen_0_2_selectlogin",
+                  id: "Welcome_Screen",
+                  //id: "Select_Login",
                   title: "nextChlngName",
                   url: {
                     "chlngJson": chlngJson,
@@ -732,8 +732,8 @@ class Load extends Component {
               this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
             } else {
               this.props.navigator.push({
-                id: "Screen_0_1_welcome",
-                //id: "Screen_0_2_selectlogin",
+                id: "Welcome_Screen",
+                //id: "Select_Login",
                 title: "nextChlngName",
                 url: {
                   "chlngJson": chlngJson,
@@ -751,8 +751,8 @@ class Load extends Component {
           this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
         } else {
           this.props.navigator.push({
-            id: "Screen_0_1_welcome",
-            //id: "Screen_0_2_selectlogin",
+            id: "Welcome_Screen",
+            //id: "Select_Login",
             title: "nextChlngName",
             url: {
               "chlngJson": chlngJson,

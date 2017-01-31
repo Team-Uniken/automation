@@ -1,38 +1,49 @@
 
-import React from 'react';
+/**
+ *  check status of entered user if everything is right it navigate it forword else return appropriate error message
+ */
+
+'use strict';
+
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
+
+/*
+ Required for this js
+ */
 import Events from 'react-native-simple-events';
-import LoginTypeButton from '../view/logintypebutton';
-import PasswordVerification from './Screen_2_2_password';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
-import MainActivation from '../MainActivation';
-import Main from '../Main';
-import Title from '../view/title';
+import {Text, View, Platform, BackAndroid, AsyncStorage, StatusBar} from 'react-native'
+const FBSDK = require('react-native-fbsdk');
 
-const errors = {
-  "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
-  "LAErrorUserCancel": "Authentication was canceled by the user—for example, the user tapped Cancel in the dialog.",
-  "LAErrorUserFallback": "Authentication was canceled because the user tapped the fallback button (Enter Password).",
-  "LAErrorSystemCancel": "Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up.",
-  "LAErrorPasscodeNotSet": "Authentication could not start because the passcode is not set on the device.",
-  "LAErrorTouchIDNotAvailable": "Authentication could not start because Touch ID is not available on the device",
-  "LAErrorTouchIDNotEnrolled": "Authentication could not start because Touch ID has no enrolled fingers.",
-  "RCTTouchIDUnknownError": "Could not authenticate for an unknown reason.",
-  "RCTTouchIDNotSupported": "Device does not support Touch ID."
-};
-
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
+import PasswordVerification from '../Components/Challenges/Password_Verification';
+import MainActivation from '../Components/Container/MainActivation';
+import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-const {Text, View, Platform, BackAndroid,
-  AsyncStorage, StatusBar} = ReactNative;
-const {Component} = React;
+/*
+ Custome View
+ */
+import LoginTypeButton from '../Components/view/logintypebutton';
+import Title from '../Components/view/title';
 
+
+/*
+  INSTANCES
+ */
 var obj;
+const LOGIN_TYPE_PER_ROW = 3;
+
 //Facebook login code
-const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
   LoginManager,
@@ -42,7 +53,6 @@ const {
 } = FBSDK;
 
 
-const LOGIN_TYPE_PER_ROW = 3;
 
 class SelectLogin extends Component {
 
@@ -67,11 +77,17 @@ class SelectLogin extends Component {
 
     this.checkForRegisteredCredsAndShow();
   }
-
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
     obj = this;
   }
-
+ /*
+      This is life cycle method of the react native component.
+      This method is called when the component is Mounted/Loaded.
+    */
   componentDidMount() {
     var $this = this;
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
@@ -129,7 +145,7 @@ class SelectLogin extends Component {
         Events.trigger('hideLoader', true);
       }).done();
   }
-
+//push datasource to gridview depends on tbacred and depends on platform if android pattern else touch option will be added.
   fillAdditionalLoginOptions() {
     this.state.dataSource = [];
     if (this.props.tbacred) {
@@ -160,7 +176,7 @@ class SelectLogin extends Component {
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
   }
-
+//check for registercred in database if ERPasswd is in database than isRegistered flag is set to true.
   async checkForRegisteredCredsAndShow(option) {
     var ret = false;
     await AsyncStorage.getItem(Main.dnaUserName).then((value) => {
@@ -187,7 +203,7 @@ class SelectLogin extends Component {
 
     return ret;
   }
-
+//check facebook accessToken is valid or not.
   checkValidityOfAccessToken() {
     Events.trigger('showLoader', true);
     $this = this;
@@ -236,7 +252,7 @@ class SelectLogin extends Component {
       return (result)
     }
   }
-
+//patten login callback.
   onPatternUnlock(args) {
     this.onDoPasswordCheckChallenge(args.password);
   }
@@ -276,7 +292,7 @@ class SelectLogin extends Component {
       } catch (e) { }
     }).done();
   }
-
+//submit response in  challenge response and showNextChallenge
   onDoPasswordCheckChallenge(args) {
     // if (args.length > 0) {
     var responseJson = this.props.url.chlngJson;
@@ -284,13 +300,10 @@ class SelectLogin extends Component {
     Events.trigger('showNextChallenge', {
       response: responseJson
     });
-    // } else {
-    //   alert('Please enter password');
-    // }
   }
 
 
-
+//navigate to pattern screen
   doPatternLogin() {
     this.props.navigator.push({
       id: 'pattern',
@@ -300,27 +313,7 @@ class SelectLogin extends Component {
     });
   }
 
-  // <View style={Skin.layout0.bottom.loginbutton.wrap}>
-  //               <LoginTypeButton
-  //                 label={Skin.icon.touchid}
-  //                 onPress={this.touch.bind(this) }
-  //                 text="TouchId" />
-  //               <LoginTypeButton
-  //                 label={Skin.icon.password}
-  //                 onPress={this.password.bind(this) }
-  //                 text="Password" />
-  //               <LoginTypeButton
-  //                 label={Skin.icon.wechat}
-  //                 onPress={this.wechat.bind(this) }
-  //                 text="WeChat" />
-  //             </View>
-  //             <View style={Skin.layout0.bottom.loginbutton.wrap}>
-  //               <LoginTypeButton
-  //                 label={Skin.icon.facebook}
-  //                 onPress={this.touch.bind(this) }
-  //                 text="Facebook" />
-  //             </View>
-
+//return logintypebutton depends on item supply.
   renderItem(item) {
     return (
       <View style={Skin.layout0.bottom.loginbutton.wrap}>
@@ -331,7 +324,7 @@ class SelectLogin extends Component {
       </View>
     );
   }
-
+//navigate to screen depends on option selected.
   loginWith(credType) {
     // alert(credType);
     var type = Skin.text['0']['2'].credTypes;
@@ -357,15 +350,17 @@ class SelectLogin extends Component {
         break;
     }
   }
-
+  //show previous challenge on click of cross button or android back button.
   close() {
     Events.trigger('showPreviousChallenge');
   }
-
+//call when get back from PasswordVerification screen.
   goBackToSelectLogin(){
     this.setState({showPasswordVerify:false});
   }
-  
+    /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify) {
       return (

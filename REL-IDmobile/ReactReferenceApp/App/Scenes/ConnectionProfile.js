@@ -4,7 +4,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Modal from 'react-native-simple-modal';
 import Skin from '../Skin';
-import Main from '../Components/Main';
+import Main from '../Components/Container/Main';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 

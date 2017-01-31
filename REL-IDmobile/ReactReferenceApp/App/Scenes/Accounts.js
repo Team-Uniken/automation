@@ -9,7 +9,7 @@ import Skin from '../Skin';
 /*
   CALLED
 */
-import Main from '../Components/Main';
+import Main from '../Components/Container/Main';
 import ListItem from '../Components/ListItem';
 import ListSectionHeader from '../Components/ListSectionHeader';
 import { FormattedCurrency } from 'react-native-globalize';

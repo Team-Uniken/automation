@@ -1,28 +1,51 @@
+/*This class is responsible for displaying the verfication key for the user and accept the activation code, 
+  so that user can proceed with the userId activation process*/
+
 'use strict';
 
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid } from 'react-native';
+/*
+ ALWAYS NEED
+ */
+import React, { Component,} from 'react';
 
-//const {Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, } = ReactNative;
-
+/*
+ Required for this js
+ */
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid ,AsyncStorage} from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+var dismissKeyboard = require('react-native-dismiss-keyboard');
+
+
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
+import Main from '../Container/Main';
+var constant = require('../Constants');
+
+/*
+ Custome View
+ */
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-var dismissKeyboard = require('react-native-dismiss-keyboard');
+
+/*
+  INSTANCES
+ */
 var obj;
 
-class AccessCode extends Component {
+
+class Activation_Code extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      accessCode: '',
+      activatonCode: '',
       showCamera: true,
       barCodeFlag: true,
       cameraPermission: false,
@@ -35,10 +58,13 @@ class AccessCode extends Component {
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
     this.checkCameraPermission = this.checkCameraPermission.bind(this);
     this.requestCameraPermission = this.requestCameraPermission.bind(this);
-    this.checkAccessCode = this.checkAccessCode.bind(this);
     // this.barCodeScanFlag = true;
   }
 
+/*
+This is life cycle method of the react native component.
+This method is called when the component will start to load
+*/
   componentWillMount() {
     obj = this;
     if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -46,15 +72,27 @@ class AccessCode extends Component {
     }
   }
 
+/*
+  This is life cycle method of the react native component.
+  This method is called when the component is Mounted/Loaded.
+*/
   componentDidMount() {
+    AsyncStorage.removeItem(Main.dnaUserName, null);
+    constant.USER_T0 = "YES";
+
+    if (Platform.OS === 'android' && Platform.Version >= 23) {
+      this.checkCameraPermission();
+    }
     BackAndroid.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));
-    if (Platform.OS === 'android' && Platform.Version >= 23)
-      this.checkCameraPermission();
   }
 
+/*
+  This is life cycle method of the react native component.
+  This method is called when the component is Updated.
+*/
   componentWillUpdate() {
 
     if (this.state.isPoped) {
@@ -63,6 +101,9 @@ class AccessCode extends Component {
     }
   }
 
+/*
+  This method is used to request the camera permission from the user.
+*/ 
   async requestCameraPermission() {
     try {
       const granted = await PermissionsAndroid.requestPermission(
@@ -89,6 +130,9 @@ class AccessCode extends Component {
     }
   }
 
+/*
+  This method is used to request the camera permission from the user.
+*/
   checkCameraPermission() {
     PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.CAMERA)
       .then(response => {
@@ -104,6 +148,9 @@ class AccessCode extends Component {
       });
   }
 
+/*
+  This method is a callback obtained after the QRCode has been scan.
+*/
   _onBarCodeRead(result) {
     if (obj.state.barCodeFlag === true) {
       obj.state.barCodeFlag = false;
@@ -111,10 +158,16 @@ class AccessCode extends Component {
     }
   }
 
-  onAccessCodeChange(e) {
-    this.setState({ accessCode: e.nativeEvent.text });
+/*
+  This method is a called for every text that is entered in the Activation Code TextInput.
+*/
+  onActivationCodeChange(e) {
+    this.setState({ activatonCode: e.nativeEvent.text });
   }
 
+/*
+  This method is used to return the tittle of Submit/Next button.
+*/
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
@@ -122,21 +175,52 @@ class AccessCode extends Component {
     return 'NEXT';
   }
 
-
-
-  checkAccessCode() {
-    let vkey = this.state.accessCode;
+/*
+  This method is used to get the users entered/Scanned QR code value and submit the same as a challenge response.
+  For Empty activation code, Alert dailogue is dispalyed to user.
+*/ 
+  checkActivationCode() {
+    let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
-      this.setState({ accessCode: '' });
       this.hideCamera();
+      this.setState({ activatonCode: '' });
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
-      alert('Enter Access Code');
+      alert('Enter Activation Code');
+    }
+  }
+/*
+  This method is used to hide the camera which was used to scan QR code.
+*/
+  hideCamera() {
+    if (Platform.OS === 'android') {
+      this.setState({ showCamera: false });
+      this.state.isPoped = true;
     }
   }
 
+/*
+  This is a utility method used to set the camera cordinates.
+*/  
+
+  measureView(event) {
+    console.log('event peroperties: ', event);
+    if (this.state.initCamHeightIsSet === false) {
+      this.state.initCamHeightIsSet = true;
+      this.setState({
+        camHeight: event.nativeEvent.layout.height
+      });
+    }
+  }
+
+/*
+  This method is a called from a QRCode scan callback, and checks for
+  the verification key obtined is same as the key which is obtained in the challenge.
+  If the values are mateched, it submit the Activation code as a challenge response.
+  For Invalid verification key, Alert dailogue is dispalyed to user.
+*/
   onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
@@ -160,7 +244,6 @@ class AccessCode extends Component {
         }, 2000);
         return;
       }
-
       var vfKey = res.key;
       var aCode = res.value;
       var exp = res.expiry;
@@ -168,14 +251,17 @@ class AccessCode extends Component {
       if (obtainedVfKey === vfKey) {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
-
-        $this.hideCamera();
+        if (Platform.OS === 'android') {
+          $this.hideCamera();
+        }
         let responseJson = $this.props.url.chlngJson;
         obj.state.barCodeFlag = false;
 
+        $this.setState({ activatonCode: '' });
         responseJson.chlng_resp[0].response = aCode;
-        $this.setState({ accessCode: '' });
+        
         setTimeout(() => {
+          console.log("Activation ------ showNext");
           Events.trigger('showNextChallenge', {
             response: responseJson
           });
@@ -193,7 +279,7 @@ class AccessCode extends Component {
       // Events.trigger('hideLoader', true);
       alert('Invalid QR code');
       setTimeout(function () {
-        obj.state.barCodeFlag = true;
+        $this.state.barCodeFlag = true;
       }, 2000);
       //  setTimeout(function() {
       //   $this.setState({ showCamera: true });
@@ -202,37 +288,28 @@ class AccessCode extends Component {
     }
   }
 
+/*
+  This method is used to render the JSX elements.
+*/
   renderIf(condition, jsx) {
     if (condition) {
       return jsx;
     }
   }
 
+/*
+  This method is used to handle the cancel button click of the componenet.
+*/
   close() {
     let responseJson = this.props.url.chlngJson;
     this.hideCamera();
     Events.trigger('showPreviousChallenge');
   }
 
-  hideCamera() {
-    if (Platform.OS === 'android') {
-      this.setState({ showCamera: false });
-      this.state.isPoped = true;
-    }
-  }
-
-  measureView(event) {
-    console.log('event peroperties: ', event);
-    if (this.state.initCamHeightIsSet === false) {
-      this.state.initCamHeightIsSet = true;
-      this.setState({
-        camHeight: event.nativeEvent.layout.height
-      });
-    }
-  }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
-
     return (
       <MainActivation>
         <View style={Skin.layout1.wrap}>
@@ -244,7 +321,7 @@ class AccessCode extends Component {
             <Title onClose={() => {
               this.close();
             } }>
-              Access Code
+              Activation
             </Title>
           </View>
           <ScrollView
@@ -255,6 +332,7 @@ class AccessCode extends Component {
               flex: 1,
               marginBottom: 12
             }}>
+
               <Text style={[Skin.layout1.content.camera.prompt, {
                 position: 'absolute',
                 top: 20,
@@ -262,11 +340,11 @@ class AccessCode extends Component {
                 width: Skin.SCREEN_WIDTH,
                 backgroundColor:'transparent'
               }]}>
-                {"Step 1: Verify Code " + this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
+                {"Step 1: Verify Code " +
+                  this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
               </Text>
 
               <View style={[Skin.layout1.content.wrap, { flex: 1, zIndex: 0 }]}>
-
                 {this.renderIf(this.state.showCamera,
                   <Camera
                     captureAudio={false}
@@ -283,22 +361,23 @@ class AccessCode extends Component {
                 ) }
 
               </View>
+
               <View style={[{ width: Skin.SCREEN_WIDTH, position: 'absolute', alignItems: 'center', justifyContent: 'center', bottom: 0 }]}>
                 <Input
                   placeholder={'or Enter Numeric Code'}
-                  ref={'accessCode'}
+                  ref={'activationCode'}
                   autoFocus={false}
                   autoCorrect={false}
                   autoComplete={false}
                   autoCapitalize={true}
                   secureTextEntry={true}
-                  value={this.state.accessCode}
-                  styleInputView={[{ width: Skin.SCREEN_WIDTH-100}]}
-                  styleInput={Skin.layout1.content.code.input}
+                    styleInputView={[{ width: Skin.SCREEN_WIDTH-100}]}
+                   styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}
+            
                   placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
-                  onChange={this.onAccessCodeChange.bind(this) }
-                  onSubmitEditing={this.checkAccessCode} />
+                  onChange={this.onActivationCodeChange.bind(this) }
+                  onSubmitEditing={() => { dismissKeyboard(); this.checkActivationCode(); } }/>
               </View>
             </View>
           </ScrollView>
@@ -306,16 +385,14 @@ class AccessCode extends Component {
             <View style={Skin.layout1.bottom.container}>
               <Button
                 label={Skin.text['1']['1'].submit_button}
-                onPress={() => {
-                  dismissKeyboard();
-                  this.checkAccessCode();
-                } }/>
+                onPress={this.checkActivationCode.bind(this) } />
               <Text
                 onPress={() => {
                   Alert.alert(
                     'Message',
                     'Feature coming soon',
                     [
+
                       {
                         text: 'OK',
                         onPress: () => console.log('OK Pressed')
@@ -324,7 +401,7 @@ class AccessCode extends Component {
                   )
                 } }
                 style={Skin.layout1.bottom.footertext}>
-                Resend Access Code
+                Resend Activation Code
               </Text>
             </View>
           </View>
@@ -336,21 +413,6 @@ class AccessCode extends Component {
 }
 
 
-AccessCode.propTypes = {
-  onSucess: React.PropTypes.func,
-  onCancel: React.PropTypes.func,
-}
-
-AccessCode.getDefaultProps = {
-  url: {
-    chlngJson: {
-      chlng_resp: [{
-        challenge: 'ABCDEFG'
-      }]
-    }
-  }
-}
-
-module.exports = AccessCode;
+module.exports = Activation_Code;
 
 

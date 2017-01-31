@@ -11,7 +11,7 @@ import Skin from '../../Skin';
 /*
   CALLED
 */
-import Main from '../Main';
+import Main from '../Container/Main';
 
 // Secondary Scenes
 
@@ -19,16 +19,16 @@ import Main from '../Main';
 // SECURITY SCENES
 
 import PatternLock from '../Challenges/Screen_PatternLock';
-import SelectLogin from '../Challenges/Screen_0_2_selectlogin';
-import AccessCode from '../Challenges/Screen_Otp';
-import Activation from '../Challenges/Screen_1_2_activation';
-import PasswordSet from '../Challenges/Screen_1_3_setPassword';
+import SelectLogin from '../../Scenes/Select_Login';
+import AccessCode from '../Challenges/Access_Code';
+import Activation from '../Challenges/Activation_Code';
+import PasswordSet from '../Challenges/SetPassword';
 import PostLoginAccessCode from '../PostLogin/Screen_PostLogin_Otp';
-import QuestionSet from '../Challenges/Screen_Question_Set';
+import QuestionSet from '../Challenges/SetQuestion';
 import PostLoginQuestionVerification from '../PostLogin/Screen_PostLogin_Question_Verification';
-import UserLogin from '../Challenges/Screen_2_1_username';
-import DeviceBinding from '../Challenges/Screen_Device_Binding';
-import DeviceName from '../Challenges/Screen_Device_Name';
+import UserLogin from '../Challenges/Check_User';
+import DeviceBinding from '../Challenges/Device_Binding';
+import DeviceName from '../Challenges/Device_Name';
 import PostLoginPasswordVerification from '../PostLogin/Screen_PostLogin_password';
 import ScreenHider from '../Utils/ScreenHider';
 

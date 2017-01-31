@@ -1,42 +1,43 @@
+/**
+ *  set password screen comes in activation flow. 
+ * allow you to set password and confirm it.
+ */
 'use strict';
 
 /*
  ALWAYS NEED
  */
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
-import Main from '../Main';
-/*
- CALLED
- */
-import Events from 'react-native-simple-events';
-import MainActivation from '../MainActivation';
-import dismissKeyboard from 'dismissKeyboard';
 
+/*
+ Required for this js
+ */
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Events from 'react-native-simple-events';
+import dismissKeyboard from 'dismissKeyboard';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackAndroid, } from 'react-native'
+
+
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
+import Main from '../Container/Main';
+import MainActivation from '../Container/MainActivation';
+
+
+/*
+ Custome View
+ */
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-/*
- Instantiaions
- */
-const {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  InteractionManager,
-  AsyncStorage,
-  StatusBar,
-  ScrollView,
-  BackAndroid,
-} = ReactNative;
 
-const {Component} = React;
+
 
 export default class PasswordSet extends Component {
   constructor(props) {
@@ -46,69 +47,51 @@ export default class PasswordSet extends Component {
       cPassword: '',
       userID: '',
     };
-    /*
-     this._props = {
-     url: {
-     chlngJson: {
-     chlng_idx: 1,
-     sub_challenge_index: 0,
-     chlng_name: 'pass',
-     chlng_type: 1,
-     challengeOperation: 1,
-     chlng_prompt: [[]],
-     chlng_info: [
-     {
-     key: 'Response label',
-     value: 'Password',
-     }, {
-     key: 'description',
-     value: 'Enter password of length 8-10 characters',
-     },
-     ],
-     chlng_resp: [
-     {
-     "challenge":"password",
-     "response":"",
-     }
-     ],
-     challenge_response_policy: [],
-     chlng_response_validation: false,
-     attempts_left: 3,
-     },
-     chlngsCount: 1,
-     currentIndex: 1,
-     },
-     };
-     */
   }
+  /*
+This is life cycle method of the react native component.
+This method is called when the component will start to load
+*/
   componentWillMount() {
-
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
   }
-
-
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      this.close();
+      return true;
+    }.bind(this));
+  }
+  //To check password policy
   validatePassword(textval) {
     // var passwordregex = /^[0-9]/;
     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
-
+  /*
+    onTextchange method for Password TextInput
+  */
   onPasswordChange(event) {
     this.setState({ password: event.nativeEvent.text.trim() });
     this.state.password = event.nativeEvent.text.trim();
   }
-
+  /*onTextchange method for confirm password TextInput  */
   onConfirmPasswordChange(event) {
     this.setState({ cPassword: event.nativeEvent.text.trim() });
     this.state.cPassword = event.nativeEvent.text.trim();
   }
-
+  /*
+      This method is used to get the users entered paswword and confirmPassword to check both are same,
+       and submit the same as a challenge response.
+    */
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
-
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
@@ -133,31 +116,24 @@ export default class PasswordSet extends Component {
       alert('Please enter password ');
     }
   }
-
+  //return text Submit or Continue based on chlng_idx and chlngsCount if current challenge is last in challenge array it return Submit else return Continue
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'Continue';
   }
-
+  //showPreviousChallenge on press of cross icon.
   close() {
     let responseJson = this.props.url.chlngJson;
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
-  
 
-
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
-      this.close();
-      return true;
-    }.bind(this));
-  }
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
-
-
     return (
       <MainActivation>
         <View style={Skin.layout1.wrap}>
@@ -181,7 +157,6 @@ export default class PasswordSet extends Component {
                   <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
                 </View>
                 <View style={Skin.layout1.content.bottom.container}>
-
                   <Input
                     returnKeyType={'next'}
                     keyboardType={'default'}
@@ -198,7 +173,6 @@ export default class PasswordSet extends Component {
                     onSubmitEditing={() => { this.refs.cPassword.focus(); } }
                     marginBottom={12}
                     />
-
                   <Input
                     autoFocus={false}
                     autoComplete={false}
@@ -212,7 +186,6 @@ export default class PasswordSet extends Component {
                     placeholder={'Confirm Password'}
                     onChange={this.onConfirmPasswordChange.bind(this) }
                     onSubmitEditing={this.setPassword.bind(this) }
-
                     />
                 </View>
               </View>

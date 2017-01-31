@@ -8,7 +8,7 @@ import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert,
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import Skin from '../../Skin';
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';

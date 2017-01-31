@@ -16,7 +16,7 @@ import Config from 'react-native-config';
  CALLED
  */
 import Events from 'react-native-simple-events';
-import Main from '../Main';
+import Main from '../Container/Main';
 import Web from '../../Scenes/Web';
 
 import MenuItem from '../view/menuitem';
@@ -418,8 +418,8 @@ class ControlPanel extends Component {
         this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
       } else {
         this.props.navigator.push({
-          id: "Screen_0_1_welcome",
-          //id: "Screen_0_2_selectlogin",
+          id: "Welcome_Screen",
+          //id: "Select_Login",
           title: "nextChlngName",
           url: {
             "chlngJson": chlngJson,

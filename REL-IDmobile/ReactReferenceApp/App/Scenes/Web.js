@@ -7,7 +7,7 @@ import Skin from '../Skin';
 /*
   CALLED
 */
-import Main from '../Components/Main';
+import Main from '../Components/Container/Main';
 import WebViewAndroid from '../android_native_modules/nativewebview';
 import Communications from 'react-native-communications';
 

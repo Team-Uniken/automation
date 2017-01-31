@@ -11,8 +11,8 @@ import Skin from '../../Skin';
 /*
  CALLED
  */
-import Main from '../Main';
-import MainActivation from '../MainActivation';
+import Main from '../Container/Main';
+import MainActivation from '../Container/MainActivation';
 import OpenLinks from '../OpenLinks';
 import Events from 'react-native-simple-events';
 import TouchID from 'react-native-touch-id';

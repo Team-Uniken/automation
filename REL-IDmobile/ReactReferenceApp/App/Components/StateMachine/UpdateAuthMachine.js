@@ -16,16 +16,16 @@ import Skin from '../../Skin';
 
 // SECURITY SCENES
 import PatternLock from '../Challenges/Screen_PatternLock';
-import SelectLogin from '../Challenges/Screen_0_2_selectlogin';
-import AccessCode from '../Challenges/Screen_Otp';
-import Activation from '../Challenges/Screen_1_2_activation';
+import SelectLogin from '../../Scenes/Select_Login';
+import AccessCode from '../Challenges/Access_Code';
+import Activation from '../Challenges/Activation_Code';
 import UpdatePasswordSet from '../PostLogin/Screen_Update_Password_Dashboard';
 import PostLoginAccessCode from '../PostLogin/Screen_PostLogin_Otp';
 import UpdateQuestionSet from '../PostLogin/Screen_Update_Question_Dashboard';
 import PostLoginQuestionVerification from '../PostLogin/Screen_PostLogin_Question_Verification';
-import UserLogin from '../Challenges/Screen_2_1_username';
-import DeviceBinding from '../Challenges/Screen_Device_Binding';
-import DeviceName from '../Challenges/Screen_Device_Name';
+import UserLogin from '../Challenges/Check_User';
+import DeviceBinding from '../Challenges/Device_Binding';
+import DeviceName from '../Challenges/Device_Name';
 import PostLoginPasswordVerification from '../PostLogin/Screen_PostLogin_password';
 import ScreenHider from '../Utils/ScreenHider';
 
@@ -35,7 +35,7 @@ import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native';
-var Main = require('../Main');
+var Main = require('../Container/Main');
 
 /*
   Instantiaions

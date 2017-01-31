@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactNative, { View, Text, ListView, Image } from 'react-native'
 import Skin from '../../../Skin';
-import Main from '../../Main';
+import Main from '../../Container/Main';
 import ControlPanel from '../ControlPanel';
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'

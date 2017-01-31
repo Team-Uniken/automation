@@ -10,7 +10,7 @@ import Skin from '../Skin';
 /*
   CALLED
 */
-import Main from '../Components/Main';
+import Main from '../Components/Container/Main';
 import Modal from 'react-native-simple-modal';
 import DatePicker from 'react-native-datepicker';
 import PickerAndroid from 'react-native-picker-android';

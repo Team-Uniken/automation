@@ -9,7 +9,7 @@ const onUpdateNotificationModuleEvt = new NativeEventEmitter(NativeModules.React
 /*
  CALLED
  */
-import Main from '../Components/Main';
+import Main from '../Components/Container/Main';
 import Constants from '../Components/Constants';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;

@@ -12,9 +12,9 @@ import Input from '../view/input';
 import Margin from '../view/margin';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
 import ModalPicker from 'react-native-modal-picker'
-import Main from '../Main';
+import Main from '../Container/Main';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 const errors = {
   "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",

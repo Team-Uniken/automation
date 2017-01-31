@@ -11,25 +11,25 @@ import Skin from '../../Skin';
 /*
  CALLED
  */
-import Main from '../Main';
+import Main from '../Container/Main';
 // Secondary Scenes
 
 // SECURITY SCENES
-import SelfRegister from '../Challenges/Screen_1_1_register';
-import Activation from '../Challenges/Screen_1_2_activation';
-import AccessCode from '../Challenges/Screen_Otp';
-import PasswordSet from '../Challenges/Screen_1_3_setPassword';
+import SelfRegister from '../../Scenes/Self_Register';
+import Activation from '../Challenges/Activation_Code';
+import AccessCode from '../Challenges/Access_Code';
+import PasswordSet from '../Challenges/SetPassword';
 import UpdatePasswordSet from '../Challenges/Screen_Update_Password';
-import Otp from '../Challenges/Screen_1_2_activation';
-import QuestionSet from '../Challenges/Screen_Question_Set';
-import QuestionVerification from '../Challenges/Screen_Question_Verification';
-import UserLogin from '../Challenges/Screen_2_1_username';
-import DeviceBinding from '../Challenges/Screen_Device_Binding';
-import DeviceName from '../Challenges/Screen_Device_Name';
-import PasswordVerification from '../Challenges/Screen_2_2_password';
+import Otp from '../Challenges/Activation_Code';
+import QuestionSet from '../Challenges/SetQuestion';
+import QuestionVerification from '../Challenges/Question_Verification';
+import UserLogin from '../Challenges/Check_User';
+import DeviceBinding from '../Challenges/Device_Binding';
+import DeviceName from '../Challenges/Device_Name';
+import PasswordVerification from '../Challenges/Password_Verification';
 import PatternLock from '../Challenges/Screen_PatternLock';
 import ScreenHider from '../Utils/ScreenHider';
-import SelectLogin from '../Challenges/Screen_0_2_selectlogin';
+import SelectLogin from '../../Scenes/Select_Login';
 
 
 // COMPONENTS
@@ -37,7 +37,6 @@ import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Constants';
-import Demo from '../demo';
 import RegisterOption from '../Challenges/Screen_1_4_registerOptions';
 import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';
@@ -127,7 +126,6 @@ class TwoFactorAuthMachine extends Component {
     this.showNextChallenge = this.showNextChallenge.bind(this);
     this.resetChallenge = this.resetChallenge.bind(this);
   }
-
   //Setting the initial state of machine and registering events
   componentWillMount() {
     obj = this;

@@ -1,39 +1,48 @@
+/**
+ *  set Question and Answer screen comes in activation flow. 
+ * allow you to select or write your own question and answer.
+ */
+
 'use strict';
 
 /*
-  NEEDED
-*/
+ ALWAYS NEED
+ */
+import React, { Component, PropTypes } from 'react';
 import ReactNative from 'react-native';
-import React from 'react';
-import Skin from '../../Skin';
 
 /*
-  CALLED
-*/
-import dismissKeyboard from 'dismissKeyboard';
-import MainActivation from '../MainActivation';
+ Required for this js
+ */
 import Events from 'react-native-simple-events';
+import dismissKeyboard from 'dismissKeyboard';
+import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackAndroid, } from 'react-native'
 
+
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
+import MainActivation from '../Container/MainActivation';
+
+
+/*
+ Custome View
+ */
+import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
-import Button from '../view/button';
 import Title from '../view/title';
 
-let obj;
-const {
-  View,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  ListView,
-  TextInput,
-  StyleSheet,
-  StatusBar,
-  InteractionManager,
-  BackAndroid,
-} = ReactNative;
 
-const {Component} = React;
+/*
+  INSTANCED
+ */
+let obj;
+
+
+
+
 
 export default class QuestionSet extends Component {
 
@@ -93,7 +102,10 @@ export default class QuestionSet extends Component {
       },
     };
   }
-
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
         BackAndroid.addEventListener('hardwareBackPress', function() {
             this.close();
@@ -114,15 +126,22 @@ export default class QuestionSet extends Component {
       dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
     });
   }
-
+  /*
+     onTextchange method for Question TextInput
+   */
   onQuestionChange(event) {
     this.setState({ secQue: event.nativeEvent.text });
   }
-
+ /*
+     onTextchange method for Answer TextInput
+   */
   onAnswerChange(event) {
     this.setState({ secAnswer: event.nativeEvent.text });
   }
-
+  /*
+    This method is used to get the users entered question and answer,
+     and submit as a challenge response key and response value respectively.
+  */
   setSecrets() {
     //console.log(this);
     const kSecQ = this.state.secQue;
@@ -140,7 +159,9 @@ export default class QuestionSet extends Component {
       });
     }
   }
-
+  /*
+     This method is used to return the tittle of Submit/Next button.
+   */
   btnText() {
     if (this.props.url.chlng_idx === this.props.url.chlngsCount) {
       return 'Submit';
@@ -185,7 +206,9 @@ export default class QuestionSet extends Component {
       <View style={styles.divider} />
     );
   }
-
+ /*
+      This method is used to handle the cancel button click or back button.
+    */
    close() {
     let responseJson = this.props.url.chlngJson;
     this.setState({ showCamera: false });
@@ -193,15 +216,10 @@ export default class QuestionSet extends Component {
   }
 
 
-
+ /*
+     This method is used to render the componenet with all its element.
+   */
   render() {
-
-    /**
-     * SCROLL VIEW ADDED HERE IN LIEU OF MAINACTIVATION
-     * When react-native-keyboard-scroll-view is updated and bug patch is rolled into React Native we can swop to that.
-     <Text style={Skin.activationStyle.counter}>{this.props.url.currentIndex}/{this.props.url.chlngsCount}</Text>
-     */
-
     return (
         <MainActivation>
       <View style={Skin.layout1.wrap}>

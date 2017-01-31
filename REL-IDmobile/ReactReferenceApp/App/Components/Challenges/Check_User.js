@@ -2,9 +2,9 @@
 
 import React, { Component, PropTypes } from 'react';
 import Skin from '../../Skin';
-import Main from '../Main';
+import Main from '../Container/Main';
 import Load from '../../Scenes/Load';
-import MainActivation from '../MainActivation';
+import MainActivation from '../Container/MainActivation';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import TouchID from 'react-native-touch-id';

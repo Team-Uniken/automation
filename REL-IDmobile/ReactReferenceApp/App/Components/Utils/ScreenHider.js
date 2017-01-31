@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import Skin from '../../Skin';
 import Loader from './Loader';
-import Main from '../Main';
+import Main from '../Container/Main';
 
 import Events from 'react-native-simple-events';
 import { AppRegistry, Text, TouchableOpacity, View, AsyncStorage, TouchableHighlight,
@@ -57,11 +57,6 @@ class ScreenHider extends Component {
           }
         }
       }).done();
-
-
-
-
-
     }
     if (this.props.url.chlngJson.chlng_name == 'devbind') {
       responseJson = this.props.url.chlngJson;

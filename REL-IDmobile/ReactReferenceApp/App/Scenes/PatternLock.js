@@ -6,8 +6,8 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import Skin from '../Skin';
-import Main from '../Components/Main';
-import MainActivation from '../Components/MainActivation';
+import Main from '../Components/Container/Main';
+import MainActivation from '../Components/Container/MainActivation';
 
 import PatternView from '../Components/PatternView';
 import dismissKeyboard from 'dismissKeyboard';

@@ -1,49 +1,52 @@
+/*
+ *A welcome screen which give you two option self Register or already member.
+ */
+'use strict';
 
-import React, { Component } from 'react';
-import ReactNative, { View, Text,Navigator, BackAndroid,StatusBar} from 'react-native'
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
+import ReactNative from 'react-native';
 
-import Skin from '../../Skin';
+/*
+ Required for this js
+ */
 import Events from 'react-native-simple-events';
-import Button from '../view/button';
 import Config from 'react-native-config';
-
-import Setting from '../view/setting';
-
+import {View, Text, Navigator, BackAndroid, StatusBar} from 'react-native';
 
 
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
 
 
 
-class First extends Component {
+/*
+ Custome View
+ */
+import Button from '../Components/view/button';
+import Setting from '../Components/view/setting';
 
-  //   closeStateMachine() {
-  //   console.log('---------- closeStateMachine ' );
-  //    // obj.props.navigator.pop();
-  //     var allScreens =obj.props.navigator.getCurrentRoutes(-1);
-      
-  //     for(var i = 0; i < allScreens.length; i++){
-  //       var screen = allScreens[i];
-  //       if(screen.id === 'Screen_0_1_welcome'){
-  //         var mySelectedRoute = obj.props.navigator.getCurrentRoutes()[i];
-  //         obj.props.navigator.popToRoute(mySelectedRoute);
-  //         return;
-  //       }
-  //     }
-   
-  // }
 
+/*
+  INSTANCES
+ */
+let obj;
+
+
+class Welcome_Screen extends Component {
+ /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
     obj=this;
   //  Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
   }
-
-  //  componentDidMount() {
-  //    BackAndroid.addEventListener('hardwareBackPress', function() {
-  //     // this.props.navigator.pop();
-  //    alert('working');
-  //           return false;
-  //       }.bind(this));
-  // }
+//call on click of already a member to show next challenge(checkUser).
   selectReg() {
     console.log('doNavigation:');
     this.props.navigator.push({
@@ -54,25 +57,13 @@ class First extends Component {
         "screenId": this.props.url.screenId
       }
     });
-
   }
-
+//call on click of register to show SelfRegister screen.
   register() {
     console.log('doNavigation:');
-//    this.props.navigator.push({ id: "Screen_1_1_register" });
-    
-//    this.props.navigator.push({
-//                              id: "Screen_1_1_register",
-//                              title: "nextChlngName",
-//                              url: {
-//                              "chlngJson": this.props.url.chlngJson,
-//                              "screenId": this.props.url.screenId
-//                              }
-//                              });
-    
     this.props.navigator.push({
                               id: "Machine",
-                              //id: "Screen_0_2_selectlogin",
+                              //id: "Select_Login",
                               title: "SelfRegister",
                               url: {
                               "chlngJson": this.props.url.chlngJson,
@@ -80,7 +71,9 @@ class First extends Component {
                               }
                               });
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     return (
       <View style={Skin.layout0.wrap.container}>
@@ -126,5 +119,5 @@ class First extends Component {
   }
 }
 
-module.exports = First;
+module.exports = Welcome_Screen;
 
