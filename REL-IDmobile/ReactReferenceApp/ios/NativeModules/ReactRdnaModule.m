@@ -712,24 +712,28 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 
 -(void)initializeLocationManager{
   
-  if ([CLLocationManager locationServicesEnabled] == NO) {
-    NSLog(@"locationServicesEnabled false");
-  } else {
-    CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
-    if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
-      NSLog(@"authorizationStatus failed");
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if ([CLLocationManager locationServicesEnabled] == NO) {
+      NSLog(@"locationServicesEnabled false");
     } else {
-      if (locationManagerObject == nil)
-      {
-        locationManagerObject = [[CLLocationManager alloc] init];
-        [locationManagerObject requestWhenInUseAuthorization];
-        [locationManagerObject requestAlwaysAuthorization];
-        locationManagerObject.desiredAccuracy = kCLLocationAccuracyBest;
-        locationManagerObject.delegate = self;
+      CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
+      if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
+        NSLog(@"authorizationStatus failed");
+      } else {
+        if (locationManagerObject == nil)
+        {
+          locationManagerObject = [[CLLocationManager alloc] init];
+          [locationManagerObject requestWhenInUseAuthorization];
+          [locationManagerObject requestAlwaysAuthorization];
+          locationManagerObject.desiredAccuracy = kCLLocationAccuracyBest;
+          locationManagerObject.delegate = self;
+        }
+        [locationManagerObject startUpdatingLocation];
       }
-      [locationManagerObject startUpdatingLocation];
     }
-  }
+  });
+  
+ 
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -744,7 +748,7 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
     NSString *longitude = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
     NSString *latitude = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
     NSString *altitude = [NSString stringWithFormat:@"%.8f", currentLocation.altitude];
-    NSLog(@"lat = %@\n long = %@\n and altitude = %@",latitude,longitude,altitude);
+    //NSLog(@"lat = %@\n long = %@\n and altitude = %@",latitude,longitude,altitude);
   }
 }
 
