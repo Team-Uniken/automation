@@ -9,7 +9,7 @@ import NavBar from '../../view/navbar.js'
 
 
 
-class Screen_3_3_locations extends Component {
+class Locations extends Component {
 
   constructor(props) {
     super(props);
@@ -180,7 +180,7 @@ class Screen_3_3_locations extends Component {
   }
 }
 
-Screen_3_3_locations.propTypes = {
+Locations.propTypes = {
   icons: PropTypes.object,
   headers: PropTypes.object,
   iconcolor: PropTypes.object,
@@ -194,7 +194,7 @@ Screen_3_3_locations.propTypes = {
   navState: PropTypes.object,
 }
 
-Screen_3_3_locations.defaultProps = {
+Locations.defaultProps = {
   headers: {
     1: 'Savings',
     2: 'Personal Checking',
@@ -240,4 +240,4 @@ Screen_3_3_locations.defaultProps = {
   },
 }
 
-export default Screen_3_3_locations
+export default Locations

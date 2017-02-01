@@ -10,7 +10,7 @@ import { FormattedCurrency } from 'react-native-globalize';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-class Screen_3_2_history extends Component {
+class History extends Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({
@@ -197,7 +197,7 @@ class Screen_3_2_history extends Component {
 
 }
 
-Screen_3_2_history.propTypes = {
+History.propTypes = {
   icons: PropTypes.object,
   headers: PropTypes.object,
   iconcolor: PropTypes.object,
@@ -211,7 +211,7 @@ Screen_3_2_history.propTypes = {
   navState: PropTypes.object,
 }
 
-Screen_3_2_history.defaultProps = {
+History.defaultProps = {
   headers: {
     1: 'Savings',
     2: 'Personal Checking',
@@ -257,4 +257,4 @@ Screen_3_2_history.defaultProps = {
   },
 }
 
-export default Screen_3_2_history
+export default History

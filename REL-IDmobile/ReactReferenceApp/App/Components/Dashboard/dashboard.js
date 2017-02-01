@@ -1,18 +1,25 @@
+/*
+ * a dashboard which will navigate to flavour wise respective dashboard.
+ */
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
+
+/*
+ Required for this js
+ */
 import Config from 'react-native-config';
+import {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet} from 'react-native';
 
-
-const {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet} = ReactNative;
-const {Component} = React;
-import NWDDashboard from './NWD/Screen_3_1_deals';
-
+/*
+ Use in this js
+ */
+import NWDDashboard from './NWD/Deals';
 import SandPDashbord from './SandP/homepage';
-
-import StockDashbord from './Stock/Screen_3_1_deals';
-
+import StockDashbord from './Stock/Deals';
 import UbsDashbord from './Ubs/homepage';
 
 

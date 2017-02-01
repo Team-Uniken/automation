@@ -25,7 +25,7 @@ import Activation from '../Challenges/Activation_Code';
 import PasswordSet from '../Challenges/SetPassword';
 import PostLoginAccessCode from '../PostLogin/Screen_PostLogin_Otp';
 import QuestionSet from '../Challenges/SetQuestion';
-import PostLoginQuestionVerification from '../PostLogin/Screen_PostLogin_Question_Verification';
+import PostLoginQuestionVerification from '../PostLogin/PostLogin_Question_Verification';
 import UserLogin from '../Challenges/Check_User';
 import DeviceBinding from '../Challenges/Device_Binding';
 import DeviceName from '../Challenges/Device_Name';

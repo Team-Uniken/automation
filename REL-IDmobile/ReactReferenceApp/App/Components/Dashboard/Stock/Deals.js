@@ -11,7 +11,7 @@ import { FormattedCurrency } from 'react-native-globalize';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-class Screen_3_1_deals extends Component {
+class Deals extends Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({
@@ -234,7 +234,7 @@ class Screen_3_1_deals extends Component {
 
 }
 
-Screen_3_1_deals.propTypes = {
+Deals.propTypes = {
   icons: PropTypes.object,
   headers: PropTypes.object,
   iconcolor: PropTypes.object,
@@ -248,7 +248,7 @@ Screen_3_1_deals.propTypes = {
   navState: PropTypes.object,
 }
 
-Screen_3_1_deals.defaultProps = {
+Deals.defaultProps = {
   headers: {
     1: 'Savings',
     2: 'Personal Checking',
@@ -298,4 +298,4 @@ response: {
 
 
 
-export default Screen_3_1_deals
+export default Deals

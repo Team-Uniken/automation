@@ -1,38 +1,44 @@
+/*
+ * it will show drawer menu option.
+ * and on click to any item it perform respective opration
+ */
+'use strict';
 
 /*
  ALWAYS NEED
  */
-'use strict';
-
-var ReactNative = require('react-native');
-var React = require('react');
-import Skin from '../../Skin';
-var SCREEN_WIDTH = require('Dimensions').get('window').width;
-var SCREEN_HEIGHT = require('Dimensions').get('window').height;
-var constant = require('../Constants');
-import Config from 'react-native-config';
+import React, { Component, } from 'react';
+import ReactNative from 'react-native';
 
 /*
- CALLED
+ Required for this js
  */
 import Events from 'react-native-simple-events';
+import Config from 'react-native-config';
+import {View, Text, Navigator, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, IntentAndroid, InteractionManager, DeviceEventEmitter} from 'react-native';
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
 import Main from '../Container/Main';
 import Web from '../../Scenes/Web';
+var constant = require('../Constants');
+var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
+/*
+ Custome View
+ */
 import MenuItem from '../view/menuitem';
 
-var styles = Skin.loadStyle;
 
-//var Menu = require('./Menu');
-//var Web = require('./Web');
-var {DeviceEventEmitter} = require('react-native');
-import { NativeModules, NativeEventEmitter } from 'react-native';
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-const onGetPostLoginChallengesModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-const onGetNotificationsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
+/*
+  INSTANCES
+ */
 let chlngJson;
 let nextChlngName;
 var eventLogOff;
@@ -42,39 +48,21 @@ let challengeName;
 let onGetAllChallengeEvent;
 let onGetAllChallengeStatusSubscription;
 let onLogOffSubscription;
-/*
- INSTANCES
- */
-var {
-  View,
-  Text,
-  Navigator,
-  StyleSheet,
-  TouchableHighlight,
-  AsyncStorage,
-  Alert,
-  ScrollView,
-  Platform,
-  IntentAndroid,
-  InteractionManager,
-} = ReactNative;
-
-const {
-  Component
-} = React;
-
-const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
 var styles = Skin.controlStyle;
 var Obj;
 var securePortalUrl;
+
+const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetPostLoginChallengesModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetNotificationsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 class ControlPanel extends Component {
 
   constructor(props) {
     super(props);
     console.log(props);
-
     this.getPostLoginChallenges = this.getPostLoginChallenges.bind(this);
     this.logOff = this.logOff.bind(this);
     this.onLogOff = this.onLogOff.bind(this);
@@ -108,10 +96,7 @@ class ControlPanel extends Component {
     if (onGetNotificationsSubscription) {
       onGetNotificationsSubscription.remove();
     }
-//    onGetNotifications = DeviceEventEmitter.addListener(
-//      'onGetNotifications',
-//      this.onGetNotificationsDetails.bind(this)
-//    );
+
     onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
                                                                                        this.onGetNotifications.bind(this));
   }

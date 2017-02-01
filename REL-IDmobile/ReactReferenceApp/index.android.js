@@ -27,11 +27,11 @@ import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 // SECURITY SCENES
 
 
-import RegisterOptionScene from './App/Components/PostLogin/Screen_1_4_registerOptionsDashboard';
+import RegisterOptionScene from './App/Components/PostLogin/RegisterOptionsDashboard';
 import PatternLock from './App/Scenes/Screen_PatternLock';
-import Screen_3_1_deals from './App/Components/Dashboard/NWD/Screen_3_1_deals';
-import Screen_3_2_history from './App/Components/Dashboard/NWD/Screen_3_2_history';
-import Screen_3_3_locations from './App/Components/Dashboard/NWD/Screen_3_3_locations';
+import Deals from './App/Components/Dashboard/NWD/Deals';
+import History from './App/Components/Dashboard/NWD/History';
+import Locations from './App/Components/Dashboard/NWD/Locations';
 
 
 //Dashboard
@@ -110,7 +110,7 @@ class ReactRefApp extends Component {
                 title={route.title}
                 rdna={route.DnaObject} />);
     } else if (id === 'Accounts') {
-     return (<Screen_3_1_deals
+     return (<Deals
                 navigator={nav}
                 url={route.url}
                 title={route.title}
@@ -182,20 +182,20 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    }else if (id === 'Screen_3_1_deals') {
-      return (<Screen_3_1_deals
+    }else if (id === 'Deals') {
+      return (<Deals
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_3_2_history') {
-      return (<Screen_3_2_history
+    } else if (id === 'History') {
+      return (<History
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_3_3_locations') {
-      return (<Screen_3_3_locations
+    } else if (id === 'Locations') {
+      return (<Locations
                 navigator={nav}
                 url={route.url}
                 title={route.title}
