@@ -279,10 +279,12 @@ class Load extends Component {
     if (onPauseCompletedSubscription !== undefined) {
       console.log("--------------- removing onPauseCompleted");
       onPauseCompletedSubscription.remove();
+      onPauseCompletedSubscription = null;
     }
 
     if (onResumeCompletedSubscription !== undefined) {
       onResumeCompletedSubscription.remove();
+      onResumeCompletedSubscription = null;
     }
 
 

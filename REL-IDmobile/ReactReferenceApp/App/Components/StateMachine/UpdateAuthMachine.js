@@ -90,6 +90,7 @@ class UpdateAuthMachine extends Component {
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
     if(onUpdateChallengeStatusSubscription){
       onUpdateChallengeStatusSubscription.remove();
+      onUpdateChallengeStatusSubscription = null;
     }
     onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
                                                                                        this.onUpdateChallengeStatus.bind(this));
@@ -122,6 +123,7 @@ class UpdateAuthMachine extends Component {
     Events.rm('closeUpdateMachine', 'closeUpdateMachine');
     if(onUpdateChallengeStatusSubscription){
       onUpdateChallengeStatusSubscription.remove();
+      onUpdateChallengeStatusSubscription = null;
     }
   }
  /*
@@ -133,7 +135,10 @@ class UpdateAuthMachine extends Component {
     Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    onUpdateChallengeStatusSubscription.remove();
+    if(onUpdateChallengeStatusSubscription){
+      onUpdateChallengeStatusSubscription.remove();
+      onUpdateChallengeStatusSubscription = null;
+    }
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     console.log(res);

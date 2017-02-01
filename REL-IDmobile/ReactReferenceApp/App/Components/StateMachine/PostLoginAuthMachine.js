@@ -100,12 +100,19 @@ class PostLoginAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
+    
+    if(onCheckChallengeResponseSubscription){
+      onCheckChallengeResponseSubscription.remove();
+      onCheckChallengeResponseSubscription = null;
+    }
+    
      onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
                                                                                  this.onCheckChallengeResponseStatus.bind(this)
                                                                                  );
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
      onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
                                                                                         this.onGetAllChallengeStatus.bind(this));
@@ -135,7 +142,10 @@ class PostLoginAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    onCheckChallengeResponseSubscription.remove();
+    if(onCheckChallengeResponseSubscription){
+      onCheckChallengeResponseSubscription.remove();
+      onCheckChallengeResponseSubscription = null;
+    }
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     console.log(res);
@@ -341,6 +351,11 @@ class PostLoginAuthMachine extends Component {
     * are provided in status else it navigates to Dashboard screen.
     */
   onGetAllChallengeStatus(e) {
+    
+    if(onGetAllChallengeStatusSubscription){
+      onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
+    }
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
     console.log(res);

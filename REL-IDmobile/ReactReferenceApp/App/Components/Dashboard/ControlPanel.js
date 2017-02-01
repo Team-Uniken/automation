@@ -95,6 +95,7 @@ class ControlPanel extends Component {
 
     if (onGetNotificationsSubscription) {
       onGetNotificationsSubscription.remove();
+      onGetNotificationsSubscription = null;
     }
 
     onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
@@ -102,8 +103,9 @@ class ControlPanel extends Component {
   }
 
   logOff() {
-    if (eventLogOff) {
-      eventLogOff.remove();
+    if (onLogOffSubscription) {
+      onLogOffSubscription.remove();
+      onLogOffSubscription = null;
     }
 //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
     onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
@@ -156,6 +158,12 @@ class ControlPanel extends Component {
   }
 
   onGetPostLoginChallenges(status) {
+    
+    if (onGetPostLoginChallengesSubscription) {
+      onGetPostLoginChallengesSubscription.remove();
+      onGetPostLoginChallengesSubscription = null;
+    }
+    
     Events.trigger('hideLoader', true);
     const res = JSON.parse(status.response);
     console.log(res);
@@ -191,6 +199,11 @@ class ControlPanel extends Component {
 
   onGetNotifications(e) {
     console.log('----- onGetNotifications');
+    
+    if (onGetNotificationsSubscription) {
+      onGetNotificationsSubscription.remove();
+      onGetNotificationsSubscription = null;
+    }
     // NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
     console.log(res);
@@ -290,6 +303,7 @@ class ControlPanel extends Component {
   getPostLoginChallenges(useCaseName, challengeToBeUpdated) {
     if (onGetPostLoginChallengesSubscription) {
       onGetPostLoginChallengesSubscription.remove();
+      onGetPostLoginChallengesSubscription = null;
     }
 
 //    eventGetPostLoginChallenges = DeviceEventEmitter.addListener(
@@ -432,8 +446,10 @@ class ControlPanel extends Component {
    //This getAllChallenges method is only for updating menu options
   getAllChallenges() {
     Events.trigger('showLoader', true);
+    
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
 //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
 //      'onGetAllChallengeStatus',
@@ -452,9 +468,12 @@ class ControlPanel extends Component {
   }
 
   onGetAllChallengeSettingStatus(e) {
+   
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
+    
     var $this = this;
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);

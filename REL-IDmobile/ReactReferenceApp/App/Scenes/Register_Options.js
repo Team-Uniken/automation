@@ -292,7 +292,10 @@ This method is called when the component will start to load
     //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    onUpdateChallengeStatusSubscription.remove();
+    if(onUpdateChallengeStatusSubscription){
+      onUpdateChallengeStatusSubscription.remove();
+      onUpdateChallengeStatusSubscription = null;
+    }
 
     console.log(res);
 
@@ -528,6 +531,12 @@ This method is called when the component will start to load
     }
 
     if (this.state.facebook == true) {
+      
+      if(onUpdateChallengeStatusSubscription){
+        onUpdateChallengeStatusSubscription.remove();
+        onUpdateChallengeStatusSubscription = null;
+      }
+      
       onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
                                                                                          this.onUpdateChallengeStatus.bind(this));
 

@@ -176,9 +176,11 @@ export default class DeviceMgmtScene extends Component {
 //    );
     if(onGetRegistredDeviceDetailsSubscription){
       onGetRegistredDeviceDetailsSubscription.remove();
+      onGetRegistredDeviceDetailsSubscription = null;
     }
     if(onUpdateDeviceDetailsSubscription){
       onUpdateDeviceDetailsSubscription.remove();
+      onUpdateDeviceDetailsSubscription = null;
     }
     
     onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',

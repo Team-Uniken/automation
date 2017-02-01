@@ -169,9 +169,11 @@ class MainActivation extends Component {
 
     if (onGetCredentialSubscriptions) {
       onGetCredentialSubscriptions.remove();
+      onGetCredentialSubscriptions = null;
     }
     if (onGetpasswordSubscriptions) {
       onGetpasswordSubscriptions.remove();
+      onGetpasswordSubscriptions = null;
     }
     //    getCredentialSubscriptions  = DeviceEventEmitter.addListener(
     //                                                                 'onGetCredentials',

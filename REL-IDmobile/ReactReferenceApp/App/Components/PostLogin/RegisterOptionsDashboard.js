@@ -64,7 +64,6 @@ const {
 const {Component} = React;
 
 var obj;
-let onGetAllChallengeEventx;
 let onGetAllChallengeStatusSubscription;
 let onUpdateChallengeStatusSubscription;
 
@@ -111,6 +110,7 @@ class RegisterOptionScene extends Component {
   onGetAllChallengeStatus(e) {
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
     var $this = this;
     Events.trigger('hideLoader', true);
@@ -282,6 +282,7 @@ class RegisterOptionScene extends Component {
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
 
 //    onGetAllChallengeEventx = DeviceEventEmitter.addListener(
@@ -506,7 +507,10 @@ class RegisterOptionScene extends Component {
     //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
+    if(onUpdateChallengeStatusSubscription){
     onUpdateChallengeStatusSubscription.remove();
+      onUpdateChallengeStatusSubscription = null;
+    }
 
     console.log(res);
 
@@ -759,6 +763,11 @@ class RegisterOptionScene extends Component {
 //          'onUpdateChallengeStatus',
 //          this.onUpdateChallengeResponseStatus.bind(this)
 //        );
+        
+        if(onUpdateChallengeStatusSubscription){
+          onUpdateChallengeStatusSubscription.remove();
+          onUpdateChallengeStatusSubscription = null;
+        }
 //        
         onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
                                                                                            this.onUpdateChallengeStatus.bind(this));

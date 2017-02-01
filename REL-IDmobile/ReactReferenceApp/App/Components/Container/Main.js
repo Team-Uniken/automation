@@ -105,6 +105,7 @@ This method is called when the component will start to load
   componentWillMount() {
     if (onGetCredentialSubscriptions) {
       onGetCredentialSubscriptions.remove();
+      onGetCredentialSubscriptions = null;
     }
     onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
       this.onGetCredentials.bind.bind(this));

@@ -333,6 +333,7 @@ export default class NotificationMgmtScene extends Component {
     }
     if (onUpdateNotificationSubscription) {
       onUpdateNotificationSubscription.remove();
+      onUpdateNotificationSubscription = null;
     }
 //    onUpdateNotification = DeviceEventEmitter.addListener(
 //      'onUpdateNotification',
@@ -414,6 +415,10 @@ export default class NotificationMgmtScene extends Component {
   }
   componentWillUnmount() {
     Events.rm('showNotification', 'showNotification');
+    if (onUpdateNotificationSubscription) {
+      onUpdateNotificationSubscription.remove();
+      onUpdateNotificationSubscription = null;
+    }
   }
 
   onGetNotificationsDetails(e) {

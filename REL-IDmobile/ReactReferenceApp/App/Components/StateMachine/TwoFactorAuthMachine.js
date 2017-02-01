@@ -79,7 +79,6 @@ let currentIndex;
 //let subscriptions;
 let onGetAllChallengeStatusSubscription;
 let onCheckChallengeResponseSubscription;
-let onForgotPasswordSubscription;
 let onForgotPasswordStatusSubscription;
 let obj;
 let screenId;
@@ -159,6 +158,7 @@ class TwoFactorAuthMachine extends Component {
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
 
     //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
@@ -317,6 +317,7 @@ class TwoFactorAuthMachine extends Component {
   onForgotPasswordStatus(res) {
     if (onForgotPasswordStatusSubscription) {
       onForgotPasswordStatusSubscription.remove();
+      onForgotPasswordStatusSubscription = null;
     }
 
     //Calling onCheckChallengeResponseStatus as handling is same
@@ -505,8 +506,10 @@ class TwoFactorAuthMachine extends Component {
    * are provided in status else it navigates to Dashboard screen.
    */
   onGetAllChallengeStatus(e) {
+    
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
     var $this = this;
     Events.trigger('hideLoader', true);
@@ -808,6 +811,11 @@ class TwoFactorAuthMachine extends Component {
       //        'onForgotPasswordStatus',
       //        this.onForgotPasswordStatus
       //      );
+      
+      if(onForgotPasswordStatusSubscription){
+        onForgotPasswordStatusSubscription.remove();
+        onForgotPasswordStatusSubscription = null;
+      }
 
       onForgotPasswordStatusSubscription = onForgotPasswordStatusModuleEvt.addListener('onForgotPasswordStatus',
         this.onForgotPasswordStatus.bind(this));
