@@ -1,16 +1,33 @@
+
+/*
+ * Use to hide challenge screen and just show spinner.
+ */
+
 'use strict';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 
+/*
+ Required for this js
+ */
+import {AsyncStorage,  } from 'react-native';
+import Events from 'react-native-simple-events';
 
-import React, { Component } from 'react';
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
 import Loader from './Loader';
 import Main from '../Container/Main';
 
-import Events from 'react-native-simple-events';
-import { AppRegistry, Text, TouchableOpacity, View, AsyncStorage, TouchableHighlight,
-} from 'react-native';
-
+/*
+  INSTANCES
+ */
 let responseJson;
+
+
 class ScreenHider extends Component {
   constructor() {
     super();
@@ -18,11 +35,13 @@ class ScreenHider extends Component {
       open: false
     };
   }
-
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
     if (this.props.url.chlngJson.chlng_name == 'checkuser') {
       AsyncStorage.getItem("userId").then((value) => {
-
         if (value) {
           if (value == "empty") {
           } else {
@@ -35,7 +54,6 @@ class ScreenHider extends Component {
       }).done();
     }
     if (this.props.url.chlngJson.chlng_name == 'pass') {
-
       AsyncStorage.getItem("userId").then((value) => {
         if (value) {
           if (value == "empty") {
