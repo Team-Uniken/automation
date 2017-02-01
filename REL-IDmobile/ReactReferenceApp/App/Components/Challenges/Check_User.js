@@ -190,7 +190,7 @@ class UserLogin extends Component {
                          this.close();
                        }}>
             </Title>
-            <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+            <Text style={[Skin.layout0.top.icon]}>
               {Skin.icon.logo}
             </Text>
             <Text style={Skin.layout0.top.subtitle}>
@@ -223,21 +223,7 @@ class UserLogin extends Component {
   }
 }
 
-UserLogin.propTypes = {
-  url: PropTypes.Object,
-  navigator: PropTypes.Array,
-}
 
-UserLogin.getDefaultProps = {
-  url: {
-    chlngJson: {
-      chlng_resp: [{
-        challenge: 'ABCDEFG'
-      }]
-    }
-  },
-  navigator: []
-}
 
 
 module.exports = UserLogin;

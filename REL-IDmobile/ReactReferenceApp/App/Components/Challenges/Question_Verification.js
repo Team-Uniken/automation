@@ -148,7 +148,7 @@ export default class QuestionVerification extends Component {
               this.close();
             } }>
             </Title>
-            <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+            <Text style={[Skin.layout0.top.icon]}>
               {Skin.icon.logo}
             </Text>
             <Text style={Skin.layout0.top.subtitle}>Secret Question</Text>

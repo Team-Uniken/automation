@@ -83,7 +83,7 @@ class Welcome_Screen extends Component {
       barStyle={'default'} />
         <View style={Skin.layout0.top.container}>
        
-          <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+          <Text style={[Skin.layout0.top.icon]}>
             {Skin.icon.logo}
           </Text>
           <Text style={Skin.layout0.top.subtitle}>

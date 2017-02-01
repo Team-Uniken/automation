@@ -127,7 +127,7 @@ class PasswordVerification extends Component {
             </View>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout0.top.container}>
-                <Text style={[Skin.layout0.top.icon, Skin.font.ICON_FONT]}>
+                <Text style={[Skin.layout0.top.icon]}>
                   {Skin.icon.logo}
                 </Text>
                 <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
