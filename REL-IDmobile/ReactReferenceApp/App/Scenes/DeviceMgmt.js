@@ -1,33 +1,38 @@
+/**
+ * Device managment screen for edit device name and delete device(to make it temporary).
+ */
 'use strict';
 
-
-import React, { Component } from 'react';
-import ReactNative, { View, StyleSheet,
-  Text,
-  ListView,
-  TextInput,
-  //  Dimensions,
-  AsyncStorage,
-  DeviceEventEmitter,
-  TouchableHighlight,
-  TouchableOpacity,
-  Alert, } from 'react-native'
-
-import Skin from '../Skin';
-import Modal from 'react-native-simple-modal';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
+import ReactNative from 'react-native';
 
 /*
-  CALLED
-*/
+ Required for this js
+ */
+import Modal from 'react-native-simple-modal';
+import {View, StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, TouchableOpacity, Alert, } from 'react-native'
+import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+
+
+/*
+ Use in this js
+ */
 import Main from '../Components/Container/Main';
 import Constants from '../Components/Utils/Constants';
-import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
+import Skin from '../Skin';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-import { NativeModules, NativeEventEmitter } from 'react-native';
+
+
+/*
+  INSTANCES
+ */
 const onGetRegistredDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onUpdateDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-
-
 let obj;
 let onUpdateDeviceDetailsSubscription;
 let onGetRegistredDeviceDetailsSubscription;
@@ -40,7 +45,7 @@ const styles = StyleSheet.create({
     color: '#FFF'
   },
   rowFront: {
-    marginTop:8,
+    marginTop: 8,
     padding: 10,
     alignItems: 'flex-start',
     borderBottomColor: Skin.colors.DIVIDER_COLOR,
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   rowBack: {
-     marginTop:8,
+    marginTop: 8,
     alignItems: 'center',
     backgroundColor: '#DDD',
     flex: 1,
@@ -160,51 +165,46 @@ export default class DeviceMgmtScene extends Component {
     };
   }
 
-  /**
-   * Attaches listeners for the "get Devices" event and the "updated Device" evemt.
-   * These listeners are in global scope.
-   * @return {null}
-   */
+
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
-//    onGetDevice = DeviceEventEmitter.addListener(
-//      'onGetRegistredDeviceDetails',
-//      this.onGetRegistredDeviceDetails.bind(this)
-//    );
-//    onUpdateDevice = DeviceEventEmitter.addListener(
-//      'onUpdateDeviceDetails',
-//      this.onUpdateDeviceDetails.bind(this)
-//    );
-    if(onGetRegistredDeviceDetailsSubscription){
+    if (onGetRegistredDeviceDetailsSubscription) {
       onGetRegistredDeviceDetailsSubscription.remove();
       onGetRegistredDeviceDetailsSubscription = null;
     }
-    if(onUpdateDeviceDetailsSubscription){
+    if (onUpdateDeviceDetailsSubscription) {
       onUpdateDeviceDetailsSubscription.remove();
       onUpdateDeviceDetailsSubscription = null;
     }
-    
-    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',
-                                                                                       this.onGetRegistredDeviceDetails.bind(this));
-    onUpdateDeviceDetailsSubscription = onUpdateDeviceDetailsModuleEvt.addListener('onUpdateDeviceDetails',
-                                                                                       this.onUpdateDeviceDetails.bind(this));
-    
-  }
 
+    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',
+      this.onGetRegistredDeviceDetails.bind(this));
+    onUpdateDeviceDetailsSubscription = onUpdateDeviceDetailsModuleEvt.addListener('onUpdateDeviceDetails',
+      this.onUpdateDeviceDetails.bind(this));
+
+  }
+ /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+   */
   componentDidMount() {
-    if(Main.isConnected){
-    this.getRegisteredDeviceDetails();
-    }else{
-    
-    Alert.alert(
-                '',
-                'Please check your internet connection',
-                [
-                 { text: 'OK', onPress: () => this.props.navigator.pop(0) }
-                 ]
-                );
+    if (Main.isConnected) {
+      this.getRegisteredDeviceDetails();
+    } else {
+
+      Alert.alert(
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+        ]
+      );
     }
   }
-
+  //call getRegisteredDeviceDetails api.
   getRegisteredDeviceDetails() {
     AsyncStorage.getItem('userId').then((value) => {
       ReactRdna.getRegisteredDeviceDetails(value, (response) => {
@@ -221,12 +221,7 @@ export default class DeviceMgmtScene extends Component {
       });
     }).done();
   }
-
-  /**
-   * Parses the Device list when received from the async event in ComponentWIllMount
-   * @param  {object} e event response
-   * @return {null}
-   */
+  //callback of getRegisteredDeviceDetails api.
   onGetRegistredDeviceDetails(e) {
     console.log('----- onGetRegistredDeviceDetails');
     devicesResponse = e;
@@ -243,7 +238,7 @@ export default class DeviceMgmtScene extends Component {
       console.log('Something went wrong');
     }
   }
-
+  //callback of rdna updateDeviceDetails api.
   onUpdateDeviceDetails(e) {
     const res = JSON.parse(e.response);
     const statusCode = res.pArgs.response.StatusCode;
@@ -306,65 +301,65 @@ export default class DeviceMgmtScene extends Component {
   }
 
   deleteDevice(deviceHolder) {
-    
-    if(Main.isConnected){
+
+    if (Main.isConnected) {
       const device = deviceHolder.device;
       this.toggleDeviceStatus(device);
       console.log('------- old ' + deviceHolderList[deviceHolder.index].device
-                  .status + ' new ' + device.status);
+        .status + ' new ' + device.status);
       obj.setState({
-                   dataSource: deviceHolderList,
-                   });
-      
+        dataSource: deviceHolderList,
+      });
+
       this.updateDeviceDetails();
-    }else{
-      
+    } else {
+
       Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK'}
-                   ]
-                  );
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK' }
+        ]
+      );
     }
-    
+
   }
 
   isDeviceDeleted(device) {
     return device.status === Constants.DEVICE_DELETE;
   }
-
+  //call rdna updateDeviceDetails api.
   updateDeviceDetails() {
-    
-    if(Main.isConnected){
+
+    if (Main.isConnected) {
       console.log('----- DeviceMgmt.updateDeviceDetails');
       console.log('----- ----- devicesList: ' + JSON.stringify(devicesList));
       AsyncStorage.getItem('userId').then((value) => {
-                                          ReactRdna.updateDeviceDetails(value, JSON.stringify(devicesList), (response) => {
-                                                                        console.log('----- ----- AsyncStorage -> ReactRdna.updateDeviceDetails.response:');
-                                                                        console.log(response);
-                                                                        
-                                                                        if (response[0].error !== 0) {
-                                                                        console.log('----- ----- response is not 0');
-                                                                        if (devicesResponse !== undefined) {
-                                                                        console.log('----- ----- response is not 0');
-                                                                        // If error occurred reload last response
-                                                                        this.onGetRegistredDeviceDetails(devicesResponse);
-                                                                        }
-                                                                        }
-                                                                        });
-                                          }).done();
-    }else{
-      
+        ReactRdna.updateDeviceDetails(value, JSON.stringify(devicesList), (response) => {
+          console.log('----- ----- AsyncStorage -> ReactRdna.updateDeviceDetails.response:');
+          console.log(response);
+
+          if (response[0].error !== 0) {
+            console.log('----- ----- response is not 0');
+            if (devicesResponse !== undefined) {
+              console.log('----- ----- response is not 0');
+              // If error occurred reload last response
+              this.onGetRegistredDeviceDetails(devicesResponse);
+            }
+          }
+        });
+      }).done();
+    } else {
+
       Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK' }
-                   ]
-                  );
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK' }
+        ]
+      );
     }
-    
+
   }
 
   renderListViewData(devices) {
@@ -389,7 +384,7 @@ export default class DeviceMgmtScene extends Component {
     }
   }
 
-
+  //onTextchange method for devicename TextInput
   onChangeDeviceName(event) {
     this.setState({ inputDeviceName: event.nativeEvent.text });
     console.log('device name ' + event.nativeEvent.text);
@@ -441,7 +436,9 @@ export default class DeviceMgmtScene extends Component {
       </View>
     )
   }
-
+ /*
+    This method is used to render the componenet with all its element.
+  */
   renderRow(rowData, secId, rowId, rowMap) {
     const device = rowData.device;
     const devicename = device.devName;
@@ -479,7 +476,9 @@ export default class DeviceMgmtScene extends Component {
       </View>
     );
   }
-
+ /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <Main

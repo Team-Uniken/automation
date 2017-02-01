@@ -1,31 +1,33 @@
+/**
+ *  Show android native pattern view for set pattern or verify pattern.
+ */
+
 'use strict';
 
 /*
-  ALWAYS NEED
-*/
-import React from 'react';
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+
+/*
+ Required for this js
+ */
+import dismissKeyboard from 'dismissKeyboard';
+import {View, TouchableHighlight, Text, Platform, AsyncStorage, } from 'react-native'
+
+/*
+ Use in this js
+ */
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
-
 import PatternView from '../Components/PatternView';
-import dismissKeyboard from 'dismissKeyboard';
-
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-const {
-  View,
-  TouchableHighlight,
-  Text,
-  Platform,
-  AsyncStorage,
-} = ReactNative;
-
-const {
-  Component
-} = React;
-
+/*
+  INSTANCES
+ */
 const MAX_ATTEMPTS = 4;
 const MIN_DOTS = 4;
 
@@ -64,7 +66,10 @@ class PatternLock extends Component {
     }
     this.operationMsg = "";
   }
-
+/*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
     dismissKeyboard();
     if (this.mode === "verify") {
@@ -79,16 +84,21 @@ class PatternLock extends Component {
       }
     }
   }
-
+  //call on click of submit button.
   onSubmit() {
     this.refs["patternView"].getPatternString();
   }
-
+  /**
+   * callback of getPatternString return in result pattern and size.
+  */
   onGetPattern(result) {
     var pattern = result.pattern;
     var patternSize = result.size;
 
     if (!this.isEmpty(pattern)) {
+      /**
+       * in verify mode it perform decryptUserData
+       */
       if (this.mode == "verify") {
         this.currentPattern = pattern;
         try {
@@ -106,6 +116,9 @@ class PatternLock extends Component {
       }
 
       if (this.mode == "set") {
+           /**
+          * in set mode it perform encryptUserData against user.
+          */
         if (this.state.screen === "set") {
           if (patternSize >= MIN_DOTS) {
             this.currentPattern = pattern;
@@ -137,7 +150,9 @@ class PatternLock extends Component {
   }
 
 
-
+ /**
+   * callback on encryptDataPacket
+   */
   onDataEncrypted(status) {
     //alert(JSON.stringify(status));
     if (status.error == 0) {
@@ -152,7 +167,9 @@ class PatternLock extends Component {
       }
     }
   }
-
+/**
+ * callback on decryptDataPacket
+ */
   onDataDecrypted(status) {
     if (status.error == 0) {
       if (this.mode === "verify") {
@@ -161,28 +178,17 @@ class PatternLock extends Component {
           var userData = JSON.parse(userDataStr);
 
           if (userData.pattern === this.currentPattern) {
-            // alert("pattern matched");
             this.msg = "";
-            // this.setState({
-            //   invalidPattern:false
-            // });
-
             this.props.onUnlock(userData.userid, userData.password, this.props.data);
           }
           else {
             this.refs["patternView"].clearPattern();
             this.wrongAttempt();
-            // this.setState({
-            //    invalidPattern:true
-            // });
           }
         }
         catch (e) {
           this.refs["patternView"].clearPattern();
           this.wrongAttempt();
-          // this.setState({
-          //      invalidPattern:true
-          // });
         }
       }
     } else {
@@ -190,7 +196,9 @@ class PatternLock extends Component {
       this.wrongAttempt();
     }
   }
-
+/**
+   * perform encryptDataPacket 
+   */
   encryptUserData(userid, password, pattern) {
     var data = {
       "userid": userid,
@@ -202,15 +210,22 @@ class PatternLock extends Component {
 
     ReactRdna.encryptDataPacket(dataStr, pattern, this.onDataEncrypted);
   }
-
+  /**
+   * perform decryptDataPacket 
+   */
   decryptUserData(data, pattern) {
     ReactRdna.decryptDataPacket(data, pattern, this.onDataDecrypted);
   }
-
+ /**
+   * check string is empty or not.
+   */
   isEmpty(str) {
     return (!str || 0 === str.length);
   }
-
+  /**
+   * native method called when number of fail attempts ==4.
+   * and wait for 60 seconds.
+   */
   startTicker(duration, tickerFunction, tickerEndFunction) {
     var timeLeft = duration;
     var tickInterval, tickerTimeout;
@@ -234,7 +249,9 @@ class PatternLock extends Component {
 
     tickInterval = setInterval(tick, 1000);
   }
-
+ /**
+   * call if pattern is wrong.
+   */
   wrongAttempt() {
     if (this.state.attempts <= 1) {
       alert("Max wrong attempts reached, try again in 60 seconds");
@@ -272,37 +289,14 @@ class PatternLock extends Component {
       text: val
     });
   }
-
+ /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     var submitBtnText = "Submit";
     if (this.mode == "set" && this.state.screen == "set") {
       submitBtnText = "Continue";
     }
-
-    // if(this.state.invalidPattern == true){
-    //   this.msg = "Invalid Pattern";
-    // }
-
-    //<Text style={Skin.PatternLockStyle.errorMsg}>{this.msg}</Text>
-
-    //  <TouchableHighlight
-    //         onPress={this.onSubmit.bind(this)}
-    //         underlayColor={Skin.colors.REPPLE_COLOR}
-    //         style={Skin.PatternLockStyle.button}>
-    //         <Text style={Skin.activationStyle.buttontext}>
-    //           {submitBtnText}
-    //         </Text>
-    //       </TouchableHighlight>
-
-    // {this.mode === "set"?<TouchableHighlight
-    //          onPress={this.onSubmit.bind(this)}
-    //          underlayColor={Skin.colors.REPPLE_COLOR}
-    //          style={Skin.PatternLockStyle.button}>
-    //          <Text style={Skin.activationStyle.buttontext}>
-    //            {submitBtnText}
-    //          </Text>
-    //         </TouchableHighlight>:{}}
-
     if (Platform.OS == "android") {
       return (
         <MainActivation navigator={this.props.navigator} style={{ backgroundColor: '#ffffff' }} scroll={false}>

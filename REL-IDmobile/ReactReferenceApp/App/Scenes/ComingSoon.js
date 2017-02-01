@@ -1,31 +1,35 @@
+/**
+ * Just A simple text UI to show this feature is coming soon. 
+ */
 'use strict';
+
 /*
-    NEED
+ ALWAYS NEED
  */
 import ReactNative from 'react-native';
-import React from 'react';
-import Skin from '../Skin';
+import React, { Component, } from 'react';
 
 /*
-  CALLED
-*/
+ Required for this js
+ */
+import {View, Text, } from 'react-native'
+
+
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 
-/*
-  Instantiaions
-*/
-const {
-    View,
-    Text,
-} = ReactNative;
 
-const{Component}=React;
-
-export default class ComingSoonScene extends Component{
-    constructor(props){
+export default class ComingSoonScene extends Component {
+    constructor(props) {
         super(props);
         console.log(this.props);
     }
+    /*
+  This method is used to render the componenet with all its element.
+*/
     render() {
         return (
             <Main
@@ -34,33 +38,33 @@ export default class ComingSoonScene extends Component{
                     disabled: true,
                 }}
                 navBar={{
-                  title: this.props.title || 'Coming Soon',
-                  visible: true,
-                  tint: Skin.colors.TEXT_COLOR,
-                  left: {
-                    text: 'Back',
-                    icon: '',
-                    iconStyle: {},
-                    textStyle: {},
-                    handler: this.props.navigator.pop
-                  },
+                    title: this.props.title || 'Coming Soon',
+                    visible: true,
+                    tint: Skin.colors.TEXT_COLOR,
+                    left: {
+                        text: 'Back',
+                        icon: '',
+                        iconStyle: {},
+                        textStyle: {},
+                        handler: this.props.navigator.pop
+                    },
                 }}
                 bottomMenu={{
                     visible: false,
                     active: 3,
                 }}
                 navigator={this.props.navigator}
-            >   
-                <View 
+                >
+                <View
                     style={{
-                        flex:1,
-                        backgroundColor:Skin.colors.TEXT_COLOR,
+                        flex: 1,
+                        backgroundColor: Skin.colors.TEXT_COLOR,
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding:15,
+                        padding: 15,
                     }}
-                >
+                    >
                     <Text
                         style={{
                             textAlign: 'center',
@@ -70,7 +74,7 @@ export default class ComingSoonScene extends Component{
                             fontWeight: 'bold',
                             alignItems: 'center',
                         }}
-                    >
+                        >
                         {this.props.title} Feature Coming Soon!
                     </Text>
                 </View>

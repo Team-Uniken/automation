@@ -8,15 +8,12 @@ import React from 'react';
 console.disableYellowBox = true;
 
 // Main Scenes
-import AccountsScene from './App/Scenes/Accounts';
-import PayBillsScene from './App/Scenes/PayBills';
 import ContactScene from './App/Scenes/Contact';
 import DepositsScene from './App/Scenes/Deposits';
 import FindBranchScene from './App/Scenes/FindBranch';
 
 // Secondary Scenes
 import DeviceMgmtScene from './App/Scenes/DeviceMgmt';
-import AppointmentsScene from './App/Scenes/Appointments';
 import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
 import ComingSoonScene from './App/Scenes/ComingSoon';
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
@@ -54,8 +51,6 @@ import SetPassword from './App/Components/Challenges/SetPassword';
 import Register_Options from './App/Scenes/Register_Options';
 
 
-import Appointment from './App/Scenes/Appointment';
-import AddAppointment from './App/Scenes/AddAppointment';
 
 //import SecureChat from './App/Components/secure_chat/Navigation';
 import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';
@@ -115,12 +110,6 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'PayBills') {
-      return (<PayBillsScene
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
     } else if (id === 'Contact') {
       return (<ContactScene
         navigator={nav}
@@ -139,13 +128,6 @@ class ReactRefApp extends Component {
         url={route.url}
         title={route.title}
         rdna={route.DnaObject} />);
-    } else if (id === 'Appointments') {
-      return (<AppointmentsScene
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    // LOAD SCENES
     }else if (id === 'Welcome_Screen') {
       return (<Welcome_Screen
                 navigator={nav}
@@ -214,17 +196,7 @@ class ReactRefApp extends Component {
        } else if (id === 'SecureChat') {
        return (<SecureChat navigator={nav} />);
        */
-    } else if (id === 'Appointment') {
-      return (<Appointment
-        navigator={nav}
-        url={route.url}
-        title={route.title} />);
-    } else if (id === 'AddAppointment') {
-      return (<AddAppointment
-        navigator={nav}
-        url={route.url}
-        title={route.title} />);
-    } else if (id === 'ActivateNewDevice') {
+    }else if (id === 'ActivateNewDevice') {
       return (<ActivateNewDeviceScene
         navigator={nav}
         url={route.url}

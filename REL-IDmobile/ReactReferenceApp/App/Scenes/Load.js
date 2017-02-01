@@ -1,57 +1,46 @@
+/**
+ * this is a first screen after index.
+ * hear we do initialization and on it success we go to stateMachine which decide which challenge show first.
+ */
 'use strict';
 
 /*
  ALWAYS NEED
  */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import React from 'react';
-import Skin from '../Skin';
+
+/*
+ Required for this js
+ */
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
-import Main from '../Components/Container/Main';
+import TouchID from 'react-native-touch-id';
+import TouchId from 'react-native-smart-touch-id'
+var PushNotification = require('react-native-push-notification');
+import {Text, DeviceEventEmitter, View, NetInfo,Animated, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
+import { NativeModules, NativeEventEmitter } from 'react-native'
+
 
 /*
- CALLED
+ Use in this js
  */
-import TouchID from 'react-native-touch-id';
+import Skin from '../Skin';
+import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
-import { DeviceEventEmitter } from 'react-native';
 import Setting from '../Components/view/setting';
 import Version from '../Components/view/version';
-
+import Web from './Web';
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
-const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
-const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
-
-if (Config.ENV == 'sandp') {
-  var erelid = require("../../Connection_profiles/snp.json");
-  var welcome = require('../img/sandp.png')
-} else if (Config.ENV == 'nwd') {
-  var erelid = require("../../Connection_profiles/nwd.json");
-  var welcome = require('../img/nwd.png')
-} else if (Config.ENV == 'stock') {
-  var erelid = require("../../Connection_profiles/stock.json");
-  var welcome = require('../img/stock.png')
-} else if (Config.ENV == 'ubs') {
-  var erelid = require("../../Connection_profiles/ubs.json");
-  var welcome = require('../img/ubs.png')
-}
-
-
-//import erelid from '../../erelid.json';
-//import TouchId from 'react-native-smart-touch-id'
-import Web from './Web';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-var PushNotification = require('react-native-push-notification');
-//import Notification from 'react-native-system-notification';
-import { NativeModules, NativeEventEmitter } from 'react-native'
-const reason = 'Please validate your Touch Id';
-/*
- Instantiaions
- */
 
+
+
+/*
+  INSTANCES
+ */
+const reason = 'Please validate your Touch Id';
 let initSuc = false;
 let isRunAfterInteractions = false;
 let initCount = 0;
@@ -73,20 +62,38 @@ let onInitializeSubscription;
 let onPauseCompletedSubscription;
 let onResumeCompletedSubscription;
 
+const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
+/**
+ * Return flavour specific connectionProfile and load image.
+ */
+if (Config.ENV == 'sandp') {
+  var erelid = require("../../Connection_profiles/snp.json");
+  var welcome = require('../img/sandp.png')
+} else if (Config.ENV == 'nwd') {
+  var erelid = require("../../Connection_profiles/nwd.json");
+  var welcome = require('../img/nwd.png')
+} else if (Config.ENV == 'stock') {
+  var erelid = require("../../Connection_profiles/stock.json");
+  var welcome = require('../img/stock.png')
+} else if (Config.ENV == 'ubs') {
+  var erelid = require("../../Connection_profiles/ubs.json");
+  var welcome = require('../img/ubs.png')
+}
+
+
+
+
+
+//disable console.log
 console.log = function () { }
-
-const {Text, View, Animated, NetInfo, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } = ReactNative;
-
-const {Component} = React;
 
 BackAndroid.addEventListener('hardwareBackPress', function () {
   return true;
 });
 
-/*
- Class Load
- */
 
 class Load extends Component {
   constructor(props) {
@@ -106,11 +113,7 @@ class Load extends Component {
   openRoute(route) {
     this.props.navigator.push(route);
   }
-
-
-  //Push notification code
-
-
+  //use to clear twoFactorAuthMachine navigator
   closeStateMachine() {
     console.log('---------- closeStateMachine ');
     var allScreens = obj1.props.navigator.getCurrentRoutes(-1);
@@ -132,12 +135,13 @@ class Load extends Component {
       }
     });
   }
-
+ /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
-
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
-
     console.log('test logs');
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
@@ -146,16 +150,12 @@ class Load extends Component {
     } else {
       //Android push notification listeners to be added here.
     }
-
     NetInfo.isConnected.addEventListener('change', this._handleConnectivityChange.bind());
     NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
   }
-
-
   _handleConnectivityChange(isConnected) {
        Main.isConnected = isConnected;    
   }
-
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
@@ -170,7 +170,6 @@ class Load extends Component {
         gotNotification = false;
       }
     }
-
     if (gotNotification == false) {
       AlertIOS.alert(
         '',
@@ -181,11 +180,8 @@ class Load extends Component {
       );
     }
   }
-  //Push notification code Ends
-
-
+  //Call getNotifications api.
   getMyNotifications() {
-
     var recordCount = "0";
     var startIndex = "1";
     var enterpriseID = "";
@@ -208,15 +204,14 @@ class Load extends Component {
   }
 
 
-
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
-
     Obj = this;
-
     //push messgage adnorid configure starts
     if (Platform.OS === 'android') {
-
-
       PushNotification.configure({
         // (optional) Called when Token is generated (iOS and Android)
         onRegister: function (token) {
@@ -505,6 +500,10 @@ class Load extends Component {
     });
 
   }
+   /*
+    This is life cycle method of the react native component.
+    This method is called when app state get change like pause, resume
+  */
   _handleAppStateChange(currentAppState) {
     console.log('_handleAppStateChange');
     console.log(currentAppState);
@@ -543,104 +542,8 @@ class Load extends Component {
     }
   }
 
-
+//Perform RDNA.Initialize().
   doInitialize() {
-    this.newDoInitialize();
-    //    AsyncStorage.getItem("passwd").then((value) => {
-    //                                        if(value){
-    //                                        if(value === "empty"){
-    //                                        //PROCEED NORMAL WAY.
-    //                                        this.newDoInitialize();
-    //                                        }else{
-    //                                        savedUserName = value;
-    //                                        //SHOW FINGER PRINT ALERT AND PROCEED
-    //                                        if(Platform.OS === 'ios'){
-    //                                        console.log("ios touch");
-    //                                        this._verifyTouchIdSupport();
-    //                                        }else{
-    //                                        this.newDoInitialize();
-    //                                        };
-    ////
-    //                                        }
-    //                                        }else{
-    //                                        this.newDoInitialize();
-    //                                        }
-    //                                        }).done();
-  }
-  //  
-  //  _isSupported = () => {
-  //    TouchId.isSupported( (error) => {
-  //                        if (error) {
-  //                        Alert.alert('TouchId is not supported!')
-  //                        } else {
-  //                        this._trggerTouchId();
-  //                        }
-  //                        })
-  //  }
-  //  
-  //  _trggerTouchId = () => {
-  //    let description = 'Verify the existing mobile phone fingerprint using the home key'
-  //    //let title       //fallback button title will be default as 'Enter Password'(localized)
-  //    //let title = ""  //fallback button will be hidden
-  //    //fallback button title will be 'Verify Password'(unlocalized)
-  //    TouchId.verify( description, title, (error) => {
-  //                   if (error) {
-  //                   if(error.message == '-3') {
-  //                   //fallback button is pressed
-  //                   Alert.alert('errorCode: ' + error.message + ' verify failed, user wants to ' + title)
-  //                   }
-  //                   else {
-  //                   Alert.alert('errorCode: ' + error.message + ' verify failed')
-  //                   }
-  //                   } else {
-  //                   this.newDoInitialize();
-  //                   }
-  //                   })
-  //  }
-  //  
-  //  _verifyTouchIdSupport(){
-  //    TouchID.isSupported()
-  //    .then(supported => {
-  //          // Success code
-  //          console.log('TouchID is supported.');
-  //          this._verifyTouchId();
-  //          })
-  //    .catch(error => {
-  //           // Failure code
-  //           this.newDoInitialize()//normal way
-  //           console.log('TouchID is not supported.');
-  //           console.log(error);
-  //           });
-  //  }
-  //  _verifyTouchId(){
-  //    TouchID.authenticate(reason)
-  //    .then(success => {
-  //          // Success code
-  //          console.log('in verify touchId');
-  //          this.newDoInitialize();
-  //          })
-  //    .catch(error => {
-  //           console.log(error)
-  //           var er = error.name;
-  //           
-  //           if(er === LAErrorUserFallback){
-  //           console.log("user clicked password");
-  //                      fallbackAuth();
-  //           }else{
-  //           AlertIOS.alert(error.message);
-  //           }
-  //           });
-  //    
-  //  }
-  //  
-  //  fallbackAuth() {
-  //    alert("infallback");
-  //    console.log('in verify touchId fallback');
-  //    this.newDoInitialize();
-  //  }
-
-
-  newDoInitialize() {
     initSuc = false;
     isRunAfterInteractions = false;
     initCount = 0;
@@ -649,37 +552,28 @@ class Load extends Component {
     var jsonProxySettings = JSON.stringify(proxySettings);
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       console.log('Initialize RDNA - get Item CurrentConnectionProfile:');
-
       currentProfile = JSON.parse(currentProfile);
-
       let currentAgentInfo = currentProfile.RelId;
       let currentGatewayHost = currentProfile.Host;
       var currentGatewayPort = currentProfile.Port;
       if (Platform.OS === 'android') {
         currentGatewayPort = parseInt(currentGatewayPort);
       }
-      // if(Number.isInteger(currentGatewayPort)){
-      //   currentGatewayPort = Math.abs(currentGatewayPort);
-      // }else{
-      //   alert("Invalid gateway port");
-      //   return;
-      // }
       Main.gatewayHost = currentGatewayHost;
       Main.gatewayPort = currentGatewayPort;
       
       ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
-          // alert(response[0].error);
         } else {
           console.log('immediate response is' + response[0].error);
-          // alert(response[0].error);
         }
       })
     });
   }
 
 
+//callback of RDNA.initialize.
   onInitCompleted() {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
     if (isRunAfterInteractions) {
@@ -698,12 +592,9 @@ class Load extends Component {
       }
     }
   }
-
+//perform screen navigation.
   doNavigation() {
     console.log('doNavigation:');
-
-    //alert(Main.gotNotification);
-
     if (Main.gotNotification === true) {
       AsyncStorage.getItem("userId").then((value) => {
         if (value) {
@@ -764,11 +655,10 @@ class Load extends Component {
         }
       }).done();
     }
-
-
-
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     console.log('************ Load Render');
     console.log(this.props.navigator.state);

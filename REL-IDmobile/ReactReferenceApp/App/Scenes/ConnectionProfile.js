@@ -1,20 +1,38 @@
+/**
+ * import new connection profile or select existing profile for initialization.
+ */
 'use strict';
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+
+/*
+ Required for this js
+ */
 import Modal from 'react-native-simple-modal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackAndroid} from 'react-native'
+
+
+
+/*
+ Use in this js
+ */
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
-const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-const {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackAndroid} = ReactNative;
-const {Component} = React;
+/*
+  INSTANCES
+ */
 let CONNECTION_PROFILES_DATA = [];
 let CURRENT_CONNECTION_PROFILES_DATA = [];
-
 let obj;
+
+
 
 class ConnectionProfileScene extends Component {
 
@@ -29,15 +47,11 @@ class ConnectionProfileScene extends Component {
       }),
     };
   }
-
-  open() {
-    this.setState({
-      open: true
-    });
-  }
-
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
-
     BackAndroid.addEventListener('hardwareBackPress', function() {
       this.props.navigator.resetTo({
                 id: 'Load'
@@ -56,24 +70,25 @@ class ConnectionProfileScene extends Component {
       CURRENT_CONNECTION_PROFILES_DATA = JSON.parse(currentProfile);
       console.log(CURRENT_CONNECTION_PROFILES_DATA);
     });
-
-
   }
 
+
+//open import connection profile dialog.
   onImportPressed() {
-    this.open();
+    this.setState({
+      open: true
+    });
   }
-
+//Validate entered connection profile is valide or not.
   validateURL(textval) {
     var urlregex = /^(http|https):\/\/(([a-zA-Z0-9$\-_.+!*'(),;:&=]|%[0-9a-fA-F]{2})+@)?(((25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])){3})|localhost|([a-zA-Z0-9\-\u00C0-\u017F]+\.)+([a-zA-Z]{2,}))(:[0-9]+)?(\/(([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*(\/([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*)*)?(\?([a-zA-Z0-9$\-_.+!*'(),;:@&=\/?]|%[0-9a-fA-F]{2})*)?(\#([a-zA-Z0-9$\-_.+!*'(),;:@&=\/?]|%[0-9a-fA-F]{2})*)?)?$/;
     return urlregex.test(textval);
   }
-
+//check entered url is valid or not if it is valide than get connectionprofile from entered url and store it into database.
   checkURL() {
     const url = this.state.inputURL;
     if (url.length > 0) {
       if (this.validateURL(url)) {
-
         fetch(url)
           .then((response) => response.text())
           .then((text) => {
@@ -137,13 +152,15 @@ class ConnectionProfileScene extends Component {
       alert('Please enter url');
     }
   }
-
+  //onTextchange method for URLChange TextInput
   onURLChange(event) {
     var newstate = this.state;
     newstate.inputURL = event.nativeEvent.text;
     this.setState(newstate);
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   renderConnectionProfile(connectionprofile1) {
     var cpName = connectionprofile1.Name;
     if (CURRENT_CONNECTION_PROFILES_DATA.Name == connectionprofile1.Name) {
@@ -164,7 +181,6 @@ class ConnectionProfileScene extends Component {
           <Text style={Skin.customeStyle.div1}>
           </Text>
         </View>
-
       );
     } else {
       return (
@@ -198,6 +214,7 @@ class ConnectionProfileScene extends Component {
       );
     }
   }
+    //call when click on any connection profile row.
   onConnectionProfilePressed(connectionprofile1) {
     Alert.alert(
       'Message',
@@ -263,7 +280,9 @@ class ConnectionProfileScene extends Component {
       ]
     );
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     return (
       <Main
