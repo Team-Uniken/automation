@@ -389,7 +389,7 @@ class SelectLogin extends Component {
                 {Skin.text['0']['2'].prompt}
               </Text>
             </View>
-            <View style={height = 10}></View>
+            <View style={{height:10}}></View>
             <View style={Skin.layout0.bottom.container}>
               <GridView
                 style={{ flex: 1 }}

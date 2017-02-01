@@ -34,11 +34,12 @@ import RegisterOptionScene from './App/Components/PostLogin/Screen_1_4_registerO
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
-import Screen_0_1_welcome from './App/Components/Challenges/Screen_0_1_welcome';
-import Screen_0_2_selectlogin from './App/Components/Challenges/Screen_0_2_selectlogin';
-import Screen_1_1_register from './App/Components/Challenges/Screen_1_1_register';
-import Screen_1_2_activation from './App/Components/Challenges/Screen_1_2_activation';
-import Screen_1_3_setPassword from './App/Components/Challenges/Screen_1_3_setPassword';
+import Welcome_Screen from './App/Scenes/Welcome_Screen';                    // Screen (gives option to register / login)
+import Select_Login from './App/Scenes/Select_Login';            // Select login mode (password / pattern etc)
+import Self_Register from './App/Scenes/Self_Register';
+
+import Activation_Code from './App/Components/Challenges/Activation_Code';
+import SetPassword from './App/Components/Challenges/SetPassword';
 import Screen_1_4_registerOptions from './App/Components/Challenges/Screen_1_4_registerOptions';
 import Screen_3_1_deals from './App/Components/Dashboard/NWD/Screen_3_1_deals';
 import Screen_3_2_history from './App/Components/Dashboard/NWD/Screen_3_2_history';
@@ -114,7 +115,7 @@ class ReactRefApp extends Component {
     // id = 'QuestionSet';
     // id = 'QuestionVerification';
     // id = 'Contact';
-    // id = 'Screen_1_1_register'
+    // id = 'Self_Register'
     // id = 'Screen_1_2_activation'
     // id = 'Screen_1_4_registerOptions'
     // id = 'Screen_1_3_setPassword'
@@ -168,32 +169,32 @@ class ReactRefApp extends Component {
                 rdna={route.DnaObject} />);
 
     // LOAD SCENES
-    } else if (id === 'Screen_0_1_welcome') {
-      return (<Screen_0_1_welcome
+    } else if (id === 'Welcome_Screen') {
+      return (<Welcome_Screen
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_0_2_selectlogin') {
-      return (<Screen_0_2_selectlogin
+    } else if (id === 'Select_Login') {
+      return (<Select_Login
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_1_1_register') {
-      return (<Screen_1_1_register
+    } else if (id === 'Self_Register') {
+      return (<Self_Register
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_1_2_activation') {
-      return (<Screen_1_2_activation
+    } else if (id === 'Activation_Code') {
+      return (<Activation_Code
                 navigator={nav}
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_1_3_setPassword') {
-      return (<Screen_1_3_setPassword
+    } else if (id === 'SetPassword') {
+      return (<SetPassword
                 navigator={nav}
                 url={route.url}
                 title={route.title}
