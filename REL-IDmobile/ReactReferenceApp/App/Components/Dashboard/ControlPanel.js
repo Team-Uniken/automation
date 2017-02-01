@@ -121,6 +121,7 @@ class ControlPanel extends Component {
   onLogOff(e) {
     if (onLogOffSubscription) {
       onLogOffSubscription.remove();
+      onLogOffSubscription = null;
     }
 
     console.log('immediate response is' + e.response);
