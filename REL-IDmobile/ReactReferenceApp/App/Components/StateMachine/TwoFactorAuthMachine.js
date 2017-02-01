@@ -210,8 +210,10 @@ class TwoFactorAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if (onCheckChallengeResponseSubscription)
+    if (onCheckChallengeResponseSubscription){
       onCheckChallengeResponseSubscription.remove();
+      onCheckChallengeResponseSubscription = null;
+    }
     Events.rm('showNextChallenge', 'showNextChallenge');
     Events.rm('showPreviousChallenge', 'showPreviousChallenge');
     Events.rm('showCurrentChallenge', 'showCurrentChallenge');
@@ -897,6 +899,7 @@ class TwoFactorAuthMachine extends Component {
     if (Main.isConnected) {
       if (onCheckChallengeResponseSubscription) {
         onCheckChallengeResponseSubscription.remove();
+        onCheckChallengeResponseSubscription = null;
       }
       //      subscriptions = DeviceEventEmitter.addListener(
       //        'onCheckChallengeResponseStatus',
