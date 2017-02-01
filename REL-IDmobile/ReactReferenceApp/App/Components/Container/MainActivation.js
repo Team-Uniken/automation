@@ -26,7 +26,7 @@ import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Skin from '../../Skin';
 import Loader from '../Utils/Loader';
 import Main from './Main';
-var constant = require('../Constants');
+var constant =require('../Utils/Constants');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 import { NativeModules, NativeEventEmitter } from 'react-native';

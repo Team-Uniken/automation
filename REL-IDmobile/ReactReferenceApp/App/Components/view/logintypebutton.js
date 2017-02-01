@@ -1,10 +1,22 @@
+/**
+ *  return a custom button with text and icon depends on props.
+ */
 
-import React from 'react';
+'use strict';
+
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+/*
+ Required for this js
+ */
+import {Text, View, TouchableOpacity, } from 'react-native'
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
-
-const {Text, View, TouchableOpacity, } = ReactNative;
-const {Component} = React;
 
 class LoginTypeButton extends Component {
   render() {

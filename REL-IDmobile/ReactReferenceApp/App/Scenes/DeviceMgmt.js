@@ -20,7 +20,7 @@ import Modal from 'react-native-simple-modal';
   CALLED
 */
 import Main from '../Components/Container/Main';
-import Constants from '../Components/Constants';
+import Constants from '../Components/Utils/Constants';
 import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import { NativeModules, NativeEventEmitter } from 'react-native';

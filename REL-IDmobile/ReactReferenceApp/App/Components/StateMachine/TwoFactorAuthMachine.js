@@ -64,7 +64,7 @@ import SelectLogin from '../../Scenes/Select_Login';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
-import Constants from '../Constants';
+import Constants from '../Utils/Constants';
 import RegisterOption from '../../Scenes/Register_Options';
 import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';

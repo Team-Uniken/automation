@@ -1,10 +1,23 @@
+/*
+ *Custome TextInput component.
+ */
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+
+/*
+ Required for this js
+ */
+import {View, TextInput} from 'react-native';
+
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
 
-const {View, TextInput, Alert} = ReactNative;
-const {Component} = React;
 
 class Input extends Component {
   constructor(props) {
@@ -55,22 +68,3 @@ class Input extends Component {
 }
 
 module.exports = Input;
-/*
-<View 
-        //ref={this.props.ref}
-        style={this.state.hasFocus ?
-             { backgroundColor: '#00ffaa' } : { backgroundColor: '#0000aa' }}>
-        <TextInput
-          //autoCorrect={false}
-          //autoCapitalize={'none'}
-          keyboardType={this.props.keyboardType}
-          placeholder={this.props.placeholder}
-          placeholderTextColor={Skin.baseline.textinput.placeholderTextColor} 
-          returnKeyType={this.props.returnKeyType}
-          secureTextEntry={this.props.secureTextEntry}
-          //onChange={this.props.onChange}
-          //onFocus={()=>{this.setFocus(true)}}
-          //onBlur={this.setFocus(false).bind(this)}
-          />
-      </View>
-*/

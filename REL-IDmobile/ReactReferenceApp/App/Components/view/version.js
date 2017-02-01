@@ -1,11 +1,24 @@
+/*
+ *Custome  Component which show only app version.
+ *Visible in bottom Right corner.
+ */
 
-import React from 'react';
+/*
+ *ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
+
+/*
+ Required for this js
+ */
+import {Text, View, Platform, TouchableHighlight, } from 'react-native';
 import Config from 'react-native-config';
 
-const {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet} = ReactNative;
-const {Component} = React;
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 class Setting extends Component {
@@ -28,5 +41,4 @@ class Setting extends Component {
     );
   }
 }
-
 module.exports = Setting;

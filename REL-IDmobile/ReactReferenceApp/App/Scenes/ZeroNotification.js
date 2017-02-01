@@ -10,7 +10,7 @@ const onUpdateNotificationModuleEvt = new NativeEventEmitter(NativeModules.React
  CALLED
  */
 import Main from '../Components/Container/Main';
-import Constants from '../Components/Constants';
+import Constants from '../Components/Utils/Constants';
 import Events from 'react-native-simple-events';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const SCREEN_WIDTH = require('Dimensions').get('window').width;

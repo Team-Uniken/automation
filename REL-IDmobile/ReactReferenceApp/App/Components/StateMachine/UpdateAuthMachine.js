@@ -32,7 +32,7 @@ import ScreenHider from '../Utils/ScreenHider';
 import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
-import Constants from '../Constants';
+import Constants from '../Utils/Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 var Main = require('../Container/Main');
 

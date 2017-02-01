@@ -1,10 +1,22 @@
+/*
+ *Custome Button component.
+ */
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
 
-const {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet} = ReactNative;
-const {Component} = React;
+/*
+ Required for this js
+ */
+import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
 
 
 class Button extends Component {

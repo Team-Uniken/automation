@@ -1,3 +1,6 @@
+/*
+ *Constant file use to declare constants.
+ */
 module.exports = {
   CHLNG_VERIFICATION_MODE: 0,
   DEVICE_DELETE : "Delete",

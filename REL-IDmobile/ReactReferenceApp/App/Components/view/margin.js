@@ -1,37 +1,29 @@
+/*
+ *Custome Vertical margin component.
+ */
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+
+/*
+ Required for this js
+ */
+import {View, } from 'react-native';
+
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
-import Events from 'react-native-simple-events';
-import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-
-const {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  TouchableOpacity,
-  TextInput,
-  Slider,
-  ScrollView,
-} = ReactNative;
-const{Component} =  React;
-
-
-
-
 
 class Margin extends Component {
-
   render() {
     return (  
       <View style={{marginBottom:this.props.space}}/>
          );
   }
-
-
-
-
 }
 
 module.exports = Margin;

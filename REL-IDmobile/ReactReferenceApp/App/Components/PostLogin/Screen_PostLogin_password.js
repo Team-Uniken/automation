@@ -19,7 +19,7 @@ import TouchID from 'react-native-touch-id';
 
 import TouchId from 'react-native-smart-touch-id'
 const reason = 'Please validate your Touch Id';
-var constant = require('../Constants');
+var constant = require('../Utils/Constants');
 const dismissKeyboard = require('dismissKeyboard')
 
 import Button from '../view/button';

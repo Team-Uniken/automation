@@ -25,7 +25,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Skin from '../../Skin';
 import Main from '../Container/Main';
 import Web from '../../Scenes/Web';
-var constant = require('../Constants');
+var constant = require('../Utils/Constants');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 

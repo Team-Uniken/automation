@@ -13,7 +13,7 @@ import Button from '../view/button';
 import Input from '../view/input';
 import Title from '../view/title';
 
-const constant = require('../Constants');
+const constant = require('../Utils/Constants');
 let responseJson;
 let chlngJson;
 let nextChlngName;

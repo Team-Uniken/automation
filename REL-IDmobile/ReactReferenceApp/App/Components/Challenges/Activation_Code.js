@@ -24,7 +24,7 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
 import Skin from '../../Skin';
 import MainActivation from '../Container/MainActivation';
 import Main from '../Container/Main';
-var constant = require('../Constants');
+var constant = require('../Utils/Constants');
 
 /*
  Custome View
