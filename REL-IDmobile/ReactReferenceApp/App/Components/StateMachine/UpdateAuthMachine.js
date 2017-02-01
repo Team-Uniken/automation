@@ -69,7 +69,11 @@ class UpdateAuthMachine extends Component {
     this.onPostUpdate = this.onPostUpdate.bind(this);
     this.closeUpdateMachine = this.closeUpdateMachine.bind(this);
   }
-
+ /** 
+   *   This is life cycle method of the react native component.
+   *   This method is called when the component will start to load
+   * Setting the initial state of machine and registering events
+  */
   componentWillMount() {
     obj = this;
     currentIndex = 0;
@@ -87,14 +91,25 @@ class UpdateAuthMachine extends Component {
     if(onUpdateChallengeStatusSubscription){
       onUpdateChallengeStatusSubscription.remove();
     }
-//    subscriptions = DeviceEventEmitter.addListener(
-//      'onUpdateChallengeStatus',
-//      this.onUpdateChallengeResponseStatus.bind(this)
-//    );
     onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
                                                                                        this.onUpdateChallengeStatus.bind(this));
     Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
     Events.on('closeUpdateMachine', 'closeUpdateMachine', this.closeUpdateMachine);
+  }
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+    Setting the initial screen to UserLogin
+  */
+  componentDidMount() {
+    screenId = 'Main';
+    // this.props.screenId;
+    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+  }
+  //Printing the logs of unmount.
+  componentWillUnmount() {
+    console.log('----- UpdateAuthMachine unmounted');
   }
 
   onPostUpdate(){
@@ -109,39 +124,9 @@ class UpdateAuthMachine extends Component {
       onUpdateChallengeStatusSubscription.remove();
     }
   }
-
-  componentDidMount() {
-    screenId = 'Main';
-    // this.props.screenId;
-    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
-  }
-
-  componentWillUnmount() {
-    console.log('----- UpdateAuthMachine unmounted');
-  }
-
-  onErrorOccured(response) {
-    console.log("-------- Error occurred ");
-    if (response.ResponseData) {
-      let chlngJson = response.ResponseData;
-      console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
-      let nextChlngName = chlngJson.chlng[0].chlng_name;
-      if (chlngJson != null) {
-        console.log('UpdateAuthMachine - onErrorOccured - chlngJson != null');
-        //obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-        obj.props.navigator.push({
-          id: 'UpdateMachine',
-          title: nextChlngName,
-          url: {
-            chlngJson,
-            screenId: nextChlngName,
-          },
-        });
-      }
-    }
-  }
-
+ /*
+    This is method is callback method, it is called to give resposne of updateChallenges call of RDNA.
+  */
   onUpdateChallengeStatus(e) {
     const res = JSON.parse(e.response);
 
@@ -236,25 +221,12 @@ class UpdateAuthMachine extends Component {
       alert('Internal system error occurred.' + res.errCode);
     }
   }
-
-
   /**
-   public static final String CHLNG_CHECK_USER       = "checkuser";
-   public static final String CHLNG_ACTIVATION_CODE  = "actcode";
-   public static final String CHLNG_SEC_QA           = "secqa";
-   public static final String CHLNG_PASS             = "pass";
-   public static final String CHLNG_DEV_BIND         = "devbind";
-   public static final String CHLNG_DEV_NAME         = "devname";
-   public static final String CHLNG_OTP              = "otp";
-   public static final String CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
-   **/
-
-
+   * This method is called to show next challenge in challenge array on UI.
+   * This method can also be called by triggering showNextChallenge event
+   */
   showNextChallenge(args) {
-
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
-    // alert(JSON.stringify(args));
-
     const i = challengeJsonArr.indexOf(currentIndex);
     challengeJsonArr[i] = args.response;
     currentIndex++;
@@ -356,15 +328,21 @@ class UpdateAuthMachine extends Component {
         />
     );
   }
-
+ /**
+   * Returns true if next challenge exist based on currentIndex, else returns false 
+   */
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
-
+ /**
+   * This method pops the current screen and decrements the currentIndex,
+   */
   hasPreviousChallenge() {
     return null;
   }
-
+ /**
+   * This method pops the current screen and decrements the currentIndex,
+   */
   showPreviousChallenge() {
     console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
@@ -373,27 +351,17 @@ class UpdateAuthMachine extends Component {
     }
   }
 
-  showCurrentChallenge() {
-
-  }
-
-  start(json, nav) {
-    challengeJson = json;
-    currentIndex = 0;
-  }
-
-  stop() {
-
-  }
-
+  /**
+     * Returns current challenge based on currentIndex.
+     */
   getCurrentChallenge() {
     return challengeJsonArr[currentIndex];
   }
 
-  getTotalChallenges() {
-
-  }
-
+/**
+   * This method is called by UpdateAuthMachine to submit the challenges with responses.
+   * It calls updateChallenges of Native Bridge which inturn calls updateChallenges of RDNA. 
+   */
   callUpdateChallenge() {
     if(Main.isConnected){
 

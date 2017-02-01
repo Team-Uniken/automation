@@ -80,7 +80,11 @@ class PostLoginAuthMachine extends Component {
     this.stateNavigator = null;
     this.showNextChallenge = this.showNextChallenge.bind(this);
   }
-
+  /** 
+   *   This is life cycle method of the react native component.
+   *   This method is called when the component will start to load
+   * Setting the initial state of machine and registering events
+  */
   componentWillMount() {
     obj = this;
     currentIndex = 0;
@@ -96,11 +100,6 @@ class PostLoginAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
-
-//    subscriptions = DeviceEventEmitter.addListener(
-//      'onCheckChallengeResponseStatus',
-//      this.onCheckChallengeResponseStatus.bind(this)
-//    );
      onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
                                                                                  this.onCheckChallengeResponseStatus.bind(this)
                                                                                  );
@@ -108,47 +107,27 @@ class PostLoginAuthMachine extends Component {
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
     }
-
-//    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-//      'onGetAllChallengeStatus',
-//      this.onGetAllChallengeStatus.bind(this)
-//    );
-
      onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
                                                                                         this.onGetAllChallengeStatus.bind(this));
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
-
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+    Setting the initial screen to UserLogin
+  */
   componentDidMount() {
     screenId = 'UserLogin';
   }
-
+  //Printing the logs of unmount.
   componentWillUnmount() {
     console.log('----- PostLoginAuthMachine unmounted');
   }
 
-  onErrorOccured(response) {
-    console.log("-------- Error occurred ");
-    if (response.ResponseData) {
-      let chlngJson = response.ResponseData;
-      console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
-      let nextChlngName = chlngJson.chlng[0].chlng_name;
-      if (chlngJson != null) {
-        console.log('PostLoginAuthMachine - onErrorOccured - chlngJson != null');
-        //obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-        obj.props.navigator.push({
-          id: 'PostLoginAuthMachine',
-          title: nextChlngName,
-          url: {
-            chlngJson,
-            screenId: nextChlngName,
-          },
-        });
-      }
-    }
-  }
-
+  /*
+      This is method is callback method, it is called to give resposne of checkChallenge call of RDNA.
+    */
   onCheckChallengeResponseStatus(e) {
     const res = JSON.parse(e.response);
     console.log("onCheckChallengeResponse ----- hide loader");
@@ -228,22 +207,11 @@ class PostLoginAuthMachine extends Component {
       alert('Internal system error occurred.' + res.errCode);
     }
   }
-
-
   /**
-   public static final String CHLNG_CHECK_USER       = "checkuser";
-   public static final String CHLNG_ACTIVATION_CODE  = "actcode";
-   public static final String CHLNG_SEC_QA           = "secqa";
-   public static final String CHLNG_PASS             = "pass";
-   public static final String CHLNG_DEV_BIND         = "devbind";
-   public static final String CHLNG_DEV_NAME         = "devname";
-   public static final String CHLNG_OTP              = "otp";
-   public static final String CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
-   **/
-
-
+     * This method is called to show next challenge in challenge array on UI.
+     * This method can also be called by triggering showNextChallenge event
+     */
   showNextChallenge(args) {
-
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
     // alert("response = "+ JSON.stringify(args));
@@ -342,15 +310,15 @@ class PostLoginAuthMachine extends Component {
         />
     );
   }
-
+/**
+    * Returns true if next challenge exist based on currentIndex, else returns false 
+    */
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
-
-  hasPreviousChallenge() {
-    return null;
-  }
-
+  /**
+   * This method pops the current screen and decrements the currentIndex,
+   */
   showPreviousChallenge() {
     console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
@@ -359,27 +327,19 @@ class PostLoginAuthMachine extends Component {
     }
   }
 
-  showCurrentChallenge() {
-
-  }
-
-  start(json, nav) {
-    challengeJson = json;
-    currentIndex = 0;
-  }
-
-  stop() {
-
-  }
-
+ /**
+       * Returns current challenge based on currentIndex.
+       */
   getCurrentChallenge() {
     return challengeJsonArr[currentIndex];
   }
 
-  getTotalChallenges() {
-
-  }
-
+/**
+    * This is method is callback method, it is called to give resposne of getAllChallenges call of RDNA.
+    * The status provides all challenges that can be updated by calling updateChallenge API.
+    * This method parses the response and shows RegisterOption screen (i.e Registration screen for alternative login options) if challeges 
+    * are provided in status else it navigates to Dashboard screen.
+    */
   onGetAllChallengeStatus(e) {
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
@@ -427,7 +387,7 @@ class PostLoginAuthMachine extends Component {
     }
     
   }
-
+//get perticular challenge by challege name from challege array.
   getChallengesByName(chlngName) {
     challengeName = chlngName;
     Events.trigger('showLoader', true);
@@ -441,9 +401,11 @@ class PostLoginAuthMachine extends Component {
       })
     }).done();
   }
-
+ /**
+   * This method is called by TwoFactorAuthMachine to submit the challenges with responses.
+   * It calls checkChallenge of Native Bridge which inturn calls checkChallenge of RDNA. 
+   */
   callCheckChallenge() {
-    
      if(Main.isConnected){
 
     console.log("onCheckChallengeResponse ----- show loader");

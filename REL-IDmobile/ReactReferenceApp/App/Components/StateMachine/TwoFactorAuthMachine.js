@@ -1,3 +1,31 @@
+/** This class handles the Two Factor Authentication flow , hence TwoFactorAuthMachine.
+    It handles the below listed flows :
+      1)Activation
+      2)Normal Login
+      3)Secondary Device Login
+      4)Forgot Password
+    The main responsiblity of this class is to navigate to screens, 
+    doing appropriate operation based on status and error codes returned in async callbacks,
+    navigating the UI screens based on challenges, mode(normal,forgotPassowrd) and challengeOperations
+    This class exposes some important Events , these events triggers the new flow or ends the flow based on use, please see the list below: 
+       1)showNextChallenge - This event is triggered to show next challenge in challenge array on UI.
+       2)showPreviousChallenge - This event is triggered to show previous challenge in challenge array on UI.
+       3)showCurrentChallenge - This event is triggered to show current challenge (current challenge is detemined by currentIndex)
+                                in challenge array on UI.
+       4)resetChallenge - This event is triggered to reset the state of RDNA, this is triggered when you want 
+                          to start the new flow without ending the current flow properly i.e when you get error. 
+       5)forgotPassowrd - This event triggers the forgot password flow.
+       6)onPostForgotPassword - This is event is triggered by TwoFactorAuthMachine when forgot password flow finishes.
+       7)finishForgotPasswordFlow -  This event should be triggered when you are done with post operations (e.g update data, remove old data) of forgotPassoword flow to 
+                                     allow TwoFactorAuthMachine to do cleanup and redirect to DashBoard. If onPostForgotPassword event is overriden then call this 
+                                     event explicitly. 
+    There are also some async callback methods which are called from Native Bridge through EventsEmitters, below is the list of callbacks:
+       1)onCheckChallengeResponseStatus - This is method is called to give resposne of checkChallenge call of RDNA. 
+       2)onForgotPasswordStatus - This is method is called to give resposne of forgotPassoword call of RDNA. 
+       3)onGetAllChallengeStatus - This is method is called to give resposne of getAllChallenges call of RDNA. 
+**/
+
+
 'use strict';
 
 /*
@@ -77,35 +105,6 @@ const onCheckChallengeResponseStatusModuleEvt = new NativeEventEmitter(NativeMod
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onForgotPasswordStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
-/** This class handles the Two Factor Authentication flow , hence TwoFactorAuthMachine.
-    It handles the below listed flows :
-      1)Activation
-      2)Normal Login
-      3)Secondary Device Login
-      4)Forgot Password
-
-    The main responsiblity of this class is to manage challenges, 
-    doing appropriate operation based on status and error codes returned in async callbacks,
-    navigating the UI screens based on challenges, mode(normal,forgotPassowrd) and challengeOperations
-
-    This class exposes some important Events , these events triggers the new flow or ends the flow based on use, please see the list below: 
-       1)showNextChallenge - This event is triggered to show next challenge in challenge array on UI.
-       2)showPreviousChallenge - This event is triggered to show previous challenge in challenge array on UI.
-       3)showCurrentChallenge - This event is triggered to show current challenge (current challenge is detemined by currentIndex)
-                                in challenge array on UI.
-       4)resetChallenge - This event is triggered to reset the state of RDNA, this is triggered when you want 
-                          to start the new flow without ending the current flow properly i.e when you get error. 
-       5)forgotPassowrd - This event triggers the forgot password flow.
-       6)onPostForgotPassword - This is event is triggered by TwoFactorAuthMachine when forgot password flow finishes.
-       7)finishForgotPasswordFlow -  This event should be triggered when you are done with post operations (e.g update data, remove old data) of forgotPassoword flow to 
-                                     allow TwoFactorAuthMachine to do cleanup and redirect to DashBoard. If onPostForgotPassword event is overriden then call this 
-                                     event explicitly. 
-
-    There are also some async callback methods which are called from Native Bridge through EventsEmitters, below is the list of callbacks:
-       1)onCheckChallengeResponseStatus - This is method is called to give resposne of checkChallenge call of RDNA. 
-       2)onForgotPasswordStatus - This is method is called to give resposne of forgotPassoword call of RDNA. 
-       3)onGetAllChallengeStatus - This is method is called to give resposne of getAllChallenges call of RDNA. 
-**/
 class TwoFactorAuthMachine extends Component {
 
   constructor(props) {
@@ -126,7 +125,12 @@ class TwoFactorAuthMachine extends Component {
     this.showNextChallenge = this.showNextChallenge.bind(this);
     this.resetChallenge = this.resetChallenge.bind(this);
   }
-  //Setting the initial state of machine and registering events
+
+  /** 
+   *   This is life cycle method of the react native component.
+   *   This method is called when the component will start to load
+   * Setting the initial state of machine and registering events
+  */
   componentWillMount() {
     obj = this;
     if (Platform.OS === 'ios') {
@@ -165,7 +169,11 @@ class TwoFactorAuthMachine extends Component {
       this.onGetAllChallengeStatus.bind(this));
   }
 
-  //Setting the initial screen to UserLogin
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+    Setting the initial screen to UserLogin
+  */
   componentDidMount() {
     screenId = 'UserLogin';// this.props.screenId;
   }
@@ -173,30 +181,6 @@ class TwoFactorAuthMachine extends Component {
   //Printing the logs of unmount.
   componentWillUnmount() {
     console.log('----- TwoFactorAuthMachine unmounted');
-  }
-
-
-  //Not used 
-  //Todo: Confirm that it is not used and remove.
-  onErrorOccured(response) {
-    console.log("-------- Error occurred ");
-    if (response.ResponseData) {
-      let chlngJson = response.ResponseData;
-      console.log("-------- Error occurred JSON " + JSON.stringify(chlngJson));
-      let nextChlngName = chlngJson.chlng[0].chlng_name;
-      if (chlngJson != null) {
-        console.log('TwoFactorAuthMachine - onErrorOccured - chlngJson != null');
-        //obj.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-        obj.props.navigator.push({
-          id: 'Machine',
-          title: nextChlngName,
-          url: {
-            chlngJson,
-            screenId: nextChlngName,
-          },
-        });
-      }
-    }
   }
 
   /*
@@ -210,7 +194,7 @@ class TwoFactorAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if (onCheckChallengeResponseSubscription){
+    if (onCheckChallengeResponseSubscription) {
       onCheckChallengeResponseSubscription.remove();
       onCheckChallengeResponseSubscription = null;
     }
@@ -237,7 +221,7 @@ class TwoFactorAuthMachine extends Component {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
             Web.proxy = pPort;
           }
-          
+
           if (Constants.USER_T0 === 'YES') {
             AsyncStorage.getItem('userId').then((value) => {
               Events.trigger('showLoader', true);
@@ -339,19 +323,6 @@ class TwoFactorAuthMachine extends Component {
     this.onCheckChallengeResponseStatus(res);
   }
 
-
-  /**
-   public static final String CHLNG_CHECK_USER       = "checkuser";
-   public static final String CHLNG_ACTIVATION_CODE  = "actcode";
-   public static final String CHLNG_SEC_QA           = "secqa";
-   public static final String CHLNG_PASS             = "pass";
-   public static final String CHLNG_DEV_BIND         = "devbind";
-   public static final String CHLNG_DEV_NAME         = "devname";
-   public static final String CHLNG_OTP              = "otp";
-   public static final String CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
-   **/
-
-
   /**
    * This method searches the  tbacred challenge in challengeJsonArr and returns it.
    */
@@ -360,7 +331,6 @@ class TwoFactorAuthMachine extends Component {
       if (challengeJsonArr[i].chlng_name === 'tbacred')
         return challengeJsonArr[i];
     }
-
     return null;
   }
 
@@ -586,23 +556,6 @@ class TwoFactorAuthMachine extends Component {
             this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
           });
         }
-
-        //        //var arrChlng = chlngJson.chlng;
-        //        var selectedChlng;
-        //        var status = 0;
-        //        for(var i = 0; i < chlngJson.chlng.length; i++){
-        //          var chlng = chlngJson.chlng[i];
-        //          if(chlng.chlng_name === challengeName){
-        //
-        //          }else{
-        //            chlngJson.chlng.splice(i, 1);
-        //            i--;
-        //          }
-        //        }
-        //
-        //        const nextChlngName = chlngJson.chlng[0].chlng_name;
-        //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-
       } else {
         //Removing user preference if user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
@@ -766,21 +719,7 @@ class TwoFactorAuthMachine extends Component {
       currentIndex--;
       obj.stateNavigator.pop();
     } else {
-      //      var chlngJson;
-      //      chlngJson = saveChallengeJson;
-      //      const nextChlngName = chlngJson.chlng[0].chlng_name;
-      //        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-      //        //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-      //         obj.stateNavigator.push({
-      //          id:nextChlngName,
-      //          title: nextChlngName,
-      //          url: {
-      //            chlngJson,
-      //            screenId: nextChlngName,
-      //          },
-      //        });
-
-      obj.resetChallenge();
+        obj.resetChallenge();
     }
   }
 
