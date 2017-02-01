@@ -19,7 +19,7 @@ import SelfRegister from '../../Scenes/Self_Register';
 import Activation from '../Challenges/Activation_Code';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
-import UpdatePasswordSet from '../Challenges/Screen_Update_Password';
+import Forgot_Password from '../Challenges/Forgot_Password';
 import Otp from '../Challenges/Activation_Code';
 import QuestionSet from '../Challenges/SetQuestion';
 import QuestionVerification from '../Challenges/Question_Verification';
@@ -27,7 +27,7 @@ import UserLogin from '../Challenges/Check_User';
 import DeviceBinding from '../Challenges/Device_Binding';
 import DeviceName from '../Challenges/Device_Name';
 import PasswordVerification from '../Challenges/Password_Verification';
-import PatternLock from '../Challenges/Screen_PatternLock';
+import PatternLock from '../../Scenes/Screen_PatternLock';
 import ScreenHider from '../Utils/ScreenHider';
 import SelectLogin from '../../Scenes/Select_Login';
 
@@ -37,7 +37,7 @@ import buildStyleInterpolator from 'buildStyleInterpolator';
 import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Constants';
-import RegisterOption from '../Challenges/Screen_1_4_registerOptions';
+import RegisterOption from '../../Scenes/Register_Options';
 import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';
 import { NativeModules, NativeEventEmitter } from 'react-native';
@@ -649,7 +649,7 @@ class TwoFactorAuthMachine extends Component {
         return (<SelectLogin navigator={nav} url={route.url} title={route.title} tbacred ={tbacredChallenge}/>);
       } else {
         if (this.mode === "forgotPassword") {
-          return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
+          return (<Forgot_Password navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
         }
 
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);

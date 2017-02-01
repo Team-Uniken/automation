@@ -1,49 +1,45 @@
+/**
+ *  Allow you to set new password. 
+ */
 'use strict';
 
 /*
  ALWAYS NEED
  */
-import React from 'react';
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
-import Main from '../Container/Main';
+
 /*
- CALLED
+ Required for this js
  */
 import Events from 'react-native-simple-events';
-import MainActivation from '../Container/MainActivation';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, } from 'react-native'
+import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 
-import Button from '../view/button';
-import Margin from '../view/margin';
-import Input from '../view/input';
-import Title from '../view/title';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
+import MainActivation from '../Container/MainActivation';
+import Main from '../Container/Main';
 
 /*
- Instantiaions
+ Custome View
  */
-const {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  InteractionManager,
-  AsyncStorage,
-  StatusBar,
-  Platform,
-  ScrollView,
-  BackAndroid,
-} = ReactNative;
+import Button from '../view/button';
+import Input from '../view/input';
+import Title from '../view/title';
 
-const {Component} = React;
-
+/*
+  INSTANCES
+ */
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
 var obj;
 
-export default class UpdatePasswordSet extends Component {
+
+export default class ForgatePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,45 +54,13 @@ export default class UpdatePasswordSet extends Component {
     this.setPassword = this.setPassword.bind(this);
     this.onPatternClose = this.onPatternClose.bind(this);
     this.onPostForgotPassword = this.onPostForgotPassword.bind(this);
-    /*
-     this._props = {
-     url: {
-     chlngJson: {
-     chlng_idx: 1,
-     sub_challenge_index: 0,
-     chlng_name: 'pass',
-     chlng_type: 1,
-     challengeOperation: 1,
-     chlng_prompt: [[]],
-     chlng_info: [
-     {
-     key: 'Response label',
-     value: 'Password',
-     }, {
-     key: 'description',
-     value: 'Enter password of length 8-10 characters',
-     },
-     ],
-     chlng_resp: [
-     {
-     "challenge":"password",
-     "response":"",
-     }
-     ],
-     challenge_response_policy: [],
-     chlng_response_validation: false,
-     attempts_left: 3,
-     },
-     chlngsCount: 1,
-     currentIndex: 1,
-     },
-     };
-     */
   }
-
+ /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
-    
-    obj = this;
+      obj = this;
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
@@ -115,18 +79,27 @@ export default class UpdatePasswordSet extends Component {
 
      Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
   }
-
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.close);
+  }
+  //To check password policy
   validatePassword(textval) {
     // var passwordregex = /^[0-9]/;
     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
-
+  /*
+    onTextchange method for Password TextInput
+  */
   onPasswordChange(event) {
     this.setState({ password: event.nativeEvent.text.trim() });
     this.state.password = event.nativeEvent.text.trim();
   }
-
+  /*onTextchange method for confirm password TextInput  */
   onConfirmPasswordChange(event) {
     this.setState({ cPassword: event.nativeEvent.text.trim() });
     this.state.cPassword = event.nativeEvent.text.trim();
@@ -160,11 +133,13 @@ export default class UpdatePasswordSet extends Component {
       }
     }).done();
   }
-
+/*
+    This method is used to get the users entered paswword and confirmPassword to check both are same,
+     and submit the same as a challenge response.
+  */
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
-
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
@@ -189,13 +164,18 @@ export default class UpdatePasswordSet extends Component {
     }
   }
 
+  /*
+    This method is used to return the tittle of Submit/Next button.
+  */
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'Continue';
   }
-
+  /*
+    This method is used to handle the cancel button click or back button.
+  */
   close() {
     if (this.props.mode === "forgotPassword") {
       Events.trigger('resetChallenge',null);
@@ -206,7 +186,9 @@ export default class UpdatePasswordSet extends Component {
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
-
+ /**
+   * Store encrypted password against user for ios. 
+  */
   encrypytPasswdiOS() {
 
     if (Platform.OS === 'ios') {
@@ -229,11 +211,9 @@ export default class UpdatePasswordSet extends Component {
       }).done();
     }
   }
-
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close);
-  }
-
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <MainActivation>
@@ -308,4 +288,4 @@ export default class UpdatePasswordSet extends Component {
   }
 }
 
-module.exports = UpdatePasswordSet;
+module.exports = ForgatePassword;

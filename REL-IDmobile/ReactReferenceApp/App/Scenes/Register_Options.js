@@ -1,38 +1,50 @@
+/*
+ *Provide checkbox for nexttime login like with facebook, pattern, touchid.
+ defaultLogin, rememberuser etc.
+ */
 
-
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
+
+/*
+ Required for this js
+ */
+import {Text,View,ScrollView,StatusBar,DeviceEventEmitter,AsyncStorage,Alert,AlertIOS,Platform,BackAndroid,} from 'react-native';
 import Events from 'react-native-simple-events';
-//import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-import Title from '../view/title';
-import Button from '../view/button';
-import Checkbox from '../view/checkbox';
-import Input from '../view/input';
-import Margin from '../view/margin';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
-import MainActivation from '../Container/MainActivation';
 import ModalPicker from 'react-native-modal-picker'
-import Main from '../Container/Main';
 import { NativeModules, NativeEventEmitter } from 'react-native';
-const errors = {
-  "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
-  "LAErrorUserCancel": "Authentication was canceled by the user—for example, the user tapped Cancel in the dialog.",
-  "LAErrorUserFallback": "Authentication was canceled because the user tapped the fallback button (Enter Password).",
-  "LAErrorSystemCancel": "Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up.",
-  "LAErrorPasscodeNotSet": "Authentication could not start because the passcode is not set on the device.",
-  "LAErrorTouchIDNotAvailable": "Authentication could not start because Touch ID is not available on the device",
-  "LAErrorTouchIDNotEnrolled": "Authentication could not start because Touch ID has no enrolled fingers.",
-  "RCTTouchIDUnknownError": "Could not authenticate for an unknown reason.",
-  "RCTTouchIDNotSupported": "Device does not support Touch ID."
-};
 
-let subscriptions;
-
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
+import MainActivation from '../Components/Container/MainActivation';
+import Main from '../Components/Container/Main';
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+
+/*
+ Custome View
+ */
+import Title from '../Components/view/title';
+import Button from '../Components/view/button';
+import Checkbox from '../Components/view/checkbox';
+import Input from '../Components/view/input';
+import Margin from '../Components/view/margin';
+
+/*
+  INSTANCES
+ */
+
+let subscriptions;
+
+
 //Facebook login code
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -42,22 +54,6 @@ const {
   GraphRequestManager,
   AccessToken
 } = FBSDK;
-
-
-const {
-  Text,
-  View,
-  ScrollView,
-  StatusBar,
-  DeviceEventEmitter,
-  AsyncStorage,
-  Alert,
-  AlertIOS,
-  Platform,
-  BackAndroid,
-} = ReactNative;
-const {Component} = React;
-
 var obj;
 let onUpdateChallengeStatusSubscription;
 class Register extends Component {
@@ -87,7 +83,10 @@ class Register extends Component {
     this.close = this.close.bind(this);
     this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
   }
-
+/*
+This is life cycle method of the react native component.
+This method is called when the component will start to load
+*/
   componentWillMount() {
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
       if (userPrefs) {
@@ -111,64 +110,15 @@ class Register extends Component {
 
       }
     }).done();
-
-    // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
-    //   if (userPrefs) {
-    //     try {
-    //       userPrefs = JSON.parse(userPrefs);
-    //       if (userPrefs.defaultLogin === 'none') {
-    //         this.setState({
-    //           defaultLogin: "none",
-    //           modalInitValue: "None"
-    //         });
-    //       }
-    //       else {
-    //         alert(userPrefs.defaultLogin);
-    //         this.setState({
-    //           defaultLogin: value.defaultLogin,
-    //           modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label
-    //         });
-    //       }
-    //     }
-    //     catch (e) { }
-    //   }
-    // });
-
     obj = this;
-    /** Uncomment if you want to go to DashBoard if all tbacreds are registered */
-    // var isCheck = false;
-    // for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
-    //   var chlng = this.props.url.chlngJson.chlng[i];
-    //   if (chlng.chlng_prompt[0].length > 0) {
-    //     var promts = JSON.parse(chlng.chlng_prompt[0]);
-
-    //     if (promts.is_registered == false) {
-    //       isCheck = true;
-    //       break;
-    //     }
-    //   }
-    // }
-
-    // if (isCheck == false) {
-    //   if (this.props.url.touchCred.isTouch == true) {
-    //     this.doNavigateDashBoard();
-    //   }
-    // }
-
     AsyncStorage.getItem('devname').then((value) => {
-
-
       if (value != null) {
         this.setState({ devname: value });
         this.setState({ devnameopacity: 1 });
       } else {
         this.setState({ devnameopacity: 0 });
       }
-
-
     }).done();
-
-
     AsyncStorage.getItem('rememberuser').then((value) => {
       if (value == null || value === 'empty') {
         obj.setState({ rememberusername: '' });
@@ -176,10 +126,8 @@ class Register extends Component {
         obj.setState({ rememberusername: '\u2714' });
       }
     });
-
-
   }
-
+//on press of close button it navigate to dashboard without saveing the recent change.
   close() {
     this.doNavigateDashBoard();
   }
@@ -217,14 +165,12 @@ class Register extends Component {
           this.setState({ modalInitValue: "Select Default Login" });
         });
       }
-
       this.setState({ pattern: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
   }
 
   selectMakePermanent() {
-
   }
 
   selectskipwelcome() {
@@ -322,7 +268,6 @@ class Register extends Component {
     } else if (this.state.touchid) {
       data.push(Skin.text['0']['2'].credTypes['touchid']);
     }
-
     return data
   }
 
@@ -361,15 +306,7 @@ class Register extends Component {
           const nextChlngName = chlngJson.chlng[0].chlng_name;
           if (chlngJson != null) {
             console.log('UpdateAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-            //            //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-            //            this.props.navigator.push({
-            //            id: 'UpdateMachine',
-            //            title: nextChlngName,
-            //            url: {
-            //              chlngJson,
-            //            screenId: nextChlngName,
-            //              },
-            //              });
+
           }
         } else {
           console.log('UpdateAuthMachine - else ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
@@ -377,9 +314,6 @@ class Register extends Component {
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           }
-          // alert(res.pArgs.response.StatusMsg);
-
-          // this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           this.saveDefaultLoginPrefs();
           obj.doNavigateDashBoard();
 

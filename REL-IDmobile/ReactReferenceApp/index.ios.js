@@ -40,7 +40,7 @@ import Self_Register from './App/Scenes/Self_Register';
 
 import Activation_Code from './App/Components/Challenges/Activation_Code';
 import SetPassword from './App/Components/Challenges/SetPassword';
-import Screen_1_4_registerOptions from './App/Components/Challenges/Screen_1_4_registerOptions';
+import Register_Options from './App/Scenes/Register_Options';
 import Screen_3_1_deals from './App/Components/Dashboard/NWD/Screen_3_1_deals';
 import Screen_3_2_history from './App/Components/Dashboard/NWD/Screen_3_2_history';
 import Screen_3_3_locations from './App/Components/Dashboard/NWD/Screen_3_3_locations';
@@ -117,7 +117,7 @@ class ReactRefApp extends Component {
     // id = 'Contact';
     // id = 'Self_Register'
     // id = 'Screen_1_2_activation'
-    // id = 'Screen_1_4_registerOptions'
+    // id = 'Register_Options'
     // id = 'Screen_1_3_setPassword'
     // id = 'Screen_3_1_deals'
     // id = 'Screen_3_2_history'
@@ -199,8 +199,8 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_1_4_registerOptions') {
-      return (<Screen_1_4_registerOptions
+    } else if (id === 'Register_Options') {
+      return (<Register_Options
                 navigator={nav}
                 url={route.url}
                 title={route.title}

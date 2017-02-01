@@ -5,16 +5,17 @@
 */
 import React from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
-import Main from '../Container/Main';
-import MainActivation from '../../Components/Container/MainActivation';
+import Skin from '../Skin';
+import Main from '../Components/Container/Main';
+import MainActivation from '../Components/Container/MainActivation';
 
-import PatternView from '../PatternView';
+import PatternView from '../Components/PatternView';
 import dismissKeyboard from 'dismissKeyboard';
-import Title from '../view/title';
+import Title from '../Components/view/title';
 import Events from 'react-native-simple-events';
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
 
 const {
   View,

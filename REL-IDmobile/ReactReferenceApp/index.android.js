@@ -28,7 +28,7 @@ import NotificationMgmtScene from './App/Scenes/ZeroNotification';
 
 
 import RegisterOptionScene from './App/Components/PostLogin/Screen_1_4_registerOptionsDashboard';
-import PatternLock from './App/Components/Challenges/Screen_PatternLock';
+import PatternLock from './App/Scenes/Screen_PatternLock';
 import Screen_3_1_deals from './App/Components/Dashboard/NWD/Screen_3_1_deals';
 import Screen_3_2_history from './App/Components/Dashboard/NWD/Screen_3_2_history';
 import Screen_3_3_locations from './App/Components/Dashboard/NWD/Screen_3_3_locations';
@@ -51,7 +51,7 @@ import Self_Register from './App/Scenes/Self_Register';
 
 import Activation_Code from './App/Components/Challenges/Activation_Code';              // Activation key verification screen
 import SetPassword from './App/Components/Challenges/SetPassword'; 
-import Screen_1_4_registerOptions from './App/Components/Challenges/Screen_1_4_registerOptions';
+import Register_Options from './App/Scenes/Register_Options';
 
 
 import Appointment from './App/Scenes/Appointment';
@@ -176,8 +176,8 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Screen_1_4_registerOptions') {
-      return (<Screen_1_4_registerOptions
+    } else if (id === 'Register_Options') {
+      return (<Register_Options
                 navigator={nav}
                 url={route.url}
                 title={route.title}

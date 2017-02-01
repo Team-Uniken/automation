@@ -15,7 +15,7 @@ import Skin from '../../Skin';
 // Secondary Scenes
 
 // SECURITY SCENES
-import PatternLock from '../Challenges/Screen_PatternLock';
+import PatternLock from '../../Scenes/Screen_PatternLock';
 import SelectLogin from '../../Scenes/Select_Login';
 import AccessCode from '../Challenges/Access_Code';
 import Activation from '../Challenges/Activation_Code';
