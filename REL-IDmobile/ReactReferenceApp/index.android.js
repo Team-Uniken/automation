@@ -1,69 +1,69 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * This is the starting point for Uniken's REL-ID Reference Application developed in react-native for Android
+ * This source code for reference app is made available to mobile developers to understand how to integrate with REL-ID SDK
+ * Developers can use this source code OR any module or part of this source code as is, without warrenty
+ *    
+ * Application Name : REL-ID Reference App 
+ * https://github.com/Team-Uniken/REL-ID_internal.git
  */
+
 'use strict';
+
+// Loading react library 
 import React from 'react';
+import { FormattedWrapper } from 'react-native-globalize';            //Provides access to all formatting options as well as easy-to-use React Native components
+import buildStyleInterpolator from 'buildStyleInterpolator';
+import { AppRegistry, Navigator, Text } from 'react-native';
+import { Component } from 'react';
 
-console.disableYellowBox = true;
-
-// Main Scenes
-import ContactScene from './App/Scenes/Contact';
-import DepositsScene from './App/Scenes/Deposits';
-import FindBranchScene from './App/Scenes/FindBranch';
-
-// Secondary Scenes
-import DeviceMgmtScene from './App/Scenes/DeviceMgmt';
-import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';
-import ComingSoonScene from './App/Scenes/ComingSoon';
-import ConnectionProfileScene from './App/Scenes/ConnectionProfile';
-import LoadScene from './App/Scenes/Load';
-import Web from './App/Scenes/Web';
-import NotificationMgmtScene from './App/Scenes/ZeroNotification';
-
-// SECURITY SCENES
-
-
-import RegisterOptionScene from './App/Components/PostLogin/RegisterOptionsDashboard';
-import PatternLock from './App/Scenes/Screen_PatternLock';
-import Deals from './App/Components/Dashboard/NWD/Deals';
-import History from './App/Components/Dashboard/NWD/History';
-import Locations from './App/Components/Dashboard/NWD/Locations';
-
-
-//Dashboard
-import Dashboard from './App/Components/Dashboard/dashboard';
+/**
+ * The application has various screens, staring from initial splash screen i.e load.js, followed by REL-ID user activation and authentication screens.
+ * Once user is authenticated into REL-ID, Application shows feature specific screens (Dashboard) 
+ */
 
 
 
-// COMPONENTS
+console.disableYellowBox = true;    //disable yellow warning box
 
-var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+// This application contains difference Scenes. Each scene is a js file present under ./App/Scenes folder
+// For example, /App/Scenes/Accounts will be Accounts.js under ./App/Scenes folder
+// loading the main scenes (js files), containing display and logic for REL-ID features
 
 
 import Welcome_Screen from './App/Scenes/Welcome_Screen';                    // Screen (gives option to register / login)
 import Select_Login from './App/Scenes/Select_Login';            // Select login mode (password / pattern etc)
-import Self_Register from './App/Scenes/Self_Register';
+import Self_Register from './App/Scenes/Self_Register';                  // screen for self-registration
+import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';     // generate access code for new device
+import DeviceMgmtScene from './App/Scenes/DeviceMgmt';                  // Device Management for edit or delete device 
+import ConnectionProfileScene from './App/Scenes/ConnectionProfile';    // import new connection profile or select existing profile for initialization
+import LoadScene from './App/Scenes/Load';                              // splash screen perform initialization 
+import Web from './App/Scenes/Web';                                               // retun platform specific WebView
+import NotificationMgmtScene from './App/Scenes/ZeroNotification';                // notification screen
+import ComingSoonScene from './App/Scenes/ComingSoon';                             // comming soon feature UI screen.
+import Register_Options from './App/Scenes/Register_Options';            // Provide all other option through which we can login like facebook,pattern,password
+import PatternLock from './App/Scenes/Screen_PatternLock';               //
 
-
+//Challenges
 import Activation_Code from './App/Components/Challenges/Activation_Code';              // Activation key verification screen
-import SetPassword from './App/Components/Challenges/SetPassword'; 
-import Register_Options from './App/Scenes/Register_Options';
+import SetPassword from './App/Components/Challenges/SetPassword';                       // set password screen
+
+//Dashboard
+import Dashboard from './App/Components/Dashboard/dashboard';     //Navigate to respective flavour dashboard
+
+//NWD Dashboard
+import Deals from './App/Components/Dashboard/NWD/Deals';
+import History from './App/Components/Dashboard/NWD/History';
+import Locations from './App/Components/Dashboard/NWD/Locations';
+
+//PostLogin
+import RegisterOptionScene from './App/Components/PostLogin/RegisterOptionsDashboard';  //use for change register option
+
+//StateMachine
+import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';  // use to flow in challenge array
+import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';  // use to update challenges
+import PostLoginAuthMachine from './App/Components/StateMachine/PostLoginAuthMachine';  //use for post login authentication
 
 
-
-//import SecureChat from './App/Components/secure_chat/Navigation';
-import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';
-import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';
-import PostLoginAuthMachine from './App/Components/StateMachine/PostLoginAuthMachine';
-import { FormattedWrapper } from 'react-native-globalize';
-import buildStyleInterpolator from 'buildStyleInterpolator';
-//let buildStyleInterpolator = require('buildStyleInterpolator');
-
-import { AppRegistry, Navigator, Text } from 'react-native';
-
-
-import { Component } from 'react';
 
 
 const FadeIn = {
@@ -110,24 +110,6 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'Contact') {
-      return (<ContactScene
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'Deposits') {
-      return (<DepositsScene
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    } else if (id === 'FindBranch') {
-      return (<FindBranchScene
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
     }else if (id === 'Welcome_Screen') {
       return (<Welcome_Screen
                 navigator={nav}

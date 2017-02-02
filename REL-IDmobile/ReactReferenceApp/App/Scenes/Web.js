@@ -1,32 +1,34 @@
+/**
+ *  return platform specific webview.
+ */
+
 'use strict';
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../Skin';
 
 /*
-  CALLED
-*/
-import Main from '../Components/Container/Main';
-import WebViewAndroid from '../android_native_modules/nativewebview';
+ Required for this js
+ */
 import Communications from 'react-native-communications';
 
-const {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  WebView,
-} = ReactNative;
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
+import Main from '../Components/Container/Main';
+import WebViewAndroid from '../android_native_modules/nativewebview';
+import {Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
 
-const{
-  Component
-} = React;
-
+/*
+  INSTANCES
+ */
 const WEBVIEW_REF = 'webview';
-//var DEFAULT_URL = 'http://wiki.uniken.com';
 const DEFAULT_URL = 'http://www.google.com';
+
 
 
 export default class Web extends Component {
@@ -42,7 +44,10 @@ export default class Web extends Component {
       scalesPageToFit: this.props.scale || true,
     };
   }
-
+/**
+   *This is life cycle method of the react native component.
+   *This method is called when the component will start to load
+   */
   componentWillMount(){
     console.log('************ Component Will Mount');
   }
@@ -74,7 +79,7 @@ export default class Web extends Component {
     }
     return null;
   }
-
+  //Return platform specific webview.
   getWebView() {
     if (Platform.OS === 'ios') {
       return (
