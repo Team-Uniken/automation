@@ -411,6 +411,10 @@ class ControlPanel extends Component {
   }
 
   doNavigation() {
+        if (onGetNotificationsSubscription) {
+          onGetNotificationsSubscription.remove();
+          onGetNotificationsSubscription = null;
+        }
     console.log('doNavigation:');
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
     AsyncStorage.getItem('skipwelcome').then((value) => {
