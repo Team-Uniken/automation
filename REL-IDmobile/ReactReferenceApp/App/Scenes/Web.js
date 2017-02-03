@@ -135,7 +135,9 @@ export default class Web extends Component {
     }      
     }
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     return (
       <Main

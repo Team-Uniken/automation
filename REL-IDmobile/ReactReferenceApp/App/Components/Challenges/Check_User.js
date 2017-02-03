@@ -1,24 +1,43 @@
+/**
+ *  check status of entered user if everything is right it navigate it forword else return appropriate error message
+ */
+
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
+
+/*
+ Required for this js
+ */
+import Events from 'react-native-simple-events';
+import TouchID from 'react-native-touch-id';
+import dismissKeyboard from 'dismissKeyboard';
+import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackAndroid, StatusBar } from 'react-native'
+
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
 import Main from '../Container/Main';
 import Load from '../../Scenes/Load';
 import MainActivation from '../Container/MainActivation';
-import Events from 'react-native-simple-events';
-import dismissKeyboard from 'dismissKeyboard';
-import TouchID from 'react-native-touch-id';
-import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackAndroid, StatusBar } from 'react-native'
+const constant = require('../Utils/Constants');
+
+/*
+ Custome View
+ */
 import Button from '../view/button';
 import Input from '../view/input';
 import Title from '../view/title';
 
-const constant = require('../Utils/Constants');
+/*
+  INSTANCES
+ */
 let responseJson;
-let chlngJson;
-let nextChlngName;
 let obj;
-let statusMessage;
 let savedUserName;
 
 
@@ -39,29 +58,14 @@ class UserLogin extends Component {
   }
 
 
-
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
     obj = this;
     constant.USER_SESSION = "NO";
     constant.USER_T0 = "NO";
-
-    // AsyncStorage.setItem("isPwdSet", "empty");
-    // if (Platform.OS == "android") {
-    //   try {
-    //     AsyncStorage.getItem("userData").then((value) => {
-    //       if (value) {
-    //         this.setState({ pattern: true, });
-
-    //         Main.isPatternEnabled = true;
-    //       } else {
-    //         Main.isPatternEnabled = false;
-    //       }
-    //     }).done();
-    //   } catch ( e ) {}
-    // } else {
-    //   this.locked = false;
-    // }
-
     console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 
     AsyncStorage.getItem('rememberuser').then((value) => {
@@ -76,7 +80,10 @@ class UserLogin extends Component {
       }
     });
   }
-
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
     obj = this;
     BackAndroid.addEventListener('hardwareBackPress', function() {
@@ -97,15 +104,17 @@ class UserLogin extends Component {
         console.log(error);
       });
   }
-
+  //onTextchange method for Enter_User TextInput
   onUsernameChange(event) {
     this.setState({ inputUsername: event.nativeEvent.text });
   }
 
+ /*
+    This method is used to get the user entered value and submit the same as a challenge response.
+  */
   checkUsername() {
     this.state.progress = 0;
     let un = this.state.inputUsername;
-    //    this.setState({ isLoaderVisible: true});
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
@@ -124,58 +133,17 @@ class UserLogin extends Component {
     }
   }
 
-  checkUsernameSuccess() {
-    Main.dnaUserName = savedUserName;
-    InteractionManager.runAfterInteractions(() => {
-      this.props.navigator.push(
-        { id: "Activation",title: nextChlngName,url: chlngJson }
-      );
-    });
-  }
-
-  checkUsernameFailure() {
-    console.log('\n\nin checkUsernameFailure');
-    this.setState({ isLoaderVisible: false });
-    this.state.progress = 0;
-    Animated.sequence([
-      Animated.timing(this.state.logWrapOpac, {
-        toValue: 1,
-        duration: 1 * 0.1,
-        delay: 0 * Skin.spd
-      }),
-      Animated.timing(this.state.progWrapOpac, {
-        toValue: 0,
-        duration: 500 * Skin.spd,
-        delay: 0 * Skin.spd
-      })
-    ]).start();
-    this.clearText('inputUsername')
-    this.setState({ failureMessage: statusMessage });
-    Animated.sequence([
-      Animated.timing(this.state.logWarnOpac, {
-        toValue: 1,
-        duration: 500 * Skin.spd,
-        delay: 0 * Skin.spd
-      })
-    ]).start();
-    this.refs.inputUsername.focus();
-
-  }
-
-
-  getProgress(offset) {
-    var progress = this.state.progress + offset;
-    return progress;
-  }
-
-
+  // clear text of inputBox
   clearText(fieldName) {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
-
+  //use to clear twoFactorAuthMachine navigator
   close() {
     Events.trigger('closeStateMachine');
   }
+  /*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     return (
       <MainActivation>

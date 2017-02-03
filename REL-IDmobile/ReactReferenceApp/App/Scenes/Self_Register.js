@@ -94,7 +94,7 @@ class Register extends Component {
     this.keyboardWillHideListener.remove()
   }
 
-
+//use to change checkbox UI from checked to uncheck or uncheck to check.
   selectCheckbox() {
     if (!this.state.check) {
       this.setState({ check: true });
@@ -164,7 +164,6 @@ class Register extends Component {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
-      
       if(Main.isConnected){
         this.registerUser();
       }else{
@@ -242,6 +241,7 @@ class Register extends Component {
 
   }
 
+//show alert dailog with msg and title pass to it
   showMessage(title, msg, press) {
     Alert.alert(
       title,
@@ -259,11 +259,12 @@ class Register extends Component {
       }]
     )
   }
-
-  checkUsername() {
+ /*
+    This method is used to get the confirmEmail and submit the same as a challenge response and call showNextChallenge.
+  */
+    checkUsername() {
     this.state.progress = 0;
     var un = this.state.confirmEmail;
-    //    this.setState({ isLoaderVisible: true});
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
@@ -272,7 +273,6 @@ class Register extends Component {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = un;
       Events.trigger('showNextChallenge', { response: responseJson });
-
     } else {
       dismissKeyboard();
       AsyncStorage.setItem("userId", "empty");

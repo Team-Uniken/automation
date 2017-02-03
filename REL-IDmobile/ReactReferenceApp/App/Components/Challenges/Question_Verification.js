@@ -48,42 +48,6 @@ export default class QuestionVerification extends Component {
     this.state = {
       sAnswer: '',
     };
-    this._props = {
-      url: {
-        chlngJson: {
-          chlng_idx: 1,
-          sub_challenge_index: 0,
-          chlng_name: 'pass',
-          chlng_type: 1,
-          challengeOperation: 0,
-          chlng_prompt: [[]],
-          chlng_info: [
-            {
-              key: 'Prompt label',
-              value: 'Verification Key',
-            }, {
-              key: 'Response label',
-              value: 'Password',
-            }, {
-              key: 'Description',
-              value: 'Enter password of length 8-10 characters',
-            }, {
-              key: 'Reading',
-              value: 'Activation verification challenge',
-            },
-          ],
-          chlng_resp: [
-            {
-              challenge: 'password',
-              response: '',
-            },
-          ],
-          challenge_response_policy: [],
-          chlng_response_validation: false,
-          attempts_left: 3,
-        },
-      },
-    };
   }
   /*
   This is life cycle method of the react native component.

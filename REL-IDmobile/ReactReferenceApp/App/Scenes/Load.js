@@ -660,8 +660,6 @@ class Load extends Component {
   This method is used to render the componenet with all its element.
 */
   render() {
-    console.log('************ Load Render');
-    console.log(this.props.navigator.state);
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>

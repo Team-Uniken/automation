@@ -151,7 +151,6 @@ This method is called when the component will start to load
     const user = this.state.userName;
     const pass = this.state.password;
     if (user.length > 0) {
-
       ReactRdna.setCredentials(this.state.userName, this.state.password, true, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
@@ -162,7 +161,6 @@ This method is called when the component will start to load
     } else {
       alert('Please enter valid data');
     }
-
   }
 
   cancelCreds() {

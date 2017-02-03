@@ -1,45 +1,33 @@
+/*
+ * it shows Notifications
+ */
 'use strict';
-
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../Skin';
+
+/*
+ Required for this js
+ */
+import Events from 'react-native-simple-events';
+import {StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+
+/*
+ Use in this js
+ */
+import Skin from '../Skin';
+import Main from '../Components/Container/Main';
+import Constants from '../Components/Utils/Constants';
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onUpdateNotificationModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 /*
- CALLED
+  INSTANCES
  */
-import Main from '../Components/Container/Main';
-import Constants from '../Components/Utils/Constants';
-import Events from 'react-native-simple-events';
-const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
-const SCREEN_HEIGHT = require('Dimensions').get('window').height;
-/*
- INSTANCED
- */
-const {
-  StyleSheet,
-  Text,
-  ListView,
-  TextInput,
-  AsyncStorage,
-  DeviceEventEmitter,
-  TouchableHighlight,
-  View,
-  WebView,
-  Alert,
-} = ReactNative;
-
-const {
-  Component
-} = React;
-
-//let onUpdateDevice;
-//let onGetDevice;
-//let devicesList;
-//let deviceHolderList;
-//let devicesResponse;
 let onGetNotifications;
 let onUpdateNotification;
 let notificationList;
@@ -47,12 +35,16 @@ let notificationHolderList;
 let notificationResponse;
 let NotificationObtianedResponse;
 let obj;
+var notification = [];
 let onUpdateNotificationSubscription;
 
-var notification = [];
 
 
 
+
+/*
+ *Sort notification row based on timestamp.
+ */
 function compare(a, b) {
   if (a.expiry_timestamp < b.expiry_timestamp)
     return 1;
@@ -62,7 +54,9 @@ function compare(a, b) {
     return 0;
 }
 
-
+/*
+ *Custome Notification row.
+ */
 var SampleRow = React.createClass({
   showalertforReject(notification, btnLabel) {
     Alert.alert(
@@ -319,11 +313,12 @@ export default class NotificationMgmtScene extends Component {
       dataSource: ds.cloneWithRows(data)
     };
   }
-
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
-
     obj = this;
-
     Events.on('showNotification', 'showNotification', this.showNotification);
     if (this.props.url != null) {
       NotificationObtianedResponse = this.props.url.data;
@@ -335,24 +330,37 @@ export default class NotificationMgmtScene extends Component {
       onUpdateNotificationSubscription.remove();
       onUpdateNotificationSubscription = null;
     }
-//    onUpdateNotification = DeviceEventEmitter.addListener(
-//      'onUpdateNotification',
-//      this.onUpdateNotificationDetails.bind(this)
-//    );
     onUpdateNotificationSubscription = onUpdateNotificationModuleEvt.addListener('onUpdateNotification',
                                                                                  this.onUpdateNotification.bind(this));
-    
-
+  
   }
-
+      /*
+This is life cycle method of the react native component.
+This method is called when the component will Unmount.
+*/
+  componentWillUnmount() {
+    Events.rm('showNotification', 'showNotification');
+    if (onUpdateNotificationSubscription) {
+      onUpdateNotificationSubscription.remove();
+      onUpdateNotificationSubscription = null;
+    }
+  }
+ /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
     var listViewScrollView = this.refs.listView.getScrollResponder();
   }
-
+ /**
+   *  show Notifications
+   */
   showNotification(args) {
     obj.onGetNotificationsDetails(args);
   }
-
+ /*
+   method to check is their any notification.
+  */
   getMyNotifications() {
     if (Main.isConnected) {
       var recordCount = "0";
@@ -384,7 +392,7 @@ export default class NotificationMgmtScene extends Component {
       );
     }
   }
-
+  //Send notification response
   updateNotificationDetails(notificationId, action) {
     console.log('----- NotificationMgmt.updateNotificationDetails');
     if (Main.isConnected) {
@@ -413,14 +421,8 @@ export default class NotificationMgmtScene extends Component {
       );
     }
   }
-  componentWillUnmount() {
-    Events.rm('showNotification', 'showNotification');
-    if (onUpdateNotificationSubscription) {
-      onUpdateNotificationSubscription.remove();
-      onUpdateNotificationSubscription = null;
-    }
-  }
 
+  //callback of getNotifications.
   onGetNotificationsDetails(e) {
     console.log('----- onGetNotificationsDetails');
     NotificationObtianedResponse = e;
@@ -504,7 +506,9 @@ export default class NotificationMgmtScene extends Component {
       {...rowData}
       style={Skin.appointmentrow.row} />
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     //console.log('in render');
     return (
