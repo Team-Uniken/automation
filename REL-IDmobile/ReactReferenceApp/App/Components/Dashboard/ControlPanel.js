@@ -201,10 +201,10 @@ class ControlPanel extends Component {
   onGetNotifications(e) {
     console.log('----- onGetNotifications');
     
-    if (onGetNotificationsSubscription) {
-      onGetNotificationsSubscription.remove();
-      onGetNotificationsSubscription = null;
-    }
+//    if (onGetNotificationsSubscription) {
+//      onGetNotificationsSubscription.remove();
+//      onGetNotificationsSubscription = null;
+//    }
     // NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
     console.log(res);
