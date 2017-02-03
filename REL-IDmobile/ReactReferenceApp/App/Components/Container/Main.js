@@ -133,20 +133,20 @@ This method is called when the component will start to load
 
     Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
   }
-  //to open drawer
+  //to open 401 dialog
   open() {
     this.setState({ open: true });
   }
-  //to close drawer
+  //to close 401 dialog
   close() {
     this.setState({ open: false });
   }
-
+  //call to get 401 credential for domainUrl
   onGetCredentials(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }
-
+  //get user name and password from 401 dialog and call setCredentials
   checkCreds() {
     const user = this.state.userName;
     const pass = this.state.password;
@@ -162,7 +162,7 @@ This method is called when the component will start to load
       alert('Please enter valid data');
     }
   }
-
+  //call when we close 401 dialog
   cancelCreds() {
     ReactRdna.setCredentials(this.state.userName, this.state.password, false, (response) => {
       if (response) {
@@ -202,10 +202,6 @@ This method is called when the component will start to load
     }
   }
 
-  onGetCredentials(domainUrl) {
-    this.state.baseUrl = domainUrl.response;
-    this.open();
-  }
   /**
    * Builds the main wrapper elements of the post-login screen.
    * Main----
@@ -216,7 +212,7 @@ This method is called when the component will start to load
    *
    * @return {JSX}
    */
-
+//to check drawer is open or not
   getDrawerState() {
     return this.state.drawerState.open;
   }
@@ -248,7 +244,9 @@ This method is called when the component will start to load
       );
     }
   }
-
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     return (
       <Drawer

@@ -26,7 +26,7 @@ import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Skin from '../../Skin';
 import Loader from '../Utils/Loader';
 import Main from './Main';
-var constant =require('../Utils/Constants');
+var constant = require('../Utils/Constants');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
@@ -66,28 +66,64 @@ class MainActivation extends Component {
     console.log('\nMain Activation in constructor');
     console.log(this.state.visible);
   }
+  /*
+   This is life cycle method of the react native component.
+   This method is called when the component will start to load
+   */
+  componentWillMount() {
+    if (onGetCredentialSubscriptions) {
+      onGetCredentialSubscriptions.remove();
+      onGetCredentialSubscriptions = null;
+    }
+    if (onGetpasswordSubscriptions) {
+      onGetpasswordSubscriptions.remove();
+      onGetpasswordSubscriptions = null;
+    }
+    onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
+      this.onGetpassword.bind(this));
+    onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
+      this.onGetCredentials.bind.bind(this));
+    if (constant.USER_SESSION === "YES") {
+      this.setState({ isSettingButtonHide: 0 });
+    } else {
+      this.setState({ isSettingButtonHide: 1.0 });
+    }
+  }
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component is Mounted/Loaded.
+*/
+  componentDidMount() {
+    obj = this;
+    Events.on('hideLoader', 'hideLoader', this.hideLoader);
+    Events.on('showLoader', 'showLoader', this.showLoader);
+  }
 
+
+
+  //to open 401 dialog 
   open() {
     this.setState({
       open: true
     });
   }
-
+  //to close 401 dialog 
   close() {
     this.setState({
       open: false
     });
   }
-
+  //to close keyboard
   dismiss() {
     dismissKeyboard();
   }
-
+  //call to get 401 credential for domainUrl
   onGetCredentials(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }
 
+  //to get stored password and call setCredentials  method
   onGetpassword(e) {
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
@@ -100,30 +136,15 @@ class MainActivation extends Component {
             console.log('immediate response is' + response[0].error);
           }
         });
-        //                                                ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
-        //                                                                            if (response) {
-        //                                                                            console.log('immediate response of encrypt data packet is is' + response[0].error);
-        //                                                                            ReactRdna.setCredentials(uName,response[0].response,true,(response) => {
-        //                                                                                                     if (response) {
-        //                                                                                                     console.log('immediate response is'+response[0].error);
-        //                                                                                                     }else{
-        //                                                                                                     console.log('immediate response is'+response[0].error);
-        //                                                                                                     }
-        //                                                                                                     });
-        //                                                                            } else {
-        //                                                                            console.log('immediate response is' + response[0].response);
-        //                                                                            }
-        //                                                                            });
       } catch (e) { }
     }).done();
   }
 
+  //get user name and password from 401 dialog and call setCredentials
   checkCreds() {
-
     const user = this.state.userName;
     const pass = this.state.password;
     if (user.length > 0) {
-
       ReactRdna.setCredentials(this.state.userName, this.state.password, true, (response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
@@ -135,9 +156,8 @@ class MainActivation extends Component {
       alert('Please enter valid data');
     }
   }
-
+  //call when we close 401 dialog
   cancelCreds() {
-
     ReactRdna.setCredentials(this.state.userName, this.state.password, false, (response) => {
       if (response) {
         console.log('immediate response is' + response[0].error);
@@ -146,66 +166,30 @@ class MainActivation extends Component {
       }
     });
   }
-
+  //onTextchange method for username TextInput
   onUserChange(event) {
     var newstate = this.state;
     newstate.userName = event.nativeEvent.text;
     this.setState(newstate);
   }
-
+  //onTextchange method for password TextInput
   onPasswordChange(event) {
     var newstate = this.state;
     newstate.password = event.nativeEvent.text;
     this.setState(newstate);
   }
 
-  componentDidMount() {
-    obj = this;
-    Events.on('hideLoader', 'hideLoader', this.hideLoader);
-    Events.on('showLoader', 'showLoader', this.showLoader);
-  }
-
-  componentWillMount() {
-
-    if (onGetCredentialSubscriptions) {
-      onGetCredentialSubscriptions.remove();
-      onGetCredentialSubscriptions = null;
-    }
-    if (onGetpasswordSubscriptions) {
-      onGetpasswordSubscriptions.remove();
-      onGetpasswordSubscriptions = null;
-    }
-    //    getCredentialSubscriptions  = DeviceEventEmitter.addListener(
-    //                                                                 'onGetCredentials',
-    //                                                                 this.onGetCredentialsStatus.bind(this)
-    //                                                                 );
-    //    passwordSubscriptions = DeviceEventEmitter.addListener('getpasswordSubscriptions',this.onpasswordSubscriptions.bind(this));
-
-
-    onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
-      this.onGetpassword.bind(this));
-    onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
-      this.onGetCredentials.bind.bind(this));
-
-
-
-    if (constant.USER_SESSION === "YES") {
-      this.setState({ isSettingButtonHide: 0 });
-    } else {
-      this.setState({ isSettingButtonHide: 1.0 });
-    }
-  }
-
+//Hide spinner progress view
   hideLoader(args) {
     console.log('\n in hideLoader of main activation');
     obj.hideLoaderView();
   }
-
+//Show spinner progress view
   showLoader(args) {
     console.log('\n in hideLoader of main activation');
     obj.showLoaderView();
   }
-
+//Hide spinner progress view
   hideLoaderView() {
     console.log('\n in hide Loader view of main activation');
     this.setState({ visible: false });
@@ -214,7 +198,7 @@ class MainActivation extends Component {
     this.setState({ isSettingButtonHide: 1 });
     console.log(this.state.visible);
   }
-
+//Show spinner progress view
   showLoaderView() {
     console.log('\n in show Loader view of main activation');
     this.setState({ visible: true });
@@ -481,6 +465,9 @@ class MainActivation extends Component {
   //     }
   //   }
 
+/*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     console.log('\n\n\n  Main Activation render called again');
     //    this.state.visible = this.props.visible;
