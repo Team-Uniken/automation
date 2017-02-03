@@ -60,8 +60,6 @@ class Register extends Component {
       phoneNumber: '',
       value: this.props.value,
       resetSlider: false,
-      randomMinValue: 1,
-      randomMaxValue: 90,
       keyboardVisible: false,
     };
 
@@ -71,14 +69,17 @@ class Register extends Component {
    This is life cycle method of the react native component.
    This method is called when the component will start to load
    */
-  componentWillMount() {
+componentWillMount() {
     obj = this;
     this.state.value = 0;
     InteractionManager.runAfterInteractions(() => {
       this.refs.firstname.focus()
     });
+    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
 
   }
+
 
   keyboardWillShow(e) {
     this.setState({ keyboardVisible: true })
