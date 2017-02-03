@@ -24,11 +24,11 @@ class Loader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ColorProp: Skin.load.OVERLAY_BG_RGB,
-      color: Skin.load.OVERLAY_SPINNER_COLOR
+      color: Skin.load.OVERLAY_SPINNER_COLOR    //spinner color
 
     };
   }
+  //Show spinner if visible==true.
   render() {
     return (
       <Spinner visible={ this.props.visible } color={ this.state.color } />
