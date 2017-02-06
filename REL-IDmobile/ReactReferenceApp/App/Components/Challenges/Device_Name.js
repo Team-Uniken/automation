@@ -87,7 +87,9 @@ export default class DeviceName extends Component {
     dismissKeyboard();
   }
 
-  //return text Submit or Continue based on chlng_idx and chlngsCount if current challenge is last in challenge array it return Submit else return Continue
+  /*
+     This method is used to return the text Submit/Continue for submit button.
+   */
   btnText() {
     console.log('------ devname ' +
       this.props.url.chlngJson.chlng_idx +

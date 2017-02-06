@@ -6,12 +6,12 @@
 /*
  ALWAYS NEED
  */
-import React, { Component,} from 'react';
+import React, { Component, } from 'react';
 
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid ,AsyncStorage} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid, AsyncStorage} from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -61,10 +61,10 @@ class Activation_Code extends Component {
     // this.barCodeScanFlag = true;
   }
 
-/*
-This is life cycle method of the react native component.
-This method is called when the component will start to load
-*/
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
     obj = this;
     if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -72,10 +72,10 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This is life cycle method of the react native component.
-  This method is called when the component is Mounted/Loaded.
-*/
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
     AsyncStorage.removeItem(Main.dnaUserName, null);
     constant.USER_T0 = "YES";
@@ -89,10 +89,10 @@ This method is called when the component will start to load
     }.bind(this));
   }
 
-/*
-  This is life cycle method of the react native component.
-  This method is called when the component is Updated.
-*/
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Updated.
+  */
   componentWillUpdate() {
 
     if (this.state.isPoped) {
@@ -101,16 +101,16 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This method is used to request the camera permission from the user.
-*/ 
+  /*
+    This method is used to request the camera permission from the user.
+  */
   async requestCameraPermission() {
     try {
       const granted = await PermissionsAndroid.requestPermission(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          'title': Skin.CLIENT_TITLE_TEXT+' App Camera Permission',
-          'message': Skin.CLIENT_TITLE_TEXT+' App needs access to your camera ' +
+          'title': Skin.CLIENT_TITLE_TEXT + ' App Camera Permission',
+          'message': Skin.CLIENT_TITLE_TEXT + ' App needs access to your camera ' +
           'so you can scan the QR Code.'
         }
       )
@@ -130,9 +130,9 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This method is used to request the camera permission from the user.
-*/
+  /*
+    This method is used to request the camera permission from the user.
+  */
   checkCameraPermission() {
     PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.CAMERA)
       .then(response => {
@@ -148,9 +148,9 @@ This method is called when the component will start to load
       });
   }
 
-/*
-  This method is a callback obtained after the QRCode has been scan.
-*/
+  /*
+    This method is a callback obtained after the QRCode has been scan.
+  */
   _onBarCodeRead(result) {
     if (obj.state.barCodeFlag === true) {
       obj.state.barCodeFlag = false;
@@ -158,16 +158,16 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This method is a called for every text that is entered in the Activation Code TextInput.
-*/
+  /*
+    This method is a called for every text that is entered in the Activation Code TextInput.
+  */
   onActivationCodeChange(e) {
     this.setState({ activatonCode: e.nativeEvent.text });
   }
 
-/*
-  This method is used to return the tittle of Submit/Next button.
-*/
+  /*
+     This method is used to return the text Submit/Continue for submit button.
+   */
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
@@ -175,10 +175,10 @@ This method is called when the component will start to load
     return 'NEXT';
   }
 
-/*
-  This method is used to get the users entered/Scanned QR code value and submit the same as a challenge response.
-  For Empty activation code, Alert dailogue is dispalyed to user.
-*/ 
+  /*
+    This method is used to get the users entered/Scanned QR code value and submit the same as a challenge response.
+    For Empty activation code, Alert dailogue is dispalyed to user.
+  */
   checkActivationCode() {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
@@ -191,9 +191,9 @@ This method is called when the component will start to load
       alert('Enter Activation Code');
     }
   }
-/*
-  This method is used to hide the camera which was used to scan QR code.
-*/
+  /*
+    This method is used to hide the camera which was used to scan QR code.
+  */
   hideCamera() {
     if (Platform.OS === 'android') {
       this.setState({ showCamera: false });
@@ -201,9 +201,9 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This is a utility method used to set the camera cordinates.
-*/  
+  /*
+    This is a utility method used to set the camera cordinates.
+  */
 
   measureView(event) {
     console.log('event peroperties: ', event);
@@ -215,12 +215,12 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This method is a called from a QRCode scan callback, and checks for
-  the verification key obtined is same as the key which is obtained in the challenge.
-  If the values are mateched, it submit the Activation code as a challenge response.
-  For Invalid verification key, Alert dailogue is dispalyed to user.
-*/
+  /*
+    This method is a called from a QRCode scan callback, and checks for
+    the verification key obtined is same as the key which is obtained in the challenge.
+    If the values are mateched, it submit the Activation code as a challenge response.
+    For Invalid verification key, Alert dailogue is dispalyed to user.
+  */
   onQRScanSuccess(result) {
     var $this = this;
     if (result.length != 0) {
@@ -259,7 +259,7 @@ This method is called when the component will start to load
 
         $this.setState({ activatonCode: '' });
         responseJson.chlng_resp[0].response = aCode;
-        
+
         setTimeout(() => {
           console.log("Activation ------ showNext");
           Events.trigger('showNextChallenge', {
@@ -288,27 +288,27 @@ This method is called when the component will start to load
     }
   }
 
-/*
-  This method is used to render the JSX elements.
-*/
+  /*
+    This method is used to render the JSX elements.
+  */
   renderIf(condition, jsx) {
     if (condition) {
       return jsx;
     }
   }
 
-/*
-  This method is used to handle the cancel button click of the componenet.
-*/
+  /*
+    This method is used to handle the cancel button click of the componenet.
+  */
   close() {
     let responseJson = this.props.url.chlngJson;
     this.hideCamera();
     Events.trigger('showPreviousChallenge');
   }
 
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <MainActivation>
@@ -338,7 +338,7 @@ This method is called when the component will start to load
                 top: 20,
                 zIndex: 1,
                 width: Skin.SCREEN_WIDTH,
-                backgroundColor:'transparent'
+                backgroundColor: 'transparent'
               }]}>
                 {"Step 1: Verify Code " +
                   this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
@@ -371,10 +371,10 @@ This method is called when the component will start to load
                   autoComplete={false}
                   autoCapitalize={true}
                   secureTextEntry={true}
-                    styleInputView={[{ width: Skin.SCREEN_WIDTH-100}]}
-                   styleInput={Skin.layout1.content.code.input}
+                  styleInputView={[{ width: Skin.SCREEN_WIDTH - 100 }]}
+                  styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}
-            
+
                   placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
                   onChange={this.onActivationCodeChange.bind(this) }
                   onSubmitEditing={() => { dismissKeyboard(); this.checkActivationCode(); } }/>

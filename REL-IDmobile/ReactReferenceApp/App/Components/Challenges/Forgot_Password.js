@@ -55,12 +55,12 @@ export default class ForgatePassword extends Component {
     this.onPatternClose = this.onPatternClose.bind(this);
     this.onPostForgotPassword = this.onPostForgotPassword.bind(this);
   }
- /*
-  This is life cycle method of the react native component.
-  This method is called when the component will start to load
-  */
+  /*
+   This is life cycle method of the react native component.
+   This method is called when the component will start to load
+   */
   componentWillMount() {
-      obj = this;
+    obj = this;
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
@@ -77,12 +77,12 @@ export default class ForgatePassword extends Component {
       }
     }).done();
 
-     Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
+    Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
   }
- /*
-    This is life cycle method of the react native component.
-    This method is called when the component is Mounted/Loaded.
-  */
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+   */
   componentDidMount() {
     BackAndroid.addEventListener('hardwareBackPress', this.close);
   }
@@ -106,19 +106,19 @@ export default class ForgatePassword extends Component {
   }
 
   onSetPattern(data) {
-     Events.trigger('finishForgotPasswordFlow',null);
+    Events.trigger('finishForgotPasswordFlow', null);
   }
 
   onPatternClose() {
     AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
-     Events.trigger('finishForgotPasswordFlow',null);
+    Events.trigger('finishForgotPasswordFlow', null);
   }
 
   onPostForgotPassword() {
     AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
       if (Platform.OS == 'ios' && this.state.erpasswd) {
         this.encrypytPasswdiOS();
-         Events.trigger('finishForgotPasswordFlow',null);
+        Events.trigger('finishForgotPasswordFlow', null);
       } else if (Platform.OS == 'android' && this.state.erpasswd) {
         this.props.navigator.push(
           {
@@ -129,14 +129,14 @@ export default class ForgatePassword extends Component {
             mode: "set"
           });
       } else {
-         Events.trigger('finishForgotPasswordFlow',null);
+        Events.trigger('finishForgotPasswordFlow', null);
       }
     }).done();
   }
-/*
-    This method is used to get the users entered paswword and confirmPassword to check both are same,
-     and submit the same as a challenge response.
-  */
+  /*
+      This method is used to get the users entered paswword and confirmPassword to check both are same,
+       and submit the same as a challenge response.
+    */
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
@@ -165,8 +165,8 @@ export default class ForgatePassword extends Component {
   }
 
   /*
-    This method is used to return the tittle of Submit/Next button.
-  */
+     This method is used to return the text Submit/Continue for submit button.
+   */
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
@@ -178,7 +178,7 @@ export default class ForgatePassword extends Component {
   */
   close() {
     if (this.props.mode === "forgotPassword") {
-      Events.trigger('resetChallenge',null);
+      Events.trigger('resetChallenge', null);
     } else {
       this.props.parentnav.pop();
     }
@@ -186,9 +186,9 @@ export default class ForgatePassword extends Component {
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
- /**
-   * Store encrypted password against user for ios. 
-  */
+  /**
+    * Store encrypted password against user for ios. 
+   */
   encrypytPasswdiOS() {
 
     if (Platform.OS === 'ios') {

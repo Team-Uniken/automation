@@ -116,7 +116,9 @@ This method is called when the component will start to load
       alert('Please enter password ');
     }
   }
-  //return text Submit or Continue based on chlng_idx and chlngsCount if current challenge is last in challenge array it return Submit else return Continue
+  /*
+     This method is used to return the text Submit/Continue for submit button.
+   */
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';

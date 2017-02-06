@@ -3,7 +3,7 @@
 /*
   ALWAYS NEED
 */
-import React from 'react';
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
@@ -55,7 +55,6 @@ const {
   Platform,
 } = ReactNative;
 
-const {Component} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -69,11 +68,11 @@ class UpdateAuthMachine extends Component {
     this.onPostUpdate = this.onPostUpdate.bind(this);
     this.closeUpdateMachine = this.closeUpdateMachine.bind(this);
   }
- /** 
-   *   This is life cycle method of the react native component.
-   *   This method is called when the component will start to load
-   * Setting the initial state of machine and registering events
-  */
+  /** 
+    *   This is life cycle method of the react native component.
+    *   This method is called when the component will start to load
+    * Setting the initial state of machine and registering events
+   */
   componentWillMount() {
     obj = this;
     currentIndex = 0;
@@ -88,20 +87,20 @@ class UpdateAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
-    if(onUpdateChallengeStatusSubscription){
+    if (onUpdateChallengeStatusSubscription) {
       onUpdateChallengeStatusSubscription.remove();
       onUpdateChallengeStatusSubscription = null;
     }
     onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
-                                                                                       this.onUpdateChallengeStatus.bind(this));
+      this.onUpdateChallengeStatus.bind(this));
     Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
     Events.on('closeUpdateMachine', 'closeUpdateMachine', this.closeUpdateMachine);
   }
- /*
-    This is life cycle method of the react native component.
-    This method is called when the component is Mounted/Loaded.
-    Setting the initial screen to UserLogin
-  */
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+     Setting the initial screen to UserLogin
+   */
   componentDidMount() {
     screenId = 'Main';
     // this.props.screenId;
@@ -113,29 +112,29 @@ class UpdateAuthMachine extends Component {
     console.log('----- UpdateAuthMachine unmounted');
   }
 
-  onPostUpdate(){
-     this.closeUpdateMachine();
+  onPostUpdate() {
+    this.closeUpdateMachine();
   }
 
-  closeUpdateMachine(){
+  closeUpdateMachine() {
     this.props.navigator.popToTop();
     Events.rm('onPostUpdate', 'onPostUpdate');
     Events.rm('closeUpdateMachine', 'closeUpdateMachine');
-    if(onUpdateChallengeStatusSubscription){
+    if (onUpdateChallengeStatusSubscription) {
       onUpdateChallengeStatusSubscription.remove();
       onUpdateChallengeStatusSubscription = null;
     }
   }
- /*
-    This is method is callback method, it is called to give resposne of updateChallenges call of RDNA.
-  */
+  /*
+     This is method is callback method, it is called to give resposne of updateChallenges call of RDNA.
+   */
   onUpdateChallengeStatus(e) {
     const res = JSON.parse(e.response);
 
     Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if(onUpdateChallengeStatusSubscription){
+    if (onUpdateChallengeStatusSubscription) {
       onUpdateChallengeStatusSubscription.remove();
       onUpdateChallengeStatusSubscription = null;
     }
@@ -171,11 +170,11 @@ class UpdateAuthMachine extends Component {
           }
           alert(res.pArgs.response.StatusMsg);
           //this.props.navigator.popToRoute({ id: 'Main', title: 'DashBoard', url: '' });
-          Events.trigger('onPostUpdate',null);
+          Events.trigger('onPostUpdate', null);
         }
       } else {
-        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
-           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+        if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -252,7 +251,7 @@ class UpdateAuthMachine extends Component {
       obj.callUpdateChallenge();
     }
   }
-
+  //render screen based on a id pass to it.
   renderScene(route, nav) {
     const id = route.id;
     console.log('---------- renderScene ' + id + ' url ' + route.url);
@@ -333,21 +332,21 @@ class UpdateAuthMachine extends Component {
         />
     );
   }
- /**
-   * Returns true if next challenge exist based on currentIndex, else returns false 
-   */
+  /**
+    * Returns true if next challenge exist based on currentIndex, else returns false 
+    */
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
- /**
-   * This method pops the current screen and decrements the currentIndex,
-   */
+  /**
+    * This method pops the current screen and decrements the currentIndex,
+    */
   hasPreviousChallenge() {
     return null;
   }
- /**
-   * This method pops the current screen and decrements the currentIndex,
-   */
+  /**
+    * This method pops the current screen and decrements the currentIndex,
+    */
   showPreviousChallenge() {
     console.log('---------- showPreviousChallenge ' + currentIndex);
     if (currentIndex > 0) {
@@ -363,28 +362,28 @@ class UpdateAuthMachine extends Component {
     return challengeJsonArr[currentIndex];
   }
 
-/**
-   * This method is called by UpdateAuthMachine to submit the challenges with responses.
-   * It calls updateChallenges of Native Bridge which inturn calls updateChallenges of RDNA. 
-   */
+  /**
+     * This method is called by UpdateAuthMachine to submit the challenges with responses.
+     * It calls updateChallenges of Native Bridge which inturn calls updateChallenges of RDNA. 
+     */
   callUpdateChallenge() {
-    if(Main.isConnected){
+    if (Main.isConnected) {
 
-    Events.trigger('showLoader', true);
-    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.updateChallenges(JSON.stringify(challengeJson), value, (response) => {
-        if (response[0].error === 0) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-          alert(response[0].error);
-        }
-      });
-    }).done();
-  }else{
-    alert("Please check your internet connection");
-  }
+      Events.trigger('showLoader', true);
+      console.log('----- Main.dnaUserName ' + Main.dnaUserName);
+      AsyncStorage.getItem('userId').then((value) => {
+        ReactRdna.updateChallenges(JSON.stringify(challengeJson), value, (response) => {
+          if (response[0].error === 0) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+            alert(response[0].error);
+          }
+        });
+      }).done();
+    } else {
+      alert("Please check your internet connection");
+    }
   }
 }
 

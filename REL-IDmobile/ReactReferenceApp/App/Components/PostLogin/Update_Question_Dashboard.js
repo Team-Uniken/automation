@@ -1,40 +1,43 @@
+/**
+ *  Update Password screen. 
+ */
+
 'use strict';
 
 /*
-  NEEDED
-*/
+ ALWAYS NEED
+ */
 import ReactNative from 'react-native';
-import React from 'react';
-import Skin from '../../Skin';
-import Main from '../Container/Main';
+import React, { Component, } from 'react';
 
 /*
-  CALLED
-*/
+ Required for this js
+ */
+import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackAndroid, } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
-import MainActivation from '../Container/MainActivation';
 import Events from 'react-native-simple-events';
 
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
+import Main from '../Container/Main';
+import MainActivation from '../Container/MainActivation';
+
+/*
+ Custom View
+ */
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Button from '../view/button';
 import Title from '../view/title';
 
-let obj;
-const {
-  View,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  ListView,
-  TextInput,
-  StyleSheet,
-  StatusBar,
-  InteractionManager,
-  BackAndroid,
-} = ReactNative;
+/*
+  INSTANCES
+ */
 
-const {Component} = React;
+let obj;
+
 
 export default class UpdateQuestionSet extends Component {
 
@@ -52,80 +55,41 @@ export default class UpdateQuestionSet extends Component {
       secQue: '',
       secAnswer: '',
     };
-
-    this._props = {
-      url: {
-        chlng_idx: 1,
-        sub_challenge_index: 0,
-        chlng_name: "secqa",
-        chlng_type: 2,
-        challengeOperation: 1,
-        chlng_prompt: [[
-          "What is the last name of your third grade teacher?",
-          "What was the name of the boy/girl you had your second kiss with?",
-          "What was the name of your second dog/cat/goldfish/etc?",
-          "Where were you when you had your first alcoholic drink (or cigarette)?",
-          "When you were young, what did you want to be when you grew up?",
-        ]],
-        chlng_info: [
-          {
-            key: "Prompt label",
-            value: "Secret Question",
-          }, {
-            key: "Response label",
-            value: "Secret Answer",
-          }, {
-            key: "Description",
-            value: "Choose your secret question and then provide answer",
-          }, {
-            key: "Reading",
-            value: "Set secret question and answer",
-          },
-        ],
-        chlng_resp: [
-          {
-            challenge: '',
-            response: '',
-          },
-        ],
-        challenge_response_policy: [],
-        chlng_response_validation: false,
-        attempts_left: 3,
-        currentIndex: 1,
-      },
-    };
-  }
-
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close);
-    // console.log('----- QuestionSet - componentDidMount');
-    // console.log(this.props);
-    const prompts = [
-      'What is the last name of your third grade teacher?',
-      'What was the name of the boy/girl you had your second kiss with?',
-      'What was the name of your second dog/cat/goldfish/etc?',
-      'Where were you when you had your first alcoholic drink (or cigarette)?',
-      'When you were young, what did you want to be when you grew up?',
-    ];
-    const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
-    //const { data, sectionIds } = this.renderListViewData(prompts);
-    this.setState({
-      dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
-    });
   }
 
   componentWillUnmount() {
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
   }
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+   */
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.close);
+    // console.log('----- QuestionSet - componentDidMount');
+    // console.log(this.props);
+    const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
+    this.setState({
+      dataSource: obj.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
+    });
+  }
 
+  /*
+      onTextchange method for Question TextInput
+    */
   onQuestionChange(event) {
     this.setState({ secQue: event.nativeEvent.text });
   }
-
+  /*
+      onTextchange method for Answer TextInput
+    */
   onAnswerChange(event) {
     this.setState({ secAnswer: event.nativeEvent.text });
   }
-
+  /*
+    This method is used to get the users entered question and answer,
+     and submit as a challenge response key and response value respectively.
+  */
   setSecrets() {
     //console.log(this);
     const kSecQ = this.state.secQue;
@@ -143,7 +107,9 @@ export default class UpdateQuestionSet extends Component {
       });
     }
   }
-
+  /*
+   This method is used to return the text Submit/Continue for submit button.
+ */
   btnText() {
     if (this.props.url.chlng_idx === this.props.url.chlngsCount) {
       return 'Submit';
@@ -188,13 +154,17 @@ export default class UpdateQuestionSet extends Component {
       <View style={styles.divider} />
     );
   }
-
+  /*
+       This method is used to handle the cancel button click or back button.
+     */
   close() {
     this.props.parentnav.pop();
     return true;
   }
 
-
+  /*
+       This method is used to render the componenet with all its element.
+     */
   render() {
 
     /**

@@ -1,46 +1,42 @@
+/**
+ *  Update Password screen. 
+ */
+
 'use strict';
 
 /*
  ALWAYS NEED
  */
-import React from 'react';
 import ReactNative from 'react-native';
+import React, { Component, } from 'react';
+
+/*
+ Required for this js
+ */
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, } from 'react-native';
+import Events from 'react-native-simple-events';
+import dismissKeyboard from 'dismissKeyboard';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
+/*
+ Use in this js
+ */
 import Skin from '../../Skin';
 import Main from '../Container/Main';
-/*
- CALLED
- */
-import Events from 'react-native-simple-events';
 import MainActivation from '../Container/MainActivation';
-import dismissKeyboard from 'dismissKeyboard';
 
+/*
+ Custom View
+ */
 import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 /*
- Instantiaions
+  INSTANCES
  */
-const {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  InteractionManager,
-  AsyncStorage,
-  StatusBar,
-  Platform,
-  ScrollView,
-  BackAndroid,
-} = ReactNative;
-
-const {Component} = React;
-
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
 var obj;
 export default class UpdatePasswordSet extends Component {
   constructor(props) {
@@ -57,44 +53,12 @@ export default class UpdatePasswordSet extends Component {
     this.setPassword = this.setPassword.bind(this);
     this.onPostUpdate = this.onPostUpdate.bind(this);
     this.onPatternClose = this.onPatternClose.bind(this);
-    /*
-     this._props = {
-     url: {
-     chlngJson: {
-     chlng_idx: 1,
-     sub_challenge_index: 0,
-     chlng_name: 'pass',
-     chlng_type: 1,
-     challengeOperation: 1,
-     chlng_prompt: [[]],
-     chlng_info: [
-     {
-     key: 'Response label',
-     value: 'Password',
-     }, {
-     key: 'description',
-     value: 'Enter password of length 8-10 characters',
-     },
-     ],
-     chlng_resp: [
-     {
-     "challenge":"password",
-     "response":"",
-     }
-     ],
-     challenge_response_policy: [],
-     chlng_response_validation: false,
-     attempts_left: 3,
-     },
-     chlngsCount: 1,
-     currentIndex: 1,
-     },
-     };
-     */
   }
-
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Updated.
+  */
   componentWillMount() {
-    
     obj = this;
     Events.on('onPostUpdate', 'onPostUpdate', this.onPostUpdate);
     AsyncStorage.getItem('RUserId').then((value) => {
@@ -113,28 +77,37 @@ export default class UpdatePasswordSet extends Component {
       }
     }).done();
   }
-
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component is Mounted/Loaded.
+*/
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this.close);
+  }
+  //To check password policy
   validatePassword(textval) {
     // var passwordregex = /^[0-9]/;
     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
-
+  /*
+     onTextchange method for Password TextInput
+   */
   onPasswordChange(event) {
     this.setState({ password: event.nativeEvent.text.trim() });
     this.state.password = event.nativeEvent.text.trim();
   }
-
+  /*onTextchange method for confirm password TextInput  */
   onConfirmPasswordChange(event) {
     this.setState({ cPassword: event.nativeEvent.text.trim() });
     this.state.cPassword = event.nativeEvent.text.trim();
   }
-
+  //
   onSetPattern(data) {
     this.close();
   }
 
-  onPatternClose(){
+  onPatternClose() {
     AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     this.close();
   }
@@ -150,16 +123,19 @@ export default class UpdatePasswordSet extends Component {
             id: 'pattern',
             data: '',
             onSetPattern: this.onSetPattern,
-            onClose:this.onPatternClose,
+            onClose: this.onPatternClose,
             mode: "set"
           });
       }
-      else{
+      else {
         this.close();
       }
     }).done();
   }
-
+  /*
+      This method is used to get the users entered paswword and confirmPassword to check both are same,
+       and submit the same as a challenge response.
+    */
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
@@ -187,21 +163,22 @@ export default class UpdatePasswordSet extends Component {
       alert('Please enter password ');
     }
   }
-
+  /*
+     This method is used to return the text Submit/Continue for submit button.
+   */
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'SUBMIT';
     }
     return 'Continue';
   }
-
+  //showPreviousChallenge on press of cross icon.
   close() {
     if (this.props.mode === "forgotPassword") {
       Events.trigger("resetChallenge", null);
     } else {
-      Events.trigger('closeUpdateMachine',null);
+      Events.trigger('closeUpdateMachine', null);
     }
-
     BackAndroid.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
@@ -229,10 +206,10 @@ export default class UpdatePasswordSet extends Component {
     }
   }
 
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close);
-  }
 
+  /*
+     This method is used to render the componenet with all its element.
+   */
   render() {
     return (
       <Main

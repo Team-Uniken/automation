@@ -90,8 +90,9 @@ export default class DeviceBinding extends Component {
       ]).start();
     }
   }
-  //return text Submit or Continue based on chlng_idx and chlngsCount if current challenge is last in challenge array it return Submit else return Continue
-  btnText() {
+ /*
+    This method is used to return the text Submit/Continue for submit button.
+  */  btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
       return 'Submit';
     }
@@ -103,19 +104,19 @@ export default class DeviceBinding extends Component {
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
-/*
-  This is life cycle method of the react native component.
-  This method is called when the component is Mounted/Loaded.
-*/ 
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component is Mounted/Loaded.
+  */
   componentDidMount() {
     BackAndroid.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));
   }
-   /*
-    This method is used to render the componenet with all its element.
-  */
+  /*
+   This method is used to render the componenet with all its element.
+ */
   render() {
     console.log(JSON.stringify(this.props.url));
     return (

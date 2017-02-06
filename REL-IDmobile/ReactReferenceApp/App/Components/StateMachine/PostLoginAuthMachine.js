@@ -3,7 +3,7 @@
 /*
   ALWAYS NEED
 */
-import React from 'react';
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
@@ -65,9 +65,6 @@ const {
   Platform,
 } = ReactNative;
 
-const {
-  Component
-} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -100,30 +97,30 @@ class PostLoginAuthMachine extends Component {
     console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
-    
-    if(onCheckChallengeResponseSubscription){
+
+    if (onCheckChallengeResponseSubscription) {
       onCheckChallengeResponseSubscription.remove();
       onCheckChallengeResponseSubscription = null;
     }
-    
-     onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
-                                                                                 this.onCheckChallengeResponseStatus.bind(this)
-                                                                                 );
+
+    onCheckChallengeResponseSubscription = onCheckChallengeResponseStatusModuleEvt.addListener('onCheckChallengeResponseStatus',
+      this.onCheckChallengeResponseStatus.bind(this)
+    );
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
-     onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-                                                                                        this.onGetAllChallengeStatus.bind(this));
+    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+      this.onGetAllChallengeStatus.bind(this));
     Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
     Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
   }
- /*
-    This is life cycle method of the react native component.
-    This method is called when the component is Mounted/Loaded.
-    Setting the initial screen to UserLogin
-  */
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+     Setting the initial screen to UserLogin
+   */
   componentDidMount() {
     screenId = 'UserLogin';
   }
@@ -142,7 +139,7 @@ class PostLoginAuthMachine extends Component {
 
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if(onCheckChallengeResponseSubscription){
+    if (onCheckChallengeResponseSubscription) {
       onCheckChallengeResponseSubscription.remove();
       onCheckChallengeResponseSubscription = null;
     }
@@ -176,8 +173,8 @@ class PostLoginAuthMachine extends Component {
           this.getChallengesByName(this.props.challengesToBeUpdated[0]);
         }
       } else {
-         if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
-           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+        if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -246,6 +243,8 @@ class PostLoginAuthMachine extends Component {
     }
   }
 
+
+  //render screen based on a id pass to it.
   renderScene(route, nav) {
     obj.stateNavigator = nav;
     const id = route.id;
@@ -320,9 +319,9 @@ class PostLoginAuthMachine extends Component {
         />
     );
   }
-/**
-    * Returns true if next challenge exist based on currentIndex, else returns false 
-    */
+  /**
+      * Returns true if next challenge exist based on currentIndex, else returns false 
+      */
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
@@ -337,22 +336,22 @@ class PostLoginAuthMachine extends Component {
     }
   }
 
- /**
-       * Returns current challenge based on currentIndex.
-       */
+  /**
+        * Returns current challenge based on currentIndex.
+        */
   getCurrentChallenge() {
     return challengeJsonArr[currentIndex];
   }
 
-/**
-    * This is method is callback method, it is called to give resposne of getAllChallenges call of RDNA.
-    * The status provides all challenges that can be updated by calling updateChallenge API.
-    * This method parses the response and shows RegisterOption screen (i.e Registration screen for alternative login options) if challeges 
-    * are provided in status else it navigates to Dashboard screen.
-    */
+  /**
+      * This is method is callback method, it is called to give resposne of getAllChallenges call of RDNA.
+      * The status provides all challenges that can be updated by calling updateChallenge API.
+      * This method parses the response and shows RegisterOption screen (i.e Registration screen for alternative login options) if challeges 
+      * are provided in status else it navigates to Dashboard screen.
+      */
   onGetAllChallengeStatus(e) {
-    
-    if(onGetAllChallengeStatusSubscription){
+
+    if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
@@ -377,20 +376,20 @@ class PostLoginAuthMachine extends Component {
             i--;
           }
         }
-        
+
         console.log("PostAuth ------ getAllChallenges ---  " + JSON.stringify(chlngJson));
-        if(chlngJson.chlng.length > 0){
-           const nextChlngName = chlngJson.chlng[0].chlng_name;
-           this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        if (chlngJson.chlng.length > 0) {
+          const nextChlngName = chlngJson.chlng[0].chlng_name;
+          this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
         }
-        else{
+        else {
           alert("Challenge not configured");
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
       } else {
-        if(res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") || 
-           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")){
+        if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -400,9 +399,9 @@ class PostLoginAuthMachine extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-    
+
   }
-//get perticular challenge by challege name from challege array.
+  //get perticular challenge by challege name from challege array.
   getChallengesByName(chlngName) {
     challengeName = chlngName;
     Events.trigger('showLoader', true);
@@ -416,29 +415,29 @@ class PostLoginAuthMachine extends Component {
       })
     }).done();
   }
- /**
-   * This method is called by TwoFactorAuthMachine to submit the challenges with responses.
-   * It calls checkChallenge of Native Bridge which inturn calls checkChallenge of RDNA. 
-   */
+  /**
+    * This method is called by TwoFactorAuthMachine to submit the challenges with responses.
+    * It calls checkChallenge of Native Bridge which inturn calls checkChallenge of RDNA. 
+    */
   callCheckChallenge() {
-     if(Main.isConnected){
+    if (Main.isConnected) {
 
-    console.log("onCheckChallengeResponse ----- show loader");
-    Events.trigger('showLoader', true);
-    console.log('----- Main.dnaUserName ' + Main.dnaUserName);
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
-        if (response[0].error === 0) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-          alert(response[0].error);
-        }
-      });
-    }).done();
-     }else{
-       alert("Please check your internet connection");
-     }
+      console.log("onCheckChallengeResponse ----- show loader");
+      Events.trigger('showLoader', true);
+      console.log('----- Main.dnaUserName ' + Main.dnaUserName);
+      AsyncStorage.getItem('userId').then((value) => {
+        ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
+          if (response[0].error === 0) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+            alert(response[0].error);
+          }
+        });
+      }).done();
+    } else {
+      alert("Please check your internet connection");
+    }
   }
 }
 

@@ -32,7 +32,7 @@
  ALWAYS NEED
  */
 import ReactNative from 'react-native';
-import React from 'react';
+import React, { Component, } from 'react';
 import Skin from '../../Skin';
 
 
@@ -96,7 +96,6 @@ const {
   InteractionManager
 } = ReactNative;
 
-const {Component} = React;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -506,7 +505,7 @@ class TwoFactorAuthMachine extends Component {
    * are provided in status else it navigates to Dashboard screen.
    */
   onGetAllChallengeStatus(e) {
-    
+
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
@@ -575,6 +574,7 @@ class TwoFactorAuthMachine extends Component {
   }
 
 
+  //render screen based on a id pass to it.
   renderScene(route, nav) {
     const id = route.id;
     console.log('---------- renderScene ' + id + ' url ' + route.url);
@@ -722,7 +722,7 @@ class TwoFactorAuthMachine extends Component {
       currentIndex--;
       obj.stateNavigator.pop();
     } else {
-        obj.resetChallenge();
+      obj.resetChallenge();
     }
   }
 
@@ -811,8 +811,8 @@ class TwoFactorAuthMachine extends Component {
       //        'onForgotPasswordStatus',
       //        this.onForgotPasswordStatus
       //      );
-      
-      if(onForgotPasswordStatusSubscription){
+
+      if (onForgotPasswordStatusSubscription) {
         onForgotPasswordStatusSubscription.remove();
         onForgotPasswordStatusSubscription = null;
       }

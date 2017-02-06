@@ -59,58 +59,16 @@ export default class QuestionSet extends Component {
       secQue: '',
       secAnswer: '',
     };
-
-    this._props = {
-      url: {
-        chlng_idx: 1,
-        sub_challenge_index: 0,
-        chlng_name: "secqa",
-        chlng_type: 2,
-        challengeOperation: 1,
-        chlng_prompt: [[
-          "What is the last name of your third grade teacher?",
-          "What was the name of the boy/girl you had your second kiss with?",
-          "What was the name of your second dog/cat/goldfish/etc?",
-          "Where were you when you had your first alcoholic drink (or cigarette)?",
-          "When you were young, what did you want to be when you grew up?",
-        ]],
-        chlng_info: [
-          {
-            key: "Prompt label",
-            value: "Secret Question",
-          }, {
-            key: "Response label",
-            value: "Secret Answer",
-          }, {
-            key: "Description",
-            value: "Choose your secret question and then provide answer",
-          }, {
-            key: "Reading",
-            value: "Set secret question and answer",
-          },
-        ],
-        chlng_resp: [
-          {
-            challenge: '',
-            response: '',
-          },
-        ],
-        challenge_response_policy: [],
-        chlng_response_validation: false,
-        attempts_left: 3,
-        currentIndex: 1,
-      },
-    };
   }
- /*
-    This is life cycle method of the react native component.
-    This method is called when the component is Mounted/Loaded.
-  */
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+   */
   componentDidMount() {
-        BackAndroid.addEventListener('hardwareBackPress', function() {
-            this.close();
-            return true;
-        }.bind(this));
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+      this.close();
+      return true;
+    }.bind(this));
     // console.log('----- QuestionSet - componentDidMount');
     // console.log(this.props);
     const prompts = [
@@ -132,9 +90,9 @@ export default class QuestionSet extends Component {
   onQuestionChange(event) {
     this.setState({ secQue: event.nativeEvent.text });
   }
- /*
-     onTextchange method for Answer TextInput
-   */
+  /*
+      onTextchange method for Answer TextInput
+    */
   onAnswerChange(event) {
     this.setState({ secAnswer: event.nativeEvent.text });
   }
@@ -160,7 +118,7 @@ export default class QuestionSet extends Component {
     }
   }
   /*
-     This method is used to return the tittle of Submit/Next button.
+     This method is used to return the text Submit/Continue for submit button.
    */
   btnText() {
     if (this.props.url.chlng_idx === this.props.url.chlngsCount) {
@@ -206,90 +164,90 @@ export default class QuestionSet extends Component {
       <View style={styles.divider} />
     );
   }
- /*
-      This method is used to handle the cancel button click or back button.
-    */
-   close() {
+  /*
+       This method is used to handle the cancel button click or back button.
+     */
+  close() {
     let responseJson = this.props.url.chlngJson;
     this.setState({ showCamera: false });
     Events.trigger('showPreviousChallenge');
   }
 
 
- /*
-     This method is used to render the componenet with all its element.
-   */
+  /*
+      This method is used to render the componenet with all its element.
+    */
   render() {
     return (
-        <MainActivation>
-      <View style={Skin.layout1.wrap}>
-        <StatusBar
-          style={Skin.layout1.statusbar}
-          backgroundColor={Skin.main.STATUS_BAR_BG}
-          barStyle={'default'} />
-        <View style={Skin.layout1.title.wrap}>
-          <Title onClose={() => {
-      this.close();
-      }}>
-      Activation
-      </Title>
+      <MainActivation>
+        <View style={Skin.layout1.wrap}>
+          <StatusBar
+            style={Skin.layout1.statusbar}
+            backgroundColor={Skin.main.STATUS_BAR_BG}
+            barStyle={'default'} />
+          <View style={Skin.layout1.title.wrap}>
+            <Title onClose={() => {
+              this.close();
+            } }>
+              Activation
+            </Title>
 
-        </View>
-        <View
-          style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
-          <View>
-            <View style={Skin.layout0.top.container}>
-              <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
-              <Margin
-                space={16}/>
-              <View
-                style={[
-                  Skin.baseline.textinput.wrap,
-                  this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
-                ]}>
-                <TextInput
-                  multiline
-                  style = {Skin.baseline.textinput.base}
-                  autoCorrect={false}
-                  placeholder={'Type/Select question'}
-                  ref={(component) => { this.quesInput = component; return this.quesInput; } }
-                  returnKeyType = {"next"}
-                  placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-                  onChange={this.onQuestionChange.bind(this) }
-                  />
-              </View>
-              <Margin
-                space={8}/>
-              <View style={styles.listViewWrap}>
-                <ListView
-                  ref="listView"
-                  automaticallyAdjustContentInsets={false}
-                  dataSource={this.state.dataSource}
-                  renderRow={this.renderRow.bind(this) }
-                  renderSeperator={this.renderSeperator.bind(this) }
-                  style={styles.listView}
-                  showsVerticalScrollIndicator
-                  />
-              </View>
-              <Margin
-                space={8}/>
-              <View style={Skin.layout0.bottom.container}>
-                <Input
-                  placeholder={'Enter your secret answer'}
-                  onSubmitEditing={this.setSecrets.bind(this) }
-                  onChange={this.onAnswerChange.bind(this) }
-                  />
-                <Button
-                  label= {this.btnText() }
-                  onPress={this.setSecrets.bind(this) }/>
+          </View>
+          <View
+            style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
+            <View>
+              <View style={Skin.layout0.top.container}>
+                <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
+                <Margin
+                  space={16}/>
+                <View
+                  style={[
+                    Skin.baseline.textinput.wrap,
+                    this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
+                  ]}>
+                  <TextInput
+                    multiline
+                    style = {Skin.baseline.textinput.base}
+                    autoCorrect={false}
+                    placeholder={'Type/Select question'}
+                    ref={(component) => { this.quesInput = component; return this.quesInput; } }
+                    returnKeyType = {"next"}
+                    placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
+                    onChange={this.onQuestionChange.bind(this) }
+                    />
+                </View>
+                <Margin
+                  space={8}/>
+                <View style={styles.listViewWrap}>
+                  <ListView
+                    ref="listView"
+                    automaticallyAdjustContentInsets={false}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this) }
+                    renderSeperator={this.renderSeperator.bind(this) }
+                    style={styles.listView}
+                    showsVerticalScrollIndicator
+                    />
+                </View>
+                <Margin
+                  space={8}/>
+                <View style={Skin.layout0.bottom.container}>
+                  <Input
+                    placeholder={'Enter your secret answer'}
+                    onSubmitEditing={this.setSecrets.bind(this) }
+                    onChange={this.onAnswerChange.bind(this) }
+                    />
+                  <Button
+                    label= {this.btnText() }
+                    onPress={this.setSecrets.bind(this) }/>
+                </View>
               </View>
             </View>
+
           </View>
 
         </View>
-
-      </View>
-        </MainActivation>
+      </MainActivation>
     );
 
 

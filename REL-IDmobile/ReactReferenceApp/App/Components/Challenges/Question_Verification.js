@@ -83,7 +83,7 @@ export default class QuestionVerification extends Component {
     }
   }
   /*
-     This method is used to return the tittle of Submit/Next button.
+     This method is used to return the text Submit/Continue for submit button.
    */
   btnText() {
     if (this.props.url.chlngJson.chlng_idx === this.props.url.chlngsCount) {
@@ -103,7 +103,7 @@ export default class QuestionVerification extends Component {
     This method is used to render the componenet with all its element.
   */
   render() {
-     return (
+    return (
       <MainActivation>
         <View style={Skin.layout1.content.wrap}>
 

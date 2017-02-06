@@ -1,33 +1,46 @@
+/**
+ *  use to edit/update regisert option . 
+ */
 
+'use strict';
 
-import React from 'react';
+/*
+ ALWAYS NEED
+ */
+import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import Skin from '../../Skin';
+
+/*
+ Required for this js
+ */
+import {Text, View, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage, Alert, AlertIOS, Platform, InteractionManager, BackAndroid, } from 'react-native';
 import Events from 'react-native-simple-events';
-//import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import TouchID from 'react-native-touch-id';
+import ModalPicker from 'react-native-modal-picker'
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+/*
+ Use in this js
+ */
+import Skin from '../../Skin';
+import MainActivation from '../Container/MainActivation';
+import Main from '../Container/Main';
+
+
+
+/*
+ Custom View
+ */
 import Title from '../view/title';
 import Button from '../view/button';
 import Checkbox from '../view/checkbox';
 import Input from '../view/input';
 import Margin from '../view/margin';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-import TouchID from 'react-native-touch-id';
-import MainActivation from '../Container/MainActivation';
-import ModalPicker from 'react-native-modal-picker'
-import Main from '../Container/Main';
-import { NativeModules, NativeEventEmitter } from 'react-native';
-const errors = {
-  "LAErrorAuthenticationFailed": "Authentication was not successful because the user failed to provide valid credentials.",
-  "LAErrorUserCancel": "Authentication was canceled by the user—for example, the user tapped Cancel in the dialog.",
-  "LAErrorUserFallback": "Authentication was canceled because the user tapped the fallback button (Enter Password).",
-  "LAErrorSystemCancel": "Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up.",
-  "LAErrorPasscodeNotSet": "Authentication could not start because the passcode is not set on the device.",
-  "LAErrorTouchIDNotAvailable": "Authentication could not start because Touch ID is not available on the device",
-  "LAErrorTouchIDNotEnrolled": "Authentication could not start because Touch ID has no enrolled fingers.",
-  "RCTTouchIDUnknownError": "Could not authenticate for an unknown reason.",
-  "RCTTouchIDNotSupported": "Device does not support Touch ID."
-};
 
+/*
+  INSTANCES
+ */
 let subscriptions;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
@@ -35,7 +48,6 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
-//onUpdateChallengeStatus
 
 //Facebook login code
 const FBSDK = require('react-native-fbsdk');
@@ -48,20 +60,6 @@ const {
 } = FBSDK;
 
 
-const {
-  Text,
-  View,
-  ScrollView,
-  StatusBar,
-  DeviceEventEmitter,
-  AsyncStorage,
-  Alert,
-  AlertIOS,
-  Platform,
-  InteractionManager,
-  BackAndroid,
-} = ReactNative;
-const {Component} = React;
 
 var obj;
 let onGetAllChallengeStatusSubscription;
@@ -106,107 +104,31 @@ class RegisterOptionScene extends Component {
     this.renderIf = this.renderIf.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
   }
+  /*
+This is life cycle method of the react native component.
+This method is called when the component will start to load
+*/
+  componentWillMount() {
+    if (Platform.OS === "ios")
+      this.isTouchPresent();
 
-  onGetAllChallengeStatus(e) {
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
-    var $this = this;
-    Events.trigger('hideLoader', true);
-    this.state.showOptions = true;
-    const res = JSON.parse(e.response);
-    console.log(res);
-    if (res.errCode === 0) {
-      const statusCode = res.pArgs.response.StatusCode;
-      if (statusCode === 100) {
-        var arrTba = new Array();
-        const chlngJson = res.pArgs.response.ResponseData;
-        for (var i = 0; i < chlngJson.chlng.length; i++) {
-          if (chlngJson.chlng[i].chlng_name === 'secqa') {
-            Main.enableUpdateSecqaOption = true;
-          }
-
-          if (chlngJson.chlng[i].chlng_name === 'tbacred')
-            arrTba.push(chlngJson.chlng[i]);
-        }
-
-        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
-
-          if (arrTba.length > 0) {
-            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-              if (value) {
-                try {
-                  value = JSON.parse(value);
-                  this.state.rpass = value.RPasswd;
-                  if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } };
-                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
-                  } else {
-
-                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
-                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
-
-                  }
-
-                  // this.forceUpdate();
-                } catch (e) { }
-              }
-            }).done();
-          } else {
-            this.props.navigator.pop();
-          }
-        } else {
-          this.props.navigator.pop();
-        }
-
-        //        //var arrChlng = chlngJson.chlng;
-        //        var selectedChlng;
-        //        var status = 0;
-        //        for(var i = 0; i < chlngJson.chlng.length; i++){
-        //          var chlng = chlngJson.chlng[i];
-        //          if(chlng.chlng_name === challengeName){
-        //
-        //          }else{
-        //            chlngJson.chlng.splice(i, 1);
-        //            i--;
-        //          }
-        //        }
-        //
-        //        const nextChlngName = chlngJson.chlng[0].chlng_name;
-        //        this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-
-      } else {
-        alert(res.pArgs.response.StatusMsg);
-      }
-    } else {
-      console.log('Something went wrong');
-      // If error occurred reload devices list with previous response
-    }
+    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+      this.onGetAllChallengeStatus.bind(this));
+    obj = this;
   }
-
-  isTouchPresent() {
-    var $this = this;
-    TouchID.isSupported()
-      .then((supported) => {
-        // Success code
-        console.log('TouchID is supported.');
-        $this.isTouchIDPresent = true;
-      })
-      .catch((error) => {
-        // Failure code
-        console.log(error);
-        $this.isTouchIDPresent = false;
-      });
-  }
-
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component is Mounted/Loaded.
+*/
   componentDidMount() {
     BackAndroid.addEventListener('hardwareBackPress', function () {
       return true;
     }.bind(this));
-
     InteractionManager.runAfterInteractions(() => {
-
       if (Main.isConnected) {
         Events.trigger('showLoader', true);
         ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
@@ -218,7 +140,6 @@ class RegisterOptionScene extends Component {
           }
         });
       } else {
-
         Alert.alert(
           '',
           'Please check your internet connection',
@@ -276,82 +197,92 @@ class RegisterOptionScene extends Component {
     });
   }
 
-  componentWillMount() {
-    if (Platform.OS === "ios")
-      this.isTouchPresent();
 
+  //Callback of getAllChallenges
+  onGetAllChallengeStatus(e) {
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
+    var $this = this;
+    Events.trigger('hideLoader', true);
+    this.state.showOptions = true;
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
+      if (statusCode === 100) {
+        var arrTba = new Array();
+        const chlngJson = res.pArgs.response.ResponseData;
+        for (var i = 0; i < chlngJson.chlng.length; i++) {
+          if (chlngJson.chlng[i].chlng_name === 'secqa') {
+            Main.enableUpdateSecqaOption = true;
+          }
 
-//    onGetAllChallengeEventx = DeviceEventEmitter.addListener(
-//      'onGetAllChallengeStatus',
-//      this.onGetAllChallengeStatus
-//    );
-    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-                                                                                       this.onGetAllChallengeStatus.bind(this));
+          if (chlngJson.chlng[i].chlng_name === 'tbacred')
+            arrTba.push(chlngJson.chlng[i]);
+        }
 
+        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
 
-    // AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
-    //   if (userPrefs) {
-    //     try {
-    //       userPrefs = JSON.parse(userPrefs);
-    //       if (userPrefs.defaultLogin === 'none') {
-    //         this.setState({
-    //           defaultLogin: "none",
-    //           modalInitValue: "None"
-    //         });
-    //       }
-    //       else {
-    //         alert(userPrefs.defaultLogin);
-    //         this.setState({
-    //           defaultLogin: value.defaultLogin,
-    //           modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label
-    //         });
-    //       }
-    //     }
-    //     catch (e) { }
-    //   }
-    // });
+          if (arrTba.length > 0) {
+            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+              if (value) {
+                try {
+                  value = JSON.parse(value);
+                  this.state.rpass = value.RPasswd;
+                  if (value.ERPasswd && value.ERPasswd !== "empty") {
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
+                  } else {
 
-    obj = this;
-    /** Uncomment if you want to go to DashBoard if all tbacreds are registered */
-    // var isCheck = false;
-    // for (var i = 0; i < this.state.url.chlngJson.chlng.length; i++) {
-    //   var chlng = this.state.url.chlngJson.chlng[i];
-    //   if (chlng.chlng_prompt[0].length > 0) {
-    //     var promts = JSON.parse(chlng.chlng_prompt[0]);
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
 
-    //     if (promts.is_registered == false) {
-    //       isCheck = true;
-    //       break;
-    //     }
-    //   }
-    // }
+                  }
 
-    // if (isCheck == false) {
-    //   if (this.state.url.touchCred.isTouch == true) {
-    //     this.doNavigateDashBoard();
-    //   }
-    // }
-    //-----------
-
-
-
+                  // this.forceUpdate();
+                } catch (e) { }
+              }
+            }).done();
+          } else {
+            this.props.navigator.pop();
+          }
+        } else {
+          this.props.navigator.pop();
+        }
+      } else {
+        alert(res.pArgs.response.StatusMsg);
+      }
+    } else {
+      console.log('Something went wrong');
+      // If error occurred reload devices list with previous response
+    }
   }
 
+//check device touchid feature supported or not
+  isTouchPresent() {
+    var $this = this;
+    TouchID.isSupported()
+      .then((supported) => {
+        // Success code
+        console.log('TouchID is supported.');
+        $this.isTouchIDPresent = true;
+      })
+      .catch((error) => {
+        // Failure code
+        console.log(error);
+        $this.isTouchIDPresent = false;
+      });
+  }
+
+
+//back to dashboard on click of cross button or android back button.
   close() {
     this.doNavigateDashBoard();
   }
 
-  selectdevice() {
-    if (this.state.device.length == 0) {
-      this.setState({ device: true });
-    } else {
-      this.setState({ device: false });
-    }
-  }
+//call when we cllck on touchid option
   selecttouchid() {
     if (this.state.touchid === false) {
       this._clickHandler();
@@ -366,7 +297,7 @@ class RegisterOptionScene extends Component {
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
   }
-
+//call when we cllck on pattern option
   selectpattern() {
     if (this.state.pattern === false) {
       this.doPatternSet();
@@ -386,7 +317,7 @@ class RegisterOptionScene extends Component {
   selectMakePermanent() {
 
   }
-
+//call when we cllck on skipwelcome option
   selectskipwelcome() {
     if (this.state.welcome === false) {
       this.setState({ welcome: true });
@@ -394,7 +325,7 @@ class RegisterOptionScene extends Component {
       this.setState({ welcome: false });
     }
   }
-
+//call when we cllck on facebook option
   selectfb() {
     if (this.state.wechat.length == 0) {
       this.doFacebookLogin();
@@ -406,10 +337,10 @@ class RegisterOptionScene extends Component {
       respo[0].response = " ";
     }
   }
+  //call when we cllck on rememberuser option
   selectrememberusername() {
     if (this.state.rememberusername.length == 0) {
       this.setState({ rememberusername: '\u2714' });
-
       AsyncStorage.getItem('userId').then((value) => {
         AsyncStorage.setItem("rememberuser", value);
       });
@@ -418,22 +349,16 @@ class RegisterOptionScene extends Component {
       AsyncStorage.setItem("rememberuser", 'empty');
     }
   }
-  selectwelcomescreen() {
-    if (this.state.welcomescreen.length == 0) {
-      this.setState({ welcomescreen: '\u2714' });
-    } else {
-      this.setState({ welcomescreen: '' });
-    }
-  }
 
+// callback of pattern screen
   onSetPattern(data) {
     this.props.navigator.pop();
     this.setState({ pattern: true });
   }
 
+//show all login option and defaultLogin option
   getLoginOptions() {
     let index = 0;
-
     let data = [
       {
         key: 'title',
@@ -483,15 +408,16 @@ class RegisterOptionScene extends Component {
         }
       }
     }
-
     return data
   }
 
+//call when we change defaultLogin option
   changeDefaultLogin(option) {
     this.state.defaultLogin = option.key;
     this.setState({ defaultLogin: option.key })
   }
 
+//call to save defaultLogin option 
   saveDefaultLoginPrefs() {
     if (this.state.defaultLogin) {
       var data = JSON.stringify({ defaultLogin: this.state.defaultLogin });
@@ -507,13 +433,11 @@ class RegisterOptionScene extends Component {
     //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if(onUpdateChallengeStatusSubscription){
-    onUpdateChallengeStatusSubscription.remove();
+    if (onUpdateChallengeStatusSubscription) {
+      onUpdateChallengeStatusSubscription.remove();
       onUpdateChallengeStatusSubscription = null;
     }
-
     console.log(res);
-
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
       console.log('UpdateAuthMachine - statusCode ' + statusCode);
@@ -597,6 +521,7 @@ class RegisterOptionScene extends Component {
     }
   }
 
+//navigate to pattern screen
   doPatternSet() {
     this.props.navigator.push({
       id: 'pattern',
@@ -727,7 +652,6 @@ class RegisterOptionScene extends Component {
   }
 
   encrypytPasswdiOS() {
-
     if (Platform.OS === 'ios') {
       AsyncStorage.getItem(Main.dnaUserName).then((value) => {
         if (value) {
@@ -759,18 +683,18 @@ class RegisterOptionScene extends Component {
     if (this.state.facebook != this.state.isFacebookRegisteredWithServer) {
 
       if (Main.isConnected) {
-//        subscriptions = DeviceEventEmitter.addListener(
-//          'onUpdateChallengeStatus',
-//          this.onUpdateChallengeResponseStatus.bind(this)
-//        );
-        
-        if(onUpdateChallengeStatusSubscription){
+        //        subscriptions = DeviceEventEmitter.addListener(
+        //          'onUpdateChallengeStatus',
+        //          this.onUpdateChallengeResponseStatus.bind(this)
+        //        );
+
+        if (onUpdateChallengeStatusSubscription) {
           onUpdateChallengeStatusSubscription.remove();
           onUpdateChallengeStatusSubscription = null;
         }
-//        
+        //        
         onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
-                                                                                           this.onUpdateChallengeStatus.bind(this));
+          this.onUpdateChallengeStatus.bind(this));
 
 
         AsyncStorage.getItem('userId').then((value) => {
@@ -802,7 +726,7 @@ class RegisterOptionScene extends Component {
       this.doNavigateDashBoard();
     }
   }
-
+// navigate to dashboard
   doNavigateDashBoard() {
     this.props.navigator.popToTop();
   }
