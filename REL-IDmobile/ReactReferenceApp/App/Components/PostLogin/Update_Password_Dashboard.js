@@ -238,7 +238,7 @@ export default class UpdatePasswordSet extends Component {
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
             <View style={[Skin.layout1.wrap, { marginTop: 20 }]}>
-              <ScrollView style={Skin.layout1.content.scrollwrap}>
+              <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
                 <View style={Skin.layout1.content.wrap}>
                   <View style={Skin.layout1.content.container}>
                     <View style={Skin.layout1.content.top.container}>

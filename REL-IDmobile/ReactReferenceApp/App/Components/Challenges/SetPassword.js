@@ -150,7 +150,7 @@ This method is called when the component will start to load
               Registration
             </Title>
           </View>
-          <ScrollView style={Skin.layout1.content.scrollwrap}>
+          <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
                 <View style={Skin.layout1.content.top.container}>
