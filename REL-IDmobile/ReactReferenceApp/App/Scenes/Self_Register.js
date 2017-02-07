@@ -65,11 +65,11 @@ class Register extends Component {
 
     this.close = this.close.bind(this);
   }
- /*
-   This is life cycle method of the react native component.
-   This method is called when the component will start to load
-   */
-componentWillMount() {
+  /*
+    This is life cycle method of the react native component.
+    This method is called when the component will start to load
+    */
+  componentWillMount() {
     obj = this;
     this.state.value = 0;
     InteractionManager.runAfterInteractions(() => {
@@ -95,7 +95,7 @@ componentWillMount() {
     this.keyboardWillHideListener.remove()
   }
 
-//use to change checkbox UI from checked to uncheck or uncheck to check.
+  //use to change checkbox UI from checked to uncheck or uncheck to check.
   selectCheckbox() {
     if (!this.state.check) {
       this.setState({ check: true });
@@ -149,7 +149,7 @@ componentWillMount() {
     return reg.test(phone)
   }
 
-// check all fields are filled with valid data to call registerUser.
+  // check all fields are filled with valid data to call registerUser.
   validateAndProcced() {
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
       && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
@@ -165,18 +165,18 @@ componentWillMount() {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
-      if(Main.isConnected){
+      if (Main.isConnected) {
         this.registerUser();
-      }else{
+      } else {
         this.showMessage("Error", "Please check your internet connection", false);
       }
-      
+
     } else {
       this.showMessage("Error", "Accept Terms and Conditions", false);
     }
   }
 
-//RegisterUser on currentProfile.
+  //RegisterUser on currentProfile.
   registerUser() {
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
@@ -242,7 +242,7 @@ componentWillMount() {
 
   }
 
-//show alert dailog with msg and title pass to it
+  //show alert dailog with msg and title pass to it
   showMessage(title, msg, press) {
     Alert.alert(
       title,
@@ -260,10 +260,10 @@ componentWillMount() {
       }]
     )
   }
- /*
-    This method is used to get the confirmEmail and submit the same as a challenge response and call showNextChallenge.
-  */
-    checkUsername() {
+  /*
+     This method is used to get the confirmEmail and submit the same as a challenge response and call showNextChallenge.
+   */
+  checkUsername() {
     this.state.progress = 0;
     var un = this.state.confirmEmail;
     if (un.length > 0) {
@@ -283,7 +283,7 @@ componentWillMount() {
     }
   }
 
-//Return platform specific webView to term and Conditions Page.
+  //Return platform specific webView to term and Conditions Page.
   getWebView() {
     if (Platform.OS === 'ios') {
       return (
@@ -318,9 +318,9 @@ componentWillMount() {
     }
   }
 
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <MainActivation>
@@ -386,6 +386,7 @@ componentWillMount() {
                     placeholder={'Confirm Email'}
                     ref={'confirmEmail'}
                     keyboardType={'email-address'}
+                    returnKeyType={'next'}
                     enablesReturnKeyAutomatically={true}
                     autoFocus={false}
                     autoCorrect={false}
@@ -407,7 +408,7 @@ componentWillMount() {
                     returnKeyType={"done"}
                     value={this.state.phoneNumber}
                     onChange={this.onPhoneNumberChange.bind(this) } />
-                    
+
                   <Text style={Skin.layout1.content.slider.text}>
                     Slide to prove you{"'"}re human
                   </Text>
