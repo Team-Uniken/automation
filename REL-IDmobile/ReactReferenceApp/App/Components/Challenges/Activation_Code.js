@@ -374,7 +374,6 @@ class Activation_Code extends Component {
                   styleInputView={[{ width: Skin.SCREEN_WIDTH - 100 }]}
                   styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}
-
                   placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}
                   onChange={this.onActivationCodeChange.bind(this) }
                   onSubmitEditing={() => { dismissKeyboard(); this.checkActivationCode(); } }/>

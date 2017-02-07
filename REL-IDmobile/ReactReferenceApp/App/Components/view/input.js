@@ -49,7 +49,6 @@ class Input extends Component {
            returnKeyLabel={this.props.returnKeyLabel}
            secureTextEntry={this.props.secureTextEntry}
            selectionColor={Skin.colors.BUTTON_BG_COLOR}
-           autoFocus = {this.props.autoFocus}
            onChange={this.props.onChange}
            onSubmitEditing={this.props.onSubmitEditing}
            onFocus={()=>{this.setFocus(true)}}

@@ -384,6 +384,7 @@ module.exports.baseline = {
     placeholderTextColor: INPUT_PLACEHOLDER_COLOR,
     wrapfocus: {
       borderBottomColor: INPUT_BD_COLOR,
+      backgroundColor:'#141414'
     },
     wrap: {
       borderColor: 'transparent',
