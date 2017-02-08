@@ -150,6 +150,7 @@ This method is called when the component will start to load
               Registration
             </Title>
           </View>
+          
           <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
@@ -200,7 +201,7 @@ This method is called when the component will start to load
                 label={Skin.text['1']['1'].submit_button}/>
             </View>
           </View>
-          <KeyboardSpacer topSpacing={-40}/>
+          <KeyboardSpacer topSpacing={-30}/>
         </View>
       </MainActivation>
     );

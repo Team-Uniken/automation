@@ -289,10 +289,11 @@ export default class UpdatePasswordSet extends Component {
                     label={Skin.text['1']['1'].submit_button}/>
                 </View>
               </View>
-              <KeyboardSpacer topSpacing={-55}/>
+          <KeyboardSpacer topSpacing={-30}/>
             </View>
           </MainActivation>
         </View>
+
       </Main>
     );
 
