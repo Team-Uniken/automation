@@ -341,7 +341,7 @@ class AccessCode extends Component {
                   autoCapitalize={true}
                   secureTextEntry={true}
                   value={this.state.accessCode}
-                  styleInputView={[{ width: Skin.SCREEN_WIDTH - 100 }]}
+                  styleInputView={[{ width: Skin.SCREEN_WIDTH - 104 }]}
                   styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}
                   placeholderTextColor={Skin.layout1.content.code.placeholderTextColor}

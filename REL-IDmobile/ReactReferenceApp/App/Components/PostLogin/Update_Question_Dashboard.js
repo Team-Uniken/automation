@@ -139,7 +139,7 @@ export default class UpdateQuestionSet extends Component {
         style={styles.row}
         onPress={() => {
           this.setState({ secQue: rowData.msg });
-          this.quesInput.setNativeProps({ text: rowData.msg });
+          // this.quesInput.setNativeProps({ text: rowData.msg });
         } }
         underlayColor={Skin.colors.REPPLE_COLOR}
         activeOpacity={0.6}
@@ -207,54 +207,51 @@ export default class UpdateQuestionSet extends Component {
                     <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
                     <Margin
                       space={16}/>
-                    <View
-                      style={[
-                        Skin.baseline.textinput.wrap,
-                        this.state.hasFocus ? Skin.baseline.textinput.wrapfocus : {}
-                      ]}>
-                      <TextInput
-                        multiline
-                        style = {Skin.baseline.textinput.base}
-                        autoCorrect={false}
-                        placeholder={'Type/Select question'}
-                        ref={(component) => { this.quesInput = component; return this.quesInput; } }
-                        returnKeyType = {"next"}
-                        placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-                        onChange={this.onQuestionChange.bind(this) }
-                        />
-                    </View>
-                    <Margin
-                      space={8}/>
-                    <View style={styles.listViewWrap}>
-                      <ListView
-                        ref="listView"
-                        automaticallyAdjustContentInsets={false}
-                        dataSource={this.state.dataSource}
-                        renderRow={this.renderRow.bind(this) }
-                        renderSeperator={this.renderSeperator.bind(this) }
-                        style={styles.listView}
-                        showsVerticalScrollIndicator
-                        />
-                    </View>
-                    <Margin
-                      space={8}/>
-                    <View style={Skin.layout0.bottom.container}>
-                      <Input
-                        placeholder={'Enter your secret answer'}
-                        onSubmitEditing={this.setSecrets.bind(this) }
-                        onChange={this.onAnswerChange.bind(this) }
-                        />
-                      <Button
-                        label= {this.btnText() }
-                        onPress={this.setSecrets.bind(this) }/>
-                    </View>
+                    <Input
+                      value={this.state.secQue}
+                      style = {Skin.baseline.textinput.base}
+                      autoCorrect={false}
+                      placeholder={'Type/Select question'}
+                      returnKeyType = {"next"}
+                      placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
+                      onChange={this.onQuestionChange.bind(this) }
+                      onSubmitEditing={() => {
+                        this.refs.secAnswer.focus();
+                      } }
+                      />
+                  <Margin
+                    space={8}/>
+                  <View style={styles.listViewWrap}>
+                    <ListView
+                      ref="listView"
+                      automaticallyAdjustContentInsets={false}
+                      dataSource={this.state.dataSource}
+                      renderRow={this.renderRow.bind(this) }
+                      renderSeperator={this.renderSeperator.bind(this) }
+                      style={styles.listView}
+                      showsVerticalScrollIndicator
+                      />
+                  </View>
+                  <Margin
+                    space={8}/>
+                  <View style={Skin.layout0.bottom.container}>
+                    <Input
+                      ref={'secAnswer'}
+                      placeholder={'Enter your secret answer'}
+                      onSubmitEditing={this.setSecrets.bind(this) }
+                      onChange={this.onAnswerChange.bind(this) }
+                      />
+                    <Button
+                      label= {this.btnText() }
+                      onPress={this.setSecrets.bind(this) }/>
                   </View>
                 </View>
               </View>
             </View>
+            </View>
           </MainActivation>
         </View>
-      </Main>
+      </Main >
     );
 
 
