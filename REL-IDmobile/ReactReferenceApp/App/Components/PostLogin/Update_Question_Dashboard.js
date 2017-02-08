@@ -16,6 +16,7 @@ import React, { Component, } from 'react';
 import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackAndroid, } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import Events from 'react-native-simple-events';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 /*
  Use in this js
@@ -233,14 +234,15 @@ export default class UpdateQuestionSet extends Component {
                       />
                   </View>
                   <Margin
-                    space={8}/>
+                  space={16}/>
+                <Input
+                  ref={'secAnswer'}
+                  placeholder={'Enter your secret answer'}
+                  onSubmitEditing={this.setSecrets.bind(this) }
+                  onChange={this.onAnswerChange.bind(this) }
+                  />
+                <KeyboardSpacer topSpacing={-30}/>
                   <View style={Skin.layout0.bottom.container}>
-                    <Input
-                      ref={'secAnswer'}
-                      placeholder={'Enter your secret answer'}
-                      onSubmitEditing={this.setSecrets.bind(this) }
-                      onChange={this.onAnswerChange.bind(this) }
-                      />
                     <Button
                       label= {this.btnText() }
                       onPress={this.setSecrets.bind(this) }/>
