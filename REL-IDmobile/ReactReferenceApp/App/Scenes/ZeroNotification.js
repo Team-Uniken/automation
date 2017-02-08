@@ -14,6 +14,7 @@ import ReactNative from 'react-native';
 import Events from 'react-native-simple-events';
 import {StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import Modal from 'react-native-simple-modal';
 
 /*
  Use in this js
@@ -37,10 +38,6 @@ let NotificationObtianedResponse;
 let obj;
 var notification = [];
 let onUpdateNotificationSubscription;
-
-
-
-
 
 /*
  *Sort notification row based on timestamp.
@@ -86,9 +83,7 @@ var SampleRow = React.createClass({
         obj.updateNotificationDetails(notification.notification_uuid, data.action);
         break;
       }
-
     }
-
   },
   render() {
     var body = this.props.notification.message.body;
@@ -187,9 +182,6 @@ var SampleRow = React.createClass({
                   {amount}
                 </Text>
               </View>
-
-
-
             </View>
             <View style={[Skin.notification.row, { marginTop: 8 }]}>
 
@@ -302,16 +294,24 @@ export default class NotificationMgmtScene extends Component {
     var ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
       rowHasChanged: (r1, r2) => r1 !== r2
-
     });
     notification = [];
+
     this.updateNotificationDetails = this.updateNotificationDetails.bind(this);
     this.getMyNotifications = this.getMyNotifications.bind(this);
     this.onGetNotificationsDetails = this.onGetNotificationsDetails.bind(this);
+    this.showAlertModal = this.showAlertModal.bind(this);
+    this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
+    this.onAlertModalOk = this.onAlertModalOk.bind(this);
+    this.dismissAlertModal = this.dismissAlertModal.bind(this);
+
     var data = this.renderListViewData(notification.sort(compare));
     this.state = {
-      dataSource: ds.cloneWithRows(data)
+      dataSource: ds.cloneWithRows(data),
+      alertMsg: "",
+      showAlert: false
     };
+    this.selectedAlertOp = true;
   }
   /*
   This is life cycle method of the react native component.
@@ -331,10 +331,9 @@ export default class NotificationMgmtScene extends Component {
       onUpdateNotificationSubscription = null;
     }
     onUpdateNotificationSubscription = onUpdateNotificationModuleEvt.addListener('onUpdateNotification',
-                                                                                 this.onUpdateNotification.bind(this));
-  
+      this.onUpdateNotification.bind(this));
   }
-      /*
+  /*
 This is life cycle method of the react native component.
 This method is called when the component will Unmount.
 */
@@ -345,22 +344,22 @@ This method is called when the component will Unmount.
       onUpdateNotificationSubscription = null;
     }
   }
- /*
-    This is life cycle method of the react native component.
-    This method is called when the component is Mounted/Loaded.
-  */
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+   */
   componentDidMount() {
     var listViewScrollView = this.refs.listView.getScrollResponder();
   }
- /**
-   *  show Notifications
-   */
+  /**
+    *  show Notifications
+    */
   showNotification(args) {
     obj.onGetNotificationsDetails(args);
   }
- /*
-   method to check is their any notification.
-  */
+  /*
+    method to check is their any notification.
+   */
   getMyNotifications() {
     if (Main.isConnected) {
       var recordCount = "0";
@@ -437,17 +436,23 @@ This method is called when the component will Unmount.
       //      this.setState({deviceCount: notificationList.notifications.length });
       var noti = notificationList.notifications;
 
-      this.setState({ notification: noti });
-      notification = noti;
+      if (noti.length > 0) {
+        if (this.state.showAlert === true) {
+          this.dismissAlertModal();
+        }
 
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
-      });
+        this.setState({ notification: noti });
+        notification = noti;
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+        });
+      } else {
+        this.showAlertModal("You have no pending notifications");
+      }
     } else {
       console.log('Something went wrong');
     }
   }
-
 
   onUpdateNotification(e) {
     const res = JSON.parse(e.response);
@@ -489,6 +494,28 @@ This method is called when the component will Unmount.
     }
   }
 
+  showAlertModal(msg) {
+    this.setState({
+      showAlert: true,
+      alertMsg: msg
+    });
+  }
+
+  dismissAlertModal() {
+    this.selectedAlertOp = false;
+    this.setState({
+      showAlert: false
+    });
+  }
+
+  onAlertModalOk() {
+    this.props.navigator.pop();
+  }
+
+  onAlertModalDismissed() {
+    //Do nothing for right now
+  }
+
   renderListViewData(s) {
     const data = [];
     let index = -1;
@@ -501,14 +528,15 @@ This method is called when the component will Unmount.
     });
     return data;
   }
+
   renderRow(rowData) {
     return <SampleRow
       {...rowData}
       style={Skin.appointmentrow.row} />
   }
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     //console.log('in render');
     return (
@@ -534,6 +562,7 @@ This method is called when the component will Unmount.
         }}
         navigator={this.props.navigator}
         >
+
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <ListView
             ref="listView"
@@ -541,9 +570,87 @@ This method is called when the component will Unmount.
             dataSource={this.state.dataSource}
             renderRow={this.renderRow} />
         </View>
+
+        <Modal
+          style={styles.modalwrap}
+          overlayOpacity={0.75}
+          offset={100}
+          open={this.state.showAlert}
+          modalDidOpen={() => console.log('modal did open') }
+          modalDidClose={() => {
+            if (this.selectedAlertOp) {
+              this.selectedAlertOp = false;
+              this.onAlertModalOk();
+            } else {
+              this.selectedAlertOp = false;
+              this.onAlertModalDismissed();
+            }
+          } }>
+          <View style={styles.modalTitleWrap}>
+            <Text style={styles.modalTitle}>
+              Alert
+            </Text>
+          </View>
+          <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+            {this.state.alertMsg}
+          </Text>
+          <View style={styles.border}></View>
+
+          <TouchableHighlight
+            onPress={() => {
+              this.selectedAlertOp = true;
+              this.setState({
+                showAlert: false
+              });
+            } }
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={styles.modalButton}>
+            <Text style={styles.modalButtonText}>
+              OK
+            </Text>
+          </TouchableHighlight>
+        </Modal>
       </Main>
     );
   }
 }
+
+//Styles for alert modal
+const styles = StyleSheet.create({
+  modalwrap: {
+    height: 150,
+    flexDirection: 'column',
+    borderRadius: 15,
+    backgroundColor: '#fff',
+  },
+  modalTitleWrap: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalTitle: {
+    color: Skin.colors.PRIMARY_TEXT,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+  },
+  modalButton: {
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalButtonText: {
+    textAlign: 'center',
+    color: '#268CFE',
+    fontSize: 16,
+  },
+  border: {
+    height: 1,
+    marginTop: 16,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+  }
+});
 
 module.exports = NotificationMgmtScene;

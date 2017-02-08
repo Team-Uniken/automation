@@ -229,16 +229,7 @@ class ControlPanel extends Component {
           });
         } else if (this.isNotificationScreenPresent() == 1) {
           Events.trigger('showNotification', e);
-          Alert.alert(
-            '',
-            'You have no Pending notifications',
-            [
-              { text: 'OK', onPress: () => this.props.navigator.pop(0) }
-            ]
-          )
-
         }
-
       } else {
         if (res.pArgs.response.StatusMsg == 'User not active or present') {
           console.log('User not active or present');
