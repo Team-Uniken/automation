@@ -81,7 +81,11 @@ if (Config.ENV == 'sandp') {
 } else if (Config.ENV == 'ubs') {
   var erelid = require("../../Connection_profiles/ubs.json");
   var welcome = require('../img/ubs.png')
+}else if (Config.ENV == 'cbc') {
+    var erelid = require("../../Connection_profiles/cbc.json");
+    var welcome = require('../img/ubs.png')
 }
+
 
 
 
