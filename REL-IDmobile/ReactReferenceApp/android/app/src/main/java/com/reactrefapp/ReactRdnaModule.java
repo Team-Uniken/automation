@@ -99,11 +99,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public String getApplicationFingerprint() {
-                return "avsguysdvnh23r76wejfhgqwvshnc7e3tru4251";
-            }
-
-            @Override
             public int onTerminate(final String s) {
                 Runnable runnable = new Runnable() {
                     @Override
@@ -443,7 +438,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         uName=userID;
         Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
         Logger.d(TAG , "----- userID " + userID);
-        int error = rdnaObj.checkChallenges(challengeRequestArray, userID);
+        int error = rdnaObj.checkChallengeResponse(challengeRequestArray, userID);
 
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
@@ -525,7 +520,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         Logger.d(TAG , "----- notificationID " + notificationID);
         Logger.d(TAG , "----- startReresponsecord " + response);
 
-        int error = rdnaObj.updateNotifications(notificationID, response);
+        int error = rdnaObj.updateNotification(notificationID, response);
         Logger.d(TAG , "----- error " + error);
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
@@ -711,8 +706,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     public void setCredentials(String username,String password,boolean val,Callback callback){
         rdnaiwaCreds = new RDNA.RDNAIWACreds();
         rdnaiwaCreds.userName = username;
-        rdnaiwaCreds.userPassword = password;
-        rdnaiwaCreds.status = val == true ? RDNA.RDNAIWAAuthStatus.AUTH_SUCCESS : RDNA.RDNAIWAAuthStatus.AUTH_CANCELLED;
+        rdnaiwaCreds.password = password;
+        rdnaiwaCreds.authStatus = val == true ? RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_SUCCESS : RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_CANCELLED;
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", 0);
         WritableArray writableArray = Arguments.createArray();
