@@ -568,6 +568,7 @@ This method is called when the component will Unmount.
             ref="listView"
             automaticallyAdjustContentInsets={false}
             dataSource={this.state.dataSource}
+            removeClippedSubviews={false}
             renderRow={this.renderRow} />
         </View>
 
