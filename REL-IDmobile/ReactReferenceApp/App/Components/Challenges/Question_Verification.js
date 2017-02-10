@@ -12,9 +12,9 @@ import ReactNative from 'react-native';
 /*
  Required for this js
  */
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Events from 'react-native-simple-events';
 import {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, BackAndroid, } from 'react-native'
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 
 /*
@@ -124,18 +124,19 @@ export default class QuestionVerification extends Component {
             <Text style={Skin.layout0.top.attempt}>
               Attempt left {this.props.url.chlngJson.attempts_left}
             </Text>
-            <TextInput
-              autoCorrect={ false }
-              ref={ 'answer' }
+
+            <Input
+              autoCorrect={false}
+              ref='answer'
               placeholder={ 'Enter Secret Answer' }
               onChange={ this.onAnswerChange.bind(this) }
               returnKeyType={ 'next' }
               secureTextEntry={ true }
               keyboardType={ 'default' }
-              placeholderTextColor={ Skin.PLACEHOLDER_TEXT_COLOR_RGB }
-              style = {[Skin.baseline.textinput.base, this.props.styleInput]}
               onSubmitEditing={ this.checkAnswer.bind(this) }
+              autoFocus={true}
               />
+            <KeyboardSpacer topSpacing={-30}/>
             <Margin
               space={16}/>
             <View style={Skin.layout0.bottom.container}>

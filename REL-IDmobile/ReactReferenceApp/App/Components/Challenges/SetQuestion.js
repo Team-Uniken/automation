@@ -151,7 +151,7 @@ export default class QuestionSet extends Component {
         onPress={() => {
           this.setState({ secQue: rowData.msg });
           // this.quesInput.setNativeProps({ text: rowData.msg });
-
+          this.refs.secAnswer.focus();
         } }
         underlayColor={Skin.colors.REPPLE_COLOR}
         activeOpacity={0.6}
@@ -196,7 +196,7 @@ export default class QuestionSet extends Component {
 
           </View>
           <View
-            style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
+            style={{ justifyContent: 'center' }}>
             <View>
               <View style={Skin.layout0.top.container}>
                 <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
