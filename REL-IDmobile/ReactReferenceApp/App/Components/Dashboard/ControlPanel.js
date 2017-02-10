@@ -410,9 +410,9 @@ class ControlPanel extends Component {
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value != null && value != undefined && value === "true") {
-        this.props.navigator.push({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
       } else {
-        this.props.navigator.push({
+        this.props.navigator.resetTo({
           id: "Welcome_Screen",
           //id: "Select_Login",
           title: "nextChlngName",
