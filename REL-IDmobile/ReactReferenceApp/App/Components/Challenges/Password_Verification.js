@@ -144,7 +144,7 @@ class PasswordVerification extends Component {
                   onSubmitEditing={ this.checkPassword.bind(this) }
                   onChange={ this.onPasswordChange.bind(this) }
                   enablesReturnKeyAutomatically={true}
-                  autoFocus={false}
+                  autoFocus={true}
                   autoCorrect={false}
                   autoComplete={false}
                   autoCapitalize={false}

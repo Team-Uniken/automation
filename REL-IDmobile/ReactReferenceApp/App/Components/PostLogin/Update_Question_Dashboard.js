@@ -182,7 +182,7 @@ export default class UpdateQuestionSet extends Component {
           disabled: true,
         }}
         navBar={{
-          title: 'Change Secret Question',
+          title: 'Change Secret',
           visible: true,
           tint: Skin.main.NAVBAR_TINT,
           left: {
