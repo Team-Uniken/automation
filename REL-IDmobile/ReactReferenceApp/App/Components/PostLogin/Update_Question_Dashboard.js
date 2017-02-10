@@ -140,6 +140,7 @@ export default class UpdateQuestionSet extends Component {
         style={styles.row}
         onPress={() => {
           this.setState({ secQue: rowData.msg });
+          this.refs.secAnswer.focus();
           // this.quesInput.setNativeProps({ text: rowData.msg });
         } }
         underlayColor={Skin.colors.REPPLE_COLOR}
@@ -198,28 +199,27 @@ export default class UpdateQuestionSet extends Component {
         }}
         navigator={this.props.navigator}
         >
-        <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+        <View style={{ backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
-            <View style={Skin.layout1.wrap}>
-              <View
-                style={{ height: Skin.SCREEN_HEIGHT - 100, justifyContent: 'center' }}>
-                <View>
-                  <View style={Skin.layout0.top.container}>
-                    <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
-                    <Margin
-                      space={16}/>
-                    <Input
-                      value={this.state.secQue}
-                      style = {Skin.baseline.textinput.base}
-                      autoCorrect={false}
-                      placeholder={'Type/Select question'}
-                      returnKeyType = {"next"}
-                      placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-                      onChange={this.onQuestionChange.bind(this) }
-                      onSubmitEditing={() => {
-                        this.refs.secAnswer.focus();
-                      } }
-                      />
+            <View
+              style={{ justifyContent: 'center' }}>
+              <View>
+                <View style={Skin.layout0.top.container}>
+                  <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
+                  <Margin
+                    space={160}/>
+                  <Input
+                    value={this.state.secQue}
+                    style = {Skin.baseline.textinput.base}
+                    autoCorrect={false}
+                    placeholder={'Type/Select question'}
+                    returnKeyType = {"next"}
+                    placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
+                    onChange={this.onQuestionChange.bind(this) }
+                    onSubmitEditing={() => {
+                      this.refs.secAnswer.focus();
+                    } }
+                    />
                   <Margin
                     space={8}/>
                   <View style={styles.listViewWrap}>
@@ -234,14 +234,14 @@ export default class UpdateQuestionSet extends Component {
                       />
                   </View>
                   <Margin
-                  space={16}/>
-                <Input
-                  ref={'secAnswer'}
-                  placeholder={'Enter your secret answer'}
-                  onSubmitEditing={this.setSecrets.bind(this) }
-                  onChange={this.onAnswerChange.bind(this) }
-                  />
-                <KeyboardSpacer topSpacing={-30}/>
+                    space={16}/>
+                  <Input
+                    ref={'secAnswer'}
+                    placeholder={'Enter your secret answer'}
+                    onSubmitEditing={this.setSecrets.bind(this) }
+                    onChange={this.onAnswerChange.bind(this) }
+                    />
+                  <KeyboardSpacer topSpacing={-30}/>
                   <View style={Skin.layout0.bottom.container}>
                     <Button
                       label= {this.btnText() }
@@ -249,7 +249,6 @@ export default class UpdateQuestionSet extends Component {
                   </View>
                 </View>
               </View>
-            </View>
             </View>
           </MainActivation>
         </View>
