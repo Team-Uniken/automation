@@ -207,7 +207,7 @@ export default class UpdateQuestionSet extends Component {
                 <View style={Skin.layout0.top.container}>
                   <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
                   <Margin
-                    space={160}/>
+                    space={16}/>
                   <Input
                     value={this.state.secQue}
                     style = {Skin.baseline.textinput.base}
