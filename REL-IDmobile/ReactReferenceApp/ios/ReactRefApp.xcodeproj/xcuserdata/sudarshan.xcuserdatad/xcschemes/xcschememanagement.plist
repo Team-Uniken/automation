@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>cbc.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
 		<key>nwd.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -43,6 +48,11 @@
 			<true/>
 		</dict>
 		<key>13B07F861A680F5B00A75B9A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1A6151AB1E4CDF5B00B3C9B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
