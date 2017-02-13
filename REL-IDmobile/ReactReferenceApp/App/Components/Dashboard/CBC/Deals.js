@@ -172,14 +172,16 @@ class Deals extends Component {
             backgroundColor: '#000000',
           }}>
             <Image
-              source={require('../../../img/stock.png') }
-              style={Skin.layout3.split.top.bg} />
+              source={require('../../../img/cbc.png') }
+              style={Skin.layout3.split.top.bg}
+  />
           </View>
+           
           <NavBar
             tintColor={'transparent'}
             statusBarTint={'transparent'}
             statusBarLight={'light-content'}
-            title={'Bank Of Uniken'}
+            title={''}
             titleTint={'#000000'}
             right={''}
             left={{
@@ -197,6 +199,7 @@ class Deals extends Component {
             flexDirection: 'column',
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
+            marginBottom:-15,
           }}>
             <Text style={{
               color: '#000000',
