@@ -589,7 +589,7 @@ class TwoFactorAuthMachine extends Component {
       if (Main.gotNotification === true) {
         return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       } else {
-        return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
+       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
       }
     }
     else if (id === 'SelfRegister') {
