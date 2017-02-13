@@ -21,6 +21,7 @@ import NWDDashboard from './NWD/Deals';
 import SandPDashbord from './SandP/homepage';
 import StockDashbord from './Stock/Deals';
 import UbsDashbord from './Ubs/homepage';
+import CBCDashbord from './CBC/homepage';
 
 
 class Dashboard extends Component {
@@ -58,6 +59,14 @@ class Dashboard extends Component {
                 title={this.props.title}
                 rdna={this.props.rdna}/>
       );
+    }else if (Config.ENV == 'cbc') {
+      return (
+              <CBCDashbord
+              navigator={this.props.navigator}
+              url={this.props.url}
+              title={this.props.title}
+              rdna={this.props.rdna}/>
+              );
     }
 
 

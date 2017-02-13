@@ -45,10 +45,8 @@
 		1A6151C81E4CDF5B00B3C9B2 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EADB2464F484FCB911B1B07 /* libRCTFBSDK.a */; };
 		1A6151C91E4CDF5B00B3C9B2 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
 		1A6151CA1E4CDF5B00B3C9B2 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
-		1A6151CC1E4CDF5B00B3C9B2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
 		1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
-		1A6151CF1E4CDF5B00B3C9B2 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		1A6151D11E4CDF5B00B3C9B2 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
 		1A6151ED1E4CE66200B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
 		1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
@@ -56,6 +54,11 @@
 		551E55A61E1BBE7A004F007A /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 552BB7DC1E1BA6260009F274 /* libReactNativeConfig.a */; };
 		551E55B91E1BBE8E004F007A /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 552BB7DC1E1BA6260009F274 /* libReactNativeConfig.a */; };
 		551E56091E1CE406004F007A /* ImagesS&PGlobal.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 551E56071E1CE0EE004F007A /* ImagesS&PGlobal.xcassets */; };
+		551EE2DE1E51BAE400ADAD6C /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
+		551EE2E01E51BB1200ADAD6C /* cbc.plist in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DF1E51BB1200ADAD6C /* cbc.plist */; };
+		551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
+		551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
+		551EE2E31E51C68D00ADAD6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
 		552BB7991E1BA0B90009F274 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		552BB79A1E1BA0B90009F274 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		552BB79B1E1BA0B90009F274 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -428,6 +431,8 @@
 		2EADB2464F484FCB911B1B07 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		424C93016AC84233830D863A /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		551E56071E1CE0EE004F007A /* ImagesS&PGlobal.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ImagesS&PGlobal.xcassets"; sourceTree = "<group>"; };
+		551EE2DD1E51BAE400ADAD6C /* cbc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cbc.ttf; sourceTree = "<group>"; };
+		551EE2DF1E51BB1200ADAD6C /* cbc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cbc.plist; sourceTree = "<group>"; };
 		552BB7C21E1BA0B90009F274 /* SandP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SandP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		552BB7D71E1BA6260009F274 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		558654DF1E12689500B01A6A /* logo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.ttf; sourceTree = "<group>"; };
@@ -906,6 +911,8 @@
 			isa = PBXGroup;
 			children = (
 				55D972051E40A0790082A2DF /* api-sdk */,
+				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
+				551EE2DD1E51BAE400ADAD6C /* cbc.ttf */,
 				65D7F7B11E30A3F9009ACC25 /* ubs.ttf */,
 				65D7F7621E309469009ACC25 /* ubs.plist */,
 				65079D161E1F7FE5005D9A11 /* stock.plist */,
@@ -1353,11 +1360,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				551EE2E31E51C68D00ADAD6C /* LaunchScreen.xib in Resources */,
+				551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */,
+				551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */,
 				1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */,
-				1A6151CC1E4CDF5B00B3C9B2 /* LaunchScreen.xib in Resources */,
 				1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */,
 				1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */,
-				1A6151CF1E4CDF5B00B3C9B2 /* gothic_0.TTF in Resources */,
 				1A6151D11E4CDF5B00B3C9B2 /* index.ios.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1399,11 +1407,13 @@
 				65127E101D795B4000FB36E1 /* LaunchScreen.xib in Resources */,
 				65127E111D795B4000FB36E1 /* icomoon.ttf in Resources */,
 				65127E121D795B4000FB36E1 /* App in Resources */,
+				551EE2DE1E51BAE400ADAD6C /* cbc.ttf in Resources */,
 				65127E131D795B4000FB36E1 /* gothic_0.TTF in Resources */,
 				65127E141D795B4000FB36E1 /* Images.xcassets in Resources */,
 				654B80E21DBE11780052D415 /* ReactRefAppDeveloper-Info.plist in Resources */,
 				65127E151D795B4000FB36E1 /* index.ios.js in Resources */,
 				65127E161D795B4000FB36E1 /* Info.plist in Resources */,
+				551EE2E01E51BB1200ADAD6C /* cbc.plist in Resources */,
 				1A6151ED1E4CE66200B3C9B2 /* ImagesCBC.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1756,10 +1766,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1df609cf-8bbf-4d5f-ae1a-da2a80ddcd22";
-				PROVISIONING_PROFILE_SPECIFIER = "NWD Distribution InHouse Profile";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
 			};
 			name = Debug;
 		};
@@ -1810,10 +1820,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.nwd;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1df609cf-8bbf-4d5f-ae1a-da2a80ddcd22";
-				PROVISIONING_PROFILE_SPECIFIER = "NWD Distribution InHouse Profile";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
 			};
 			name = Release;
 		};

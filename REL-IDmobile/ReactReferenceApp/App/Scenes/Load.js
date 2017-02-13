@@ -83,7 +83,7 @@ if (Config.ENV == 'sandp') {
   var welcome = require('../img/ubs.png')
 }else if (Config.ENV == 'cbc') {
     var erelid = require("../../Connection_profiles/cbc.json");
-    var welcome = require('../img/ubs.png')
+    var welcome = require('../img/cbc.png')
 }
 
 
