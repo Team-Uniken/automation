@@ -50,7 +50,6 @@
 		1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		1A6151CF1E4CDF5B00B3C9B2 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		1A6151D11E4CDF5B00B3C9B2 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
-		1A6151EB1E4CE2C600B3C9B2 /* cbc.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151D91E4CDF5C00B3C9B2 /* cbc.plist */; };
 		1A6151ED1E4CE66200B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
 		1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
 		1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
@@ -424,7 +423,6 @@
 		13B07F961A680F5B00A75B9A /* ReactRefApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A6151D81E4CDF5B00B3C9B2 /* cbc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cbc.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1A6151D91E4CDF5C00B3C9B2 /* cbc.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = cbc.plist; path = "/Users/james/Sites/Uniken/REL-ID_internal/REL-IDmobile/ReactReferenceApp/ios/cbc.plist"; sourceTree = "<absolute>"; };
 		1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBC.xcassets; sourceTree = "<group>"; };
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		2EADB2464F484FCB911B1B07 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
@@ -471,7 +469,7 @@
 		6582FD681D9526890075C15D /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		65D7F74B1E308FC8009ACC25 /* ubs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ubs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D7F7621E309469009ACC25 /* ubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ubs.plist; sourceTree = "<group>"; };
-		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = ImagesUBS.xcassets; path = ReactRefApp/ImagesUBS.xcassets; sourceTree = "<group>"; };
+		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesUBS.xcassets; sourceTree = "<group>"; };
 		65D7F7B11E30A3F9009ACC25 /* ubs.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ubs.ttf; sourceTree = "<group>"; };
 		6D45FA733C9846B1A939D5E9 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -810,6 +808,7 @@
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
+				65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */,
 				1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */,
 				55D351961E1E126F00806F82 /* ImagesStock.xcassets */,
 				551E56071E1CE0EE004F007A /* ImagesS&PGlobal.xcassets */,
@@ -908,7 +907,6 @@
 			children = (
 				55D972051E40A0790082A2DF /* api-sdk */,
 				65D7F7B11E30A3F9009ACC25 /* ubs.ttf */,
-				65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */,
 				65D7F7621E309469009ACC25 /* ubs.plist */,
 				65079D161E1F7FE5005D9A11 /* stock.plist */,
 				65079D141E1F7FDD005D9A11 /* sandp.plist */,
@@ -926,7 +924,6 @@
 				654F81C41CC9FAD5009E6168 /* ReactRefApp */,
 				654F81D61CC9FAE3009E6168 /* ReactRefAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
-				1A6151D91E4CDF5C00B3C9B2 /* cbc.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1357,7 +1354,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */,
-				1A6151EB1E4CE2C600B3C9B2 /* cbc.plist in Resources */,
 				1A6151CC1E4CDF5B00B3C9B2 /* LaunchScreen.xib in Resources */,
 				1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */,
 				1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */,
