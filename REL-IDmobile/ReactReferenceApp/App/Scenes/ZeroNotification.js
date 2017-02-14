@@ -85,7 +85,7 @@ var SampleRow = React.createClass({
         obj.setState({
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
-        });
+        },()=>{
         if (data.authlevel !== null && data.authlevel !== undefined) {
           if (data.authlevel == "1") {
             this.showModelForPassword();
@@ -101,6 +101,7 @@ var SampleRow = React.createClass({
         } else {
           obj.updateNotificationDetails();
         }
+                     });
         break;
       }
     }
