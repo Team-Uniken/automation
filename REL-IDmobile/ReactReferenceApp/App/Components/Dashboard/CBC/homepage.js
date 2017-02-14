@@ -192,7 +192,7 @@ class HomePage extends Component {
             tintColor={'transparent'}
             statusBarTint={'transparent'}
             statusBarLight={'light-content'}
-            title={Skin.admin.MENU_TITLE}
+            title={''}
             titleTint={Config.THEME_COLOR}
             right={''}
             left={{
