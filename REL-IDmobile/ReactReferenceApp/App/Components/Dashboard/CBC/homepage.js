@@ -174,8 +174,6 @@ class HomePage extends Component {
             width: 100,
             color: Config.THEME_COLOR,
             },
-
-            textStyle: {},
             handler: this.triggerDrawer
             },
             }}
@@ -201,7 +199,7 @@ class HomePage extends Component {
               color: Config.THEME_COLOR,
               fontSize: 24,
               textAlign: 'center',
-              marginTop: Skin.SCREEN_HEIGHT / 2 - 30
+              marginTop: Skin.SCREEN_HEIGHT / 2 - 90
             }}>
               Welcome to {Skin.admin.MENU_TITLE}
             </Text>
