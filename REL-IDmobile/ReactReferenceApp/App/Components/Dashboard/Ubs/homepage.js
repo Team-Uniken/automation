@@ -161,8 +161,25 @@ class HomePage extends Component {
         drawerState={this.props.drawerState}
         bottomMenu={this.props.menuState}
         navigator={this.props.navigator}
-        defaultNav={false}
-         bottomMenu={{
+        defaultNav={true}
+        navBar={{
+          title: Skin.admin.MENU_TITLE,
+          visible: true,
+          navBarLine: false,
+          left: {
+            icon: Skin.icon.user,
+            iconStyle: {
+              fontSize: 35,
+              paddingLeft: 17,
+              width: 100,
+              color: Config.THEME_COLOR,
+            },
+
+            textStyle: {},
+            handler: this.triggerDrawer
+          },
+        }}
+        bottomMenu={{
           visible: false,
         }}>
         <View style={[Skin.layout3.split.top.wrap, {
@@ -188,29 +205,9 @@ class HomePage extends Component {
             </Text>
 
           </View>
-          <NavBar
-            tintColor={'transparent'}
-            statusBarTint={'transparent'}
-            statusBarLight={'light-content'}
-            title={Skin.admin.MENU_TITLE}
-            titleTint={Config.THEME_COLOR}
-            right={''}
-            left={{
-              icon: Skin.icon.user,
-              iconStyle: {
-                fontSize: 35,
-                paddingLeft: 17,
-                width: 100,
-                color: Config.THEME_COLOR,
-              },
-              handler: this.triggerDrawer
-            }} />
-
         </View>
-      </Main>
-    )
+      </Main>)
   }
-
 }
 
 HomePage.propTypes = {
