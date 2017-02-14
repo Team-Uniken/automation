@@ -218,6 +218,10 @@ This method is called when the component will start to load
   }
   //tool bar 
   buildNavBar() {
+    var navBarLineHeight = 1;
+    if(this.props.navBar.navBarLine === false)
+      navBarLineHeight = 0;
+    
     if (this.props.defaultNav) {
       return (
         [<NavigationBar
@@ -240,7 +244,7 @@ This method is called when the component will start to load
           right={''}
           left={this.props.navBar.left}
           />,
-          <View style={{ height: 1, backgroundColor: Skin.main.TITLE_COLOR }}/>]
+         <View style={{ height: navBarLineHeight, backgroundColor: Skin.main.TITLE_COLOR }}/>]
       );
     }
   }
