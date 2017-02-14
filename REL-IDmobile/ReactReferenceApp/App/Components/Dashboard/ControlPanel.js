@@ -307,7 +307,7 @@ class ControlPanel extends Component {
                                                                                        this.onGetPostLoginChallenges.bind(this));
     challengeName = challengeToBeUpdated;
     console.log("onGetPostLoginChallenges ----- show loader");
-    Events.trigger('showLoader', true);
+//    Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
       ReactRdna.getPostLoginChallenges(value, useCaseName, (response) => {
@@ -379,7 +379,7 @@ class ControlPanel extends Component {
                                                                                          this.onGetAllChallengeStatus.bind(this));
 
       challengeName = chlngName;
-      Events.trigger('showLoader', true);
+//      Events.trigger('showLoader', true);
       AsyncStorage.getItem('userId').then((value) => {
         ReactRdna.getAllChallenges(value, (response) => {
           if (response) {
@@ -441,7 +441,7 @@ class ControlPanel extends Component {
 
    //This getAllChallenges method is only for updating menu options
   getAllChallenges() {
-    Events.trigger('showLoader', true);
+//    Events.trigger('showLoader', true);
     
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
