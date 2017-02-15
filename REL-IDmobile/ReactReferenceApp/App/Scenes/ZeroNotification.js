@@ -82,6 +82,7 @@ var SampleRow = React.createClass({
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
+                                  data.authlevel="2";
         obj.setState({
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
@@ -393,8 +394,10 @@ export default class NotificationMgmtScene extends Component {
         const pw = this.state.inputPassword;
         if (pw === value.RPasswd) {
           //Call update notification
+          obj.state.inputPassword='',
           this.updateNotificationDetails();
         } else {
+          obj.state.inputPassword='',
           alert('Entered password does not match');
         }
       } catch (e) { }
@@ -487,12 +490,19 @@ export default class NotificationMgmtScene extends Component {
           value = JSON.parse(value);
           if (value.RPasswd) {
             isAdditionalAuthSupported.pass = true;
-          }
+            }else{
+            isAdditionalAuthSupported.pass = false;
+            }
 
           if (value.ERPasswd && value.ERPasswd !== "empty") {
             isAdditionalAuthSupported.erpass = true;
-          }
-        } catch (e) { }
+            }else{
+              isAdditionalAuthSupported.erpass = false;
+            }
+        } catch (e) {isAdditionalAuthSupported.erpass = false;isAdditionalAuthSupported.pass = false; }
+      }else{
+        isAdditionalAuthSupported.erpass = false;
+        isAdditionalAuthSupported.pass = false;                                        
       }
     });
   }
