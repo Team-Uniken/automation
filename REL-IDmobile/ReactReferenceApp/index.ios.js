@@ -39,6 +39,8 @@ import ConnectionProfileScene from './App/Scenes/ConnectionProfile';    // impor
 import LoadScene from './App/Scenes/Load';                              // splash screen perform initialization 
 import Web from './App/Scenes/Web';                                               // retun platform specific WebView
 import NotificationMgmtScene from './App/Scenes/ZeroNotification';                // notification screen
+import Notification_History from './App/Scenes/Notification_History';                    //Notification_History Screen
+
 import ComingSoonScene from './App/Scenes/ComingSoon';                             // comming soon feature UI screen.
 import Register_Options from './App/Scenes/Register_Options';            // Provide all other option through which we can login like facebook,pattern,password
 import PatternLock from './App/Scenes/Screen_PatternLock';               //
@@ -279,7 +281,13 @@ class ReactRefApp extends Component {
                 url={route.url}
                 title={route.title}
                 rdna={route.DnaObject} />);
-    } else if (id === 'RegisterOptionScene') {
+    }else if (id === 'Notification_History') {
+      return (<Notification_History
+        navigator={nav}
+        url={route.url}
+        title={route.title}
+        rdna={route.DnaObject} />);
+    }else if (id === 'RegisterOptionScene') {
       return (<RegisterOptionScene
                 navigator={nav}
                 url={route.url}
