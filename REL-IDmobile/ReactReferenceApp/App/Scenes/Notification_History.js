@@ -148,7 +148,9 @@ class Notifications_History extends Component {
   */
   componentDidMount() {
         if (Main.isConnected) {
-      this.getNotificationHistory();
+          var a=0;
+          var b='';
+      this.getNotificationHistory(a,a,b,b,b,b,b,b,b);
     } else {
       Alert.alert(
         '',
