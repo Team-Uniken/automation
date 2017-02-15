@@ -185,6 +185,7 @@ class HomePage extends Component {
         <View style={[Skin.layout3.split.top.wrap, {
           justifyContent: 'space-between'
         }]}>
+
           <View style={{
             position: 'absolute',
             flex: 1,
@@ -200,6 +201,7 @@ class HomePage extends Component {
               fontSize: 24,
               textAlign: 'center',
               marginTop: Skin.SCREEN_HEIGHT / 2 - 90
+
             }}>
               Welcome to {Skin.admin.MENU_TITLE}
             </Text>

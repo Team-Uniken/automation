@@ -16,7 +16,6 @@ import Events from 'react-native-simple-events';
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-
 const {
   View,
   TouchableHighlight,
@@ -94,10 +93,8 @@ class PatternLock extends Component {
     BackAndroid.addEventListener('hardwareBackPress', this.close)
   }
 
-
-
-  componentWillUnmount(){
-    BackAndroid.removeEventListener('hardwareBackPress',this.close);
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this.close);
   }
 
   onSubmit() {
@@ -213,15 +210,15 @@ class PatternLock extends Component {
             //alert("pattern matched = " + userDataStr);
             this.msg = "";
             var resp = {
-              password:userData.password ,
+              password: userData.password,
               data: this.props.data
             }
 
             this.props.onUnlock(resp);
           }
           else {
-             this.refs["patternView"].clearPattern();
-             this.wrongAttempt();
+            this.refs["patternView"].clearPattern();
+            this.wrongAttempt();
           }
         }
         catch (e) {
@@ -339,7 +336,7 @@ class PatternLock extends Component {
   }
 
   close() {
-    if(this.refs["patternView"])
+    if (this.refs["patternView"])
       this.refs["patternView"].clearPattern();
     if (this.mode === "verify") {
       if (this.clearTimers) {
@@ -409,7 +406,7 @@ class PatternLock extends Component {
                       ref="patternView"
                       style={Skin.PatternLockStyle.patternlockview}
                       enablePatternDetection={true}
-                      pathColor="#929292" circleColor="#d92a2e" dotColor="#929292"
+                      pathColor="#929292" circleColor={Skin.THEME_COLOR} dotColor="#929292"
                       gridRows='3' gridColumns='3' onGetPattern = {this.onGetPattern.bind(this) }/>
 
                     <Text ref="error" style={Skin.PatternLockStyle.errorMsg}>{this.msg}</Text>

@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "1009571729745",
+    "project_id": "commercial-bank-of-chatam"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009571729745:android:6c53c3baea626749",
+        "android_client_info": {
+          "package_name": "com.uniken.cbc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0lhhEsufF8mL8vX0MH0Bha3zeWIMOft4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

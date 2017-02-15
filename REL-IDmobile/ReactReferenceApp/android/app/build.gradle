@@ -6,7 +6,7 @@ import com.android.build.OutputFile
 
 //project.ext.set("envConfigFiles", ["nwdDebug": ".env.nwd","sandpDebug":".env.sandp"])
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -124,6 +124,12 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
+        releaseCbc {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
     }
 
     productFlavors{
@@ -165,6 +171,15 @@ android {
             versionName "4.0"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
+        cbc{
+            applicationId 'com.uniken.cbc'
+            signingConfig signingConfigs.releaseCbc
+            minSdkVersion 16
+            targetSdkVersion 24
+            versionCode 11
+            versionName "1.1"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+        }
     }
 
     buildTypes {
@@ -172,7 +187,6 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-
     }
 //    applicationVariants.all { variant ->
 //        variant.outputs.each { output ->

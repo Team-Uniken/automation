@@ -406,7 +406,24 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                     }
                 };
                 callOnMainThread(runnable);
-                return 0;            }
+                return 0;
+            }
+
+            @Override
+            public int onGetNotificationsHistory(final String status) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", status);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onGetNotificationsHistory", params);
+                    }
+                };
+                callOnMainThread(runnable);
+                return 0;
+            }
         };
 
         RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, context);
@@ -514,6 +531,21 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
         callback.invoke(writableArray);
     }
+
+    @ReactMethod
+    public void getNotificationHistory(int recordCount,int startIndex,String enterpriseID,String startDate,String endDate,
+                               String notificationStatus,String notificationActionTaken,String keywordSearch,String deviceID,Callback callback){
+
+        int error = rdnaObj.getNotificationHistory(recordCount, startIndex,enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID);
+
+        Logger.d(TAG , "----- error " + error);
+        WritableMap errorMap = Arguments.createMap();
+        errorMap.putInt("error", error);
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
     @ReactMethod
     public void updateNotification(String notificationID, String response, Callback callback){
         Logger.d(TAG , "----- updateNotification ");

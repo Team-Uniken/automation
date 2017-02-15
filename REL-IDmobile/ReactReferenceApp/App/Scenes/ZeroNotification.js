@@ -12,9 +12,10 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import {StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, } from 'react-native';
+import {StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
+import TouchID from 'react-native-touch-id';
 
 /*
  Use in this js
@@ -26,7 +27,7 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onUpdateNotificationModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 /*
-  INSTANCES
+ INSTANCES
  */
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
 let onGetNotifications;
@@ -38,6 +39,7 @@ let NotificationObtianedResponse;
 let obj;
 var notification = [];
 let onUpdateNotificationSubscription;
+let isAdditionalAuthSupported = { pass: false, erpass: false };
 
 /*
  *Sort notification row based on timestamp.
@@ -80,11 +82,75 @@ var SampleRow = React.createClass({
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
-        obj.updateNotificationDetails(notification.notification_uuid, data.action);
+        obj.setState({
+          selectedNotificationId: notification.notification_uuid,
+          selectedAction: data.action,
+        },()=>{
+        if (data.authlevel !== null && data.authlevel !== undefined) {
+          if (data.authlevel == "1") {
+            this.showModelForPassword();
+          } else if (data.authlevel == "2") {
+            if (Platform.OS === 'android') {
+              this.showComponentForPattern();
+            } else {
+              this.showModelForTouchId();
+            }
+          } else {
+            obj.updateNotificationDetails();
+          }
+        } else {
+          obj.updateNotificationDetails();
+        }
+                     });
         break;
       }
     }
   },
+
+  showModelForPassword() {
+    if (isAdditionalAuthSupported.pass === true) {
+      obj.setState({
+        showPasswordModel: true,
+      });
+    } else {
+      Alert.alert(
+        '',
+        'Additional authentication not supported.',
+        [
+          { text: 'OK' }
+        ]
+      );
+    }
+  },
+
+  showModelForTouchId() {
+    if (isAdditionalAuthSupported.erpass === true) {
+      obj.authenticateWithTouchIDIfSupported();
+    } else {
+      Alert.alert(
+        '',
+        'Additional authentication not supported.',
+        [
+          { text: 'OK' }
+        ]
+      );
+    }
+  },
+
+  showComponentForPattern() {
+    if (isAdditionalAuthSupported.erpass === true) {
+      obj.authenticateWithPattern();
+    } else {
+      Alert.alert(
+        '',
+        'Additional authentication not supported.',
+        [
+          { text: 'OK' }
+        ]
+      );
+    }
+  },
+
   render() {
     var body = this.props.notification.message.body;
     var bodyarray = body.split("\n");
@@ -212,9 +278,7 @@ var SampleRow = React.createClass({
                     </Text>
                   </View>
                 </TouchableHighlight>
-
               </View>
-
             </View>
           </View>
         </View>
@@ -275,9 +339,7 @@ var SampleRow = React.createClass({
                     </Text>
                   </View>
                 </TouchableHighlight>
-
               </View>
-
             </View>
           </View>
         </View>
@@ -304,19 +366,102 @@ export default class NotificationMgmtScene extends Component {
     this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
     this.onAlertModalOk = this.onAlertModalOk.bind(this);
     this.dismissAlertModal = this.dismissAlertModal.bind(this);
+    this.onPatternUnlock = this.onPatternUnlock.bind(this);
+    this.authenticateWithPattern = this.authenticateWithPattern.bind(this);
+    this.authenticateWithTouchIDIfSupported = this.authenticateWithTouchIDIfSupported.bind(this);
+    this.authenticateTouchID = this.authenticateTouchID.bind(this);
+    this.onTouchIDAuthenticationDone = this.onTouchIDAuthenticationDone.bind(this);
 
     var data = this.renderListViewData(notification.sort(compare));
     this.state = {
       dataSource: ds.cloneWithRows(data),
       alertMsg: "",
-      showAlert: false
+      showAlert: false,
+      inputPassword: '',
+      showPasswordModel: false,
+      selectedNotificationId: '',
+      selectedAction: '',
     };
     this.selectedAlertOp = true;
   }
+
+  checkPassword() {
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      try {
+        value = JSON.parse(value);
+        const pw = this.state.inputPassword;
+        if (pw === value.RPasswd) {
+          //Call update notification
+          this.updateNotificationDetails();
+        } else {
+          alert('Entered password does not match');
+        }
+      } catch (e) { }
+    }).done();
+    this.setState({ showPasswordModel: false });
+  }
+
+  onPasswordChange(event) {
+    var newstate = this.state;
+    newstate.inputPassword = event.nativeEvent.text;
+    this.setState(newstate);
+  }
+
+  //navigate to pattern screen
+  authenticateWithPattern() {
+    this.props.navigator.push({
+      id: 'pattern',
+      onUnlock: this.onPatternUnlock,
+      onClose: null,
+      operationMsg:'Provide pattern to authenticate',
+      mode: 'verify'
+    });
+  }
+
+  //patten login callback.
+  onPatternUnlock(args) {
+    this.updateNotificationDetails();
+  }
+
+  authenticateWithTouchIDIfSupported() {
+    console.log(TouchID);
+    TouchID.isSupported()
+      .then(this.authenticateTouchID)
+      .catch(error => {
+      });
+  }
+
+  authenticateTouchID() {
+    return TouchID.authenticate()
+      .then(success => {
+        this.onTouchIDAuthenticationDone();
+      })
+      .catch(error => {
+        console.log(error)
+        AlertIOS.alert(error.message);
+      });
+  }
+
+  onTouchIDAuthenticationDone() {
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      try {
+        value = JSON.parse(value);
+        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
+          if (response) {
+            console.log('immediate response of encrypt data packet is is' + response[0].error);
+            this.updateNotificationDetails();
+          } else {
+            console.log('immediate response is' + response[0].response);
+          }
+        });
+      } catch (e) { }
+    }).done();
+  }
+
   /*
-  This is life cycle method of the react native component.
-  This method is called when the component will start to load
-  */
+   This is life cycle method of the react native component.
+   This method is called when the component will start to load
+   */
   componentWillMount() {
     obj = this;
     Events.on('showNotification', 'showNotification', this.showNotification);
@@ -332,11 +477,27 @@ export default class NotificationMgmtScene extends Component {
     }
     onUpdateNotificationSubscription = onUpdateNotificationModuleEvt.addListener('onUpdateNotification',
       this.onUpdateNotification.bind(this));
+
+    //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      if (value != null && value != undefined) {
+        try {
+          value = JSON.parse(value);
+          if (value.RPasswd) {
+            isAdditionalAuthSupported.pass = true;
+          }
+
+          if (value.ERPasswd && value.ERPasswd !== "empty") {
+            isAdditionalAuthSupported.erpass = true;
+          }
+        } catch (e) { }
+      }
+    });
   }
   /*
-This is life cycle method of the react native component.
-This method is called when the component will Unmount.
-*/
+   This is life cycle method of the react native component.
+   This method is called when the component will Unmount.
+   */
   componentWillUnmount() {
     Events.rm('showNotification', 'showNotification');
     if (onUpdateNotificationSubscription) {
@@ -345,20 +506,20 @@ This method is called when the component will Unmount.
     }
   }
   /*
-     This is life cycle method of the react native component.
-     This method is called when the component is Mounted/Loaded.
+   This is life cycle method of the react native component.
+   This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
     var listViewScrollView = this.refs.listView.getScrollResponder();
   }
   /**
-    *  show Notifications
-    */
+   *  show Notifications
+   */
   showNotification(args) {
     obj.onGetNotificationsDetails(args);
   }
   /*
-    method to check is their any notification.
+   method to check is their any notification.
    */
   getMyNotifications() {
     if (Main.isConnected) {
@@ -392,10 +553,10 @@ This method is called when the component will Unmount.
     }
   }
   //Send notification response
-  updateNotificationDetails(notificationId, action) {
+  updateNotificationDetails() {
     console.log('----- NotificationMgmt.updateNotificationDetails');
     if (Main.isConnected) {
-      ReactRdna.updateNotification(notificationId, action, (response) => {
+      ReactRdna.updateNotification(this.state.selectedNotificationId, this.state.selectedAction, (response) => {
         console.log('ReactRdna.updateNotificationDetails.response:');
         console.log(response);
 
@@ -535,8 +696,8 @@ This method is called when the component will Unmount.
       style={Skin.appointmentrow.row} />
   }
   /*
-    This method is used to render the componenet with all its element.
-  */
+   This method is used to render the componenet with all its element.
+   */
   render() {
     //console.log('in render');
     return (
@@ -611,6 +772,44 @@ This method is called when the component will Unmount.
             </Text>
           </TouchableHighlight>
         </Modal>
+
+        <Modal
+          style={styles.modalwrap}
+          overlayOpacity={0.75}
+          offset={100}
+          open={this.state.showPasswordModel}
+          modalDidOpen={() => console.log('modal did open') }
+          modalDidClose={() => this.setState({
+            showPasswordModel: false
+          }) }>
+          <View style={styles.modalTitleWrap}>
+            <Text style={styles.modalTitle}>
+              Please enter your password
+            </Text>
+          </View>
+          <TextInput
+            autoCorrect={false}
+            ref='inputPassword'
+            label={'Enter Password'}
+            style={styles.modalInput}
+            placeholder={'Enter Password'}
+            secureTextEntry={true}
+            value={this.state.inputPassword}
+            placeholderTextColor={Skin.colors.HINT_COLOR}
+            onSubmitEditing={this.checkPassword.bind(this) }
+            onChange={this.onPasswordChange.bind(this) } />
+          <View style={styles.border}></View>
+
+          <TouchableHighlight
+            onPress={this.checkPassword.bind(this) }
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={styles.modalButton}>
+            <Text style={styles.modalButtonText}>
+              Submit
+            </Text>
+          </TouchableHighlight>
+
+        </Modal>
       </Main>
     );
   }
@@ -640,6 +839,7 @@ const styles = StyleSheet.create({
   modalButton: {
     height: 40,
     alignItems: 'center',
+    alignSelf: 'stretch',
     justifyContent: 'center',
   },
   modalButtonText: {
@@ -651,6 +851,15 @@ const styles = StyleSheet.create({
     height: 1,
     marginTop: 16,
     backgroundColor: Skin.colors.DIVIDER_COLOR,
+  },
+
+  modalInput: {
+    textAlign: 'center',
+    color: Skin.colors.PRIMARY_TEXT,
+    height: 32,
+    padding: 0,
+    fontSize: 16,
+    backgroundColor: null,
   }
 });
 
