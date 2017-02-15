@@ -86,6 +86,7 @@ var SampleRow = React.createClass({
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
         },()=>{
+
         if (data.authlevel !== null && data.authlevel !== undefined) {
           if (data.authlevel == "1") {
             this.showModelForPassword();
@@ -413,7 +414,7 @@ export default class NotificationMgmtScene extends Component {
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
       onClose: null,
-      operationMsg:'Provide pattern to authenticate',
+      operationMsg:'Enter pattern',
       mode: 'verify'
     });
   }
@@ -421,6 +422,7 @@ export default class NotificationMgmtScene extends Component {
   //patten login callback.
   onPatternUnlock(args) {
     this.updateNotificationDetails();
+    this.props.navigator.pop();
   }
 
   authenticateWithTouchIDIfSupported() {
