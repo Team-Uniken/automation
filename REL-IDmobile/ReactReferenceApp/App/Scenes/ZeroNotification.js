@@ -82,7 +82,6 @@ var SampleRow = React.createClass({
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
-                                  data.authlevel="2";
         obj.setState({
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
