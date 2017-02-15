@@ -380,7 +380,8 @@ This method is called when the component will start to load
   }
 
   checkValidityOfAccessToken() {
-    $this = this;
+    
+    var $this = this;
     AccessToken.getCurrentAccessToken().then((data) => {
       if (data) {
         var callback = function (error, result) {
@@ -414,7 +415,7 @@ This method is called when the component will start to load
   //Facebook login code
   doFacebookLogin() {
     // Events.trigger('showLoader', true);
-    $this = this;
+   var $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
         if (result.isCancelled) {
