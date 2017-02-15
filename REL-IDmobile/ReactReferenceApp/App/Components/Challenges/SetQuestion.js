@@ -232,15 +232,17 @@ export default class QuestionSet extends Component {
                 <Input
                   ref={'secAnswer'}
                   placeholder={'Enter your secret answer'}
+                   autoCorrect={false}
                   onSubmitEditing={this.setSecrets.bind(this) }
                   onChange={this.onAnswerChange.bind(this) }
                   />
-                <KeyboardSpacer topSpacing={-30}/>
+            
                 <View style={Skin.layout0.bottom.container}>
                   <Button
                     label= {this.btnText() }
                     onPress={this.setSecrets.bind(this) }/>
                 </View>
+            <KeyboardSpacer topSpacing={-30}/>
               </View>
             </View>
 
