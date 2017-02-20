@@ -533,10 +533,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getNotificationHistory(int recordCount,int startIndex,String enterpriseID,String startDate,String endDate,
-                               String notificationStatus,String notificationActionTaken,String keywordSearch,String deviceID,Callback callback){
+    public void getNotificationHistory(int recordCount,String enterpriseID,int startIndex,String startDate,String endDate,
+                               String notificationStatus,String actionPerformed,String keywordSearch,String deviceID,Callback callback){
 
-        int error = rdnaObj.getNotificationHistory(recordCount, startIndex,enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID);
+        int error = rdnaObj.getNotificationHistory(recordCount,enterpriseID, startIndex,startDate, endDate, notificationStatus, actionPerformed, keywordSearch, deviceID);
 
         Logger.d(TAG , "----- error " + error);
         WritableMap errorMap = Arguments.createMap();
