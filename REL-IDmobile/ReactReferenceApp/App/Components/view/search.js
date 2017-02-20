@@ -119,3 +119,8 @@ class Search extends Component {
 }
 
 module.exports = Search;
+  //  <Search
+  //         value={this.state.search}
+  //         onChange={this.onSearchChange.bind(this) }
+  //         onSubmitEditing={this.performesearch.bind(this) }
+  //         />
