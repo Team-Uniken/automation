@@ -268,8 +268,13 @@ class Notifications_History extends Component {
     const res = JSON.parse(e.response);
     if (res.errCode == 0) {
       var ResponseObj = JSON.parse(e.response);
+      var count = ResponseObj.pArgs.response.ResponseData.total_count;
+      if(count===0){
+      
+      }else{
       var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
       Obj.renderHistory(ObtainedHistory);
+      }
 //      alert("onGetNotificationHistory errCode" + res.errCode);
     } else {
       alert("onGetNotificationHistory errCode" + res.errCode);
