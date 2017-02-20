@@ -41,68 +41,68 @@ var now = new Date();
 
 var Obj;
 
-// var HISTORY = {
-//   "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
-//   "device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
-//   "timestamp": "2017-02-17T15:41:11IST",
-//   "uuid": "99301ddb-f42a-11e6-8719-9c2a70c87e2b",
-//   "data": {
-//     "notification_history_details": {
-//       "total_count": 3,
-//       "history": [
-//         {
-//           "notification_uuid": "e7b0190a-d48e-4a6d-b9f8-11c601831426",
-//           "status": "UPDATED",
-//           "delivery_status": "FAILED_TO_NOTIFY",
-//           "action_performed": "Approve",
-//           "message": {
-//             "subject": "LoginAttempt",
-//             "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
-//           },
-//           "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
-//           "device_alias": "<Device_Alias>",
-//           "create_ts": "2017-02-16T19: 15: 29IST",
-//           "update_ts": "2017-02-16T19: 15: 41IST",
-//           "expiry_timestamp": "2017-02-16T19: 18: 29IST",
-//           "enterprise_id": "UBS"
-//         },
-//         {
-//           "notification_uuid": "8ce9b3bd-fe9a-413c-8e59-113b6511d597",
-//           "status": "UPDATED",
-//           "delivery_status": "FAILED_TO_NOTIFY",
-//           "action_performed": "Approve",
-//           "message": {
-//             "subject": "LoginAttempt",
-//             "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
-//           },
-//           "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
-//           "device_alias": "<Device_Alias>",
-//           "create_ts": "2017-02-17T12: 12: 12IST",
-//           "update_ts": "2017-02-17T12: 12: 30IST",
-//           "expiry_timestamp": "2017-02-17T12: 15: 11IST",
-//           "enterprise_id": "UBS"
-//         },
-//         {
-//           "notification_uuid": "7546e2ef-07fb-4e89-93d6-b28536cc021b",
-//           "status": "EXPIRED",
-//           "delivery_status": "FAILED_TO_NOTIFY",
-//           "action_performed": "NONE",
-//           "message": {
-//             "subject": "LoginAttempt",
-//             "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
-//           },
-//           "device_alias": "<Device_Alias>",
-//           "create_ts": "2017-02-17T12: 12: 55IST",
-//           "expiry_timestamp": "2017-02-17T12: 15: 55IST",
-//           "enterprise_id": "UBS"
-//         }
-//       ]
-//     },
-//     "status_code": 100,
-//     "message": "Success"
-//   },
-//   "node_name": "f9439096-f429-11e6-8719-9c2a70c87e2b:fa831577-f429-11e6-8719-9c2a70c87e2b"
-// };
+var HISTORY = {
+  "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
+  "device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+  "timestamp": "2017-02-17T15:41:11IST",
+  "uuid": "99301ddb-f42a-11e6-8719-9c2a70c87e2b",
+  "data": {
+    "notification_history_details": {
+      "total_count": 3,
+      "history": [
+        {
+          "notification_uuid": "e7b0190a-d48e-4a6d-b9f8-11c601831426",
+          "status": "UPDATED",
+          "delivery_status": "FAILED_TO_NOTIFY",
+          "action_performed": "Approve",
+          "message": {
+            "subject": "LoginAttempt",
+            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+          },
+          "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+          "device_alias": "<Device_Alias>",
+          "create_ts": "2017-02-16T19: 15: 29IST",
+          "update_ts": "2017-02-16T19: 15: 41IST",
+          "expiry_timestamp": "2017-02-16T19: 18: 29IST",
+          "enterprise_id": "UBS"
+        },
+        {
+          "notification_uuid": "8ce9b3bd-fe9a-413c-8e59-113b6511d597",
+          "status": "UPDATED",
+          "delivery_status": "FAILED_TO_NOTIFY",
+          "action_performed": "Approve",
+          "message": {
+            "subject": "LoginAttempt",
+            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+          },
+          "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+          "device_alias": "<Device_Alias>",
+          "create_ts": "2017-02-17T12: 12: 12IST",
+          "update_ts": "2017-02-17T12: 12: 30IST",
+          "expiry_timestamp": "2017-02-17T12: 15: 11IST",
+          "enterprise_id": "UBS"
+        },
+        {
+          "notification_uuid": "7546e2ef-07fb-4e89-93d6-b28536cc021b",
+          "status": "EXPIRED",
+          "delivery_status": "FAILED_TO_NOTIFY",
+          "action_performed": "NONE",
+          "message": {
+            "subject": "LoginAttempt",
+            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+          },
+          "device_alias": "<Device_Alias>",
+          "create_ts": "2017-02-17T12: 12: 55IST",
+          "expiry_timestamp": "2017-02-17T12: 15: 55IST",
+          "enterprise_id": "UBS"
+        }
+      ]
+    },
+    "status_code": 100,
+    "message": "Success"
+  },
+  "node_name": "f9439096-f429-11e6-8719-9c2a70c87e2b:fa831577-f429-11e6-8719-9c2a70c87e2b"
+};
 
 
 var styles = StyleSheet.create({
@@ -155,7 +155,13 @@ var styles = StyleSheet.create({
     color: Skin.colors.PRIMARY_TEXT,
     fontSize: 16,
     marginLeft: 8,
-    margin:8,
+    marginBottom: 4,
+  },
+  action_performed: {
+    color: Skin.colors.PRIMARY_TEXT,
+    fontSize: 16,
+    marginLeft: 8,
+    marginBottom: 8,
   },
   go: {
     color: '#000',
@@ -213,7 +219,7 @@ class Notifications_History extends Component {
   componentDidMount() {
     Obj = this;
     if (Main.isConnected) {
-      this.getNotificationHistory(10, 0,'','','','','','','');
+      this.getNotificationHistory(10, 0, '', '', '', '', '', '', '');
     } else {
       // Alert.alert(
       //   '',
@@ -223,12 +229,12 @@ class Notifications_History extends Component {
       //   ]
       // );
     }
-//    this.renderHistory(HISTORY);
+ //   this.renderHistory(HISTORY);
   }
 
-  renderHistory(history) {
-//    var history = data.data.notification_history_details.history
-    var sorthistory = history.sort(compare);
+  renderHistory(data) {
+   // var history = data.data.notification_history_details.history
+    var sorthistory = data.sort(compare);
     var dateAdd = this.addDate(sorthistory);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHistoryArrayToMap(dateAdd))
@@ -244,17 +250,17 @@ class Notifications_History extends Component {
     });
     return history;
   }
-//  var recordCount = "0";
-//  var startIndex = "1";
-//  var enterpriseID = "";
-//  var startDate = "";
-//  var endDate = "";
+  //  var recordCount = "0";
+  //  var startIndex = "1";
+  //  var enterpriseID = "";
+  //  var startDate = "";
+  //  var endDate = "";
   //call getNotificationHistory api.
-  
+
   getNotificationHistory(recordCount, startIndex, enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID) {
     ReactRdna.getNotificationHistory(recordCount, enterpriseID, startIndex, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID, (response) => {
       if (response[0].error === 0) {
-     //   alert('getNotificationHistory response is' + response[0].error);
+        //   alert('getNotificationHistory response is' + response[0].error);
       } else {
         alert('immediate response is' + response[0].error);
       }
@@ -275,7 +281,7 @@ class Notifications_History extends Component {
       var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
       Obj.renderHistory(ObtainedHistory);
       }
-//      alert("onGetNotificationHistory errCode" + res.errCode);
+
     } else {
       alert("onGetNotificationHistory errCode" + res.errCode);
     }
@@ -328,6 +334,11 @@ class Notifications_History extends Component {
     this.setState({ search: '' });
   }
 
+removeSpace(str){
+  return str.replace(/\s+/g, '');
+}
+
+
   go() {
     if (this.state.startdate == '') {
       alert('Select Start Date.');
@@ -365,51 +376,9 @@ class Notifications_History extends Component {
         }}
         navigator={this.props.navigator}
         >
-     
-        <View style={[styles.container,{backgroundColor:'#f5f5f5'}]}>
-          <View style={{ height: 0,backgroundColor:'#f00', flexDirection: 'row', marginLeft: 4, marginRight: 4 }}>
-            <View style={{ flex: 2 }}>
-              <DatePicker
-                style={styles.date}
-                date={this.state.startdate}
-                placeholder="Start Date"
-                format="YYYY-MM-DD"
-                iconSource=""
-                minDate="2016-05-01"
-                maxDate={dateFormat(now, "isoDate") }
-                onDateChange={(date) => { this.setState({ startdate: date }) } }
-                />
-            </View>
-            <View style={{ flex: 2 }}>
-              <DatePicker
-                style={styles.date}
-                date={this.state.enddate}
-                placeholder="End Date"
-                format="YYYY-MM-DD"
-                iconSource=""
-                minDate={this.state.startdate}
-                maxDate={dateFormat(now, "isoDate") }
-                onDateChange={(date) => { this.setState({ enddate: date }) } }
-                />
-            </View>
-            <View style={{ flex: 2 }}>
-              <ModalPicker
-                data={this.getSortByOptions() }
-                selectStyle={styles.select}
-                initValue={this.state.modalInitValue}
-                onChange={(option) => {
-                } } />
-            </View>
-            <TouchableOpacity style={{ marginTop: 4, height: 40, width: 40, borderRadius: 0, borderWidth: 1, borderColor: '#bfbfbf', }}
-              underlayColor={Skin.baseline.button.underlayColor}
-              activeOpacity={Skin.baseline.button.activeOpacity}
-              onPress={() => {
-                this.go();
-              } }
-              >
-              <Text style={styles.go}>GO</Text>
-            </TouchableOpacity>
-          </View>
+
+        <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
+
           <ListView
             style={styles.list}
             dataSource={this.state.dataSource}
@@ -435,17 +404,18 @@ class Notifications_History extends Component {
     } else if (notification.status == "EXPIRED") {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
-          <Text style={styles.expired_update}>Expired Date: {notification.expiry_timestamp}{"\n"}Action perform : {notification.action_performed}
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0])} IST
+          </Text>
+          <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
           </Text>
         </View>
       );
     } else if (notification.status == "UPDATED") {
       indents.push(
         <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
-          <Text style={styles.expired_update}>Updated Date: {notification.update_ts}{"\n"}Action perform : {notification.action_performed}
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0])} IST
           </Text>
-          <Text style={styles.device_alias}>
-            {notification.device_alias}
+          <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
           </Text>
         </View>
       );
@@ -454,16 +424,16 @@ class Notifications_History extends Component {
 
     return (
       <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
-        <View style={Skin.notification.row}>
-          <Text style={[Skin.notification.subject,{marginBottom:8}]}>
+        <View style={[Skin.notification.row, { marginBottom: 4 }]}>
+          <Text style={Skin.notification.subject}>
             {notification.message.subject}
           </Text>
           <Text style={Skin.notification.time}>
-            {notification.create_ts.split("T")[1]}
+          {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0])} IST
           </Text>
         </View>
 
-        <View style={{ backgroundColor: 'transparent', flex: 2, flexDirection: 'column' }}>
+        <View style={{ backgroundColor: 'transparent', flex: 2, flexDirection: 'column', marginBottom: 8 }}>
           <View style={Skin.notification.row}>
             <Text style={Skin.notification.dot}>{"\u2022"}</Text>
             <Text style={Skin.notification.body}>
@@ -492,9 +462,56 @@ class Notifications_History extends Component {
   */
   renderSectionHeader(sectionData, category) {
     return (
-      <Text style={{ textAlign: 'left', color: Config.THEME_COLOR, opacity:1, marginLeft: 16, alignItems: 'center', fontSize: 14, backgroundColor: 'transparent' }}>{category}</Text>
+      <Text style={{ textAlign: 'left', color: Config.THEME_COLOR, opacity: 1, marginLeft: 16, alignItems: 'center', fontSize: 14, backgroundColor: 'transparent' }}>{category}</Text>
     )
   }
 }
 
 module.exports = Notifications_History;
+
+
+
+// filter row code
+//          <View style={{ height: 50, flexDirection: 'row', marginLeft: 4, marginRight: 4 }}>
+//             <View style={{ flex: 2 }}>
+//               <DatePicker
+//                 style={styles.date}
+//                 date={this.state.startdate}
+//                 placeholder="Start Date"
+//                 format="YYYY-MM-DD"
+//                 iconSource=""
+//                 minDate="2016-05-01"
+//                 maxDate={dateFormat(now, "isoDate") }
+//                 onDateChange={(date) => { this.setState({ startdate: date }) } }
+//                 />
+//             </View>
+//             <View style={{ flex: 2 }}>
+//               <DatePicker
+//                 style={styles.date}
+//                 date={this.state.enddate}
+//                 placeholder="End Date"
+//                 format="YYYY-MM-DD"
+//                 iconSource=""
+//                 minDate={this.state.startdate}
+//                 maxDate={dateFormat(now, "isoDate") }
+//                 onDateChange={(date) => { this.setState({ enddate: date }) } }
+//                 />
+//             </View>
+//             <View style={{ flex: 2 }}>
+//               <ModalPicker
+//                 data={this.getSortByOptions() }
+//                 selectStyle={styles.select}
+//                 initValue={this.state.modalInitValue}
+//                 onChange={(option) => {
+//                 } } />
+//             </View>
+//             <TouchableOpacity style={{ marginTop: 4, height: 40, width: 40, borderRadius: 0, borderWidth: 1, borderColor: '#bfbfbf', }}
+//               underlayColor={Skin.baseline.button.underlayColor}
+//               activeOpacity={Skin.baseline.button.activeOpacity}
+//               onPress={() => {
+//                 this.go();
+//               } }
+//               >
+//               <Text style={styles.go}>GO</Text>
+//             </TouchableOpacity>
+//           </View>
