@@ -17,6 +17,7 @@ import ModalPicker from 'react-native-modal-picker'
 import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Config from 'react-native-config'
+import Events from 'react-native-simple-events';
 
 /*
  Use in this js
@@ -24,6 +25,7 @@ import Config from 'react-native-config'
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import MainActivation from '../Components/Container/MainActivation';
 
 
 /*
@@ -229,11 +231,11 @@ class Notifications_History extends Component {
       //   ]
       // );
     }
- //   this.renderHistory(HISTORY);
+    //   this.renderHistory(HISTORY);
   }
 
   renderHistory(data) {
-   // var history = data.data.notification_history_details.history
+    // var history = data.data.notification_history_details.history
     var sorthistory = data.sort(compare);
     var dateAdd = this.addDate(sorthistory);
     this.setState({
@@ -260,6 +262,7 @@ class Notifications_History extends Component {
   getNotificationHistory(recordCount, startIndex, enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID) {
     ReactRdna.getNotificationHistory(recordCount, enterpriseID, startIndex, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID, (response) => {
       if (response[0].error === 0) {
+        Events.trigger('showLoader', true);
         //   alert('getNotificationHistory response is' + response[0].error);
       } else {
         alert('immediate response is' + response[0].error);
@@ -271,15 +274,16 @@ class Notifications_History extends Component {
 
   //callback of getNotificationHistory api.
   onGetNotificationHistory(e) {
+   Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
     if (res.errCode == 0) {
       var ResponseObj = JSON.parse(e.response);
       var count = ResponseObj.pArgs.response.ResponseData.total_count;
-      if(count===0){
-      
-      }else{
-      var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
-      Obj.renderHistory(ObtainedHistory);
+      if (count === 0) {
+
+      } else {
+        var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
+        Obj.renderHistory(ObtainedHistory);
       }
 
     } else {
@@ -334,9 +338,9 @@ class Notifications_History extends Component {
     this.setState({ search: '' });
   }
 
-removeSpace(str){
-  return str.replace(/\s+/g, '');
-}
+  removeSpace(str) {
+    return str.replace(/\s+/g, '');
+  }
 
 
   go() {
@@ -354,6 +358,7 @@ removeSpace(str){
    */
   render() {
     return (
+      <MainActivation>
       <Main
         drawerState={{
           open: false,
@@ -387,6 +392,7 @@ removeSpace(str){
             />
         </View>
       </Main>
+      </MainActivation>
     );
   }
 
@@ -404,7 +410,7 @@ removeSpace(str){
     } else if (notification.status == "EXPIRED") {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
-          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0])} IST
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0]) } IST
           </Text>
           <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
           </Text>
@@ -413,7 +419,7 @@ removeSpace(str){
     } else if (notification.status == "UPDATED") {
       indents.push(
         <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
-          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0])} IST
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0]) } IST
           </Text>
           <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
           </Text>
@@ -429,7 +435,7 @@ removeSpace(str){
             {notification.message.subject}
           </Text>
           <Text style={Skin.notification.time}>
-          {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0])} IST
+            {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0]) } IST
           </Text>
         </View>
 
