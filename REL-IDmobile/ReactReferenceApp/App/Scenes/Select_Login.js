@@ -109,7 +109,7 @@ class SelectLogin extends Component {
 
   //Facebook login code
   doFacebookLogin() {
-    $this = this;
+   var $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
         {
@@ -206,7 +206,7 @@ class SelectLogin extends Component {
 //check facebook accessToken is valid or not.
   checkValidityOfAccessToken() {
     Events.trigger('showLoader', true);
-    $this = this;
+   var $this = this;
     AccessToken.getCurrentAccessToken().then((data) => {
       if (data) {
         var callback = function (error, result) {
