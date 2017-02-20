@@ -38,7 +38,7 @@ let onGetNotificationHistorySubscription;
 var dateFormat = require('dateformat');
 var now = new Date();
 
-
+var Obj;
 
 var HISTORY = {
   "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
@@ -209,8 +209,9 @@ class Notifications_History extends Component {
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
+    Obj = this;
     if (Main.isConnected) {
-      this.getNotificationHistory(10, 0,'',this.state.startdate,this.state.enddate,'','','','');
+      this.getNotificationHistory('10', '0','','','','','','','');
     } else {
       // Alert.alert(
       //   '',
@@ -220,11 +221,11 @@ class Notifications_History extends Component {
       //   ]
       // );
     }
-    this.renderHistory(HISTORY);
+//    this.renderHistory(HISTORY);
   }
 
-  renderHistory(data) {
-    var history = data.data.notification_history_details.history
+  renderHistory(history) {
+//    var history = data.data.notification_history_details.history
     var sorthistory = history.sort(compare);
     var dateAdd = this.addDate(sorthistory);
     this.setState({
@@ -241,10 +242,15 @@ class Notifications_History extends Component {
     });
     return history;
   }
-
+//  var recordCount = "0";
+//  var startIndex = "1";
+//  var enterpriseID = "";
+//  var startDate = "";
+//  var endDate = "";
   //call getNotificationHistory api.
+  
   getNotificationHistory(recordCount, startIndex, enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID) {
-    ReactRdna.getNotificationHistory(recordCount, startIndex, enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID, (response) => {
+    ReactRdna.getNotificationHistory(recordCount, enterpriseID, startIndex, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID, (response) => {
       if (response[0].error === 0) {
      //   alert('getNotificationHistory response is' + response[0].error);
       } else {
@@ -259,7 +265,10 @@ class Notifications_History extends Component {
   onGetNotificationHistory(e) {
     const res = JSON.parse(e.response);
     if (res.errCode == 0) {
-      alert("onGetNotificationHistory errCode" + res.errCode);
+      var ResponseObj = JSON.parse(e.response);
+      var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
+      Obj.renderHistory(ObtainedHistory);
+//      alert("onGetNotificationHistory errCode" + res.errCode);
     } else {
       alert("onGetNotificationHistory errCode" + res.errCode);
     }

@@ -471,7 +471,8 @@ RCT_EXPORT_METHOD (getNotifications:(NSString *)recordCount
   
 }
 
-RCT_EXPORT_METHOD (getNotificationsHistiory:(NSString *)recordCount
+
+RCT_EXPORT_METHOD (getNotificationHistory:(NSString *)recordCount
                    withEnterpriseID:(NSString *)enterpriseID
                    withStartIndex:(NSString *)startIndex
                    withStartDate:(NSString *)startDate
@@ -483,7 +484,7 @@ RCT_EXPORT_METHOD (getNotificationsHistiory:(NSString *)recordCount
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
   int errorID = 0;
-  errorID = [rdnaObject getNotificationsHistiory:[recordCount intValue] andEnterpriseID:enterpriseID andStartIndex:[startIndex intValue] andStartDate:startDate andEndDate:endDate andNotificationStatus:notificationStatus andActionPerformed:actionPerformed andKeyordSearch:keywordSearch andDeviceID:deviceID];
+  errorID = [rdnaObject getNotificationsHistiory:10 andEnterpriseID:enterpriseID andStartIndex:0 andStartDate:@"" andEndDate:@"" andNotificationStatus:notificationStatus andActionPerformed:actionPerformed andKeyordSearch:keywordSearch andDeviceID:deviceID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   callback(@[responseArray]);
