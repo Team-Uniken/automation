@@ -206,7 +206,7 @@ class SelectLogin extends Component {
 //check facebook accessToken is valid or not.
   checkValidityOfAccessToken() {
     Events.trigger('showLoader', true);
-    var $this = this;
+   var $this = this;
     AccessToken.getCurrentAccessToken().then((data) => {
       if (data) {
         var callback = function (error, result) {

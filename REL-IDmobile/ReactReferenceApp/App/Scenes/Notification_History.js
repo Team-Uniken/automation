@@ -14,8 +14,12 @@ import ReactNative from 'react-native';
  */
 import DatePicker from 'react-native-datepicker'
 import ModalPicker from 'react-native-modal-picker'
-import {Image, StyleSheet, Text, View, ListView, AppRegistry, TextInput, TouchableHighlight, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
+import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import Config from 'react-native-config'
+import Modal from 'react-native-simple-modal';
+import Events from 'react-native-simple-events';
+
 
 /*
  Use in this js
@@ -23,7 +27,13 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import MainActivation from '../Components/Container/MainActivation';
 
+
+/*
+ Custome View
+ */
+import Search from '../Components/view/search';
 /*
   INSTANCES
  */
@@ -32,6 +42,73 @@ let onGetNotificationHistorySubscription;
 
 var dateFormat = require('dateformat');
 var now = new Date();
+
+var Obj;
+
+var HISTORY = {
+  "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
+  "device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+  "timestamp": "2017-02-17T15:41:11IST",
+  "uuid": "99301ddb-f42a-11e6-8719-9c2a70c87e2b",
+  "data": {
+    "notification_history_details": {
+      "total_count": 3,
+      "history": [
+        {
+          "notification_uuid": "e7b0190a-d48e-4a6d-b9f8-11c601831426",
+          "status": "UPDATED",
+          "delivery_status": "FAILED_TO_NOTIFY",
+          "action_performed": "Approve",
+          "message": {
+            "subject": "LoginAttempt",
+            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+          },
+          "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+          "device_alias": "<Device_Alias>",
+          "create_ts": "2017-02-16T19: 15: 29IST",
+          "update_ts": "2017-02-16T19: 15: 41IST",
+          "expiry_timestamp": "2017-02-16T19: 18: 29IST",
+          "enterprise_id": "UBS"
+        },
+        {
+          "notification_uuid": "8ce9b3bd-fe9a-413c-8e59-113b6511d597",
+          "status": "UPDATED",
+          "delivery_status": "FAILED_TO_NOTIFY",
+          "action_performed": "Approve",
+          "message": {
+            "subject": "LoginAttempt",
+            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+          },
+          "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+          "device_alias": "<Device_Alias>",
+          "create_ts": "2017-02-17T12: 12: 12IST",
+          "update_ts": "2017-02-17T12: 12: 30IST",
+          "expiry_timestamp": "2017-02-17T12: 15: 11IST",
+          "enterprise_id": "UBS"
+        },
+        {
+          "notification_uuid": "7546e2ef-07fb-4e89-93d6-b28536cc021b",
+          "status": "EXPIRED",
+          "delivery_status": "FAILED_TO_NOTIFY",
+          "action_performed": "NONE",
+          "message": {
+            "subject": "LoginAttempt",
+            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+          },
+          "device_alias": "<Device_Alias>",
+          "create_ts": "2017-02-17T12: 12: 55IST",
+          "expiry_timestamp": "2017-02-17T12: 15: 55IST",
+          "enterprise_id": "UBS"
+        }
+      ]
+    },
+    "status_code": 100,
+    "message": "Success"
+  },
+  "node_name": "f9439096-f429-11e6-8719-9c2a70c87e2b:fa831577-f429-11e6-8719-9c2a70c87e2b"
+};
+
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -49,6 +126,7 @@ var styles = StyleSheet.create({
   },
   select: {
     borderRadius: 0,
+    borderColor: '#bfbfbf',
     margin: 4,
     borderWidth: 1,
     height: 40,
@@ -62,7 +140,12 @@ var styles = StyleSheet.create({
     color: Skin.colors.PRIMARY_TEXT,
     fontSize: 16,
     height: 48,
-    backgroundColor: '#ebebeb'
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    width: Skin.SCREEN_WIDTH - 32,
+    paddingLeft: 8,
+    paddingRight: 8,
+    backgroundColor: '#e0e0e0',
   },
   amount: {
     fontSize: 22,
@@ -72,47 +155,71 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 4,
   },
-});
-var history = [
-  {
-    notification_uuid: "<NOTIFICATION_UUID>",
-    status: "<ACTIVE/EXPIRED/UPDATED>",
-    delivery_status: "NOTIFIED/PARTIALLY_NOTIFIED/FAILED_TO_NOTIFY",
-    action_taken: "<Accepted/Rejected/NONE>",
-    message: {
-      "subject": "<subject_1>",
-      "body": "<body_1>"
-    },
-    device_uuid: "<UUID_of_device_which_accepted_or_rejected_The_Notification>",
-    device_alias: "<Name_of_device_which_accepted_or_rejected_The_Notification>",
-    created_ts: "2016-02-09T12:24:16",
-    updated_ts: "2016-03-09T12:24:15",
-    expired_ts: "2016-06-09T12:24:15",
-    enterprise_id: "<enterprise_id>"
+  expired_update: {
+    color: Skin.colors.PRIMARY_TEXT,
+    fontSize: 16,
+    marginLeft: 8,
+    marginBottom: 4,
   },
-  {
-    notification_uuid: "<NOTIFICATION_UUID>",
-    status: "<ACTIVE/EXPIRED/UPDATED>",
-    delivery_status: "NOTIFIED/PARTIALLY_NOTIFIED/FAILED_TO_NOTIFY",
-    action_taken: "<Accepted/Rejected/NONE>",
-    message: {
-      "subject": "<subject_2>",
-      "body": "<body_2>"
-    },
-    device_uuid: "<UUID_of_device_which_accepted_or_rejected_The_Notification>",
-    device_alias: "<Name_of_device_which_accepted_or_rejected_The_Notification>",
-    created_ts: "2016-02-09T12:24:15",
-    updated_ts: "2016-03-09T12:24:15",
-    expired_ts: "2016-06-09T12:24:15",
-    enterprise_id: "<enterprise_id>"
+  action_performed: {
+    color: Skin.colors.PRIMARY_TEXT,
+    fontSize: 16,
+    marginLeft: 8,
+    marginBottom: 8,
+  },
+  go: {
+    color: '#000',
+    fontSize: 16,
+    height: 40,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    width: 40,
+    backgroundColor: 'transparent',
+    opacity: 0.7,
+  },
+  modalwrap: {
+    height: 150,
+    flexDirection: 'column',
+    borderRadius: 15,
+    backgroundColor: '#fff',
+  },
+  modalTitleWrap: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalTitle: {
+    color: Skin.colors.PRIMARY_TEXT,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+  },
+  modalButton: {
+    height: 40,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  modalButtonText: {
+    textAlign: 'center',
+    color: '#268CFE',
+    fontSize: 16,
+  },
+  border: {
+    height: 1,
+    marginTop: 16,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
   }
-]
+});
+
 function compare(a, b) {
-  if (a.created_ts < b.created_ts)
+  if (a.create_ts < b.create_ts)
     return 1;
-  if (a.created_ts > b.created_ts)
+  if (a.create_ts > b.create_ts)
     return -1;
-  if (a.created_ts == b.created_ts)
+  if (a.create_ts == b.create_ts)
     return 0;
 }
 class Notifications_History extends Component {
@@ -120,14 +227,22 @@ class Notifications_History extends Component {
     super(props);
     this.state = {
       modalInitValue: "All",
-      startdate: dateFormat(now, "isoDate"),
-      enddate: dateFormat(now, "isoDate"),
+      search: '',
+      startdate: '',
+      enddate: '',
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       }),
-
+      selectedAction: '',
+      alertMsg: "",
+      showAlert: false
     };
+    this.selectedAlertOp = true;
+    this.showAlertModal = this.showAlertModal.bind(this);
+    this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
+    this.onAlertModalOk = this.onAlertModalOk.bind(this);
+    this.dismissAlertModal = this.dismissAlertModal.bind(this);
   }
   /*
    This is life cycle method of the react native component.
@@ -142,44 +257,93 @@ class Notifications_History extends Component {
       this.onGetNotificationHistory.bind(this));
   }
 
+
   /*
     This is life cycle method of the react native component.
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
-        if (Main.isConnected) {
-          var a=0;
-          var b='';
-      this.getNotificationHistory(a,a,b,b,b,b,b,b,b);
+    Obj = this;
+    if (Main.isConnected) {
+      this.getNotificationHistory(10, 0, '', '', '', '', '', '', '');
     } else {
-      Alert.alert(
-        '',
-        'Please check your internet connection',
-        [
-          { text: 'OK', onPress: () => this.props.navigator.pop(0) }
-        ]
-      );
+      // Alert.alert(
+      //   '',
+      //   'Please check your internet connection',
+      //   [
+      //     { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+      //   ]
+      // );
     }
-    var data = history.sort(compare);
+    //   this.renderHistory(HISTORY);
+  }
+
+  renderHistory(data) {
+    // var history = data.data.notification_history_details.history
+    var sorthistory = data.sort(compare);
+    var dateAdd = this.addDate(sorthistory);
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHistoryArrayToMap(data))
+      dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHistoryArrayToMap(dateAdd))
     });
   }
 
+  /**
+   * add Date attribute in each item of History array
+   */
+  addDate(history) {
+    history.forEach(function (h) {
+      h.created_date = h.create_ts.split("T")[0];
+    });
+    return history;
+  }
+  //  var recordCount = "0";
+  //  var startIndex = "1";
+  //  var enterpriseID = "";
+  //  var startDate = "";
+  //  var endDate = "";
   //call getNotificationHistory api.
-  getNotificationHistory(recordCount,startIndex,enterpriseID,startDate,endDate, notificationStatus, notificationActionTaken,keywordSearch,deviceID) {
-    ReactRdna.getNotificationHistory(recordCount,startIndex,enterpriseID,startDate,endDate,notificationStatus,notificationActionTaken,keywordSearch,deviceID,  (response) => {
-      console.log('-----NotificationHistory.getNotificationHistory.response ');
-      console.log(response);
-      alert("getNotificationHistory"+response[0].error);
-      if (response[0].error !== 0) {
-        console.log('----- ----- response is not 0');
+
+  getNotificationHistory(recordCount, startIndex, enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID) {
+    ReactRdna.getNotificationHistory(recordCount, enterpriseID, startIndex, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID, (response) => {
+      if (response[0].error === 0) {
+        Events.trigger('showLoader', true);
+        //   alert('getNotificationHistory response is' + response[0].error);
+      } else {
+        alert('immediate response is' + response[0].error);
       }
     });
   }
+
+
+
   //callback of getNotificationHistory api.
   onGetNotificationHistory(e) {
-    alert("onGetNotificationHistory"+e.response);
+    Events.trigger('hideLoader', true);
+    const res = JSON.parse(e.response);
+    if (res.errCode == 0) {
+      var ResponseObj = JSON.parse(e.response);
+      if (ResponseObj.pArgs.response.ResponseData != undefined) {
+        var count = ResponseObj.pArgs.response.ResponseData.total_count;
+        if (count === 0) {
+          if (this.state.showAlert === false) {
+            this.showAlertModal("No record found");
+          }
+        } else {
+          if (this.state.showAlert === true) {
+            this.dismissAlertModal();
+          }
+          var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
+          Obj.renderHistory(ObtainedHistory);
+        }
+      }
+      else {
+        if (this.state.showAlert === false) {
+          this.showAlertModal("No record found");
+        }
+      }
+    } else {
+      alert("onGetNotificationHistory errCode" + res.errCode);
+    }
   }
   /**
    * return sort by options
@@ -200,8 +364,8 @@ class Notifications_History extends Component {
         label: 'EXPIRED'
       },
       {
-        key: 'UPDATE',
-        label: 'UPDATE'
+        key: 'UPDATED',
+        label: 'UPDATED'
       }
     ];
     return data;
@@ -209,84 +373,143 @@ class Notifications_History extends Component {
   convertHistoryArrayToMap(data) {
     var historyCategoryMap = {}; // Create the blank map
     data.forEach(function (notification) {
-      if (!historyCategoryMap[notification.created_ts]) {
+      if (!historyCategoryMap[notification.created_date]) {
         // Create an entry in the map for the category if it hasn't yet been created
-        historyCategoryMap[notification.created_ts] = [];
+        historyCategoryMap[notification.created_date] = [];
       }
-      historyCategoryMap[notification.created_ts].push(notification);
+
+      historyCategoryMap[notification.created_date].push(notification);
     });
     return historyCategoryMap;
   }
+  /*
+    onTextchange method for Access Code TextInput.
+  */
+  onSearchChange(event) {
+    this.setState({ search: event.nativeEvent.text });
+  }
+
+  performesearch() {
+    this.setState({ search: '' });
+  }
+
+  removeSpace(str) {
+    return str.replace(/\s+/g, '');
+  }
+
+
+  go() {
+    if (this.state.startdate == '') {
+      alert('Select Start Date.');
+    } else if (this.state.enddate == '') {
+      alert('Select End Date.');
+    } else {
+      alert('go');
+    }
+  }
+
+  showAlertModal(msg) {
+    this.setState({
+      showAlert: true,
+      alertMsg: msg
+    });
+  }
+
+  dismissAlertModal() {
+    this.selectedAlertOp = false;
+    this.setState({
+      showAlert: false
+    });
+  }
+
+  onAlertModalOk() {
+    this.props.navigator.pop();
+  }
+
+  onAlertModalDismissed() {
+    //Do nothing for right now
+  }
+
   /*
      This method is used to render the componenet with all its element.
    */
   render() {
     return (
-      <Main
-        drawerState={{
-          open: false,
-          disabled: true,
-        }}
-        navBar={{
-          title: 'Notification History',
-          visible: true,
-          tint: Skin.colors.TEXT_COLOR,
-          left: {
-            text: 'Back',
-            icon: '',
-            iconStyle: {},
-            textStyle: {},
-            handler: this.props.navigator.pop,
-          },
-        }}
-        bottomMenu={{
-          visible: false,
-        }}
-        navigator={this.props.navigator}
-        >
-        <View style={styles.container}>
-          <View style={{ height: 50, flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}>
-              <DatePicker
-                style={styles.date}
-                date={this.state.startdate}
-                placeholder="Start Date"
-                format="YYYY-MM-DD"
-                iconSource=""
-                minDate="2016-05-01"
-                maxDate={dateFormat(now, "isoDate") }
-                onDateChange={(date) => { this.setState({ startdate: date }) } }
-                />
-            </View>
-            <View style={{ flex: 1 }}>
-              <DatePicker
-                style={styles.date}
-                date={this.state.enddate}
-                placeholder="End Date"
-                format="YYYY-MM-DD"
-                iconSource=""
-                minDate={this.state.startdate}
-                maxDate={dateFormat(now, "isoDate") }
-                onDateChange={(date) => { this.setState({ enddate: date }) } }
-                />
-            </View>
-            <View style={{ flex: 1 }}>
-              <ModalPicker
-                data={this.getSortByOptions() }
-                selectStyle={styles.select}
-                initValue={this.state.modalInitValue}
-                onChange={(option) => {
-                } } />
-            </View>
+      <MainActivation>
+        <Main
+          drawerState={{
+            open: false,
+            disabled: true,
+          }}
+          navBar={{
+            title: 'Notification History',
+            visible: true,
+            tint: Skin.colors.TEXT_COLOR,
+            left: {
+              text: 'Back',
+              icon: '',
+              iconStyle: {},
+              textStyle: {},
+              handler: this.props.navigator.pop,
+            },
+          }}
+          bottomMenu={{
+            visible: false,
+          }}
+          navigator={this.props.navigator}
+          >
+
+          <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
+
+            <ListView
+              style={styles.list}
+              dataSource={this.state.dataSource}
+              renderRow={this.notification_history}
+              renderSectionHeader={this.renderSectionHeader}
+              />
           </View>
-          <ListView
-            style={styles.list}
-            dataSource={this.state.dataSource}
-            renderRow={this.notification_history}
-            renderSectionHeader={this.renderSectionHeader}
-            />
-        </View>
-      </Main>
+
+          <Modal
+            style={styles.modalwrap}
+            overlayOpacity={0.75}
+            offset={100}
+            open={this.state.showAlert}
+            modalDidOpen={() => console.log('modal did open') }
+            modalDidClose={() => {
+              if (this.selectedAlertOp) {
+                this.selectedAlertOp = false;
+                this.onAlertModalOk();
+              } else {
+                this.selectedAlertOp = false;
+                this.onAlertModalDismissed();
+              }
+            } }>
+            <View style={styles.modalTitleWrap}>
+              <Text style={styles.modalTitle}>
+                Alert
+              </Text>
+            </View>
+            <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+              {this.state.alertMsg}
+            </Text>
+            <View style={styles.border}></View>
+
+            <TouchableHighlight
+              onPress={() => {
+                this.selectedAlertOp = true;
+                this.setState({
+                  showAlert: false
+                });
+              } }
+              underlayColor={Skin.colors.REPPLE_COLOR}
+              style={styles.modalButton}>
+              <Text style={styles.modalButtonText}>
+                OK
+              </Text>
+            </TouchableHighlight>
+          </Modal>
+        </Main>
+      </MainActivation>
     );
   }
 
@@ -295,47 +518,65 @@ class Notifications_History extends Component {
      This method return custom notification row.
    */
   notification_history(notification) {
-      var bodyarray = notification.message.body.split("\n");
-    return (
-      <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, }}>
-        <View style={Skin.notification.col}>
+    var bodyarray = notification.message.body.split("\n");
+    var indents = [];
+    if (notification.status == 'ACTIVE') {
+      indents.push(
+        null
+      );
+    } else if (notification.status == "EXPIRED") {
+      indents.push(
+        <View style={{ flexDirection: 'column', }}>
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0]) } IST
+          </Text>
+          <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
+          </Text>
+        </View>
+      );
+    } else if (notification.status == "UPDATED") {
+      indents.push(
+        <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0]) } IST
+          </Text>
+          <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
+          </Text>
+        </View>
+      );
+    }
 
+
+    return (
+      <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
+        <View style={[Skin.notification.row, { marginBottom: 4 }]}>
+          <Text style={Skin.notification.subject}>
+            {notification.message.subject}
+          </Text>
+          <Text style={Skin.notification.time}>
+            {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0]) } IST
+          </Text>
+        </View>
+
+        <View style={{ backgroundColor: 'transparent', flex: 2, flexDirection: 'column', marginBottom: 8 }}>
           <View style={Skin.notification.row}>
-            <Text style={Skin.notification.subject}>
-              {notification.message.subject}
-            </Text>
-            <Text style={Skin.notification.time}>
-              date
+            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
+            <Text style={Skin.notification.body}>
+              {bodyarray[0]}
             </Text>
           </View>
-
-            <View style={{ backgroundColor: 'transparant', flex: 2, flexDirection: 'column' }}>
-              <View style={Skin.notification.row}>
-                <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-                <Text style={Skin.notification.body}>
-                     {bodyarray[0]}
-                </Text>
-              </View>
-              <View style={Skin.notification.row}>
-                <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-                <Text style={Skin.notification.body}>
-                     {bodyarray[1]}
-                </Text>
-              </View>
-              <View style={Skin.notification.row}>
-                <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-                <Text style={Skin.notification.body}>
-                     {bodyarray[2]}
-                </Text>
-              </View>
-            </View>
-
-          <View style={{ flexDirection: 'column', }}>
-            <Text style={styles.device_alias}>
-              {notification.device_alias}
+          <View style={Skin.notification.row}>
+            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
+            <Text style={Skin.notification.body}>
+              {bodyarray[1]}
+            </Text>
+          </View>
+          <View style={Skin.notification.row}>
+            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
+            <Text style={Skin.notification.body}>
+              {bodyarray[2]}
             </Text>
           </View>
         </View>
+        {indents}
       </View>
     )
   }
@@ -344,9 +585,56 @@ class Notifications_History extends Component {
   */
   renderSectionHeader(sectionData, category) {
     return (
-      <Text style={{ textAlign: 'left', color: '#000', opacity: 0.7, marginLeft: 16, alignItems: 'center', fontSize: 14, backgroundColor: 'transparant' }}>{category}</Text>
+      <Text style={{ textAlign: 'left', color: Config.THEME_COLOR, opacity: 1, marginLeft: 16, alignItems: 'center', fontSize: 14, backgroundColor: 'transparent' }}>{category}</Text>
     )
   }
 }
 
 module.exports = Notifications_History;
+
+
+
+// filter row code
+//          <View style={{ height: 50, flexDirection: 'row', marginLeft: 4, marginRight: 4 }}>
+//             <View style={{ flex: 2 }}>
+//               <DatePicker
+//                 style={styles.date}
+//                 date={this.state.startdate}
+//                 placeholder="Start Date"
+//                 format="YYYY-MM-DD"
+//                 iconSource=""
+//                 minDate="2016-05-01"
+//                 maxDate={dateFormat(now, "isoDate") }
+//                 onDateChange={(date) => { this.setState({ startdate: date }) } }
+//                 />
+//             </View>
+//             <View style={{ flex: 2 }}>
+//               <DatePicker
+//                 style={styles.date}
+//                 date={this.state.enddate}
+//                 placeholder="End Date"
+//                 format="YYYY-MM-DD"
+//                 iconSource=""
+//                 minDate={this.state.startdate}
+//                 maxDate={dateFormat(now, "isoDate") }
+//                 onDateChange={(date) => { this.setState({ enddate: date }) } }
+//                 />
+//             </View>
+//             <View style={{ flex: 2 }}>
+//               <ModalPicker
+//                 data={this.getSortByOptions() }
+//                 selectStyle={styles.select}
+//                 initValue={this.state.modalInitValue}
+//                 onChange={(option) => {
+//                 } } />
+//             </View>
+//             <TouchableOpacity style={{ marginTop: 4, height: 40, width: 40, borderRadius: 0, borderWidth: 1, borderColor: '#bfbfbf', }}
+//               underlayColor={Skin.baseline.button.underlayColor}
+//               activeOpacity={Skin.baseline.button.activeOpacity}
+//               onPress={() => {
+//                 this.go();
+//               } }
+//               >
+//               <Text style={styles.go}>GO</Text>
+//             </TouchableOpacity>
+//           </View>

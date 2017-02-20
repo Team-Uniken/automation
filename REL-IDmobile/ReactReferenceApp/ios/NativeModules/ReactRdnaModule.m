@@ -40,7 +40,7 @@ RDNAIWACreds *rdnaIWACredsObj;
 RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents {
-  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigRecieved",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification"];
+  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigRecieved",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification",@"onGetNotificationsHistory"];
 }
 
 -(void)initParams{
@@ -471,6 +471,26 @@ RCT_EXPORT_METHOD (getNotifications:(NSString *)recordCount
   
 }
 
+
+RCT_EXPORT_METHOD (getNotificationHistory:(int)recordCount
+                   withEnterpriseID:(NSString *)enterpriseID
+                   withStartIndex:(int)startIndex
+                   withStartDate:(NSString *)startDate
+                   withEndDate:(NSString *)endDate
+                   withNotificationStatus:(NSString *)notificationStatus
+                   withActionPerformed:(NSString *)actionPerformed
+                   withKeyordSearch:(NSString *)keywordSearch
+                   withDeviceID:(NSString *)deviceID
+                   reactCallBack:(RCTResponseSenderBlock)callback){
+  
+  int errorID = 0;
+  errorID = [rdnaObject getNotificationsHistiory:recordCount andEnterpriseID:enterpriseID andStartIndex:startIndex andStartDate:startDate andEndDate:endDate andNotificationStatus:notificationStatus andActionPerformed:actionPerformed andKeyordSearch:keywordSearch andDeviceID:deviceID];
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+  callback(@[responseArray]);
+  
+}
+
 RCT_EXPORT_METHOD (updateNotification:(NSString *)notificationID
                    withResponse:(NSString *)response
                    reactCallBack:(RCTResponseSenderBlock)callback){
@@ -694,6 +714,11 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateNotification"
 //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onUpdateNotification" body:@{@"response":status}];
+  return 0;
+}
+
+-(int)onGetNotificationsHistory:(NSString*)status{
+  [self sendEventWithName:@"onGetNotificationsHistory" body:@{@"response":status}];
   return 0;
 }
 

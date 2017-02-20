@@ -27,6 +27,8 @@ class Input extends Component {
   setFocus(newstate) {
     //Alert.alert('yes')
     this.setState({ hasFocus: newstate })
+    if(this.state.hasFocus==true && this.props.focusLost==true)
+       this.props.onFocusLost();
   }
   focus() {
     this.refs.textinput.focus()
