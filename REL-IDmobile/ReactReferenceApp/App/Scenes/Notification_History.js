@@ -16,6 +16,7 @@ import DatePicker from 'react-native-datepicker'
 import ModalPicker from 'react-native-modal-picker'
 import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import Config from 'react-native-config'
 
 /*
  Use in this js
@@ -40,68 +41,68 @@ var now = new Date();
 
 var Obj;
 
-var HISTORY = {
-  "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
-  "device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
-  "timestamp": "2017-02-17T15:41:11IST",
-  "uuid": "99301ddb-f42a-11e6-8719-9c2a70c87e2b",
-  "data": {
-    "notification_history_details": {
-      "total_count": 3,
-      "history": [
-        {
-          "notification_uuid": "e7b0190a-d48e-4a6d-b9f8-11c601831426",
-          "status": "UPDATED",
-          "delivery_status": "FAILED_TO_NOTIFY",
-          "action_performed": "Approve",
-          "message": {
-            "subject": "LoginAttempt",
-            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
-          },
-          "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
-          "device_alias": "<Device_Alias>",
-          "create_ts": "2017-02-16T19: 15: 29IST",
-          "update_ts": "2017-02-16T19: 15: 41IST",
-          "expiry_timestamp": "2017-02-16T19: 18: 29IST",
-          "enterprise_id": "UBS"
-        },
-        {
-          "notification_uuid": "8ce9b3bd-fe9a-413c-8e59-113b6511d597",
-          "status": "UPDATED",
-          "delivery_status": "FAILED_TO_NOTIFY",
-          "action_performed": "Approve",
-          "message": {
-            "subject": "LoginAttempt",
-            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
-          },
-          "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
-          "device_alias": "<Device_Alias>",
-          "create_ts": "2017-02-17T12: 12: 12IST",
-          "update_ts": "2017-02-17T12: 12: 30IST",
-          "expiry_timestamp": "2017-02-17T12: 15: 11IST",
-          "enterprise_id": "UBS"
-        },
-        {
-          "notification_uuid": "7546e2ef-07fb-4e89-93d6-b28536cc021b",
-          "status": "EXPIRED",
-          "delivery_status": "FAILED_TO_NOTIFY",
-          "action_performed": "NONE",
-          "message": {
-            "subject": "LoginAttempt",
-            "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
-          },
-          "device_alias": "<Device_Alias>",
-          "create_ts": "2017-02-17T12: 12: 55IST",
-          "expiry_timestamp": "2017-02-17T12: 15: 55IST",
-          "enterprise_id": "UBS"
-        }
-      ]
-    },
-    "status_code": 100,
-    "message": "Success"
-  },
-  "node_name": "f9439096-f429-11e6-8719-9c2a70c87e2b:fa831577-f429-11e6-8719-9c2a70c87e2b"
-};
+// var HISTORY = {
+//   "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
+//   "device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+//   "timestamp": "2017-02-17T15:41:11IST",
+//   "uuid": "99301ddb-f42a-11e6-8719-9c2a70c87e2b",
+//   "data": {
+//     "notification_history_details": {
+//       "total_count": 3,
+//       "history": [
+//         {
+//           "notification_uuid": "e7b0190a-d48e-4a6d-b9f8-11c601831426",
+//           "status": "UPDATED",
+//           "delivery_status": "FAILED_TO_NOTIFY",
+//           "action_performed": "Approve",
+//           "message": {
+//             "subject": "LoginAttempt",
+//             "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+//           },
+//           "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+//           "device_alias": "<Device_Alias>",
+//           "create_ts": "2017-02-16T19: 15: 29IST",
+//           "update_ts": "2017-02-16T19: 15: 41IST",
+//           "expiry_timestamp": "2017-02-16T19: 18: 29IST",
+//           "enterprise_id": "UBS"
+//         },
+//         {
+//           "notification_uuid": "8ce9b3bd-fe9a-413c-8e59-113b6511d597",
+//           "status": "UPDATED",
+//           "delivery_status": "FAILED_TO_NOTIFY",
+//           "action_performed": "Approve",
+//           "message": {
+//             "subject": "LoginAttempt",
+//             "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+//           },
+//           "action_device_uuid": "18YJGCVJ52XPQOZB59KH3FFVCEME6URBW5RWFNF10KKCG68IC9",
+//           "device_alias": "<Device_Alias>",
+//           "create_ts": "2017-02-17T12: 12: 12IST",
+//           "update_ts": "2017-02-17T12: 12: 30IST",
+//           "expiry_timestamp": "2017-02-17T12: 15: 11IST",
+//           "enterprise_id": "UBS"
+//         },
+//         {
+//           "notification_uuid": "7546e2ef-07fb-4e89-93d6-b28536cc021b",
+//           "status": "EXPIRED",
+//           "delivery_status": "FAILED_TO_NOTIFY",
+//           "action_performed": "NONE",
+//           "message": {
+//             "subject": "LoginAttempt",
+//             "body": "WindowsNT10.0;WOW64\nCity,   Country(127.0.0.1)\nSite: NetBankingRetail\n"
+//           },
+//           "device_alias": "<Device_Alias>",
+//           "create_ts": "2017-02-17T12: 12: 55IST",
+//           "expiry_timestamp": "2017-02-17T12: 15: 55IST",
+//           "enterprise_id": "UBS"
+//         }
+//       ]
+//     },
+//     "status_code": 100,
+//     "message": "Success"
+//   },
+//   "node_name": "f9439096-f429-11e6-8719-9c2a70c87e2b:fa831577-f429-11e6-8719-9c2a70c87e2b"
+// };
 
 
 var styles = StyleSheet.create({
@@ -154,6 +155,7 @@ var styles = StyleSheet.create({
     color: Skin.colors.PRIMARY_TEXT,
     fontSize: 16,
     marginLeft: 8,
+    margin:8,
   },
   go: {
     color: '#000',
@@ -211,7 +213,7 @@ class Notifications_History extends Component {
   componentDidMount() {
     Obj = this;
     if (Main.isConnected) {
-      this.getNotificationHistory('10', '0','','','','','','','');
+      this.getNotificationHistory(10, 0,'','','','','','','');
     } else {
       // Alert.alert(
       //   '',
@@ -358,13 +360,9 @@ class Notifications_History extends Component {
         }}
         navigator={this.props.navigator}
         >
-        <Search
-          value={this.state.search}
-          onChange={this.onSearchChange.bind(this) }
-          onSubmitEditing={this.performesearch.bind(this) }
-          />
-        <View style={styles.container}>
-          <View style={{ height: 50, flexDirection: 'row', marginLeft: 4, marginRight: 4 }}>
+     
+        <View style={[styles.container,{backgroundColor:'#f5f5f5'}]}>
+          <View style={{ height: 0,backgroundColor:'#f00', flexDirection: 'row', marginLeft: 4, marginRight: 4 }}>
             <View style={{ flex: 2 }}>
               <DatePicker
                 style={styles.date}
@@ -432,14 +430,14 @@ class Notifications_History extends Component {
     } else if (notification.status == "EXPIRED") {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
-          <Text style={styles.expired_update}>Expired Date: {notification.expiry_timestamp}
+          <Text style={styles.expired_update}>Expired Date: {notification.expiry_timestamp}{"\n"}Action perform : {notification.action_performed}
           </Text>
         </View>
       );
     } else if (notification.status == "UPDATED") {
       indents.push(
         <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
-          <Text style={styles.expired_update}>Updated Date: {notification.update_ts}
+          <Text style={styles.expired_update}>Updated Date: {notification.update_ts}{"\n"}Action perform : {notification.action_performed}
           </Text>
           <Text style={styles.device_alias}>
             {notification.device_alias}
@@ -450,9 +448,9 @@ class Notifications_History extends Component {
 
 
     return (
-      <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#f5f5f5' }}>
+      <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
         <View style={Skin.notification.row}>
-          <Text style={Skin.notification.subject}>
+          <Text style={[Skin.notification.subject,{marginBottom:8}]}>
             {notification.message.subject}
           </Text>
           <Text style={Skin.notification.time}>
@@ -489,7 +487,7 @@ class Notifications_History extends Component {
   */
   renderSectionHeader(sectionData, category) {
     return (
-      <Text style={{ textAlign: 'left', color: '#000', opacity: 0.7, marginLeft: 16, alignItems: 'center', fontSize: 14, backgroundColor: 'transparent' }}>{category}</Text>
+      <Text style={{ textAlign: 'left', color: Config.THEME_COLOR, opacity:1, marginLeft: 16, alignItems: 'center', fontSize: 14, backgroundColor: 'transparent' }}>{category}</Text>
     )
   }
 }
