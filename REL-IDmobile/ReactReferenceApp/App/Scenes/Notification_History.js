@@ -17,6 +17,7 @@ import ModalPicker from 'react-native-modal-picker'
 import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Config from 'react-native-config'
+import Modal from 'react-native-simple-modal';
 
 /*
  Use in this js
@@ -173,6 +174,41 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent',
     opacity: 0.7,
   },
+  modalwrap: {
+    height: 150,
+    flexDirection: 'column',
+    borderRadius: 15,
+    backgroundColor: '#fff',
+  },
+  modalTitleWrap: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalTitle: {
+    color: Skin.colors.PRIMARY_TEXT,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+  },
+  modalButton: {
+    height: 40,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  modalButtonText: {
+    textAlign: 'center',
+    color: '#268CFE',
+    fontSize: 16,
+  },
+  border: {
+    height: 1,
+    marginTop: 16,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+  }
 });
 
 function compare(a, b) {
@@ -195,8 +231,15 @@ class Notifications_History extends Component {
         rowHasChanged: (r1, r2) => r1 !== r2,
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       }),
-
+      selectedAction: '',
+      alertMsg: "",
+      showAlert: false
     };
+    this.selectedAlertOp = true;
+    this.showAlertModal = this.showAlertModal.bind(this);
+    this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
+    this.onAlertModalOk = this.onAlertModalOk.bind(this);
+    this.dismissAlertModal = this.dismissAlertModal.bind(this);
   }
   /*
    This is life cycle method of the react native component.
@@ -229,11 +272,11 @@ class Notifications_History extends Component {
       //   ]
       // );
     }
- //   this.renderHistory(HISTORY);
+    //   this.renderHistory(HISTORY);
   }
 
   renderHistory(data) {
-   // var history = data.data.notification_history_details.history
+    // var history = data.data.notification_history_details.history
     var sorthistory = data.sort(compare);
     var dateAdd = this.addDate(sorthistory);
     this.setState({
@@ -274,14 +317,23 @@ class Notifications_History extends Component {
     const res = JSON.parse(e.response);
     if (res.errCode == 0) {
       var ResponseObj = JSON.parse(e.response);
-      var count = ResponseObj.pArgs.response.ResponseData.total_count;
-      if(count===0){
-      
-      }else{
-      var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
-      Obj.renderHistory(ObtainedHistory);
+      if (ResponseObj.pArgs.response.ResponseData != undefined) {
+        var count = ResponseObj.pArgs.response.ResponseData.total_count;
+        if (count === 0) {
+          this.showAlertModal("No record found");
+        } else {
+          if (this.state.showAlert === true) {
+            this.dismissAlertModal();
+          }
+          var ObtainedHistory = ResponseObj.pArgs.response.ResponseData.history;
+          Obj.renderHistory(ObtainedHistory);
+        }
       }
-
+      else{
+        if (this.state.showAlert === false) {
+          this.showAlertModal("No record found");
+        }
+      }
     } else {
       alert("onGetNotificationHistory errCode" + res.errCode);
     }
@@ -334,9 +386,9 @@ class Notifications_History extends Component {
     this.setState({ search: '' });
   }
 
-removeSpace(str){
-  return str.replace(/\s+/g, '');
-}
+  removeSpace(str) {
+    return str.replace(/\s+/g, '');
+  }
 
 
   go() {
@@ -347,6 +399,28 @@ removeSpace(str){
     } else {
       alert('go');
     }
+  }
+
+  showAlertModal(msg) {
+    this.setState({
+      showAlert: true,
+      alertMsg: msg
+    });
+  }
+
+  dismissAlertModal() {
+    this.selectedAlertOp = false;
+    this.setState({
+      showAlert: false
+    });
+  }
+
+  onAlertModalOk() {
+    this.props.navigator.pop();
+  }
+
+  onAlertModalDismissed() {
+    //Do nothing for right now
   }
 
   /*
@@ -386,6 +460,46 @@ removeSpace(str){
             renderSectionHeader={this.renderSectionHeader}
             />
         </View>
+
+        <Modal
+          style={styles.modalwrap}
+          overlayOpacity={0.75}
+          offset={100}
+          open={this.state.showAlert}
+          modalDidOpen={() => console.log('modal did open') }
+          modalDidClose={() => {
+            if (this.selectedAlertOp) {
+              this.selectedAlertOp = false;
+              this.onAlertModalOk();
+            } else {
+              this.selectedAlertOp = false;
+              this.onAlertModalDismissed();
+            }
+          } }>
+          <View style={styles.modalTitleWrap}>
+            <Text style={styles.modalTitle}>
+              Alert
+            </Text>
+          </View>
+          <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+            {this.state.alertMsg}
+          </Text>
+          <View style={styles.border}></View>
+
+          <TouchableHighlight
+            onPress={() => {
+              this.selectedAlertOp = true;
+              this.setState({
+                showAlert: false
+              });
+            } }
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={styles.modalButton}>
+            <Text style={styles.modalButtonText}>
+              OK
+            </Text>
+          </TouchableHighlight>
+        </Modal>
       </Main>
     );
   }
@@ -404,7 +518,7 @@ removeSpace(str){
     } else if (notification.status == "EXPIRED") {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
-          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0])} IST
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0]) } IST
           </Text>
           <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
           </Text>
@@ -413,7 +527,7 @@ removeSpace(str){
     } else if (notification.status == "UPDATED") {
       indents.push(
         <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
-          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0])} IST
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0]) } IST
           </Text>
           <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
           </Text>
@@ -429,7 +543,7 @@ removeSpace(str){
             {notification.message.subject}
           </Text>
           <Text style={Skin.notification.time}>
-          {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0])} IST
+            {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0]) } IST
           </Text>
         </View>
 
