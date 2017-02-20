@@ -18,6 +18,8 @@ import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInpu
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Config from 'react-native-config'
 import Modal from 'react-native-simple-modal';
+import Events from 'react-native-simple-events';
+
 
 /*
  Use in this js
@@ -25,6 +27,7 @@ import Modal from 'react-native-simple-modal';
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import MainActivation from '../Components/Container/MainActivation';
 
 
 /*
@@ -303,6 +306,7 @@ class Notifications_History extends Component {
   getNotificationHistory(recordCount, startIndex, enterpriseID, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID) {
     ReactRdna.getNotificationHistory(recordCount, enterpriseID, startIndex, startDate, endDate, notificationStatus, notificationActionTaken, keywordSearch, deviceID, (response) => {
       if (response[0].error === 0) {
+        Events.trigger('showLoader', true);
         //   alert('getNotificationHistory response is' + response[0].error);
       } else {
         alert('immediate response is' + response[0].error);
@@ -314,13 +318,16 @@ class Notifications_History extends Component {
 
   //callback of getNotificationHistory api.
   onGetNotificationHistory(e) {
+    Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
     if (res.errCode == 0) {
       var ResponseObj = JSON.parse(e.response);
       if (ResponseObj.pArgs.response.ResponseData != undefined) {
         var count = ResponseObj.pArgs.response.ResponseData.total_count;
         if (count === 0) {
-          this.showAlertModal("No record found");
+          if (this.state.showAlert === false) {
+            this.showAlertModal("No record found");
+          }
         } else {
           if (this.state.showAlert === true) {
             this.dismissAlertModal();
@@ -329,7 +336,7 @@ class Notifications_History extends Component {
           Obj.renderHistory(ObtainedHistory);
         }
       }
-      else{
+      else {
         if (this.state.showAlert === false) {
           this.showAlertModal("No record found");
         }
@@ -428,79 +435,81 @@ class Notifications_History extends Component {
    */
   render() {
     return (
-      <Main
-        drawerState={{
-          open: false,
-          disabled: true,
-        }}
-        navBar={{
-          title: 'Notification History',
-          visible: true,
-          tint: Skin.colors.TEXT_COLOR,
-          left: {
-            text: 'Back',
-            icon: '',
-            iconStyle: {},
-            textStyle: {},
-            handler: this.props.navigator.pop,
-          },
-        }}
-        bottomMenu={{
-          visible: false,
-        }}
-        navigator={this.props.navigator}
-        >
+      <MainActivation>
+        <Main
+          drawerState={{
+            open: false,
+            disabled: true,
+          }}
+          navBar={{
+            title: 'Notification History',
+            visible: true,
+            tint: Skin.colors.TEXT_COLOR,
+            left: {
+              text: 'Back',
+              icon: '',
+              iconStyle: {},
+              textStyle: {},
+              handler: this.props.navigator.pop,
+            },
+          }}
+          bottomMenu={{
+            visible: false,
+          }}
+          navigator={this.props.navigator}
+          >
 
-        <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
+          <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
 
-          <ListView
-            style={styles.list}
-            dataSource={this.state.dataSource}
-            renderRow={this.notification_history}
-            renderSectionHeader={this.renderSectionHeader}
-            />
-        </View>
-
-        <Modal
-          style={styles.modalwrap}
-          overlayOpacity={0.75}
-          offset={100}
-          open={this.state.showAlert}
-          modalDidOpen={() => console.log('modal did open') }
-          modalDidClose={() => {
-            if (this.selectedAlertOp) {
-              this.selectedAlertOp = false;
-              this.onAlertModalOk();
-            } else {
-              this.selectedAlertOp = false;
-              this.onAlertModalDismissed();
-            }
-          } }>
-          <View style={styles.modalTitleWrap}>
-            <Text style={styles.modalTitle}>
-              Alert
-            </Text>
+            <ListView
+              style={styles.list}
+              dataSource={this.state.dataSource}
+              renderRow={this.notification_history}
+              renderSectionHeader={this.renderSectionHeader}
+              />
           </View>
-          <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
-            {this.state.alertMsg}
-          </Text>
-          <View style={styles.border}></View>
 
-          <TouchableHighlight
-            onPress={() => {
-              this.selectedAlertOp = true;
-              this.setState({
-                showAlert: false
-              });
-            } }
-            underlayColor={Skin.colors.REPPLE_COLOR}
-            style={styles.modalButton}>
-            <Text style={styles.modalButtonText}>
-              OK
+          <Modal
+            style={styles.modalwrap}
+            overlayOpacity={0.75}
+            offset={100}
+            open={this.state.showAlert}
+            modalDidOpen={() => console.log('modal did open') }
+            modalDidClose={() => {
+              if (this.selectedAlertOp) {
+                this.selectedAlertOp = false;
+                this.onAlertModalOk();
+              } else {
+                this.selectedAlertOp = false;
+                this.onAlertModalDismissed();
+              }
+            } }>
+            <View style={styles.modalTitleWrap}>
+              <Text style={styles.modalTitle}>
+                Alert
+              </Text>
+            </View>
+            <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+              {this.state.alertMsg}
             </Text>
-          </TouchableHighlight>
-        </Modal>
-      </Main>
+            <View style={styles.border}></View>
+
+            <TouchableHighlight
+              onPress={() => {
+                this.selectedAlertOp = true;
+                this.setState({
+                  showAlert: false
+                });
+              } }
+              underlayColor={Skin.colors.REPPLE_COLOR}
+              style={styles.modalButton}>
+              <Text style={styles.modalButtonText}>
+                OK
+              </Text>
+            </TouchableHighlight>
+          </Modal>
+        </Main>
+      </MainActivation>
     );
   }
 

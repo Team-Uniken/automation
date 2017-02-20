@@ -608,7 +608,7 @@ class ControlPanel extends Component {
             />
         <MenuItem
             visibility={Config.NOTIFICATION_HISTORY}
-            lable="Notification_History"
+            lable="Notification History"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
