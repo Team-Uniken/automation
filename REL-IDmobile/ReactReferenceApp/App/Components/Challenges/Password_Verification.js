@@ -147,6 +147,7 @@ class PasswordVerification extends Component {
                   autoFocus={true}
                   autoCorrect={false}
                   autoComplete={false}
+                  clearTextOnFocus={false}
                   autoCapitalize={false}
                   />
                   <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
