@@ -138,8 +138,8 @@ android {
             signingConfig signingConfigs.releaseSandP
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 44
-            versionName "4.4"
+            versionCode 45
+            versionName "4.5"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
 
@@ -148,8 +148,8 @@ android {
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 44
-            versionName "4.4"
+            versionCode 45
+            versionName "4.5"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
 
@@ -158,8 +158,8 @@ android {
             signingConfig signingConfigs.releaseStock
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 44
-            versionName "4.4"
+            versionCode 45
+            versionName "4.5"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
         ubs{
@@ -167,8 +167,8 @@ android {
             signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 44
-            versionName "4.4"
+            versionCode 45
+            versionName "4.5"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
         cbc{
@@ -176,8 +176,8 @@ android {
             signingConfig signingConfigs.releaseCbc
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 44
-            versionName "4.4"
+            versionCode 45
+            versionName "4.5"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
     }

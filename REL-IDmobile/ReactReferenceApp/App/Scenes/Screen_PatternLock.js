@@ -63,6 +63,7 @@ class PatternLock extends Component {
     this.startTicker = this.startTicker.bind(this);
     this.tick = this.tick.bind(this);
     this.tickerEnd = this.tickerEnd.bind(this);
+    this.close = this.close.bind(this);
     if (this.mode == "verify")
       this.msg = "Attempts left " + MAX_ATTEMPTS;
     else {
