@@ -60,6 +60,7 @@ class Input extends Component {
           autoFocus={this.props.autoFocus}
           autoCorrect={this.props.autoCorrect}
           autoCapitalize={this.props.autoCapitalize}
+            clearTextOnFocus={this.props.clearTextOnFocus}
           keyboardAppearance={'light'}
           value={this.props.value}
           enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}
