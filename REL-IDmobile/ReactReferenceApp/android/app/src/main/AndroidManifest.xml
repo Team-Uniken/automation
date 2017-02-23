@@ -89,13 +89,13 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="io.neson.react.notification.NotificationEventReceiver" />   <!-- <- Add this line -->
-        <receiver android:name="io.neson.react.notification.NotificationPublisher" />       <!-- <- Add this line -->
-        <receiver android:name="io.neson.react.notification.SystemBootEventReceiver">       <!-- <- Add this line -->
-            <intent-filter>                                                                   <!-- <- Add this line -->
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>           <!-- <- Add this line -->
-            </intent-filter>                                                                  <!-- <- Add this line -->
-        </receiver>
+        <!--<receiver android:name="io.neson.react.notification.NotificationEventReceiver" />   &lt;!&ndash; <- Add this line &ndash;&gt;-->
+        <!--<receiver android:name="io.neson.react.notification.NotificationPublisher" />       &lt;!&ndash; <- Add this line &ndash;&gt;-->
+        <!--<receiver android:name="io.neson.react.notification.SystemBootEventReceiver">       &lt;!&ndash; <- Add this line &ndash;&gt;-->
+            <!--<intent-filter>                                                                   &lt;!&ndash; <- Add this line &ndash;&gt;-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"></action>           &lt;!&ndash; <- Add this line &ndash;&gt;-->
+            <!--</intent-filter>                                                                  &lt;!&ndash; <- Add this line &ndash;&gt;-->
+        <!--</receiver>-->
 
     </application>
 
