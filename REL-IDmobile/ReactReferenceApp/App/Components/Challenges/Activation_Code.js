@@ -183,7 +183,7 @@ class Activation_Code extends Component {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
-      this.hideCamera();
+      //this.hideCamera();
       this.setState({ activatonCode: '' });
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
@@ -251,9 +251,8 @@ class Activation_Code extends Component {
       if (obtainedVfKey === vfKey) {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
-        if (Platform.OS === 'android') {
-          $this.hideCamera();
-        }
+        
+       // $this.hideCamera();
         let responseJson = $this.props.url.chlngJson;
         obj.state.barCodeFlag = false;
 
@@ -302,7 +301,7 @@ class Activation_Code extends Component {
   */
   close() {
     let responseJson = this.props.url.chlngJson;
-    this.hideCamera();
+    //this.hideCamera();
     Events.trigger('showPreviousChallenge');
   }
 

@@ -209,7 +209,7 @@ class TwoFactorAuthMachine extends Component {
       console.log('TwoFactorAuthMachine - statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
-          obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
+        //  obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
           console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           this.showFirstChallenge(chlngJson, 0);
