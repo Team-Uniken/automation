@@ -12,6 +12,8 @@
 #import <RCTConvert.h>
 #import "RCTEventDispatcher.h"
 #import "RelIDRequestInterceptor.h"
+#import <SystemConfiguration/SCNetworkReachability.h>
+
 RCTBridge *_Nullable localbridgeDispatcher;
 
 @interface RDNARequestUtility(){
@@ -166,24 +168,35 @@ RCT_EXPORT_METHOD (doHTTPPostRequest:(NSString *)url
 
 - (BOOL)isNetworkAvailable
 {
-  CFNetDiagnosticRef dReference;
-  dReference = CFNetDiagnosticCreateWithURL (kCFAllocatorDefault, (__bridge CFURLRef)[NSURL URLWithString:@"www.apple.com"]);
+//  CFNetDiagnosticRef dReference;
+//  dReference = CFNetDiagnosticCreateWithURL (kCFAllocatorDefault, (__bridge CFURLRef)[NSURL URLWithString:@"www.apple.com"]);
+//  
+//  CFNetDiagnosticStatus status;
+//  status = CFNetDiagnosticCopyNetworkStatusPassively (dReference, NULL);
+//  
+//  CFRelease (dReference);
+//  
+//  if ( status == kCFNetDiagnosticConnectionUp )
+//  {
+//    NSLog (@"Connection is Available");
+//    return YES;
+//  }
+//  else
+//  {
+//    NSLog (@"Connection is down");
+//    return NO;
+//  }
+  SCNetworkReachabilityFlags flags;
+  SCNetworkReachabilityRef address;
+  address = SCNetworkReachabilityCreateWithName(NULL, "www.apple.com" );
+  Boolean success = SCNetworkReachabilityGetFlags(address, &flags);
+  CFRelease(address);
   
-  CFNetDiagnosticStatus status;
-  status = CFNetDiagnosticCopyNetworkStatusPassively (dReference, NULL);
+  bool canReach = success
+  && !(flags & kSCNetworkReachabilityFlagsConnectionRequired)
+  && (flags & kSCNetworkReachabilityFlagsReachable);
   
-  CFRelease (dReference);
-  
-  if ( status == kCFNetDiagnosticConnectionUp )
-  {
-    NSLog (@"Connection is Available");
-    return YES;
-  }
-  else
-  {
-    NSLog (@"Connection is down");
-    return NO;
-  }
+  return canReach;
 }
 
 @end
