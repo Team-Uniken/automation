@@ -13,6 +13,7 @@
 #import <RCTConvert.h>
 #import "RCTEventDispatcher.h"
 #import "AppDelegate.h"
+#import <AVFoundation/AVFoundation.h>
 
 RDNA *rdnaObject;
 id<RDNACallbacks> rdnaClientCallbacks;
@@ -731,6 +732,15 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
     [tokenString appendString:[NSString stringWithFormat:@"%02.2hhx", bytes[j]]];
   }
   return tokenString;
+}
+
+RCT_EXPORT_METHOD(checkDeviceAuthorizationStatus:(RCTResponseSenderBlock) callback)
+{
+  NSString *mediaType = AVMediaTypeVideo;
+  
+  [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+    callback(@[[NSNull null], @(granted)]);
+  }];
 }
 
 #pragma mark Location Manager Implementation
