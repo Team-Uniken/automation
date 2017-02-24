@@ -324,6 +324,7 @@ class ControlPanel extends Component {
   onGetAllChallengeStatus(e) {
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
+      onGetAllChallengeStatusSubscription = null;
     }
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
@@ -369,6 +370,7 @@ class ControlPanel extends Component {
 
       if (onGetAllChallengeStatusSubscription) {
         onGetAllChallengeStatusSubscription.remove();
+        onGetAllChallengeStatusSubscription = null;
       }
 
 //      onGetAllChallengeEvent = DeviceEventEmitter.addListener(
