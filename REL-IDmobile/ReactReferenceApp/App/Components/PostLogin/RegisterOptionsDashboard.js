@@ -396,7 +396,7 @@ This method is called when the component will start to load
         }
       }
 
-      if (this.state.rpass != null || this.state.rpass != undefined) {
+      if (this.state.rpass !== "empty" && ( this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
           if (this.state.pattern) {
             data.push(Skin.text['0']['2'].credTypes['pattern']);
@@ -815,7 +815,7 @@ This method is called when the component will start to load
         this.state.initTouchAndPatternState = false;
       }
 
-      if (this.state.rpass != null || this.state.rpass != undefined) {
+      if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
           indents.push(
             <Checkbox
