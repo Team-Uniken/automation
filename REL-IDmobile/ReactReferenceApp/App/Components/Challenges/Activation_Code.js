@@ -89,8 +89,11 @@ class Activation_Code extends Component {
       
     }
     
-    if (Platform.OS === 'android' && Platform.Version >= 23) {
-      this.state.showCamera = false;
+    if (Platform.OS === 'android') {
+      if(Platform.Version >= 23)
+         this.state.showCamera = false;
+      else
+         this.state.showCamera = true;
     }
     
   }
@@ -106,6 +109,7 @@ class Activation_Code extends Component {
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.checkCameraPermission();
     }
+    
     BackAndroid.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
