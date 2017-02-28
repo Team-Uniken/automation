@@ -190,8 +190,9 @@ class UpdateAuthMachine extends Component {
               } else {
                 chlngJson = res.pArgs.response.ResponseData;
               }
+             
+              const currentChlng = challengeJsonArr[currentIndex];
 
-              const currentChlng = challengeJsonArr[--currentIndex];
               for (var i = 0; i < chlngJson.chlng.length; i++) {
                 var chlng = chlngJson.chlng[i];
                 if (chlng.chlng_name === currentChlng.chlng_name) {
@@ -231,8 +232,8 @@ class UpdateAuthMachine extends Component {
    */
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
-    const i = challengeJsonArr.indexOf(currentIndex);
-    challengeJsonArr[i] = args.response;
+    // const i = challengeJsonArr.indexOf(currentIndex);
+    // challengeJsonArr[i] = args.response;
     currentIndex++;
     if (obj.hasNextChallenge()) {
       // Show Next challenge screen
@@ -249,6 +250,7 @@ class UpdateAuthMachine extends Component {
     } else {
       // Call checkChallenge
       obj.callUpdateChallenge();
+      currentIndex--;
     }
   }
   //render screen based on a id pass to it.
