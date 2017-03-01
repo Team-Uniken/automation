@@ -155,6 +155,8 @@ export default class UpdatePasswordSet extends Component {
         } else {
           alert('Password and Confirm Password do not match');
           this.setState({ password: "", cPassword: "" });
+          this.refs.password.focus();
+
         }
       } else {
         alert('Please enter confirm password ');
@@ -289,7 +291,7 @@ export default class UpdatePasswordSet extends Component {
                     label={Skin.text['1']['1'].submit_button}/>
                 </View>
               </View>
-          <KeyboardSpacer topSpacing={0}/>
+              <KeyboardSpacer topSpacing={0}/>
             </View>
           </MainActivation>
         </View>
