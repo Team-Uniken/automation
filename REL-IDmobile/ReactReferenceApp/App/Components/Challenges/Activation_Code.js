@@ -398,6 +398,7 @@ class Activation_Code extends Component {
                   autoComplete={false}
                   autoCapitalize={true}
                   secureTextEntry={true}
+                  value={this.state.activatonCode}
                   styleInputView={[{ width: Skin.SCREEN_WIDTH - 104 }]}
                   styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}

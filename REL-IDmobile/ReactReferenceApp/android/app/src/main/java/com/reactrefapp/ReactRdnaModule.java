@@ -765,6 +765,24 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getDeviceUUID(Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            RDNA.RDNAStatus<String> status =   rdnaObj.getDeviceID();
+            errorMap.putInt("error", status.errorCode);
+            if(status.errorCode == 0)
+                errorMap.putString("response",status.result);
+        }
+        else{
+            errorMap.putInt("error",1);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
     public void demo(){
     }
 }

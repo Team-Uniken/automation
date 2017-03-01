@@ -163,6 +163,9 @@ export default class DeviceMgmtScene extends Component {
       status: 'created',
       deviceCount: 0,
     };
+
+    this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
+    this.getRegisteredDeviceDetails = this.getRegisteredDeviceDetails.bind(this);
   }
 
 
@@ -171,20 +174,14 @@ export default class DeviceMgmtScene extends Component {
   This method is called when the component will start to load
   */
   componentWillMount() {
-    if (onGetRegistredDeviceDetailsSubscription) {
-      onGetRegistredDeviceDetailsSubscription.remove();
-      onGetRegistredDeviceDetailsSubscription = null;
-    }
+    
     if (onUpdateDeviceDetailsSubscription) {
       onUpdateDeviceDetailsSubscription.remove();
       onUpdateDeviceDetailsSubscription = null;
     }
 
-    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',
-      this.onGetRegistredDeviceDetails.bind(this));
     onUpdateDeviceDetailsSubscription = onUpdateDeviceDetailsModuleEvt.addListener('onUpdateDeviceDetails',
       this.onUpdateDeviceDetails.bind(this));
-
   }
  /*
      This is life cycle method of the react native component.
@@ -206,8 +203,13 @@ export default class DeviceMgmtScene extends Component {
   }
   //call getRegisteredDeviceDetails api.
   getRegisteredDeviceDetails() {
-    AsyncStorage.getItem('userId').then((value) => {
-      ReactRdna.getRegisteredDeviceDetails(value, (response) => {
+    if (onGetRegistredDeviceDetailsSubscription) {
+      onGetRegistredDeviceDetailsSubscription.remove();
+      onGetRegistredDeviceDetailsSubscription = null;
+    }
+
+    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',this.onGetRegistredDeviceDetails);
+      ReactRdna.getRegisteredDeviceDetails(Main.dnaUserName, (response) => {
         console.log('----- DeviceMgmt.getRegisteredDeviceDetails.response ');
         console.log(response);
 
@@ -219,11 +221,15 @@ export default class DeviceMgmtScene extends Component {
           }
         }
       });
-    }).done();
   }
+
   //callback of getRegisteredDeviceDetails api.
   onGetRegistredDeviceDetails(e) {
     console.log('----- onGetRegistredDeviceDetails');
+    if (onGetRegistredDeviceDetailsSubscription) {
+      onGetRegistredDeviceDetailsSubscription.remove();
+      onGetRegistredDeviceDetailsSubscription = null;
+    }
     devicesResponse = e;
     const res = JSON.parse(e.response);
     console.log(res);
@@ -238,6 +244,7 @@ export default class DeviceMgmtScene extends Component {
       console.log('Something went wrong');
     }
   }
+
   //callback of rdna updateDeviceDetails api.
   onUpdateDeviceDetails(e) {
     const res = JSON.parse(e.response);

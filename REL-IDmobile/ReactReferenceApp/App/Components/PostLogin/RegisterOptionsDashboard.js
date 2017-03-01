@@ -42,12 +42,13 @@ import Margin from '../view/margin';
   INSTANCES
  */
 let subscriptions;
+let onGetRegistredDeviceDetailsSubscription;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
-
+const onGetRegistredDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 //Facebook login code
 const FBSDK = require('react-native-fbsdk');
@@ -84,6 +85,7 @@ class RegisterOptionScene extends Component {
       modalInitValue: "Select Default Login",
       devname: "Device Name",
       devnameopacity: 0,
+      devid: 0,
       url: null,
       showOptions: false,
       initTouchAndPatternState: true,
@@ -103,7 +105,11 @@ class RegisterOptionScene extends Component {
     this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
     this.renderIf = this.renderIf.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
+    this.getDeviceUUID = this.getDeviceUUID.bind(this);
+    this.getRegisteredDeviceDetails = this.getRegisteredDeviceDetails.bind(this);
+    this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
   }
+
   /*
 This is life cycle method of the react native component.
 This method is called when the component will start to load
@@ -119,6 +125,8 @@ This method is called when the component will start to load
     onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
       this.onGetAllChallengeStatus.bind(this));
     obj = this;
+
+    this.getDeviceUUID();
   }
   /*
   This is life cycle method of the react native component.
@@ -162,10 +170,9 @@ This method is called when the component will start to load
       });
 
       AsyncStorage.getItem('skipwelcome').then((value) => {
-        if (value === "false") {
+        if (value === "false" || value == null || value == undefined) {
           this.setState({ welcomescreen: '' });
           this.setState({ welcome: false });
-
         } else {
           this.setState({ welcomescreen: '\u2714' });
           this.setState({ welcome: true });
@@ -174,16 +181,12 @@ This method is called when the component will start to load
 
 
       AsyncStorage.getItem('devname').then((value) => {
-
-
         if (value != null) {
           this.setState({ devname: value });
           this.setState({ devnameopacity: 1 });
         } else {
           this.setState({ devnameopacity: 0 });
         }
-
-
       }).done();
 
 
@@ -197,6 +200,71 @@ This method is called when the component will start to load
     });
   }
 
+  getDeviceUUID() {
+    ReactRdna.getDeviceUUID((response) => {
+      console.log(response);
+      if (response[0].error !== 0) {
+        console.log('----- ----- response is not 0');
+      }
+      else {
+        this.state.devid = response[0].response;
+        this.getRegisteredDeviceDetails();
+      }
+    });
+  }
+
+  //call getRegisteredDeviceDetails api.
+  getRegisteredDeviceDetails() {
+    if (onGetRegistredDeviceDetailsSubscription) {
+      onGetRegistredDeviceDetailsSubscription.remove();
+      onGetRegistredDeviceDetailsSubscription = null;
+    }
+
+    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails', this.onGetRegistredDeviceDetails);
+
+    ReactRdna.getRegisteredDeviceDetails(Main.dnaUserName, (response) => {
+      console.log('----- DeviceMgmt.getRegisteredDeviceDetails.response ');
+      console.log(response);
+
+      if (response[0].error !== 0) {
+        console.log('----- ----- response is not 0');
+      }
+    });
+  }
+
+  //callback of getRegisteredDeviceDetails api.
+  onGetRegistredDeviceDetails(e) {
+    console.log('----- onGetRegistredDeviceDetails');
+    if (onGetRegistredDeviceDetailsSubscription) {
+      onGetRegistredDeviceDetailsSubscription.remove();
+      onGetRegistredDeviceDetailsSubscription = null;
+    }
+    const res = JSON.parse(e.response);
+    console.log(res);
+    if (res.errCode === 0) {
+      var statusCode = res.pArgs.response.StatusCode;
+      var deviceData = res.pArgs.response.ResponseData;
+      if (deviceData && deviceData.device) {
+        for (var i = 0; i < deviceData.device.length; i++) {
+          var device = deviceData.device[i];
+          if (device) {
+            if (this.state.devid === device.devUUID) {
+              var devName = device.devName;
+              if (devName && devName.trim() !== "") {
+                AsyncStorage.setItem("devname", devName).then(()=>{
+                   this.state.devname = devName;
+                   this.setState({ devname: devName, devnameopacity: 1 });
+                });
+              }
+            }
+          }
+        }
+      }
+      //deviceHolderList = this.renderListViewData(devicesList.device);
+    } else {
+      console.log('Something went wrong');
+    }
+  }
 
   //Callback of getAllChallenges
   onGetAllChallengeStatus(e) {
@@ -238,7 +306,6 @@ This method is called when the component will start to load
 
                     this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
                     this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
-
                   }
 
                   // this.forceUpdate();
@@ -260,7 +327,7 @@ This method is called when the component will start to load
     }
   }
 
-//check device touchid feature supported or not
+  //check device touchid feature supported or not
   isTouchPresent() {
     var $this = this;
     TouchID.isSupported()
@@ -277,12 +344,12 @@ This method is called when the component will start to load
   }
 
 
-//back to dashboard on click of cross button or android back button.
+  //back to dashboard on click of cross button or android back button.
   close() {
     this.doNavigateDashBoard();
   }
 
-//call when we cllck on touchid option
+  //call when we cllck on touchid option
   selecttouchid() {
     if (this.state.touchid === false) {
       this._clickHandler();
@@ -297,7 +364,7 @@ This method is called when the component will start to load
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
     }
   }
-//call when we cllck on pattern option
+  //call when we cllck on pattern option
   selectpattern() {
     if (this.state.pattern === false) {
       this.doPatternSet();
@@ -317,7 +384,7 @@ This method is called when the component will start to load
   selectMakePermanent() {
 
   }
-//call when we cllck on skipwelcome option
+  //call when we cllck on skipwelcome option
   selectskipwelcome() {
     if (this.state.welcome === false) {
       this.setState({ welcome: true });
@@ -325,7 +392,7 @@ This method is called when the component will start to load
       this.setState({ welcome: false });
     }
   }
-//call when we cllck on facebook option
+  //call when we cllck on facebook option
   selectfb() {
     if (this.state.wechat.length == 0) {
       this.doFacebookLogin();
@@ -350,13 +417,13 @@ This method is called when the component will start to load
     }
   }
 
-// callback of pattern screen
+  // callback of pattern screen
   onSetPattern(data) {
     this.props.navigator.pop();
     this.setState({ pattern: true });
   }
 
-//show all login option and defaultLogin option
+  //show all login option and defaultLogin option
   getLoginOptions() {
     let index = 0;
     let data = [
@@ -396,7 +463,7 @@ This method is called when the component will start to load
         }
       }
 
-      if (this.state.rpass !== "empty" && ( this.state.rpass != null || this.state.rpass != undefined)) {
+      if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
           if (this.state.pattern) {
             data.push(Skin.text['0']['2'].credTypes['pattern']);
@@ -411,13 +478,13 @@ This method is called when the component will start to load
     return data
   }
 
-//call when we change defaultLogin option
+  //call when we change defaultLogin option
   changeDefaultLogin(option) {
     this.state.defaultLogin = option.key;
     this.setState({ defaultLogin: option.key })
   }
 
-//call to save defaultLogin option 
+  //call to save defaultLogin option 
   saveDefaultLoginPrefs() {
     if (this.state.defaultLogin) {
       var data = JSON.stringify({ defaultLogin: this.state.defaultLogin });
@@ -521,7 +588,7 @@ This method is called when the component will start to load
     }
   }
 
-//navigate to pattern screen
+  //navigate to pattern screen
   doPatternSet() {
     this.props.navigator.push({
       id: 'pattern',
@@ -726,7 +793,7 @@ This method is called when the component will start to load
       this.doNavigateDashBoard();
     }
   }
-// navigate to dashboard
+  // navigate to dashboard
   doNavigateDashBoard() {
     this.props.navigator.popToTop();
   }

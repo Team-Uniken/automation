@@ -25,7 +25,6 @@ import Main from '../Container/Main';
 import Load from '../../Scenes/Load';
 import MainActivation from '../Container/MainActivation';
 const constant = require('../Utils/Constants');
-
 /*
  Custome View
  */
@@ -140,6 +139,7 @@ class UserLogin extends Component {
   }
   //use to clear twoFactorAuthMachine navigator
   close() {
+    dismissKeyboard();
     Events.trigger('closeStateMachine');
   }
   /*
