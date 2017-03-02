@@ -204,12 +204,13 @@ class TwoFactorAuthMachine extends Component {
 
     console.log(res);
 
+
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
       console.log('TwoFactorAuthMachine - statusCode ' + statusCode);
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
-        //  obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
+          //  obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
           console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           this.showFirstChallenge(chlngJson, 0);
@@ -237,10 +238,10 @@ class TwoFactorAuthMachine extends Component {
             if (this.mode === "forgotPassword") {
               Events.trigger('onPostForgotPassword', null);
             } else {
-              if( Main.isOtherLogin === "true"){
-                 Main.isOtherLogin === "false";
-                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => {                                                      }).done();
-                
+              if (Main.isOtherLogin === "true") {
+                Main.isOtherLogin === "false";
+                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => { }).done();
+
               }
               Main.gotNotification = false;
               this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
@@ -385,9 +386,20 @@ class TwoFactorAuthMachine extends Component {
         for (var i = 0; i < allScreens.length; i++) {
           var screen = allScreens[i];
           if (screen.id === 'checkuser') {
-            var mySelectedRoute = obj.stateNavigator.getCurrentRoutes()[i];
-            // alert(mySelectedRoute);
-            obj.stateNavigator.popToRoute(mySelectedRoute);
+            const i = challengeJsonArr.indexOf(currentIndex);
+            challengeJsonArr[i] = saveChallengeJson.response;
+            if (obj.hasNextChallenge()) {
+              const currentChlng = obj.getCurrentChallenge();
+              obj.stateNavigator.replace({
+                id: currentChlng.chlng_name,
+                url: {
+                  chlngJson: currentChlng,
+                  chlngsCount: challengeJsonArr.length,
+                  currentIndex: currentIndex + 1,
+                },
+                title: obj.props.title,
+              });
+            }
             flag = true;
             return;
           }
@@ -594,7 +606,7 @@ class TwoFactorAuthMachine extends Component {
       if (Main.gotNotification === true) {
         return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       } else {
-       return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
+        return (<UserLogin navigator={nav} url={route.url} title={route.title} />);
       }
     }
     else if (id === 'SelfRegister') {
