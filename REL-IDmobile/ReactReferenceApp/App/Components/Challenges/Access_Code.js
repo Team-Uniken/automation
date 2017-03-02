@@ -70,8 +70,12 @@ class AccessCode extends Component {
   */
   componentWillMount() {
     obj = this;
-    if (Platform.OS === 'android' && Platform.Version >= 23) {
-      this.state.showCamera = false;
+    
+     if (Platform.OS === 'android') {
+      if(Platform.Version >= 23)
+         this.state.showCamera = false;
+      else
+         this.state.showCamera = true;
     }
   }
   /*

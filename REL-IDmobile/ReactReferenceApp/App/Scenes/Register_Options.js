@@ -100,16 +100,16 @@ This method is called when the component will start to load
 
 
     AsyncStorage.getItem('skipwelcome').then((value) => {
-      if (value === "false") {
+      if (value === "false" || value == null || value == undefined) {
         this.setState({ welcomescreen: '' });
         this.setState({ welcome: false });
 
       } else {
         this.setState({ welcomescreen: '\u2714' });
         this.setState({ welcome: true });
-
       }
     }).done();
+
     obj = this;
     AsyncStorage.getItem('devname').then((value) => {
       if (value != null) {
@@ -522,7 +522,6 @@ This method is called when the component will start to load
       }).done();
     }
   }
-
 
   doUpdate() {
     if (this.state.welcome == true) {

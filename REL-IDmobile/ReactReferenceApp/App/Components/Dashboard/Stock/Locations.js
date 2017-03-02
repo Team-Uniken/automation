@@ -76,7 +76,8 @@ class Locations extends Component {
           );
       },
       (error) => {
-        alert(error)
+        if(error.message)
+        alert(error.message);
       },
       //(error) => alert(error.message),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }

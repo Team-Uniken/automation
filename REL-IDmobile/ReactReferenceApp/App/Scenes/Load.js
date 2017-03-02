@@ -113,6 +113,13 @@ class Load extends Component {
       d_text_opac: new Animated.Value(0),
       relid_opac_val: new Animated.Value(0),
     };
+    
+    // Setting skipwelcome to default true if user prefs not found
+    AsyncStorage.getItem('skipwelcome').then((value) => {
+      if (value == null || value == undefined) {
+        AsyncStorage.setItem("skipwelcome", "true");
+      }
+    }).done();
   }
   openRoute(route) {
     this.props.navigator.push(route);

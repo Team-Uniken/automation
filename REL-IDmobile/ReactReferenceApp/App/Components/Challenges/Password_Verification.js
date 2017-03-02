@@ -54,7 +54,7 @@ class PasswordVerification extends Component {
   This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
-    dismissKeyboard();
+    //dismissKeyboard();
     BackAndroid.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;

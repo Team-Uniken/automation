@@ -30,9 +30,15 @@ class Input extends Component {
     if(this.state.hasFocus==true && this.props.focusLost==true)
        this.props.onFocusLost();
   }
+
   focus() {
-    this.refs.textinput.focus()
+    this.refs.textinput.focus();
   }
+
+  clear(){
+    this.refs.textinput.clear();
+  }
+  
   render() {
     return (
       <View
@@ -60,7 +66,7 @@ class Input extends Component {
           autoFocus={this.props.autoFocus}
           autoCorrect={this.props.autoCorrect}
           autoCapitalize={this.props.autoCapitalize}
-            clearTextOnFocus={this.props.clearTextOnFocus}
+          clearTextOnFocus={this.props.clearTextOnFocus}
           keyboardAppearance={'light'}
           value={this.props.value}
           enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}

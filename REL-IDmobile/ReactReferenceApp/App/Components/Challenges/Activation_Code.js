@@ -11,7 +11,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid, AsyncStorage} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, AlertIOS, PermissionsAndroid, Platform, BackAndroid, AsyncStorage} from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -25,6 +25,7 @@ import Skin from '../../Skin';
 import MainActivation from '../Container/MainActivation';
 import Main from '../Container/Main';
 var constant = require('../Utils/Constants');
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 /*
  Custome View
@@ -46,7 +47,7 @@ class Activation_Code extends Component {
     super(props);
     this.state = {
       activatonCode: '',
-      showCamera: true,
+      showCamera: false,
       barCodeFlag: true,
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
@@ -67,9 +68,34 @@ class Activation_Code extends Component {
   */
   componentWillMount() {
     obj = this;
-    if (Platform.OS === 'android' && Platform.Version >= 23) {
-      this.state.showCamera = false;
+    if (Platform.OS === 'ios'){
+      ReactRdna.checkDeviceAuthorizationStatus((err, isAuthorized)=>{
+                                                      if (isAuthorized) {
+                                                      this.setState({showCamera: true});
+                                                      } else {
+                                                         this.setState({showCamera: false});
+                                                      AlertIOS.alert(
+                                                                     "Camera Access Denied",
+                                                                     "Go to Settings / Privacy / Camera and enable access for this app",
+                                                                     [{
+                                                                      text:"OK",
+                                                                      onPress:()=>{
+//                                                                       Events.trigger('showPreviousChallenge');
+                                                                      }
+                                                                      }]
+                                                                     );
+                                                      }
+                                                      });
+      
     }
+    
+    if (Platform.OS === 'android') {
+      if(Platform.Version >= 23)
+         this.state.showCamera = false;
+      else
+         this.state.showCamera = true;
+    }
+    
   }
 
   /*
@@ -83,6 +109,7 @@ class Activation_Code extends Component {
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.checkCameraPermission();
     }
+    
     BackAndroid.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
@@ -344,6 +371,7 @@ class Activation_Code extends Component {
               </Text>
 
               <View style={[Skin.layout1.content.wrap, { flex: 1, zIndex: 0 }]}>
+            
                 {this.renderIf(this.state.showCamera,
                   <Camera
                     captureAudio={false}
@@ -370,6 +398,7 @@ class Activation_Code extends Component {
                   autoComplete={false}
                   autoCapitalize={true}
                   secureTextEntry={true}
+                  value={this.state.activatonCode}
                   styleInputView={[{ width: Skin.SCREEN_WIDTH - 104 }]}
                   styleInput={Skin.layout1.content.code.input}
                   returnKeyType={"next"}

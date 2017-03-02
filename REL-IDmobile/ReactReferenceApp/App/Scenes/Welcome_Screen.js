@@ -46,6 +46,7 @@ class Welcome_Screen extends Component {
     obj=this;
   //  Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
   }
+
 //call on click of already a member to show next challenge(checkUser).
   selectReg() {
     console.log('doNavigation:');

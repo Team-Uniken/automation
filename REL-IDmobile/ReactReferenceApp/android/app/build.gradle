@@ -88,14 +88,26 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
-    splits {
-        abi {
-            reset()
-            enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
-            //include "armeabi-v7a", "x86"
+    defaultConfig{
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+
+        packagingOptions {
+            exclude '/lib/mips64/**'
+            exclude '/lib/arm64-v8a/**'
+            exclude '/lib/x86_64/**'
         }
     }
+
+//    splits {
+//        abi {
+//            reset()
+//            enable enableSeparateBuildPerCPUArchitecture
+//            universalApk false  // If true, also generate a universal APK
+//            include "armeabi-v7a", "x86"
+//        }
+//    }
 
 
 

@@ -237,6 +237,11 @@ class TwoFactorAuthMachine extends Component {
             if (this.mode === "forgotPassword") {
               Events.trigger('onPostForgotPassword', null);
             } else {
+              if( Main.isOtherLogin === "true"){
+                 Main.isOtherLogin === "false";
+                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => {                                                      }).done();
+                
+              }
               Main.gotNotification = false;
               this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
             }
