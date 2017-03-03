@@ -17,6 +17,7 @@ import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
 import {View, Text, Navigator, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, IntentAndroid, InteractionManager, DeviceEventEmitter} from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import Communications from 'react-native-communications';
 
 
 /*
@@ -664,7 +665,8 @@ class ControlPanel extends Component {
                 });
               }
               else {
-                this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' });
+                //this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' });
+                   Communications.web('https://www.google.co.in/');
               }
             }
             }
