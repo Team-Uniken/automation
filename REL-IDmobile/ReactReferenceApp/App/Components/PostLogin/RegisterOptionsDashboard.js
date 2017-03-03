@@ -201,7 +201,7 @@ This method is called when the component will start to load
   }
 
   getDeviceUUID() {
-    ReactRdna.getDeviceUUID((response) => {
+    ReactRdna.getDeviceID((response) => {
       console.log(response);
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
