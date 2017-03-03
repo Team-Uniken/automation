@@ -12,10 +12,11 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid, TouchableHighlight } from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import Modal from 'react-native-simple-modal';
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 
 
@@ -54,12 +55,20 @@ class AccessCode extends Component {
       isPoped: false,
       camHeight: null,
       initCamHeightIsSet: false,
+      alertMsg: "",
+      showAlert: false,
     }
+    this.selectedAlertOp = true;
     //this.barCodeFlag = true;
     this._onBarCodeRead = this._onBarCodeRead.bind(this);
     this.checkCameraPermission = this.checkCameraPermission.bind(this);
     this.requestCameraPermission = this.requestCameraPermission.bind(this);
     this.checkAccessCode = this.checkAccessCode.bind(this);
+    
+    this.showAlertModal = this.showAlertModal.bind(this);
+    this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
+    this.onAlertModalOk = this.onAlertModalOk.bind(this);
+    this.dismissAlertModal = this.dismissAlertModal.bind(this);
     // this.barCodeScanFlag = true;
   }
 
@@ -225,7 +234,9 @@ class AccessCode extends Component {
         $this.hideCamera();
         let responseJson = $this.props.url.chlngJson;
         obj.state.barCodeFlag = false;
-
+        if ($this.state.showAlert === true) {
+          $this.dismissAlertModal();
+        }
         responseJson.chlng_resp[0].response = aCode;
         $this.setState({ accessCode: '' });
         setTimeout(() => {
@@ -234,7 +245,8 @@ class AccessCode extends Component {
           });
         }, 1000);
       } else {
-        alert('Verification code does not match');
+        $this.showAlertModal("Verification code does not match");
+        //alert('Verification code does not match');
         setTimeout(function () {
           obj.state.barCodeFlag = true;
         }, 2000);
@@ -281,6 +293,33 @@ class AccessCode extends Component {
       });
     }
   }
+  
+  /*
+   Alert actions methods
+   */
+  showAlertModal(msg) {
+    this.setState({
+                  showAlert: true,
+                  alertMsg: msg
+                  });
+  }
+  
+  dismissAlertModal() {
+    this.selectedAlertOp = false;
+    this.setState({
+                  showAlert: false
+                  });
+  }
+  
+  onAlertModalOk() {
+    //this.props.navigator.pop();
+  }
+  
+  onAlertModalDismissed() {
+    //Do nothing for right now
+  }
+  
+  
   /*
     This method is used to render the componenet with all its element.
   */
@@ -385,10 +424,97 @@ class AccessCode extends Component {
           </View>
           <KeyboardSpacer topSpacing={-55} />
         </View>
+            <Modal
+            style={styles.modalwrap}
+            overlayOpacity={0.75}
+            offset={100}
+            open={this.state.showAlert}
+            modalDidOpen={() => console.log('modal did open') }
+            modalDidClose={() => {
+            if (this.selectedAlertOp) {
+            this.selectedAlertOp = false;
+            this.onAlertModalOk();
+            } else {
+            this.selectedAlertOp = false;
+            this.onAlertModalDismissed();
+            }
+            } }>
+            <View style={styles.modalTitleWrap}>
+            <Text style={styles.modalTitle}>
+            Alert
+            </Text>
+            </View>
+            <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+            {this.state.alertMsg}
+            </Text>
+            <View style={styles.border}></View>
+            
+            <TouchableHighlight
+            onPress={() => {
+            this.selectedAlertOp = true;
+            this.setState({
+                          showAlert: false
+                          });
+            } }
+            underlayColor={Skin.colors.REPPLE_COLOR}
+            style={styles.modalButton}>
+            <Text style={styles.modalButtonText}>
+            OK
+            </Text>
+            </TouchableHighlight>
+            </Modal>
       </MainActivation>
     );
   }
 }
+
+//Styles for alert modal
+const styles = StyleSheet.create({
+                                 modalwrap: {
+                                 height: 150,
+                                 flexDirection: 'column',
+                                 borderRadius: 15,
+                                 backgroundColor: '#fff',
+                                 },
+                                 modalTitleWrap: {
+                                 justifyContent: 'center',
+                                 flex: 1,
+                                 },
+                                 modalTitle: {
+                                 color: Skin.colors.PRIMARY_TEXT,
+                                 textAlign: 'center',
+                                 justifyContent: 'center',
+                                 alignItems: 'center',
+                                 fontSize: 20,
+                                 fontWeight: 'bold',
+                                 backgroundColor: 'transparent',
+                                 },
+                                 modalButton: {
+                                 height: 40,
+                                 alignItems: 'center',
+                                 alignSelf: 'stretch',
+                                 justifyContent: 'center',
+                                 },
+                                 modalButtonText: {
+                                 textAlign: 'center',
+                                 color: '#268CFE',
+                                 fontSize: 16,
+                                 },
+                                 border: {
+                                 height: 1,
+                                 marginTop: 16,
+                                 backgroundColor: Skin.colors.DIVIDER_COLOR,
+                                 },
+                                 
+                                 modalInput: {
+                                 textAlign: 'center',
+                                 color: Skin.colors.PRIMARY_TEXT,
+                                 height: 32,
+                                 padding: 0,
+                                 fontSize: 16,
+                                 backgroundColor: null,
+                                 }
+                                 });
 
 
 module.exports = AccessCode;
