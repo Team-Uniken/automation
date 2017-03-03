@@ -236,9 +236,10 @@ export default class Web extends Component {
       scalesPageToFit: this.state.scalesPageToFit,
     });
     if (!this.props.secure) {
-      this.props.navigator.pop();
-      Communications.web(this.props.url);
+      //this.props.navigator.pop();
+      //Communications.web(this.props.url);
     }
+    
   }
 
 }
