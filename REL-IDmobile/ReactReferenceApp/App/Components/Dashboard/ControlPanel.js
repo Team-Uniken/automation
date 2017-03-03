@@ -108,14 +108,25 @@ class ControlPanel extends Component {
       onLogOffSubscription = null;
     }
 //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
-    onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
-    ReactRdna.logOff(Main.dnaUserName, (response) => {
-      if (response) {
-        console.log('immediate response is' + response[0].error);
-      } else {
-        console.log('immediate response is' + response[0].error);
-      }
-    });
+    if(Main.isConnected){
+      onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
+      ReactRdna.logOff(Main.dnaUserName, (response) => {
+        if (response) {
+          console.log('immediate response is' + response[0].error);
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+      });
+    }
+    else{
+      Alert.alert(
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => {}}
+        ]
+      );
+    }
   }
 
   onLogOff(e) {
