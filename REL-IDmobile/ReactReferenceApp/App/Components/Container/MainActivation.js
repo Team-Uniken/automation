@@ -474,7 +474,8 @@ class MainActivation extends Component {
     if (Platform.OS == "android") {
       return (
 
-        <TouchableWithoutFeedback onPress={this.dismiss}>
+        <TouchableWithoutFeedback onPress={this.dismiss}
+                        disabled={this.props.disabled}>
           <View style={Skin.activationStyle.container} onPress={this.dismiss}>
 
 
@@ -565,7 +566,8 @@ class MainActivation extends Component {
     } else if (Platform.OS == "ios") {
       return (
 
-        <TouchableWithoutFeedback onPress={this.dismiss}>
+        <TouchableWithoutFeedback onPress={this.dismiss}
+              disabled={this.props.disabled}>
           <View style={Skin.activationStyle.container} onPress={this.dismiss}>
 
 

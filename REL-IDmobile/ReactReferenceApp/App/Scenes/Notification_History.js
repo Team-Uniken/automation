@@ -435,7 +435,8 @@ class Notifications_History extends Component {
    */
   render() {
     return (
-      <MainActivation>
+      <MainActivation
+            disabled={true}>
         <Main
           drawerState={{
             open: false,
