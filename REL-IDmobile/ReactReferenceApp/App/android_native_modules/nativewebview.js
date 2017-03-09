@@ -52,6 +52,7 @@ class WebViewBridge extends Component {
     this.onLoadingStart = this.onLoadingStart.bind(this);
     this.onLoadingError = this.onLoadingError.bind(this);
     this.onLoadingFinish = this.onLoadingFinish.bind(this);
+    this.clear = this.clear.bind(this);
     //this.onChange= this.onChange.bind(this);
   }
 
@@ -90,6 +91,9 @@ class WebViewBridge extends Component {
       // if we're in either LOADING or ERROR states, don't show the webView
       webViewStyles.push(styles.hidden);
     }
+    else {
+      webViewStyles.push(styles.visible);
+    }
 
     var {javaScriptEnabled, domStorageEnabled} = this.props;
     if (this.props.javaScriptEnabledAndroid) {
@@ -113,6 +117,7 @@ class WebViewBridge extends Component {
         style={webViewStyles}
         webViewClient={null}
         onLoadingError={this.onLoadingError}
+        onLoadingStart={this.onLoadingStart}
         />;
 
     return (
@@ -140,13 +145,27 @@ class WebViewBridge extends Component {
   }
 
   reload() {
-    this.setState({ viewState: WebViewBridgeState.IDLE }, () => {
+    if(this.state.viewState ===  WebViewBridgeState.ERROR){
+      this.clear();
+    }
+
+    this.setState({
+      viewState: WebViewBridgeState.IDLE
+    }, () => {
       UIManager.dispatchViewManagerCommand(
         this.getWebViewBridgeHandle(),
         UIManager.RCTWebViewBridge.Commands.reload,
         null
       );
     });
+  }
+
+  clear(){
+     UIManager.dispatchViewManagerCommand(
+      this.getWebViewBridgeHandle(),
+      UIManager.RCTWebViewBridge.Commands.clear,
+      []
+    );
   }
 
   sendToBridge(message) {
@@ -183,11 +202,12 @@ class WebViewBridge extends Component {
   }
 
   onLoadingError(event) {
+    this.clear();
     event.persist(); // persist this event because we need to store it
     var {onError, onLoadEnd} = this.props;
     onError && onError(event);
     onLoadEnd && onLoadEnd(event);
-
+    
     this.setState({
       lastErrorEvent: event.nativeEvent,
       viewState: WebViewBridgeState.ERROR
@@ -230,10 +250,13 @@ WebViewBridge.propTypes = {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white'
   },
   hidden: {
-    height: 0,
-    flex: 0, // disable 'flex:1' when hiding a View
+    opacity: 0
+  },
+  visible: {
+    opacity: 1
   },
 });
 

@@ -44,6 +44,7 @@ public class WebViewBridgeManager extends ReactWebViewManager {
     public static final int COMMAND_GO_BACK = 103;
     public static final int COMMAND_GO_FORWARD = 104;
     public static final int COMMAND_RELOAD = 105;
+    public static final int COMMAND_CLEAR = 106;
 
     private boolean initializedBridge;
 
@@ -72,7 +73,7 @@ public class WebViewBridgeManager extends ReactWebViewManager {
         commandsMap.put("goBack", COMMAND_GO_BACK);
         commandsMap.put("reload", COMMAND_RELOAD);
         commandsMap.put("goForward", COMMAND_GO_FORWARD);
-
+        commandsMap.put("clear", COMMAND_CLEAR);
         return commandsMap;
     }
 
@@ -83,6 +84,9 @@ public class WebViewBridgeManager extends ReactWebViewManager {
         switch (commandId) {
             case COMMAND_INJECT_BRIDGE_SCRIPT:
                 injectBridgeScript(root);
+                break;
+            case COMMAND_CLEAR:
+                clear(root);
                 break;
             case COMMAND_SEND_TO_BRIDGE:
                 sendToBridge(root, args.getString(0));
@@ -109,6 +113,10 @@ public class WebViewBridgeManager extends ReactWebViewManager {
             default:
                 //do nothing!!!!
         }
+    }
+
+    private void clear(WebView view){
+        view.loadUrl("javascript:document.body.innerHTML = '';");
     }
 
     @ReactProp(name = "proxy")
