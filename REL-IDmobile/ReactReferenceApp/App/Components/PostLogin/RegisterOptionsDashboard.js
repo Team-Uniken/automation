@@ -881,7 +881,7 @@ This method is called when the component will start to load
         this.state.touchid = this.state.url.touchCred.isTouch;
         this.state.initTouchAndPatternState = false;
       }
-
+      
       if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
           indents.push(

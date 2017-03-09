@@ -248,7 +248,7 @@ class SelectLogin extends Component {
       var value = result.id;
       this.props.tbacred.chlng_resp[0].challenge = key;
       this.props.tbacred.chlng_resp[0].response = value;
-      Main.isOtherLogin = "true";
+      Main.isOtherLogin = true;
       Events.trigger("showNextChallenge", "");
       return (result)
     }
