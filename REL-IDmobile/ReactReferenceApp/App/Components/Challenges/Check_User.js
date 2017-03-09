@@ -73,8 +73,11 @@ class UserLogin extends Component {
       } else {
         if (this.props.url.reset) {
         } else {
-          obj.setState({ inputUsername: value });
-          obj.checkUsername();
+          InteractionManager.runAfterInteractions(()=>{
+            obj.setState({ inputUsername: value },()=>{
+              obj.checkUsername();
+            });
+          });
         }
       }
     });
