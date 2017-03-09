@@ -14,7 +14,7 @@ import React, { Component, } from 'react';
  */
 import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid, TouchableHighlight } from 'react-native';
 import Camera from 'react-native-camera';
-import Events from 'react-native-simple-events';
+import Events from 'react-native-simple-events'; 
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Modal from 'react-native-simple-modal';
 var dismissKeyboard = require('react-native-dismiss-keyboard');
@@ -38,7 +38,7 @@ import Title from '../view/title';
   INSTANCES
  */
 var obj;
-var CAMERA_REF = "camera";
+const CAMERA_REF = "camera";
 
 class AccessCode extends Component {
 

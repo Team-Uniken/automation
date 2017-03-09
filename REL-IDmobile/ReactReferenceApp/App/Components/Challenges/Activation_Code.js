@@ -40,7 +40,7 @@ import Title from '../view/title';
   INSTANCES
  */
 var obj;
-
+const CAMERA_REF = "camera";
 
 class Activation_Code extends Component {
 
@@ -219,8 +219,11 @@ class Activation_Code extends Component {
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
-      //this.hideCamera();
       this.setState({ activatonCode: '' });
+      this.state.isPoped = true;
+      if (this.state.showCamera) {
+        this.refs[CAMERA_REF].setCameraMode("off");
+      }
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
     } else {
@@ -233,7 +236,6 @@ class Activation_Code extends Component {
   hideCamera() {
     if (Platform.OS === 'android') {
       this.setState({ showCamera: false });
-      this.state.isPoped = true;
     }
   }
 
@@ -288,13 +290,16 @@ class Activation_Code extends Component {
         // alert("QR scan success");
         // Events.trigger('showLoader',true);
 
-        // $this.hideCamera();
         let responseJson = $this.props.url.chlngJson;
         obj.state.barCodeFlag = false;
-
         $this.setState({ activatonCode: '' });
         if ($this.state.showAlert === true) {
           $this.dismissAlertModal();
+        }
+
+        $this.state.isPoped = true;
+        if ($this.state.showCamera) {
+          $this.refs[CAMERA_REF].setCameraMode("off");
         }
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(() => {
@@ -339,7 +344,10 @@ class Activation_Code extends Component {
   */
   close() {
     let responseJson = this.props.url.chlngJson;
-    //this.hideCamera();
+    if (this.state.showCamera) {
+      this.refs[CAMERA_REF].setCameraMode("off");
+      this.hideCamera();
+    }
     Events.trigger('showPreviousChallenge');
   }
   
@@ -411,6 +419,7 @@ class Activation_Code extends Component {
             
                 {this.renderIf(this.state.showCamera,
                   <Camera
+                    ref={CAMERA_REF}
                     captureAudio={false}
                     onLayout={(event) => this.measureView(event) }
                     onBarCodeRead={this._onBarCodeRead}
