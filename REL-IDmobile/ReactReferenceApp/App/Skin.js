@@ -2133,6 +2133,7 @@ const collection = {
   progStyle,
   loadStyle,
   transforms,
+  CLIENT_TITLE_TEXT,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   THEME_COLOR,
