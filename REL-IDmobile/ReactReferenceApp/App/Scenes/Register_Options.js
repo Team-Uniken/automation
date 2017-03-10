@@ -88,6 +88,8 @@ This is life cycle method of the react native component.
 This method is called when the component will start to load
 */
   componentWillMount() {
+    
+    Events.trigger('hideLoader', true);
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
       if (userPrefs) {
         try {

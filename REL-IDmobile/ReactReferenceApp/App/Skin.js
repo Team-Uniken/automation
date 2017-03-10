@@ -23,8 +23,8 @@ const BLACK = '#000000'
 const WHITE = '#FFFFFF'
 //////customization changes for NWD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const THEME_COLOR = Config.THEME_COLOR
-const CLIENT_TITLE_TEXT= Config.CLIENT_TITLE_TEXT
-const DASHBOARD_MENU_TITLE=Config.DASHBOARD_MENU_TITLE
+const CLIENT_TITLE_TEXT = Config.CLIENT_TITLE_TEXT
+const DASHBOARD_MENU_TITLE = Config.DASHBOARD_MENU_TITLE
 const SPINNER_COLOR = Config.SPINNER_COLOR
 const LOGO = Config.LOGO
 const LOGO_COLOR = Config.LOGO_COLOR
@@ -117,13 +117,13 @@ const login = {
   PLACEHOLDER_TEXT_COLOR_RGB: '59,59,59',
   PLACEHOLDER_TEXT_OPACITY: '0.7',
   CONNECTION_BUTTON_BG: Config.THEME_COLOR,
-  CONNECTION_BUTTON_ICON_COLOR:'#FFF',
+  CONNECTION_BUTTON_ICON_COLOR: '#FFF',
   CONNECTION_BUTTON_UNDERLAY: '#3b3b3b',
   WARNING_TEXT_COLOR: '#3b3b3b',
 }
 
 const main = {
-  STATUS_BAR_BG:Config.STATUS_BAR_BG,
+  STATUS_BAR_BG: Config.STATUS_BAR_BG,
   BACKGROUND_COLOR: '#F9F9F9',
   BOTTOM_MENU_BG: '#3b3b3b',
   BOTTOM_MENU_COLOR: '#B0B0B0',
@@ -248,13 +248,13 @@ text = {
     test: 'test',
     '0': {
       '1': {
-        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
+        subtitle: 'Welcome to ' + CLIENT_TITLE_TEXT,
         need_to_register_button: 'I need to register',
         already_member: 'I\'m already a member',
         prompt: '',
       },
       '2': {
-        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
+        subtitle: 'Welcome to ' + CLIENT_TITLE_TEXT,
         prompt: 'Select a login',
         credTypes: {
           'facebook': {
@@ -278,8 +278,8 @@ text = {
             label: 'Password'
           },
           'iProov': {
-          key: 'iProov',
-          label: 'iProov'
+            key: 'iProov',
+            label: 'iProov'
           },
         }
       }
@@ -294,11 +294,11 @@ text = {
     },
     '2': {
       '1': {
-        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
+        subtitle: 'Welcome to ' + CLIENT_TITLE_TEXT,
         submit_button: 'Submit',
       },
       '2': {
-        subtitle: 'Welcome to '+CLIENT_TITLE_TEXT,
+        subtitle: 'Welcome to ' + CLIENT_TITLE_TEXT,
         submit_button: 'Submit',
         textinput_placeholder: 'Enter Password',
       }
@@ -381,10 +381,20 @@ module.exports.baseline = {
       flex: 1,
       fontSize: 18,
     },
+    verificationQue: {
+      textAlign: 'left',
+      height: 46,
+      width: 260,
+      paddingLeft: 10,
+      paddingTop: 3,
+      backgroundColor: INPUT_BG_COLOR,
+      color: INPUT_TEXT_COLOR,
+      fontSize: 18,
+    },
     placeholderTextColor: INPUT_PLACEHOLDER_COLOR,
     wrapfocus: {
       borderBottomColor: INPUT_BD_COLOR,
-      backgroundColor:'#141414'
+      backgroundColor: '#141414'
     },
     wrap: {
       borderColor: 'transparent',
@@ -478,7 +488,7 @@ module.exports.layout0 = {
       fontSize: 80,
       //backgroundColor: '#50ae3c',
       marginBottom: 26,
-      fontFamily:LOGO_FONT,
+      fontFamily: LOGO_FONT,
     },
     subtitle: {
       //width: VIEW_WIDTH,
@@ -794,13 +804,13 @@ const layout3 = module.exports.layout3 = {
     },
     namewrap: {
       flex: 3,
-      marginBottom:10
+      marginBottom: 10
     },
     nametext: {
-      flex:1,
+      flex: 1,
       fontSize: 13,
       color: PRIMARY_TEXT,
-      marginBottom:5
+      marginBottom: 5
     },
     numtext: {
       fontSize: 10,

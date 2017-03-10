@@ -11,7 +11,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, AlertIOS, PermissionsAndroid, Platform, BackAndroid, AsyncStorage, TouchableHighlight} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, AlertIOS, PermissionsAndroid, Platform, BackAndroid, AsyncStorage, TouchableHighlight, Linking } from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -89,7 +89,13 @@ class Activation_Code extends Component {
                                                                      [{
                                                                       text:"OK",
                                                                       onPress:()=>{
-//                                                                       Events.trigger('showPreviousChallenge');
+                                                                                                                                          Linking.canOpenURL('app-settings:').then(supported => {
+                                                                      if (!supported) {
+                                                                      console.log('Can\'t handle settings url');
+                                                                      } else {
+                                                                      return Linking.openURL('app-settings:');
+                                                                      }
+                                                                      }).catch(err => console.error('An error occurred', err));Events.trigger('showPreviousChallenge');
                                                                       }
                                                                       }]
                                                                      );

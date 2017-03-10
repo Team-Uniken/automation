@@ -12,7 +12,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid, TouchableHighlight, AlertIOS, Linking } from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events'; 
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -25,6 +25,7 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
  */
 import Skin from '../../Skin';
 import MainActivation from '../Container/MainActivation';
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 /*
  Custome View
@@ -46,7 +47,7 @@ class AccessCode extends Component {
     super(props);
     this.state = {
       accessCode: '',
-      showCamera: true,
+      showCamera: false,
       barCodeFlag: true,
       cameraPermission: false,
       cameraType: Camera.constants.Type.back,
@@ -77,6 +78,34 @@ class AccessCode extends Component {
   */
   componentWillMount() {
     obj = this;
+    if (Platform.OS === 'ios'){
+      ReactRdna.checkDeviceAuthorizationStatus((err, isAuthorized)=>{
+                                               if (isAuthorized) {
+                                               this.setState({showCamera: true});
+                                               } else {
+                                               this.setState({showCamera: false});
+                                               AlertIOS.alert(
+                                                              "Camera Access Denied",
+                                                              "Go to Settings / Privacy / Camera and enable access for this app",
+                                                              [{
+                                                               text:"OK",
+                                                               onPress:()=>{
+                                                               //                                                                       Events.trigger('showPreviousChallenge');
+                                                               Linking.canOpenURL('app-settings:').then(supported => {
+                                                                                                        if (!supported) {
+                                                                                                        console.log('Can\'t handle settings url');
+                                                                                                        } else {
+                                                                                                        return Linking.openURL('app-settings:');
+                                                                                                        }
+                                                                                                        }).catch(err => console.error('An error occurred', err));
+                                                               }
+                                                               }]
+                                                              );
+                                               }
+                                               });
+      
+    }
+
 
     if (Platform.OS === 'android') {
       if (Platform.Version >= 23)

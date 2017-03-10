@@ -104,27 +104,31 @@ export default class QuestionVerification extends Component {
   */
   render() {
     return (
-      <MainActivation>
-        <View style={Skin.layout1.content.wrap}>
 
+
+      <MainActivation>
+        <View style={Skin.layout0.wrap.container}>
           <View style={Skin.layout0.top.container}>
-            <Title onClose={() => {
-              this.close();
-            } }>
+            <Title
+              onClose={() => {
+                this.close();
+              } }>
             </Title>
             <Text style={[Skin.layout0.top.icon]}>
               {Skin.icon.logo}
             </Text>
             <Text style={Skin.layout0.top.subtitle}>Secret Question</Text>
-          </View>
-          <Text style = {[Skin.baseline.textinput.base, this.props.styleInput]}>
-            { this.props.url.chlngJson.chlng_resp[0].challenge }
-          </Text>
-          <View style={Skin.layout0.bottom.container}>
-            <Text style={Skin.layout0.top.attempt}>
+            <Text style={Skin.layout0.top.prompt}>
+              {Skin.text['2']['1'].prompt}
+            </Text>
+            <Text style = {[Skin.baseline.textinput.verificationQue, this.props.styleInput]}>
+              { this.props.url.chlngJson.chlng_resp[0].challenge }
+            </Text>
+            <Text style={[Skin.layout0.top.attempt, { marginTop: 0 }]}>
               Attempt left {this.props.url.chlngJson.attempts_left}
             </Text>
-
+          </View>
+          <View style={Skin.layout0.bottom.container}>
             <Input
               autoCorrect={false}
               ref='answer'
@@ -136,17 +140,13 @@ export default class QuestionVerification extends Component {
               onSubmitEditing={ this.checkAnswer.bind(this) }
               autoFocus={true}
               />
-            <KeyboardSpacer topSpacing={-30}/>
-            <Margin
-              space={16}/>
-            <View style={Skin.layout0.bottom.container}>
-              <Button
-                label={Skin.text['2']['1'].submit_button}
-                onPress={ this.checkAnswer.bind(this) }/>
-            </View>
+            <Button
+              label={Skin.text['2']['1'].submit_button}
+              onPress={ this.checkAnswer.bind(this) }/>
           </View>
         </View>
       </MainActivation>
+
     );
   }
 }
