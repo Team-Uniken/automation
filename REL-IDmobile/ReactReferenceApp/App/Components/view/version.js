@@ -31,9 +31,11 @@ class Setting extends Component {
           position: 'absolute',
           bottom: 0,
           right:0,
-          width:36,
+          width:50,
           height: 24,
           alignItems: 'center',
+          textAlign: 'right',
+          paddingRight: 5,
           justifyContent: 'center',
         }}
         >v{ReactRdna.AppVersion}</Text>
