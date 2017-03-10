@@ -381,7 +381,7 @@ module.exports.baseline = {
       flex: 1,
       fontSize: 18,
     },
-    que: {
+    verificationQue: {
       textAlign: 'left',
       height: 46,
       width: 260,
