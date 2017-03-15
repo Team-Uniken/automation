@@ -46,6 +46,8 @@
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }
 
 -dontwarn com.facebook.react.**
+-keep class com.reactrefapp.BuildConfig { *; }
+-keep class com.uniken.rdna.** { *; }
 
 # okhttp
 
