@@ -13,7 +13,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, } from 'react-native';
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, Alert} from 'react-native';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -87,8 +87,10 @@ export default class UpdatePasswordSet extends Component {
   }
   //To check password policy
   validatePassword(textval) {
-    // var passwordregex = /^[0-9]/;
-    var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+    if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) == 0) {
+      return false;
+    }
+    var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
 
@@ -145,14 +147,20 @@ export default class UpdatePasswordSet extends Component {
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
-            if(this.validatePassword(pw)){
-          dismissKeyboard();
-          // Main.dnaPasswd = pw;
-          let responseJson = this.props.url.chlngJson;
-          responseJson.chlng_resp[0].response = pw;
-          Events.trigger('showNextChallenge', { response: responseJson });
-          }else{
-          alert('Invalide Password');
+          if (this.validatePassword(pw)) {
+            dismissKeyboard();
+            // Main.dnaPasswd = pw;
+            let responseJson = this.props.url.chlngJson;
+            responseJson.chlng_resp[0].response = pw;
+            Events.trigger('showNextChallenge', { response: responseJson });
+          } else {
+            Alert.alert(
+              'Password Policy',
+              'Password should be 8-16 characters long,\nAtleast 1 upper case character,\nAtleast 1 lower case character,\nAtleast 1 special character,\nAtleast 1 number\nYour password should not be same as user Id or contain user Id.',
+              [
+                { text: 'OK' }
+              ]
+            );
           }
         } else {
           alert('Password and Confirm Password do not match');

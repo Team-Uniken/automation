@@ -17,7 +17,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackAndroid, } from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackAndroid,Alert } from 'react-native'
 
 
 /*
@@ -69,8 +69,10 @@ This method is called when the component will start to load
   }
   //To check password policy
   validatePassword(textval) {
-    // var passwordregex = /^[0-9]/;
-    var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+    if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) == 0) {
+      return false;
+    }
+    var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
   /*
@@ -95,15 +97,21 @@ This method is called when the component will start to load
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
-            if(this.validatePassword(pw)){
-          Main.dnaPasswd = pw;
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
-          let responseJson = this.props.url.chlngJson;
-          responseJson.chlng_resp[0].response = pw;
-          dismissKeyboard();
-          Events.trigger('showNextChallenge', { response: responseJson });
-          }else{
-          alert('Invalide Password');
+          if (this.validatePassword(pw)) {
+            Main.dnaPasswd = pw;
+            AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
+            let responseJson = this.props.url.chlngJson;
+            responseJson.chlng_resp[0].response = pw;
+            dismissKeyboard();
+            Events.trigger('showNextChallenge', { response: responseJson });
+          } else {
+            Alert.alert(
+              'Password Policy',
+              'Password should be 8-16 characters long,\nAtleast 1 upper case character,\nAtleast 1 lower case character,\nAtleast 1 special character,\nAtleast 1 number\nYour password should not be same as user Id or contain user Id.',
+              [
+                { text: 'OK' }
+              ]
+            );
           }
         } else {
           alert('Password and Confirm Password do not match');
@@ -150,7 +158,7 @@ This method is called when the component will start to load
               Registration
             </Title>
           </View>
-          
+
           <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
