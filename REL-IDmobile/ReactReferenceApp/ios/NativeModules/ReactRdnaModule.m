@@ -286,6 +286,11 @@ RCT_EXPORT_METHOD (terminate:(RCTResponseSenderBlock)callback){
   
 }
 
++(void)terminateRDNA{
+  int errorID = 0;
+  errorID = [rdnaObject terminate];
+}
+
 RCT_EXPORT_METHOD (getSessionID:(RCTResponseSenderBlock)callback){
   
   int errorID = 0;
@@ -570,7 +575,7 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   [defaults setValue:nil forKey:@"sContext"];
 //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
 //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
+//  [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
   return 0;
 }
 

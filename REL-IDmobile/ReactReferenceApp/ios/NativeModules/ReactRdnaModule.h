@@ -11,6 +11,5 @@
 #import "RDNA.h"
 #import "RCTEventEmitter.h"
 @interface ReactRdnaModule : RCTEventEmitter<RCTBridgeModule,RDNACallbacks>
-
-
++(void)terminateRDNA;
 @end
