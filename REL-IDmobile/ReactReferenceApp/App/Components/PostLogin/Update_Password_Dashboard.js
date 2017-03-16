@@ -25,6 +25,7 @@ import Skin from '../../Skin';
 import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
 
+
 /*
  Custom View
  */
@@ -90,6 +91,7 @@ export default class UpdatePasswordSet extends Component {
     var passwordregex = /^(?=^.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
     return passwordregex.test(textval);
   }
+
   /*
      onTextchange method for Password TextInput
    */
@@ -143,15 +145,15 @@ export default class UpdatePasswordSet extends Component {
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
-          //  if(this.validatePassword(pw)){
+            if(this.validatePassword(pw)){
           dismissKeyboard();
           // Main.dnaPasswd = pw;
           let responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
           Events.trigger('showNextChallenge', { response: responseJson });
-          // }else{
-          // alert('Invalide Password');
-          // }
+          }else{
+          alert('Invalide Password');
+          }
         } else {
           alert('Password and Confirm Password do not match');
           this.setState({ password: "", cPassword: "" });

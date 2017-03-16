@@ -95,16 +95,16 @@ This method is called when the component will start to load
     if (pw.length > 0) {
       if (cpw.length > 0) {
         if (pw === cpw) {
-          //  if(this.validatePassword(pw)){
+            if(this.validatePassword(pw)){
           Main.dnaPasswd = pw;
           AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
           let responseJson = this.props.url.chlngJson;
           responseJson.chlng_resp[0].response = pw;
           dismissKeyboard();
           Events.trigger('showNextChallenge', { response: responseJson });
-          // }else{
-          // alert('Invalide Password');
-          // }
+          }else{
+          alert('Invalide Password');
+          }
         } else {
           alert('Password and Confirm Password do not match');
           this.setState({ password: "", cPassword: "" });
