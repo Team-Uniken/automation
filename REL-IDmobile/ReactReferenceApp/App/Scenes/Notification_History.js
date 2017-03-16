@@ -166,6 +166,7 @@ var styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 8,
     marginBottom: 8,
+    fontWeight: 'bold'
   },
   go: {
     color: '#000',
@@ -430,13 +431,24 @@ class Notifications_History extends Component {
     //Do nothing for right now
   }
 
+  //return color code based on action
+  highlightcolor(action_performed) {
+    if (action_performed == 'Approve') {
+      return '#92D050';
+    } else if (action_performed == 'Rejected') {
+      return '#800000';
+    } else {
+      return '#212121'
+    }
+  }
+
   /*
      This method is used to render the componenet with all its element.
    */
   render() {
     return (
       <MainActivation
-            disabled={true}>
+        disabled={true}>
         <Main
           drawerState={{
             open: false,
@@ -515,6 +527,7 @@ class Notifications_History extends Component {
   }
 
 
+
   /*
      This method return custom notification row.
    */
@@ -530,7 +543,7 @@ class Notifications_History extends Component {
         <View style={{ flexDirection: 'column', }}>
           <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0]) } IST
           </Text>
-          <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
+          <Text style={styles.action_performed}>Action performed: <Text style={{ color: Obj.highlightcolor(notification.action_performed) }}>{notification.action_performed}</Text>
           </Text>
         </View>
       );
@@ -539,7 +552,7 @@ class Notifications_History extends Component {
         <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
           <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0]) } IST
           </Text>
-          <Text style={styles.action_performed}><Text style={{ fontWeight: 'bold' }}>Action performed: </Text>{notification.action_performed}
+          <Text style={styles.action_performed}>Action performed: <Text style={{ color: Obj.highlightcolor(notification.action_performed) }}>{notification.action_performed}</Text>
           </Text>
         </View>
       );
