@@ -69,7 +69,7 @@ This method is called when the component will start to load
   }
   //To check password policy
   validatePassword(textval) {
-    if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) == 0) {
+    if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) >= 0) {
       return false;
     }
     var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
