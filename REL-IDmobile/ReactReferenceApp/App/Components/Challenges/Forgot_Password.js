@@ -154,7 +154,7 @@ export default class ForgatePassword extends Component {
           } else {
             Alert.alert(
               'Password Policy',
-              'Password should be 8-16 characters long,\nAtleast 1 upper case character,\nAtleast 1 lower case character,\nAtleast 1 special character,\nAtleast 1 number\nYour password should not be same as user Id or contain user Id.',
+              'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.',
               [
                 { text: 'OK' }
               ]
