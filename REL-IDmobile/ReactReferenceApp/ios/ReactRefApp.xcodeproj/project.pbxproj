@@ -90,6 +90,42 @@
 		552BB7BB1E1BA0B90009F274 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
 		552BB7BD1E1BA0B90009F274 /* logo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 558654DF1E12689500B01A6A /* logo.ttf */; };
 		552BB7DD1E1BA6430009F274 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 552BB7DC1E1BA6260009F274 /* libReactNativeConfig.a */; };
+		558C998E1E7BF7A30002C56F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
+		558C998F1E7BF7A30002C56F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
+		558C99901E7BF7A30002C56F /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
+		558C99911E7BF7A30002C56F /* RDNARequestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */; };
+		558C99921E7BF7A30002C56F /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
+		558C99941E7BF7A30002C56F /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 552BB7DC1E1BA6260009F274 /* libReactNativeConfig.a */; };
+		558C99951E7BF7A30002C56F /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80B71DBE0A5D0052D415 /* libRCTFBSDK.a */; };
+		558C99961E7BF7A30002C56F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
+		558C99971E7BF7A30002C56F /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D972091E40A0790082A2DF /* libapi-sdk.a */; };
+		558C99981E7BF7A30002C56F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */; };
+		558C99991E7BF7A30002C56F /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
+		558C999A1E7BF7A30002C56F /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
+		558C999B1E7BF7A30002C56F /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
+		558C999C1E7BF7A30002C56F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		558C999D1E7BF7A30002C56F /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		558C999E1E7BF7A30002C56F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */; };
+		558C999F1E7BF7A30002C56F /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		558C99A01E7BF7A30002C56F /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		558C99A11E7BF7A30002C56F /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		558C99A21E7BF7A30002C56F /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		558C99A31E7BF7A30002C56F /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		558C99A41E7BF7A30002C56F /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		558C99A51E7BF7A30002C56F /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		558C99A61E7BF7A30002C56F /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */; };
+		558C99A71E7BF7A30002C56F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
+		558C99A81E7BF7A30002C56F /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		558C99A91E7BF7A30002C56F /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EADB2464F484FCB911B1B07 /* libRCTFBSDK.a */; };
+		558C99AA1E7BF7A30002C56F /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
+		558C99AB1E7BF7A30002C56F /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
+		558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
+		558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
+		558C99B01E7BF7A30002C56F /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
+		558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
+		558C99F01E7BF9F30002C56F /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 558C99EF1E7BF9F30002C56F /* index.ios.js */; };
+		558C99F11E7BFA060002C56F /* relidmobile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 558C99BB1E7BF7A30002C56F /* relidmobile.plist */; };
+		55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */; };
 		55D351671E1E0F7C00806F82 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		55D351681E1E0F7C00806F82 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		55D351691E1E0F7C00806F82 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -363,6 +399,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		558C99B61E7BF7A30002C56F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65209CF21E2DFCAC009E52F3 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -436,6 +482,10 @@
 		552BB7C21E1BA0B90009F274 /* SandP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SandP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		552BB7D71E1BA6260009F274 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		558654DF1E12689500B01A6A /* logo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.ttf; sourceTree = "<group>"; };
+		558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REL-IDMobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		558C99BB1E7BF7A30002C56F /* relidmobile.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = relidmobile.plist; path = "/Users/swapnil/Desktop/ReactNative_iOS_GitHub/REL-IDmobile/ReactReferenceApp/ios/relidmobile.plist"; sourceTree = "<absolute>"; };
+		558C99EF1E7BF9F30002C56F /* index.ios.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
+		55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStockRELIDMobile.xcassets; sourceTree = "<group>"; };
 		55D351941E1E0F7C00806F82 /* stock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D351961E1E126F00806F82 /* ImagesStock.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStock.xcassets; sourceTree = "<group>"; };
 		55D972071E40A0790082A2DF /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
@@ -573,6 +623,37 @@
 				552BB7B11E1BA0B90009F274 /* libRCTText.a in Frameworks */,
 				552BB7B21E1BA0B90009F274 /* libRCTVibration.a in Frameworks */,
 				552BB7B31E1BA0B90009F274 /* libRCTWebSocket.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558C99931E7BF7A30002C56F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558C99941E7BF7A30002C56F /* libReactNativeConfig.a in Frameworks */,
+				558C99951E7BF7A30002C56F /* libRCTFBSDK.a in Frameworks */,
+				558C99961E7BF7A30002C56F /* libstdc++.tbd in Frameworks */,
+				558C99971E7BF7A30002C56F /* libapi-sdk.a in Frameworks */,
+				558C99981E7BF7A30002C56F /* FBSDKLoginKit.framework in Frameworks */,
+				558C99991E7BF7A30002C56F /* libRCTTouchId.a in Frameworks */,
+				558C999A1E7BF7A30002C56F /* libTouchID.a in Frameworks */,
+				558C999B1E7BF7A30002C56F /* libRCTPushNotification.a in Frameworks */,
+				558C999C1E7BF7A30002C56F /* libReact.a in Frameworks */,
+				558C999D1E7BF7A30002C56F /* libRCTActionSheet.a in Frameworks */,
+				558C999E1E7BF7A30002C56F /* FBSDKCoreKit.framework in Frameworks */,
+				558C999F1E7BF7A30002C56F /* libRCTGeolocation.a in Frameworks */,
+				558C99A01E7BF7A30002C56F /* libRCTImage.a in Frameworks */,
+				558C99A11E7BF7A30002C56F /* libRCTLinking.a in Frameworks */,
+				558C99A21E7BF7A30002C56F /* libRCTNetwork.a in Frameworks */,
+				558C99A31E7BF7A30002C56F /* libRCTSettings.a in Frameworks */,
+				558C99A41E7BF7A30002C56F /* libRCTText.a in Frameworks */,
+				558C99A51E7BF7A30002C56F /* libRCTVibration.a in Frameworks */,
+				558C99A61E7BF7A30002C56F /* FBSDKShareKit.framework in Frameworks */,
+				558C99A71E7BF7A30002C56F /* Bolts.framework in Frameworks */,
+				558C99A81E7BF7A30002C56F /* libRCTWebSocket.a in Frameworks */,
+				558C99A91E7BF7A30002C56F /* libRCTFBSDK.a in Frameworks */,
+				558C99AA1E7BF7A30002C56F /* libRCTCamera.a in Frameworks */,
+				558C99AB1E7BF7A30002C56F /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +894,7 @@
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
+				55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */,
 				65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */,
 				1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */,
 				55D351961E1E126F00806F82 /* ImagesStock.xcassets */,
@@ -910,6 +992,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				558C99EF1E7BF9F30002C56F /* index.ios.js */,
 				55D972051E40A0790082A2DF /* api-sdk */,
 				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
 				551EE2DD1E51BAE400ADAD6C /* cbc.ttf */,
@@ -931,6 +1014,7 @@
 				654F81C41CC9FAD5009E6168 /* ReactRefApp */,
 				654F81D61CC9FAE3009E6168 /* ReactRefAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				558C99BB1E7BF7A30002C56F /* relidmobile.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -945,6 +1029,7 @@
 				55D351941E1E0F7C00806F82 /* stock.app */,
 				65D7F74B1E308FC8009ACC25 /* ubs.app */,
 				1A6151D81E4CDF5B00B3C9B2 /* cbc.app */,
+				558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1007,6 +1092,25 @@
 			name = SandP;
 			productName = "Hello World";
 			productReference = 552BB7C21E1BA0B90009F274 /* SandP.app */;
+			productType = "com.apple.product-type.application";
+		};
+		558C998C1E7BF7A30002C56F /* REL-IDMobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 558C99B71E7BF7A30002C56F /* Build configuration list for PBXNativeTarget "REL-IDMobile" */;
+			buildPhases = (
+				558C998D1E7BF7A30002C56F /* Sources */,
+				558C99931E7BF7A30002C56F /* Frameworks */,
+				558C99AC1E7BF7A30002C56F /* Resources */,
+				558C99B51E7BF7A30002C56F /* Bundle React Native code and images */,
+				558C99B61E7BF7A30002C56F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "REL-IDMobile";
+			productName = "Hello World";
+			productReference = 558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
 		55D351651E1E0F7C00806F82 /* stock */ = {
@@ -1096,6 +1200,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					558C998C1E7BF7A30002C56F = {
+						DevelopmentTeam = F78S5YW242;
 					};
 					55D351651E1E0F7C00806F82 = {
 						DevelopmentTeam = F78S5YW242;
@@ -1215,6 +1322,7 @@
 				55D351651E1E0F7C00806F82 /* stock */,
 				65D7F71D1E308FC8009ACC25 /* ubs */,
 				1A6151AB1E4CDF5B00B3C9B2 /* cbc */,
+				558C998C1E7BF7A30002C56F /* REL-IDMobile */,
 			);
 		};
 /* End PBXProject section */
@@ -1385,6 +1493,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		558C99AC1E7BF7A30002C56F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558C99F11E7BFA060002C56F /* relidmobile.plist in Resources */,
+				55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */,
+				558C99F01E7BF9F30002C56F /* index.ios.js in Resources */,
+				558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */,
+				558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */,
+				558C99B01E7BF7A30002C56F /* App in Resources */,
+				558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55D351851E1E0F7C00806F82 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1478,6 +1600,20 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
+		558C99B51E7BF7A30002C56F /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+		};
 		55D351901E1E0F7C00806F82 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1556,6 +1692,18 @@
 				552BB79B1E1BA0B90009F274 /* RelIDRequestInterceptor.m in Sources */,
 				552BB79C1E1BA0B90009F274 /* RDNARequestUtility.m in Sources */,
 				552BB79D1E1BA0B90009F274 /* ReactRdnaModule.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		558C998D1E7BF7A30002C56F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558C998E1E7BF7A30002C56F /* main.m in Sources */,
+				558C998F1E7BF7A30002C56F /* AppDelegate.m in Sources */,
+				558C99901E7BF7A30002C56F /* RelIDRequestInterceptor.m in Sources */,
+				558C99911E7BF7A30002C56F /* RDNARequestUtility.m in Sources */,
+				558C99921E7BF7A30002C56F /* ReactRdnaModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1928,6 +2076,116 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b04ec15e-50e1-4bf7-bab0-819bdff420a2";
 				PROVISIONING_PROFILE_SPECIFIER = "S&P Global";
+			};
+			name = Release;
+		};
+		558C99B81E7BF7A30002C56F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					React_Dist,
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/../../../react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-permissions/**",
+				);
+				INFOPLIST_FILE = relidmobile.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "${CONFIGURATION_BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lresolv",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
+			};
+			name = Debug;
+		};
+		558C99B91E7BF7A30002C56F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = React_Dist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/../../../react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-permissions/**",
+				);
+				INFOPLIST_FILE = relidmobile.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "${CONFIGURATION_BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lresolv",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
 			};
 			name = Release;
 		};
@@ -2379,6 +2637,15 @@
 			buildConfigurations = (
 				552BB7C01E1BA0B90009F274 /* Debug */,
 				552BB7C11E1BA0B90009F274 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		558C99B71E7BF7A30002C56F /* Build configuration list for PBXNativeTarget "REL-IDMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				558C99B81E7BF7A30002C56F /* Debug */,
+				558C99B91E7BF7A30002C56F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

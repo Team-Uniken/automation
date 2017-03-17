@@ -22,6 +22,7 @@ import SandPDashbord from './SandP/homepage';
 import StockDashbord from './Stock/Deals';
 import UbsDashbord from './Ubs/homepage';
 import CBCDashbord from './CBC/homepage';
+import RELIDMobileDashbord from './REL-IDMobile/Deals';
 
 
 class Dashboard extends Component {
@@ -67,7 +68,16 @@ class Dashboard extends Component {
               title={this.props.title}
               rdna={this.props.rdna}/>
               );
+    }else if (Config.ENV == 'relidmobile') {
+      return (
+              <RELIDMobileDashbord
+              navigator={this.props.navigator}
+              url={this.props.url}
+              title={this.props.title}
+              rdna={this.props.rdna}/>
+              );
     }
+
 
 
   }

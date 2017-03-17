@@ -84,6 +84,9 @@ if (Config.ENV == 'sandp') {
 }else if (Config.ENV == 'cbc') {
     var erelid = require("../../Connection_profiles/cbc.json");
     var welcome = require('../img/cbc.png')
+}else if (Config.ENV == 'relidmobile') {
+  var erelid = require("../../Connection_profiles/relidmobile.json");
+  var welcome = require('../img/stock.png')
 }
 
 
