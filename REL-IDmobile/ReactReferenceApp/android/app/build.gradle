@@ -82,7 +82,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion 24
@@ -150,8 +150,8 @@ android {
             signingConfig signingConfigs.releaseSandP
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 471
-            versionName "4.7.1"
+            versionCode 472
+            versionName "4.7.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -160,8 +160,8 @@ android {
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 471
-            versionName "4.7.1"
+            versionCode 472
+            versionName "4.7.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -170,8 +170,8 @@ android {
             signingConfig signingConfigs.releaseStock
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 471
-            versionName "4.7.1"
+            versionCode 472
+            versionName "4.7.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         ubs{
@@ -179,8 +179,8 @@ android {
             signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 471
-            versionName "4.7.1"
+            versionCode 472
+            versionName "4.7.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbc{
@@ -188,8 +188,8 @@ android {
             signingConfig signingConfigs.releaseCbc
             minSdkVersion 16
             targetSdkVersion 24
-            versionCode 471
-            versionName "4.7.1"
+            versionCode 472
+            versionName "4.7.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
