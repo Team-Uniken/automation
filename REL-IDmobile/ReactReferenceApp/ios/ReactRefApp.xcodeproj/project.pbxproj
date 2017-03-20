@@ -1244,6 +1244,7 @@
 					};
 					558C998C1E7BF7A30002C56F = {
 						DevelopmentTeam = 2S999FKG5P;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
