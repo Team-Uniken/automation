@@ -286,7 +286,6 @@ class AccessCode extends Component {
         }
         responseJson.chlng_resp[0].response = aCode;
         this.setState({ accessCode: '' });
-        this.state.isPoped = true;
         if (this.state.showCamera) {
           this.refs[CAMERA_REF].setCameraMode("off");
         }
@@ -295,6 +294,9 @@ class AccessCode extends Component {
             response: responseJson
           });
         }, 1000);
+        setTimeout(()=> {
+                   obj.state.isPoped = true;
+                   }, 2000);
       } else {
         $this.showAlertModal("Verification code does not match");
         //alert('Verification code does not match');
