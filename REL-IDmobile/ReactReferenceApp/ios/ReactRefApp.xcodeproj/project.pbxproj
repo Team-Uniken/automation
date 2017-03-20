@@ -124,7 +124,6 @@
 		558C99B01E7BF7A30002C56F /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		558C99F01E7BF9F30002C56F /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 558C99EF1E7BF9F30002C56F /* index.ios.js */; };
-		558C99F11E7BFA060002C56F /* relidmobile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 558C99BB1E7BF7A30002C56F /* relidmobile.plist */; };
 		55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */; };
 		55D351671E1E0F7C00806F82 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		55D351681E1E0F7C00806F82 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
@@ -219,6 +218,14 @@
 		6562280C1CB50BEA00AD7F6C /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
 		6567FBCB1CC1122F00AC6A04 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		6567FBCD1CC1127B00AC6A04 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCC1CC1127B00AC6A04 /* index.ios.js */; };
+		656D4EEE1E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4EEF1E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4EF01E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4EF11E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4EF21E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4EF31E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4EF41E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */; };
+		656D4F071E7C0B6000965ED6 /* relidmobile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 656D4F061E7C0B6000965ED6 /* relidmobile.plist */; };
 		6582FD5E1D9525000075C15D /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
 		6582FD5F1D9525050075C15D /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
 		6582FD661D9525790075C15D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
@@ -483,7 +490,6 @@
 		552BB7D71E1BA6260009F274 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		558654DF1E12689500B01A6A /* logo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.ttf; sourceTree = "<group>"; };
 		558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REL-IDMobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		558C99BB1E7BF7A30002C56F /* relidmobile.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = relidmobile.plist; path = "/Users/swapnil/Desktop/ReactNative_iOS_GitHub/REL-IDmobile/ReactReferenceApp/ios/relidmobile.plist"; sourceTree = "<absolute>"; };
 		558C99EF1E7BF9F30002C56F /* index.ios.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
 		55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStockRELIDMobile.xcassets; sourceTree = "<group>"; };
 		55D351941E1E0F7C00806F82 /* stock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -519,6 +525,9 @@
 		656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelIDRequestInterceptor.m; sourceTree = "<group>"; };
 		6567FBCA1CC1122F00AC6A04 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; name = App; path = ../App; sourceTree = "<group>"; };
 		6567FBCC1CC1127B00AC6A04 /* index.ios.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
+		656D4EEB1E7C0B2300965ED6 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		656D4F061E7C0B6000965ED6 /* relidmobile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = relidmobile.plist; sourceTree = "<group>"; };
 		6582FD571D9524ED0075C15D /* RCTTouchId.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTouchId.xcodeproj; path = "../node_modules/react-native-smart-touch-id/ios/RCTTouchId/RCTTouchId.xcodeproj"; sourceTree = "<group>"; };
 		6582FD601D95256E0075C15D /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		6582FD681D9526890075C15D /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -539,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551E55B91E1BBE8E004F007A /* libReactNativeConfig.a in Frameworks */,
+				656D4EEF1E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				654B80C51DBE0B250052D415 /* libRCTFBSDK.a in Frameworks */,
 				6582FD691D9526890075C15D /* libstdc++.tbd in Frameworks */,
 				55D9720B1E40A0790082A2DF /* libapi-sdk.a in Frameworks */,
@@ -570,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A6151B31E4CDF5B00B3C9B2 /* libReactNativeConfig.a in Frameworks */,
+				656D4EF31E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				1A6151B41E4CDF5B00B3C9B2 /* libRCTFBSDK.a in Frameworks */,
 				1A6151B51E4CDF5B00B3C9B2 /* libstdc++.tbd in Frameworks */,
 				1A6151B61E4CDF5B00B3C9B2 /* libapi-sdk.a in Frameworks */,
@@ -603,6 +614,7 @@
 				65209C2F1E28B70C009E52F3 /* libRCTCamera.a in Frameworks */,
 				65209C301E28B70C009E52F3 /* libReactNativePermissions.a in Frameworks */,
 				552BB7DD1E1BA6430009F274 /* libReactNativeConfig.a in Frameworks */,
+				656D4EF01E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				552BB7A01E1BA0B90009F274 /* libRCTFBSDK.a in Frameworks */,
 				552BB7A11E1BA0B90009F274 /* libstdc++.tbd in Frameworks */,
 				55D9720C1E40A0790082A2DF /* libapi-sdk.a in Frameworks */,
@@ -631,6 +643,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				558C99941E7BF7A30002C56F /* libReactNativeConfig.a in Frameworks */,
+				656D4EF41E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				558C99951E7BF7A30002C56F /* libRCTFBSDK.a in Frameworks */,
 				558C99961E7BF7A30002C56F /* libstdc++.tbd in Frameworks */,
 				558C99971E7BF7A30002C56F /* libapi-sdk.a in Frameworks */,
@@ -662,6 +675,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D3516D1E1E0F7C00806F82 /* libReactNativeConfig.a in Frameworks */,
+				656D4EF11E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				55D3516E1E1E0F7C00806F82 /* libRCTFBSDK.a in Frameworks */,
 				55D3516F1E1E0F7C00806F82 /* libstdc++.tbd in Frameworks */,
 				55D9720D1E40A0790082A2DF /* libapi-sdk.a in Frameworks */,
@@ -695,6 +709,7 @@
 				65209D0F1E2E30A7009E52F3 /* libReactNativePermissions.a in Frameworks */,
 				65209D0E1E2E30A2009E52F3 /* libRCTCamera.a in Frameworks */,
 				551E55A61E1BBE7A004F007A /* libReactNativeConfig.a in Frameworks */,
+				656D4EEE1E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				654B80C41DBE0B210052D415 /* libRCTFBSDK.a in Frameworks */,
 				6582FD6A1D9526920075C15D /* libstdc++.tbd in Frameworks */,
 				55D9720A1E40A0790082A2DF /* libapi-sdk.a in Frameworks */,
@@ -723,6 +738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D7F7251E308FC8009ACC25 /* libReactNativeConfig.a in Frameworks */,
+				656D4EF21E7C0B2300965ED6 /* libapi-sdk.a in Frameworks */,
 				65D7F7261E308FC8009ACC25 /* libRCTFBSDK.a in Frameworks */,
 				65D7F7271E308FC8009ACC25 /* libstdc++.tbd in Frameworks */,
 				55D9720E1E40A0790082A2DF /* libapi-sdk.a in Frameworks */,
@@ -933,6 +949,31 @@
 			path = NativeModules;
 			sourceTree = "<group>";
 		};
+		656D4EE91E7C0B2300965ED6 /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				656D4EEA1E7C0B2300965ED6 /* include */,
+				656D4EEC1E7C0B2300965ED6 /* libs */,
+			);
+			path = "api-sdk";
+			sourceTree = "<group>";
+		};
+		656D4EEA1E7C0B2300965ED6 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				656D4EEB1E7C0B2300965ED6 /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		656D4EEC1E7C0B2300965ED6 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				656D4EED1E7C0B2300965ED6 /* libapi-sdk.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
 		6582FD581D9524ED0075C15D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -992,6 +1033,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				656D4F061E7C0B6000965ED6 /* relidmobile.plist */,
+				656D4EE91E7C0B2300965ED6 /* api-sdk */,
 				558C99EF1E7BF9F30002C56F /* index.ios.js */,
 				55D972051E40A0790082A2DF /* api-sdk */,
 				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
@@ -1014,7 +1057,6 @@
 				654F81C41CC9FAD5009E6168 /* ReactRefApp */,
 				654F81D61CC9FAE3009E6168 /* ReactRefAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
-				558C99BB1E7BF7A30002C56F /* relidmobile.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1202,7 +1244,15 @@
 						};
 					};
 					558C998C1E7BF7A30002C56F = {
-						DevelopmentTeam = F78S5YW242;
+						DevelopmentTeam = 2S999FKG5P;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					55D351651E1E0F7C00806F82 = {
 						DevelopmentTeam = F78S5YW242;
@@ -1497,12 +1547,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				558C99F11E7BFA060002C56F /* relidmobile.plist in Resources */,
 				55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */,
 				558C99F01E7BF9F30002C56F /* index.ios.js in Resources */,
 				558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */,
 				558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */,
 				558C99B01E7BF7A30002C56F /* App in Resources */,
+				656D4F071E7C0B6000965ED6 /* relidmobile.plist in Resources */,
 				558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2086,10 +2136,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = F78S5YW242;
+				DEVELOPMENT_TEAM = 2S999FKG5P;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2129,10 +2179,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relidmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
-				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
+				PROVISIONING_PROFILE = "31878b6a-d70f-4d66-98ed-3e71f1dec69d";
+				PROVISIONING_PROFILE_SPECIFIER = "REL-ID Mobile AppStore";
 			};
 			name = Debug;
 		};
@@ -2143,10 +2193,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken Business Solutions, Inc (2S999FKG5P)";
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = F78S5YW242;
+				DEVELOPMENT_TEAM = 2S999FKG5P;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2182,10 +2232,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.relidmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
-				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
+				PROVISIONING_PROFILE = "31878b6a-d70f-4d66-98ed-3e71f1dec69d";
+				PROVISIONING_PROFILE_SPECIFIER = "REL-ID Mobile AppStore";
 			};
 			name = Release;
 		};
