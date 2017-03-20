@@ -179,7 +179,7 @@ class Deals extends Component {
             tintColor={'transparent'}
             statusBarTint={'transparent'}
             statusBarLight={'light-content'}
-            title={'Bank Of Uniken'}
+            title={'REL-ID Mobile'}
             titleTint={'#000000'}
             right={''}
             left={{

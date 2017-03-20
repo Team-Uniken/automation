@@ -86,7 +86,7 @@ if (Config.ENV == 'sandp') {
     var welcome = require('../img/cbc.png')
 }else if (Config.ENV == 'relidmobile') {
   var erelid = require("../../Connection_profiles/relidmobile.json");
-  var welcome = require('../img/stock.png')
+  var welcome = require('../img/rmobile.png')
 }
 
 
@@ -168,7 +168,7 @@ class Load extends Component {
     NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
   }
   _handleConnectivityChange(isConnected) {
-       Main.isConnected = isConnected;    
+       Main.isConnected = true;
   }
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
