@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>FacebookAppID</key>
 	<string>1286073298105145</string>
 	<key>FacebookDisplayName</key>
@@ -51,6 +51,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>REL-ID Mobile use bluetooth for device fingerprint</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>REL-ID Mobile use calender to select date and time</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) camera use</string>
 	<key>NSLocationAlwaysUsageDescription</key>
