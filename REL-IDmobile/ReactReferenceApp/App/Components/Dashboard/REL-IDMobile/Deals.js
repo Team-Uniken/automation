@@ -172,7 +172,7 @@ class Deals extends Component {
             backgroundColor: '#000000',
           }}>
             <Image
-              source={require('../../../img/stock.png') }
+              source={require('../../../img/rmobile.png') }
               style={Skin.layout3.split.top.bg} />
           </View>
           <NavBar

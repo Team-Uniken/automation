@@ -6,7 +6,7 @@ import com.android.build.OutputFile
 
 //project.ext.set("envConfigFiles", ["nwdDebug": ".env.nwd","sandpDebug":".env.sandp"])
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",relidmobile:".env.relidmobile"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
