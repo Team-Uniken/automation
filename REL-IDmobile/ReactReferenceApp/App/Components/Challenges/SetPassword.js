@@ -116,6 +116,7 @@ This method is called when the component will start to load
         } else {
           alert('Password and Confirm Password do not match');
           this.setState({ password: "", cPassword: "" });
+          this.refs.password.focus();
         }
       } else {
         alert('Please enter confirm password ');
