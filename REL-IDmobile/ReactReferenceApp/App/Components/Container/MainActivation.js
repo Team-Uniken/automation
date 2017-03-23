@@ -82,7 +82,7 @@ class MainActivation extends Component {
     onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
       this.onGetpassword.bind(this));
     onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
-      this.onGetCredentials.bind.bind(this));
+      this.onGetCredentials.bind(this));
     if (constant.USER_SESSION === "YES") {
       this.setState({ isSettingButtonHide: 0 });
     } else {

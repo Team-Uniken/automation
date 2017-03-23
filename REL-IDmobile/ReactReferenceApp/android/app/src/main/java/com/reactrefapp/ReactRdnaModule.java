@@ -83,7 +83,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             @Override
             public int onInitializeCompleted(String rdnaStatusInit) {
                 i=0;
-                Logger.d(TAG, "------- "+rdnaStatusInit);
+              //  Logger.d(TAG, "------- "+rdnaStatusInit);
                 WritableMap params = Arguments.createMap();
                 params.putString("response", rdnaStatusInit);
 
@@ -169,7 +169,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onCheckChallengeResponseStatus(final String rdnaStatusCheckChallengeResponse) {
-                Logger.d(TAG, "-------- onCheckChallengeResponseStatus " + rdnaStatusCheckChallengeResponse);
+                //Logger.d(TAG, "-------- onCheckChallengeResponseStatus " + rdnaStatusCheckChallengeResponse);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -189,7 +189,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onGetAllChallengeStatus(final String rdnaStatusGetAllChallenges) {
-                Logger.d(TAG, "-------- rdnaStatusGetAllChallenges " + rdnaStatusGetAllChallenges);
+               // Logger.d(TAG, "-------- rdnaStatusGetAllChallenges " + rdnaStatusGetAllChallenges);
                 Runnable runnable= new Runnable() {
                     @Override
                     public void run() {
@@ -208,7 +208,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onUpdateChallengeStatus(final String rdnaStatusUpdateChallenges) {
-                Logger.d(TAG, "-------- onUpdateChallengeStatus " + rdnaStatusUpdateChallenges);
+               // Logger.d(TAG, "-------- onUpdateChallengeStatus " + rdnaStatusUpdateChallenges);
                 Runnable runnable= new Runnable() {
                     @Override
                     public void run() {
@@ -227,7 +227,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onForgotPasswordStatus(final String rdnaStatusForgotPassword) {
-                Logger.d(TAG, "-------- onForgotPasswordStatus " + rdnaStatusForgotPassword);
+               // Logger.d(TAG, "-------- onForgotPasswordStatus " + rdnaStatusForgotPassword);
                 Runnable runnable= new Runnable() {
                     @Override
                     public void run() {
@@ -246,7 +246,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onLogOff(final String status) {
-                Logger.d(TAG, "-------- onLogOff " + status);
+              //  Logger.d(TAG, "-------- onLogOff " + status);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -265,7 +265,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public RDNA.RDNAIWACreds getCredentials(final String domainUrl) {
-                Logger.d(TAG, "-------- getCredentials " + domainUrl);
+               // Logger.d(TAG, "-------- getCredentials " + domainUrl);
 
                 if(i==0){
                     Runnable runnable = new Runnable() {
@@ -298,7 +298,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 try {
                     lock.acquire();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
 
                 return rdnaiwaCreds;
@@ -316,7 +316,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onGetPostLoginChallenges(final String rdnaGetPostLoginStatus) {
-                Logger.d(TAG, "-------- onGetPostLoginChallenges " + rdnaGetPostLoginStatus);
+               // Logger.d(TAG, "-------- onGetPostLoginChallenges " + rdnaGetPostLoginStatus);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -335,7 +335,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onGetRegistredDeviceDetails(final String s) {
-                Logger.d(TAG, "--------- device details " + s);
+               // Logger.d(TAG, "--------- device details " + s);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -355,7 +355,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onUpdateDeviceDetails(final String rdnaUpdateDeviceStatus) {
-                Logger.d(TAG, "-------- onUpdateDeviceDetails " + rdnaUpdateDeviceStatus);
+               // Logger.d(TAG, "-------- onUpdateDeviceDetails " + rdnaUpdateDeviceStatus);
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -382,6 +382,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
+
                         WritableMap params = Arguments.createMap();
                         params.putString("response", s);
                         context
@@ -453,8 +454,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void checkChallenges(String challengeRequestArray, String userID, Callback callback){
         uName=userID;
-        Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
-        Logger.d(TAG , "----- userID " + userID);
+       // Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
+       // Logger.d(TAG , "----- userID " + userID);
         int error = rdnaObj.checkChallengeResponse(challengeRequestArray, userID);
 
         WritableMap errorMap = Arguments.createMap();
@@ -468,8 +469,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void updateChallenges(String challenges, String userID, Callback callback){
-        Logger.d(TAG , "----- updateChallenges " + challenges);
-        Logger.d(TAG , "----- userID " + userID);
+       // Logger.d(TAG , "----- updateChallenges " + challenges);
+       // Logger.d(TAG , "----- userID " + userID);
         int error = rdnaObj.updateChallenges(challenges, userID);
 
         WritableMap errorMap = Arguments.createMap();
@@ -483,7 +484,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getAllChallenges(String userID, Callback callback){
-        Logger.d(TAG , "----- userID " + userID);
+       // Logger.d(TAG , "----- userID " + userID);
         int error = rdnaObj.getAllChallenges(userID);
 
         WritableMap errorMap = Arguments.createMap();
@@ -497,7 +498,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void terminate(Callback callback){
-        Logger.d(TAG , "----- terminate call ");
+       // Logger.d(TAG , "----- terminate call ");
         int error = rdnaObj.terminate();
 
         WritableMap errorMap = Arguments.createMap();
@@ -511,12 +512,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getNotifications(String recordCount, String startRecord, String enterpriseID, String startDate, String endDate, Callback callback){
-        Logger.d(TAG , "----- getNotification ");
-        Logger.d(TAG , "----- recordCount " + recordCount);
-        Logger.d(TAG , "----- startRecord " + startRecord);
-        Logger.d(TAG , "----- enterpriseID " + enterpriseID);
-        Logger.d(TAG , "----- startDate " + startDate);
-        Logger.d(TAG , "----- endDate " + endDate);
+      //  Logger.d(TAG , "----- getNotification ");
+      //  Logger.d(TAG , "----- recordCount " + recordCount);
+       // Logger.d(TAG , "----- startRecord " + startRecord);
+       // Logger.d(TAG , "----- enterpriseID " + enterpriseID);
+       // Logger.d(TAG , "----- startDate " + startDate);
+      //  Logger.d(TAG , "----- endDate " + endDate);
 
 
         int intRecordCount=Integer.parseInt(recordCount);
@@ -524,7 +525,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         int error = rdnaObj.getNotifications(intRecordCount, intStartRecord, enterpriseID, startDate, endDate);
 
-        Logger.d(TAG , "----- error " + error);
+       // Logger.d(TAG , "----- error " + error);
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
         WritableArray writableArray = Arguments.createArray();
@@ -538,7 +539,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         int error = rdnaObj.getNotificationHistory(recordCount,enterpriseID, startIndex,startDate, endDate, notificationStatus, actionPerformed, keywordSearch, deviceID);
 
-        Logger.d(TAG , "----- error " + error);
+       // Logger.d(TAG , "----- error " + error);
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
         WritableArray writableArray = Arguments.createArray();
@@ -548,12 +549,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void updateNotification(String notificationID, String response, Callback callback){
-        Logger.d(TAG , "----- updateNotification ");
-        Logger.d(TAG , "----- notificationID " + notificationID);
-        Logger.d(TAG , "----- startReresponsecord " + response);
+      //  Logger.d(TAG , "----- updateNotification ");
+       // Logger.d(TAG , "----- notificationID " + notificationID);
+      //  Logger.d(TAG , "----- startReresponsecord " + response);
 
         int error = rdnaObj.updateNotification(notificationID, response);
-        Logger.d(TAG , "----- error " + error);
+       // Logger.d(TAG , "----- error " + error);
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
         WritableArray writableArray = Arguments.createArray();
@@ -576,13 +577,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setDevToken(String devToken){
-        Log.d(TAG, "setdevtoken:" + devToken);
         String deviceToken=null;
         try {
             JSONObject jobj=new JSONObject(devToken);
             deviceToken= jobj.getString("token");
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         Constants.DEV_TOKEN=deviceToken;
     }
@@ -645,7 +645,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 rdnaObj = rdnaStatus.result;
                 errorMap.putInt("error", rdnaStatus.errorCode);
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
         } else {
