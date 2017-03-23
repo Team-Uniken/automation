@@ -163,6 +163,7 @@ export default class ForgatePassword extends Component {
         } else {
           alert('Password and Confirm Password do not match');
           this.setState({ password: "", cPassword: "" });
+          this.refs.password.focus();
         }
       } else {
         alert('Please enter confirm password ');
