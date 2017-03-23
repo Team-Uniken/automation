@@ -16,6 +16,7 @@ import {StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter,
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
+import Util from "../Components/Utils/Util";
 
 /*
  Use in this js
@@ -387,11 +388,25 @@ export default class NotificationMgmtScene extends Component {
   }
 
   checkPassword() {
-    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-      try {
-        value = JSON.parse(value);
+    //Todo : cleanup
+    // AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+    //   try {
+    //     value = JSON.parse(value);
+    //     const pw = this.state.inputPassword;
+    //     if (pw === value.RPasswd) {
+    //       //Call update notification
+    //       obj.state.inputPassword='',
+    //       this.updateNotificationDetails();
+    //     } else {
+    //       obj.state.inputPassword='',
+    //       alert('Entered password does not match');
+    //     }
+    //   } catch (e) { }
+    // }).done();
+
+   Util.getUserDataSecure("RPasswd").then((decryptedRPasswd)=>{
         const pw = this.state.inputPassword;
-        if (pw === value.RPasswd) {
+        if (pw === decryptedRPasswd) {
           //Call update notification
           obj.state.inputPassword='',
           this.updateNotificationDetails();
@@ -399,9 +414,9 @@ export default class NotificationMgmtScene extends Component {
           obj.state.inputPassword='',
           alert('Entered password does not match');
         }
-      } catch (e) { }
-    }).done();
-    this.setState({ showPasswordModel: false });
+   }).done();
+
+   this.setState({ showPasswordModel: false });
   }
 
   onPasswordChange(event) {
@@ -447,18 +462,29 @@ export default class NotificationMgmtScene extends Component {
   }
 
   onTouchIDAuthenticationDone() {
-    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-      try {
-        value = JSON.parse(value);
-        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
-          if (response) {
-            console.log('immediate response of encrypt data packet is is' + response[0].error);
+    //Todo : cleanup after test
+    // AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+    //   try {
+    //     value = JSON.parse(value);
+    //     ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
+    //       if (response) {
+    //         console.log('immediate response of encrypt data packet is is' + response[0].error);
+    //         this.updateNotificationDetails();
+    //       } else {
+    //         console.log('immediate response is' + response[0].response);
+    //       }
+    //     });
+    //   } catch (e) { }
+    // }).done();
+
+    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd)=>{
+      if(encryptedRPasswd){
+        Util.decryptText(encryptedRPasswd).then((RPasswd)=>{
+          if(RPasswd){
             this.updateNotificationDetails();
-          } else {
-            console.log('immediate response is' + response[0].response);
           }
-        });
-      } catch (e) { }
+        }).done();
+      }
     }).done();
   }
 

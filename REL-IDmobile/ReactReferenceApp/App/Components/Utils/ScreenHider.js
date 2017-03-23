@@ -21,6 +21,7 @@ import Events from 'react-native-simple-events';
 import Skin from '../../Skin';
 import Loader from './Loader';
 import Main from '../Container/Main';
+import Util from "./Util";
 
 /*
   INSTANCES
@@ -66,10 +67,12 @@ class ScreenHider extends Component {
                   userinfo = JSON.parse(userinfo);
                   var RPasswd = userinfo.RPasswd;
                   if (value == "empty") {
-                  } else {
-                    responseJson = this.props.url.chlngJson;
-                    responseJson.chlng_resp[0].response = RPasswd;
-                    Events.trigger('showNextChallenge', { response: responseJson });
+                  }else{
+                    Util.decryptText(RPasswd).then((decryptedRPasswd)=>{
+                      responseJson = this.props.url.chlngJson;
+                      responseJson.chlng_resp[0].response = decryptedRPasswd;
+                      Events.trigger('showNextChallenge', { response: responseJson });
+                    }).done();
                   }
                 } catch (e) { }
               }

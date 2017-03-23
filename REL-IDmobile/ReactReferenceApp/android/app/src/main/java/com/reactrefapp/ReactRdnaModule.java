@@ -63,6 +63,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         constants.put("agentInfo", Constants.AGENT_INFO);
         constants.put("GatewayHost", Constants.HOST);
         constants.put("GatewayPort", Constants.PORT);
+        constants.put("PRIVACY_SCOPE_DEVICE", "RDNA_PRIVACY_SCOPE_DEVICE");
+        constants.put("PRIVACY_SCOPE_AGENT", "RDNA_PRIVACY_SCOPE_AGENT");
+        constants.put("PRIVACY_SCOPE_USER", "RDNA_PRIVACY_SCOPE_USER");
+        constants.put("PRIVACY_SCOPE_SESSION", "RDNA_PRIVACY_SCOPE_SESSION");
         constants.put("RdnaCipherSpecs", Constants.CYPHER_SPEC);
         constants.put("RdnaCipherSalt", Constants.CYPHER_SALT);
         constants.put("AppVersion",BuildConfig.VERSION_NAME);
@@ -694,9 +698,28 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void encryptDataPacket(String data,String salt, Callback callback)
+    public void encryptDataPacket(String scope, String cipherSpecs, String salt, String data, Callback callback)
     {
-        RDNA.RDNAStatus<byte[]> status=rdnaObj.encryptDataPacket(RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, Constants.CYPHER_SPEC, salt.getBytes(), data.getBytes());
+        RDNA.RDNAPrivacyScope privacyScope = null;
+        if(scope == null)
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_DEVICE")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
+        }
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_AGENT")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT;
+        }
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_USER")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER;
+        }
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_SESSION")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
+        }
+
+        if(cipherSpecs == null)
+            cipherSpecs = Constants.CYPHER_SPEC;
+
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.encryptDataPacket(privacyScope, Constants.CYPHER_SPEC, salt!=null?salt.getBytes():null, data!=null?data.getBytes():null);
         WritableMap statusMap = Arguments.createMap();
         if(rdnaObj != null) {
             int error = status.errorCode;
@@ -709,17 +732,42 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             statusMap.putInt("error", 1);
         }
 
-        callback.invoke(statusMap);
+        WritableArray result = Arguments.createArray();
+        result.pushMap(statusMap);
+        callback.invoke(result);
     }
 
     @ReactMethod
-    public void decryptDataPacket(String data,String salt,Callback callback){
+    public void decryptDataPacket(String scope, String cipherSpecs, String salt, String data, Callback callback){
+        RDNA.RDNAPrivacyScope privacyScope = null;
+
+        if(scope == null)
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_DEVICE")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
+        }
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_AGENT")){
+           privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT;
+        }
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_USER")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER;
+        }
+        else if(scope.equals("RDNA_PRIVACY_SCOPE_SESSION")){
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
+        }
+
         byte[] base64decodedData = null;
         if(data!=null && data.length() > 0){
             base64decodedData = Base64.decode(data,Base64.DEFAULT);
         }
 
-        RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, Constants.CYPHER_SPEC, salt.getBytes(), base64decodedData);
+        if(cipherSpecs == null)
+            cipherSpecs = Constants.CYPHER_SPEC;
+
+        if(scope == null)
+            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
+
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(privacyScope, cipherSpecs, salt!=null?salt.getBytes():null, base64decodedData);
         WritableMap statusMap = Arguments.createMap();
         if(rdnaObj != null) {
             int error = status.errorCode;
@@ -731,7 +779,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             statusMap.putInt("error", 1);
         }
 
-        callback.invoke(statusMap);
+
+        WritableArray result = Arguments.createArray();
+        result.pushMap(statusMap);
+        callback.invoke(result);
     }
 
     @ReactMethod

@@ -27,6 +27,7 @@ import Skin from '../Skin';
 import PasswordVerification from '../Components/Challenges/Password_Verification';
 import MainActivation from '../Components/Container/MainActivation';
 import Main from '../Components/Container/Main';
+import Util from "../Components/Utils/Util";
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
@@ -279,18 +280,29 @@ class SelectLogin extends Component {
   }
 
   onTouchIDVerificationDone() {
-    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-      try {
-        value = JSON.parse(value);
-        ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
-          if (response) {
-            console.log('immediate response of encrypt data packet is is' + response[0].error);
+    //Todo:cleanup after test
+    // AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+    //   try {
+    //     value = JSON.parse(value);
+    //     ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
+    //       if (response) {
+    //         console.log('immediate response of encrypt data packet is is' + response[0].error);
+    //         obj.onDoPasswordCheckChallenge(response[0].response);
+    //       } else {
+    //         console.log('immediate response is' + response[0].response);
+    //       }
+    //     });
+    //   } catch (e) { }
+    // }).done();
+
+    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd)=>{
+      if(encryptedRPasswd){
+        Util.decryptText(encryptedRPasswd).then((RPasswd)=>{
+          if(RPasswd){
             obj.onDoPasswordCheckChallenge(response[0].response);
-          } else {
-            console.log('immediate response is' + response[0].response);
           }
-        });
-      } catch (e) { }
+        }).done();
+      }
     }).done();
   }
 //submit response in  challenge response and showNextChallenge

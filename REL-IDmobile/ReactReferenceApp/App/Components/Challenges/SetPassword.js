@@ -9,6 +9,7 @@
  */
 import React, { Component, PropTypes } from 'react';
 import ReactNative from 'react-native';
+import Util from "../Utils/Util";
 
 /*
  Required for this js
@@ -99,7 +100,8 @@ This method is called when the component will start to load
         if (pw === cpw) {
           if (this.validatePassword(pw)) {
             Main.dnaPasswd = pw;
-            AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
+            //AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null); Todo: to be removed after test
+            Util.saveUserDataSecure("RPasswd",pw).done();
             let responseJson = this.props.url.chlngJson;
             responseJson.chlng_resp[0].response = pw;
             dismissKeyboard();

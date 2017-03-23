@@ -24,7 +24,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Skin from '../../Skin';
 import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
-
+import Util from "../Utils/Util";
 
 /*
  Custom View
@@ -117,23 +117,25 @@ export default class UpdatePasswordSet extends Component {
   }
 
   onPostUpdate() {
-    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
-      if (Platform.OS == 'ios' && this.state.erpasswd) {
-        this.encrypytPasswdiOS();
-        this.close();
-      } else if (Platform.OS == 'android' && this.state.erpasswd) {
-        this.props.navigator.push(
-          {
-            id: 'pattern',
-            data: '',
-            onSetPattern: this.onSetPattern,
-            onClose: this.onPatternClose,
-            mode: "set"
-          });
-      }
-      else {
-        this.close();
-      }
+
+   // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
+      Util.saveUserDataSecure("RPasswd",this.state.password).then((result)=>{
+        if (Platform.OS == 'ios' && this.state.erpasswd) {
+          this.encrypytPasswdiOS();
+          this.close();
+        } else if (Platform.OS == 'android' && this.state.erpasswd) {
+          this.props.navigator.push(
+            {
+              id: 'pattern',
+              data: '',
+              onSetPattern: this.onSetPattern,
+              onClose: this.onPatternClose,
+              mode: "set"
+            });
+        }
+        else {
+          this.close();
+        }
     }).done();
   }
   /*
@@ -203,15 +205,20 @@ export default class UpdatePasswordSet extends Component {
         if (value) {
           try {
             value = JSON.parse(value);
-            ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
-              if (response) {
-                console.log('immediate response of encrypt data packet is is' + response[0].error);
-                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }));
-                obj.setState({ touchid: true });
-              } else {
-                console.log('immediate response is' + response[0].response);
-              }
-            });
+            //Todo :cleanup
+            // ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
+            //   if (response) {
+            //     console.log('immediate response of encrypt data packet is is' + response[0].error);
+            //     AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }));
+            //     obj.setState({ touchid: true });
+            //   } else {
+            //     console.log('immediate response is' + response[0].response);
+            //   }
+            // });
+
+            Util.saveUserDataSecure("ERPasswd",value.RPasswd).then((result)=>{
+              obj.setState({ touchid: true });
+            }).done();
           } catch (e) { }
         }
       }).done();

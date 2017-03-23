@@ -25,6 +25,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Skin from '../Skin';
 import MainActivation from '../Components/Container/MainActivation';
 import Main from '../Components/Container/Main';
+import Util from "../Components/Utils/Util";
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onUpdateChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -510,15 +511,20 @@ This method is called when the component will start to load
         if (value) {
           try {
             value = JSON.parse(value);
-            ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
-              if (response) {
-                console.log('immediate response of encrypt data packet is is' + response[0].error);
-                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }), null);
-                obj.setState({ touchid: true });
-              } else {
-                console.log('immediate response is' + response[0].response);
-              }
-            });
+            //Todo : cleanup
+            // ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
+            //   if (response) {
+            //     console.log('immediate response of encrypt data packet is is' + response[0].error);
+            //     AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }), null);
+            //     obj.setState({ touchid: true });
+            //   } else {
+            //     console.log('immediate response is' + response[0].response);
+            //   }
+            // });
+
+            Util.saveUserDataSecure("ERPasswd",value.RPasswd).then((result)=>{
+              obj.setState({ touchid: true });
+            }).done();
           } catch (e) { }
         }
       }).done();
