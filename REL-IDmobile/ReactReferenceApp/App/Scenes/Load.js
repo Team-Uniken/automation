@@ -168,7 +168,7 @@ class Load extends Component {
     NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
   }
   _handleConnectivityChange(isConnected) {
-       Main.isConnected = true;
+       Main.isConnected = isConnected;
   }
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
