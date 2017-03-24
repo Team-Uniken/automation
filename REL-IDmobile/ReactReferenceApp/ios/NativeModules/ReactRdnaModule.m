@@ -491,7 +491,7 @@ RCT_EXPORT_METHOD (getNotificationHistory:(int)recordCount
   
   int errorID = 0;
  
-  errorID = [rdnaObject getNotificationHistory:recordCount withStartIndex:startIndex withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate withNotificationStatus:notificationStatus withNotificationActionTaken:actionPerformed withKeywordSearch:keywordSearch withDeviceID:deviceID];
+   [rdnaObject getNotificationHistory:recordCount withStartIndex:startIndex withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate withNotificationStatus:notificationStatus withActionPerformed:actionPerformed withKeywordSearch:keywordSearch withDeviceID:deviceID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   callback(@[responseArray]);
