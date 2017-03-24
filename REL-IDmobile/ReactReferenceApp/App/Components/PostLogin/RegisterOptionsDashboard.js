@@ -584,7 +584,7 @@ This method is called when the component will start to load
         );
       }
     } else {
-      console.log(e);
+      //console.log(e);
       alert('Internal system error occurred.' + res.errCode);
     }
   }

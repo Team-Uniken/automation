@@ -696,9 +696,8 @@ const styles = StyleSheet.create({
   modalInput: {
     textAlign: 'left',
     color: Skin.colors.PRIMARY_TEXT,
-    height: 35,
+    height: 38,
     fontSize: 16,
-
   },
   border: {
     height: 1,

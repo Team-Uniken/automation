@@ -278,7 +278,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                             WritableMap params = Arguments.createMap();
                             params.putString("response", uName);
                             context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                    .emit("getpasswordSubscription", params);
+                                    .emit("onGetpassword", params);
                         }
                     };
 
