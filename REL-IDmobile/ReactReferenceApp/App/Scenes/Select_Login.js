@@ -299,7 +299,7 @@ class SelectLogin extends Component {
       if(encryptedRPasswd){
         Util.decryptText(encryptedRPasswd).then((RPasswd)=>{
           if(RPasswd){
-            obj.onDoPasswordCheckChallenge(response[0].response);
+            obj.onDoPasswordCheckChallenge(RPasswd);
           }
         }).done();
       }
