@@ -96,7 +96,7 @@ export default class UpdateQuestionSet extends Component {
     const kSecQ = this.state.secQue;
     const vSecA = this.state.secAnswer;
     let responseJson;
-    if (kSecQ.length > 0 && vSecA.length > 0) {
+    if (kSecQ.trim().length > 0 && vSecA.trim().length > 0) {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].challenge = kSecQ;
       responseJson.chlng_resp[0].response = vSecA;
