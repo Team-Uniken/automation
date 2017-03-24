@@ -108,7 +108,7 @@ This method is called when the component will start to load
       onGetCredentialSubscriptions = null;
     }
     onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
-      this.onGetCredentials.bind.bind(this));
+      this.onGetCredentials.bind(this));
   }
   /*
  This is life cycle method of the react native component.
@@ -141,11 +141,13 @@ This method is called when the component will start to load
   close() {
     this.setState({ open: false });
   }
+  
   //call to get 401 credential for domainUrl
   onGetCredentials(domainUrl) {
     this.state.baseUrl = domainUrl.response;
     this.open();
   }
+
   //get user name and password from 401 dialog and call setCredentials
   checkCreds() {
     const user = this.state.userName;

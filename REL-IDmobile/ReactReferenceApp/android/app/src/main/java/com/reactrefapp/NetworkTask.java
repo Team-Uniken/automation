@@ -42,11 +42,11 @@ public class NetworkTask extends AsyncTask<String, String, String> {
         try {
             response = get(params[0]);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             errorCode = 1;
             response = "The request timed out";
         } catch (JSONException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
             errorCode = 1;
             response = "Invalid server response";
         }

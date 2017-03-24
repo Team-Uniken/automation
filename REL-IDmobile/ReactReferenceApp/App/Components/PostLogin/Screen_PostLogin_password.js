@@ -25,7 +25,7 @@ import Skin from '../../Skin';
 import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
 import OpenLinks from '../OpenLinks';
-
+import Util from "../Utils/Util";
 /*
  Custom View
  */
@@ -40,6 +40,7 @@ import Title from '../view/title';
 
 var constant = require('../Utils/Constants');
 const dismissKeyboard = require('dismissKeyboard')
+
 
 let responseJson;
 let chlngJson;
@@ -81,7 +82,8 @@ class PasswordVerification extends Component {
     var pw = this.state.inputPassword;
     if (pw.length > 0) {
       Main.dnaPasswd = pw;
-      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
+      //AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null); Todo : to be removed after test
+      Util.saveUserDataSecure("RPasswd",pw);
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
       Events.trigger('showNextChallenge', {

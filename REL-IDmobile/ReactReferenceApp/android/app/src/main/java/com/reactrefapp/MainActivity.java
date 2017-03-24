@@ -2,6 +2,7 @@ package com.reactrefapp;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.dieam.reactnativepushnotification.modules.RNPushNotificationHelper;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -20,6 +22,15 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         currentActivity = this;
+        new RNPushNotificationHelper((Application)getApplicationContext()).clearNotifications();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.hasExtra("notification")){
+            new RNPushNotificationHelper((Application)getApplicationContext()).clearNotifications();
+        }
     }
 
     @Override

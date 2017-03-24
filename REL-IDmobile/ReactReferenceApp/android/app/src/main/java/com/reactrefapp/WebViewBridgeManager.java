@@ -143,7 +143,7 @@ public class WebViewBridgeManager extends ReactWebViewManager {
 
     @ReactProp(name="webViewClient")
     public void setWebViewClient(final WebView webView,ReadableMap params){
-        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(false);
         addEventEmitters((ThemedReactContext) webView.getContext(),webView);
 //        webView.setWebViewClient(new WebViewClient()
 //        {

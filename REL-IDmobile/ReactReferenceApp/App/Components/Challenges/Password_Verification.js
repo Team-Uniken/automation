@@ -22,6 +22,7 @@ import Skin from '../../Skin';
 import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
 import OpenLinks from '../OpenLinks';
+import Util from "../Utils/Util";
 
 /*
  Custome View
@@ -75,7 +76,8 @@ class PasswordVerification extends Component {
     var pw = this.state.inputPassword;
     if (pw.length > 0) {
       Main.dnaPasswd = pw;
-      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);
+      Util.saveUserDataSecure("RPasswd",pw).done();
+     // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);  Todo: To be removed after testing
 
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;

@@ -17,6 +17,8 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, Alert} from 'react-native'
 import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
+import Util from "../Utils/Util";
+
 
 /*
  Use in this js
@@ -117,7 +119,8 @@ export default class ForgatePassword extends Component {
   }
 
   onPostForgotPassword() {
-    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
+   // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {  Todo: to be removed  after test
+    Util.saveUserDataSecure("RPasswd",this.state.password).then((result)=>{
       if (Platform.OS == 'ios' && this.state.erpasswd) {
         this.encrypytPasswdiOS();
         Events.trigger('finishForgotPasswordFlow', null);
@@ -206,15 +209,18 @@ export default class ForgatePassword extends Component {
         if (value) {
           try {
             value = JSON.parse(value);
-            ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
-              if (response) {
-                console.log('immediate response of encrypt data packet is is' + response[0].error);
-                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }));
-                obj.setState({ touchid: true });
-              } else {
-                console.log('immediate response is' + response[0].response);
-              }
-            });
+           // ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
+           Util.saveUserDataSecure("ERPasswd",value.RPasswd).then((response) => {
+              //Todo:cleanup
+              //if (response) {
+               // console.log('immediate response of encrypt data packet is is' + response[0].error);
+               // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }));
+               // obj.setState({ touchid: true });
+              //} 
+              // else {
+              //   console.log('immediate response is' + response[0].response);
+              // }
+            }).done();
           } catch (e) { }
         }
       }).done();

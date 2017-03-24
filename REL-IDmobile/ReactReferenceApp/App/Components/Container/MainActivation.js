@@ -26,6 +26,7 @@ import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Skin from '../../Skin';
 import Loader from '../Utils/Loader';
 import Main from './Main';
+import Util from "../Utils/Util";
 var constant = require('../Utils/Constants');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -82,7 +83,7 @@ class MainActivation extends Component {
     onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
       this.onGetpassword.bind(this));
     onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
-      this.onGetCredentials.bind.bind(this));
+      this.onGetCredentials.bind(this));
     if (constant.USER_SESSION === "YES") {
       this.setState({ isSettingButtonHide: 0 });
     } else {
@@ -129,13 +130,15 @@ class MainActivation extends Component {
     AsyncStorage.getItem(e.response).then((value) => {
       try {
         value = JSON.parse(value);
-        ReactRdna.setCredentials(uName, value.RPasswd, true, (response) => {
-          if (response) {
-            console.log('immediate response is' + response[0].error);
-          } else {
-            console.log('immediate response is' + response[0].error);
-          }
-        });
+        Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
+          ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
+            if (response) {
+              console.log('immediate response is' + response[0].error);
+            } else {
+              console.log('immediate response is' + response[0].error);
+            }
+          });
+        }).done();
       } catch (e) { }
     }).done();
   }

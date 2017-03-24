@@ -76,7 +76,7 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
         response = "Request data is invalid";
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      //e.printStackTrace();
       errorCode = 1;
       response = "The request timed out";
     }
@@ -226,7 +226,7 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
         response="";
       }
     } catch (Exception e) {
-      e.printStackTrace();
+      //e.printStackTrace();
     }
 
     return response;

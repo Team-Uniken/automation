@@ -13,6 +13,7 @@ import PatternView from '../Components/PatternView';
 import dismissKeyboard from 'dismissKeyboard';
 import Title from '../Components/view/title';
 import Events from 'react-native-simple-events';
+import Util from "../Components/Utils/Util";
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -55,8 +56,8 @@ class PatternLock extends Component {
       };
     }
 
-    this.onDataEncrypted = this.onDataEncrypted.bind(this);
-    this.onDataDecrypted = this.onDataDecrypted.bind(this);
+    //  this.onDataEncrypted = this.onDataEncrypted.bind(this);
+    // this.onDataDecrypted = this.onDataDecrypted.bind(this);
     this.decryptUserData = this.decryptUserData.bind(this);
     this.encryptUserData = this.encryptUserData.bind(this);
     this.onGetPattern = this.onGetPattern.bind(this);
@@ -110,19 +111,22 @@ class PatternLock extends Component {
       if (this.mode == "verify") {
         this.currentPattern = pattern;
         try {
-          AsyncStorage.getItem(Main.dnaUserName).then((data) => {
-            try {
-              if (data) {
-                data = JSON.parse(data);
-                if (data.ERPasswd) {
-                  this.decryptUserData(data.ERPasswd, pattern);
-                }
-              }
-            }
-            catch (e) {
-              console.log("unable to  get userData");
-            }
-          }).done();
+          //Todo: cleanup after test
+          // AsyncStorage.getItem(Main.dnaUserName).then((data) => {
+          //   try {
+          //     if (data) {
+          //       data = JSON.parse(data);
+          //       if (data.ERPasswd) {
+          //         this.decryptUserData(data.ERPasswd, pattern);
+          //       }
+          //     }
+          //   }
+          //   catch (e) {
+          //     console.log("unable to  get userData");
+          //   }
+          // }).done();
+
+          this.decryptUserData(pattern);
         } catch (e) { }
       }
 
@@ -180,58 +184,58 @@ class PatternLock extends Component {
 
 
 
-  onDataEncrypted(status) {
-    //alert(JSON.stringify(status));
-    if (status.error == 0) {
-      if (this.mode == "set") {
-        try {
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: status.response }), null);
-          this.props.onSetPattern(this.props.data);
-        }
-        catch (error) {
-          console.log("PatternLock -- unnable to save userData");
-        }
-      }
-    }
-    else {
-      this.state.screen = "set";
-      alert("Could not register pattern");
-      this.close();
-    }
-  }
+  // onDataEncrypted(status) {
+  //   //alert(JSON.stringify(status));
+  //   if (status.error == 0) {
+  //     if (this.mode == "set") {
+  //       try {
+  //         AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: status.response }), null);
+  //         this.props.onSetPattern(this.props.data);
+  //       }
+  //       catch (error) {
+  //         console.log("PatternLock -- unnable to save userData");
+  //       }
+  //     }
+  //   }
+  //   else {
+  //     this.state.screen = "set";
+  //     alert("Could not register pattern");
+  //     this.close();
+  //   }
+  // }
 
-  onDataDecrypted(status) {
-    if (status.error == 0) {
-      if (this.mode === "verify") {
-        var userDataStr = status.response;
-        //alert("Password: " + userDataStr);
-        try {
-          var userData = JSON.parse(userDataStr);
-          if (userData.pattern === this.currentPattern) {
-            //alert("pattern matched = " + userDataStr);
-            this.msg = "";
-            var resp = {
-              password: userData.password,
-              data: this.props.data
-            }
+  // onDataDecrypted(status) {
+  //   if (status.error == 0) {
+  //     if (this.mode === "verify") {
+  //       var userDataStr = status.response;
+  //       //alert("Password: " + userDataStr);
+  //       try {
+  //         var userData = JSON.parse(userDataStr);
+  //         if (userData.pattern === this.currentPattern) {
+  //           //alert("pattern matched = " + userDataStr);
+  //           this.msg = "";
+  //           var resp = {
+  //             password: userData.password,
+  //             data: this.props.data
+  //           }
 
-            this.props.onUnlock(resp);
-          }
-          else {
-            this.refs["patternView"].clearPattern();
-            this.wrongAttempt();
-          }
-        }
-        catch (e) {
-          this.refs["patternView"].clearPattern();
-          this.wrongAttempt();
-        }
-      }
-    } else {
-      this.refs["patternView"].clearPattern();
-      this.wrongAttempt();
-    }
-  }
+  //           this.props.onUnlock(resp);
+  //         }
+  //         else {
+  //           this.refs["patternView"].clearPattern();
+  //           this.wrongAttempt();
+  //         }
+  //       }
+  //       catch (e) {
+  //         this.refs["patternView"].clearPattern();
+  //         this.wrongAttempt();
+  //       }
+  //     }
+  //   } else {
+  //     this.refs["patternView"].clearPattern();
+  //     this.wrongAttempt();
+  //   }
+  // }
 
   encryptUserData(userid, password, pattern) {
     var data = {
@@ -242,11 +246,53 @@ class PatternLock extends Component {
 
     var dataStr = JSON.stringify(data);
 
-    ReactRdna.encryptDataPacket(dataStr, pattern, this.onDataEncrypted);
+    //ReactRdna.encryptDataPacket(dataStr, pattern, this.onDataEncrypted); Todo: to be  removed after test
+    if (this.mode == "set") {
+      try {
+        Util.saveUserDataSecureWithSalt("ERPasswd", dataStr, pattern).then((result) => {
+          if (this.props.onSetPattern)
+            this.props.onSetPattern(this.props.data);
+        }).catch((error) => {
+          this.state.screen = "set";
+          alert("Could not register pattern");
+          this.close();
+        }).done();
+      }
+      catch (error) {
+        console.log("PatternLock -- unnable to save userData");
+      }
+    }
   }
 
-  decryptUserData(data, pattern) {
-    ReactRdna.decryptDataPacket(data, pattern, this.onDataDecrypted);
+  decryptUserData(pattern) {
+    // ReactRdna.decryptDataPacket(data, pattern, this.onDataDecrypted); Todo: to be removed after test
+    if (this.mode === "verify") {
+      Util.getUserDataSecureWithSalt("ERPasswd", pattern)
+        .then((userDataStr) => {
+          var userData = JSON.parse(userDataStr);
+          if (userData.pattern === this.currentPattern) {
+            //alert("pattern matched = " + userDataStr);
+            Util.decryptText(userData.password).then((decryptedRPasswd) => {
+              this.msg = "";
+              var resp = {
+                password: decryptedRPasswd,
+                data: this.props.data
+              }
+
+              if (this.props.onUnlock)
+                this.props.onUnlock(resp);
+            }).done();
+          }
+          else {
+            this.refs["patternView"].clearPattern();
+            this.wrongAttempt();
+          }
+        })
+        .catch((error) => {
+          this.refs["patternView"].clearPattern();
+          this.wrongAttempt();
+        }).done();
+    }
   }
 
   isEmpty(str) {
