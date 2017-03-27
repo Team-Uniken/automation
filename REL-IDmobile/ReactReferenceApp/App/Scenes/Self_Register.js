@@ -228,7 +228,7 @@ class Register extends Component {
             });
           }
         } else {
-          alert('Please try again');
+          alert(response[0].response);
 
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
