@@ -64,6 +64,7 @@ class SelectLogin extends Component {
       isRegistered: false,
       refresh: false,
       showPasswordVerify: false,
+      isTouchIDPresent: false,
     }
 
     this.loginWith = this.loginWith.bind(this);
@@ -75,8 +76,13 @@ class SelectLogin extends Component {
     this.doPatternLogin = this.doPatternLogin.bind(this);
     this.onPatternUnlock = this.onPatternUnlock.bind(this);
     this.goBackToSelectLogin = this.goBackToSelectLogin.bind(this);
-
+    this.isTouchPresent = this.isTouchPresent.bind(this);
+    
     this.checkForRegisteredCredsAndShow();
+     if (Platform.OS === 'ios') {
+       this.isTouchPresent().done();
+     }
+    
   }
   /*
   This is life cycle method of the react native component.
@@ -176,6 +182,36 @@ class SelectLogin extends Component {
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
   }
+  
+  /**
+   * This method sets the isTouchIDPresent variable to true if touchId is supported on iOS and
+   * false if not supported
+   */
+  isTouchPresent() {
+     var $this = this;
+    return new Promise(function (resolve, reject) {
+                      
+                       TouchID.isSupported()
+                       .then((supported) => {
+                             // Success code
+                             console.log('TouchID is supported.');
+                             $this.isTouchIDPresent = true;
+                             resolve("success");
+                             })
+                       .catch((error) => {
+                              // Failure code
+                              console.log(error);
+                              $this.isTouchIDPresent = false;
+                              $this.state.isRegistered = false;
+                              $this.fillAdditionalLoginOptions();
+                              $this.setState({ refresh: !$this.state.refresh });
+                              resolve("fails");
+                              });
+                      
+                       });
+ 
+  }
+  
 //check for registercred in database if ERPasswd is in database than isRegistered flag is set to true.
   async checkForRegisteredCredsAndShow(option) {
     var ret = false;

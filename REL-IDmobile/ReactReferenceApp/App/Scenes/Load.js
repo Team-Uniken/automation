@@ -415,7 +415,7 @@ class Load extends Component {
         AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
           currentProfile = JSON.parse(currentProfile);
           console.log(currentProfile);
-          if (currentProfile != null || currentProfile.length > 0) {
+          if (currentProfile != null && currentProfile.length > 0) {
             this.doInitialize();
           } else {
 

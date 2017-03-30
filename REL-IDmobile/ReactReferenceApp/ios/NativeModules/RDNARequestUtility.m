@@ -86,7 +86,7 @@ RCT_EXPORT_METHOD (doHTTPGetRequest:(NSString *)url
           callback(@[responseArray]);
       }else{
         errorID = 1;
-        NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":@"The request timed out"};
+        NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":[error localizedDescription]};
         NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
         callback(@[responseArray]);
       }
@@ -149,7 +149,7 @@ RCT_EXPORT_METHOD (doHTTPPostRequest:(NSString *)url
                                                            
                                                          }else{
                                                            errorID = 1;
-                                                           NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":@"The request timed out"};
+                                                           NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":[error localizedDescription]};
                                                            NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
                                                            callback(@[responseArray]);
                                                          }

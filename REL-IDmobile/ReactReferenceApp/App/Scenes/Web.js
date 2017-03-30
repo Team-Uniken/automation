@@ -14,6 +14,7 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Communications from 'react-native-communications';
+import Config from 'react-native-config'
 
 /*
  Use in this js
@@ -273,12 +274,13 @@ const styles = StyleSheet.create({
   },
   navButtonText: {
     fontSize: 20,
-    color: Skin.colors.TEXT_COLOR,
+    color: Config.THEME_COLOR,
     fontWeight: 'bold',
   },
   disabledButtonText: {
     fontSize: 20,
-    color: 'rgba(' + Skin.colors.TEXT_COLOR_RGB + ', 0.3)',
+    color: Config.THEME_COLOR,
+    opacity:0.65,
     fontWeight: 'bold',
   },
 
