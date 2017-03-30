@@ -12,7 +12,7 @@ import ReactNative from 'react-native';
 /*
  Required for this js
  */
-import {Text,View,ScrollView,StatusBar,DeviceEventEmitter,AsyncStorage,Alert,AlertIOS,Platform,BackAndroid,} from 'react-native';
+import {Text, View, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage, Alert, AlertIOS, Platform, BackAndroid, } from 'react-native';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
@@ -84,12 +84,12 @@ class Register extends Component {
     this.close = this.close.bind(this);
     this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
   }
-/*
-This is life cycle method of the react native component.
-This method is called when the component will start to load
-*/
+  /*
+  This is life cycle method of the react native component.
+  This method is called when the component will start to load
+  */
   componentWillMount() {
-    
+
     Events.trigger('hideLoader', true);
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
       if (userPrefs) {
@@ -130,7 +130,7 @@ This method is called when the component will start to load
       }
     });
   }
-//on press of close button it navigate to dashboard without saveing the recent change.
+  //on press of close button it navigate to dashboard without saveing the recent change.
   close() {
     this.doNavigateDashBoard();
   }
@@ -240,22 +240,22 @@ This method is called when the component will start to load
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
 
-        var promts;
-        if (chlng.chlng_prompt[0].length > 0) {
-          var promtsArr = chlng.chlng_prompt[0];
-          for(var j= 0; j< promtsArr.length;j++){
-            promts = JSON.parse(promtsArr[j]);
-            if (promts.is_registered == true) {
-              data.push({
-                        key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
-                        });
-            } else {
-              if (this.state[promts.cred_type] === true) {
-                data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
-              }
-            
+      var promts;
+      if (chlng.chlng_prompt[0].length > 0) {
+        var promtsArr = chlng.chlng_prompt[0];
+        for (var j = 0; j < promtsArr.length; j++) {
+          promts = JSON.parse(promtsArr[j]);
+          if (promts.is_registered == true) {
+            data.push({
+              key: promts.cred_type, label: Skin.text['0']['2'].credTypes[promts.cred_type].label
+            });
+          } else {
+            if (this.state[promts.cred_type] === true) {
+              data.push(Skin.text['0']['2'].credTypes[promts.cred_type]);
+            }
+
           }
-        
+
         }
       }
     }
@@ -295,7 +295,7 @@ This method is called when the component will start to load
     //    Events.trigger('hideLoader', true);
     // Unregister All Events
     // We can also unregister in componentWillUnmount
-    if(onUpdateChallengeStatusSubscription){
+    if (onUpdateChallengeStatusSubscription) {
       onUpdateChallengeStatusSubscription.remove();
       onUpdateChallengeStatusSubscription = null;
     }
@@ -383,7 +383,7 @@ This method is called when the component will start to load
   }
 
   checkValidityOfAccessToken() {
-    
+
     var $this = this;
     AccessToken.getCurrentAccessToken().then((data) => {
       if (data) {
@@ -418,7 +418,8 @@ This method is called when the component will start to load
   //Facebook login code
   doFacebookLogin() {
     // Events.trigger('showLoader', true);
-   var $this = this;
+    var $this = this;
+    LoginManager.logOut();
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
         if (result.isCancelled) {
@@ -522,7 +523,7 @@ This method is called when the component will start to load
             //   }
             // });
 
-            Util.saveUserDataSecure("ERPasswd",value.RPasswd).then((result)=>{
+            Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {
               obj.setState({ touchid: true });
             }).done();
           } catch (e) { }
@@ -539,14 +540,14 @@ This method is called when the component will start to load
     }
 
     if (this.state.facebook == true) {
-      
-      if(onUpdateChallengeStatusSubscription){
+
+      if (onUpdateChallengeStatusSubscription) {
         onUpdateChallengeStatusSubscription.remove();
         onUpdateChallengeStatusSubscription = null;
       }
-      
+
       onUpdateChallengeStatusSubscription = onUpdateChallengeStatusModuleEvt.addListener('onUpdateChallengeStatus',
-                                                                                         this.onUpdateChallengeStatus.bind(this));
+        this.onUpdateChallengeStatus.bind(this));
 
 
       AsyncStorage.getItem('userId').then((value) => {
@@ -621,18 +622,18 @@ This method is called when the component will start to load
       var promts;
       if (chlng.chlng_prompt[0].length > 0) {
         var promtsArr = chlng.chlng_prompt[0];
-        for(var j= 0; j< promtsArr.length;j++){
-         promts = JSON.parse(promtsArr[j]);
+        for (var j = 0; j < promtsArr.length; j++) {
+          promts = JSON.parse(promtsArr[j]);
           if (promts.is_registered == false) {
             indents.push(
-                         <Checkbox
-                         onSelect={() => { this.selectCheckBox(promts.cred_type) } }
-                         selected={this.state[promts.cred_type]}
-                         labelSide={"right"}
-                         >
-                         {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
-                         </Checkbox>
-                         );
+              <Checkbox
+                onSelect={() => { this.selectCheckBox(promts.cred_type) } }
+                selected={this.state[promts.cred_type]}
+                labelSide={"right"}
+                >
+                {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
+              </Checkbox>
+            );
             // <CheckBox
             // value={this.state[promts[0].credType]}
             // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
@@ -641,7 +642,7 @@ This method is called when the component will start to load
 
         }
 
-              }
+      }
     }
 
     if (this.props.url.touchCred.isTouch == false) {
@@ -660,16 +661,16 @@ This method is called when the component will start to load
         // onSelect={this.selectpattern.bind(this) }
         // lable="Enable Pattern Login"/>);
       } else {
-        if( this.props.url.touchCred.isSupported == true){
-        indents.push(
-          <Checkbox
-            onSelect={this.selecttouchid.bind(this) }
-            selected={this.state.touchid}
-            labelSide={"right"}
-            >
-            Enable TouchID Login
-          </Checkbox>
-        );
+        if (this.props.url.touchCred.isSupported == true) {
+          indents.push(
+            <Checkbox
+              onSelect={this.selecttouchid.bind(this) }
+              selected={this.state.touchid}
+              labelSide={"right"}
+              >
+              Enable TouchID Login
+            </Checkbox>
+          );
         }
 
         // <CheckBox

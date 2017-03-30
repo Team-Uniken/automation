@@ -252,9 +252,9 @@ This method is called when the component will start to load
             if (this.state.devid === device.devUUID) {
               var devName = device.devName;
               if (devName && devName.trim() !== "") {
-                AsyncStorage.setItem("devname", devName).then(()=>{
-                   this.state.devname = devName;
-                   this.setState({ devname: devName, devnameopacity: 1 });
+                AsyncStorage.setItem("devname", devName).then(() => {
+                  this.state.devname = devName;
+                  this.setState({ devname: devName, devnameopacity: 1 });
                 });
               }
             }
@@ -634,6 +634,7 @@ This method is called when the component will start to load
   doFacebookLogin() {
     // Events.trigger('showLoader', true);
     var $this = this;
+    LoginManager.logOut();
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
         if (result.isCancelled) {
@@ -736,10 +737,10 @@ This method is called when the component will start to load
             //   }
             // });
 
-            Util.saveUserDataSecure("ERPasswd",value.RPasswd).then((result)=>{
+            Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {
               obj.setState({ touchid: true });
             }).done();
-            
+
           } catch (e) { }
         }
       }).done();
@@ -888,7 +889,7 @@ This method is called when the component will start to load
         this.state.touchid = this.state.url.touchCred.isTouch;
         this.state.initTouchAndPatternState = false;
       }
-      
+
       if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
           indents.push(

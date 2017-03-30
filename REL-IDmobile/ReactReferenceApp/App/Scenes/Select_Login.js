@@ -158,7 +158,6 @@ class SelectLogin extends Component {
       }
     }
 
-
     if (Platform.OS == 'android') {
       if (this.state.isRegistered) {
         if (this.state.dataSource) {
@@ -212,6 +211,7 @@ class SelectLogin extends Component {
       if (data) {
         var callback = function (error, result) {
           if (error) {
+            LoginManager.logOut();
             $this.doFacebookLogin();
           } else {
             $this.facebookResponseCallback(null, result)
