@@ -18,7 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackAndroid,Alert } from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackAndroid, Alert } from 'react-native'
 
 
 /*
@@ -67,6 +67,8 @@ This method is called when the component will start to load
       this.close();
       return true;
     }.bind(this));
+    this.refs.cPassword.focus();
+
   }
   //To check password policy
   validatePassword(textval) {
@@ -101,7 +103,7 @@ This method is called when the component will start to load
           if (this.validatePassword(pw)) {
             Main.dnaPasswd = pw;
             //AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null); Todo: to be removed after test
-            Util.saveUserDataSecure("RPasswd",pw).done();
+            Util.saveUserDataSecure("RPasswd", pw).done();
             let responseJson = this.props.url.chlngJson;
             responseJson.chlng_resp[0].response = pw;
             dismissKeyboard();
@@ -125,6 +127,7 @@ This method is called when the component will start to load
       }
     } else {
       alert('Please enter password ');
+      this.refs.password.focus();
     }
   }
   /*
