@@ -412,7 +412,7 @@ class Activation_Code extends Component {
 
               <Text style={[Skin.layout1.content.camera.prompt, {
                 position: 'absolute',
-                top: 20,
+                top: 30,
                 zIndex: 1,
                 width: Skin.SCREEN_WIDTH,
                 backgroundColor: 'transparent'
@@ -487,7 +487,7 @@ class Activation_Code extends Component {
               </Text>
             </View>
           </View>
-          <KeyboardSpacer topSpacing={-55} />
+          <KeyboardSpacer topSpacing={-100} />
         </View>
             <Modal
             style={styles.modalwrap}

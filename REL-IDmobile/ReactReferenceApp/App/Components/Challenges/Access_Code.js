@@ -481,7 +481,7 @@ class AccessCode extends Component {
               </Text>
             </View>
           </View>
-          <KeyboardSpacer topSpacing={-55} />
+          <KeyboardSpacer topSpacing={-100} />
         </View>
         <Modal
           style={styles.modalwrap}

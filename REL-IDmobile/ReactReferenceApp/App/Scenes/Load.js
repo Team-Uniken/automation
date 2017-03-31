@@ -285,13 +285,13 @@ class Load extends Component {
     AppState.removeEventListener('change', this._handleAppStateChange);
     AppState.addEventListener('change', this._handleAppStateChange);
 
-    if (onPauseCompletedSubscription !== undefined) {
+    if (onPauseCompletedSubscription) {
       console.log("--------------- removing onPauseCompleted");
       onPauseCompletedSubscription.remove();
       onPauseCompletedSubscription = null;
     }
 
-    if (onResumeCompletedSubscription !== undefined) {
+    if (onResumeCompletedSubscription) {
       onResumeCompletedSubscription.remove();
       onResumeCompletedSubscription = null;
     }
@@ -351,8 +351,17 @@ class Load extends Component {
     });
 
     
-     onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
+    if(onInitializeSubscription){
       onInitializeSubscription.remove();
+      onInitializeSubscription = null;
+    }
+
+    
+     onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
+        if(onInitializeSubscription){
+        onInitializeSubscription.remove();
+        onInitializeSubscription = null;
+        }
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
       console.log('immediate response is' + e.response);
@@ -692,7 +701,11 @@ class Load extends Component {
             justifyContent: 'center',
             borderTopRightRadius: 20,
           }}
-          onPress={() => this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
+            onPress={() => {this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+            if(onInitializeSubscription){
+            onInitializeSubscription.remove();
+            onInitializeSubscription = null;
+            } }}/>
         <Version/>
       </View>
     );
