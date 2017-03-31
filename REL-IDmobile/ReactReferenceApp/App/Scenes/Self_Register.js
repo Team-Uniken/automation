@@ -199,8 +199,8 @@ class Register extends Component {
         "emailId": this.state.email.trim(),
         "mobNum": this.state.phoneNumber.trim(),
         "isRELIDZeroEnabled": "true",
-        "username": "gmuser",
-        "password": hash.sha256().update("uniken123$").digest('hex'),
+        "username": "sruser",
+        "password": hash.sha256().update("Uniken123$").digest('hex'),
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
