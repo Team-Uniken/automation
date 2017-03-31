@@ -3,7 +3,6 @@ package com.reactrefapp;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -91,7 +90,6 @@ public class PatternViewManager extends SimpleViewManager<ReactPatternView> {
 
     @Override
     public Map<String,Integer> getCommandsMap() {
-        Log.d("React", " View manager getCommandsMap:");
         return MapBuilder.of(
                 "getPatternString", COMMAND_GET_PATTERN,
                 "clearPattern",COMMAND_CLEAR_PATTERN,

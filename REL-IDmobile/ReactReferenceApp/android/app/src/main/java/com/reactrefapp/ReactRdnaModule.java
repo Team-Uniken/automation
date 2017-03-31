@@ -3,7 +3,6 @@ package com.reactrefapp;
 import android.os.Handler;
 import android.telecom.Call;
 import android.util.Base64;
-import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;

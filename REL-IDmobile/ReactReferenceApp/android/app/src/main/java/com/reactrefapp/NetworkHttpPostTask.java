@@ -231,6 +231,7 @@ public class NetworkHttpPostTask extends AsyncTask<String, String, String> {
 
     return response;
   }
+
   private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException{
     StringBuilder result = new StringBuilder();
     boolean first = true;

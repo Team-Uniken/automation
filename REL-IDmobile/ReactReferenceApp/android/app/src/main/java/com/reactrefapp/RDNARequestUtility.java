@@ -61,7 +61,6 @@ public class RDNARequestUtility extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void doHTTPPostRequest(String url, ReadableMap map, Callback callback){
-        Logger.d(TAG , "----- url "+url);
         if(isNetworkAvailable(reactContext)){
             new NetworkHttpPostTask(proxyHNIP, proxyPort,map, callback).execute(url);
         } else {

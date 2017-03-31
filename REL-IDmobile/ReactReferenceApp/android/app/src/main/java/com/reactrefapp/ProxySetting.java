@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Proxy;
 import android.os.Build;
 import android.util.ArrayMap;
-import android.util.Log;
 import android.webkit.WebView;
 
 import java.lang.reflect.Constructor;
@@ -49,7 +48,7 @@ public class ProxySetting {
 
     boolean isRequestTunneled = true;
 
-    Log.d(TAG, "Setting proxy with android >= 4.4.x and <= 5.x API.");
+    //Log.d(TAG, "Setting proxy with android >= 4.4.x and <= 5.x API.");
 
     try {
 
@@ -74,35 +73,35 @@ public class ProxySetting {
         }
       }
 
-      Log.d(TAG, "Setting proxy with android >= 4.4.x and <= 5.x API successful!");
+     // Log.d(TAG, "Setting proxy with android >= 4.4.x and <= 5.x API successful!");
     }
 
     catch (ClassNotFoundException e) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (NoSuchFieldException e) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (IllegalAccessException e) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      //Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (IllegalArgumentException e) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (NoSuchMethodException e) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      //Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (InvocationTargetException e) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (Exception ex) {
-      Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + ex);
+     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + ex);
       isRequestTunneled = false;
     }
 
@@ -112,7 +111,7 @@ public class ProxySetting {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   private static boolean setProxy_SDK_16_17_18 (String host, int port, WebView webview, String exclusionList) {
 
-    Log.d(TAG, "Setting proxy with >= 4.0.x and <= 4.3.x API.");
+    //Log.d(TAG, "Setting proxy with >= 4.0.x and <= 4.3.x API.");
 
     try {
       Class wvcClass = Class.forName("android.webkit.WebViewClassic");
@@ -148,11 +147,11 @@ public class ProxySetting {
       updateProxyInstance.invoke(sJavaBridge, ppcont.newInstance(host, port, exclusionList));
     }
     catch (Exception ex) {
-      Log.e(TAG,"Setting proxy with >= 4.0.x and <= 4.3.x API failed with error: " + ex);
+     // Log.e(TAG,"Setting proxy with >= 4.0.x and <= 4.3.x API failed with error: " + ex);
       return false;
     }
 
-    Log.d(TAG, "Setting proxy with >= 4.0.x and <= 4.3.x API successful!");
+    //Log.d(TAG, "Setting proxy with >= 4.0.x and <= 4.3.x API successful!");
     return true;
   }
 
@@ -193,7 +192,7 @@ public class ProxySetting {
     }
     catch (Exception ex) {
 
-      Log.e (TAG, "error in setProxy_SDK_13_14_15()", ex);
+     // Log.e (TAG, "error in setProxy_SDK_13_14_15()", ex);
       return false;
     }
   }

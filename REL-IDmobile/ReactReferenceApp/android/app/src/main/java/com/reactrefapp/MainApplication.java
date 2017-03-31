@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.multidex.MultiDex;
 import android.util.Base64;
-import android.util.Log;
 
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.dieam.reactnativepushnotification.modules.RNPushNotificationHelper;
@@ -49,7 +48,6 @@ public class MainApplication extends Application implements ReactApplication {
     public void onCreate() {
         super.onCreate();
         //FacebookSdk.sdkInitialize(getApplicationContext());
-        Log.e("Main",BuildConfig.THEME_COLOR);
       //  Code for facebook key hash
 //        try {
 //            PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
