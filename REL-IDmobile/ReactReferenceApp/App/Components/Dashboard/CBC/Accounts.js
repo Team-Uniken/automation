@@ -5,7 +5,8 @@
 
 import React, { Component, PropTypes } from 'react';
 import ReactNative, { View, Text, StyleSheet,ListView, Image } from 'react-native'
-
+import Events from 'react-native-simple-events';
+//import { FormattedCurrency } from 'react-native-globalize';
 import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
@@ -201,7 +202,10 @@ export default class AccountsScene extends Component {
       </ListSectionHeader>
       );
   }
-
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
+  }
   renderRow(rowData) {
     const cleanData = self.cleanRowData(rowData);
     return (
@@ -248,21 +252,6 @@ export default class AccountsScene extends Component {
         drawerState={this.props.drawerState}
         navigator={this.props.navigator}
         defaultNav={false}
-            navBar={{
-            title: '',
-            visible: true,
-            navBarLine:false,
-            left: {
-            icon: Skin.icon.user,
-            iconStyle: {
-            fontSize: 35,
-            paddingLeft: 17,
-            width: 100,
-            color: Config.THEME_COLOR,
-            },
-            handler: this.triggerDrawer
-            },
-            }}
          bottomMenu={{
           visible: false,
             
