@@ -52,8 +52,8 @@ var styles = StyleSheet.create({
 	},
 	text:{
 		color: Skin.list.LIST_HEADER_COLOR,
-		paddingBottom: 5,
-		marginTop: 10,
+		paddingBottom: 3,
+		marginTop: 14,
 		backgroundColor: Skin.main.BACKGROUND_COLOR,
 	},
 	rowwrap:{
