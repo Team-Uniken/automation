@@ -168,6 +168,8 @@ const CORE_FONT = 'Century Gothic';
 const ICON_FONT = Config.ICON_FONT;
 const LOGO_FONT = Config.LOGO_FONT;
 
+const ACC_FONT = 'account';
+
 // Speeds
 const SPEED = 0.4; // 0.8
 const LOADSPEED = 0.3; // 0.3
@@ -2168,6 +2170,7 @@ const collection = {
   VIEW_WIDTH,
   admin,
   list,
+  ACC_FONT,
   spd: SPEED,
   loadspd: LOADSPEED,
   controlStyle,
@@ -2178,6 +2181,7 @@ const collection = {
   font: {
     ICON_FONT,
     CORE_FONT,
+    ACC_FONT,
   },
   LOAD_SCREEN_IMAGE,
 };

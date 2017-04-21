@@ -34,6 +34,7 @@ const headers = {
   3: 'Credit Cards',
 };
 const icons = { 1: '\ue2f7',2: '\ue277',3: '\ue285', };
+
 const iconcolor = {
   1: Skin.colors.DIVIDER_COLOR,
   2: Skin.colors.POSITIVE_ACCENT,
@@ -117,6 +118,7 @@ export default class AccountsScene extends Component {
                   {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":-4074.52,"accountType":3}, \
                   {"accountID":"1445","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":243.22,"accountType":2}, \
                   {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":1357.98,"accountType":2}, \
+        {"accountID":"1049","accountName":"CANDEMOACT10_04","nickname":"Direct Fixed Deposit ","accountBalance":2157.98,"accountType":2}, \
                   {"accountID":"9447","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-403.12,"accountType":3}], \
               "error":"", \
               "status":"success" \
@@ -253,16 +255,16 @@ export default class AccountsScene extends Component {
         navigator={this.props.navigator}
         defaultNav={false}
          bottomMenu={{
-          visible: false,
+          visible: true,
             
         }}>
             
           <NavBar
             tintColor={'#fff'}
-            statusBarTint={'transparent'}
+            statusBarTint={'#146cc0'}
             statusBarLight={'light-content'}
             title={'Accounts'}
-            titleTint={'#000000'}
+            titleTint={'#146cc0'}
             right={''}
             left={{
               icon: Skin.icon.user,
@@ -270,7 +272,7 @@ export default class AccountsScene extends Component {
                 fontSize: 35,
                 paddingLeft: 17,
                 width: 100,
-                color: '#000000',
+                color: '#146cc0',
               },
               handler: this.triggerDrawer
             }} />

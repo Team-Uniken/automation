@@ -194,6 +194,7 @@
 		65209C301E28B70C009E52F3 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55202FA81E124A7E005286B8 /* libReactNativePermissions.a */; };
 		65209D0E1E2E30A2009E52F3 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65209C2E1E28B662009E52F3 /* libRCTCamera.a */; };
 		65209D0F1E2E30A7009E52F3 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55202FA81E124A7E005286B8 /* libReactNativePermissions.a */; };
+		6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
 		654B80C41DBE0B210052D415 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80B71DBE0A5D0052D415 /* libRCTFBSDK.a */; };
 		654B80C51DBE0B250052D415 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80B71DBE0A5D0052D415 /* libRCTFBSDK.a */; };
@@ -499,6 +500,7 @@
 		65079D161E1F7FE5005D9A11 /* stock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = stock.plist; sourceTree = "<group>"; };
 		65127E1B1D795B4000FB36E1 /* ReactRefAppDeveloper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefAppDeveloper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65209C291E28B662009E52F3 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		6524EF021EAA4A5D00E6E3CB /* account.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = account.ttf; sourceTree = "<group>"; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		654B80D11DBE0C620052D415 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -1032,6 +1034,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6524EF021EAA4A5D00E6E3CB /* account.ttf */,
 				656D4F061E7C0B6000965ED6 /* relidmobile.plist */,
 				656D4EE91E7C0B2300965ED6 /* api-sdk */,
 				558C99EF1E7BF9F30002C56F /* index.ios.js */,
@@ -1522,6 +1525,7 @@
 				551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */,
 				551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */,
 				1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */,
+				6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */,
 				1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */,
 				1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */,
 				1A6151D11E4CDF5B00B3C9B2 /* index.ios.js in Resources */,

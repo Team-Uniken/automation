@@ -85,8 +85,8 @@ class BottomMenu extends React.Component{
 		//console.log(this);
 		//console.log(i);
 		//console.log({id:this.props.list[i].link});
-		this.props.navigator.push({id:this.props.list[i].link});
-  		/* 
+//		this.props.navigator.push({id:this.props.list[i].link});
+  		/*
   		var routeStack = this.props.navigator.state.routeStack;
   		routeStack.push({id:this.props.list[i].link});
   		this.props.navigator.immediatelyResetRouteStack(routeStack);
@@ -103,27 +103,27 @@ BottomMenu.propTypes = {
 BottomMenu.defaultProps = {
     list: {
 		1:{
-			icon:'\ue266',
+			icon:'\ue901',
 			title:'ACCOUNTS',
 			link: 'Accounts',
 		},
 		2:{
-			icon:'\ue285',
+			icon:'\ue903',
 			title:'PAY BILLS',			
 			link: 'PayBills',
 		},
 		3:{
-			icon:'\ue145',
+			icon:'\ue902',
 			title:'DEPOSITS',				
 			link: 'Deposits',
 		},
 		4:{
-			icon:'t',
+			icon:'\ue908',
 			title:'FIND BRANCH',				
 			link: 'FindBranch',
 		},
 		5:{
-			icon:'$',
+			icon:'\ue904',
 			title:'CONTACT',				
 			link: 'Contact',
 		},
@@ -156,7 +156,7 @@ Skin.botmenu = StyleSheet.create({
 	},
 	box:{
 		flex: 1,
-		backgroundColor: Skin.colors.DARK_PRIMARY,
+		backgroundColor: '#146cc0',
 	},
 	boxhover:{
 		backgroundColor: Skin.colors.PRIMARY,
@@ -167,7 +167,7 @@ Skin.botmenu = StyleSheet.create({
 		height: 80
 	},
 	icon:{
-		fontFamily: 'icomoon',
+		fontFamily: Skin.ACC_FONT,
 		fontSize: 30,
 		paddingTop: 15,
 		color: Skin.colors.TEXT_COLOR,
