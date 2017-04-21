@@ -118,7 +118,6 @@ export default class AccountsScene extends Component {
                   {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":-4074.52,"accountType":3}, \
                   {"accountID":"1445","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":243.22,"accountType":2}, \
                   {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":1357.98,"accountType":2}, \
-        {"accountID":"1049","accountName":"CANDEMOACT10_04","nickname":"Direct Fixed Deposit ","accountBalance":2157.98,"accountType":2}, \
                   {"accountID":"9447","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-403.12,"accountType":3}], \
               "error":"", \
               "status":"success" \
