@@ -6,6 +6,11 @@ import ReactNative, { View, Text, StyleSheet,  TouchableOpacity,ListView, Image 
 import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
+
+import ControlPanel from '../ControlPanel';
+import Config from 'react-native-config';
+import NavBar from '../../view/navbar.js';
+import Events from 'react-native-simple-events';
 /*
   CALLED
 */
@@ -29,38 +34,47 @@ export default class ContactScene extends Component {
     // console.log(i);
     // console.log({id:this.props.list[i].link});
     //const routeStack = this.props.navigator.state.routeStack;
-    this.props.navigator.push(route);
+//    this.props.navigator.push(route);
     //this.props.navigator.immediatelyResetRouteStack(routeStack);
       // this.props.navigator.push({id:this.props.list[i].link});
+  }
+  
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
   }
 
   render() {
     return (
-      <Main
-        drawerState={{
-          open: false,
-          disabled: false,
-        }}
-        navBar={{
-          title: 'Contact',
-          visible: true,
-          tint: Skin.main.NAVBAR_TINT,
-          left: {
-            text: '',
-            icon: '\ue20e',
+            <Main
+            controlPanel={ControlPanel}
+            drawerState={this.props.drawerState}
+            navigator={this.props.navigator}
+            defaultNav={false}
+            bottomMenu={{
+            visible: true,
+            active: 5,
+            }}>
+            <NavBar
+            tintColor={'#fff'}
+            statusBarTint={'#146cc0'}
+            statusBarLight={'light-content'}
+            title={'Contact'}
+            titleTint={'#146cc0'}
+            right={''}
+            left={{
+            icon: Skin.icon.user,
             iconStyle: {
-              fontSize: 30,
-              marginLeft: 8,
+            fontSize: 35,
+            paddingLeft: 17,
+            width: 100,
+            color: '#146cc0',
             },
-            textStyle: {},
-          },
-        }}
-        bottomMenu={{
-          visible: true,
-          active: 5,
-        }}
-        navigator={this.props.navigator}
-      >
+            handler: this.triggerDrawer
+            }} />
+            
+            
+        
         <View
           style={{
             flex: 1,

@@ -9,38 +9,47 @@ import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
 
-
+import ControlPanel from '../ControlPanel';
+import Config from 'react-native-config';
+import NavBar from '../../view/navbar.js';
+import Events from 'react-native-simple-events';
 
 
 export default class DepositsScene extends Component {
 
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
+  }
+  
   render () {
     return (
-      <Main
-        drawerState={{
-          open: false,
-          disabled: false,
-        }}
-        navBar={{
-          title: 'Deposits',
-          visible: true,
-          tint: Skin.main.NAVBAR_TINT,
-          left:{
-            text: '',
-            icon: '\ue20e',
+            <Main
+            controlPanel={ControlPanel}
+            drawerState={this.props.drawerState}
+            navigator={this.props.navigator}
+            defaultNav={false}
+            bottomMenu={{
+            visible: true,
+            active: 3,
+            }}>
+            <NavBar
+            tintColor={'#fff'}
+            statusBarTint={'#146cc0'}
+            statusBarLight={'light-content'}
+            title={'Deposits'}
+            titleTint={'#146cc0'}
+            right={''}
+            left={{
+            icon: Skin.icon.user,
             iconStyle: {
-              fontSize: 30,
-              marginLeft: 8,
+            fontSize: 35,
+            paddingLeft: 17,
+            width: 100,
+            color: '#146cc0',
             },
-            textStyle: {},
-          },
-        }}
-        bottomMenu={{
-          visible: true,
-          active: 3,
-        }}
-        navigator={this.props.navigator}
-      >
+            handler: this.triggerDrawer
+            }} />
         <View
           style={{
             flex:1,

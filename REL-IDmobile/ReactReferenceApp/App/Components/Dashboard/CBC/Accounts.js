@@ -255,7 +255,7 @@ export default class AccountsScene extends Component {
         defaultNav={false}
          bottomMenu={{
           visible: true,
-            
+          active: 1,
         }}>
             
           <NavBar

@@ -53,8 +53,8 @@ class BottomMenu extends React.Component{
 						</View>
 						<TouchableHighlight style={Skin.botmenu.boxhover} underlayColor={Skin.colors.LIGHT_PRIMARY} onPress={()=>this.handleClick(i)}>
 							<View style={{flex:1,flexDirection:'column'}}>
-								<Text style={[Skin.botmenu.icon,{color:Skin.colors.TEXT_COLOR}]}>{this.props.list[i]['icon']}</Text>
-								<Text style={[Skin.botmenu.title,{color:Skin.colors.TEXT_COLOR}]}>{this.props.list[i]['title']}</Text>
+								<Text style={[Skin.botmenu.icon,{color:'#146cc0'}]}>{this.props.list[i]['icon']}</Text>
+								<Text style={[Skin.botmenu.title,{color:'#146cc0'}]}>{this.props.list[i]['title']}</Text>
 							</View>
 						</TouchableHighlight>
 					</View>
@@ -85,7 +85,7 @@ class BottomMenu extends React.Component{
 		//console.log(this);
 		//console.log(i);
 		//console.log({id:this.props.list[i].link});
-//		this.props.navigator.push({id:this.props.list[i].link});
+		this.props.navigator.push({id:this.props.list[i].link});
   		/*
   		var routeStack = this.props.navigator.state.routeStack;
   		routeStack.push({id:this.props.list[i].link});

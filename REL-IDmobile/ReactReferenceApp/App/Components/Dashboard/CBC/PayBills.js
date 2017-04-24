@@ -10,12 +10,15 @@ import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
 
+import ControlPanel from '../ControlPanel';
+import NavBar from '../../view/navbar.js';
+import Events from 'react-native-simple-events';
 
 import ListSectionHeader from '../../ListSectionHeader';
 
 import { FormattedCurrency } from 'react-native-globalize';
 
-import ControlPanel from '../ControlPanel';
+
 import Config from 'react-native-config';
 
 
@@ -176,6 +179,11 @@ export default class PayBillsScene extends Component {
       <ListSectionHeader>{headers[sectionId]}</ListSectionHeader>
     );
   }
+  
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
+  }
 
   renderRow(rowData) {
     const cleanData = self.cleanRowData(rowData);
@@ -205,30 +213,32 @@ export default class PayBillsScene extends Component {
 
   render() {
     return (
-     <Main
-        controlPanel={ControlPanel}
-        drawerState={this.props.drawerState}
-        navigator={this.props.navigator}
-        defaultNav={true}
-            navBar={{
-            title: '',
+            <Main
+            controlPanel={ControlPanel}
+            drawerState={this.props.drawerState}
+            navigator={this.props.navigator}
+            defaultNav={false}
+            bottomMenu={{
             visible: true,
-            navBarLine:false,
-            left: {
+            active: 2,
+            }}>
+            <NavBar
+            tintColor={'#fff'}
+            statusBarTint={'#146cc0'}
+            statusBarLight={'light-content'}
+            title={'Pay Bills'}
+            titleTint={'#146cc0'}
+            right={''}
+            left={{
             icon: Skin.icon.user,
             iconStyle: {
             fontSize: 35,
             paddingLeft: 17,
             width: 100,
-            color: Config.THEME_COLOR,
+            color: '#146cc0',
             },
             handler: this.triggerDrawer
-            },
-            }}
-         bottomMenu={{
-          visible: false,
-            
-        }}>
+            }} />
         <View style={{ flex: 1, backgroundColor:Skin.main.BACKGROUND_COLOR }}>
           <ListView
             dataSource={this.state.dataSource}

@@ -9,6 +9,10 @@ import Main from '../../Container/Main';
 
 import Skin from '../../../Skin';
 
+import ControlPanel from '../ControlPanel';
+import Config from 'react-native-config';
+import NavBar from '../../view/navbar.js';
+import Events from 'react-native-simple-events';
 
 
 class FindBranchScene extends Component{
@@ -63,7 +67,7 @@ class FindBranchScene extends Component{
                   }
               );
             },
-            (error) => {alert(error)},
+            (error) => {},
             //(error) => alert(error.message),
             { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
           );
@@ -78,35 +82,42 @@ class FindBranchScene extends Component{
     componentWillUnmount(){
         navigator.geolocation.clearWatch(this.watchID);
     }
+  
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
+  }
 
     render() {
         //console.log(this.props);
         return (
-            <Main
-                drawerState={{
-                    open: false,
-                    disabled: false
-                }}
-                navBar={{
-                    title: 'Find Branch',
-                    visible: true,
-                    tint: Skin.main.NAVBAR_TINT,
-                    left:{
-                        text: '',
-                        icon: '\ue20e',
-                        iconStyle: {
-                            fontSize:30,
-                            marginLeft:8,
-                        },
-                        textStyle:{},
-                    }
-                }}
-                bottomMenu={{
-                    visible: true,
-                    active: 4,
-                }}
+                <Main
+                controlPanel={ControlPanel}
+                drawerState={this.props.drawerState}
                 navigator={this.props.navigator}
-            >
+                defaultNav={false}
+                bottomMenu={{
+                visible: true,
+                active: 4,
+                }}>
+                <NavBar
+                tintColor={'#fff'}
+                statusBarTint={'#146cc0'}
+                statusBarLight={'light-content'}
+                title={'Find Branch'}
+                titleTint={'#146cc0'}
+                right={''}
+                left={{
+                icon: Skin.icon.user,
+                iconStyle: {
+                fontSize: 35,
+                paddingLeft: 17,
+                width: 100,
+                color: '#146cc0',
+                },
+                handler: this.triggerDrawer
+                }} />
+
               <View style={{ flex: 1, backgroundColor: Skin.colors.BACK_GRAY }}>
                 <MapView
                     style={{flex:1,width:Skin.SCREEN_WIDTH}}
