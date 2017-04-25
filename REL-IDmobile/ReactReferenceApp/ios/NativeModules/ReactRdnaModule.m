@@ -21,15 +21,15 @@ RDNAPrivacyStream *privacyStreamObject;
 RCTBridge *_Nullable localbridgeDispatcher;
 dispatch_semaphore_t semaphore;
 RDNAIWACreds *rdnaIWACredsObj;
+
 @interface ReactRdnaModule()<RDNAPrivacyStreamCallBacks,CLLocationManagerDelegate>{
  
   id <RDNAPrivacyStreamCallBacks> privacyStreamCallBack;
   CLLocationManager *locationManagerObject;
   BOOL isRDNAIntilized;
   NSMutableDictionary *jsonDictionary;
+  NSMutableDictionary *dictHttpCallbacks;
   int i;
-  
-  
 }
 @end
 
@@ -46,6 +46,7 @@ RCT_EXPORT_MODULE();
 
 -(void)initParams{
   rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
+  dictHttpCallbacks = [[NSMutableDictionary alloc]init];
 }
 
 #pragma mark ReactExportMethods
@@ -524,6 +525,86 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
 }
 
 
+RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
+                   withUrl:(NSString *)url
+                   withHeaders:(NSString *)headers
+                   withBody:(NSString *)body
+                   reactCallBack:(RCTResponseSenderBlock)callback){
+  
+  //rdnaHttpJSCallbacks = callback;
+  
+  int errorID = 0;
+  RDNAHTTPRequest *request = [[RDNAHTTPRequest alloc]init];
+
+  
+  if(headers){
+    NSError *err;
+  NSData *data = [headers dataUsingEncoding:NSUTF8StringEncoding];
+  id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+    
+    if(!err)
+      request.headers = json;
+  }
+  
+  request.method = method;
+  request.url = url;
+  
+  if (body.length > 0) {
+    request.body = [body dataUsingEncoding:NSUTF8StringEncoding];
+  }
+  
+  int requestID;
+  errorID = [rdnaObject openHttpConnection:request Callbacks:(id<RDNAHTTPCallbacks>)self httpRequestID:&requestID];
+  
+  
+  if(errorID != RDNA_ERR_NONE){
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":[NSNumber numberWithInt:requestID]};
+  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+  callback(@[responseArray]);
+  }else{
+    [dictHttpCallbacks setObject:callback forKey:[NSString stringWithFormat:@"%d",requestID]];
+  }
+  
+}
+
+
+
+-(NSDictionary*)createJsonHttpResponse:(RDNAHTTPStatus*) status{
+  
+  NSMutableDictionary *dictStatusJson = [[NSMutableDictionary alloc] init];
+  
+  //[dictStatusJson setValue:[NSNumber numberWithInt:status.errorCode] forKey:@"errorCode"];
+  [dictStatusJson setValue:[NSNumber numberWithInt:status.requestID] forKey:@"requestID"];
+
+  NSMutableDictionary *dictRequestJson = [[NSMutableDictionary alloc] init];
+  
+  [dictRequestJson setValue:[NSNumber numberWithInt:status.request.method] forKey:@"method"];
+   [dictRequestJson setValue:status.request.url forKey:@"url"];
+  
+
+  [dictRequestJson setValue:status.request.headers forKey:@"headers"];
+  [dictRequestJson setValue:[[NSString alloc] initWithData:status.request.body encoding:NSUTF8StringEncoding]forKey:@"body"];
+  
+  [dictStatusJson setValue:dictRequestJson forKey:@"httpRequest"];
+  
+  
+
+  NSMutableDictionary *dictResponseJson = [[NSMutableDictionary alloc] init];
+  
+  [dictResponseJson setValue:status.response.version forKey:@"version"];
+  [dictResponseJson setValue:[NSNumber numberWithInt:status.response.statusCode] forKey:@"statusCode"];
+  [dictResponseJson setValue:status.response.statusMessage forKey:@"statusMessage"];
+  
+ 
+  [dictResponseJson setValue:status.response.headers forKey:@"headers"];
+  [dictResponseJson setValue:[[NSString alloc] initWithData:status.response.body encoding:NSUTF8StringEncoding]forKey:@"body"];
+  
+  [dictStatusJson setValue:dictResponseJson forKey:@"httpResponse"];
+  
+  return dictStatusJson;
+}
+
+
 #pragma mark Wrapper callback methods
 
 
@@ -740,6 +821,23 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   return tokenString;
 }
 
+
+#pragma mark http response callback methods
+
+-(int)onHttpResponse:(RDNAHTTPStatus*) status{
+  
+  //[self sendEventWithName:@"onHttpResponse" body:@{@"response":[self createJsonHttpResponse:status]}];
+  RCTResponseSenderBlock rdnaHttpJSCallbacks = [dictHttpCallbacks valueForKey:[NSString stringWithFormat:@"%d",status.requestID]];
+  if(rdnaHttpJSCallbacks){
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:status.errorCode],@"response":[self createJsonHttpResponse:status]};
+  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+  rdnaHttpJSCallbacks(@[responseArray]);
+    [dictHttpCallbacks removeObjectForKey:[NSString stringWithFormat:@"%d",status.requestID]];
+  }
+  return 0;
+}
+
+
 RCT_EXPORT_METHOD(checkDeviceAuthorizationStatus:(RCTResponseSenderBlock) callback)
 {
   NSString *mediaType = AVMediaTypeVideo;
@@ -818,6 +916,9 @@ RCT_EXPORT_METHOD(checkDeviceAuthorizationStatus:(RCTResponseSenderBlock) callba
            @"STREAM_TYPE_ENCRYPT":@(RDNA_STREAM_TYPE_ENCRYPT),
            @"STREAM_TYPE_ENCRYPT":@(RDNA_STREAM_TYPE_ENCRYPT),
            @"AppVersion": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
+           @"RDNA_HTTP_POST":@(RDNA_HTTP_POST),
+           @"RDNA_HTTP_GET":@(RDNA_HTTP_GET),
+           
            };
   
 }
@@ -847,4 +948,11 @@ RCT_ENUM_CONVERTER(RDNAStreamType,
                       @"STREAM_TYPE_ENCRYPT":@(RDNA_STREAM_TYPE_ENCRYPT)}),
                    RDNA_STREAM_TYPE_ENCRYPT,
                    integerValue);
+
+RCT_ENUM_CONVERTER(RDNAHttpMethods,
+                   (@{@"RDNA_HTTP_POST":@(RDNA_HTTP_POST),
+                      @"RDNA_HTTP_GET":@(RDNA_HTTP_GET)}),
+                   RDNA_HTTP_POST,
+                   integerValue);
+
 @end
