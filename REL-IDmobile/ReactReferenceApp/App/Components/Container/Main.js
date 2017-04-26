@@ -34,7 +34,7 @@ const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdna
  Custome View
  */
 import NavigationBar from '../view/navbar.js'
-import BottomMenu from '../view/bottomMenu';
+import BottomMenu from '../view/cbcbottomMenu';
 import NavButton from '../NavButton';
 
 /*

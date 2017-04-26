@@ -40,7 +40,7 @@ ListItem.defaultProps={
 		backgroundColor: Skin.colors.TEXT_COLOR,
 		paddingTop: 5,
         paddingBottom: 5,
-		width: (SCREEN_WIDTH > 350) ? SCREEN_WIDTH*52/75 : SCREEN_WIDTH-32,
+		width: SCREEN_WIDTH-32,
 		marginBottom:0,
 	}
 }

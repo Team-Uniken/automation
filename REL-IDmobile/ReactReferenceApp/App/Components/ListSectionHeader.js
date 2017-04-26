@@ -52,12 +52,12 @@ var styles = StyleSheet.create({
 	},
 	text:{
 		color: Skin.list.LIST_HEADER_COLOR,
-		paddingBottom: 5,
-		paddingTop: 10,
+		paddingBottom: 3,
+		marginTop: 14,
 		backgroundColor: Skin.main.BACKGROUND_COLOR,
 	},
 	rowwrap:{
-		width: SCREEN_WIDTH*4/5,
+		width: SCREEN_WIDTH-32,
 		
 	}
 

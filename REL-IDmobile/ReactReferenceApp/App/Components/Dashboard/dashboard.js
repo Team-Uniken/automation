@@ -21,7 +21,7 @@ import NWDDashboard from './NWD/Deals';
 import SandPDashbord from './SandP/homepage';
 import StockDashbord from './Stock/Deals';
 import UbsDashbord from './Ubs/homepage';
-import CBCDashbord from './CBC/homepage';
+import CBCDashbord from './CBC/Accounts';
 import RELIDMobileDashbord from './REL-IDMobile/Deals';
 
 
