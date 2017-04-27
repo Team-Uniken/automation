@@ -891,7 +891,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                                 }
                             }
                             response.putMap("headers",headers);
-                            String responseData = null;
+                            String responseData = "";
                             if(rdnaHttpStatus.response.data!=null)
                                 responseData = new String(rdnaHttpStatus.response.data, Charset.forName("UTF-8"));
                             response.putString("data",responseData);
@@ -904,8 +904,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                                 }
                             }
                             request.putMap("headers",requestHeaders);
+                            String requestData = "";
                             if(rdnaHttpStatus.request.data!=null)
-                               request.putString("data",new String(rdnaHttpStatus.request.data,Charset.forName("UTF-8")));
+                                requestData = new String(rdnaHttpStatus.request.data,Charset.forName("UTF-8"));
+                            request.putString("data",requestData);
                             responseStatus.putMap("httpRequest",request);
                             responseStatus.putMap("httpResponse",response);
                             parentMap.putInt("error",rdnaHttpStatus.errorCode);

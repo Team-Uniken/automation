@@ -103,13 +103,18 @@ class Register extends Component {
 
 
     AsyncStorage.getItem('skipwelcome').then((value) => {
-      if (value === "false" || value == null || value == undefined) {
-        this.setState({ welcomescreen: '' });
-        this.setState({ welcome: false });
-
-      } else {
+      if (value == null || value == undefined) {
         this.setState({ welcomescreen: '\u2714' });
         this.setState({ welcome: true });
+        // Setting skipwelcome to default true if user prefs not found
+        AsyncStorage.setItem("skipwelcome", "true");
+      }else if(value === "true") {
+        this.setState({ welcomescreen: '\u2714' });
+        this.setState({ welcome: true });
+      }
+      else {
+        this.setState({ welcomescreen: '' });
+        this.setState({ welcome: false });
       }
     }).done();
 

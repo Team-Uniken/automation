@@ -77,12 +77,12 @@ class SelectLogin extends Component {
     this.onPatternUnlock = this.onPatternUnlock.bind(this);
     this.goBackToSelectLogin = this.goBackToSelectLogin.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
-    
+
     this.checkForRegisteredCredsAndShow();
-     if (Platform.OS === 'ios') {
-       this.isTouchPresent().done();
-     }
-    
+    if (Platform.OS === 'ios') {
+      this.isTouchPresent().done();
+    }
+
   }
   /*
   This is life cycle method of the react native component.
@@ -91,10 +91,10 @@ class SelectLogin extends Component {
   componentWillMount() {
     obj = this;
   }
- /*
-      This is life cycle method of the react native component.
-      This method is called when the component is Mounted/Loaded.
-    */
+  /*
+       This is life cycle method of the react native component.
+       This method is called when the component is Mounted/Loaded.
+     */
   componentDidMount() {
     var $this = this;
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
@@ -102,8 +102,17 @@ class SelectLogin extends Component {
         try {
           userPrefs = JSON.parse(userPrefs);
           if (userPrefs.defaultLogin &&
-            userPrefs.defaultLogin !== 'facebook')
-            $this.loginWith(userPrefs.defaultLogin);
+            userPrefs.defaultLogin !== 'facebook') {
+            if (userPrefs.defaultLogin === 'pattern'
+              || userPrefs.defaultLogin === 'touchid') {
+              if (userPrefs.ERPasswd != null && userPrefs.ERPasswd !== 'empty') {
+
+                $this.loginWith(userPrefs.defaultLogin);
+              }
+            } else {
+              $this.loginWith(userPrefs.defaultLogin);
+            }
+          }
         }
         catch (e) { }
       }
@@ -116,7 +125,7 @@ class SelectLogin extends Component {
 
   //Facebook login code
   doFacebookLogin() {
-   var $this = this;
+    var $this = this;
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
         {
@@ -152,7 +161,7 @@ class SelectLogin extends Component {
         Events.trigger('hideLoader', true);
       }).done();
   }
-//push datasource to gridview depends on tbacred and depends on platform if android pattern else touch option will be added.
+  //push datasource to gridview depends on tbacred and depends on platform if android pattern else touch option will be added.
   fillAdditionalLoginOptions() {
     this.state.dataSource = [];
     if (this.props.tbacred) {
@@ -182,37 +191,37 @@ class SelectLogin extends Component {
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
   }
-  
+
   /**
    * This method sets the isTouchIDPresent variable to true if touchId is supported on iOS and
    * false if not supported
    */
   isTouchPresent() {
-     var $this = this;
+    var $this = this;
     return new Promise(function (resolve, reject) {
-                      
-                       TouchID.isSupported()
-                       .then((supported) => {
-                             // Success code
-                             console.log('TouchID is supported.');
-                             $this.isTouchIDPresent = true;
-                             resolve("success");
-                             })
-                       .catch((error) => {
-                              // Failure code
-                              console.log(error);
-                              $this.isTouchIDPresent = false;
-                              $this.state.isRegistered = false;
-                              $this.fillAdditionalLoginOptions();
-                              $this.setState({ refresh: !$this.state.refresh });
-                              resolve("fails");
-                              });
-                      
-                       });
- 
+
+      TouchID.isSupported()
+        .then((supported) => {
+          // Success code
+          console.log('TouchID is supported.');
+          $this.isTouchIDPresent = true;
+          resolve("success");
+        })
+        .catch((error) => {
+          // Failure code
+          console.log(error);
+          $this.isTouchIDPresent = false;
+          $this.state.isRegistered = false;
+          $this.fillAdditionalLoginOptions();
+          $this.setState({ refresh: !$this.state.refresh });
+          resolve("fails");
+        });
+
+    });
+
   }
-  
-//check for registercred in database if ERPasswd is in database than isRegistered flag is set to true.
+
+  //check for registercred in database if ERPasswd is in database than isRegistered flag is set to true.
   async checkForRegisteredCredsAndShow(option) {
     var ret = false;
     await AsyncStorage.getItem(Main.dnaUserName).then((value) => {
@@ -231,7 +240,7 @@ class SelectLogin extends Component {
           }
         } catch (e) { }
       }
-      else{
+      else {
         this.fillAdditionalLoginOptions();
         this.setState({ refresh: !this.state.refresh });
       }
@@ -239,10 +248,10 @@ class SelectLogin extends Component {
 
     return ret;
   }
-//check facebook accessToken is valid or not.
+  //check facebook accessToken is valid or not.
   checkValidityOfAccessToken() {
     Events.trigger('showLoader', true);
-   var $this = this;
+    var $this = this;
     AccessToken.getCurrentAccessToken().then((data) => {
       if (data) {
         var callback = function (error, result) {
@@ -290,7 +299,7 @@ class SelectLogin extends Component {
       return (result)
     }
   }
-//patten login callback.
+  //patten login callback.
   onPatternUnlock(args) {
     this.onDoPasswordCheckChallenge(args.password);
   }
@@ -331,17 +340,17 @@ class SelectLogin extends Component {
     //   } catch (e) { }
     // }).done();
 
-    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd)=>{
-      if(encryptedRPasswd){
-        Util.decryptText(encryptedRPasswd).then((RPasswd)=>{
-          if(RPasswd){
+    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd) => {
+      if (encryptedRPasswd) {
+        Util.decryptText(encryptedRPasswd).then((RPasswd) => {
+          if (RPasswd) {
             obj.onDoPasswordCheckChallenge(RPasswd);
           }
         }).done();
       }
     }).done();
   }
-//submit response in  challenge response and showNextChallenge
+  //submit response in  challenge response and showNextChallenge
   onDoPasswordCheckChallenge(args) {
     // if (args.length > 0) {
     var responseJson = this.props.url.chlngJson;
@@ -352,17 +361,17 @@ class SelectLogin extends Component {
   }
 
 
-//navigate to pattern screen
+  //navigate to pattern screen
   doPatternLogin() {
     this.props.navigator.push({
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
-      onClose:null,
+      onClose: null,
       mode: 'verify'
     });
   }
 
-//return logintypebutton depends on item supply.
+  //return logintypebutton depends on item supply.
   renderItem(item) {
     return (
       <View style={Skin.layout0.bottom.loginbutton.wrap}>
@@ -373,7 +382,7 @@ class SelectLogin extends Component {
       </View>
     );
   }
-//navigate to screen depends on option selected.
+  //navigate to screen depends on option selected.
   loginWith(credType) {
     // alert(credType);
     var type = Skin.text['0']['2'].credTypes;
@@ -403,13 +412,13 @@ class SelectLogin extends Component {
   close() {
     Events.trigger('showPreviousChallenge');
   }
-//call when get back from PasswordVerification screen.
-  goBackToSelectLogin(){
-    this.setState({showPasswordVerify:false});
+  //call when get back from PasswordVerification screen.
+  goBackToSelectLogin() {
+    this.setState({ showPasswordVerify: false });
   }
-    /*
-    This method is used to render the componenet with all its element.
-  */
+  /*
+  This method is used to render the componenet with all its element.
+*/
   render() {
     if (this.state.dataSource && (this.state.dataSource.length > 0) && !this.state.showPasswordVerify) {
       return (
@@ -432,13 +441,13 @@ class SelectLogin extends Component {
               <Text style={Skin.layout0.top.subtitle}>
                 {Skin.text['0']['2'].subtitle}
               </Text>
-               <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
-                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
+              <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+              <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
               <Text style={Skin.layout0.top.prompt}>
                 {Skin.text['0']['2'].prompt}
               </Text>
             </View>
-            <View style={{height:10}}></View>
+            <View style={{ height: 10 }}></View>
             <View style={Skin.layout0.bottom.container}>
               <GridView
                 style={{ flex: 1 }}
@@ -452,7 +461,7 @@ class SelectLogin extends Component {
       );
     }
     else {
-      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.state.dataSource.length > 0?this.goBackToSelectLogin:null}/>);
+      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.state.dataSource.length > 0 ? this.goBackToSelectLogin : null}/>);
     }
   }
 }
