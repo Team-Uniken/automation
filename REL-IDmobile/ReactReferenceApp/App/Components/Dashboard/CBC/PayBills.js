@@ -224,7 +224,7 @@ export default class PayBillsScene extends Component {
             }}>
             <NavBar
             tintColor={'#fff'}
-            statusBarTint={'#146cc0'}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
             statusBarLight={'light-content'}
             title={'Pay Bills'}
             titleTint={'#146cc0'}

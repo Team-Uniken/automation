@@ -177,7 +177,7 @@ class Deals extends Component {
           </View>
           <NavBar
             tintColor={'transparent'}
-            statusBarTint={'transparent'}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
             statusBarLight={'light-content'}
             title={'Bank Of Uniken'}
             titleTint={'#000000'}

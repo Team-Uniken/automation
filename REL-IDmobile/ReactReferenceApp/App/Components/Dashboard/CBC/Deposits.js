@@ -35,7 +35,7 @@ export default class DepositsScene extends Component {
             }}>
             <NavBar
             tintColor={'#fff'}
-            statusBarTint={'#146cc0'}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
             statusBarLight={'light-content'}
             title={'Deposits'}
             titleTint={'#146cc0'}

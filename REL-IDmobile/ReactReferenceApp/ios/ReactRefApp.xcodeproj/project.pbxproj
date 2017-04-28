@@ -124,6 +124,12 @@
 		558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		558C99F01E7BF9F30002C56F /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 558C99EF1E7BF9F30002C56F /* index.ios.js */; };
 		55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */; };
+		55C9249F1EB3661800DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		55C924B11EB3661900DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		55C924B21EB3661B00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		55C924B31EB3661B00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		55C924B41EB3661C00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		55C924B51EB3661C00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		55D351671E1E0F7C00806F82 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		55D351681E1E0F7C00806F82 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		55D351691E1E0F7C00806F82 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -1511,6 +1517,7 @@
 				1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */,
 				6567FBCB1CC1122F00AC6A04 /* App in Resources */,
 				656227ED1CB50B2300AD7F6C /* gothic_0.TTF in Resources */,
+				55C924B31EB3661B00DA8083 /* account.ttf in Resources */,
 				654F81D11CC9FAD5009E6168 /* Images.xcassets in Resources */,
 				6567FBCD1CC1127B00AC6A04 /* index.ios.js in Resources */,
 				654F81D21CC9FAD5009E6168 /* Info.plist in Resources */,
@@ -1540,6 +1547,7 @@
 				552BB7B51E1BA0B90009F274 /* LaunchScreen.xib in Resources */,
 				552BB7B61E1BA0B90009F274 /* icomoon.ttf in Resources */,
 				552BB7B71E1BA0B90009F274 /* App in Resources */,
+				55C924B41EB3661C00DA8083 /* account.ttf in Resources */,
 				552BB7B81E1BA0B90009F274 /* gothic_0.TTF in Resources */,
 				552BB7BB1E1BA0B90009F274 /* index.ios.js in Resources */,
 				65079D151E1F7FDD005D9A11 /* sandp.plist in Resources */,
@@ -1555,6 +1563,7 @@
 				558C99F01E7BF9F30002C56F /* index.ios.js in Resources */,
 				558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */,
 				558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */,
+				55C924B11EB3661900DA8083 /* account.ttf in Resources */,
 				558C99B01E7BF7A30002C56F /* App in Resources */,
 				656D4F071E7C0B6000965ED6 /* relidmobile.plist in Resources */,
 				558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */,
@@ -1569,6 +1578,7 @@
 				55D351861E1E0F7C00806F82 /* LaunchScreen.xib in Resources */,
 				55D351871E1E0F7C00806F82 /* icomoon.ttf in Resources */,
 				55D351881E1E0F7C00806F82 /* App in Resources */,
+				55C924B51EB3661C00DA8083 /* account.ttf in Resources */,
 				55D351891E1E0F7C00806F82 /* gothic_0.TTF in Resources */,
 				65079D171E1F7FE5005D9A11 /* stock.plist in Resources */,
 				55D3518D1E1E0F7C00806F82 /* index.ios.js in Resources */,
@@ -1589,6 +1599,7 @@
 				654B80E21DBE11780052D415 /* ReactRefAppDeveloper-Info.plist in Resources */,
 				65127E151D795B4000FB36E1 /* index.ios.js in Resources */,
 				65127E161D795B4000FB36E1 /* Info.plist in Resources */,
+				55C924B21EB3661B00DA8083 /* account.ttf in Resources */,
 				551EE2E01E51BB1200ADAD6C /* cbc.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1601,6 +1612,7 @@
 				65D7F7891E309A1F009ACC25 /* ImagesUBS.xcassets in Resources */,
 				65D7F7401E308FC8009ACC25 /* icomoon.ttf in Resources */,
 				65D7F7411E308FC8009ACC25 /* App in Resources */,
+				55C9249F1EB3661800DA8083 /* account.ttf in Resources */,
 				65D7F7421E308FC8009ACC25 /* gothic_0.TTF in Resources */,
 				65D7F7B21E30A3FA009ACC25 /* ubs.ttf in Resources */,
 				65D7F7631E309469009ACC25 /* ubs.plist in Resources */,

@@ -57,7 +57,7 @@ export default class ContactScene extends Component {
             }}>
             <NavBar
             tintColor={'#fff'}
-            statusBarTint={'#146cc0'}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
             statusBarLight={'light-content'}
             title={'Contact'}
             titleTint={'#146cc0'}

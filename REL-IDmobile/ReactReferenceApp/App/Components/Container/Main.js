@@ -15,6 +15,7 @@ import ReactNative from 'react-native';
 /*
  Required for this js
  */
+import Config from 'react-native-config';
 import Drawer from 'react-native-drawer';
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
@@ -34,7 +35,14 @@ const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdna
  Custome View
  */
 import NavigationBar from '../view/navbar.js'
-import BottomMenu from '../view/cbcbottomMenu';
+
+if (Config.ENV == 'cbc') {
+  var BottomMenu = require("../view/cbcbottomMenu");
+} else if (Config.ENV == 'nwd') {
+  var BottomMenu = require("../view/bottomMenu");
+ 
+}
+
 import NavButton from '../NavButton';
 
 /*
@@ -225,11 +233,14 @@ This method is called when the component will start to load
       navBarLineHeight = 0;
     
     if (this.props.defaultNav) {
+      
       return (
         [<NavigationBar
           title={this.props.navBar.title}
           titleTint={Skin.main.TITLE_COLOR}
           tintColor={Skin.main.NAVBAR_BG}
+          statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
+          statusBarLight={'light-content'}
           //tintColor={'transparent'}
           // rightButton={
           //   <NavButton

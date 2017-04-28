@@ -260,7 +260,7 @@ export default class AccountsScene extends Component {
             
           <NavBar
             tintColor={'#fff'}
-            statusBarTint={'#146cc0'}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
             statusBarLight={'light-content'}
             title={'Accounts'}
             titleTint={'#146cc0'}

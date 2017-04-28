@@ -179,7 +179,7 @@ class Deals extends Component {
            
           <NavBar
             tintColor={'transparent'}
-            statusBarTint={'transparent'}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
             statusBarLight={'light-content'}
             title={''}
             titleTint={'#000000'}

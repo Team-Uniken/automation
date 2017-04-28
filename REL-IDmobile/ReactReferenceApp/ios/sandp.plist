@@ -64,6 +64,7 @@
 		<string>gothic_0.TTF</string>
 		<string>icomoon.ttf</string>
 		<string>logo.ttf</string>
+		<string>account.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

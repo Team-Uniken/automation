@@ -42,6 +42,7 @@ const BOTTOM_MENU_SELECT_BG = Config.BOTTOM_MENU_SELECT_BG
 const INPUT_PLACEHOLDER_COLOR = Config.INPUT_PLACEHOLDER_COLOR
 
 const LOAD_SCREEN_IMAGE = Config.LOAD_SCREEN_IMAGE
+const STATUS_BAR_TINT_COLOUR = Config.STATUS_BAR_TINT_COLOUR
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2184,6 +2185,7 @@ const collection = {
     ACC_FONT,
   },
   LOAD_SCREEN_IMAGE,
+  STATUS_BAR_TINT_COLOUR,
 };
 
 module.exports = Object.assign(module.exports, collection);
