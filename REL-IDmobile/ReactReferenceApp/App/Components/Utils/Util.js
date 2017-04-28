@@ -168,6 +168,26 @@ class Util extends Component {
       }
     });
   }
+
+  static convertToPostData(jsonObject){
+    if(jsonObject!=null && jsonObject!=undefined){
+      var postData = "";      
+      var firstKey = true;
+      var keys = Object.keys(jsonObject).forEach((key)=>{
+        if(firstKey===true){
+          firstKey = false;
+          postData = postData + key + '=' + jsonObject[key];
+        }
+        else{
+          postData = postData + '&' + key + '=' + jsonObject[key];
+        }
+      });
+      
+      return postData;
+    }else{
+      return null;
+    }
+  }
 }
 
 

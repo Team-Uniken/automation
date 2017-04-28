@@ -25,8 +25,9 @@ import Skin from '../Skin';
 import WebViewAndroid from '../android_native_modules/nativewebview';
 import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
+import Util from '../Components/Utils/Util'
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
-
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 /*
  Custome View
@@ -200,18 +201,22 @@ class Register extends Component {
         "mobNum": this.state.phoneNumber.trim(),
         "isRELIDZeroEnabled": "true",
         "username": "sruser",
-        "password": hash.sha256().update("Uniken123$").digest('hex'),
+        "password": "1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
       Events.trigger('showLoader', true);
-      RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
+
+      var postData = Util.convertToPostData(userMap);
+      var contentType = JSON.stringify({"Content-Type":"application/x-www-form-urlencoded"});
+      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, baseUrl, contentType,postData,(response)=>{
+     // RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         Events.trigger('hideLoader', true);
         if (response[0].error == 0) {
           var res;
           try {
-            res = JSON.parse(response[0].response);
+            res = JSON.parse(response[0].response.httpResponse.data);
           } catch (e) {
             obj.showMessage("Error", "Invalid response.Please try again", false);
             this.setState({ value: true, value: 0 }, () => {
@@ -234,12 +239,9 @@ class Register extends Component {
             this.state.resetSlider = false;
           });
         }
-
-      })
+      });
 
     }).done();
-
-
   }
 
   //show alert dailog with msg and title pass to it
