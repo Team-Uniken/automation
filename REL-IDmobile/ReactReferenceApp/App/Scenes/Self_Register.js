@@ -233,7 +233,7 @@ class Register extends Component {
             });
           }
         } else {
-          alert(response[0].response);
+          alert("Service not available");
 
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;

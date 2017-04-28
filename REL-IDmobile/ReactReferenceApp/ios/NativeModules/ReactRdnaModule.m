@@ -558,7 +558,7 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   
   if(errorID != RDNA_ERR_NONE){
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":[NSNumber numberWithInt:requestID]};
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":@""};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   callback(@[responseArray]);
   }else{
