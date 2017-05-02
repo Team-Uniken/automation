@@ -858,7 +858,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             if(httpMethod!=null)
                 request.method = RDNA.RDNAHTTPMethods.valueOf(httpMethod);
             if(body!=null)
-                request.data = body.getBytes();
+                request.body = body.getBytes();
 
             request.url = url;
 
@@ -900,9 +900,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                             }
                             response.putMap("headers",headers);
                             String responseData = "";
-                            if(rdnaHttpStatus.response.data!=null)
-                                responseData = new String(rdnaHttpStatus.response.data, Charset.forName("UTF-8"));
-                            response.putString("data",responseData);
+                            if(rdnaHttpStatus.response.body!=null)
+                                responseData = new String(rdnaHttpStatus.response.body, Charset.forName("UTF-8"));
+                            response.putString("body",responseData);
 
                             request.putString("method",rdnaHttpStatus.request.method.name());
                             request.putString("url",rdnaHttpStatus.request.url);
@@ -913,9 +913,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                             }
                             request.putMap("headers",requestHeaders);
                             String requestData = "";
-                            if(rdnaHttpStatus.request.data!=null)
-                                requestData = new String(rdnaHttpStatus.request.data,Charset.forName("UTF-8"));
-                            request.putString("data",requestData);
+                            if(rdnaHttpStatus.request.body!=null)
+                                requestData = new String(rdnaHttpStatus.request.body,Charset.forName("UTF-8"));
+                            request.putString("body",requestData);
                             responseStatus.putMap("httpRequest",request);
                             responseStatus.putMap("httpResponse",response);
                             parentMap.putInt("error",rdnaHttpStatus.errorCode);

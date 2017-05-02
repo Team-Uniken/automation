@@ -216,7 +216,7 @@ class Register extends Component {
         if (response[0].error == 0) {
           var res;
           try {
-            res = JSON.parse(response[0].response.httpResponse.data);
+            res = JSON.parse(response[0].response.httpResponse.body);
           } catch (e) {
             obj.showMessage("Error", "Invalid response.Please try again", false);
             this.setState({ value: true, value: 0 }, () => {
