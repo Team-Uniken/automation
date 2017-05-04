@@ -114,7 +114,7 @@ export default class ForgatePassword extends Component {
   }
 
   onPatternClose() {
-    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
     Events.trigger('finishForgotPasswordFlow', null);
   }
 
@@ -122,15 +122,18 @@ export default class ForgatePassword extends Component {
    // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {  Todo: to be removed  after test
     Util.saveUserDataSecure("RPasswd",this.state.password).then((result)=>{
       if (Platform.OS == 'ios' && this.state.erpasswd) {
+        AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
         this.encrypytPasswdiOS();
         Events.trigger('finishForgotPasswordFlow', null);
       } else if (Platform.OS == 'android' && this.state.erpasswd) {
+        AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
         this.props.navigator.push(
           {
             id: 'pattern',
             data: '',
             onSetPattern: this.onSetPattern,
-            onClose: this.onPatternClose,
+           // onClose: this.onPatternClose,
+            disableClose:true,
             mode: "set"
           });
       } else {

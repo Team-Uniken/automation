@@ -265,7 +265,7 @@ class ReactRefApp extends Component {
                 rdna={route.DnaObject} />);
 
     }else if (id === 'pattern') {
-      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} operationMsg={route.operationMsg} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} operationMsg={route.operationMsg} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
     }
     return (<Text>
       Error

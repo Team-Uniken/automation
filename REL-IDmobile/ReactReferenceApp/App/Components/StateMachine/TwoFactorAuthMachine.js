@@ -251,9 +251,11 @@ class TwoFactorAuthMachine extends Component {
         if (Main.isOtherLogin === true) {
           Main.isOtherLogin = false;
         }
+
         //Removing user preference when user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
-          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("exhausted")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -582,7 +584,8 @@ class TwoFactorAuthMachine extends Component {
       } else {
         //Removing user preference if user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
-          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("exhausted")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -623,7 +626,7 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         var tbacredChallenge = this.getTBACreds();
-        return (<SelectLogin navigator={nav} url={route.url} title={route.title} tbacred ={tbacredChallenge}/>);
+        return (<SelectLogin navigator={nav} url={route.url} title={route.title} tbacred={tbacredChallenge} />);
       } else {
         if (this.mode === "forgotPassword") {
           return (<Forgot_Password navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
@@ -632,9 +635,15 @@ class TwoFactorAuthMachine extends Component {
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {
+      //Reseting default login prefs in case of secondary
+      //var prefs = JSON.stringify({ defaultLogin: "none" });
+      //AsyncStorage.mergeItem(Main.dnaUserName, prefs, null);
       return (<AccessCode navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'secqa' || id == 'secondarySecqa') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
+        //Reseting default login prefs in case of secondary
+        //var prefs = JSON.stringify({ defaultLogin: "none" });
+        //AsyncStorage.mergeItem(Main.dnaUserName, prefs, null);
         return (<QuestionVerification navigator={nav} url={route.url} title={route.title} />);
         // }else if(stepdone==false){
         //   stepdone=true;
@@ -652,7 +661,7 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'RegisterOption') {
       return (<RegisterOption navigator={nav} parentnav={obj.props.navigator} url={route.url} title={route.title} />);
     } else if (id === 'pattern') {
-      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
     }
     return (<Text>Error</Text>);
   }
@@ -660,7 +669,7 @@ class TwoFactorAuthMachine extends Component {
   render() {
     return (
       <Navigator
-        ref={(ref) => { this.stateNavigator = ref; return ref; } }
+        ref={(ref) => { this.stateNavigator = ref; return ref; }}
         renderScene={this.renderScene}
         initialRoute={{
           id: this.props.url.screenId,
@@ -691,7 +700,7 @@ class TwoFactorAuthMachine extends Component {
             return config;
           }
         }
-        />
+      />
     );
   }
 

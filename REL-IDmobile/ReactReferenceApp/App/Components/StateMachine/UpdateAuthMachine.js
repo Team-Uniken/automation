@@ -174,7 +174,8 @@ class UpdateAuthMachine extends Component {
         }
       } else {
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
-          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("exhausted")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
@@ -292,7 +293,7 @@ class UpdateAuthMachine extends Component {
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
     } else if (id === 'pattern') {
-      return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern}/>);
+      return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
     }
     return (<Text>Error</Text>);
   }

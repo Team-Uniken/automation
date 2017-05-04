@@ -112,7 +112,7 @@ export default class UpdatePasswordSet extends Component {
   }
 
   onPatternClose() {
-    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
     this.close();
   }
 
@@ -121,15 +121,18 @@ export default class UpdatePasswordSet extends Component {
    // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
       Util.saveUserDataSecure("RPasswd",this.state.password).then((result)=>{
         if (Platform.OS == 'ios' && this.state.erpasswd) {
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ERPasswd: "empty",defaultLogin:"none"}), null);
           this.encrypytPasswdiOS();
           this.close();
         } else if (Platform.OS == 'android' && this.state.erpasswd) {
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
           this.props.navigator.push(
             {
               id: 'pattern',
               data: '',
               onSetPattern: this.onSetPattern,
-              onClose: this.onPatternClose,
+             // onClose: this.onPatternClose,
+              disableClose:true,
               mode: "set"
             });
         }

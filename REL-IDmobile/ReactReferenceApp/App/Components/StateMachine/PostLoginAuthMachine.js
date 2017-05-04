@@ -174,7 +174,8 @@ class PostLoginAuthMachine extends Component {
         }
       } else {
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
-          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked")) {
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("exhausted")) {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }

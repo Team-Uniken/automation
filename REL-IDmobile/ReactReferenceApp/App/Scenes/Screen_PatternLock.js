@@ -41,6 +41,7 @@ class PatternLock extends Component {
     this.mode = this.props.mode;
     this.clearTimers = null;
     this.currentPattern = "";
+    this.disableClose = false;
     if (this.mode == "set") {
       this.state = {
         screen: "set",
@@ -71,6 +72,13 @@ class PatternLock extends Component {
       this.msg = "Pattern should atleast be of 4 dots";
     }
     this.operationMsg = "";
+
+  //  alert(this.props.disableClose);
+    if(this.props.disableClose!=null && this.props.disableClose!=undefined){
+      this.disableClose = true;
+    }else{
+      this.disableClose = false;
+    }
   }
 
   componentWillMount() {
@@ -92,15 +100,25 @@ class PatternLock extends Component {
   }
 
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close)
+    if(this.disableClose)
+      BackAndroid.addEventListener('hardwareBackPress', this.doNothing)
+    else
+      BackAndroid.addEventListener('hardwareBackPress', this.close)
   }
 
   componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.close);
+    if(this.disableClose)
+       BackAndroid.removeEventListener('hardwareBackPress', this.doNothing);
+    else
+       BackAndroid.removeEventListener('hardwareBackPress', this.close);
   }
 
   onSubmit() {
     this.refs["patternView"].getPatternString();
+  }
+
+  doNothing(){
+    return true;
   }
 
   onGetPattern(result) {
@@ -433,10 +451,11 @@ class PatternLock extends Component {
             barStyle={'default'} />
           <View style={{ justifyContent: 'center' }}>
             <View style={Skin.layout1.title.wrap}>
-              <Title onClose={() => {
+              {!this.disableClose && [<Title onClose={() => {
                 this.close();
               } }>
               </Title>
+              ]}
             </View>
           </View>
           <View style={Skin.layout1.content.wrap}>
