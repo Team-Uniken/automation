@@ -311,7 +311,11 @@ This method is called when the component will start to load
 
                   // this.forceUpdate();
                 } catch (e) { }
-              }
+                                                        }else{
+                                                        
+                                                        this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
+                                                        this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
+                                                        }
             }).done();
           } else {
             this.props.navigator.pop();

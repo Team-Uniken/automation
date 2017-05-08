@@ -76,7 +76,7 @@ class PasswordVerification extends Component {
     var pw = this.state.inputPassword;
     if (pw.length > 0) {
       Main.dnaPasswd = pw;
-      Util.saveUserDataSecure("RPasswd",pw).done();
+      //Util.saveUserDataSecure("RPasswd",pw).done();
      // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);  Todo: To be removed after testing
 
       responseJson = this.props.url.chlngJson;

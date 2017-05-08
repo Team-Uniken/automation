@@ -301,6 +301,7 @@ class SelectLogin extends Component {
   }
   //patten login callback.
   onPatternUnlock(args) {
+     Main.dnaPasswd = args.password;
     this.onDoPasswordCheckChallenge(args.password);
   }
 
@@ -344,6 +345,7 @@ class SelectLogin extends Component {
       if (encryptedRPasswd) {
         Util.decryptText(encryptedRPasswd).then((RPasswd) => {
           if (RPasswd) {
+            Main.dnaPasswd = RPasswd;
             obj.onDoPasswordCheckChallenge(RPasswd);
           }
         }).done();

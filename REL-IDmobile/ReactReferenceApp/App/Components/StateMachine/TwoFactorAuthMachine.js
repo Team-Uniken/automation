@@ -58,6 +58,7 @@ import PasswordVerification from '../Challenges/Password_Verification';
 import PatternLock from '../../Scenes/Screen_PatternLock';
 import ScreenHider from '../Utils/ScreenHider';
 import SelectLogin from '../../Scenes/Select_Login';
+import Util from '../Utils/Util';
 
 
 // COMPONENTS
@@ -240,7 +241,9 @@ class TwoFactorAuthMachine extends Component {
             } else {
               if (Main.isOtherLogin === true) {
                 Main.isOtherLogin = false;
-                AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => { }).done();
+              //  AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => { }).done();
+              }else{
+                Util.saveUserDataSecure("RPasswd",Main.dnaPasswd).done();
               }
               Main.gotNotification = false;
               this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
@@ -251,6 +254,8 @@ class TwoFactorAuthMachine extends Component {
         if (Main.isOtherLogin === true) {
           Main.isOtherLogin = false;
         }
+         const chlngJson = res.pArgs.response.ResponseData;
+      
 
         //Removing user preference when user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
@@ -260,14 +265,7 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("rememberuser", "empty");
         }
 
-        //Todo : cleanup
-        AsyncStorage.getItem("isPwdSet").then((flag) => {
-          if (flag === "YES") {
-            AsyncStorage.setItem("passwd", "empty");
-
-          }
-
-        }).done();
+       
 
         Alert.alert(
           'Error',
@@ -709,6 +707,20 @@ class TwoFactorAuthMachine extends Component {
    */
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
+  }
+  
+  
+  checkForPasswordChallenge(chlngJson){
+    if(chlngJson!=null && chlngJson.chlng!=null){
+      
+      for(var i = 0; i<chlngJson.chlng.length; i++){
+        if( chlngJson.chlng[i].chlng_name === 'pass'){
+          return true;
+        }
+      }
+         }
+    return false;
+   
   }
 
   /**
