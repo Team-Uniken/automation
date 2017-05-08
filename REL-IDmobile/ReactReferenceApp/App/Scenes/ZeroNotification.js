@@ -831,6 +831,7 @@ export default class NotificationMgmtScene extends Component {
             style={styles.modalInput}
             placeholder={'Enter Password'}
             secureTextEntry={true}
+            autoFocus={true}
             value={this.state.inputPassword}
             placeholderTextColor={Skin.colors.HINT_COLOR}
             onSubmitEditing={this.checkPassword.bind(this) }
