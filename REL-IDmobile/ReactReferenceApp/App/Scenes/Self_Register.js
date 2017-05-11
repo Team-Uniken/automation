@@ -402,7 +402,7 @@ class Register extends Component {
                     <Input
                       placeholder={'Phone Number'}
                       ref={'phoneNumber'}
-                      keyboardType={'numbers-and-punctuation'}
+                      keyboardType={'phone-pad'}
                       enablesReturnKeyAutomatically={true}
                       autoFocus={false}
                       autoCorrect={false}
