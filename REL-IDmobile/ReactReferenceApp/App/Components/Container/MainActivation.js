@@ -139,7 +139,15 @@ class MainActivation extends Component {
             }
           });
         }).done();
-      } catch (e) { }
+      } catch (e) {
+        ReactRdna.setCredentials(uName,"", false, (response) => {
+          if (response) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+          }
+        });
+      }
     }).done();
   }
 
