@@ -65,6 +65,38 @@
             endingLineNumber = "142"
             landmarkName = "RCT_EXPORT_METHOD()"
             landmarkType = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[ReactRdnaModule __rct_export__1437]"
+                  moduleName = "cbc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sudarshan/Documents/Uniken/GIT_HUB/REL-IDmobile/ReactReferenceApp/ios/NativeModules/ReactRdnaModule.m"
+                  timestampString = "514477649.562461"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "143"
+                  endingLineNumber = "143"
+                  offsetFromSymbolStart = "55">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ReactRdnaModule serviceAccessStopAll:]"
+                  moduleName = "cbc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sudarshan/Documents/Uniken/GIT_HUB/REL-IDmobile/ReactReferenceApp/ios/NativeModules/ReactRdnaModule.m"
+                  timestampString = "514477649.564427"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "63">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
