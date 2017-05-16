@@ -51,6 +51,7 @@ import NavButton from '../NavButton';
 let _toggleDrawer;
 let eventToggleDrawer = false;
 let onGetCredentialSubscriptions;
+var obj;
 
 
 
@@ -123,6 +124,7 @@ This method is called when the component will start to load
  This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
+    obj = this;
     console.log("eventToggleDrawer = " + eventToggleDrawer);
     if (eventToggleDrawer === true) {
       Events.rm('toggleDrawer', 'toggleDrawerID')
@@ -143,17 +145,28 @@ This method is called when the component will start to load
   }
   //to open 401 dialog
   open() {
-    this.setState({ open: true });
+    obj.setState({ open: true });
   }
   //to close 401 dialog
   close() {
-    this.setState({ open: false });
+    obj.setState({ open: false });
+  }
+  
+  validate(){
+    const user = this.state.userName;
+    const pass = this.state.password;
+    if (user.length != 0) {
+      obj.close();
+    }else{
+      alert('Please enter valid data');
+    }
+
   }
   
   //call to get 401 credential for domainUrl
   onGetCredentials(domainUrl) {
-    this.state.baseUrl = domainUrl.response;
-    this.open();
+    obj.state.baseUrl = domainUrl.response;
+    obj.open();
   }
 
   //get user name and password from 401 dialog and call setCredentials
@@ -368,7 +381,7 @@ This method is called when the component will start to load
             <TouchableHighlight
               onPress={() => {
                 this.selectedDialogOp = true;
-                this.close();
+                this.validate();
               } }
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
