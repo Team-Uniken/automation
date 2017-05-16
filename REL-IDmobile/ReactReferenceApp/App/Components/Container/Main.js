@@ -40,7 +40,6 @@ if (Config.ENV == 'cbc') {
   var BottomMenu = require("../view/cbcbottomMenu");
 } else if (Config.ENV == 'nwd') {
   var BottomMenu = require("../view/bottomMenu");
- 
 }
 
 import NavButton from '../NavButton';
@@ -315,9 +314,9 @@ This method is called when the component will start to load
         panOpenMask={0.2}>
         {this.buildNavBar() }
         {this.props.children}
-        <BottomMenu
+        {BottomMenu!=undefined && [<BottomMenu
           navigator={this.props.navigator}
-          bottomMenu={this.props.bottomMenu} />
+          bottomMenu={this.props.bottomMenu} />]}
         <Modal
           onPress={() => {
             this.setState({ userName: '', password: '', open: false }); this.cancelCreds();
