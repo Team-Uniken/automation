@@ -1,8 +1,10 @@
 package com.reactrefapp;
 
+import android.content.Context;
 import android.os.Handler;
 import android.telecom.Call;
 import android.util.Base64;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
@@ -14,16 +16,20 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+
 import com.uniken.rdna.RDNA;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -439,7 +445,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
         };
 
-        RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, context);
+        RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,getSSLCertificate(), context);
         rdnaObj = rdnaStatus.result;
 
         WritableMap errorMap = Arguments.createMap();
@@ -847,6 +853,48 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         writableArray.pushMap(errorMap);
         callback.invoke(writableArray);
+    }
+
+    public RDNA.RDNASSLCertificate getSSLCertificate(){
+        RDNA.RDNASSLCertificate certificate = null;
+        try {
+            byte[] data = getAssetContent(getReactApplicationContext(), "cert/clientcert.p12");
+//            String base64Byte1 = Base64.encodeToString(data,Base64.DEFAULT);
+//            String base64Byte2 = Base64.encodeToString(data,Base64.CRLF);
+//            String base64Byte3 = Base64.encodeToString(data,Base64.NO_CLOSE);
+//            String base64Byte4 = Base64.encodeToString(data,Base64.NO_PADDING);
+            String base64Byte5 = Base64.encodeToString(data,Base64.NO_WRAP);
+            certificate = new RDNA.RDNASSLCertificate(base64Byte5,"uniken123$");
+//            String base64Byte6 = Base64.encodeToString(data,Base64.URL_SAFE);
+//
+//            byte[] base64DecodedSud = Base64.decode(getAssetContent(getReactApplicationContext(),"baseencodedd.txt"),Base64.NO_WRAP);
+//
+//            if(Arrays.equals(data,base64DecodedSud)){
+//                Log.e("Init","Yay");
+//            }
+//
+//
+//            Log.e("Init","len" + data.length);
+        }catch (Exception e){}
+
+        return certificate;
+    }
+
+    public static byte[] getAssetContent(Context context, String file) throws IOException {
+        InputStream stream = null;
+        stream = context.getAssets().open(file);
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = stream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+
+        return buffer.toByteArray();
     }
 
     @ReactMethod
