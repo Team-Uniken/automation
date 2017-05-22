@@ -8,8 +8,8 @@
   "Profiles": [
                {
                "Name": "ubsrelidapp",
-               "Host": "124.66.133.78",
-               "Port": "4443",
+               "Host": "apisdkdemo.uniken.com",
+               "Port": "443",
                "RelId": "ubsrelidapp"
                }
                ]

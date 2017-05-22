@@ -8,7 +8,7 @@
   "Profiles": [
     {
       "Name": "apisdkdev.uniken.com",
-      "Host": "54.179.148.241",
+      "Host": "apisdkdev.uniken.com",
       "Port": "4443",
       "RelId": "apisdkdev.uniken.com"
     }
