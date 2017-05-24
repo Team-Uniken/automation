@@ -27,6 +27,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
  Use in this js
  */
 import Skin from '../../Skin';
+import Util from '../Utils/Util';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onGetpasswordModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -180,6 +181,7 @@ This method is called when the component will start to load
   onGetpassword(e) {
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
+                                          if(value){
                                           value = JSON.parse(value);
                                           Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
                                                                                ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
@@ -199,9 +201,18 @@ This method is called when the component will start to load
                                                                                                                  });
                                                                                         
                                                                                         }).done();
+                                          }else{
+                                          ReactRdna.setCredentials(uName,"", true, (response) => {
+                                                                   if (response) {
+                                                                   console.log('immediate response is' + response[0].error);
+                                                                   } else {
+                                                                   console.log('immediate response is' + response[0].error);
+                                                                   }
+                                                                   });
+                                          
+                                          }
                                           }).done();
   }
-
 
   //get user name and password from 401 dialog and call setCredentials
   checkCreds() {
