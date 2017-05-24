@@ -26,8 +26,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
-import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
+//import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 //import io.neson.react.notification.NotificationPackage;
+import com.facebook.react.modules.network.ReactCookieJarContainer;
+import com.facebook.stetho.Stetho;
+import okhttp3.OkHttpClient;
+import com.facebook.react.modules.network.OkHttpClientProvider;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import java.util.concurrent.TimeUnit;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -47,6 +54,19 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+        if(BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(0, TimeUnit.MILLISECONDS)
+                    .readTimeout(0, TimeUnit.MILLISECONDS)
+                    .writeTimeout(0, TimeUnit.MILLISECONDS)
+                    .cookieJar(new ReactCookieJarContainer())
+                    .addNetworkInterceptor(new StethoInterceptor())
+                    .build();
+            OkHttpClientProvider.replaceOkHttpClient(client);
+        }
         //FacebookSdk.sdkInitialize(getApplicationContext());
       //  Code for facebook key hash
 //        try {
@@ -77,7 +97,7 @@ public class MainApplication extends Application implements ReactApplication {
               new MainReactPackage(),
             new ReactNativeConfigPackage(),
               new RDNAReactPackage(),
-              new ExtraDimensionsPackage(MainActivity.currentActivity),
+             // new ExtraDimensionsPackage(MainActivity.currentActivity),
               new ReactNativePushNotificationPackage(),
               new FBSDKPackage(getCallbackManager()),
               new RCTCameraPackage()
