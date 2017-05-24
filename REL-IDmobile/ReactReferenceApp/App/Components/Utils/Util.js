@@ -23,7 +23,9 @@ class Util extends Component {
             }
           }
         });
-      }
+       }else{
+               reject({ error: "Invalid encryptedText" });
+       }
     });
   }
 
@@ -42,7 +44,9 @@ class Util extends Component {
             }
           }
         });
-      }
+         }else{
+             reject({ error: "Invalid encryptedText" });
+        }
     });
   }
 

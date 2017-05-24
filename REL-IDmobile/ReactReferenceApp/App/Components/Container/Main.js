@@ -19,7 +19,7 @@ import Config from 'react-native-config';
 import Drawer from 'react-native-drawer';
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
-import {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, DeviceEventEmitter } from 'react-native'
+import {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, DeviceEventEmitter, AsyncStorage } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 
@@ -29,6 +29,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Skin from '../../Skin';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetpasswordModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 
 /*
@@ -50,6 +51,7 @@ import NavButton from '../NavButton';
 let _toggleDrawer;
 let eventToggleDrawer = false;
 let onGetCredentialSubscriptions;
+let onGetpasswordSubscriptions;
 var obj;
 
 
@@ -115,8 +117,14 @@ This method is called when the component will start to load
       onGetCredentialSubscriptions.remove();
       onGetCredentialSubscriptions = null;
     }
+    if (onGetpasswordSubscriptions) {
+      onGetpasswordSubscriptions.remove();
+      onGetpasswordSubscriptions = null;
+    }
     onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
       this.onGetCredentials.bind(this));
+    onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
+                                                                    this.onGetpassword.bind(this));
   }
   /*
  This is life cycle method of the react native component.
@@ -167,6 +175,33 @@ This method is called when the component will start to load
     obj.state.baseUrl = domainUrl.response;
     obj.open();
   }
+  
+  //to get stored password and call setCredentials  method
+  onGetpassword(e) {
+    let uName = e.response;
+    AsyncStorage.getItem(e.response).then((value) => {
+                                          value = JSON.parse(value);
+                                          Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
+                                                                               ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
+                                                                                                        if (response) {
+                                                                                                        console.log('immediate response is' + response[0].error);
+                                                                                                        } else {
+                                                                                                        console.log('immediate response is' + response[0].error);
+                                                                                                        }
+                                                                                                        });
+                                                                               }).catch((error)=>{
+                                                                                        ReactRdna.setCredentials(uName,"", true, (response) => {
+                                                                                                                 if (response) {
+                                                                                                                 console.log('immediate response is' + response[0].error);
+                                                                                                                 } else {
+                                                                                                                 console.log('immediate response is' + response[0].error);
+                                                                                                                 }
+                                                                                                                 });
+                                                                                        
+                                                                                        }).done();
+                                          }).done();
+  }
+
 
   //get user name and password from 401 dialog and call setCredentials
   checkCreds() {
@@ -332,6 +367,7 @@ This method is called when the component will start to load
               this.checkCreds();
             } else {
               this.selectedDialogOp = false;
+             this.setState({ userName: '', password: '', open: false });
               this.cancelCreds();
             }
           } }>

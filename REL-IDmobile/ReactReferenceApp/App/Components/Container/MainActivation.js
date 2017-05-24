@@ -41,6 +41,7 @@ let obj;
 let onGetCredentialSubscriptions;
 let onGetpasswordSubscriptions;
 
+
 class MainActivation extends Component {
   constructor(props) {
     super(props);
@@ -104,13 +105,13 @@ class MainActivation extends Component {
 
   //to open 401 dialog 
   open() {
-    this.setState({
+    obj.setState({
       open: true
     });
   }
   //to close 401 dialog 
   close() {
-    this.setState({
+    obj.setState({
       open: false
     });
   }
@@ -132,15 +133,14 @@ class MainActivation extends Component {
   }
   //call to get 401 credential for domainUrl
   onGetCredentials(domainUrl) {
-    this.state.baseUrl = domainUrl.response;
-    this.open();
+    obj.state.baseUrl = domainUrl.response;
+    obj.open();
   }
 
   //to get stored password and call setCredentials  method
   onGetpassword(e) {
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
-      try {
         value = JSON.parse(value);
         Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
           ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
@@ -150,16 +150,16 @@ class MainActivation extends Component {
               console.log('immediate response is' + response[0].error);
             }
           });
-        }).done();
-      } catch (e) {
-        ReactRdna.setCredentials(uName,"", false, (response) => {
-          if (response) {
-            console.log('immediate response is' + response[0].error);
-          } else {
-            console.log('immediate response is' + response[0].error);
-          }
-        });
-      }
+        }).catch((error)=>{
+                    ReactRdna.setCredentials(uName,"", true, (response) => {
+                                                                          if (response) {
+                                                                          console.log('immediate response is' + response[0].error);
+                                                                          } else {
+                                                                          console.log('immediate response is' + response[0].error);
+                                                                          }
+                                                                          });
+                                                 
+                                                 }).done();
     }).done();
   }
 
@@ -232,261 +232,6 @@ class MainActivation extends Component {
   }
 
 
-  //   render() {
-  //     console.log('\n\n\n  Main Activation render called again');
-  // //    this.state.visible = this.props.visible;
-  //     if(Platform.OS == "android"){
-  //       return (
-  //               <View style={Skin.activationStyle.container} onPress={this.dismiss}>
-  //                 <StatusBar
-  //                   backgroundColor={Skin.main.STATUS_BAR_BG}
-  //                   barStyle={'light-content'}
-  //                 />
-  //                 <View style={Skin.activationStyle.bgbase} />
-  //                 <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
-  //                 <View style={Skin.activationStyle.bgcolorizer} />
-  //                   <Text style={[Skin.activationStyle.loadertext,{opacity:0}]}>Processing...</Text>
-  //                 <View style={[Skin.activationStyle.centering_wrap,{opacity:this.state.opacity}]}>
-  //                   <View style={Skin.activationStyle.wrap}>
-  //                     {this.props.children}
-  //                   </View>
-  //                 </View>
-  //                 <TouchableHighlight
-  //                   activeOpacity={1.0}
-  //                   style={{
-  //                     backgroundColor: Skin.login.CONNECTION_BUTTON_BG,
-  //                     height: 50,
-  //                     width: 50,
-  //                     alignItems: 'center',
-  //                     justifyContent: 'center',
-  //                     borderTopRightRadius: 20,
-  //                     opacity:this.state.isSettingButtonHide,
-  //                   }}
-  //                   underlayColor={Skin.login.CONNECTION_BUTTON_UNDERLAY}
-  //                   onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}
-  //                 >
-  //                   <View>
-  //                     <Text
-  //                       style={{
-  //                         color: Skin.login.CONNECTION_BUTTON_ICON_COLOR,
-  //                         fontSize: 30,
-  //                       }}
-  //                     >
-  //                     {Skin.icon.settings}
-  //                     </Text>
-
-  //                   </View>
-  //                 </TouchableHighlight>
-  //                 <Loader visible={this.state.visible}/>
-  //                 <Modal
-  //                 style={styles.modalwrap}
-  //                 overlayOpacity={0.75}
-  //                 offset={100}
-  //                 open={this.state.open}
-  //                 modalDidOpen={() => console.log('modal did open')}
-  //                 modalDidClose={() => {
-  //                                        if(this.selectedDialogOp){
-  //                                          this.selectedDialogOp = false;
-  //                                          this.checkCreds();
-  //                                        }
-  //                                        else{
-  //                                          this.selectedDialogOp = false;
-  //                                          this.cancelCreds();
-  //                                        }
-  //                                    }}>
-  //                 <View style={styles.modalTitleWrap}>
-  //                 <Text style={styles.modalTitle}>
-  //                 401 Authentication{'\n'}{this.state.baseUrl}
-  //                 </Text>
-
-  //                 <View style={styles.border}></View>
-
-  //                 </View>
-  //                 <TextInput
-  //                 autoCorrect={false}
-  //                 ref='userName'
-  //                 style={styles.modalInput}
-  //                 placeholder={'Enter username'}
-  //                 value={this.state.userName}
-  //                 onChange={this.onUserChange.bind(this)}
-  //                 placeholderTextColor={Skin.colors.HINT_COLOR}
-  //                  />
-  //                 <TextInput
-  //                 autoCorrect={false}
-  //                 ref='password'
-  //                 style={styles.modalInput}
-  //                 secureTextEntry
-  //                 placeholder={'Enter password'}
-  //                 value={this.state.password}
-  //                 onChange={this.onPasswordChange.bind(this)}
-  //                 placeholderTextColor={Skin.colors.HINT_COLOR}
-  //                 />
-  //                 <View style={styles.border}></View>
-  //                 <View style={{
-  //                 flex: 1,
-  //                 flexDirection: 'row'
-  //                 }}>
-  //                 <TouchableHighlight
-  //                 onPress={() => {
-  //                                   this.selectedDialogOp = false;
-  //                                   this.setState({
-  //                                               userName:'',
-  //                                               password:'',
-  //                                               open: false
-  //                                               });
-  //                                 }}
-  //                 underlayColor={Skin.colors.REPPLE_COLOR}
-  //                 style={styles.modalButton}>
-  //                 <Text style={styles.modalButtonText}>
-  //                 CANCEL
-  //                 </Text>
-  //                 </TouchableHighlight>
-  //                 <TouchableHighlight
-  //                 onPress={()=> {
-  //                                selectedDialogOp = true;
-  //                                this.close();
-  //                               }}
-  //                 underlayColor={Skin.colors.REPPLE_COLOR}
-  //                 style={styles.modalButton}>
-  //                 <Text style={styles.modalButtonText}>
-  //                 SUBMIT
-  //                 </Text>
-  //                 </TouchableHighlight>
-  //                 </View>
-  //                 </Modal>
-  //               </View>
-  //           );
-  //     }else if(Platform.OS == "ios"){
-  //         return (
-  //           <TouchableWithoutFeedback onPress={this.dismiss}>
-  //             <View style={Skin.activationStyle.container}>
-  //               <StatusBar
-  //                 backgroundColor={Skin.main.STATUS_BAR_BG}
-  //                 barStyle={'light-content'}
-  //               />
-  //               <View style={Skin.activationStyle.bgbase} />
-  //               <Image style={Skin.activationStyle.bgimage} source={require('image!bg')} />
-  //               <View style={Skin.statusBarStyle.default}>
-  //                 <StatusBar
-  //                   barStyle="light-content"
-  //                 />
-  //               </View>
-  //               <View style={Skin.activationStyle.bgcolorizer} />
-  //                 <View style={[Skin.activationStyle.centering_wrap,{opacity:this.state.opacity}]}>
-  //                 <View style={Skin.activationStyle.wrap}>
-  //                   {this.props.children}
-  //                 </View>
-  //               </View>
-  //               <TouchableHighlight
-  //                 activeOpacity={1.0}
-  //                 style={{
-  //                   backgroundColor: Skin.login.CONNECTION_BUTTON_BG,
-  //                   height: 50,
-  //                   width: 50,
-  //                   alignItems: 'center',
-  //                   justifyContent: 'center',
-  //                   borderTopRightRadius: 20,
-  //                   opacity:this.state.isSettingButtonHide,
-  //                 }}
-  //                 underlayColor={Skin.login.CONNECTION_BUTTON_UNDERLAY}
-  //                 onPress={() => this.props.navigator.push({ id: 'ConnectionProfile' })}
-  //               >
-  //                 <View >
-  //                   <Text
-  //                     style={{
-  //                       color: Skin.login.CONNECTION_BUTTON_ICON_COLOR,
-  //                       fontSize: 30,
-  //                     }}
-  //                   >
-  //                   {Skin.icon.settings}
-  //                   </Text>
-  //                 </View>
-  //               </TouchableHighlight>
-
-  //                 <Loader visible={this.state.visible}/>
-
-  //                 <Modal
-  //                 style={styles.modalwrap}
-  //                 overlayOpacity={0.75}
-  //                 offset={100}
-  //                 open={this.state.open}
-  //                 modalDidOpen={() => console.log('modal did open')}
-  //                 modalDidClose={() => {
-  //                                        if(this.selectedDialogOp){
-  //                                          this.selectedDialogOp = false;
-  //                                          this.checkCreds();
-  //                                        }
-  //                                        else{
-  //                                          this.selectedDialogOp = false;
-  //                                          this.cancelCreds();
-  //                                        }
-  //                                    }}>
-  //                 <View style={styles.modalTitleWrap}>
-  //                 <Text style={styles.modalTitle}>
-  //                 401 Authentication{'\n'}{this.state.baseUrl}
-  //                 </Text>
-
-  //                 <View style={styles.border}></View>
-  //                 </View>
-  //                 <TextInput
-  //                 autoCorrect={false}
-  //                 ref='userName'
-  //                 style={styles.modalInput}
-  //                 placeholder={'Enter username'}
-  //                 value={this.state.userName}
-  //                 onChange={this.onUserChange.bind(this)}
-  //                 placeholderTextColor={Skin.colors.HINT_COLOR}
-  //                  />
-  //                 <TextInput
-  //                 autoCorrect={false}
-  //                 ref='password'
-  //                 style={styles.modalInput}
-  //                 secureTextEntry
-  //                 placeholder={'Enter password'}
-  //                 value={this.state.password}
-  //                 onChange={this.onPasswordChange.bind(this)}
-  //                 placeholderTextColor={Skin.colors.HINT_COLOR}
-  //                 />
-  //                 <View style={styles.border}></View>
-  //                 <View style={{
-  //                 flex: 1,
-  //                 flexDirection: 'row'
-  //                 }}>
-  //                 <TouchableHighlight
-  //                 onPress={() => {
-  //                                   this.selectedDialogOp = false;
-  //                                   this.setState({
-  //                                               userName:'',
-  //                                               password:'',
-  //                                               open: false
-  //                                               });
-  //                               }}
-  //                 underlayColor={Skin.colors.REPPLE_COLOR}
-  //                 style={styles.modalButton}>
-  //                 <Text style={styles.modalButtonText}>
-  //                 CANCEL
-  //                 </Text>
-  //                 </TouchableHighlight>
-  //                 <TouchableHighlight
-  //                 onPress={()=> {
-  //                                this.selectedDialogOp = true;
-  //                                this.close();
-  //                               }}
-  //                 underlayColor={Skin.colors.REPPLE_COLOR}
-  //                 style={styles.modalButton}>
-  //                 <Text style={styles.modalButtonText}>
-  //                 SUBMIT
-  //                 </Text>
-  //                 </TouchableHighlight>
-  //                 </View>
-  //                 </Modal>
-
-  //             </View>
-
-  //           </TouchableWithoutFeedback>
-  //         );
-  //     }
-  //   }
 
 /*
   This method is used to render the componenet with all its element.
@@ -599,7 +344,7 @@ class MainActivation extends Component {
             <Loader visible={this.state.visible}/>
               <Modal
               onPress={() => {
-              this.setState({ userName: '', password: '', open: false }); this.cancelCreds();
+              this.setState({ userName: '', password: '', open: false });this.cancelCreds();
               } }
               style={styles.modalwrap}
               overlayOpacity={0.75}
@@ -612,6 +357,7 @@ class MainActivation extends Component {
               this.checkCreds();
               } else {
               this.selectedDialogOp = false;
+              this.setState({ userName: '', password: '', open: false });
               this.cancelCreds();
               }
               } }>
