@@ -141,6 +141,7 @@ class MainActivation extends Component {
   onGetpassword(e) {
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
+                                          if(value){
         value = JSON.parse(value);
         Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
           ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
@@ -160,6 +161,16 @@ class MainActivation extends Component {
                                                                           });
                                                  
                                                  }).done();
+                                          }else{
+                                          ReactRdna.setCredentials(uName,"", true, (response) => {
+                                                                   if (response) {
+                                                                   console.log('immediate response is' + response[0].error);
+                                                                   } else {
+                                                                   console.log('immediate response is' + response[0].error);
+                                                                   }
+                                                                   });
+
+                                          }
     }).done();
   }
 

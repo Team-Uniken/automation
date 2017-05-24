@@ -735,6 +735,11 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   if (i==0) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *name = [defaults valueForKey:@"userName"];
+    
+    if(name==nil){
+      name =@"";
+    }
+    
 //    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
 //                                                              body:@{@"response":name}];
     [self sendEventWithName:@"onGetpassword" body:@{@"response":name}];
