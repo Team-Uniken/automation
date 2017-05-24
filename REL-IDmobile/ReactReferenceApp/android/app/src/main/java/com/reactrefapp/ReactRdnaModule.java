@@ -41,7 +41,7 @@ import java.util.concurrent.Semaphore;
 public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     int i;
-    String uName;
+    String uName = "";
 
     Handler uiHandler;
     Semaphore lock = new Semaphore(0,true);
