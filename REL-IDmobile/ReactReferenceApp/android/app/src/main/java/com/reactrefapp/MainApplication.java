@@ -56,17 +56,17 @@ public class MainApplication extends Application implements ReactApplication {
         super.onCreate();
 
 
-//        if(BuildConfig.DEBUG) {
-//            Stetho.initializeWithDefaults(this);
-//            OkHttpClient client = new OkHttpClient.Builder()
-//                    .connectTimeout(0, TimeUnit.MILLISECONDS)
-//                    .readTimeout(0, TimeUnit.MILLISECONDS)
-//                    .writeTimeout(0, TimeUnit.MILLISECONDS)
-//                    .cookieJar(new ReactCookieJarContainer())
-//                    .addNetworkInterceptor(new StethoInterceptor())
-//                    .build();
-//            OkHttpClientProvider.replaceOkHttpClient(client);
-//        }
+      //  if(BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(0, TimeUnit.MILLISECONDS)
+                    .readTimeout(0, TimeUnit.MILLISECONDS)
+                    .writeTimeout(0, TimeUnit.MILLISECONDS)
+                    .cookieJar(new ReactCookieJarContainer())
+                    .addNetworkInterceptor(new StethoInterceptor())
+                    .build();
+            OkHttpClientProvider.replaceOkHttpClient(client);
+       // }
         //FacebookSdk.sdkInitialize(getApplicationContext());
       //  Code for facebook key hash
 //        try {
@@ -87,7 +87,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
-    protected boolean getUseDeveloperSupport() {
+    public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
 

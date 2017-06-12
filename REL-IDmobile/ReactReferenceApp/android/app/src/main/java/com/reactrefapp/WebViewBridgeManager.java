@@ -100,6 +100,11 @@ public class WebViewBridgeManager extends ReactWebViewManager {
         view.loadUrl("javascript:document.body.innerHTML = '';");
     }
 
+    @ReactProp(name = "messagingEnabled")
+    public void setMessagingEnabled(WebView view,boolean enabled) {
+        super.setMessagingEnabled(view,enabled);
+    }
+
     @ReactProp(name = "proxy")
     public void setProxy(WebView view, ReadableMap source){
         int proxyPort = 0;

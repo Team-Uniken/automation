@@ -242,6 +242,7 @@ WebViewBridge.propTypes = {
   /**
   * Sets the proxy for this WebView. 
   */
+  messagingEnabled:PropTypes.bool,
   proxy: PropTypes.object,
   webViewClient: PropTypes.object,
   ...WebView.propTypes,
