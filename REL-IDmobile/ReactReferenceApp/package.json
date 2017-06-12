@@ -23,7 +23,7 @@
     "react-native-camera": "^0.6.0",
     "react-native-checkbox-field": "^1.1.0",
     "react-native-communications": "^1.0.1",
-    "react-native-config": "^0.4.2",
+    "react-native-config": "git+https://github.com/hussainkantawala/react-native-config.git#6b5216e0a587906166936091cb3b348fef0e8b32",
     "react-native-datepicker": "^1.4.4",
     "react-native-deprecated-custom-components": "^0.1.0",
     "react-native-dismiss-keyboard": "^1.0.0",
