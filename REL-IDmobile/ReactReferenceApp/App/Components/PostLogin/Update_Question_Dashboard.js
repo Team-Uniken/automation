@@ -202,9 +202,11 @@ export default class UpdateQuestionSet extends Component {
         <View style={{ backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
             <View
-              style={{ justifyContent: 'center' }}>
-              <View>
-                <View style={Skin.layout0.top.container}>
+            style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
+            <View style={[{ justifyContent: 'center',alignItems:'center' },{flex:1}]}>
+            <View style={[{justifyContent: 'center',alignItems:'center' , flex: 40,
+                           
+                               alignItems: "center"}]}>
                   <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
                   <Margin
                     space={16}/>
@@ -241,13 +243,12 @@ export default class UpdateQuestionSet extends Component {
                     onSubmitEditing={this.setSecrets.bind(this) }
                     onChange={this.onAnswerChange.bind(this) }
                     />
-                  <KeyboardSpacer topSpacing={-30}/>
-                  <View style={Skin.layout0.bottom.container}>
-                    <Button
-                      label= {this.btnText() }
-                      onPress={this.setSecrets.bind(this) }/>
-                  </View>
+            <Button
+            label= {this.btnText() }
+            onPress={this.setSecrets.bind(this) }/>
                 </View>
+           
+            <KeyboardSpacer topSpacing={-60}/>
               </View>
             </View>
           </MainActivation>

@@ -1010,7 +1010,7 @@ This method is called when the component will start to load
                   </View>
                 </ScrollView>
                 <View
-                  style={Skin.layout1.bottom.wrap}>
+                  style={[Skin.layout1.bottom.wrap,{marginBottom:100}]}>
                   <View style={Skin.layout1.bottom.container}>
                     <Button
                       label={Skin.text['1']['1'].submit_button}
@@ -1018,7 +1018,7 @@ This method is called when the component will start to load
                       />
                   </View>
                 </View>
-                <KeyboardSpacer topSpacing={-55}/>
+                <KeyboardSpacer topSpacing={100}/>
               </View >
             ) }
           </MainActivation>

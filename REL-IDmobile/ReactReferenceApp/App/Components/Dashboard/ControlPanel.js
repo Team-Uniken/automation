@@ -15,7 +15,8 @@ import ReactNative from 'react-native';
  */
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
-import {View, Text, Navigator, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, IntentAndroid, InteractionManager, DeviceEventEmitter} from 'react-native';
+import {Navigator} from 'react-native-deprecated-custom-components'
+import {View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, IntentAndroid, InteractionManager, DeviceEventEmitter} from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Communications from 'react-native-communications';
 

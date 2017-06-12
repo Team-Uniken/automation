@@ -259,8 +259,9 @@ export default class UpdatePasswordSet extends Component {
         >
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
-            <View style={[Skin.layout1.wrap, { marginTop: 20 }]}>
-              <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
+            <View style={[Skin.layout1.wrap, ]}>
+            <ScrollView style={[Skin.layout1.content.scrollwrap]} keyboardShouldPersistTaps={true}
+            contentContainerStyle={{justifyContent:'center',flexGrow:1}}>
                 <View style={Skin.layout1.content.wrap}>
                   <View style={Skin.layout1.content.container}>
                     <View style={Skin.layout1.content.top.container}>
@@ -300,18 +301,22 @@ export default class UpdatePasswordSet extends Component {
                         onChange={this.onConfirmPasswordChange.bind(this) }
                         onSubmitEditing={this.setPassword.bind(this) }
                         />
+            <View style={[Skin.layout1.bottom.wrap,{marginBottom:100}]}>
+            <View style={Skin.layout1.bottom.container}>
+            <Button style={Skin.layout1.bottom.button}
+            onPress={this.setPassword.bind(this) }
+            label={Skin.text['1']['1'].submit_button}/>
+            </View>
+            </View>
+            <KeyboardSpacer topSpacing={0}/>
                     </View>
+            
                   </View>
+            
                 </View>
+           
               </ScrollView>
-              <View style={Skin.layout1.bottom.wrap}>
-                <View style={Skin.layout1.bottom.container}>
-                  <Button style={Skin.layout1.bottom.button}
-                    onPress={this.setPassword.bind(this) }
-                    label={Skin.text['1']['1'].submit_button}/>
-                </View>
-              </View>
-              <KeyboardSpacer topSpacing={0}/>
+           
             </View>
           </MainActivation>
         </View>
