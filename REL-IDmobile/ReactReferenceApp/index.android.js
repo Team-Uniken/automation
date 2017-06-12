@@ -13,8 +13,10 @@
 import React from 'react';
 import { FormattedWrapper } from 'react-native-globalize';            //Provides access to all formatting options as well as easy-to-use React Native components
 import buildStyleInterpolator from 'buildStyleInterpolator';
-import { AppRegistry, Navigator, Text } from 'react-native';
+import { AppRegistry, Text } from 'react-native';
 import { Component } from 'react';
+import {Navigator} from 'react-native-deprecated-custom-components'
+
 
 /**
  * The application has various screens, staring from initial splash screen i.e load.js, followed by REL-ID user activation and authentication screens.
