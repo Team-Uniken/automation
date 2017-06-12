@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RCTBridgeModule.h"
+#import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 #import "RDNA.h"
-#import "RCTEventEmitter.h"
+
 @interface ReactRdnaModule : RCTEventEmitter<RCTBridgeModule,RDNACallbacks>
 +(void)terminateRDNA;
 @end

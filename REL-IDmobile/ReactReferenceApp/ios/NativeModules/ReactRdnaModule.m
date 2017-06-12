@@ -8,10 +8,10 @@
 
 #import "ReactRdnaModule.h"
 #import <CoreLocation/CoreLocation.h>
-#import <RCTLog.h>
-#import "RCTBridge.h"
-#import <RCTConvert.h>
-#import "RCTEventDispatcher.h"
+#import <React/RCTLog.h>
+#import <React/RCTBridge.h>
+#import <React/RCTConvert.h>
+#import <React/RCTEventDispatcher.h>
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 
