@@ -8,12 +8,12 @@
  */
 
 #import "AppDelegate.h"
-#import "RCTRootView.h"
-#import "RCTPushNotificationManager.h"
-#import "RCTBundleURLProvider.h"
+
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "ReactRdnaModule.h"
-//#include "TargetConditionals.h"
+#import "RCTPushNotificationManager.h"
 
 @implementation AppDelegate
 @synthesize apnsDeviceToken;

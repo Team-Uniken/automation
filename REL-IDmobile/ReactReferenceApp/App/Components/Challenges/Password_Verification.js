@@ -120,7 +120,7 @@ class PasswordVerification extends Component {
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'} />
 
-          <View style={{ justifyContent: 'center' }}>
+            <View style={[ Skin.layout1.wrap, { flex: 1 },{justifyContent: 'center'} ]}>
             <View style={Skin.layout1.title.wrap}>
               <Title onClose={() => {
                 this.close();

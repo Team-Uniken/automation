@@ -228,7 +228,7 @@ class Activation_Code extends Component {
       this.setState({ activatonCode: '' });
       this.state.isPoped = true;
       if (this.state.showCamera) {
-        this.refs[CAMERA_REF].setCameraMode("off");
+       // this.refs[CAMERA_REF].setCameraMode("off");
       }
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
@@ -351,7 +351,7 @@ class Activation_Code extends Component {
   close() {
     let responseJson = this.props.url.chlngJson;
     if (this.state.showCamera) {
-      this.refs[CAMERA_REF].setCameraMode("off");
+      //this.refs[CAMERA_REF].setCameraMode("off");
       this.hideCamera();
     }
     Events.trigger('showPreviousChallenge');

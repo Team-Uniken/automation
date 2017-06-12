@@ -18,8 +18,9 @@ import Config from 'react-native-config';
 import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
 var PushNotification = require('react-native-push-notification');
-import {Text, DeviceEventEmitter, View, NetInfo,Animated, InteractionManager, Navigator, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
+import {Text, DeviceEventEmitter, View, NetInfo,Animated, InteractionManager, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
+import {Navigator} from 'react-native-deprecated-custom-components'
 
 
 /*
@@ -69,23 +70,25 @@ const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.Reac
 /**
  * Return flavour specific connectionProfile and load image.
  */
+
+var erelid = null;
 if (Config.ENV == 'sandp') {
-  var erelid = require("../../Connection_profiles/snp.json");
+  erelid = require("../../Connection_profiles/snp.json");
   var welcome = require('../img/sandp.png')
 } else if (Config.ENV == 'nwd') {
-  var erelid = require("../../Connection_profiles/nwd.json");
+  erelid = require("../../Connection_profiles/nwd.json");
   var welcome = require('../img/nwd.png')
 } else if (Config.ENV == 'stock') {
-  var erelid = require("../../Connection_profiles/stock.json");
+  erelid = require("../../Connection_profiles/stock.json");
   var welcome = require('../img/stock.png')
 } else if (Config.ENV == 'ubs') {
-  var erelid = require("../../Connection_profiles/ubs.json");
+  erelid = require("../../Connection_profiles/ubs.json");
   var welcome = require('../img/ubs.png')
 }else if (Config.ENV == 'cbc') {
-    var erelid = require("../../Connection_profiles/cbc.json");
+  erelid = require("../../Connection_profiles/cbc.json");
     var welcome = require('../img/cbc.png')
 }else if (Config.ENV == 'relidmobile') {
-  var erelid = require("../../Connection_profiles/relidmobile.json");
+  erelid = require("../../Connection_profiles/relidmobile.json");
   var welcome = require('../img/rmobile.png')
 }
 
@@ -161,7 +164,7 @@ class Load extends Component {
     NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
   }
   _handleConnectivityChange(isConnected) {
-       Main.isConnected = isConnected;
+       Main.isConnected = true;
   }
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true

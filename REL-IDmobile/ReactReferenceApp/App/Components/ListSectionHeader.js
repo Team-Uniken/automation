@@ -16,10 +16,11 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 /* 
   Instantiaions
 */
+import {Navigator} from 'react-native-deprecated-custom-components'
+
 var {
 	View,
 	Text,
-	Navigator,
 	TextInput,
 	TouchableHighlight,
 	StyleSheet

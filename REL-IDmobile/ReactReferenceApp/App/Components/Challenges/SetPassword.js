@@ -215,7 +215,7 @@ This method is called when the component will start to load
                 label={Skin.text['1']['1'].submit_button}/>
             </View>
           </View>
-          <KeyboardSpacer topSpacing={-50}/>
+          <KeyboardSpacer topSpacing={20}/>
         </View>
       </MainActivation>
     );

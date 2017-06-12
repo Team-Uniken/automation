@@ -226,11 +226,11 @@ class MainActivation extends Component {
 //Hide spinner progress view
   hideLoaderView() {
     console.log('\n in hide Loader view of main activation');
-    this.setState({ visible: false });
-    this.setState({ opacity: 1 });
-    this.setState({ loadertext: 0 });
-    this.setState({ isSettingButtonHide: 1 });
-    console.log(this.state.visible);
+    obj.setState({ visible: false });
+    obj.setState({ opacity: 1 });
+    obj.setState({ loadertext: 0 });
+    obj.setState({ isSettingButtonHide: 1 });
+    console.log(obj.state.visible);
   }
 //Show spinner progress view
   showLoaderView() {

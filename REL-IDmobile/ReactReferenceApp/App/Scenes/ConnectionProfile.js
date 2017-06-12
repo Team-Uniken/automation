@@ -203,7 +203,7 @@ class ConnectionProfileScene extends Component {
               style={Skin.ConnectionProfile.button}
               underlayColor={Skin.colors.REPPLE_COLOR}>
               <Image
-                source={require('image!del') }
+                source={{ uri: "del.png" }}
                 style={Skin.ConnectionProfile.images} />
             </TouchableHighlight>
           </View>

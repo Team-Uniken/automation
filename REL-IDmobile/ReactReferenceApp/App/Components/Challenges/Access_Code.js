@@ -146,7 +146,7 @@ class AccessCode extends Component {
     if (allScreens[allScreens.length - 1].id == 'otp') {
       if (this.state.isPoped) {
         if (this.state.showCamera) {
-          this.refs[CAMERA_REF].setCameraMode("on");
+          //this.refs[CAMERA_REF].setCameraMode("on");
         }
 
         this.state.isPoped = false;
@@ -234,7 +234,7 @@ class AccessCode extends Component {
       this.setState({ accessCode: '' });
       this.state.isPoped = true;
       if (this.state.showCamera) {
-        this.refs[CAMERA_REF].setCameraMode("off");
+       // this.refs[CAMERA_REF].setCameraMode("off");
       }
       responseJson.chlng_resp[0].response = vkey;
       Events.trigger('showNextChallenge', { response: responseJson });
@@ -287,7 +287,7 @@ class AccessCode extends Component {
         responseJson.chlng_resp[0].response = aCode;
         this.setState({ accessCode: '' });
         if (this.state.showCamera) {
-          this.refs[CAMERA_REF].setCameraMode("off");
+         // this.refs[CAMERA_REF].setCameraMode("off");
         }
         setTimeout(() => {
           Events.trigger('showNextChallenge', {
@@ -322,7 +322,7 @@ class AccessCode extends Component {
   //show previous challenge on click of cross button or android back button.
   close() {
     if (this.state.showCamera) {
-      this.refs[CAMERA_REF].setCameraMode("off");
+     // this.refs[CAMERA_REF].setCameraMode("off");
       this.hideCamera();
     }
     let responseJson = this.props.url.chlngJson;

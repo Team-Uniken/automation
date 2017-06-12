@@ -196,8 +196,8 @@ export default class QuestionSet extends Component {
 
           </View>
           <View
-            style={{ justifyContent: 'center' }}>
-            <View>
+            style={[{ justifyContent: 'center' },{flex:1}]}>
+            <View style={[{flex:1}]}>
               <View style={Skin.layout0.top.container}>
                 <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
                 <Margin

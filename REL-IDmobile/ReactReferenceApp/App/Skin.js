@@ -610,7 +610,7 @@ module.exports.layout1 = {
   },
   content: {
     scrollwrap: {
-      flex: 66,
+      flexGrow: 66,
       flexDirection: 'column',
       //backgroundColor: "rgba(10,20,132,1)",
     },
@@ -715,7 +715,8 @@ module.exports.layout1 = {
       //backgroundColor: "rgba(50,107,180,1)"
     },
     button: {
-
+      width: 260,
+    alignSelf:'center'
     },
     footertext: {
       color: BUTTON_BG_COLOR,
