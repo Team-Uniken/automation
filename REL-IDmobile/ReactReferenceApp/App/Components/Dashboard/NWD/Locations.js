@@ -1,13 +1,33 @@
 import React, { Component, PropTypes } from 'react';
-import ReactNative, { View, Text, ListView, Image, MapView, PermissionsAndroid, Platform} from 'react-native'
+import ReactNative, { View, Text, ListView, Image, PermissionsAndroid, Platform,Dimensions} from 'react-native'
+import MapView from 'react-native-maps';
 import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ControlPanel from '../ControlPanel';
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'
 import NavBar from '../../view/navbar.js'
+import MyLocationMapMarker from '../../view/MyLocationMapMarker';
+var isEqual = require('lodash.isequal');
 
 
+const propTypes = {
+  ...MapView.Marker.propTypes,
+  // override this prop to make it optional
+coordinate: PropTypes.shape({
+                            latitude: PropTypes.number.isRequired,
+                            longitude: PropTypes.number.isRequired,
+                            }),
+};
+
+
+const { width, height } = Dimensions.get('window');
+
+var ASPECT_RATIO = width / height;
+var LATITUDE = 37.78825;
+var LONGITUDE = -122.4324;
+var LATITUDE_DELTA = 0.0922;
+var LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class Locations extends Component {
 
@@ -24,6 +44,13 @@ class Locations extends Component {
       lon: '',
       locationPermissionAndroid: false,
       showMap: true,
+    myPosition: null,
+    region: {
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
+    },
     }
     this.requestLocationPermission = this.requestLocationPermission.bind(this);
     this.getCurrentPosition = this.getCurrentPosition.bind(this);
@@ -85,8 +112,26 @@ class Locations extends Component {
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
       console.log('watching');
-      var lastPosition = JSON.stringify(position);
-      this.setState({ lastPosition });
+     // var lastPosition = JSON.stringify(position);
+      //this.setState({ lastPosition });
+                                                       const myLastPosition = this.state.myPosition;
+                                                       const myPosition = position.coords;
+                                                       if (!isEqual(myPosition, myLastPosition)) {
+                                                       
+                                                       //this.state.region.longitude = myPosition.longitude ;
+                                                       //this.state.region.latitude = myPosition.latitude ;
+                                                       LONGITUDE = myPosition.longitude;
+                                                       LATITUDE = myPosition.latitude
+                                                       this.setState({ myPosition });
+                                                       
+                                                       this.state.region = {latitude:myPosition.latitude,
+                                                       longitude: myPosition.longitude,
+                                                       latitudeDelta: LATITUDE_DELTA,
+                                                       longitudeDelta: LONGITUDE_DELTA,}
+                                                       
+                                                       this.map.animateToRegion(this.state.region);
+                                                       
+                                                       }
     });
   }
 
@@ -138,9 +183,15 @@ class Locations extends Component {
     console.log('trigger')
     Events.trigger('toggleDrawer')
   }
+  onRegionChange(region) {
+    this.setState({ region });
+  }
 
   render() {
     //console.log(this.props);
+    let {coordinate} = this.props;
+    
+    coordinate = this.state.myPosition;
     return (
       <Main
         controlPanel={ControlPanel}
@@ -168,13 +219,22 @@ class Locations extends Component {
           flex: 1,
           backgroundColor: Skin.colors.BACK_GRAY
         }}>
-          <MapView
-            style={{
-              flex: 1,
-              width: Skin.SCREEN_WIDTH
-            }}
-            showsUserLocation={true}
-            followUserLocation={true} />
+          
+            <MapView
+            {...this.props}
+            ref={ref => { this.map = ref; }}
+            style={[{flex:1},{width:Skin.SCREEN_WIDTH}]}
+            scrollEnabled={true}
+            zoomEnabled={true}
+            pitchEnabled={true}
+            rotateEnabled={true}
+            onRegionChange={region => this.onRegionChange(region)}
+            
+            >
+            <MyLocationMapMarker
+            coordinate={coordinate}
+            />
+            </MapView>
         </View>
       </Main>
     );
@@ -241,4 +301,5 @@ Locations.defaultProps = {
   },
 }
 
-export default Locations
+module.exports  = Locations
+Locations.propTypes = propTypes;
