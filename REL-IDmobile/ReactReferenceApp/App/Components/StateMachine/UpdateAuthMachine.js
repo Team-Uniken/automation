@@ -35,6 +35,8 @@ import Events from 'react-native-simple-events';
 import Constants from '../Utils/Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 var Main = require('../Container/Main');
+import {Navigator} from 'react-native-deprecated-custom-components'
+
 
 /*
   Instantiaions
@@ -48,7 +50,6 @@ let onUpdateChallengeStatusSubscription
 let obj;
 let screenId;
 const {
-  Navigator,
   AsyncStorage,
   Alert,
   DeviceEventEmitter,
@@ -168,7 +169,9 @@ class UpdateAuthMachine extends Component {
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
           }
-          alert(res.pArgs.response.StatusMsg);
+          setTimeout(() => {
+             alert(res.pArgs.response.StatusMsg);
+          }, 100);
           //this.props.navigator.popToRoute({ id: 'Main', title: 'DashBoard', url: '' });
           Events.trigger('onPostUpdate', null);
         }
@@ -180,6 +183,7 @@ class UpdateAuthMachine extends Component {
           AsyncStorage.setItem("rememberuser", "empty");
         }
 
+         setTimeout(() => {
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
@@ -221,10 +225,13 @@ class UpdateAuthMachine extends Component {
             style: 'cancel',
           }]
         );
+       }, 100);
       }
     } else {
       console.log(e);
+       setTimeout(() => {
       alert('Internal system error occurred.' + res.errCode);
+      }, 100);
     }
   }
   /**

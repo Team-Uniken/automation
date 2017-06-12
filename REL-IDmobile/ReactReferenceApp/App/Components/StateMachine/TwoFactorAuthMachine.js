@@ -70,6 +70,8 @@ import RegisterOption from '../../Scenes/Register_Options';
 import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import {Navigator} from 'react-native-deprecated-custom-components'
+
 /*
  Instantiaions
  */
@@ -88,7 +90,6 @@ let stepdone = false;
 let mode = "normal";
 
 const {
-  Navigator,
   AsyncStorage,
   Alert,
   DeviceEventEmitter,
@@ -265,7 +266,8 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("rememberuser", "empty");
         }
 
-       
+        
+        setTimeout(() => {
 
         Alert.alert(
           'Error',
@@ -298,13 +300,16 @@ class TwoFactorAuthMachine extends Component {
             style: 'cancel',
           }]
         );
+                                              }, 100);
       }
     } else {
       if (Main.isOtherLogin === true) {
         Main.isOtherLogin = false;
       }
       console.log(e);
-      //Show alert as errorCode is not 0 and call resetChallenge 
+      //Show alert as errorCode is not 0 and call resetChallenge
+      
+       setTimeout(() => {
       Alert.alert(
         'Error',
         'Internal system error occurred.', [{
@@ -316,6 +321,7 @@ class TwoFactorAuthMachine extends Component {
           style: 'cancel',
         }]
       );
+                   }, 100);
     }
   }
 

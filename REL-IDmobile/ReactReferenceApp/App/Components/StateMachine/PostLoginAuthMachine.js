@@ -38,6 +38,8 @@ import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Utils/Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native'
+import {Navigator} from 'react-native-deprecated-custom-components'
+
 const onCheckChallengeResponseStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
@@ -58,7 +60,6 @@ let onCheckChallengeResponseSubscription;
 let obj;
 let screenId;
 const {
-  Navigator,
   AsyncStorage,
   Alert,
   DeviceEventEmitter,
@@ -179,6 +180,8 @@ class PostLoginAuthMachine extends Component {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
+        
+        setTimeout(() => {
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
@@ -209,10 +212,13 @@ class PostLoginAuthMachine extends Component {
             style: 'cancel',
           }]
         );
+       }, 100);            
       }
     } else {
       console.log(e);
+       setTimeout(() => {
       alert('Internal system error occurred.' + res.errCode);
+      }, 100);
     }
   }
   /**
