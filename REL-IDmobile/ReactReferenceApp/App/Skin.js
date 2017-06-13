@@ -707,6 +707,7 @@ module.exports.layout1 = {
       bottom: 0,
       left: 0,
       alignItems: 'center',
+      marginBottom:20
       //backgroundColor: "rgba(155,199,255,1)"
     },
     container: {

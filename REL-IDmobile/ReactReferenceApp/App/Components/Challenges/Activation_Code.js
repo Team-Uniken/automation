@@ -305,7 +305,7 @@ class Activation_Code extends Component {
 
         $this.state.isPoped = true;
         if ($this.state.showCamera) {
-          $this.refs[CAMERA_REF].setCameraMode("off");
+         // $this.refs[CAMERA_REF].setCameraMode("off");
         }
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(() => {
@@ -412,7 +412,7 @@ class Activation_Code extends Component {
 
               <Text style={[Skin.layout1.content.camera.prompt, {
                 position: 'absolute',
-                top: 30,
+                top: 20,
                 zIndex: 1,
                 width: Skin.SCREEN_WIDTH,
                 backgroundColor: 'transparent'
