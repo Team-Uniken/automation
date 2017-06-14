@@ -415,7 +415,7 @@ class Activation_Code extends Component {
 
               <Text style={[Skin.layout1.content.camera.prompt, {
                 position: 'absolute',
-                top: 30,
+                top: 20,
                 zIndex: 1,
                 width: Skin.SCREEN_WIDTH,
                 backgroundColor: 'transparent'
