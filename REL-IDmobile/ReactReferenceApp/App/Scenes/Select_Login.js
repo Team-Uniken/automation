@@ -17,7 +17,7 @@ import ReactNative from 'react-native';
 import Events from 'react-native-simple-events';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
-import {Text, View, Platform, BackAndroid, AsyncStorage, StatusBar} from 'react-native'
+import {Text, View, Platform, BackHandler, AsyncStorage, StatusBar} from 'react-native'
 const FBSDK = require('react-native-fbsdk');
 
 /*
@@ -118,7 +118,7 @@ class SelectLogin extends Component {
       }
     });
 
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       return true;
     }.bind(this));
   }

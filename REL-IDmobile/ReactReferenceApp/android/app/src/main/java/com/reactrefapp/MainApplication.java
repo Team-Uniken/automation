@@ -14,6 +14,12 @@ import com.dieam.reactnativepushnotification.modules.RNPushNotificationHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
+import com.burnweb.rnwebview.RNWebViewPackage;
+import io.neson.react.notification.NotificationPackage;
+import com.joshblour.reactnativepermissions.ReactNativePermissionsPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.oney.gcm.GcmPackage;
+import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -95,6 +101,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new RNWebViewPackage(),
+          //  new NotificationPackage(),
+            new ReactNativePermissionsPackage(),
+            new MapsPackage(),
+            new GcmPackage(),
+           // new ExtraDimensionsPackage(),
             new ReactNativeConfigPackage(),
               new RDNAReactPackage(),
              // new ExtraDimensionsPackage(MainActivity.currentActivity),

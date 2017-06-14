@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TextInput, TouchableHighlight, StatusBar, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, BackAndroid, } from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, StatusBar, DeviceEventEmitter, TouchableOpacity, Platform, Alert, AsyncStorage, BackHandler, } from 'react-native'
 import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 
@@ -55,7 +55,7 @@ export default class DeviceName extends Component {
      This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));

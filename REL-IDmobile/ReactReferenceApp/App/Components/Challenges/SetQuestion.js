@@ -16,7 +16,7 @@ import ReactNative from 'react-native';
  */
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
-import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackAndroid, } from 'react-native'
+import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackHandler, } from 'react-native'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 
@@ -66,7 +66,7 @@ export default class QuestionSet extends Component {
      This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));

@@ -18,7 +18,7 @@ import Config from 'react-native-config';
 import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
 var PushNotification = require('react-native-push-notification');
-import {Text, DeviceEventEmitter, View, NetInfo,Animated, InteractionManager, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackAndroid, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
+import {Text, DeviceEventEmitter, View, NetInfo,Animated, InteractionManager, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import {Navigator} from 'react-native-deprecated-custom-components'
 
@@ -100,7 +100,7 @@ if (Config.ENV == 'sandp') {
 //disable console.log
 console.log = function () { }
 
-BackAndroid.addEventListener('hardwareBackPress', function () {
+BackHandler.addEventListener('hardwareBackPress', function () {
   return true;
 });
 

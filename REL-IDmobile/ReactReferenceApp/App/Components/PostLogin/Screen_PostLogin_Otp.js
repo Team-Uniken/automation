@@ -13,7 +13,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackAndroid } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, PermissionsAndroid, Platform, BackHandler } from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -23,7 +23,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
  */
 import Skin from '../../Skin';
 import MainActivation from '../Container/MainActivation';
-
+ 
 /*
  Custom View
  */
@@ -68,7 +68,7 @@ This method is called when the component will start to load
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));
@@ -90,7 +90,7 @@ This method is called when the component will start to load
   */
   async requestCameraPermission() {
     try {
-      const granted = await PermissionsAndroid.requestPermission(
+      const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
           'title': Skin.CLIENT_TITLE_TEXT + ' App Camera Permission',
@@ -118,7 +118,7 @@ This method is called when the component will start to load
     This method is used to request the camera permission from the user.
   */
   checkCameraPermission() {
-    PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.CAMERA)
+    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
       .then((response) => {
         //response is an object mapping type to permission
         if (response) {

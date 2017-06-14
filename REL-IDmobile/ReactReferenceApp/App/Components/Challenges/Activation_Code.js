@@ -11,7 +11,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, AlertIOS, PermissionsAndroid, Platform, BackAndroid, AsyncStorage, TouchableHighlight, Linking } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, StatusBar, ScrollView, Alert, AlertIOS, PermissionsAndroid, Platform, BackHandler, AsyncStorage, TouchableHighlight, Linking } from 'react-native';
 import Camera from 'react-native-camera';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -125,7 +125,7 @@ class Activation_Code extends Component {
       this.checkCameraPermission();
     }
     
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));
@@ -148,7 +148,7 @@ class Activation_Code extends Component {
   */
   async requestCameraPermission() {
     try {
-      const granted = await PermissionsAndroid.requestPermission(
+      const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
           'title': Skin.CLIENT_TITLE_TEXT + ' App Camera Permission',
@@ -176,7 +176,7 @@ class Activation_Code extends Component {
     This method is used to request the camera permission from the user.
   */
   checkCameraPermission() {
-    PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.CAMERA)
+    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)
       .then(response => {
         //response is an object mapping type to permission
         if (response) {
@@ -228,6 +228,7 @@ class Activation_Code extends Component {
       this.setState({ activatonCode: '' });
       this.state.isPoped = true;
       if (this.state.showCamera) {
+        this.hideCamera();
        // this.refs[CAMERA_REF].setCameraMode("off");
       }
       responseJson.chlng_resp[0].response = vkey;
@@ -298,6 +299,7 @@ class Activation_Code extends Component {
 
         let responseJson = $this.props.url.chlngJson;
         obj.state.barCodeFlag = false;
+        
         $this.setState({ activatonCode: '' });
         if ($this.state.showAlert === true) {
           $this.dismissAlertModal();
@@ -305,7 +307,8 @@ class Activation_Code extends Component {
 
         $this.state.isPoped = true;
         if ($this.state.showCamera) {
-          $this.refs[CAMERA_REF].setCameraMode("off");
+          //$this.refs[CAMERA_REF].setCameraMode("off");
+          //this.hideCamera();
         }
         responseJson.chlng_resp[0].response = aCode;
         setTimeout(() => {

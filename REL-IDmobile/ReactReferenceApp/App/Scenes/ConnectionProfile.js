@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Modal from 'react-native-simple-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackAndroid} from 'react-native'
+import {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackHandler} from 'react-native'
 
 
 
@@ -52,7 +52,7 @@ class ConnectionProfileScene extends Component {
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function() {
+    BackHandler.addEventListener('hardwareBackPress', function() {
       this.props.navigator.resetTo({
                 id: 'Load'
               });

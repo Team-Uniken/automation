@@ -13,7 +13,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, Alert} from 'react-native';
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackHandler, Alert} from 'react-native';
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -83,7 +83,7 @@ export default class UpdatePasswordSet extends Component {
   This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close);
+    BackHandler.addEventListener('hardwareBackPress', this.close);
   }
   //To check password policy
   validatePassword(textval) {
@@ -196,7 +196,7 @@ export default class UpdatePasswordSet extends Component {
     } else {
       Events.trigger('closeUpdateMachine', null);
     }
-    BackAndroid.removeEventListener('hardwareBackPress', this.close);
+    BackHandler.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
 

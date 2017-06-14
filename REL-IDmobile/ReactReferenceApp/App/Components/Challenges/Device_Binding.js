@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TouchableHighlight, TouchableOpacity, Image, Animated, StyleSheet, AsyncStorage, StatusBar, BackAndroid, } from 'react-native'
+import {View, Text, TouchableHighlight, TouchableOpacity, Image, Animated, StyleSheet, AsyncStorage, StatusBar, BackHandler, } from 'react-native'
 
 /*
  Use in this js
@@ -109,7 +109,7 @@ export default class DeviceBinding extends Component {
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));

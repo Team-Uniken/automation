@@ -24,7 +24,7 @@ const {
   Platform,
   AsyncStorage,
   StatusBar,
-  BackAndroid
+  BackHandler
 } = ReactNative;
 
 const {
@@ -101,16 +101,16 @@ class PatternLock extends Component {
 
   componentDidMount() {
     if(this.disableClose)
-      BackAndroid.addEventListener('hardwareBackPress', this.doNothing)
+      BackHandler.addEventListener('hardwareBackPress', this.doNothing)
     else
-      BackAndroid.addEventListener('hardwareBackPress', this.close)
+      BackHandler.addEventListener('hardwareBackPress', this.close)
   }
 
   componentWillUnmount() {
     if(this.disableClose)
-       BackAndroid.removeEventListener('hardwareBackPress', this.doNothing);
+       BackHandler.removeEventListener('hardwareBackPress', this.doNothing);
     else
-       BackAndroid.removeEventListener('hardwareBackPress', this.close);
+       BackHandler.removeEventListener('hardwareBackPress', this.close);
   }
 
   onSubmit() {

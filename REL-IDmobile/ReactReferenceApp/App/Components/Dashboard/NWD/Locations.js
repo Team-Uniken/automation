@@ -137,7 +137,7 @@ class Locations extends Component {
 
   async requestLocationPermission() {
     try {
-      const granted = await PermissionsAndroid.requestPermission(
+      const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           'title': Skin.CLIENT_TITLE_TEXT+' App Location Permission',
@@ -162,7 +162,7 @@ class Locations extends Component {
   }
 
   checkLocationPermission() {
-    PermissionsAndroid.checkPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
       .then(response => {
         //response is an object mapping type to permission
         if (response) {

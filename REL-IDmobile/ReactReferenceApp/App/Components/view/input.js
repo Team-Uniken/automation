@@ -70,6 +70,7 @@ class Input extends Component {
           keyboardAppearance={'light'}
           value={this.props.value}
           enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}
+          underlineColorAndroid={'transparent'}
           />
       </View>
     );

@@ -13,7 +13,7 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, BackAndroid, } from 'react-native'
+import {View, Text, TextInput, TouchableOpacity, TouchableHighlight, ScrollView, BackHandler, } from 'react-native'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 
@@ -54,7 +54,7 @@ export default class QuestionVerification extends Component {
   This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));

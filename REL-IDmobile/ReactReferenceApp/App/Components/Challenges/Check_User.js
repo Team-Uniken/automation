@@ -15,7 +15,7 @@ import React, { Component, } from 'react';
 import Events from 'react-native-simple-events';
 import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
-import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackAndroid, StatusBar } from 'react-native'
+import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar } from 'react-native'
 
 /*
  Use in this js
@@ -88,7 +88,7 @@ class UserLogin extends Component {
   */
   componentDidMount() {
     obj = this;
-    BackAndroid.addEventListener('hardwareBackPress', function() {
+    BackHandler.addEventListener('hardwareBackPress', function() {
       this.close();
       return true;
     }.bind(this));

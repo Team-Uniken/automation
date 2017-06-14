@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
-import {View, Text, BackAndroid, StatusBar} from 'react-native';
+import {View, Text, BackHandler, StatusBar} from 'react-native';
 import {Navigator} from 'react-native-deprecated-custom-components'
 
 

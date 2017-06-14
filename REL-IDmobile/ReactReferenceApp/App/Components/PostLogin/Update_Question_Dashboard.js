@@ -13,7 +13,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackAndroid, } from 'react-native';
+import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackHandler, } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -59,14 +59,14 @@ export default class UpdateQuestionSet extends Component {
   }
 
   componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.close);
+    BackHandler.removeEventListener('hardwareBackPress', this.close);
   }
   /*
      This is life cycle method of the react native component.
      This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close);
+    BackHandler.addEventListener('hardwareBackPress', this.close);
     // console.log('----- QuestionSet - componentDidMount');
     // console.log(this.props);
     const { data, sectionIds } = this.renderListViewData(this.props.url.chlngJson.chlng_prompt[0]);
@@ -206,7 +206,7 @@ export default class UpdateQuestionSet extends Component {
             <View style={[{ justifyContent: 'center',alignItems:'center' },{flex:1}]}>
             <View style={[{justifyContent: 'center',alignItems:'center' , flex: 40,
                            
-                               alignItems: "center"}]}>
+                              }]}>
                   <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
                   <Margin
                     space={16}/>

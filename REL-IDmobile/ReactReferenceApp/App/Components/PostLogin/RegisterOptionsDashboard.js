@@ -13,7 +13,7 @@ import ReactNative from 'react-native';
 /*
  Required for this js
  */
-import {Text, View, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage, Alert, AlertIOS, Platform, InteractionManager, BackAndroid, } from 'react-native';
+import {Text, View, ScrollView, StatusBar, DeviceEventEmitter, AsyncStorage, Alert, AlertIOS, Platform, InteractionManager, BackHandler, } from 'react-native';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
@@ -134,7 +134,7 @@ This method is called when the component will start to load
   This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       return true;
     }.bind(this));
     InteractionManager.runAfterInteractions(() => {

@@ -50,7 +50,7 @@ export default class MyLocationMapMarker extends React.PureComponent {
     if (this.props.coordinate) return;
 
     if (Platform.OS === 'android') {
-      PermissionsAndroid.requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
         .then(granted => {
           if (granted && this.mounted) this.watchLocation();
         });

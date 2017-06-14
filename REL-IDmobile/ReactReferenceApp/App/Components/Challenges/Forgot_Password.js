@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackAndroid, Alert} from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, Platform, ScrollView, BackHandler, Alert} from 'react-native'
 import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import Util from "../Utils/Util";
@@ -86,7 +86,7 @@ export default class ForgatePassword extends Component {
      This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.close);
+    BackHandler.addEventListener('hardwareBackPress', this.close);
   }
   //To check password policy
   validatePassword(textval) {
@@ -198,7 +198,7 @@ export default class ForgatePassword extends Component {
       this.props.parentnav.pop();
     }
 
-    BackAndroid.removeEventListener('hardwareBackPress', this.close);
+    BackHandler.removeEventListener('hardwareBackPress', this.close);
     return true;
   }
   /**

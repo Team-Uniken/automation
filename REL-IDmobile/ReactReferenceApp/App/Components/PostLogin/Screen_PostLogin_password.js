@@ -13,7 +13,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackAndroid, StatusBar } from 'react-native';
+import {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar } from 'react-native';
 import Events from 'react-native-simple-events';
 import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
@@ -62,7 +62,7 @@ class PasswordVerification extends Component {
 */
   componentDidMount() {
     dismissKeyboard();
-    BackAndroid.addEventListener('hardwareBackPress', function () {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));

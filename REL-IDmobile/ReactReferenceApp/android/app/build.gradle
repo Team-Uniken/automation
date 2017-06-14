@@ -1,11 +1,6 @@
 apply plugin: "com.android.application"
 
 
-import com.android.build.OutputFile
-
-
-//project.ext.set("envConfigFiles", ["nwdDebug": ".env.nwd","sandpDebug":".env.sandp"])
-
 project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",relidmobile:".env.relidmobile"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
@@ -96,6 +91,7 @@ android {
         }
 
         multiDexEnabled true
+        resValue "string", "build_config_package", "com.reactrefapp"
     }
 
 //    splits {
@@ -226,6 +222,12 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-webview-android')
+    compile project(':react-native-system-notification')
+    compile project(':react-native-permissions')
+    compile project(':react-native-maps')
+    compile project(':react-native-gcm-android')
+    compile project(':react-native-extra-dimensions-android')
     compile project(':react-native-config')
     compile project(':react-native-camera')
     //compile fileTree(include: ['*.jar'], dir: 'libs')
