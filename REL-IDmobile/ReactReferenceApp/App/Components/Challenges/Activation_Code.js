@@ -405,7 +405,7 @@ class Activation_Code extends Component {
             </Title>
           </View>
           <ScrollView
-            style={Skin.layout1.content.scrollwrap}
+            style={[Skin.layout1.content.scrollwrap,{ flexGrow: 66 }]}
             contentContainerStyle={{ flex: 1 }}>
             <View style={{
               backgroundColor: '#000000',

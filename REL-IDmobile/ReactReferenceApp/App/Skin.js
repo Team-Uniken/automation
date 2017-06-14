@@ -610,7 +610,6 @@ module.exports.layout1 = {
   },
   content: {
     scrollwrap: {
-      flexGrow: 66,
       flexDirection: 'column',
       //backgroundColor: "rgba(10,20,132,1)",
     },
