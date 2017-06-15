@@ -222,12 +222,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-webview-android')
-    compile project(':react-native-system-notification')
-    compile project(':react-native-permissions')
     compile project(':react-native-maps')
-    compile project(':react-native-gcm-android')
-    compile project(':react-native-extra-dimensions-android')
     compile project(':react-native-config')
     compile project(':react-native-camera')
     //compile fileTree(include: ['*.jar'], dir: 'libs')
