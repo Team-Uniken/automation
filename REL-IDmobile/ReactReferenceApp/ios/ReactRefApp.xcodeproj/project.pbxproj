@@ -40,7 +40,6 @@
 		1A6151C61E4CDF5B00B3C9B2 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
 		1A6151C71E4CDF5B00B3C9B2 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		1A6151C91E4CDF5B00B3C9B2 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
-		1A6151CA1E4CDF5B00B3C9B2 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
 		1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
@@ -139,7 +138,6 @@
 		558C99A71E7BF7A30002C56F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
 		558C99A81E7BF7A30002C56F /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		558C99AA1E7BF7A30002C56F /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
-		558C99AB1E7BF7A30002C56F /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
 		558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
 		558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		558C99B01E7BF7A30002C56F /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
@@ -176,7 +174,6 @@
 		55D351801E1E0F7C00806F82 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
 		55D351811E1E0F7C00806F82 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		55D351831E1E0F7C00806F82 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
-		55D351841E1E0F7C00806F82 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
 		55D351861E1E0F7C00806F82 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
 		55D351871E1E0F7C00806F82 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		55D351881E1E0F7C00806F82 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
@@ -208,8 +205,6 @@
 		65127E131D795B4000FB36E1 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		65127E141D795B4000FB36E1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C91CC9FAD5009E6168 /* Images.xcassets */; };
 		65127E161D795B4000FB36E1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 654F81CA1CC9FAD5009E6168 /* Info.plist */; };
-		65209C301E28B70C009E52F3 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55202FA81E124A7E005286B8 /* libReactNativePermissions.a */; };
-		65209D0F1E2E30A7009E52F3 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55202FA81E124A7E005286B8 /* libReactNativePermissions.a */; };
 		6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		65281C301D6C34F700F15ACE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
 		654B80D51DBE0C620052D415 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
@@ -262,7 +257,6 @@
 		65D7F7381E308FC8009ACC25 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
 		65D7F7391E308FC8009ACC25 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		65D7F73B1E308FC8009ACC25 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
-		65D7F73C1E308FC8009ACC25 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
 		65D7F73F1E308FC8009ACC25 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
 		65D7F7401E308FC8009ACC25 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		65D7F7411E308FC8009ACC25 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
@@ -279,7 +273,6 @@
 		65F9811D1ECED6C300208701 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 65F981161ECED6C300208701 /* clientcert.p12 */; };
 		716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096B4050EB024090BB820E85 /* libAirMaps.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		B0CF8B55BF304536AE90B14B /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 424C93016AC84233830D863A /* libReactNativePermissions.a */; };
 		CEF10CBBB34C44C2812CF73A /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 617F92D6FBF04371B6760DC9 /* libReactNativeConfig.a */; };
 /* End PBXBuildFile section */
 
@@ -353,13 +346,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
-		};
-		55202FA71E124A7E005286B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6D45FA733C9846B1A939D5E9 /* ReactNativePermissions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
-			remoteInfo = ReactNativePermissions;
 		};
 		5535B19E1EE01D15007AE1B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -662,7 +648,6 @@
 		1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBC.xcassets; sourceTree = "<group>"; };
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		3475BFD97D954F819B1A2E01 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
-		424C93016AC84233830D863A /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		5506A3341EE150C000870068 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		55074F9B1EE7F22600BF6DC8 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
@@ -715,7 +700,6 @@
 		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesUBS.xcassets; sourceTree = "<group>"; };
 		65D7F7B11E30A3F9009ACC25 /* ubs.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ubs.ttf; sourceTree = "<group>"; };
 		65F981161ECED6C300208701 /* clientcert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = clientcert.p12; sourceTree = "<group>"; };
-		6D45FA733C9846B1A939D5E9 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		6F434F749DC140C5BCDC414D /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -753,7 +737,6 @@
 				654B80D51DBE0C620052D415 /* Bolts.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5797D192178A4FEB996EFD7F /* libRCTCamera.a in Frameworks */,
-				B0CF8B55BF304536AE90B14B /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,7 +770,6 @@
 				1A6151C61E4CDF5B00B3C9B2 /* Bolts.framework in Frameworks */,
 				1A6151C71E4CDF5B00B3C9B2 /* libRCTWebSocket.a in Frameworks */,
 				1A6151C91E4CDF5B00B3C9B2 /* libRCTCamera.a in Frameworks */,
-				1A6151CA1E4CDF5B00B3C9B2 /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,7 +783,6 @@
 				55074FA61EE81EF800BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074FA51EE81EF200BF6DC8 /* libAirMaps.a in Frameworks */,
 				55074F941EE7EF0700BF6DC8 /* libRCTAnimation.a in Frameworks */,
-				65209C301E28B70C009E52F3 /* libReactNativePermissions.a in Frameworks */,
 				552BB7A11E1BA0B90009F274 /* libstdc++.tbd in Frameworks */,
 				552BB7A21E1BA0B90009F274 /* libTouchID.a in Frameworks */,
 				552BB7A31E1BA0B90009F274 /* libRCTTouchId.a in Frameworks */,
@@ -850,7 +831,6 @@
 				558C99A71E7BF7A30002C56F /* Bolts.framework in Frameworks */,
 				558C99A81E7BF7A30002C56F /* libRCTWebSocket.a in Frameworks */,
 				558C99AA1E7BF7A30002C56F /* libRCTCamera.a in Frameworks */,
-				558C99AB1E7BF7A30002C56F /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,7 +862,6 @@
 				55D351801E1E0F7C00806F82 /* Bolts.framework in Frameworks */,
 				55D351811E1E0F7C00806F82 /* libRCTWebSocket.a in Frameworks */,
 				55D351831E1E0F7C00806F82 /* libRCTCamera.a in Frameworks */,
-				55D351841E1E0F7C00806F82 /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,7 +872,6 @@
 				55074F9E1EE7F22600BF6DC8 /* libapi-sdk.a in Frameworks */,
 				55074F921EE7EEEA00BF6DC8 /* libRCTAnimation.a in Frameworks */,
 				55074F911EE7EC2B00BF6DC8 /* libRCTCamera.a in Frameworks */,
-				65209D0F1E2E30A7009E52F3 /* libReactNativePermissions.a in Frameworks */,
 				6582FD6A1D9526920075C15D /* libstdc++.tbd in Frameworks */,
 				6582FD671D95257D0075C15D /* libTouchID.a in Frameworks */,
 				6582FD5F1D9525050075C15D /* libRCTTouchId.a in Frameworks */,
@@ -945,7 +923,6 @@
 				65D7F7381E308FC8009ACC25 /* Bolts.framework in Frameworks */,
 				65D7F7391E308FC8009ACC25 /* libRCTWebSocket.a in Frameworks */,
 				65D7F73B1E308FC8009ACC25 /* libRCTCamera.a in Frameworks */,
-				65D7F73C1E308FC8009ACC25 /* libReactNativePermissions.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,14 +1046,6 @@
 				55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */,
 			);
 			path = libs;
-			sourceTree = "<group>";
-		};
-		55202F941E124A7E005286B8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				55202FA81E124A7E005286B8 /* libReactNativePermissions.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		5535B19A1EE01D15007AE1B6 /* Products */ = {
@@ -1204,7 +1173,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				6D45FA733C9846B1A939D5E9 /* ReactNativePermissions.xcodeproj */,
 				5A302D3D19354BB9B400DA70 /* RCTCamera.xcodeproj */,
 				3475BFD97D954F819B1A2E01 /* RCTFBSDK.xcodeproj */,
 				AD1D57AD9D504CB281F071FF /* ReactNativeConfig.xcodeproj */,
@@ -1564,10 +1532,6 @@
 					ProjectRef = AD1D57AD9D504CB281F071FF /* ReactNativeConfig.xcodeproj */;
 				},
 				{
-					ProductGroup = 55202F941E124A7E005286B8 /* Products */;
-					ProjectRef = 6D45FA733C9846B1A939D5E9 /* ReactNativePermissions.xcodeproj */;
-				},
-				{
 					ProductGroup = 6582FD611D95256E0075C15D /* Products */;
 					ProjectRef = 6582FD601D95256E0075C15D /* TouchID.xcodeproj */;
 				},
@@ -1654,13 +1618,6 @@
 			fileType = archive.ar;
 			path = libRCTAnimation.a;
 			remoteRef = 5506A33C1EE150C000870068 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55202FA81E124A7E005286B8 /* libReactNativePermissions.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativePermissions.a;
-			remoteRef = 55202FA71E124A7E005286B8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5535B19F1EE01D15007AE1B6 /* libRCTCamera.a */ = {
@@ -2205,7 +2162,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"\"$(SRCROOT)/../App/react-native-camera/ios",
 				);
 				INFOPLIST_FILE = ReactRefApp/Info.plist;
@@ -2253,7 +2209,6 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"\"$(SRCROOT)/../App/react-native-camera/ios",
 				);
 				INFOPLIST_FILE = ReactRefApp/Info.plist;
@@ -2304,7 +2259,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"\"$(SRCROOT)/../App/react-native-camera/ios",
 				);
 				INFOPLIST_FILE = cbc.plist;
@@ -2354,7 +2308,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"\"$(SRCROOT)/../App/react-native-camera/ios",
 				);
 				INFOPLIST_FILE = cbc.plist;
@@ -2508,7 +2461,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../App/react-native-camera/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions",
 				);
 				INFOPLIST_FILE = relidmobile.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -2559,7 +2511,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../App/react-native-camera/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions",
 				);
 				INFOPLIST_FILE = relidmobile.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -2614,7 +2565,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"\"$(SRCROOT)/../App/react-native-camera/ios/**",
 				);
 				INFOPLIST_FILE = stock.plist;
@@ -2666,7 +2616,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 					"\"$(SRCROOT)/../App/react-native-camera/ios/**",
 				);
 				INFOPLIST_FILE = stock.plist;
@@ -2722,7 +2671,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ReactRefApp/ReactRefAppDeveloper-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2768,7 +2716,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
-					"$(SRCROOT)/../node_modules/react-native-permissions/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ReactRefApp/ReactRefAppDeveloper-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2818,8 +2765,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../App/react-native-camera/ios",
-					"/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions",
 				);
 				INFOPLIST_FILE = ubs.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -2870,8 +2815,6 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../App/react-native-camera/ios",
-					"/**",
-					"$(SRCROOT)/../node_modules/react-native-permissions",
 				);
 				INFOPLIST_FILE = ubs.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
