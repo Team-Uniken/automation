@@ -1,11 +1,14 @@
 package com.reactrefapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.telecom.Call;
 import android.util.Base64;
 import android.util.Log;
 
+import com.better.workspace.lib.BetterMTD;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -52,6 +55,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     private ReactApplicationContext context;
     private String TAG = "ReactRdnaModule";
     private HashMap<Integer,Callback> callbackHashMap = new HashMap<>();
+    private final int ERROR_HEALTH_CHECK_FAILED = 1000;
 
     public ReactRdnaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -84,6 +88,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         constants.put("RdnaCipherSpecs", Constants.CYPHER_SPEC);
         constants.put("RdnaCipherSalt", Constants.CYPHER_SALT);
         constants.put("AppVersion",BuildConfig.VERSION_NAME);
+        constants.put("ERROR_HEALTH_CHECK_FAILED",ERROR_HEALTH_CHECK_FAILED);
         return constants;
     }
 
@@ -94,7 +99,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     //CONST_AGENTINFO, CONST_RDNA_IP, CONST_RDNA_PORT, CONST_CYPHER_SPEC, CONST_CYPHER_SALT, null, (response) =>
     @ReactMethod
-    public void initialize(String agentInfo, String authGatewayHNIP, int authGatewayPort, String cipherSpecs, String cipherSalt, String proxySettings, Callback callback) {
+    public void initialize(final String agentInfo,final String authGatewayHNIP,final int authGatewayPort,final String cipherSpecs,final String cipherSalt, String proxySettings,final Callback callback) {
 
         callbacks = new RDNA.RDNACallbacks(){
 
@@ -445,16 +450,56 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
         };
 
-        RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,getSSLCertificate(), context);
-        rdnaObj = rdnaStatus.result;
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                BetterMTD betterMTD = BetterMTD.init(context.getApplicationContext());
+                boolean check =  betterMTD.healthCheck(context.getApplicationContext());
+                RDNA.RDNAStatus<RDNA> rdnaStatus = null;
+                if(check == true){
+                    rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,null,null, context);
+                    rdnaObj = rdnaStatus.result;
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", rdnaStatus.errorCode);
+                    WritableMap errorMap = Arguments.createMap();
+                    errorMap.putInt("error", rdnaStatus.errorCode);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+                    WritableArray writableArray = Arguments.createArray();
+                    writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+                    callback.invoke(writableArray);
+                }else{
+                      Runnable runnable = new Runnable() {
+                          @Override
+                          public void run() {
+                              AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context.getCurrentActivity());
+                              alertBuilder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                                  @Override
+                                  public void onClick(DialogInterface dialogInterface, int i) {
+                                      System.exit(0);
+                                  }
+                              });
+
+                              alertBuilder.setTitle("Alert");
+                              alertBuilder.setMessage("This device is not safe");
+                              alertBuilder.setCancelable(false);
+                              alertBuilder.show();
+                          }
+                      };
+
+                      callOnMainThread(runnable);
+//                    WritableMap errorMap = Arguments.createMap();
+//                    errorMap.putInt("error",ERROR_HEALTH_CHECK_FAILED);
+//
+//                    WritableArray writableArray = Arguments.createArray();
+//                    writableArray.pushMap(errorMap);
+//
+//                    callback.invoke(writableArray);
+                    Log.e("ReactRdnaModule","BetterMobi Health Check Failed!");
+                }
+            }
+        }).start();
     }
 
     @ReactMethod

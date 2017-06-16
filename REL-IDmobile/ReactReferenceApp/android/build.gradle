@@ -31,6 +31,25 @@ allprojects {
         flatDir {
             dirs 'libs'
         }
+
+        maven{
+            url 'https://www.jitpack.io'
+        }
+        mavenCentral()
+        maven {
+            url 'https://api.bitbucket.org/1.0/repositories/sirackh/workspacelib/raw/snapshots'
+            credentials{
+                username mavenUser
+                password mavenPassword
+            }
+        }
+        maven {
+            url "https://api.bitbucket.org/1.0/repositories/sirackh/workspacelib/raw/releases"
+            credentials{
+                username mavenUser
+                password mavenPassword
+            }
+        }
     }
 
 
