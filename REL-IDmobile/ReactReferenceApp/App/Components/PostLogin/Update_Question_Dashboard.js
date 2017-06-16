@@ -199,7 +199,7 @@ export default class UpdateQuestionSet extends Component {
         }}
         navigator={this.props.navigator}
         >
-        <View style={{ backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+        <View style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
           <MainActivation>
             <View
             style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
@@ -248,7 +248,7 @@ export default class UpdateQuestionSet extends Component {
             onPress={this.setSecrets.bind(this) }/>
                 </View>
            
-            <KeyboardSpacer topSpacing={-60}/>
+            <KeyboardSpacer topSpacing={-100}/>
               </View>
             </View>
           </MainActivation>
