@@ -248,8 +248,8 @@ export default class DeviceMgmtScene extends Component {
   //callback of rdna updateDeviceDetails api.
   onUpdateDeviceDetails(e) {
     const res = JSON.parse(e.response);
-    const statusCode = res.pArgs.response.StatusCode;
     if (res.errCode === 0) {
+      const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
         this.getRegisteredDeviceDetails();
       } else {
