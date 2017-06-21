@@ -14,6 +14,7 @@
 #import <React/RCTEventDispatcher.h>
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
+#import "ActiveShieldSDK.h"
 
 RDNA *rdnaObject;
 id<RDNACallbacks> rdnaClientCallbacks;
@@ -71,11 +72,17 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   RDNA *rdna;
   localbridgeDispatcher = _bridge;
   [self initParams];
-  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
-  rdnaObject = rdna;
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  if([ReactRdnaModule verifyBetterMobi]){
+    errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
+    rdnaObject = rdna;
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    callback(@[responseArray]);
+  }else{
+    NSDictionary *dictionary = @{@"error":@"Your device is not safe."};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    callback(@[responseArray]);
+  }
   
 }
 
@@ -933,6 +940,104 @@ RCT_EXPORT_METHOD(checkDeviceAuthorizationStatus:(RCTResponseSenderBlock) callba
            };
   
 }
+
+#pragma mark Better Mobile SDK API
+
++(BOOL)verifyBetterMobi{
+  ActiveShield *shield = [ActiveShield sharedInstance];
+  AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+  [shield addObserverWithCallback:^(NSArray<ASSecurityThreat *> *newThreats, NSArray<ASSecurityThreat *> *resolvedThreats, NSArray<ASSecurityThreat *> *allActiveThreats)
+   {
+     
+     NSLog(@"You have %lu new threats.", (unsigned long)newThreats.count);
+     
+     for (ASSecurityThreat *_threat in allActiveThreats)
+     {
+       switch (_threat.genus)
+       {
+         case ASSecurityThreatCategoryNone:
+           
+           NSLog(@"The device's has no threat.");
+           
+           
+           break;
+         case ASSecurityThreatCategorySystem:
+           //we have a system level threat, ie. jailbroken device or vulnerable settings like obsolete OS, etc..
+           //let's check the 'species' to identify the issue precisely
+           // check the ASSecurityThreatSpecies enum for all possible values
+           if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
+           {
+             //ok, this device is jailbroken (or in any other way compromised) :(
+             //             [localRdnaCallback onDeviceThreat:@"Your device's integrity is compromised."];
+             //             NSLog(@"The device's integrity is compromised.");
+           }
+           break;
+           
+         case ASSecurityThreatCategoryNetwork:
+           //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
+           if (_threat.implicatedNetworks.count)
+           {
+             BMNetworkId *_network = _threat.implicatedNetworks[0];
+             NSLog(@"Possible network attack on %@", _network.friendlyId);
+             [delegate onDeviceThreat:@"Your device is not safe."];
+           }
+           break;
+           
+         case ASSecurityThreatCategoryApp:
+           if (_threat.implicatedApps.count)
+           {
+             NSString *_badAppBundleID = _threat.implicatedApps[0];
+             NSLog(@"The app with the bundle ID %@ is bad!", _badAppBundleID);
+           }
+           switch (_threat.species) {
+             case 0:
+               NSLog(@"ASAppSecurityThreatRepackagedApp");
+               [delegate onDeviceThreat:@"Your device is not safe. Malicious app has been found on your device"];
+               break;
+             case 1:
+               NSLog(@"ASAppSecurityThreatMaliciousApp");
+               [delegate onDeviceThreat:@"Your device is not safe. Malicious app has been found on your device"];
+               break;
+             case 2:
+               NSLog(@"ASAppSecurityThreatUnknownSourceApp");
+               [delegate onDeviceThreat:@"Your device is not safe. Your device contains app from unknown resources"];
+               break;
+             case 3:
+               NSLog(@"ASAppSecurityThreatEnterpriseBlacklistedApp");
+               if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+                 [delegate onDeviceThreat:@"Your device is not safe. Your device contains app from unknown resources"];
+               }
+               break;
+               
+             default:
+               break;
+           }
+           break;
+           
+         default:
+           break;
+       }
+     }
+     
+   }];
+  
+  [shield startMonitoring];
+  
+  //at any point, I can query ActiveShield for active threats
+  
+  NSArray<ASSecurityThreat *> *_activeThreats = shield.activeThreats;
+  
+  NSLog(@"You have %lu active threats.", (unsigned long)_activeThreats.count);
+  
+  BOOL retval;
+  if (_activeThreats.count==0) {
+    retval = YES;
+  }else{
+    retval = NO;
+  }
+  return retval;
+}
+
 
 @end
 

@@ -13,5 +13,5 @@
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) NSData *apnsDeviceToken;
-
+-(void)onDeviceThreat:(NSString*)status;
 @end
