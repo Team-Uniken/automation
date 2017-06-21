@@ -452,7 +452,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         RDNA.RDNAStatus<RDNA> rdnaStatus = null;
 
-        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,getSSLCertificate(),null, context);
+        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,null,null, context);
         rdnaObj = rdnaStatus.result;
 
         WritableMap errorMap = Arguments.createMap();
