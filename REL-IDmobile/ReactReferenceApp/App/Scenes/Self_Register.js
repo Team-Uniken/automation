@@ -227,14 +227,18 @@ class Register extends Component {
           if (res.isError == false) {
             obj.showMessage("Activation Code Sent to", this.state.confirmEmail + "\nPlease check the email for more instruction.", true);
           } else {
+            
+            setTimeout(() => {
             alert(res.errorMessage);
+             }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
             });
           }
         } else {
+          setTimeout(() => {
           alert("Service not available");
-
+          }, 100);
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
           });
@@ -283,7 +287,9 @@ class Register extends Component {
       dismissKeyboard();
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
         alert('Please enter a valid username');
+         }, 100);           
       });
     }
   }
