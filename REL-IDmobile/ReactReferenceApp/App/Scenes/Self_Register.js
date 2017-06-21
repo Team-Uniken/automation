@@ -246,6 +246,8 @@ class Register extends Component {
 
   //show alert dailog with msg and title pass to it
   showMessage(title, msg, press) {
+    setTimeout(() => {
+
     Alert.alert(
       title,
       msg,
@@ -261,6 +263,7 @@ class Register extends Component {
         }
       }]
     )
+               }, 100);
   }
   /*
      This method is used to get the confirmEmail and submit the same as a challenge response and call showNextChallenge.
@@ -325,7 +328,7 @@ class Register extends Component {
   */
   render() {
     return (
-      <View>
+      <View style={[Skin.layout1.wrap,{ flex: 1 }]}>
         <MainActivation>
           <View style={Skin.layout1.wrap}>
             <StatusBar
@@ -424,7 +427,7 @@ class Register extends Component {
                       value={this.state.value}
                       minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                       maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
-                      onValueChange={(value) => this.setState({ value: value }) } />
+                      onSlidingComplete={(value) => this.setState({ value: value }) }/>
                     <Checkbox
                       onSelect={this.selectCheckbox.bind(this) }
                       selected={this.state.check}
