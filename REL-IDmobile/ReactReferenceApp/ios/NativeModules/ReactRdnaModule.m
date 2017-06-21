@@ -79,9 +79,8 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
     NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
     callback(@[responseArray]);
   }else{
-    NSDictionary *dictionary = @{@"error":@"Your device is not safe."};
-    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-    callback(@[responseArray]);
+    AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [delegate onDeviceThreat:@"Your device is not safe."];
   }
   
 }
@@ -1004,9 +1003,9 @@ RCT_EXPORT_METHOD(checkDeviceAuthorizationStatus:(RCTResponseSenderBlock) callba
                break;
              case 3:
                NSLog(@"ASAppSecurityThreatEnterpriseBlacklistedApp");
-               if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+//               if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
                  [delegate onDeviceThreat:@"Your device is not safe. Your device contains app from unknown resources"];
-               }
+//               }
                break;
                
              default:
