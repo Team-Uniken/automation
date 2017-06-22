@@ -163,7 +163,9 @@ class ConnectionProfileScene extends Component {
 */
   renderConnectionProfile(connectionprofile1) {
     var cpName = connectionprofile1.Name;
-    if (CURRENT_CONNECTION_PROFILES_DATA.Name == connectionprofile1.Name) {
+    var isImported = connectionprofile1.imported;
+    if(isImported!=undefined||isImported!=null){
+//    if (CURRENT_CONNECTION_PROFILES_DATA.Name == connectionprofile1.Name) {
       return (
         <View>
           <View style={Skin.ConnectionProfile.selectederow}>
@@ -182,7 +184,8 @@ class ConnectionProfileScene extends Component {
           </Text>
         </View>
       );
-    } else {
+//    }
+    }else {
       return (
         <View>
           <View style={Skin.ConnectionProfile.customerow}>

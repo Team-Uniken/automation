@@ -398,6 +398,7 @@ class Load extends Component {
           for (let j = 0; j < relidArray.length; j++) {
             if (RelIdName === relidArray[j].Name) {
               profileArray[i].RelId = relidArray[j].RelId;
+              profileArray[i].imported="true"
 
             }
           }
