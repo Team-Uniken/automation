@@ -13,7 +13,7 @@ import React, { Component, } from 'react';
 /*
  Required for this js
  */
-import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackHandler, } from 'react-native';
+import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackHandler, ScrollView, } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -197,14 +197,20 @@ export default class UpdateQuestionSet extends Component {
         bottomMenu={{
           visible: false,
         }}
+            
+            
         navigator={this.props.navigator}
         >
         <View style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
           <MainActivation>
             <View
             style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
-            <View style={[{ justifyContent: 'center',alignItems:'center' },{flex:1}]}>
-            <View style={[{justifyContent: 'center',alignItems:'center' , flex: 40,
+            <View style={[{ justifyContent: 'center',alignItems:'center' }]}>
+            <ScrollView style={[Skin.layout1.content.scrollwrap]} keyboardShouldPersistTaps={true}
+            overScrollMode='never'
+            bounces='false'
+            contentContainerStyle={{justifyContent:'center',flexGrow:1}}>
+            <View style={[{justifyContent: 'center',alignItems:'center' ,
                            
                               }]}>
                   <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
@@ -237,18 +243,26 @@ export default class UpdateQuestionSet extends Component {
                   </View>
                   <Margin
                     space={16}/>
+            <View style={[{justifyContent: 'center',alignItems:'center' ,
+                          
+                          }]}>
                   <Input
                     ref={'secAnswer'}
                     placeholder={'Enter your secret answer'}
+                    autoCorrect={false}
                     onSubmitEditing={this.setSecrets.bind(this) }
-                    onChange={this.onAnswerChange.bind(this) }
+                    onChange={this.onAnswerChange.bind(this)
+                    }
                     />
             <Button
             label= {this.btnText() }
             onPress={this.setSecrets.bind(this) }/>
+            </View>
+<KeyboardSpacer topSpacing={0}/>
                 </View>
-           
-            <KeyboardSpacer topSpacing={-100}/>
+            
+           </ScrollView>
+            
               </View>
             </View>
           </MainActivation>
