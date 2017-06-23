@@ -283,7 +283,7 @@ class TwoFactorAuthMachine extends Component {
                 if (chlngJson != null) {
                   console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
                   //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-                  this.props.navigator.push({
+                  this.props.navigator.resetTo({
                     id: 'Machine',
                     title: nextChlngName,
                     url: {
@@ -391,31 +391,6 @@ class TwoFactorAuthMachine extends Component {
         currentIndex = 0;
         challengeJsonArr = saveChallengeJson.chlng;
         console.log('immediate response is' + response[0].error);
-        var allScreens = obj.stateNavigator.getCurrentRoutes(-1);
-        var flag = false;
-        for (var i = 0; i < allScreens.length; i++) {
-          var screen = allScreens[i];
-          if (screen.id === 'checkuser') {
-            const i = challengeJsonArr.indexOf(currentIndex);
-            challengeJsonArr[i] = saveChallengeJson.response;
-            if (obj.hasNextChallenge()) {
-              const currentChlng = obj.getCurrentChallenge();
-              obj.stateNavigator.replace({
-                id: currentChlng.chlng_name,
-                url: {
-                  chlngJson: currentChlng,
-                  chlngsCount: challengeJsonArr.length,
-                  currentIndex: currentIndex + 1,
-                },
-                title: obj.props.title,
-              });
-            }
-            flag = true;
-            return;
-          }
-        }
-
-        if (flag == false) {
           var chlngJson1;
           chlngJson1 = saveChallengeJson;
           const nextChlngName = chlngJson1.chlng[0].chlng_name;
@@ -431,7 +406,7 @@ class TwoFactorAuthMachine extends Component {
               screenId: nextChlngName,
             },
           });
-        }
+        
       } else {
         console.log('immediate response is' + response[0].error);
         alert(response[0].error);
@@ -743,7 +718,7 @@ class TwoFactorAuthMachine extends Component {
         || firstChlngName === 'devname') {
         this.showFirstChallenge(chlngJson, startIndex + 1);
       } else {
-        this.props.navigator.push({
+        this.props.navigator.resetTo({
           id: 'Machine',
           title: firstChlngName,
           url: {
