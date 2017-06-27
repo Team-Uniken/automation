@@ -115,13 +115,7 @@ var SampleRow = React.createClass({
         showPasswordModel: true,
       });
     } else {
-      Alert.alert(
-        '',
-        'Additional authentication not supported.',
-        [
-          { text: 'OK' }
-        ]
-      );
+       this.showAlertAuthNotSuppoted('User not login using password');
     }
   },
 
@@ -129,13 +123,7 @@ var SampleRow = React.createClass({
     if (isAdditionalAuthSupported.erpass === true) {
       obj.authenticateWithTouchIDIfSupported();
     } else {
-      Alert.alert(
-        '',
-        'Additional authentication not supported.',
-        [
-          { text: 'OK' }
-        ]
-      );
+      this.showAlertAuthNotSuppoted('"TouchID" is not enabled or supported');
     }
   },
 
@@ -143,15 +131,28 @@ var SampleRow = React.createClass({
     if (isAdditionalAuthSupported.erpass === true) {
       obj.authenticateWithPattern();
     } else {
-      Alert.alert(
-        '',
-        'Additional authentication not supported.',
-        [
-          { text: 'OK' }
-        ]
-      );
+      this.showAlertAuthNotSuppoted('"Pattern" is not enabled');
     }
   },
+
+    //Additional authentication not supported.
+    showAlertAuthNotSuppoted(msg){
+      Alert.alert(
+        '',
+        msg,
+        [
+          { text: 'OK' ,
+          onPress: () => {
+            obj.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
+            obj.updateNotificationDetails();
+          }
+          }
+        ]
+      );
+    
+  },
+     
+                                  
 
   render() {
     var body = this.props.notification.message.body;
