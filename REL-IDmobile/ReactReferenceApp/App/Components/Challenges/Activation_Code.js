@@ -78,29 +78,30 @@ class Activation_Code extends Component {
   componentWillMount() {
     obj = this;
     if (Platform.OS === 'ios'){
-      ReactRdna.checkDeviceAuthorizationStatus((err, isAuthorized)=>{
-                                                      if (isAuthorized) {
+      Camera.checkVideoAuthorizationStatus().then((isAuthorized)=>{
+                                                   if(isAuthorized){
                                                       this.setState({showCamera: true});
-                                                      } else {
-                                                         this.setState({showCamera: false});
-                                                      AlertIOS.alert(
-                                                                     "Camera Access Denied",
-                                                                     "Go to Settings / Privacy / Camera and enable access for this app",
-                                                                     [{
-                                                                      text:"OK",
-                                                                      onPress:()=>{
-                                                                                                                                          Linking.canOpenURL('app-settings:').then(supported => {
-                                                                      if (!supported) {
-                                                                      console.log('Can\'t handle settings url');
-                                                                      } else {
-                                                                      return Linking.openURL('app-settings:');
-                                                                      }
-                                                                      }).catch(err => console.error('An error occurred', err));Events.trigger('showPreviousChallenge');
-                                                                      }
-                                                                      }]
-                                                                     );
-                                                      }
-                                                      });
+                                                   }else{
+                                                   this.setState({showCamera: false});
+                                                   AlertIOS.alert(
+                                                                  "Camera Access Denied",
+                                                                  "Go to Settings / Privacy / Camera and enable access for this app",
+                                                                  [{
+                                                                   text:"OK",
+                                                                   onPress:()=>{
+                                                                   Linking.canOpenURL('app-settings:').then(supported => {
+                                                                                                            if (!supported) {
+                                                                                                            console.log('Can\'t handle settings url');
+                                                                                                            } else {
+                                                                                                            return Linking.openURL('app-settings:');
+                                                                                                            }
+                                                                                                            }).catch(err => console.error('An error occurred', err));Events.trigger('showPreviousChallenge');
+                                                                   }
+                                                                   }]
+                                                                  );
+                                                   }
+                                         
+                                           }).done();
       
     }
     
