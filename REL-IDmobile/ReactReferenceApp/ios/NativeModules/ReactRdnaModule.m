@@ -849,15 +849,6 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
 }
 
 
-RCT_EXPORT_METHOD(checkDeviceAuthorizationStatus:(RCTResponseSenderBlock) callback)
-{
-  NSString *mediaType = AVMediaTypeVideo;
-  
-  [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
-    callback(@[[NSNull null], @(granted)]);
-  }];
-}
-
 #pragma mark Location Manager Implementation
 
 -(void)initializeLocationManager{

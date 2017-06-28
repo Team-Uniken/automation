@@ -22,6 +22,7 @@ import {Navigator} from 'react-native-deprecated-custom-components'
  Use in this js
  */
 import Skin from '../Skin';
+import MainActivation from '../Components/Container/MainActivation';
 
 
 
@@ -30,6 +31,7 @@ import Skin from '../Skin';
  */
 import Button from '../Components/view/button';
 import Setting from '../Components/view/setting';
+
 
 
 /*
@@ -78,6 +80,7 @@ class Welcome_Screen extends Component {
 */
   render() {
     return (
+      <MainActivation>
       <View style={Skin.layout0.wrap.container}>
       <StatusBar
       style={Skin.layout1.statusbar}
@@ -117,6 +120,7 @@ class Welcome_Screen extends Component {
         </View>
        
       </View>
+      </MainActivation>
       );
   }
 }
