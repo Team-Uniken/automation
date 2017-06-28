@@ -169,6 +169,8 @@ class History extends Component {
         navigator={this.props.navigator}
         defaultNav={false}>
         <NavBar
+          statusBarTint={Skin.BUTTON_BG_COLOR}
+          statusBarLight={'light-content'}
           title={'History'}
           right={''}
           titleTint={Skin.main.TITLE_COLOR}
