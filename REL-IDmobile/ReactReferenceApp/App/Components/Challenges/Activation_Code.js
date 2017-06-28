@@ -242,9 +242,9 @@ class Activation_Code extends Component {
     This method is used to hide the camera which was used to scan QR code.
   */
   hideCamera() {
-    if (Platform.OS === 'android') {
+//    if (Platform.OS === 'android') {
       this.setState({ showCamera: false });
-    }
+//    }
   }
 
   /*
