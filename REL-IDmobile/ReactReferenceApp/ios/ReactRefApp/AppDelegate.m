@@ -31,7 +31,8 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
+//  self.window.rootViewController =
+  [self.window setRootViewController:rootViewController];
   [self.window makeKeyAndVisible];
   
   [[FBSDKApplicationDelegate sharedInstance] application:application
@@ -61,7 +62,7 @@
   //   */
   UIView* launchScreenView = [[[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil] objectAtIndex:0];
   launchScreenView.frame = self.window.bounds;
-  rootView.loadingView = launchScreenView;
+//  rootView.loadingView = launchScreenView;
   
   
   return YES;
@@ -98,10 +99,10 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application{
-  self.window.hidden = true;
+//  self.window.hidden = true;
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application{
-  self.window.hidden = false;
+//  self.window.hidden = false;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
