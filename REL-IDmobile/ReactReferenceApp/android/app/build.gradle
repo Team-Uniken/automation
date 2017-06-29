@@ -109,8 +109,8 @@ android {
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 481
-            versionName "4.8.1"
+            versionCode 482
+            versionName "4.8.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
