@@ -278,7 +278,7 @@ export default class UpdatePasswordSet extends Component {
                         autoComplete={false}
                         autoCapitalize={false}
                         ref={'password'}
-                        placeholder={'Enter Password'}
+                        placeholder={'Enter new Password'}
                         value={this.state.password}
                         secureTextEntry={true}
                         blurOnSubmit={false}
@@ -297,7 +297,7 @@ export default class UpdatePasswordSet extends Component {
                         ref={'cPassword'}
                         value={this.state.cPassword}
                         keyboardType={'default'}
-                        placeholder={'Confirm Password'}
+                        placeholder={'Confirm new Password'}
                         onChange={this.onConfirmPasswordChange.bind(this) }
                         onSubmitEditing={this.setPassword.bind(this) }
                         />

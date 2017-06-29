@@ -59,19 +59,11 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
                    CipherSalt:(NSString *)cipherSalt
                    ProxySettings:(NSString *)proxySettings
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"clientcert" ofType:@"p12"];
-  NSData *certData = [NSData dataWithContentsOfFile:path];
-  NSString *certString3 = [certData base64EncodedStringWithOptions:2];
-  NSString *certPassword = @"uniken123$";
-  RDNASSLCertificate *rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
-  rdnaSSLlCertificate.p12Certificate = certString3;
-  rdnaSSLlCertificate.password = certPassword;
   int errorID = 0;
   RDNA *rdna;
   localbridgeDispatcher = _bridge;
   [self initParams];
-  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
+  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
   rdnaObject = rdna;
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
