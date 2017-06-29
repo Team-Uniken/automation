@@ -72,25 +72,31 @@ const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.Reac
  */
 
 var erelid = null;
-if (Config.ENV == 'sandp') {
-  erelid = require("../../Connection_profiles/snp.json");
-  var welcome = require('../img/sandp.png')
-} else if (Config.ENV == 'nwd') {
+if (Config.ENV == 'nwd') {
   erelid = require("../../Connection_profiles/nwd.json");
   var welcome = require('../img/nwd.png')
-} else if (Config.ENV == 'stock') {
-  erelid = require("../../Connection_profiles/stock.json");
-  var welcome = require('../img/stock.png')
-} else if (Config.ENV == 'ubs') {
-  erelid = require("../../Connection_profiles/ubs.json");
-  var welcome = require('../img/ubs.png')
-}else if (Config.ENV == 'cbc') {
-  erelid = require("../../Connection_profiles/cbc.json");
-    var welcome = require('../img/cbc.png')
-}else if (Config.ENV == 'relidmobile') {
-  erelid = require("../../Connection_profiles/relidmobile.json");
-  var welcome = require('../img/rmobile.png')
 }
+
+//
+//if (Config.ENV == 'sandp') {
+//  erelid = require("../../Connection_profiles/snp.json");
+//  var welcome = require('../img/sandp.png')
+//} else if (Config.ENV == 'nwd') {
+//  erelid = require("../../Connection_profiles/nwd.json");
+//  var welcome = require('../img/nwd.png')
+//} else if (Config.ENV == 'stock') {
+//  erelid = require("../../Connection_profiles/stock.json");
+//  var welcome = require('../img/stock.png')
+//} else if (Config.ENV == 'ubs') {
+//  erelid = require("../../Connection_profiles/ubs.json");
+//  var welcome = require('../img/ubs.png')
+//}else if (Config.ENV == 'cbc') {
+//  erelid = require("../../Connection_profiles/cbc.json");
+//    var welcome = require('../img/cbc.png')
+//}else if (Config.ENV == 'relidmobile') {
+//  erelid = require("../../Connection_profiles/relidmobile.json");
+//  var welcome = require('../img/rmobile.png')
+//}
 
 
 

@@ -67,11 +67,11 @@ import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';  //
 import PostLoginAuthMachine from './App/Components/StateMachine/PostLoginAuthMachine';  //use for post login authentication
 
 
-import AccountsScene from './App/Components/Dashboard/CBC/Accounts';
-import PayBillsScene from './App/Components/Dashboard/CBC/PayBills';
-import ContactScene from './App/Components/Dashboard/CBC/Contact';
-import DepositsScene from './App/Components/Dashboard/CBC/Deposits';
-import FindBranchScene from './App/Components/Dashboard/CBC/FindBranch';
+//import AccountsScene from './App/Components/Dashboard/CBC/Accounts';
+//import PayBillsScene from './App/Components/Dashboard/CBC/PayBills';
+//import ContactScene from './App/Components/Dashboard/CBC/Contact';
+//import DepositsScene from './App/Components/Dashboard/CBC/Deposits';
+//import FindBranchScene from './App/Components/Dashboard/CBC/FindBranch';
 
 const FadeIn = {
   opacity: {
@@ -131,17 +131,18 @@ class ReactRefApp extends Component {
     // id = 'Locations'
     }
 
-    if (id === 'Accounts') {
-      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'PayBills') {
-      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Contact') {
-      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Deposits') {
-      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'FindBranch') {
-      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Main') {
+//    if (id === 'Accounts') {
+//      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'PayBills') {
+//      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'Contact') {
+//      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'Deposits') {
+//      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'FindBranch') {
+//      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else
+      if (id === 'Main') {
       return (<Dashboard
               navigator={nav}
               url={route.url}
@@ -358,163 +359,4 @@ class ReactRefApp extends Component {
 
 AppRegistry.registerComponent('ReactRefApp', () => ReactRefApp);
 
-
-
-///**
-// * Sample React Native App
-// * https://github.com/facebook/react-native
-// * @flow
-// */
-//
-//import React, { Component } from 'react';
-//import {
-//  AppRegistry,
-//  StyleSheet,
-//  Text,
-//  View,
-//  TouchableHighlight
-//} from 'react-native';
-//
-//export default class ReactRefApp extends Component {
-//  render() {
-//    return (
-//      <View style={styles.container}>
-//      <Login/>
-//      <Text style={styles.welcome}>
-//      Welcome to React Native!
-//      </Text>
-//      <Text style={styles.instructions}>
-//      To get started, edit index.ios.js
-//      </Text>
-//      <Text style={styles.instructions}>
-//      Press Cmd+R to reload, {'\n'}
-//      Cmd+D or shake for dev menu
-//        </Text>
-//        </View>
-//        );
-//  }
-//}
-//
-//const styles = StyleSheet.create({
-//container: {
-//flex: 1,
-//justifyContent: 'center',
-//alignItems: 'center',
-//backgroundColor: '#F5FCFF',
-//  },
-//welcome: {
-//fontSize: 20,
-//textAlign: 'center',
-//margin: 10,
-//  },
-//instructions: {
-//textAlign: 'center',
-//color: '#333333',
-//marginBottom: 5,
-//  },
-//  });
-//
-//
-//
-//
-//AppRegistry.registerComponent('ReactRefApp', () => ReactRefApp);
-//
-//const FBSDK = require('react-native-fbsdk');
-//const {
-//  LoginButton,
-//  LoginManager,
-//  GraphRequest,
-//  GraphRequestManager,
-//  AccessToken
-//} = FBSDK;
-//
-//
-//
-//
-//// Start the graph request.
-//
-//
-//class Login extends Component {
-//  //var Login = React.createClass({
-//  constructor(props) {
-//    super(props);
-//    
-//  }
-//  
-//  responseCallback(error, result) {
-//    if (error) {
-//      //                                                        response.ok = false
-//      //                                                        response.error = error
-//      alert(result);
-//      return (result)
-//    } else {
-//      //                                                        response.ok = true
-//      //                                                        response.json = result
-//      alert(result);
-//      return (result)
-//    }
-//    
-//  }
-//  
-//  // the famous params object...
-//  
-//  
-//  doLogin() {
-//    $this = this;
-//    LoginManager.logInWithReadPermissions(['public_profile']).then(
-//      (result, error) => {
-//      {
-//      if (result.isCancelled) {
-//      alert('Login cancelled');
-//      } else {
-//      alert('Login success with permissions: '
-//        + result.grantedPermissions.toString());
-//      AccessToken.getCurrentAccessToken().then((data) => {
-//        $this.profileRequestParams = {
-//      fields: {
-//      string: "id, name, email, first_name, last_name, gender"
-//        }
-//        }
-//        
-//        $this.profileRequestConfig = {
-//      httpMethod: 'GET',
-//      version: 'v2.5',
-//      parameters: $this.profileRequestParams,
-//      accessToken: data.accessToken.toString()
-//        }
-//        
-//        $this.profileRequest = new GraphRequest(
-//          '/me',
-//          $this.profileRequestConfig,
-//          $this.responseCallback,
-//          );
-//        new GraphRequestManager().addRequest($this.profileRequest).start();
-//        }).done();
-//      
-//      }
-//      }
-//      }).done();
-//  }
-//  //                                                                                             function(error) {
-//  //                                                                                             alert('Login fail with error: ' + error);
-//  //                                                                                                                          }});
-//  //                                                                                             }
-//  render() {
-//    return (
-//      <View>
-//      <TouchableHighlight
-//      style={{ backgroundColor: '#32cd32', width: 100, height: 40 }}
-//      underlayColor={'#32cd32'}
-//      onPress={this.doLogin.bind(this) }
-//      activeOpacity={0.6}>
-//      <Text style={{ color: 'white' }}>
-//      FBLogin
-//      </Text>
-//      </TouchableHighlight>
-//      
-//      
-//      </View>
-//      );
-//  }
-//}
 

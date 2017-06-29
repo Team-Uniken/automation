@@ -69,11 +69,11 @@ import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';  //
 import PostLoginAuthMachine from './App/Components/StateMachine/PostLoginAuthMachine';  //use for post login authentication
 
 
-import AccountsScene from './App/Components/Dashboard/CBC/Accounts';
-import PayBillsScene from './App/Components/Dashboard/CBC/PayBills';
-import ContactScene from './App/Components/Dashboard/CBC/Contact';
-import DepositsScene from './App/Components/Dashboard/CBC/Deposits';
-import FindBranchScene from './App/Components/Dashboard/CBC/FindBranch';
+// import AccountsScene from './App/Components/Dashboard/CBC/Accounts';
+// import PayBillsScene from './App/Components/Dashboard/CBC/PayBills';
+// import ContactScene from './App/Components/Dashboard/CBC/Contact';
+// import DepositsScene from './App/Components/Dashboard/CBC/Deposits';
+// import FindBranchScene from './App/Components/Dashboard/CBC/FindBranch';
 
 const FadeIn = {
   opacity: {
@@ -109,17 +109,18 @@ class ReactRefApp extends Component {
     // MAIN SCENES
 
 
-  if (id === 'Accounts') {
-      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'PayBills') {
-      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Contact') {
-      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Deposits') {
-      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'FindBranch') {
-      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Main') {
+  // if (id === 'Accounts') {
+  //     return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  //   } else if (id === 'PayBills') {
+  //     return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  //   } else if (id === 'Contact') {
+  //     return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  //   } else if (id === 'Deposits') {
+  //     return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  //   } else if (id === 'FindBranch') {
+  //     return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+  //   } else 
+    if (id === 'Main') {
       return (<Dashboard
                 navigator={nav}
                 url={route.url}
