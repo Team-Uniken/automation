@@ -59,6 +59,7 @@ function compare(a, b) {
  */
 var SampleRow = React.createClass({
   showalertforReject(notification, btnLabel) {
+   if (Platform.OS === 'android') {
     Alert.alert(
       'Fraud Warning',
       'You\'ve rejected this transaction, would you like to flag it as fraud?',
@@ -77,6 +78,24 @@ var SampleRow = React.createClass({
         },
       ]
     )
+  }else{
+  AlertIOS.alert('Fraud Warning',
+    'You\'ve rejected this transaction, would you like to flag it as fraud?',
+    [
+      {
+    text: 'It\'s Fraud',
+    onPress: () => {
+      this.showalert(notification, btnLabel)
+      }
+      },
+      {
+    text: 'No',
+    onPress: () => {
+      this.showalert(notification, btnLabel)
+      }
+      },
+      ]);
+  }
   },
 
   showalert(notification, btnLabel) {

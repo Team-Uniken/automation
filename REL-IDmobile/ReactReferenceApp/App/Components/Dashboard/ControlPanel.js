@@ -16,7 +16,7 @@ import ReactNative from 'react-native';
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
 import {Navigator} from 'react-native-deprecated-custom-components'
-import {View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert,AlertIOS, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter} from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Communications from 'react-native-communications';
 
@@ -74,7 +74,7 @@ class ControlPanel extends Component {
   }
 
   showLogOffAlert() {
-
+ if (Platform.OS === 'android') {
     Alert.alert(
       '',
       'Do you want to log-off',
@@ -85,7 +85,18 @@ class ControlPanel extends Component {
         },
       ]
     );
-  }
+ }else{
+   AlertIOS.alert('',
+     'Do you want to log-off',
+     [
+       { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
+       {
+     text: 'OK', onPress: this.logOff
+       },
+       ]
+     );
+ }
+}
 
   componentDidMount() {
      //This getAllChallenges call was only for updating menu options
