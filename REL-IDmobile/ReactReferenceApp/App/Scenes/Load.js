@@ -127,12 +127,12 @@ class Load extends Component {
   closeStateMachine() {
     console.log('---------- closeStateMachine ');
     var allScreens = obj1.props.navigator.getCurrentRoutes(-1);
-    for (var i = 0; i < allScreens.length; i++) {
+    for (var i = allScreens.length - 1; i >= 0; i--) {
       var screen = allScreens[i];
-      if (screen.id === 'Welcome_Screen') {
+      if (screen.id === 'Load') {
         var mySelectedRoute = obj1.props.navigator.getCurrentRoutes()[i];
-        obj1.props.navigator.popToRoute(mySelectedRoute);
-        return;
+        obj1.props.navigator.replace(mySelectedRoute);
+        //return;
       }
     }
     obj1.props.navigator.push({

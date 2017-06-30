@@ -242,9 +242,9 @@ class Activation_Code extends Component {
     This method is used to hide the camera which was used to scan QR code.
   */
   hideCamera() {
-    if (Platform.OS === 'android') {
+//    if (Platform.OS === 'android') {
       this.setState({ showCamera: false });
-    }
+//    }
   }
 
   /*
@@ -447,7 +447,7 @@ class Activation_Code extends Component {
 
               <View style={[{ width: Skin.SCREEN_WIDTH, position: 'absolute', alignItems: 'center', justifyContent: 'center', bottom: 0 }]}>
                 <Input
-                  placeholder={'or Enter Numeric Code'}
+                  placeholder={'or Enter Activation Code'}
                   ref={'activationCode'}
                   autoFocus={false}
                   autoCorrect={false}

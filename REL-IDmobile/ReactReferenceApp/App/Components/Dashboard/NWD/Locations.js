@@ -200,6 +200,8 @@ class Locations extends Component {
         navigator={this.props.navigator}
         defaultNav={false}>
         <NavBar
+          statusBarTint={Skin.BUTTON_BG_COLOR}
+          statusBarLight={'light-content'}
           title={'Locations'}
           titleTint={Skin.main.TITLE_COLOR}
           tintColor={'#ffffff'}

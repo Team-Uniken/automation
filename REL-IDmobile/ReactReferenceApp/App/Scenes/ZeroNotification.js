@@ -115,7 +115,7 @@ var SampleRow = React.createClass({
         showPasswordModel: true,
       });
     } else {
-       this.showAlertAuthNotSuppoted('User not login using password');
+       this.showAlertAuthNotSuppoted('Failed to get additional authentication. User not logged in using password.');
     }
   },
 
@@ -123,7 +123,7 @@ var SampleRow = React.createClass({
     if (isAdditionalAuthSupported.erpass === true) {
       obj.authenticateWithTouchIDIfSupported();
     } else {
-      this.showAlertAuthNotSuppoted('"TouchID" is not enabled or supported');
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. TouchID is not enabled or supported.');
     }
   },
 
@@ -131,7 +131,7 @@ var SampleRow = React.createClass({
     if (isAdditionalAuthSupported.erpass === true) {
       obj.authenticateWithPattern();
     } else {
-      this.showAlertAuthNotSuppoted('"Pattern" is not enabled');
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. Pattern is not enabled.');
     }
   },
 
@@ -507,7 +507,7 @@ export default class NotificationMgmtScene extends Component {
       onUpdateNotificationSubscription = null;
     }
     onUpdateNotificationSubscription = onUpdateNotificationModuleEvt.addListener('onUpdateNotification',
-      this.onUpdateNotification.bind(this));
+      obj.onUpdateNotification.bind(obj));
 
     //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
     AsyncStorage.getItem(Main.dnaUserName).then((value) => {
