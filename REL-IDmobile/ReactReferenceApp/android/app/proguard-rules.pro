@@ -86,3 +86,14 @@
 # stetho
 
 -dontwarn com.facebook.stetho.**
+
+#gcm
+-keep public class com.google.android.gms.* { public *; }
+-dontwarn com.google.android.gms.**
+-keep class com.amazonaws.util.** { *; }
+-keep interface com.amazonaws.util.** { *; }
+-dontwarn com.amazonaws.util.**
+-dontwarn android.text.StaticLayout
+
+
+
