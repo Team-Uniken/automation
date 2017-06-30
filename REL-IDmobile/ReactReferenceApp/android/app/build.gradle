@@ -149,9 +149,9 @@ android {
             applicationId 'com.uniken.sandp'
             signingConfig signingConfigs.releaseSandP
             minSdkVersion 16
-            targetSdkVersion 24
-            versionCode 480
-            versionName "4.8.0"
+            targetSdkVersion 25
+            versionCode 483
+            versionName "4.8.3"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -159,9 +159,9 @@ android {
             applicationId 'com.uniken.nwd'
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
-            targetSdkVersion 24
-            versionCode 480
-            versionName "4.8.0"
+            targetSdkVersion 25
+            versionCode 483
+            versionName "4.8.3"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -169,36 +169,36 @@ android {
             applicationId 'com.uniken.stock'
             signingConfig signingConfigs.releaseStock
             minSdkVersion 16
-            targetSdkVersion 24
-            versionCode 480
-            versionName "4.8.0"
+            targetSdkVersion 25
+            versionCode 483
+            versionName "4.8.3"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         ubs{
             applicationId 'com.uniken.ubs'
             signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
-            targetSdkVersion 24
-            versionCode 480
-            versionName "4.8.0"
+            targetSdkVersion 25
+            versionCode 483
+            versionName "4.8.3"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbc{
             applicationId 'com.uniken.cbc'
             signingConfig signingConfigs.releaseCbc
             minSdkVersion 16
-            targetSdkVersion 24
-            versionCode 480
-            versionName "4.8.0"
+            targetSdkVersion 25
+            versionCode 483
+            versionName "4.8.3"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         relidmobile{
             applicationId 'com.uniken.relidmobile'
             signingConfig signingConfigs.releaseRelidmobile
             minSdkVersion 16
-            targetSdkVersion 24
-            versionCode 480
-            versionName "4.8.0"
+            targetSdkVersion 25
+            versionCode 483
+            versionName "4.8.3"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -246,7 +246,7 @@ dependencies {
   //  compile 'com.facebook.stetho:stetho:1.3.1'
     //compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile "com.better.workspace.lib:agent:4.3.60"
+   // compile "com.better.workspace.lib:agent:4.3.60"
 }
 //
 //configurations.all {
