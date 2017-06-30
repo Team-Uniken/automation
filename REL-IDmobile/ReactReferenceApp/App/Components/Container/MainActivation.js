@@ -250,99 +250,8 @@ class MainActivation extends Component {
   render() {
     console.log('\n\n\n  Main Activation render called again');
     //    this.state.visible = this.props.visible;
-    if (Platform.OS == "android") {
+  
       return (
-
-        <TouchableWithoutFeedback onPress={this.dismiss}
-                        disabled={this.props.disabled}>
-          <View style={Skin.activationStyle.container} onPress={this.dismiss}>
-
-
-            <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH }]}>
-              {this.props.children}
-            </View>
-
-            <Loader visible={this.state.visible}/>
-              <Modal
-              onPress={() => {
-              this.setState({ userName: '', password: '', open: false }); this.cancelCreds();
-              } }
-              style={styles.modalwrap}
-              overlayOpacity={0.75}
-              offset={100}
-              open={this.state.open}
-              modalDidOpen={() => console.log('modal did open') }
-              modalDidClose={() => {
-              if (this.selectedDialogOp) {
-              this.selectedDialogOp = false;
-              this.checkCreds();
-              } else {
-              this.selectedDialogOp = false;
-              this.cancelCreds();
-              }
-              } }>
-              <View style={styles.modalTitleWrap}>
-              <Text style={styles.modalTitle}>
-              401 Authentication
-              {'\n'}
-              {this.state.baseUrl}
-              </Text>
-              <View style={styles.border}></View>
-              </View>
-              <TextInput
-              autoCorrect={false}
-              ref='userName'
-              style={styles.modalInput}
-              placeholder={'Enter username'}
-              value={this.state.userName}
-              onChange={this.onUserChange.bind(this) }
-              placeholderTextColor={Skin.colors.HINT_COLOR} />
-              <View style={styles.underline}></View>
-              <TextInput
-              autoCorrect={false}
-              ref='password'
-              style={styles.modalInput}
-              secureTextEntry
-              placeholder={'Enter password'}
-              value={this.state.password}
-              onChange={this.onPasswordChange.bind(this) }
-              placeholderTextColor={Skin.colors.HINT_COLOR} />
-              <View style={styles.underline}></View>
-              <View style={{
-              flex: 1,
-              flexDirection: 'row'
-              }}>
-              <TouchableHighlight
-              onPress={() => {
-              this.selectedDialogOp = false;
-              this.setState({ userName: '', password: '', open: false });
-              } }
-              underlayColor={Skin.colors.REPPLE_COLOR}
-              style={styles.modalButton}>
-              <Text style={styles.modalButtonText}>
-              CANCEL
-              </Text>
-              </TouchableHighlight>
-              <TouchableHighlight
-              onPress={() => {
-              this.selectedDialogOp = true;
-              this.validate();
-              } }
-              underlayColor={Skin.colors.REPPLE_COLOR}
-              style={styles.modalButton}>
-              <Text style={styles.modalButtonText}>
-              SUBMIT
-              </Text>
-              </TouchableHighlight>
-              </View>
-              </Modal>
-
-          </View>
-        </TouchableWithoutFeedback>
-      );
-    } else if (Platform.OS == "ios") {
-      return (
-
         <TouchableWithoutFeedback onPress={this.dismiss}
               disabled={this.props.disabled}>
           <View style={Skin.activationStyle.container} onPress={this.dismiss} >
@@ -431,7 +340,7 @@ class MainActivation extends Component {
           </View>
         </TouchableWithoutFeedback>
       );
-    }
+    
 
   }
 }
