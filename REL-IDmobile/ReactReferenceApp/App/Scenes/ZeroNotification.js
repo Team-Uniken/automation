@@ -507,7 +507,7 @@ export default class NotificationMgmtScene extends Component {
       onUpdateNotificationSubscription = null;
     }
     onUpdateNotificationSubscription = onUpdateNotificationModuleEvt.addListener('onUpdateNotification',
-      this.onUpdateNotification.bind(this));
+      obj.onUpdateNotification.bind(obj));
 
     //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
     AsyncStorage.getItem(Main.dnaUserName).then((value) => {
