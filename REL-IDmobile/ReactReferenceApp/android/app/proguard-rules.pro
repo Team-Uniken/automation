@@ -86,3 +86,12 @@
 # stetho
 
 -dontwarn com.facebook.stetho.**
+
+#gcm
+-keep public class com.google.android.gms.* { public *; }
+-dontwarn com.google.android.gms.**
+
+-dontwarn android.text.StaticLayout
+
+
+
