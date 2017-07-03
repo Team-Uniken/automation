@@ -142,7 +142,6 @@
 		558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		558C99B01E7BF7A30002C56F /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
-		558C99F01E7BF9F30002C56F /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 558C99EF1E7BF9F30002C56F /* index.ios.js */; };
 		55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */; };
 		55C9249F1EB3661800DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		55C924B11EB3661900DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
@@ -150,6 +149,7 @@
 		55C924B31EB3661B00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		55C924B41EB3661C00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		55C924B51EB3661C00DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		55D17EFE1F0A322800C94FA5 /* Index.js in Resources */ = {isa = PBXBuildFile; fileRef = 55D17EFC1F0A322800C94FA5 /* Index.js */; };
 		55D351671E1E0F7C00806F82 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		55D351681E1E0F7C00806F82 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		55D351691E1E0F7C00806F82 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -657,8 +657,8 @@
 		552BB7C21E1BA0B90009F274 /* SandP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SandP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558654DF1E12689500B01A6A /* logo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.ttf; sourceTree = "<group>"; };
 		558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REL-IDMobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		558C99EF1E7BF9F30002C56F /* index.ios.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = index.ios.js; path = ../index.ios.js; sourceTree = "<group>"; };
 		55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStockRELIDMobile.xcassets; sourceTree = "<group>"; };
+		55D17EFC1F0A322800C94FA5 /* Index.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Index.js; path = ../Index.js; sourceTree = "<group>"; };
 		55D351941E1E0F7C00806F82 /* stock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D351961E1E126F00806F82 /* ImagesStock.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStock.xcassets; sourceTree = "<group>"; };
 		5A302D3D19354BB9B400DA70 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
@@ -1193,11 +1193,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				55D17EFC1F0A322800C94FA5 /* Index.js */,
 				55074F991EE7F22600BF6DC8 /* api-sdk */,
 				65F981161ECED6C300208701 /* clientcert.p12 */,
 				6524EF021EAA4A5D00E6E3CB /* account.ttf */,
 				656D4F061E7C0B6000965ED6 /* relidmobile.plist */,
-				558C99EF1E7BF9F30002C56F /* index.ios.js */,
 				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
 				551EE2DD1E51BAE400ADAD6C /* cbc.ttf */,
 				65D7F7B11E30A3F9009ACC25 /* ubs.ttf */,
@@ -1835,7 +1835,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */,
-				558C99F01E7BF9F30002C56F /* index.ios.js in Resources */,
 				65F9811D1ECED6C300208701 /* clientcert.p12 in Resources */,
 				558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */,
 				558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */,
@@ -1877,6 +1876,7 @@
 				65127E161D795B4000FB36E1 /* Info.plist in Resources */,
 				55C924B21EB3661B00DA8083 /* account.ttf in Resources */,
 				551EE2E01E51BB1200ADAD6C /* cbc.plist in Resources */,
+				55D17EFE1F0A322800C94FA5 /* Index.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
