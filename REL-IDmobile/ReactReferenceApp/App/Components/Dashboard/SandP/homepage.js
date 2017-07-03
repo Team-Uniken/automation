@@ -193,7 +193,7 @@ class HomePage extends Component {
           </View>
           <NavBar
             tintColor={'transparent'}
-            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
+            statusBarTint={Skin.BUTTON_BG_COLOR}
             statusBarLight={'light-content'}
             title={Skin.admin.MENU_TITLE}
             titleTint={Config.THEME_COLOR}
