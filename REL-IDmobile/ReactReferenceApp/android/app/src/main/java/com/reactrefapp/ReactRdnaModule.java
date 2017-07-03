@@ -8,7 +8,6 @@ import android.telecom.Call;
 import android.util.Base64;
 import android.util.Log;
 
-//import com.better.workspace.lib.BetterMTD;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -462,57 +461,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
 
         callback.invoke(writableArray);
-
-//        new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                BetterMTD betterMTD = BetterMTD.init(context.getApplicationContext());
-//                boolean check =  betterMTD.healthCheck(context.getApplicationContext());
-//                RDNA.RDNAStatus<RDNA> rdnaStatus = null;
-//                if(check == true){
-//                    rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,null,null, context);
-//                    rdnaObj = rdnaStatus.result;
-//
-//                    WritableMap errorMap = Arguments.createMap();
-//                    errorMap.putInt("error", rdnaStatus.errorCode);
-//
-//                    WritableArray writableArray = Arguments.createArray();
-//                    writableArray.pushMap(errorMap);
-//
-//                    callback.invoke(writableArray);
-//                }else{
-//                      Runnable runnable = new Runnable() {
-//                          @Override
-//                          public void run() {
-//                              AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context.getCurrentActivity());
-//                              alertBuilder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
-//                                  @Override
-//                                  public void onClick(DialogInterface dialogInterface, int i) {
-//                                      System.exit(0);
-//                                  }
-//                              });
-//
-//                              alertBuilder.setTitle("Alert");
-//                              alertBuilder.setMessage("This device is not safe");
-//                              alertBuilder.setCancelable(false);
-//                              alertBuilder.show();
-//                          }
-//                      };
-//
-//                      callOnMainThread(runnable);
-////                    WritableMap errorMap = Arguments.createMap();
-////                    errorMap.putInt("error",ERROR_HEALTH_CHECK_FAILED);
-////
-////                    WritableArray writableArray = Arguments.createArray();
-////                    writableArray.pushMap(errorMap);
-////
-////                    callback.invoke(writableArray);
-//                    Log.e("ReactRdnaModule","BetterMobi Health Check Failed!");
-//                }
-//            }
-//        }).start();
     }
 
     @ReactMethod
