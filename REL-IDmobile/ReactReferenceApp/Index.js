@@ -53,10 +53,6 @@ import SetPassword from './App/Components/Challenges/SetPassword';              
 //Dashboard
 import Dashboard from './App/Components/Dashboard/dashboard';     //Navigate to respective flavour dashboard
 
-//NWD Dashboard
-import Deals from './App/Components/Dashboard/NWD/Deals';
-import History from './App/Components/Dashboard/NWD/History';
-import Locations from './App/Components/Dashboard/NWD/Locations';
 
 //PostLogin
 import RegisterOptionScene from './App/Components/PostLogin/RegisterOptionsDashboard';  //use for change register option
@@ -66,12 +62,6 @@ import Machine from './App/Components/StateMachine/TwoFactorAuthMachine';  // us
 import UpdateMachine from './App/Components/StateMachine/UpdateAuthMachine';  // use to update challenges
 import PostLoginAuthMachine from './App/Components/StateMachine/PostLoginAuthMachine';  //use for post login authentication
 
-
-import AccountsScene from './App/Components/Dashboard/CBC/Accounts';
-import PayBillsScene from './App/Components/Dashboard/CBC/PayBills';
-import ContactScene from './App/Components/Dashboard/CBC/Contact';
-import DepositsScene from './App/Components/Dashboard/CBC/Deposits';
-import FindBranchScene from './App/Components/Dashboard/CBC/FindBranch';
 
 const FadeIn = {
   opacity: {
