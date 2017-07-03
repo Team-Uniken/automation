@@ -21,11 +21,7 @@
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-
-
-
     <uses-permission android:name="android.permission.VIBRATE" />
-
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -68,13 +64,6 @@
             </intent-filter>
         </receiver>
 
-        <!--<receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />-->
-        <!--<service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"-->
-        <!--android:exported="true"-->
-        <!--android:enabled = "true"-->
-        <!-->-->
-        <!--</service>-->
-
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
         <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
         <service
@@ -92,14 +81,6 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
-        <!--<receiver android:name="io.neson.react.notification.NotificationEventReceiver" />   &lt;!&ndash; <- Add this line &ndash;&gt;-->
-        <!--<receiver android:name="io.neson.react.notification.NotificationPublisher" />       &lt;!&ndash; <- Add this line &ndash;&gt;-->
-        <!--<receiver android:name="io.neson.react.notification.SystemBootEventReceiver">       &lt;!&ndash; <- Add this line &ndash;&gt;-->
-        <!--<intent-filter>                                                                   &lt;!&ndash; <- Add this line &ndash;&gt;-->
-        <!--<action android:name="android.intent.action.BOOT_COMPLETED"></action>           &lt;!&ndash; <- Add this line &ndash;&gt;-->
-        <!--</intent-filter>                                                                  &lt;!&ndash; <- Add this line &ndash;&gt;-->
-        <!--</receiver>-->
 
     </application>
 
