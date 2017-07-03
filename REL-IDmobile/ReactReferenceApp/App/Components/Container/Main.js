@@ -28,6 +28,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
  */
 import Skin from '../../Skin';
 import Util from '../Utils/Util';
+import {ClientBasedConfig} from '../Utils/LocalConfig';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onGetpasswordModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -37,18 +38,14 @@ const onGetpasswordModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaMod
  Custome View
  */
 import NavigationBar from '../view/navbar.js'
-
-if (Config.ENV == 'cbc') {
-  var BottomMenu = require("../view/cbcbottomMenu");
-} else if (Config.ENV == 'nwd') {
-  var BottomMenu = require("../view/bottomMenu");
-}
-
 import NavButton from '../NavButton';
 
 /*
   INSTANCED
  */
+
+var BottomMenu = ClientBasedConfig.bottomMenu;
+
 let _toggleDrawer;
 let eventToggleDrawer = false;
 let onGetCredentialSubscriptions;

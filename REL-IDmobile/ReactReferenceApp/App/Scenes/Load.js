@@ -32,7 +32,7 @@ import MainActivation from '../Components/Container/MainActivation';
 import Setting from '../Components/view/setting';
 import Version from '../Components/view/version';
 import Web from './Web';
-
+import {ClientBasedConfig} from '../Components/Utils/LocalConfig';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 
@@ -71,31 +71,8 @@ const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.Reac
  * Return flavour specific connectionProfile and load image.
  */
 
-var erelid = null;
-if (Config.ENV == 'sandp') {
-  erelid = require("../../Connection_profiles/snp.json");
-  var welcome = require('../img/sandp.png')
-} else if (Config.ENV == 'nwd') {
-  erelid = require("../../Connection_profiles/nwd.json");
-  var welcome = require('../img/nwd.png')
-} else if (Config.ENV == 'stock') {
-  erelid = require("../../Connection_profiles/stock.json");
-  var welcome = require('../img/stock.png')
-} else if (Config.ENV == 'ubs') {
-  erelid = require("../../Connection_profiles/ubs.json");
-  var welcome = require('../img/ubs.png')
-}else if (Config.ENV == 'cbc') {
-  erelid = require("../../Connection_profiles/cbc.json");
-    var welcome = require('../img/cbc.png')
-}else if (Config.ENV == 'relidmobile') {
-  erelid = require("../../Connection_profiles/relidmobile.json");
-  var welcome = require('../img/rmobile.png')
-}
-
-
-
-
-
+var erelid = ClientBasedConfig.connectionProfile;
+var welcome = ClientBasedConfig.img.welcome;
 
 //disable console.log
 console.log = function () { }
