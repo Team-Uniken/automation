@@ -2,6 +2,7 @@
 
 import ReactNative from 'react-native';
 import Main from '../Container/Main';
+import {Buffer} from 'buffer';
 
 import {AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
 import React, { Component, } from 'react';
@@ -13,7 +14,11 @@ class Util extends Component {
       if (encryptedText && typeof encryptedText === "string") {
         ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, encryptedText, (response) => {
           if (response && response[0].error == 0) {
-            resolve(response[0].response);
+            var response = response[0].response;
+            if (Platform.OS === "android") {
+              response = new Buffer(response, 'base64').toString();
+            }
+            resolve(response);
           } else {
             if (response) {
               reject({ error: response[0].error });
@@ -23,9 +28,9 @@ class Util extends Component {
             }
           }
         });
-       }else{
-               reject({ error: "Invalid encryptedText" });
-       }
+      } else {
+        reject({ error: "Invalid encryptedText" });
+      }
     });
   }
 
@@ -34,7 +39,11 @@ class Util extends Component {
       if (encryptedText && typeof encryptedText === "string") {
         ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, salt, encryptedText, (response) => {
           if (response && response[0].error == 0) {
-            resolve(response[0].response);
+            var response = response[0].response;
+            if (Platform.OS === "android") {
+              response = new Buffer(response, 'base64').toString();
+            }
+            resolve(response);
           } else {
             if (response) {
               reject({ error: response[0].error });
@@ -44,9 +53,9 @@ class Util extends Component {
             }
           }
         });
-         }else{
-             reject({ error: "Invalid encryptedText" });
-        }
+      } else {
+        reject({ error: "Invalid encryptedText" });
+      }
     });
   }
 
@@ -66,6 +75,9 @@ class Util extends Component {
           }
         });
       }
+      else {
+        reject({ error: "Invalid Plain Text" });
+      }
     });
   }
 
@@ -84,6 +96,8 @@ class Util extends Component {
             }
           }
         });
+      } else {
+        reject({ error: "Invalid Plain Text" });
       }
     });
   }
@@ -173,22 +187,22 @@ class Util extends Component {
     });
   }
 
-  static convertToPostData(jsonObject){
-    if(jsonObject!=null && jsonObject!=undefined){
-      var postData = "";      
+  static convertToPostData(jsonObject) {
+    if (jsonObject != null && jsonObject != undefined) {
+      var postData = "";
       var firstKey = true;
-      var keys = Object.keys(jsonObject).forEach((key)=>{
-        if(firstKey===true){
+      var keys = Object.keys(jsonObject).forEach((key) => {
+        if (firstKey === true) {
           firstKey = false;
           postData = postData + key + '=' + jsonObject[key];
         }
-        else{
+        else {
           postData = postData + '&' + key + '=' + jsonObject[key];
         }
       });
-      
+
       return postData;
-    }else{
+    } else {
       return null;
     }
   }

@@ -853,7 +853,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             int error = status.errorCode;
             statusMap.putInt("error", error);
             if(status.errorCode == 0 && status.result!=null) {
-                statusMap.putString("response", new String(status.result));
+                statusMap.putString("response", new String(Base64.encodeToString(status.result,Base64.NO_WRAP)));
             }
         } else {
             statusMap.putInt("error", 1);
