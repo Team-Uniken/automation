@@ -104,7 +104,16 @@ export default class UpdateQuestionSet extends Component {
     } else {
       dismissKeyboard();
       InteractionManager.runAfterInteractions(() => {
-        alert('Please enter a Question & Answer');
+        if (kSecQ.trim().length == 0 ){
+        alert('Please enter question');
+        return 0;
+        }
+        else if (vSecA.trim().length == 0 ){
+        alert('Please enter answer');
+        }
+        else{
+        
+        }
       });
     }
   }
