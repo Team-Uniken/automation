@@ -33,7 +33,10 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
  */
 const onGetRegistredDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onUpdateDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+
 let obj;
+let onLogOffSubscription;
 let onUpdateDeviceDetailsSubscription;
 let onGetRegistredDeviceDetailsSubscription;
 let devicesList;
@@ -162,6 +165,8 @@ export default class DeviceMgmtScene extends Component {
       username: '',
       status: 'created',
       deviceCount: 0,
+      currentDeviceId: null,
+      logOffOnDelete:false,
     };
 
     this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
@@ -174,7 +179,7 @@ export default class DeviceMgmtScene extends Component {
   This method is called when the component will start to load
   */
   componentWillMount() {
-    
+
     if (onUpdateDeviceDetailsSubscription) {
       onUpdateDeviceDetailsSubscription.remove();
       onUpdateDeviceDetailsSubscription = null;
@@ -183,12 +188,22 @@ export default class DeviceMgmtScene extends Component {
     onUpdateDeviceDetailsSubscription = onUpdateDeviceDetailsModuleEvt.addListener('onUpdateDeviceDetails',
       this.onUpdateDeviceDetails.bind(this));
   }
- /*
-     This is life cycle method of the react native component.
-     This method is called when the component is Mounted/Loaded.
-   */
+
+  getCurrentDeviceId() {
+    ReactRdna.getDeviceID((response) => {
+      if (response[0].error == 0) {
+        this.state.currentDeviceId = response[0].response;
+      }
+    });
+  }
+
+  /*
+      This is life cycle method of the react native component.
+      This method is called when the component is Mounted/Loaded.
+    */
   componentDidMount() {
     if (Main.isConnected) {
+      this.getCurrentDeviceId();
       this.getRegisteredDeviceDetails();
     } else {
 
@@ -208,19 +223,69 @@ export default class DeviceMgmtScene extends Component {
       onGetRegistredDeviceDetailsSubscription = null;
     }
 
-    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails',this.onGetRegistredDeviceDetails);
-      ReactRdna.getRegisteredDeviceDetails(Main.dnaUserName, (response) => {
-        console.log('----- DeviceMgmt.getRegisteredDeviceDetails.response ');
-        console.log(response);
+    onGetRegistredDeviceDetailsSubscription = onGetRegistredDeviceDetailsModuleEvt.addListener('onGetRegistredDeviceDetails', this.onGetRegistredDeviceDetails);
+    ReactRdna.getRegisteredDeviceDetails(Main.dnaUserName, (response) => {
+      console.log('----- DeviceMgmt.getRegisteredDeviceDetails.response ');
+      console.log(response);
 
-        if (response[0].error !== 0) {
-          console.log('----- ----- response is not 0');
-          if (devicesResponse !== undefined) {
-            // If error occurred reload last response
-            this.onGetRegistredDeviceDetails(devicesResponse);
-          }
+      if (response[0].error !== 0) {
+        console.log('----- ----- response is not 0');
+        if (devicesResponse !== undefined) {
+          // If error occurred reload last response
+          this.onGetRegistredDeviceDetails(devicesResponse);
+        }
+      }
+    });
+  }
+
+  logOff() {
+    if (onLogOffSubscription) {
+      onLogOffSubscription.remove();
+      onLogOffSubscription = null;
+    }
+//    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    if(Main.isConnected){
+      onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
+      ReactRdna.logOff(Main.dnaUserName, (response) => {
+        if (response) {
+          console.log('immediate response is' + response[0].error);
+        } else {
+          console.log('immediate response is' + response[0].error);
         }
       });
+    }
+    else{
+      Alert.alert(
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => {}}
+        ]
+      );
+    }
+  }
+
+  onLogOff(e) {
+    if (onLogOffSubscription) {
+      onLogOffSubscription.remove();
+      onLogOffSubscription = null;
+    }
+
+    console.log('immediate response is' + e.response);
+    var responseJson = JSON.parse(e.response);
+    if (responseJson.errCode == 0) {
+      console.log('LogOff Successfull');
+      chlngJson = responseJson.pArgs.response.ResponseData;
+      nextChlngName = chlngJson.chlng[0].chlng_name
+      const pPort = responseJson.pArgs.pxyDetails.port;
+      if (pPort > 0) {
+        RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
+        Web.proxy = pPort;
+      }
+      this.doNavigation();
+    } else {
+      alert('Failed to Log-Off with Error ' + responseJson.errCode);
+    }
   }
 
   //callback of getRegisteredDeviceDetails api.
@@ -248,10 +313,15 @@ export default class DeviceMgmtScene extends Component {
   //callback of rdna updateDeviceDetails api.
   onUpdateDeviceDetails(e) {
     const res = JSON.parse(e.response);
+    var logOff = this.state.logOffOnDelete;
+    this.state.logOffOnDelete = false;
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-        this.getRegisteredDeviceDetails();
+        // if(logOff === true)
+        //   this.logOff();
+        // else 
+          this.getRegisteredDeviceDetails();
       } else {
         alert(res.pArgs.response.StatusMsg);
         // If error occurred reload devices list with previous response
@@ -272,28 +342,28 @@ export default class DeviceMgmtScene extends Component {
     });
   }
 
+  isCurrentDevice(device) {
+    if (device) {
+      return this.state.currentDeviceId === device.devUUID
+    } else
+      return false;
+  }
 
   onDeletePressed(deviceHolder) {
     console.log(deviceHolder);
     const device = deviceHolder.device;
     let status;
-    if (this.state.deviceCount <= 1) {
-      alert('You cannot delete the last permanent device for this account.');
-    } else {
-      if (this.isDeviceDeleted(device)) {
-        status = Constants.DEVICE_ACTIVE;
-      } else {
-        status = Constants.DEVICE_DELETE;
-      }
-      Alert.alert(
-        '',
-        'Do you want to change status to ' + status + ' ?',
-        [
-          { text: 'Cancel', onPress: () => console.log("----- Cancel pressed") },
-          { text: 'OK', onPress: () => this.deleteDevice(deviceHolder) },
-        ]
-      );
-    }
+    var msg = 'Do you want to delete this device?';
+    if (this.isCurrentDevice(device))
+      msg = 'This is your current device. Your current session will be logged off by deleting this device. Do you want to proceed?';
+    Alert.alert(
+      '',
+      msg,
+      [
+        { text: 'No', onPress: () => console.log("----- Cancel pressed") },
+        { text: 'Yes', onPress: () => this.deleteDevice(deviceHolder) },
+      ]
+    );
   }
 
   onTextChange(text) {
@@ -317,7 +387,9 @@ export default class DeviceMgmtScene extends Component {
       obj.setState({
         dataSource: deviceHolderList,
       });
-
+      
+      if(this.isCurrentDevice(device))
+        this.state.logOffOnDelete = true;
       this.updateDeviceDetails();
     } else {
 
@@ -443,9 +515,9 @@ export default class DeviceMgmtScene extends Component {
       </View>
     )
   }
- /*
-    This method is used to render the componenet with all its element.
-  */
+  /*
+     This method is used to render the componenet with all its element.
+   */
   renderRow(rowData, secId, rowId, rowMap) {
     const device = rowData.device;
     const devicename = device.devName;
@@ -483,9 +555,9 @@ export default class DeviceMgmtScene extends Component {
       </View>
     );
   }
- /*
-    This method is used to render the componenet with all its element.
-  */
+  /*
+     This method is used to render the componenet with all its element.
+   */
   render() {
     return (
       <Main
