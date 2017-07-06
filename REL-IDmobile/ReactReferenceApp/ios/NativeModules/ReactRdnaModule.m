@@ -14,6 +14,7 @@
 #import <React/RCTEventDispatcher.h>
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
+#import "ActiveShieldSDK.h"
 
 RDNA *rdnaObject;
 id<RDNACallbacks> rdnaClientCallbacks;
@@ -23,13 +24,15 @@ dispatch_semaphore_t semaphore;
 RDNAIWACreds *rdnaIWACredsObj;
 
 @interface ReactRdnaModule()<RDNAPrivacyStreamCallBacks,CLLocationManagerDelegate>{
- 
+  
   id <RDNAPrivacyStreamCallBacks> privacyStreamCallBack;
   CLLocationManager *locationManagerObject;
   BOOL isRDNAIntilized;
   NSMutableDictionary *jsonDictionary;
   NSMutableDictionary *dictHttpCallbacks;
   int i;
+  ActiveShield *_shield;
+  AppDelegate *delegate;
 }
 @end
 
@@ -67,16 +70,102 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   RDNASSLCertificate *rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
   rdnaSSLlCertificate.p12Certificate = certString3;
   rdnaSSLlCertificate.password = certPassword;
-  int errorID = 0;
-  RDNA *rdna;
+  __block int errorID = 0;
   localbridgeDispatcher = _bridge;
+  delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
   [self initParams];
-  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
-  rdnaObject = rdna;
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
   
+  __block bool retval = YES;
+  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
+
+  _shield = [ActiveShield sharedInstance];
+  [_shield performSecurityCheckWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES) andCompletion:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors) {
+    
+    for (ASSecurityThreat *_threat in discoveredThreats)
+    {
+      switch (_threat.genus)
+      {
+        case ASSecurityThreatCategorySystem:
+          if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
+          {
+            //ok, this device is jailbroken (or in any other way compromised) :(
+            NSString *threatString =@"The device's integrity is compromised";
+            [threatSet addObject:threatString];
+             retval = NO;
+          }
+          break;
+        case ASSecurityThreatCategoryNetwork:
+          //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
+          if (_threat.implicatedNetworks.count)
+          {
+            BMNetworkId *_network = _threat.implicatedNetworks[0];
+            NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
+            [threatSet addObject:threatString];
+            retval = NO;
+          }
+          break;
+        case ASSecurityThreatCategoryApp:
+          if (_threat.implicatedApps.count)
+          {
+            NSString *_badAppBundleID = _threat.implicatedApps[0];
+            if (_threat.species == ASAppSecurityThreatRepackagedApp)
+            {
+              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
+              [threatSet addObject:threatString];
+              retval = NO;
+            }
+            else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
+            {
+              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+                NSString *threatString =@"Your device contains app from unknown resources";
+                [threatSet addObject:threatString];
+                retval = NO;
+              }
+            }
+            else if(_threat.species == ASAppSecurityThreatMaliciousApp)
+            {
+              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
+              [threatSet addObject:threatString];
+              retval = NO;
+            }
+            else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
+              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+                NSString *threatString =@"Your device contains app from unknown resources";
+                [threatSet addObject:threatString];
+                retval = NO;
+              }
+            }
+            else{
+              retval = YES;
+            }
+          }
+          break;
+          
+        default:
+          break;
+      }
+    }
+    if(retval){
+      RDNA *rdna;
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
+      rdnaObject = rdna;
+      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+      callback(@[responseArray]);
+      if (errorID ==0) {
+        [self startBetterMobiMonitoring];
+      }
+    }else{
+      NSMutableString *errorString = [[NSMutableString alloc]init];
+      NSArray *threat = [threatSet allObjects];
+      for (int j =0; j<threat.count; j++) {
+        [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
+      }
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [delegate onDeviceThreat:errorString];
+      });
+    }
+  }];
 }
 
 RCT_EXPORT_METHOD (getServiceByServiceName:(NSString *)serviceName
@@ -497,7 +586,7 @@ RCT_EXPORT_METHOD (getNotificationHistory:(int)recordCount
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
   int errorID = 0;
- 
+  
   errorID = [rdnaObject getNotificationHistory:recordCount withStartIndex:startIndex withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate withNotificationStatus:notificationStatus withActionPerformed:actionPerformed withKeywordSearch:keywordSearch withDeviceID:deviceID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -541,12 +630,12 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   int errorID = 0;
   RDNAHTTPRequest *request = [[RDNAHTTPRequest alloc]init];
-
+  
   
   if(headers){
     NSError *err;
-  NSData *data = [headers dataUsingEncoding:NSUTF8StringEncoding];
-  id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+    NSData *data = [headers dataUsingEncoding:NSUTF8StringEncoding];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
     
     if(!err)
       request.headers = json;
@@ -564,9 +653,9 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   
   if(errorID != RDNA_ERR_NONE){
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":@""};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":@""};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    callback(@[responseArray]);
   }else{
     [dictHttpCallbacks setObject:callback forKey:[NSString stringWithFormat:@"%d",requestID]];
   }
@@ -581,27 +670,27 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   //[dictStatusJson setValue:[NSNumber numberWithInt:status.errorCode] forKey:@"errorCode"];
   [dictStatusJson setValue:[NSNumber numberWithInt:status.requestID] forKey:@"requestID"];
-
+  
   NSMutableDictionary *dictRequestJson = [[NSMutableDictionary alloc] init];
   
   [dictRequestJson setValue:[NSNumber numberWithInt:status.request.method] forKey:@"method"];
-   [dictRequestJson setValue:status.request.url forKey:@"url"];
+  [dictRequestJson setValue:status.request.url forKey:@"url"];
   
-
+  
   [dictRequestJson setValue:status.request.headers forKey:@"headers"];
   [dictRequestJson setValue:[[NSString alloc] initWithData:status.request.body encoding:NSUTF8StringEncoding]forKey:@"body"];
   
   [dictStatusJson setValue:dictRequestJson forKey:@"httpRequest"];
   
   
-
+  
   NSMutableDictionary *dictResponseJson = [[NSMutableDictionary alloc] init];
   
   [dictResponseJson setValue:status.response.version forKey:@"version"];
   [dictResponseJson setValue:[NSNumber numberWithInt:status.response.statusCode] forKey:@"statusCode"];
   [dictResponseJson setValue:status.response.statusMessage forKey:@"statusMessage"];
   
- 
+  
   [dictResponseJson setValue:status.response.headers forKey:@"headers"];
   [dictResponseJson setValue:[[NSString alloc] initWithData:status.response.body encoding:NSUTF8StringEncoding]forKey:@"body"];
   
@@ -632,17 +721,17 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
 - (int)onInitializeCompleted:(NSString *)status {
   NSLog(@"init success");
   i =0;
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onInitializeCompleted"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onInitializeCompleted"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onInitializeCompleted" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onPauseRuntime:(NSString *)status {
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onPauseCompleted"
-//                                                            body:@{@"response":status}];
-   [self sendEventWithName:@"onPauseCompleted" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onPauseCompleted"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onPauseCompleted" body:@{@"response":status}];
   return 0;
 }
 
@@ -650,8 +739,8 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:nil forKey:@"sContext"];
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onResumeCompleted"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onResumeCompleted"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onResumeCompleted" body:@{@"response":status}];
   return 0;
 }
@@ -661,9 +750,9 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   rdnaObject = nil;
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:nil forKey:@"sContext"];
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
-//                                                            body:@{@"response":status}];
-//  [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
+  //                                                            body:@{@"response":status}];
+  //  [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
   return 0;
 }
 
@@ -683,50 +772,50 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
 
 - (int)onConfigRecieved:(NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onConfigRecieved"
-//                                                            body:@{@"response":status}];
-   [self sendEventWithName:@"onConfigRecieved" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onConfigRecieved"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onConfigRecieved" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onCheckChallengeResponseStatus:(NSString *) status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onCheckChallengeResponseStatus"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onCheckChallengeResponseStatus"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onCheckChallengeResponseStatus" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onGetAllChallengeStatus:(NSString *) status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetAllChallengeStatus"
-//                                                            body:@{@"response":status}];
- [self sendEventWithName:@"onGetAllChallengeStatus" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetAllChallengeStatus"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onGetAllChallengeStatus" body:@{@"response":status}];
   return 0;
 }
 
 
 - (int)onUpdateChallengeStatus:(NSString *) status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateChallengeStatus"
-//                                                            body:@{@"response":status}];
-   [self sendEventWithName:@"onUpdateChallengeStatus" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateChallengeStatus"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onUpdateChallengeStatus" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onForgotPasswordStatus:(NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onForgotPasswordStatus"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onForgotPasswordStatus"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onForgotPasswordStatus" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onLogOff: (NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onLogOff"
-//                                                            body:@{@"response":status}];
-    [self sendEventWithName:@"onLogOff" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onLogOff"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onLogOff" body:@{@"response":status}];
   return 0;
 }
 
@@ -740,21 +829,21 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
       name =@"";
     }
     
-//    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
-//                                                              body:@{@"response":name}];
+    //    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
+    //                                                              body:@{@"response":name}];
     [self sendEventWithName:@"onGetpassword" body:@{@"response":name}];
     i++;
   }else{
-
-//    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
-//                                                              body:@{@"response":domainUrl}];
+    
+    //    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
+    //                                                              body:@{@"response":domainUrl}];
     [self sendEventWithName:@"onGetCredentials" body:@{@"response":domainUrl}];
   }
   semaphore = dispatch_semaphore_create(0);
   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-   return rdnaIWACredsObj;
+  return rdnaIWACredsObj;
   
-
+  
 }
 
 
@@ -763,32 +852,32 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
 
 - (int)onGetPostLoginChallenges:(NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginChallenges"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginChallenges"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onGetPostLoginChallenges" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onGetRegistredDeviceDetails:(NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetRegistredDeviceDetails"
-//                                                            body:@{@"response":status}];
-    [self sendEventWithName:@"onGetRegistredDeviceDetails" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetRegistredDeviceDetails"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onGetRegistredDeviceDetails" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onUpdateDeviceDetails:(NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceDetails"
-//                                                            body:@{@"response":status}];
-   [self sendEventWithName:@"onUpdateDeviceDetails" body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceDetails"
+  //                                                            body:@{@"response":status}];
+  [self sendEventWithName:@"onUpdateDeviceDetails" body:@{@"response":status}];
   return 0;
 }
 
 - (int)onUpdateDeviceStatus:(NSString *)status{
   
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceStatus"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceStatus"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onUpdateDeviceStatus" body:@{@"response":status}];
   return 0;
 }
@@ -802,16 +891,16 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
 }
 
 - (int)onGetNotifications:(NSString *)status{
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetNotifications"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetNotifications"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onGetNotifications" body:@{@"response":status}];
   return 0;
 }
 
 
 - (int)onUpdateNotification:(NSString *)status{
-//  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateNotification"
-//                                                            body:@{@"response":status}];
+  //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateNotification"
+  //                                                            body:@{@"response":status}];
   [self sendEventWithName:@"onUpdateNotification" body:@{@"response":status}];
   return 0;
 }
@@ -840,9 +929,9 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   //[self sendEventWithName:@"onHttpResponse" body:@{@"response":[self createJsonHttpResponse:status]}];
   RCTResponseSenderBlock rdnaHttpJSCallbacks = [dictHttpCallbacks valueForKey:[NSString stringWithFormat:@"%d",status.requestID]];
   if(rdnaHttpJSCallbacks){
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:status.errorCode],@"response":[self createJsonHttpResponse:status]};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  rdnaHttpJSCallbacks(@[responseArray]);
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:status.errorCode],@"response":[self createJsonHttpResponse:status]};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    rdnaHttpJSCallbacks(@[responseArray]);
     [dictHttpCallbacks removeObjectForKey:[NSString stringWithFormat:@"%d",status.requestID]];
   }
   return 0;
@@ -874,7 +963,7 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
     }
   });
   
- 
+  
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -900,12 +989,6 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   return @{@"RdnaCipherSpecs":@"AES/256/CFB/PKCS7Padding",
            @"RdnaCipherSalt":[[NSBundle mainBundle] bundleIdentifier],
-           //           @"agentInfo":@"1JUY7BszaN3TYOQxg8kAYtm09P/fnaTtjbShDQ1ty39Sc5DIvC7EsyFAq0JXBWaJT2h1CfawxFc+tCsgYpYE6IpmgVvvI/DfqRXPWWrd0pxrw+6dbgL1nI0drWDvfUx5aK2Hb43+WpMf/JCPckmeIk7OuCLYp5iDs5tMXo5nDx45GYYJNA6KbNjwrqP4/ELj76DPrcMTgfSrK81yN9uM8hg+dNGG6VmdBdYDmufzna4Jx4Pn3tbxJVmR7dlzVx7NrOLbSre4yQZP+35KT4IIqakRfgIQ03z6fh6KVKvq1s9RinlfwslqPocrKEOR3+C6UOzySq+Jmocd+HUriAx1Wtd9tvj8meOCD7/J0B6psi3qEgfm9LsXh7YY336gsnBG2A/05I4G19DlTs07d9ZXD0AloFfPS26LZb54tVeLnkHd/5zbQjHFcrsmCEyj6tZABCeYEqYKfVkxgFUODqa8i+73O4uqW+ny+z6y+mrLVtXyRUUKjhPm1MqkZ3YaAq88t/8VXjVwNO1NB1bTfL1NOqYz4igo9zV5IN8dciTxDqZ7mVMRDsGQeQla1TbdH4TGVPkxeHJoFxpyM1BcUmEyivToLSyXDjWadjT4GFANW+oiREjeNHjvu3YSpDWjo8UzXfq8025/ftuX12BJpy2/ZpLs4jqI7vHkmR3VS2AJ3Zft2xDf8fGDwb2U6Qv8MZ7ROwmbntggafs/8xmWM/H9CBETFbO/NiDE+wRGHRd6uB/Vu+bwGBdg1gARZBvinST+fXBi+Z8YHQcBgRBkv0isA8cN4xfL6kyAYx3gWu7vBlXUqNygluabyWUUdhgIE6GepSIVrKcmTClB5wPctKX+lJ8uxtgOXSxqiQSSA8RSUxTDtMuMNJxktu7LNIGcKe70m49Cm/hDXaw4+JgTK0G3ddJJMEeq+m7SRwa+B8fyudbjcRuxLO+rxB01SiZ1D1G7Vdm3vCsOyam3J0fZ/tpLXaqdmI0FGaM1+r0BhZPdBv5NQ0V9Cn7ql3eOkxUPNtJcqULUtlYOjh4IaoElYMPFd+Dp9WIxRXkMqgakM9XUnv7XQiizBivYbSxuPdS6D0Fo+BoJ3wfOve0vtl070Nhk+pJXYLrL9P+6Kd4xRictv1Wti83NLu/sSXGx1plkE0Vu7qRJlW5qJNhV0f5apUXzzjaIg90cVuWSVf+YI/dG7vLx4DVFE9ICxDgml2A/5LSMh7CsDFA8D8ClSUXMOb/4aH9zvaywfV81yoqSVcs5Qn8DqXmVpPZAkz9MAxWYiQdm6Uc7VcS/us4gYBjKEe2IaITGDfz9/YGhYteQ3bIkxBNV/u2ZuAqH9B6Ww3UXxEKMOjAYl6FQkV8ovkSixZmyLv6EF1ih029DhBd+cwTT1YJSM2PPebyRhy23PjBdcaMbf606s2vdQjvWK/m+C2ZUB/52lZLURs8ZJzlHh7cCPNw2thMucdAbmM0wMCDn/d2hdXpzNr13DmWi3ufGVNcXQ9xlJy7TdX1Vfs3R80kUjXztKbUhQsImsXh7jx+bq9abw07BwthzDbO5wfQpORmb2SxUU+3GDHI2947PsGQeQ1WQwQ458UL/xsruFbakJbA75lfRzdsoe8fQN4VsDHy+VubMWFaAhkqpajt8/difgdpbLrSMIZ1zXQWVu912QWeYwtr0V36Wo1wdSPvxwKs867ueZL7C8zjRPj7w+4CoHqcprWDG3fgHArnC5AEXe1LCT8FgwbRnm0ZxblMpuYTHqRbSZNZY+Fk4Id5VJKRI9NfQfs0S9jI5JA3NpfMOtESYkrE+kJSzxrpt6UN80yJMqzawnMBpa7kHt4sLezWPzJTZppMqOF/sL6I++XwMKCtnpNwSwetR/xTAd/2YZUUCHpfqvF+s10uZhmXqeO36hr5rxyuB3WxHk1TcPvQZ/JYU3jKyN7W3Z6ezbfzTwLam9cKj/Gb2nK+vm+pfoOJ1YI3dA+iEbJB8xBsZBDSYi/FNGt122ZAjdplXhxLYYj6skJossnnFfWxz7Ai34sGJaqd3qK0PHliWjhQD7jRFkfgEIKUM6u8HKykNzdb9h2QJ/Yco9gPxmyk5T31xdN1UzjS4+0bycj9R1qKXBqlfQo4SPCNfa6nZ8kZXrXqRkzzderTlPb+Q4hfxRuLua15ZAbs3IZxyXWDz4JdAQ4bG5a/50WcRA/TiedFqjgNMP5CnCMATCmujHzn9ySJD/8SMUF+LyZkZqavRcoyJAolvfX1uKIfDIJWOpquOqi3cOFY49lrmtL9yMYRG0/9YP6fI3W4L9hLAybB5GPBpAVeLNarTocwJOk3AiIFuoz0KRDQabfT4rRqqWSbQ2xda63dClPDEPn4PkK5h/OXTswAuUzbwFVTQuVapi9Tby93eG8OjzpGvazy9VbR0baD5wsObAjKoLjElCL+4QQNhNjTFFzK/9O8GNuqameABd6hcOpC27MOaiKRK19zzFkrUvJar0hpkmQDjYwq3bcupoU2Z3abtUoPEksI2c6Ccv4yLX5UonYgXlKvikDWcMXkgTSMZyzM=",
-           //           @"GatewayHost":@"apisdkdev.uniken.com",
-           //           @"GatewayPort":@"443",
-           //           @"agentInfo":@"1JUY7BszaN3TYOQxg8kAYtm09P/fxaDrjqePDhk1+X9KbKK/2spRo5F7RNLXhtNHdzlL3B7THX0hSOVlUrX1+HDFuc/zw5CwXAKmQyP2I8dyro9RrZm1iJdqAAA4OUZyjQcNIvkqKmADONwKVt1n1fQrdRQtrt7xTEZIvUGmFVDytSpk0AkP96PcH10g6jxmDRfOxV34blK6M12WPxoo4ZsQihDE+ikyw3Na34081S2SswYf2B6x1YnA8weQ45zgbVeSlPBl1KnFP6AbE4XTSN5fho1ta3l/I6Gjvkx+HgDYhU41LS860ueTYcdCCItLgSkq35HEffvcgxk1BzWZ0zF7VmBPFKwOAaxd1T4ipnzcVOrzhqWXWIQqJNglbKIHukRM2lLfAfbF6oIFCMpTWk/xoGN5TokzqrGVuhT4/tjk6Mc5V1YvItHBJJQgwqj//sxPEfhE3idPD0d433/WV4c2OEpiEAqQW8MIiLyA5387wJJBOCZU6UqEoMB3JpsXLEdUpVNDfKiv9MJH15H+2gj2tto/DGYjtW0Xuxg15TX+xfMu5d6QMN6IMPXgKuF1Zqxs5ilsFaY2B9GJKkRGmlj102ywipU1trx6GIC0C/btOa4KtI71pEP4HVK7W6+kTt97cG71hGBhWpu8hqG64jp3Qz0fX6r1Uxfdn0HtUX14wgchPcUEw4OlMDTPFSFu1xLQcA9YvotlLNxRlsReziKD6vvvwfNyS+LYIQ8s5gyyp+f5oGy3/JctFIltILNWs/TJEkA6ylez63YYtoezjYG8gNyiUvT3nTUJDESnl4EX84x09g9lvfl0BFSu2Vq2kPIcgAd0OmiyWhL9uJVfFpIHwbJUGdQKDHn7ywLBRxficPlAxiBCvjD4//B20p/KH63H+rT88FW869OuxCiQ7UfE7QPVxf+xSpsK2pl7D89KX7Arfv3efrZ0X9/jj0gqRcpWR4/qhrCURxAvYVj/+F+31ZOYNGM6c7VqjGYxJspTYK9wZLOjF64hiVOhjYEIRcPD1mjMx4OB38/PdtW46bf0oghWkToAOOUTzh87WfFRZBQXhVmWu8wq3qKnn9I3od+3e7EYiCt0chOECeX2iRv9tdVLTdtkTByHr0rhnzVcE6V24N9vdgyRCnvikMqDdR5pRzxTNgNND/wuNiuvmuwjFFKi5VyFr0olpJcCWd4wdAtMM7KDUuedueJJTRa2B1a67knmHL6Vz7U1nTfp6TReNqlFcc3HFFjfuyAhzwy3UveAeyl03neVs0FDxB/kHhbytxgT/pD32bOOITNd2z+bDn8H2kdyGpy43ei06weJ4kfddqfbZ+GTHVMwwdV2FapHpZ7Rlt4tuNbmBl6kdSl4Jj2SrcFLvdjn3Uakb+iNW7N4MnM+lnC/G3JjpWey5fd6YDhCx65hrBbDKlRxl75u1wu47ZJszqVjQZd3k1QEOBal7ujv8YTcU+BvauatQQIL47Yci3rTYGN45+/dYVzJDdp6gjXfXZiHmyLGl6oxiIto92hLw+9dt/YS99nFzj5V9iifObeicSwsnK8KgJgk3yTHqL6VF1N9U8hGjLKW4pvj/L3nchS6e7GPLLR83tqYth54w+TKXStstF8aRAxeEY3e/+FmAOzqvdEOfEk92yvTwu/D9R7SgSDmJqibfzuOs0ugfAzvzI+JGEDM6z9H33PZpr3VKp7HU6ucKHB+hgLb/+D1qRMEtn4Lpz9qb/P/WTiN+0LYamlUK2Ft3f+3ox1pD+E7IATl9aJ0CFwhVLljV4OR9cY0zN8AzeF4X2nqocEXDp3kfYabylyipDkb+89qkNxeRfSUlMxkl5MBIDw0LUiZZingTp9n31BZHAVcigb9PHpzJlRUzgyIOjyhgjhQR0yowg2DimKaCnAmEXdJvCfLt3afrgQ+bBHbYWyha5AoahJ6DoZuAGraF9N/bBfJiboBWMEMVaTJNiAqg89GdXT1D7XGdB2FFVNqo5Yy8GlW707y6NUS6FcDfnTcHRfixrReEO+o3CXFMiFqoUtO/EmcKeQiLcn/gVJLSuiiLbhcsjbD2XtHiVtw1hwYcB2lhmPDcU8g3X7scpJZp4eYfPVgxojroATPO4CD27Kr645N3R1ELGKvga5zEgwK5iQgGW032AwpRKKjF/tM8YdzP1nx1ZuhNJPzpB39EbgQysAcUzlowFs9Q2yCuHhO0tVrd2oXQvOX2yZsJcMO7W12oX8zqYs0n22yVeFsXX6Vm3ZbT8Y8obC+xmrKJ8vjOSq8uG/iroQZdSJuhAJD5lNOB8Qr4l8RM3aeeVlpEBe5sJ+79rl/u4ZPKi1Hd518CPVpD2HMUgxZPnfz8gzngWtMwiT0g75rrY6ya8CEac8hQ4ULHIqWCfxGavXTMvAJpgM9l0MRyR+27xFT6NQwQjGBfICTZ8umXU35Gs73Bm12tvNGzwKQ/wH7QnPY91NaKeXXUp7+lhp5v/NQbe+iz8XkG00i+dzBsaaZwHP99GLd4L+szr5zEvysPliaQEPaA1Wx3UMxCHa3tx2SSY0=",
-           //           @"GatewayHost":@"10.0.9.87",
-           //           @"GatewayPort":@"443",
            @"agentInfo":@"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",
            @"GatewayHost":@"apisdkdev.uniken.com",
            @"GatewayPort":@"4443",
@@ -923,6 +1006,101 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
            
            };
   
+}
+
+#pragma mark BetterMobileSDk
+
+-(void)startBetterMobiMonitoring{
+
+  ReactRdnaModule __weak *self__ = self;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    [_shield addObserverWithCallback:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors)
+     {
+       [self__ _handleDiscoveredThreats:discoveredThreats andErrors:errors];
+     }];
+  });
+    [_shield startMonitoringWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES)];
+}
+
+- (void) _handleDiscoveredThreats:(NSArray<ASSecurityThreat *> *) discoveredThreats andErrors:(NSArray *)errors
+{
+  __block bool retval = YES;
+  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
+  for (ASSecurityThreat *_threat in discoveredThreats)
+  {
+    switch (_threat.genus)
+    {
+      case ASSecurityThreatCategorySystem:
+        if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
+        {
+          //ok, this device is jailbroken (or in any other way compromised) :(
+          NSString *threatString =@"The device's integrity is compromised";
+          [threatSet addObject:threatString];
+          retval = NO;
+        }
+        break;
+      case ASSecurityThreatCategoryNetwork:
+        //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
+        if (_threat.implicatedNetworks.count)
+        {
+          BMNetworkId *_network = _threat.implicatedNetworks[0];
+          NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
+          [threatSet addObject:threatString];
+          retval = NO;
+        }
+        break;
+      case ASSecurityThreatCategoryApp:
+        if (_threat.implicatedApps.count)
+        {
+          NSString *_badAppBundleID = _threat.implicatedApps[0];
+          if (_threat.species == ASAppSecurityThreatRepackagedApp)
+          {
+            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
+            [threatSet addObject:threatString];
+            retval = NO;
+          }
+          else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
+          {
+            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+              NSString *threatString =@"Your device contains app from unknown resources";
+              [threatSet addObject:threatString];
+              retval = NO;
+            }
+          }
+          else if(_threat.species == ASAppSecurityThreatMaliciousApp)
+          {
+            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
+            [threatSet addObject:threatString];
+            retval = NO;
+          }
+          else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
+            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+              NSString *threatString =@"Your device contains app from unknown resources";
+              [threatSet addObject:threatString];
+              retval = NO;
+            }
+          }
+          else{
+            retval = YES;
+          }
+        }
+        break;
+        
+      default:
+        break;
+    }
+  }
+  if(!retval){
+    NSMutableString *errorString = [[NSMutableString alloc]init];
+    NSArray *threat = [threatSet allObjects];
+    for (int j =0; j<threat.count; j++) {
+      [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [delegate onDeviceThreat:errorString];
+    });
+  }
 }
 
 @end
