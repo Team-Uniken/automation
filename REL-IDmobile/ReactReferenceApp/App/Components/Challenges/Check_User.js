@@ -177,7 +177,7 @@ class UserLogin extends Component {
               ref='inputUsername'
               returnKeyType={'next'}
               keyboardType={'email-address'}
-              placeholder={'Enter e-mail'}
+              placeholder={'Enter Username/Email'}
               autoFocus={true}
               autoCorrect={false}
               autoCapitalize={false}
