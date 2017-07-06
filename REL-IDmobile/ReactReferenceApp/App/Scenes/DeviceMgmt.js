@@ -12,6 +12,7 @@ import ReactNative from 'react-native';
 /*
  Required for this js
  */
+import Events from 'react-native-simple-events';
 import Modal from 'react-native-simple-modal';
 import {View, StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, TouchableOpacity, Alert, } from 'react-native'
 import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
@@ -33,10 +34,8 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
  */
 const onGetRegistredDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onUpdateDeviceDetailsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-
 let obj;
-let onLogOffSubscription;
+
 let onUpdateDeviceDetailsSubscription;
 let onGetRegistredDeviceDetailsSubscription;
 let devicesList;
@@ -238,56 +237,6 @@ export default class DeviceMgmtScene extends Component {
     });
   }
 
-  logOff() {
-    if (onLogOffSubscription) {
-      onLogOffSubscription.remove();
-      onLogOffSubscription = null;
-    }
-//    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
-    if(Main.isConnected){
-      onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
-      ReactRdna.logOff(Main.dnaUserName, (response) => {
-        if (response) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-        }
-      });
-    }
-    else{
-      Alert.alert(
-        '',
-        'Please check your internet connection',
-        [
-          { text: 'OK', onPress: () => {}}
-        ]
-      );
-    }
-  }
-
-  onLogOff(e) {
-    if (onLogOffSubscription) {
-      onLogOffSubscription.remove();
-      onLogOffSubscription = null;
-    }
-
-    console.log('immediate response is' + e.response);
-    var responseJson = JSON.parse(e.response);
-    if (responseJson.errCode == 0) {
-      console.log('LogOff Successfull');
-      chlngJson = responseJson.pArgs.response.ResponseData;
-      nextChlngName = chlngJson.chlng[0].chlng_name
-      const pPort = responseJson.pArgs.pxyDetails.port;
-      if (pPort > 0) {
-        RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
-        Web.proxy = pPort;
-      }
-      this.doNavigation();
-    } else {
-      alert('Failed to Log-Off with Error ' + responseJson.errCode);
-    }
-  }
-
   //callback of getRegisteredDeviceDetails api.
   onGetRegistredDeviceDetails(e) {
     console.log('----- onGetRegistredDeviceDetails');
@@ -318,9 +267,9 @@ export default class DeviceMgmtScene extends Component {
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-        // if(logOff === true)
-        //   this.logOff();
-        // else 
+        if(logOff === true)
+          Events.trigger("logOff",null);
+        else 
           this.getRegisteredDeviceDetails();
       } else {
         alert(res.pArgs.response.StatusMsg);

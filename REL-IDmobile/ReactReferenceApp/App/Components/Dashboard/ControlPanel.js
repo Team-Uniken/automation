@@ -88,6 +88,7 @@ class ControlPanel extends Component {
   }
 
   componentDidMount() {
+    Events.on('logOff', 'logOff', this.logOff);
      //This getAllChallenges call was only for updating menu options
     this.getAllChallenges();
     constant.USER_SESSION = "YES";
@@ -156,6 +157,7 @@ class ControlPanel extends Component {
 
   componentWillUnmount() {
     Events.rm('cancelOperation', 'cancelOperation');
+    Events.rm('logOff', 'logOff');
   }
 
   cancelOperation(args) {
