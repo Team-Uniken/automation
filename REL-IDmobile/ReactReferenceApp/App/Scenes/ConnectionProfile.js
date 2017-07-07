@@ -372,6 +372,7 @@ class ConnectionProfileScene extends Component {
             style={styles.modalInput}
             placeholder={'Enter url'}
             value={this.state.inputURL}
+            underlineColorAndroid={'transparent'}
             placeholderTextColor={Skin.colors.HINT_COLOR}
             onSubmitEditing={this.checkURL.bind(this) }
             onChange={this.onURLChange.bind(this) } />
