@@ -152,7 +152,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
     }
     if(retval){
       RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
       rdnaObject = rdna;
       NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
       NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -173,7 +173,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   }];
   }else{
       RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
       rdnaObject = rdna;
       NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
       NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
