@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 #import "ActiveShieldSDK.h"
+#import <ReactNativeConfig/ReactNativeConfig.h>
 
 RDNA *rdnaObject;
 id<RDNACallbacks> rdnaClientCallbacks;
@@ -44,7 +45,7 @@ RDNAIWACreds *rdnaIWACredsObj;
 RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents {
-  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigRecieved",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification",@"onGetNotificationsHistory"];
+  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigReceived",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification",@"onGetNotificationsHistory",@"onTerminate"];
 }
 
 -(void)initParams{
@@ -74,6 +75,10 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   localbridgeDispatcher = _bridge;
   delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
   [self initParams];
+  
+  
+
+  if([[ReactNativeConfig envFor:@"BETTERMOBI"] isEqualToString:@"true"]){
   
   __block bool retval = YES;
   __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
@@ -147,7 +152,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
     }
     if(retval){
       RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
       rdnaObject = rdna;
       NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
       NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -166,6 +171,16 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
       });
     }
   }];
+  }else{
+      RDNA *rdna;
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil pSSLCertificate:nil DNSServerList:nil AppContext:self];
+      rdnaObject = rdna;
+      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+      callback(@[responseArray]);
+      
+    
+  }
 }
 
 RCT_EXPORT_METHOD (getServiceByServiceName:(NSString *)serviceName
@@ -430,6 +445,18 @@ RCT_EXPORT_METHOD (getConfig:(NSString *)userID
   
 }
 
+RCT_EXPORT_METHOD (testConfig:(NSString *)userID
+                   reactCallBack:(RCTResponseSenderBlock)callback){
+  
+  int errorID = 0;
+  errorID = [rdnaObject getConfig:userID];
+  [rdnaObject terminate];
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+  callback(@[responseArray]);
+  
+}
+
 RCT_EXPORT_METHOD (getAllChallenges:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
@@ -661,9 +688,12 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   }
   
 }
-
-
-
+  
+  
+RCT_EXPORT_METHOD (exitApp){
+    exit(0);
+}
+  
 -(NSDictionary*)createJsonHttpResponse:(RDNAHTTPStatus*) status{
   
   NSMutableDictionary *dictStatusJson = [[NSMutableDictionary alloc] init];
@@ -752,7 +782,7 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   [defaults setValue:nil forKey:@"sContext"];
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
   //                                                            body:@{@"response":status}];
-  //  [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
+    [self sendEventWithName:@"onTerminate" body:@{@"response":status}];
   return 0;
 }
 
@@ -774,7 +804,7 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onConfigRecieved"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onConfigRecieved" body:@{@"response":status}];
+  [self sendEventWithName:@"onConfigReceived" body:@{@"response":status}];
   return 0;
 }
 
