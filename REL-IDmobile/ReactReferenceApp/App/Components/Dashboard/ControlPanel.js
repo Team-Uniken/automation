@@ -50,6 +50,8 @@ let challengeName;
 let onGetAllChallengeEvent;
 let onGetAllChallengeStatusSubscription;
 let onLogOffSubscription;
+let onTerminateSubscription;
+let onGetConfigSubscription;
 
 var styles = Skin.controlStyle;
 var Obj;
@@ -59,6 +61,8 @@ const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.Re
 const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onGetPostLoginChallengesModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onGetNotificationsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onTerminateModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+const onGetConfigModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 
 class ControlPanel extends Component {
 
@@ -67,9 +71,14 @@ class ControlPanel extends Component {
     console.log(props);
     this.getPostLoginChallenges = this.getPostLoginChallenges.bind(this);
     this.logOff = this.logOff.bind(this);
+    this.terminate = this.terminate.bind(this);
     this.onLogOff = this.onLogOff.bind(this);
     this.showLogOffAlert = this.showLogOffAlert.bind(this);
+    this.showTerminateAlert = this.showTerminateAlert.bind(this);
     this.doNavigation = this.doNavigation.bind(this);
+    this.onTerminate = this.onTerminate.bind(this);
+    this.getConfig = this.getConfig.bind(this);
+    this.onGetConfig = this.onGetConfig.bind(this);
     //this.getMyNotifications();
   }
 
@@ -85,6 +94,20 @@ class ControlPanel extends Component {
         },
       ]
     );
+  }
+  
+  showTerminateAlert() {
+    
+    Alert.alert(
+                '',
+                'Do you want to Exit',
+                [
+                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
+                 {
+                 text: 'OK', onPress: this.terminate
+                 },
+                 ]
+                );
   }
 
   componentDidMount() {
@@ -154,6 +177,94 @@ class ControlPanel extends Component {
       alert('Failed to Log-Off with Error ' + responseJson.errCode);
     }
   }
+  
+  
+  terminate(){
+    if (onTerminateSubscription) {
+      onTerminateSubscription.remove();
+      onTerminateSubscription = null;
+    }
+    //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    if(Main.isConnected){
+      onTerminateSubscription = onTerminateModuleEvt.addListener('onTerminate', this.onTerminate);
+      ReactRdna.terminate((response) => {
+                       if (response) {
+                       console.log('immediate response is' + response[0].error);
+                       } else {
+                       console.log('immediate response is' + response[0].error);
+                       }
+                       });
+    }
+    else{
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK', onPress: () => {}}
+                   ]
+                  );
+    }
+  }
+  
+  getConfig(){
+    
+    if (onGetConfigSubscription) {
+      onGetConfigSubscription.remove();
+      onGetConfigSubscription = null;
+    }
+    //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    if(Main.isConnected){
+      onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigRecieved', this.onGetConfig);
+      ReactRdna.getConfig(Main.dnaUserName, (response) => {
+                          if (response) {
+                          console.log('immediate response is' + response[0].error);
+                          } else {
+                          console.log('immediate response is' + response[0].error);
+                          }
+                          });
+         }
+    else{
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK', onPress: () => {}}
+                   ]
+                  );
+    }
+
+    
+  }
+  
+  onTerminate(e) {
+    if (onTerminateSubscription) {
+      onTerminateSubscription.remove();
+      onTerminateSubscription = null;
+    }
+    console.log('immediate response is' + e.response);
+    var responseJson = JSON.parse(e.response);
+    if (responseJson.errCode == 0) {
+      ReactRdna.exitApp();
+    } else {
+      alert('Failed to exit with Error ' + responseJson.errCode);
+    }
+  }
+  
+  onGetConfig(e) {
+    if (onGetConfigSubscription) {
+      onGetConfigSubscription.remove();
+      onGetConfigSubscription = null;
+    }
+    console.log('immediate response is' + e.response);
+    var responseJson = JSON.parse(e.response);
+    if (responseJson.errCode == 0) {
+      alert(responseJson);
+    } else {
+      alert('Failed to get config with Error ' + responseJson.errCode);
+    }
+  }
+  
+  
 
   componentWillUnmount() {
     Events.rm('cancelOperation', 'cancelOperation');
@@ -441,6 +552,7 @@ class ControlPanel extends Component {
       }
     }).done();
   }
+  
 
   popToLoadView() {
     this.props.navigator.replace({
@@ -701,10 +813,22 @@ class ControlPanel extends Component {
               this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
             } }
             />
+            <MenuItem
+            visibility={Config.GETCONFIG}
+            lable="Config"
+            onPress={()=>{
+              this.getConfig();
+              this.props.toggleDrawer();}}
+            />
           <MenuItem
             visibility={Config.LOGOUT}
             lable="Logout"
-            onPress={this.showLogOffAlert.bind(this) }
+            onPress={this.showLogOffAlert }
+            />
+            <MenuItem
+            visibility={Config.EXIT}
+            lable="Exit"
+            onPress={this.showTerminateAlert }
             />
         </ScrollView>
 
