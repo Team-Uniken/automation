@@ -160,8 +160,8 @@ android {
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 486
-            versionName "4.8.6"
+            versionCode 487
+            versionName "4.8.7"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -170,8 +170,8 @@ android {
             signingConfig signingConfigs.releaseStock
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 486
-            versionName "4.8.6"
+            versionCode 487
+            versionName "4.8.7"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         ubs{
@@ -179,8 +179,8 @@ android {
             signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 486
-            versionName "4.8.6"
+            versionCode 487
+            versionName "4.8.7"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbc{
@@ -188,8 +188,8 @@ android {
             signingConfig signingConfigs.releaseCbc
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 486
-            versionName "4.8.6"
+            versionCode 487
+            versionName "4.8.7"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         relidmobile{
@@ -197,8 +197,8 @@ android {
             signingConfig signingConfigs.releaseRelidmobile
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 486
-            versionName "4.8.6"
+            versionCode 487
+            versionName "4.8.7"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -228,7 +228,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release_v1.2.1', ext: 'aar')
+    compile(name: 'app-sdk-release_v1.2.3_openssl', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
     compile project(':react-native-push-notification')
