@@ -7,8 +7,11 @@ import android.os.Handler;
 import android.telecom.Call;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 
 //import com.better.workspace.lib.BetterMTD;
+//import com.better.workspace.lib.model.ThreatCategory;
+//import com.better.workspace.lib.model.ThreatType;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -35,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
@@ -95,6 +99,11 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     @Override
     public String getName() {
         return "ReactRdnaModule";
+    }
+
+    @ReactMethod
+    public void exitApp(){
+        System.exit(0);
     }
 
     //CONST_AGENTINFO, CONST_RDNA_IP, CONST_RDNA_PORT, CONST_CYPHER_SPEC, CONST_CYPHER_SALT, null, (response) =>
@@ -462,16 +471,16 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
 
         callback.invoke(writableArray);
-
+//
 //        new Thread(new Runnable()
 //        {
 //            @Override
 //            public void run()
 //            {
 //                BetterMTD betterMTD = BetterMTD.init(context.getApplicationContext());
-//                boolean check =  betterMTD.healthCheck(context.getApplicationContext());
+//                List<Pair<ThreatCategory,ThreatType>> betterResult =  betterMTD.healthCheck(context.getApplicationContext());
 //                RDNA.RDNAStatus<RDNA> rdnaStatus = null;
-//                if(check == true){
+//                if(betterResult.size() == 0){
 //                    rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,null,null, context);
 //                    rdnaObj = rdnaStatus.result;
 //
@@ -751,6 +760,41 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         callback.invoke(writableArray);
     }
 
+    @ReactMethod
+    public void getConfig(String userId, Callback callback){
+        WritableMap errorMap = Arguments.createMap();
+
+        if(rdnaObj != null) {
+            int error = rdnaObj.getConfig(userId);
+            errorMap.putInt("error", error);
+        } else {
+            errorMap.putInt("error", 1);
+        }
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
+
+
+    @ReactMethod
+    public void testConfig(String userId, Callback callback){
+        WritableMap errorMap = Arguments.createMap();
+
+        if(rdnaObj != null) {
+            int error = rdnaObj.getConfig(userId);
+            rdnaObj.terminate();
+            errorMap.putInt("error", error);
+        } else {
+            errorMap.putInt("error", 1);
+        }
+
+        WritableArray writableArray = Arguments.createArray();
+        writableArray.pushMap(errorMap);
+
+        callback.invoke(writableArray);
+    }
 
     @ReactMethod
     public void getDefaultCipherSalt(Callback callback)

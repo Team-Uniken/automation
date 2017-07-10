@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.Settings;
+import android.view.WindowManager;
 
 import com.dieam.reactnativepushnotification.modules.RNPushNotificationHelper;
 import com.facebook.react.ReactActivity;

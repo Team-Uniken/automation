@@ -100,6 +100,18 @@
         <!--<action android:name="android.intent.action.BOOT_COMPLETED"></action>           &lt;!&ndash; <- Add this line &ndash;&gt;-->
         <!--</intent-filter>                                                                  &lt;!&ndash; <- Add this line &ndash;&gt;-->
         <!--</receiver>-->
+        <!-- BetterMTD Receivers -->
+        <receiver android:name=".AppResultReceiver">
+            <intent-filter>
+                <action android:name="com.better.workspace.lib.ANALYSIS_FINISHED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".NewMalwareReceiver">
+            <intent-filter>
+                <action android:name="com.better.check.apps.NEW_MALWARE"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

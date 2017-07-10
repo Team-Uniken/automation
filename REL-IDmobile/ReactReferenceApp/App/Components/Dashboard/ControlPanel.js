@@ -79,6 +79,7 @@ class ControlPanel extends Component {
     this.onTerminate = this.onTerminate.bind(this);
     this.getConfig = this.getConfig.bind(this);
     this.onGetConfig = this.onGetConfig.bind(this);
+    this.testConfig = this.testConfig.bind(this);
     //this.getMyNotifications();
   }
 
@@ -214,7 +215,7 @@ class ControlPanel extends Component {
     }
     //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
     if(Main.isConnected){
-      onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigRecieved', this.onGetConfig);
+      onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
       ReactRdna.getConfig(Main.dnaUserName, (response) => {
                           if (response) {
                           console.log('immediate response is' + response[0].error);
@@ -232,8 +233,34 @@ class ControlPanel extends Component {
                    ]
                   );
     }
+  }
 
+  testConfig(){
     
+    if (onGetConfigSubscription) {
+      onGetConfigSubscription.remove();
+      onGetConfigSubscription = null;
+    }
+    //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    if(Main.isConnected){
+      onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
+      ReactRdna.testConfig(Main.dnaUserName, (response) => {
+                          if (response) {
+                          console.log('immediate response is' + response[0].error);
+                          } else {
+                          console.log('immediate response is' + response[0].error);
+                          }
+                          });
+         }
+    else{
+      Alert.alert(
+                  '',
+                  'Please check your internet connection',
+                  [
+                   { text: 'OK', onPress: () => {}}
+                   ]
+                  );
+    }
   }
   
   onTerminate(e) {
@@ -818,6 +845,13 @@ class ControlPanel extends Component {
             lable="Config"
             onPress={()=>{
               this.getConfig();
+              this.props.toggleDrawer();}}
+            />
+            <MenuItem
+            visibility={Config.TESTCONFIG}
+            lable="ConfigWithTerminate"
+            onPress={()=>{
+              this.testConfig();
               this.props.toggleDrawer();}}
             />
           <MenuItem

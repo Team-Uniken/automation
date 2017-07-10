@@ -21,10 +21,10 @@ import java.util.List;
 
 //import com.facebook.react.modules.network.ReactCookieJarContainer;
 //import com.facebook.stetho.Stetho;
-//import okhttp3.OkHttpClient;
-//import com.facebook.react.modules.network.OkHttpClientProvider;
+import okhttp3.OkHttpClient;
+import com.facebook.react.modules.network.OkHttpClientProvider;
 //import com.facebook.stetho.okhttp3.StethoInterceptor;
-//import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainApplication extends Application implements ReactApplication {
