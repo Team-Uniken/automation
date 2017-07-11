@@ -227,6 +227,13 @@
 		6562280C1CB50BEA00AD7F6C /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
 		6567FBCB1CC1122F00AC6A04 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		656D4F071E7C0B6000965ED6 /* relidmobile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 656D4F061E7C0B6000965ED6 /* relidmobile.plist */; };
+		657410FC1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
+		657410FD1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
+		657410FE1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
+		657410FF1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
+		657411001F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
+		657411011F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
+		657411021F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
 		6582FD5E1D9525000075C15D /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
 		6582FD5F1D9525050075C15D /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
 		6582FD661D9525790075C15D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
@@ -240,13 +247,6 @@
 		6584BA5A1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
 		6584BA5B1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
 		6584BA5C1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA5D1F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
-		6584BA5E1F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
-		6584BA5F1F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
-		6584BA601F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
-		6584BA611F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
-		6584BA621F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
-		6584BA631F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6584BA551F0D000200587C87 /* libActiveShieldSDK.a */; };
 		65D7F71F1E308FC8009ACC25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		65D7F7201E308FC8009ACC25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		65D7F7211E308FC8009ACC25 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -706,12 +706,12 @@
 		656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelIDRequestInterceptor.m; sourceTree = "<group>"; };
 		6567FBCA1CC1122F00AC6A04 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; name = App; path = ../App; sourceTree = "<group>"; };
 		656D4F061E7C0B6000965ED6 /* relidmobile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = relidmobile.plist; sourceTree = "<group>"; };
+		657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libActiveShieldSDK.a; sourceTree = "<group>"; };
 		6582FD571D9524ED0075C15D /* RCTTouchId.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTouchId.xcodeproj; path = "../node_modules/react-native-smart-touch-id/ios/RCTTouchId/RCTTouchId.xcodeproj"; sourceTree = "<group>"; };
 		6582FD601D95256E0075C15D /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		6582FD681D9526890075C15D /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		6584BA531F0D000200587C87 /* ActiveShieldSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveShieldSDK.h; sourceTree = "<group>"; };
 		6584BA541F0D000200587C87 /* bmobi.net.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = bmobi.net.cer; sourceTree = "<group>"; };
-		6584BA551F0D000200587C87 /* libActiveShieldSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libActiveShieldSDK.a; sourceTree = "<group>"; };
 		65D7F74B1E308FC8009ACC25 /* ubs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ubs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D7F7621E309469009ACC25 /* ubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ubs.plist; sourceTree = "<group>"; };
 		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesUBS.xcassets; sourceTree = "<group>"; };
@@ -744,7 +744,7 @@
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				654B80D71DBE0C620052D415 /* FBSDKCoreKit.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
-				6584BA5E1F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657410FD1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -778,7 +778,7 @@
 				1A6151BC1E4CDF5B00B3C9B2 /* libRCTActionSheet.a in Frameworks */,
 				1A6151BD1E4CDF5B00B3C9B2 /* FBSDKCoreKit.framework in Frameworks */,
 				1A6151BE1E4CDF5B00B3C9B2 /* libRCTGeolocation.a in Frameworks */,
-				6584BA621F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657411011F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				1A6151BF1E4CDF5B00B3C9B2 /* libRCTImage.a in Frameworks */,
 				1A6151C01E4CDF5B00B3C9B2 /* libRCTLinking.a in Frameworks */,
 				1A6151C11E4CDF5B00B3C9B2 /* libRCTNetwork.a in Frameworks */,
@@ -818,7 +818,7 @@
 				552BB7AF1E1BA0B90009F274 /* Bolts.framework in Frameworks */,
 				552BB7B01E1BA0B90009F274 /* libRCTSettings.a in Frameworks */,
 				552BB7B11E1BA0B90009F274 /* libRCTText.a in Frameworks */,
-				6584BA5F1F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657410FE1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				552BB7B21E1BA0B90009F274 /* libRCTVibration.a in Frameworks */,
 				552BB7B31E1BA0B90009F274 /* libRCTWebSocket.a in Frameworks */,
 			);
@@ -829,7 +829,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55074FB11EE8239A00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
-				6584BA631F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657411021F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55074FB01EE8238300BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074FAF1EE8237B00BF6DC8 /* libapi-sdk.a in Frameworks */,
 				55074F971EE7EF2600BF6DC8 /* libRCTAnimation.a in Frameworks */,
@@ -881,7 +881,7 @@
 				55D3517E1E1E0F7C00806F82 /* libRCTVibration.a in Frameworks */,
 				55D3517F1E1E0F7C00806F82 /* FBSDKShareKit.framework in Frameworks */,
 				55D351801E1E0F7C00806F82 /* Bolts.framework in Frameworks */,
-				6584BA601F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657410FF1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55D351811E1E0F7C00806F82 /* libRCTWebSocket.a in Frameworks */,
 				55D351831E1E0F7C00806F82 /* libRCTCamera.a in Frameworks */,
 			);
@@ -913,7 +913,7 @@
 				65127E0D1D795B4000FB36E1 /* libRCTVibration.a in Frameworks */,
 				65127E0E1D795B4000FB36E1 /* libRCTWebSocket.a in Frameworks */,
 				12403A1C3EFE469CB94DAC97 /* libRCTFBSDK.a in Frameworks */,
-				6584BA5D1F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657410FC1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				CEF10CBBB34C44C2812CF73A /* libReactNativeConfig.a in Frameworks */,
 				716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */,
 			);
@@ -924,7 +924,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55074FAE1EE822EA00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
-				6584BA611F0D000200587C87 /* libActiveShieldSDK.a in Frameworks */,
+				657411001F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55074FAD1EE822BC00BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074FAC1EE822A800BF6DC8 /* libapi-sdk.a in Frameworks */,
 				55074F961EE7EF1C00BF6DC8 /* libRCTAnimation.a in Frameworks */,
@@ -1174,9 +1174,9 @@
 		6584BA521F0D000200587C87 /* ActiveShieldSDKLib */ = {
 			isa = PBXGroup;
 			children = (
+				657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */,
 				6584BA531F0D000200587C87 /* ActiveShieldSDK.h */,
 				6584BA541F0D000200587C87 /* bmobi.net.cer */,
-				6584BA551F0D000200587C87 /* libActiveShieldSDK.a */,
 			);
 			path = ActiveShieldSDKLib;
 			sourceTree = "<group>";
