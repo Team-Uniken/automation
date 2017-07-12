@@ -691,9 +691,10 @@ module.exports.layout1 = {
       base: {
         //backgroundColor: "rgba(255,164,164,1)",
         //color: '#ff0000'
-        height: 23,
+        marginTop:3,
+        height: 30,
       },
-      minimumTrackTintColor: Platform.OS === "android"?"#000000":BUTTON_BG_COLOR,
+      minimumTrackTintColor: Platform.OS === "android"?(Platform.Version >= 23?"#000000":"#808080"):BUTTON_BG_COLOR,
       maximumTrackTintColor: Platform.OS === "android"?BUTTON_BG_COLOR:INPUT_BG_COLOR,
     }
   },
