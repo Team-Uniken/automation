@@ -8,7 +8,7 @@
 import Config from 'react-native-config'
 
 const React = require('react');
-const ReactNative = require('react-native');
+import ReactNative,{Platform} from 'react-native';
 // const Skin = require('./MainStyleSheet');
 // const styles = Skin.styles;
 const SCREEN_WIDTH = require('Dimensions').get('window').width;
@@ -16,8 +16,6 @@ const SCREEN_HEIGHT = require('Dimensions').get('window').height;
 const MAX_WIDTH = 300;
 const MAX_HEIGHT = 600;
 const LANGUAGE = 'en'
-
-
 
 const BLACK = '#000000'
 const WHITE = '#FFFFFF'
@@ -695,8 +693,8 @@ module.exports.layout1 = {
         //color: '#ff0000'
         height: 23,
       },
-      minimumTrackTintColor: BUTTON_BG_COLOR,
-      maximumTrackTintColor: INPUT_BG_COLOR,
+      minimumTrackTintColor: Platform.OS === "android"?"#000000":BUTTON_BG_COLOR,
+      maximumTrackTintColor: Platform.OS === "android"?BUTTON_BG_COLOR:INPUT_BG_COLOR,
     }
   },
   bottom: {
