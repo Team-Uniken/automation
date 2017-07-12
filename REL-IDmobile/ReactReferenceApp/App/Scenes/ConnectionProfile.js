@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Modal from 'react-native-simple-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import {Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackHandler} from 'react-native'
+import { Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackHandler } from 'react-native'
 
 
 
@@ -47,15 +47,22 @@ class ConnectionProfileScene extends Component {
       }),
     };
   }
+
+   componentWillMount() {
+       AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+      CURRENT_CONNECTION_PROFILES_DATA = JSON.parse(currentProfile);
+      console.log(CURRENT_CONNECTION_PROFILES_DATA);
+    });
+     }
   /*
     This is life cycle method of the react native component.
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', function() {
+    BackHandler.addEventListener('hardwareBackPress', function () {
       this.props.navigator.resetTo({
-                id: 'Load'
-              });
+        id: 'Load'
+      });
       return true;
     }.bind(this));
 
@@ -66,25 +73,22 @@ class ConnectionProfileScene extends Component {
       });
     }).done();
 
-    AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
-      CURRENT_CONNECTION_PROFILES_DATA = JSON.parse(currentProfile);
-      console.log(CURRENT_CONNECTION_PROFILES_DATA);
-    });
+  
   }
 
 
-//open import connection profile dialog.
+  //open import connection profile dialog.
   onImportPressed() {
     this.setState({
       open: true
     });
   }
-//Validate entered connection profile is valide or not.
+  //Validate entered connection profile is valide or not.
   validateURL(textval) {
     var urlregex = /^(http|https):\/\/(([a-zA-Z0-9$\-_.+!*'(),;:&=]|%[0-9a-fA-F]{2})+@)?(((25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])){3})|localhost|([a-zA-Z0-9\-\u00C0-\u017F]+\.)+([a-zA-Z]{2,}))(:[0-9]+)?(\/(([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*(\/([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*)*)?(\?([a-zA-Z0-9$\-_.+!*'(),;:@&=\/?]|%[0-9a-fA-F]{2})*)?(\#([a-zA-Z0-9$\-_.+!*'(),;:@&=\/?]|%[0-9a-fA-F]{2})*)?)?$/;
     return urlregex.test(textval);
   }
-//check entered url is valid or not if it is valide than get connectionprofile from entered url and store it into database.
+  //check entered url is valid or not if it is valide than get connectionprofile from entered url and store it into database.
   checkURL() {
     const url = this.state.inputURL;
     if (url.length > 0) {
@@ -158,18 +162,27 @@ class ConnectionProfileScene extends Component {
     newstate.inputURL = event.nativeEvent.text;
     this.setState(newstate);
   }
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   renderConnectionProfile(connectionprofile1) {
     var cpName = connectionprofile1.Name;
     var isImported = connectionprofile1.imported;
-    if(isImported!=undefined||isImported!=null){
-//    if (CURRENT_CONNECTION_PROFILES_DATA.Name == connectionprofile1.Name) {
+    var selectedProfileName = CURRENT_CONNECTION_PROFILES_DATA.Name;
+    var selectedProfileColor;
+    if(selectedProfileName === cpName){
+      selectedProfileColor = '#8c98a3';
+    }else{
+      selectedProfileColor = '#ffff';
+    }
+    if (isImported != undefined || isImported != null) {
+      //    if (CURRENT_CONNECTION_PROFILES_DATA.Name == connectionprofile1.Name) {
       return (
         <View>
-          <View style={Skin.ConnectionProfile.selectederow}>
-            <TouchableHighlight>
+          <View style={[Skin.ConnectionProfile.selectederow,{backgroundColor:selectedProfileColor}]}>
+            <TouchableHighlight
+              onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
+              underlayColor={Skin.colors.REPPLE_COLOR}>
               <Text style={[Skin.customeStyle.text1, {
                 width: Skin.SCREEN_WIDTH - 72,
                 textAlign: 'left',
@@ -184,13 +197,13 @@ class ConnectionProfileScene extends Component {
           </Text>
         </View>
       );
-//    }
-    }else {
+      //    }
+    } else {
       return (
         <View>
-          <View style={Skin.ConnectionProfile.customerow}>
+          <View style={[Skin.ConnectionProfile.customerow,{backgroundColor:selectedProfileColor}]}>
             <TouchableHighlight
-              onPress={() => this.onConnectionProfilePressed(connectionprofile1) }
+              onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
               underlayColor={Skin.colors.REPPLE_COLOR}>
               <Text style={[Skin.customeStyle.text1, {
                 width: Skin.SCREEN_WIDTH - 72,
@@ -202,7 +215,7 @@ class ConnectionProfileScene extends Component {
               </Text>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={() => this.onDeletePressed(connectionprofile1) }
+              onPress={() => this.onDeletePressed(connectionprofile1)}
               style={Skin.ConnectionProfile.button}
               underlayColor={Skin.colors.REPPLE_COLOR}>
               <Image
@@ -217,29 +230,39 @@ class ConnectionProfileScene extends Component {
       );
     }
   }
-    //call when click on any connection profile row.
+  //call when click on any connection profile row.
   onConnectionProfilePressed(connectionprofile1) {
-    Alert.alert(
-      'Message',
-      'Select Profile ' + connectionprofile1.Name + ' ?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: 'OK',
-          onPress: () => {
-            AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {
-              this.props.navigator.replace({
-                id: "Load"
+    AsyncStorage.getItem('CurrentConnectionProfile', (err, _currentProfile) => {
+      const currentProfile = JSON.parse(_currentProfile);
+      if (connectionprofile1.Name === currentProfile.Name) {
+        alert('connection profile selected');
+      } else {
+        Alert.alert(
+          'Message',
+          'Select Profile ' + connectionprofile1.Name + ' ?',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel'
+            },
+            {
+              text: 'OK',
+              onPress: () => {
+                 this.setState({
+                inputURL: '', open: false,
               });
-            });
-          }
-        },
-      ]
-    )
+                AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {
+                  this.props.navigator.replace({
+                    id: "Load"
+                  });
+                });
+              }
+            },
+          ]
+        )
+      }
+    });
   }
 
   onDeletePressed(connectionprofile1) {
@@ -261,18 +284,42 @@ class ConnectionProfileScene extends Component {
                 for (let i = 0; i < profiles.length; i++) {
                   if (connectionprofile1.Name === profiles[i].Name) {
                     profiles.splice(i, 1);
+                    CONNECTION_PROFILES_DATA = profiles;
                     AsyncStorage.getItem('CurrentConnectionProfile', (err, _currentProfile) => {
                       const currentProfile = JSON.parse(_currentProfile);
-                      if (connectionprofile1.Name === currentProfile.Name) {
-                        AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {
-                        });
+                      if (currentProfile != undefined || currentProfile != null) {
+                        if (connectionprofile1.Name === currentProfile.Name) {
+                          AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {
+                            AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(profiles[0]), () => {
+                              CURRENT_CONNECTION_PROFILES_DATA = profiles[0];
+                              obj.setState({
+                                dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
+                              });
+                            });
+
+                            AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {
+                            });
+
+                          });
+                        } else {
+                          AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {
+                            if (profiles.length == 1) {
+
+                              AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(profiles[0]), () => {
+                                CURRENT_CONNECTION_PROFILES_DATA = profiles[0];
+                                obj.setState({
+                                  dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
+                                });
+                              });
+                            } else {
+                              obj.setState({
+                                dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
+                              });
+                            }
+                          });
+
+                        }
                       }
-                    });
-                    CONNECTION_PROFILES_DATA = profiles;
-                    AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {
-                    });
-                    obj.setState({
-                      dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
                     });
                   }
                 }
@@ -283,9 +330,13 @@ class ConnectionProfileScene extends Component {
       ]
     );
   }
-/*
-  This method is used to render the componenet with all its element.
-*/
+
+  setCurrentProfile(){
+
+  }
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <Main
@@ -321,7 +372,7 @@ class ConnectionProfileScene extends Component {
           <View style={Skin.ConnectionProfile.DeviceListView}>
             <ListView
               dataSource={this.state.dataSource}
-              renderRow={this.renderConnectionProfile.bind(this) } />
+              renderRow={this.renderConnectionProfile.bind(this)} />
           </View>
           <TouchableHighlight
             style={{
@@ -337,7 +388,7 @@ class ConnectionProfileScene extends Component {
             }}
             activeOpacity={1}
             underlayColor={Skin.colors.DARK_PRIMARY}
-            onPress={() => this.onImportPressed() }>
+            onPress={() => this.onImportPressed()}>
             <Text style={{
               color: Skin.login.CONNECTION_BUTTON_ICON_COLOR,
               backgroundColor: 'transparent',
@@ -356,10 +407,10 @@ class ConnectionProfileScene extends Component {
           overlayOpacity={0.75}
           offset={100}
           open={this.state.open}
-          modalDidOpen={() => console.log('modal did open') }
+          modalDidOpen={() => console.log('modal did open')}
           modalDidClose={() => this.setState({
             open: false
-          }) }>
+          })}>
           <View style={styles.modalTitleWrap}>
             <Text style={styles.modalTitle}>
               Import Profile
@@ -374,8 +425,8 @@ class ConnectionProfileScene extends Component {
             value={this.state.inputURL}
             underlineColorAndroid={'transparent'}
             placeholderTextColor={Skin.colors.HINT_COLOR}
-            onSubmitEditing={this.checkURL.bind(this) }
-            onChange={this.onURLChange.bind(this) } />
+            onSubmitEditing={this.checkURL.bind(this)}
+            onChange={this.onURLChange.bind(this)} />
           <View style={styles.border}></View>
           <View style={{
             flex: 1,
@@ -384,7 +435,7 @@ class ConnectionProfileScene extends Component {
             <TouchableHighlight
               onPress={() => this.setState({
                 inputURL: '', open: false
-              }) }
+              })}
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>
@@ -392,7 +443,7 @@ class ConnectionProfileScene extends Component {
               </Text>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={this.checkURL.bind(this) }
+              onPress={this.checkURL.bind(this)}
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>
@@ -438,7 +489,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: Skin.colors.PRIMARY_TEXT,
     height: 32,
-    padding:0,
+    padding: 0,
     fontSize: 16,
     backgroundColor: null,
   },
