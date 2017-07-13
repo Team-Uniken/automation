@@ -108,7 +108,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     //CONST_AGENTINFO, CONST_RDNA_IP, CONST_RDNA_PORT, CONST_CYPHER_SPEC, CONST_CYPHER_SALT, null, (response) =>
     @ReactMethod
-    public void initialize(final String agentInfo,final String authGatewayHNIP,final int authGatewayPort,final String cipherSpecs,final String cipherSalt, String proxySettings,final Callback callback) {
+    public void initialize(final String agentInfo,final String authGatewayHNIP,final int authGatewayPort,final String cipherSpecs,final String cipherSalt, String proxySettings,String sslCertificate,final Callback callback) {
 
         callbacks = new RDNA.RDNACallbacks(){
 
@@ -461,7 +461,16 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         RDNA.RDNAStatus<RDNA> rdnaStatus = null;
 
-        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,null,null, context);
+        RDNA.RDNASSLCertificate rdnaSSLCertificate = null;
+        try{
+            if(sslCertificate!=null) {
+                JSONObject jsonSSl = new JSONObject(sslCertificate);
+                rdnaSSLCertificate = new RDNA.RDNASSLCertificate(jsonSSl.optString("data"),jsonSSl.optString("password"));
+            }
+        }catch (Exception e){}
+
+        final RDNA.RDNASSLCertificate rdnaSSLCert = rdnaSSLCertificate;
+        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,rdnaSSLCert,null, context);
         rdnaObj = rdnaStatus.result;
 
         WritableMap errorMap = Arguments.createMap();
