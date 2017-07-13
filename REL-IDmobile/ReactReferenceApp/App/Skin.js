@@ -1610,7 +1610,13 @@ const ConnectionProfile = StyleSheet.create({
     justifyContent: "center",
     marginTop: 4,
   },
-
+  switchview: {
+    height: 48,
+    width: 48,
+    opacity: 0.6,
+    justifyContent: "center",
+    marginTop: 4,
+ },
   images: {
     width: 18,
     height: 18,

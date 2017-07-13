@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import Modal from 'react-native-simple-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackHandler } from 'react-native'
+import { Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackHandler, Switch, } from 'react-native'
 
 
 
@@ -162,6 +162,52 @@ class ConnectionProfileScene extends Component {
     newstate.inputURL = event.nativeEvent.text;
     this.setState(newstate);
   }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+ toggleSwitch(value,connectionprofile1){
+  
+   AsyncStorage.getItem('ConnectionProfiles', (err, _profiles) => {
+              const profiles = JSON.parse(_profiles);
+              if ((profiles != null) || (profiles.length > 0)) {
+                for (let i = 0; i < profiles.length; i++) {
+                  if (connectionprofile1.Name === profiles[i].Name) {
+                   profiles[i].sslEnable = value;
+                    CONNECTION_PROFILES_DATA = profiles;
+
+                    AsyncStorage.getItem('CurrentConnectionProfile', (err, _currentProfile) => {
+                      const currentProfile = JSON.parse(_currentProfile);
+                      if (currentProfile != undefined || currentProfile != null) {
+                        if (connectionprofile1.Name === currentProfile.Name) {
+                           AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(profiles[i]), () => {
+                              CURRENT_CONNECTION_PROFILES_DATA = profiles[i];
+                                AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {
+                             obj.setState({
+                                dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
+                              });
+                          });
+                             
+                            });
+                          
+                        
+                        } else {
+                          AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profiles), () => {
+                             obj.setState({
+                                dataSource: obj.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA),
+                              });
+                          
+                          });
+
+                        }
+                      }
+                    });
+                    break;
+                  }
+                }
+              }
+            });
+
+
+ }
   /*
     This method is used to render the componenet with all its element.
   */
@@ -184,7 +230,7 @@ class ConnectionProfileScene extends Component {
               onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
               underlayColor={Skin.colors.REPPLE_COLOR}>
               <Text style={[Skin.customeStyle.text1, {
-                width: Skin.SCREEN_WIDTH - 72,
+                width: Skin.SCREEN_WIDTH - 120,
                 textAlign: 'left',
                 marginLeft: 16,
                 opacity: 1
@@ -192,6 +238,10 @@ class ConnectionProfileScene extends Component {
                 {cpName}
               </Text>
             </TouchableHighlight>
+             <View style = {[Skin.ConnectionProfile.switchview]}>
+            <Switch onValueChange={(value) => this.toggleSwitch(value,connectionprofile1)} value = {connectionprofile1.sslEnable}/>
+             <Text style = {styles.text}>{connectionprofile1.sslEnable ? 'SSL ON' : 'SSL OFF'}</Text>
+            </View>
           </View>
           <Text style={Skin.customeStyle.div1}>
           </Text>
@@ -206,7 +256,7 @@ class ConnectionProfileScene extends Component {
               onPress={() => this.onConnectionProfilePressed(connectionprofile1)}
               underlayColor={Skin.colors.REPPLE_COLOR}>
               <Text style={[Skin.customeStyle.text1, {
-                width: Skin.SCREEN_WIDTH - 72,
+                width: Skin.SCREEN_WIDTH - 120,
                 textAlign: 'left',
                 marginLeft: 16,
                 opacity: 1
@@ -214,6 +264,10 @@ class ConnectionProfileScene extends Component {
                 {cpName}
               </Text>
             </TouchableHighlight>
+            <View style = {[Skin.ConnectionProfile.switchview]}>
+            <Switch onValueChange={(value) => this.toggleSwitch(value,connectionprofile1)} value = {connectionprofile1.sslEnable}/>
+             <Text style = {styles.text}>{connectionprofile1.sslEnable ? 'SSL ON' : 'SSL OFF'}</Text>
+            </View>
             <TouchableHighlight
               onPress={() => this.onDeletePressed(connectionprofile1)}
               style={Skin.ConnectionProfile.button}
@@ -235,11 +289,11 @@ class ConnectionProfileScene extends Component {
     AsyncStorage.getItem('CurrentConnectionProfile', (err, _currentProfile) => {
       const currentProfile = JSON.parse(_currentProfile);
       if (connectionprofile1.Name === currentProfile.Name) {
-        alert('connection profile selected');
+        alert('This connection profile is already selected');
       } else {
         Alert.alert(
           'Message',
-          'Select Profile ' + connectionprofile1.Name + ' ?',
+          'Select profile \'' + connectionprofile1.Name + '\' ?',
           [
             {
               text: 'Cancel',
@@ -519,6 +573,11 @@ const styles = StyleSheet.create({
     height: 56,
     backgroundColor: 'transparent',
   },
+   text: {
+      fontSize: 10,
+      color: 'red',
+      alignItems:'center'
+   },
 });
 
 

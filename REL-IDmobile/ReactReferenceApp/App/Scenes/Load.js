@@ -73,6 +73,7 @@ const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.Reac
 
 var erelid = ClientBasedConfig.connectionProfile;
 var welcome = ClientBasedConfig.img.welcome;
+var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
 console.log = function () { }
@@ -376,6 +377,7 @@ class Load extends Component {
             if (RelIdName === relidArray[j].Name) {
               profileArray[i].RelId = relidArray[j].RelId;
               profileArray[i].imported="true"
+              profileArray[i].sslEnable=false
 
             }
           }
@@ -546,6 +548,7 @@ class Load extends Component {
     initCount = 0;
     console.log('------------Initialize RDNA');
     var proxySettings; //= {'proxyHost':'127.0.0.1','proxyPort':'proxyport'};
+    var sslDetails;
     var jsonProxySettings = JSON.stringify(proxySettings);
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       console.log('Initialize RDNA - get Item CurrentConnectionProfile:');
@@ -558,19 +561,22 @@ class Load extends Component {
       }
       Main.gatewayHost = currentGatewayHost;
       Main.gatewayPort = currentGatewayPort;
-      
-      ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, (response) => {
-        if (response) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-        }
-      })
+
+      sslCertificate.data.then((sslDetails) => {
+        sslDetails = currentProfile.sslEnable ? JSON.stringify({ 'data': sslDetails, 'password': sslCertificate.password }) : null;
+        ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, sslDetails, (response) => {
+          if (response) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+          }
+        })
+      });
     });
   }
 
 
-//callback of RDNA.initialize.
+  //callback of RDNA.initialize.
   onInitCompleted() {
     console.log('--------- onInitCompleted initCount ' + initCount + ' isRunAfterInteractions ' + isRunAfterInteractions);
     if (isRunAfterInteractions) {

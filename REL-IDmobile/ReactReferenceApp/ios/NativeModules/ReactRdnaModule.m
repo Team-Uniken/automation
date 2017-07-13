@@ -62,18 +62,31 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
                    CipherSpec:(NSString *)cipherSpec
                    CipherSalt:(NSString *)cipherSalt
                    ProxySettings:(NSString *)proxySettings
+                   RDNASSLCertificate:(NSString *) sslCertificate
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
   NSString *path = [[NSBundle mainBundle] pathForResource:@"clientcert" ofType:@"p12"];
   NSData *certData = [NSData dataWithContentsOfFile:path];
   NSString *certString3 = [certData base64EncodedStringWithOptions:2];
   NSString *certPassword = @"uniken123$";
-  RDNASSLCertificate *rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
-  rdnaSSLlCertificate.p12Certificate = certString3;
-  rdnaSSLlCertificate.password = certPassword;
+  RDNASSLCertificate *rdnaSSLlCertificate = nil;
+  
   __block int errorID = 0;
   localbridgeDispatcher = _bridge;
   delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+  if(sslCertificate!=nil){
+    
+    NSError *error;
+    NSDictionary *dictSSLDetails = [NSJSONSerialization JSONObjectWithData:[sslCertificate dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
+    if(!error){
+      rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
+      rdnaSSLlCertificate.p12Certificate = [dictSSLDetails valueForKey:@"data"];
+      rdnaSSLlCertificate.password = [dictSSLDetails valueForKey:@"password"];
+
+    }
+       }
+  
+  
   [self initParams];
   
   
@@ -152,7 +165,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
     }
     if(retval){
       RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
       rdnaObject = rdna;
       NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
       NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -173,7 +186,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   }];
   }else{
       RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
       rdnaObject = rdna;
       NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
       NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
@@ -1010,6 +1023,20 @@ RCT_EXPORT_METHOD (exitApp){
     NSString *altitude = [NSString stringWithFormat:@"%.8f", currentLocation.altitude];
     //NSLog(@"lat = %@\n long = %@\n and altitude = %@",latitude,longitude,altitude);
   }
+}
+
+#pragma mark Utils method
+- (NSString*)encodeStringTo64:(NSString*)fromString
+{
+  NSData *plainData = [fromString dataUsingEncoding:NSUTF8StringEncoding];
+  NSString *base64String;
+  if ([plainData respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
+    base64String = [plainData base64EncodedStringWithOptions:kNilOptions];  // iOS 7+
+  } else {
+    base64String = [plainData base64Encoding];                              // pre iOS7
+  }
+  
+  return base64String;
 }
 
 #pragma mark Constants to Export
