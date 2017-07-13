@@ -60,7 +60,7 @@ class Input extends Component {
           selectionColor={Skin.colors.BUTTON_BG_COLOR}
           onChange={this.props.onChange}
           onSubmitEditing={this.props.onSubmitEditing}
-          onFocus={() => { this.setFocus(true) } }
+          onFocus={this.props.onFocus ?this.props.onFocus:() => {this.setFocus(true) } }
           onBlur={() => { this.setFocus(false) } }
           autoComplete={this.props.autoComplete}
           autoFocus={this.props.autoFocus}

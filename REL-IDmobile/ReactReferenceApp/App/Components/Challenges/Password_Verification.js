@@ -12,7 +12,8 @@ import React, { Component, PropTypes } from 'react';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import {Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar} from 'react-native'
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import ReactNative, { Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar } from 'react-native'
 const dismissKeyboard = require('dismissKeyboard')
 
 /*
@@ -38,6 +39,7 @@ import Title from '../view/title';
 let responseJson;
 let chlngJson;
 let nextChlngName;
+let obj;
 
 
 class PasswordVerification extends Component {
@@ -50,34 +52,42 @@ class PasswordVerification extends Component {
 
     this.onForgotPasswordClick = this.onForgotPasswordClick.bind(this);
   }
-    /*
-  This is life cycle method of the react native component.
-  This method is called when the component is Mounted/Loaded.
+  /*
+This is life cycle method of the react native component.
+This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
     //dismissKeyboard();
+    obj = this;
     BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
       return true;
     }.bind(this));
+    InteractionManager.runAfterInteractions(() => {
+      setTimeout(() => {
+        this.refs.inputPassword.focus();
+      });
+    }, 200);
+
+
   }
- /*
-  onTextchange method for Password TextInput.
-*/
+  /*
+   onTextchange method for Password TextInput.
+ */
   onPasswordChange(event) {
     this.setState({
       inputPassword: event.nativeEvent.text
     });
   }
-/*
-  This method is used to get the users entered value and submit the same as a challenge response.
-*/ 
+  /*
+    This method is used to get the users entered value and submit the same as a challenge response.
+  */
   checkPassword() {
     var pw = this.state.inputPassword;
     if (pw.length > 0) {
       Main.dnaPasswd = pw;
       //Util.saveUserDataSecure("RPasswd",pw).done();
-     // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);  Todo: To be removed after testing
+      // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);  Todo: To be removed after testing
 
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
@@ -88,7 +98,7 @@ class PasswordVerification extends Component {
       alert('Please enter password');
     }
   }
-//trigger the event forgotPassowrd to call forgotPassowrd api.
+  //trigger the event forgotPassowrd to call forgotPassowrd api.
   onForgotPasswordClick() {
     Events.trigger("forgotPassowrd");
   }
@@ -98,33 +108,47 @@ class PasswordVerification extends Component {
     dismissKeyboard();
     return false;
   }
-//show previous challenge on click of cross button or android back button /or/ onBack came in props .
+  //show previous challenge on click of cross button or android back button /or/ onBack came in props .
   close() {
-     if(this.props.onBack){
+    if (this.props.onBack) {
       this.props.onBack();
-    }else{
+    } else {
       let responseJson = this.props.url.chlngJson;
       this.setState({ showCamera: false });
       Events.trigger('showPreviousChallenge');
     }
   }
-/*
-  This method is used to render the componenet with all its element.
-*/
+
+  // Scroll a component into view. Just pass the component ref string.
+  inputFocused(refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        ReactNative.findNodeHandle(this.refs[refName]),
+        200, //additionalOffset
+        true
+      );
+    }, 50);
+  }
+
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <MainActivation>
-        <View style={[Skin.layout1.wrap, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this) }>
+        <View style={[Skin.layout1.wrap, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
           <StatusBar
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'} />
 
-            <View style={[ Skin.layout1.wrap, { flex: 1 },{justifyContent: 'center'} ]}>
+
+          <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center' }]}>
             <View style={Skin.layout1.title.wrap}>
               <Title onClose={() => {
                 this.close();
-              } }>
+              }}>
               </Title>
             </View>
             <View style={Skin.layout1.content.wrap}>
@@ -133,38 +157,48 @@ class PasswordVerification extends Component {
                   {Skin.icon.logo}
                 </Text>
                 <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-                <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
-                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
+                <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
               </View>
-              <View style={Skin.layout0.bottom.container}>
-                <Input
-                  ref='inputPassword'
-                  returnKeyType={ 'next' }
-                  secureTextEntry
-                  placeholder={Skin.text['2']['2'].textinput_placeholder }
-                  value={ this.state.inputPassword }
-                  onSubmitEditing={ this.checkPassword.bind(this) }
-                  onChange={ this.onPasswordChange.bind(this) }
-                  enablesReturnKeyAutomatically={true}
-                  autoFocus={true}
-                  autoCorrect={false}
-                  autoComplete={false}
-                  clearTextOnFocus={false}
-                  autoCapitalize={false}
-                  />
-                  <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
-                  Attempt left {this.props.url.chlngJson.attempts_left}
-                </Text>
-                <Button
-                  label={Skin.text['2']['1'].submit_button}
-                  onPress={ this.checkPassword.bind(this) }/>
-                  
+              <View style={[Skin.layout0.bottom.container, { justifyContent: "flex-start" }]}>
+                <View style={[Skin.layout0.wrap.container,{justifyContent: "flex-start"}]}>
+                  <View style={[Skin.layout0.wrap.container, { maxHeight: 150}]}>
 
-                <Text style={Skin.baseline.text_link_no_underline}
-                  onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
+                  <Input
+                    ref='inputPassword'
+                    returnKeyType={'next'}
+                    secureTextEntry
+                    placeholder={Skin.text['2']['2'].textinput_placeholder}
+                    value={this.state.inputPassword}
+                    onSubmitEditing={this.checkPassword.bind(this)}
+                    onChange={this.onPasswordChange.bind(this)}
+                    enablesReturnKeyAutomatically={true}
+                    autoCorrect={false}
+                    autoComplete={false}
+                    autoFocus={true}
+                    clearTextOnFocus={false}
+                    autoCapitalize={false}
+                  />
+                  <KeyboardSpacer topSpacing={-150} />
+                  <View>
+                  <Text style={[Skin.layout0.top.attempt, { marginTop: 0 }]}>
+                    Attempt left {this.props.url.chlngJson.attempts_left}
+                  </Text>
+                  <Button
+                    label={Skin.text['2']['1'].submit_button}
+                    onPress={this.checkPassword.bind(this)} />
+
+
+                  <Text style={Skin.baseline.text_link_no_underline}
+                    onPress={this.onForgotPasswordClick}>Forgot your password?</Text>
+                    </View>
+                </View>
+                
               </View>
             </View>
+
           </View>
+        </View>
         </View>
       </MainActivation>
     );
