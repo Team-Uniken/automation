@@ -425,7 +425,7 @@ class Activation_Code extends Component {
                   this.props.url.chlngJson.chlng_resp[0].challenge + "\nStep 2: Scan QR Code"}
               </Text>
 
-              <View style={[Skin.layout1.content.wrap, { flex: 1, zIndex: 0 }]}>
+              <View style={[Skin.layout1.content.wrap, { flex: 1 }]}>
             
                 {this.renderIf(this.state.showCamera,
                   <Camera
@@ -437,7 +437,7 @@ class Activation_Code extends Component {
                     aspect={Camera.constants.Aspect.fill}
                     style={[Skin.layout1.content.camera.wrap, this.state.camHeight != null ? { height: this.state.camHeight } : {}]}>
                     <View style={{ flex: 20 }}/>
-                    <View style={[Skin.layout1.content.camera.box, { flex: 60, width: Skin.SCREEN_WIDTH - 100 }]}>
+                    <View style={[Skin.layout1.content.camera.box, { flex: 40, width: Skin.SCREEN_WIDTH - 100 }]}>
                     </View>
                     <View style={{ flex: 20 }}/>
                   </Camera>
