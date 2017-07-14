@@ -244,6 +244,11 @@ function hexToRgb(hex) {
   } : null;
 }
 
+function shadeColor2(color, percent) {
+  var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+  return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+}
+
 text = {
   en: {
     test: 'test',
@@ -377,7 +382,7 @@ module.exports.baseline = {
       width: 260,
       paddingLeft: 10,
       paddingTop: 3,
-      backgroundColor: INPUT_BG_COLOR,
+      backgroundColor:Platform.OS=='ios' ? INPUT_BG_COLOR : (Platform.Version >= 23?shadeColor2(INPUT_BG_COLOR,-0.012):shadeColor2(INPUT_BG_COLOR,-0.050)),
       color: INPUT_TEXT_COLOR,
       flex: 1,
       fontSize: 18,
