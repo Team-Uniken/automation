@@ -137,18 +137,17 @@ This method is called when the component is Mounted/Loaded.
   render() {
     return (
       <MainActivation>
-        <View style={[Skin.layout1.wrap, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this)}>
+        <View style={[Skin.layout1.wrap, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this) }>
           <StatusBar
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'} />
 
-
-          <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center' }]}>
+            <View style={[ Skin.layout1.wrap, { flex: 1 },{justifyContent: 'center'} ]}>
             <View style={Skin.layout1.title.wrap}>
               <Title onClose={() => {
                 this.close();
-              }}>
+              } }>
               </Title>
             </View>
             <View style={Skin.layout1.content.wrap}>
@@ -157,48 +156,38 @@ This method is called when the component is Mounted/Loaded.
                   {Skin.icon.logo}
                 </Text>
                 <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-                <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
-                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
+                <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
+                <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
               </View>
-              <View style={[Skin.layout0.bottom.container, { justifyContent: "flex-start" }]}>
-                <View style={[Skin.layout0.wrap.container,{justifyContent: "flex-start"}]}>
-                  <View style={[Skin.layout0.wrap.container, { maxHeight: 150}]}>
-
-                  <Input
-                    ref='inputPassword'
-                    returnKeyType={'next'}
-                    secureTextEntry
-                    placeholder={Skin.text['2']['2'].textinput_placeholder}
-                    value={this.state.inputPassword}
-                    onSubmitEditing={this.checkPassword.bind(this)}
-                    onChange={this.onPasswordChange.bind(this)}
-                    enablesReturnKeyAutomatically={true}
-                    autoCorrect={false}
-                    autoComplete={false}
-                    autoFocus={true}
-                    clearTextOnFocus={false}
-                    autoCapitalize={false}
+              <View style={Skin.layout0.bottom.container}>
+                <Input
+                  ref='inputPassword'
+                  returnKeyType={ 'next' }
+                  secureTextEntry
+                  placeholder={Skin.text['2']['2'].textinput_placeholder }
+                  value={ this.state.inputPassword }
+                  onSubmitEditing={ this.checkPassword.bind(this) }
+                  onChange={ this.onPasswordChange.bind(this) }
+                  enablesReturnKeyAutomatically={true}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoComplete={false}
+                  clearTextOnFocus={false}
+                  autoCapitalize={false}
                   />
-                  <KeyboardSpacer topSpacing={-150} />
-                  <View>
-                  <Text style={[Skin.layout0.top.attempt, { marginTop: 0 }]}>
-                    Attempt left {this.props.url.chlngJson.attempts_left}
-                  </Text>
-                  <Button
-                    label={Skin.text['2']['1'].submit_button}
-                    onPress={this.checkPassword.bind(this)} />
+                  <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
+                  Attempt left {this.props.url.chlngJson.attempts_left}
+                </Text>
+                <Button
+                  label={Skin.text['2']['1'].submit_button}
+                  onPress={ this.checkPassword.bind(this) }/>
+                  
 
-
-                  <Text style={Skin.baseline.text_link_no_underline}
-                    onPress={this.onForgotPasswordClick}>Forgot your password?</Text>
-                    </View>
-                </View>
-                
+                <Text style={Skin.baseline.text_link_no_underline}
+                  onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
               </View>
             </View>
-
           </View>
-        </View>
         </View>
       </MainActivation>
     );
