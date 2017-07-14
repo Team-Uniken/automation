@@ -72,7 +72,7 @@ var SampleRow = React.createClass({
         {
           text: 'No',
           onPress: () => {
-            this.showalert(notification, btnLabel)
+            this.showalert(notification, this.props.notification.action[1].label)
           }
         },
       ]

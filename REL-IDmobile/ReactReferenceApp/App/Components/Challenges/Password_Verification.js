@@ -13,7 +13,7 @@ import React, { Component, PropTypes } from 'react';
  */
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import ReactNative, { Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar } from 'react-native'
+import ReactNative, { Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native'
 const dismissKeyboard = require('dismissKeyboard')
 
 /*
@@ -63,11 +63,7 @@ This method is called when the component is Mounted/Loaded.
       this.close();
       return true;
     }.bind(this));
-    InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        this.refs.inputPassword.focus();
-      });
-    }, 200);
+
 
 
   }
@@ -119,18 +115,6 @@ This method is called when the component is Mounted/Loaded.
     }
   }
 
-  // Scroll a component into view. Just pass the component ref string.
-  inputFocused(refName) {
-    setTimeout(() => {
-      let scrollResponder = this.refs.scrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        ReactNative.findNodeHandle(this.refs[refName]),
-        200, //additionalOffset
-        true
-      );
-    }, 50);
-  }
-
   /*
     This method is used to render the componenet with all its element.
   */
@@ -159,7 +143,7 @@ This method is called when the component is Mounted/Loaded.
                 <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
                 <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
               </View>
-              <View style={Skin.layout0.bottom.container}>
+              <View style={[Skin.layout0.bottom.container]}>        
                 <Input
                   ref='inputPassword'
                   returnKeyType={ 'next' }
@@ -174,18 +158,17 @@ This method is called when the component is Mounted/Loaded.
                   autoComplete={false}
                   clearTextOnFocus={false}
                   autoCapitalize={false}
-                  />
+                  />                
                   <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
                   Attempt left {this.props.url.chlngJson.attempts_left}
                 </Text>
                 <Button
                   label={Skin.text['2']['1'].submit_button}
-                  onPress={ this.checkPassword.bind(this) }/>
-                  
-
+                  onPress={ this.checkPassword.bind(this) }/>            
                 <Text style={Skin.baseline.text_link_no_underline}
                   onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
               </View>
+              <KeyboardAvoidingView  behavior='padding' keyboardVerticalOffset={40}/>
             </View>
           </View>
         </View>
