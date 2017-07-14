@@ -78,7 +78,6 @@ class Register extends Component {
     });
     this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
-
   }
 
 
@@ -208,9 +207,9 @@ class Register extends Component {
       Events.trigger('showLoader', true);
 
       var postData = Util.convertToPostData(userMap);
-      var contentType = JSON.stringify({"Content-Type":"application/x-www-form-urlencoded"});
-      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, baseUrl, contentType,postData,(response)=>{
-     // RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
+      var contentType = JSON.stringify({ "Content-Type": "application/x-www-form-urlencoded" });
+      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, baseUrl, contentType, postData, (response) => {
+        // RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         Events.trigger('hideLoader', true);
         if (response[0].error == 0) {
@@ -227,17 +226,17 @@ class Register extends Component {
           if (res.isError == false) {
             obj.showMessage("Activation Code Sent to", this.state.confirmEmail + "\nPlease check the email for more instruction.", true);
           } else {
-            
+
             setTimeout(() => {
-            alert(res.errorMessage);
-             }, 100);
+              alert(res.errorMessage);
+            }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
             });
           }
         } else {
           setTimeout(() => {
-          alert("Service not available");
+            alert("Service not available");
           }, 100);
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
@@ -252,22 +251,23 @@ class Register extends Component {
   showMessage(title, msg, press) {
     setTimeout(() => {
 
-    Alert.alert(
-      title,
-      msg,
-      [{
-        text: 'OK',
-        onPress: () => {
-          if (press) {
-            //            obj.props.navigator.pop();
-            obj.checkUsername();
+      Alert.alert(
+        title,
+        msg,
+        [{
+          text: 'OK',
+          onPress: () => {
+            if (press) {
+              //            obj.props.navigator.pop();
+              obj.checkUsername();
+
+            }
 
           }
-
-        }
-      }]
-    )
-               }, 100);
+        }],
+        { cancelable: false }
+      )
+    }, 100);
   }
   /*
      This method is used to get the confirmEmail and submit the same as a challenge response and call showNextChallenge.
@@ -288,8 +288,8 @@ class Register extends Component {
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
-        alert('Please enter a valid username');
-         }, 100);           
+          alert('Please enter a valid username');
+        }, 100);
       });
     }
   }
@@ -334,7 +334,7 @@ class Register extends Component {
   */
   render() {
     return (
-      <View style={[Skin.layout1.wrap,{ flex: 1 }]}>
+      <View style={[Skin.layout1.wrap, { flex: 1 }]}>
         <MainActivation>
           <View style={Skin.layout1.wrap}>
             <StatusBar
