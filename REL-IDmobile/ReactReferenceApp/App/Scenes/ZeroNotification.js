@@ -448,6 +448,18 @@ export default class NotificationMgmtScene extends Component {
     TouchID.isSupported()
       .then(this.authenticateTouchID)
       .catch(error => {
+        Alert.alert(
+          '',
+          'Failed to get additional authentication. TouchID is not enabled or supported.',
+          [
+            { text: 'OK' ,
+          onPress: () => {
+            obj.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
+            this.updateNotificationDetails();
+            }
+            }
+            ]
+          );
       });
   }
 

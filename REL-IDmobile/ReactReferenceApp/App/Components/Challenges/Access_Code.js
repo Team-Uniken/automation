@@ -428,10 +428,10 @@ class AccessCode extends Component {
                     type={Camera.constants.Type.back}
                     aspect={Camera.constants.Aspect.fill}
                     style={[Skin.layout1.content.camera.wrap, this.state.camHeight != null ? { height: this.state.camHeight } : {}]}>
-                    <View style={{ flex: 20 }}/>
-                    <View style={[Skin.layout1.content.camera.box, { flex: 60, width: Skin.SCREEN_WIDTH - 100 }]}>
+                   
+                    <View style={[Skin.layout1.content.camera.box, { flex: 40, width: Skin.SCREEN_WIDTH - 100 ,marginBottom:80,marginTop:80}]}>
                     </View>
-                    <View style={{ flex: 20 }}/>
+                   
                   </Camera>
                 ) }
 

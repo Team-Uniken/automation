@@ -138,7 +138,7 @@ module.exports = BottomMenu;
 Skin.botmenu = StyleSheet.create({
 	hoverbar:{
 		backgroundColor: 'rgba('+Skin.colors.PRIMARY_RGB+',0.25)',
-		height: 10
+		height: 0
 	},
 	hoverbar_empty:{
 		backgroundColor: 'transparent',
@@ -151,7 +151,7 @@ Skin.botmenu = StyleSheet.create({
 	},
 	boxwraphover:{
 		flexDirection:'column',
-		marginTop:-10,
+		marginTop:0,
 		flex:1,
 	},
 	box:{

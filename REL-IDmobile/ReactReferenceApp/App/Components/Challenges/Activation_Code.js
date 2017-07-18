@@ -426,7 +426,7 @@ class Activation_Code extends Component {
               </Text>
 
               <View style={[Skin.layout1.content.wrap, { flex: 1, zIndex: 0 }]}>
-            
+
                 {this.renderIf(this.state.showCamera,
                   <Camera
                     ref={CAMERA_REF}
@@ -436,10 +436,10 @@ class Activation_Code extends Component {
                     type={Camera.constants.Type.back}
                     aspect={Camera.constants.Aspect.fill}
                     style={[Skin.layout1.content.camera.wrap, this.state.camHeight != null ? { height: this.state.camHeight } : {}]}>
-                    <View style={{ flex: 20 }}/>
-                    <View style={[Skin.layout1.content.camera.box, { flex: 60, width: Skin.SCREEN_WIDTH - 100 }]}>
-                    </View>
-                    <View style={{ flex: 20 }}/>
+                   
+                               <View style={[Skin.layout1.content.camera.box, { flex: 40, width: Skin.SCREEN_WIDTH - 100 ,marginBottom:80,marginTop:80}]}>
+                               </View>
+                   
                   </Camera>
                 ) }
 
