@@ -150,8 +150,8 @@ android {
             signingConfig signingConfigs.releaseSandP
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 487
-            versionName "4.8.7"
+            versionCode 488
+            versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -160,8 +160,8 @@ android {
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 487
-            versionName "4.8.7"
+            versionCode 488
+            versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -170,8 +170,8 @@ android {
             signingConfig signingConfigs.releaseStock
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 487
-            versionName "4.8.7"
+            versionCode 488
+            versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         ubs{
@@ -179,8 +179,8 @@ android {
             signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 487
-            versionName "4.8.7"
+            versionCode 488
+            versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbc{
@@ -188,8 +188,8 @@ android {
             signingConfig signingConfigs.releaseCbc
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 487
-            versionName "4.8.7"
+            versionCode 488
+            versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         relidmobile{
@@ -197,8 +197,8 @@ android {
             signingConfig signingConfigs.releaseRelidmobile
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 487
-            versionName "4.8.7"
+            versionCode 488
+            versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
