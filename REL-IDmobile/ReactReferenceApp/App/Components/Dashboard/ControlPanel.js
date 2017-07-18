@@ -244,7 +244,7 @@ class ControlPanel extends Component {
     //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
     if(Main.isConnected){
       onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
-      ReactRdna.testConfig(Main.dnaUserName, (response) => {
+      ReactRdna.testConfig(JSON.stringify({userid:''}), (response) => {
                           if (response) {
                           console.log('immediate response is' + response[0].error);
                           } else {
@@ -285,7 +285,7 @@ class ControlPanel extends Component {
     console.log('immediate response is' + e.response);
     var responseJson = JSON.parse(e.response);
     if (responseJson.errCode == 0) {
-      alert(responseJson);
+      alert(e.response);
     } else {
       alert('Failed to get config with Error ' + responseJson.errCode);
     }
