@@ -90,7 +90,7 @@ class ConnectionProfileScene extends Component {
   }
   //check entered url is valid or not if it is valide than get connectionprofile from entered url and store it into database.
   checkURL() {
-    const url = this.state.inputURL;
+    const url = this.state.inputURL.trim();
     if (url.length > 0) {
       if (this.validateURL(url)) {
         fetch(url)
