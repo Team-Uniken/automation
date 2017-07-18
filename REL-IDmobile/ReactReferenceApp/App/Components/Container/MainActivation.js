@@ -101,7 +101,16 @@ class MainActivation extends Component {
     Events.on('showLoader', 'showLoader', this.showLoader);
   }
 
-
+ componentWillUnmount(){
+    if (onGetCredentialSubscriptions) {
+      onGetCredentialSubscriptions.remove();
+      onGetCredentialSubscriptions = null;
+    }
+    if (onGetpasswordSubscriptions) {
+      onGetpasswordSubscriptions.remove();
+      onGetpasswordSubscriptions = null;
+    }
+  }
 
   //to open 401 dialog 
   open() {

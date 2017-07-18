@@ -470,7 +470,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }catch (Exception e){}
 
         final RDNA.RDNASSLCertificate rdnaSSLCert = rdnaSSLCertificate;
-        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,rdnaSSLCert,null, context);
+        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, context);
         rdnaObj = rdnaStatus.result;
 
         WritableMap errorMap = Arguments.createMap();

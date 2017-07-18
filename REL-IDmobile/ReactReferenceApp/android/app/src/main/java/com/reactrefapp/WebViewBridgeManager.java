@@ -1,17 +1,28 @@
 package com.reactrefapp;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Build;
 import android.util.Log;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.views.webview.ReactWebViewManager;
 import com.facebook.react.views.webview.WebViewConfig;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -131,82 +142,82 @@ public class WebViewBridgeManager extends ReactWebViewManager {
     public void setWebViewClient(final WebView webView,ReadableMap params){
         webView.getSettings().setJavaScriptEnabled(false);
         addEventEmitters((ThemedReactContext) webView.getContext(),webView);
-//        webView.setWebViewClient(new WebViewClient()
-//        {
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                super.onPageStarted(view, url, favicon);
-//                WritableMap event = Arguments.createMap();
-//                event.putString("name","onPageStarted");
-//                event.putString("url", url);
-//                ReactContext reactContext = (ReactContext) view.getContext();
-//                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", event);
-//            }
-//
-//            @Override
-//            public void onReceivedError(WebView view,final int errorCode,final String description,final String failingUrl) {
-//                super.onReceivedError(view, errorCode, description, failingUrl);
-//                WritableMap event = Arguments.createMap();
-//                event.putString("name","onReceivedError");
-//                event.putInt("code", errorCode);
-//                event.putString("description",description);
-//                event.putString("failingUrl",failingUrl);
-//                ReactContext reactContext = (ReactContext) view.getContext();
-//                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", event);
-//            }
-//
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                super.onPageFinished(view, url);
-//                WritableMap event = Arguments.createMap();
-//                event.putString("name","onPageFinished");
-//                event.putString("url", url);
-//                ReactContext reactContext = (ReactContext) view.getContext();
-//                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", event);
-//            }
-//
-//            @Override
-//            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error)
-//            {
-//                //showSslErrorAlertDialog(handler,error);
-//                Log.e("onReceivedSslError", "Valid Not before date " + error.getCertificate().getValidNotBeforeDate());
-//                Log.e("onReceivedSslError", error.toString());
-//            }
-//
-//            @Override
-//            public WebResourceResponse shouldInterceptRequest(WebView view, String url)
-//            {
-//                if (url.endsWith("favicon.ico")) {
-//                    return loadFaviconFromAssetFolder();
-//                }
-//                return super.shouldInterceptRequest(view, url);
-//            }
-//
-//            @SuppressLint("NewApi")
-//            @Override
-//            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request)
-//            {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    if (request.getUrl().toString().endsWith("favicon.ico")) {
-//                        return loadFaviconFromAssetFolder();
-//                    }
-//                }
-//
-//                return super.shouldInterceptRequest(view, request);
-//            }
-//
-//            public WebResourceResponse loadFaviconFromAssetFolder()
-//            {
-//                try {
-//                    return new WebResourceResponse("image/x-icon", "UTF-8", webView.getContext().getAssets().open("blank_favicon.ico"));
-//                }
-//                catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                return null;
-//            }
-//        });
+        webView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                WritableMap event = Arguments.createMap();
+                event.putString("name","onPageStarted");
+                event.putString("url", url);
+                ReactContext reactContext = (ReactContext) view.getContext();
+                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", event);
+            }
+
+            @Override
+            public void onReceivedError(WebView view,final int errorCode,final String description,final String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                WritableMap event = Arguments.createMap();
+                event.putString("name","onReceivedError");
+                event.putInt("code", errorCode);
+                event.putString("description",description);
+                event.putString("failingUrl",failingUrl);
+                ReactContext reactContext = (ReactContext) view.getContext();
+                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", event);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                WritableMap event = Arguments.createMap();
+                event.putString("name","onPageFinished");
+                event.putString("url", url);
+                ReactContext reactContext = (ReactContext) view.getContext();
+                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "topChange", event);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error)
+            {
+                //showSslErrorAlertDialog(handler,error);
+                Log.e("onReceivedSslError", "Valid Not before date " + error.getCertificate().getValidNotBeforeDate());
+                Log.e("onReceivedSslError", error.toString());
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url)
+            {
+                if (url.endsWith("favicon.ico")) {
+                    return loadFaviconFromAssetFolder();
+                }
+                return super.shouldInterceptRequest(view, url);
+            }
+
+            @SuppressLint("NewApi")
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request)
+            {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (request.getUrl().toString().endsWith("favicon.ico")) {
+                        return loadFaviconFromAssetFolder();
+                    }
+                }
+
+                return super.shouldInterceptRequest(view, request);
+            }
+
+            public WebResourceResponse loadFaviconFromAssetFolder()
+            {
+                try {
+                    return new WebResourceResponse("image/x-icon", "UTF-8", webView.getContext().getAssets().open("blank_favicon.ico"));
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+        });
     }
 
     private void injectBridgeScript(WebView root) {

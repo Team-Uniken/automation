@@ -124,6 +124,18 @@ This method is called when the component will start to load
     onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
                                                                     this.onGetpassword.bind(this));
   }
+
+  componentWillUnmount(){
+    if (onGetCredentialSubscriptions) {
+      onGetCredentialSubscriptions.remove();
+      onGetCredentialSubscriptions = null;
+    }
+    if (onGetpasswordSubscriptions) {
+      onGetpasswordSubscriptions.remove();
+      onGetpasswordSubscriptions = null;
+    }
+  }
+
   /*
  This is life cycle method of the react native component.
  This method is called when the component is Mounted/Loaded.
