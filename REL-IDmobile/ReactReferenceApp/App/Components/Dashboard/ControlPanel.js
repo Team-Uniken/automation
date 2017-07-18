@@ -216,7 +216,7 @@ class ControlPanel extends Component {
     //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
     if(Main.isConnected){
       onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
-      ReactRdna.getConfig(Main.dnaUserName, (response) => {
+      ReactRdna.getConfig(JSON.stringify({userid:''}), (response) => {
                           if (response) {
                           console.log('immediate response is' + response[0].error);
                           } else {
