@@ -149,6 +149,13 @@ const styles = StyleSheet.create({
   rightLabels: {
     flex: 2.3,
   },
+  msg:{
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    marginTop:5,
+    color:'grey',
+  }
 });
 
 export default class DeviceMgmtScene extends Component {
@@ -531,7 +538,9 @@ export default class DeviceMgmtScene extends Component {
         }}
         navigator={this.props.navigator}
         >
+        
         <View style={styles.listViewWrap}>
+          <Text style={styles.msg}>Swipe to delete/edit devices</Text>
           <SwipeListView
             style={{ marginBottom: 1 }}
             dataSource={this.ds.cloneWithRows(this.state.dataSource) }
