@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "514346021719",
+    "project_id": "cbc-verify"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514346021719:android:b08b68fa9840218f",
+        "android_client_info": {
+          "package_name": "com.uniken.cbc.verify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514346021719-qgrcui44m9d9b6s9hfvect8fern47qkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_eJRUhY2fot50sGlWWDIeK0XtZjs_hHg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
