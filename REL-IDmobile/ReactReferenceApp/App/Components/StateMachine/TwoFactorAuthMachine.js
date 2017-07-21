@@ -189,6 +189,7 @@ class TwoFactorAuthMachine extends Component {
     It is also called from onForgotPasswordStatus callback method as handling of both callbacks are same.
   */
   onCheckChallengeResponseStatus(e) {
+    Main.isApiRunning = false;
     const res = JSON.parse(e.response);
     console.log("onCheckChallengeResponse ----- hide loader");
     Events.trigger('hideLoader', true);
@@ -885,6 +886,7 @@ class TwoFactorAuthMachine extends Component {
         ReactRdna.checkChallenges(JSON.stringify(challengeJson), value, (response) => {
           if (response[0].error === 0) {
             console.log('immediate response is' + response[0].error);
+            Main.isApiRunning = true;
           } else {
             console.log('immediate response is' + response[0].error);
             alert(response[0].error);
