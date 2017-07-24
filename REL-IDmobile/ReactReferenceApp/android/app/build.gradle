@@ -1,7 +1,7 @@
 apply plugin: "com.android.application"
 
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcVerify:".env.cbcverify",relidmobile:".env.relidmobile"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -136,7 +136,7 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
-        releaseCbcVerify {
+        releaseCbcverify {
             storeFile file("reactandroid.jks")
             storePassword "uniken123\$"
             keyAlias "uniken"
@@ -198,9 +198,9 @@ android {
             versionName "4.8.8"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
-        cbcVerify{
+        cbcverify{
             applicationId 'com.uniken.cbc.verify'
-            signingConfig signingConfigs.releaseCbcVerify
+            signingConfig signingConfigs.releaseCbcverify
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 488
