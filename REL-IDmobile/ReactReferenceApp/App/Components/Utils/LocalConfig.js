@@ -1,6 +1,6 @@
 import Config from 'react-native-config';
 var RNFS = require('react-native-fs');
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 var sslCertificateFile = null;
 
 function requireClientBasedConfig() {
@@ -17,7 +17,10 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/sandp.png')
                 },
-                dashboard: require('../Dashboard/SandP/homepage').default
+                dashboard: {
+                    screenName: 'homepage',
+                    screen: require('../Dashboard/SandP/homepage').default,
+                }
             }
         })();
     }
@@ -33,7 +36,10 @@ function requireClientBasedConfig() {
                     welcome: require('../../img/nwd.png')
                 },
                 bottomMenu: require("../view/bottomMenu"),
-                dashboard: require('../Dashboard/NWD/Deals').default
+                dashboard: {
+                    screenName: 'Deals',
+                    screen: require('../Dashboard/NWD/Deals').default,
+                }
             }
         })();
     }
@@ -48,7 +54,10 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/stock.png')
                 },
-                dashboard: require('../Dashboard/Stock/Deals').default
+                dashboard: {
+                    screenName: 'Deals',
+                    screen: require("../Dashboard/Stock/Deals").default,
+                }
             }
         })();
     }
@@ -63,7 +72,10 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/ubs.png')
                 },
-                dashboard: require('../Dashboard/Ubs/homepage').default
+                dashboard: {
+                    screenName: 'homepage',
+                    screen: require('../Dashboard/Ubs/homepage').default,
+                }
             }
         })();
     }
@@ -79,10 +91,14 @@ function requireClientBasedConfig() {
                     welcome: require('../../img/cbc.png')
                 },
                 bottomMenu: require("../view/cbcbottomMenu"),
-                dashboard: require('../Dashboard/CBC/Accounts').default
+                dashboard: {
+                    screenName: 'Accounts',
+                    screen: require('../Dashboard/CBC/Accounts').default,
+                }
             }
         })();
     }
+
     if (Config.ENV == 'relidmobile') {
         config = (function () {
             return {
@@ -94,28 +110,31 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/rmobile.png')
                 },
-                dashboard: require('../Dashboard/REL-IDMobile/Deals').default
+                dashboard: {
+                    screenName: 'Deals',
+                    screen: require('../Dashboard/REL-IDMobile/Deals').default,
+                }
             }
         })();
     }
-  if (Config.ENV == 'cbcverify') {
-    config = (function () {
-              return {
-              connectionProfile: require("../../../Connection_profiles/cbcverify.json"),
-              sslCertificate: {
-              data: getSSLFileContent(),
-              password: 'uniken123$',
-              },
-              img: {
-              welcome: require('../../img/cbc.png')
-              },
-              dashboard: {
-                screenName:'DashboardNotification',
-                screen:require("../Dashboard/CBCVerify/Notification").default,
-              },
-              }
-              })();
-  }
+    if (Config.ENV == 'cbcverify') {
+        config = (function () {
+            return {
+                connectionProfile: require("../../../Connection_profiles/cbcverify.json"),
+                sslCertificate: {
+                    data: getSSLFileContent(),
+                    password: 'uniken123$',
+                },
+                img: {
+                    welcome: require('../../img/cbc.png')
+                },
+                dashboard: {
+                    screenName: 'DashboardNotification',
+                    screen: require("../Dashboard/CBCVerify/Notification").default,
+                },
+            }
+        })();
+    }
 
     return config;
 }
@@ -188,5 +207,5 @@ function getSSLFileContent() {
 
 
 module.exports = {
-  ClientBasedConfig:requireClientBasedConfig()
+    ClientBasedConfig: requireClientBasedConfig()
 }

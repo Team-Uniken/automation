@@ -12,7 +12,7 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
+import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS,RefreshControl } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
@@ -385,6 +385,7 @@ export default class NotificationMgmtScene extends Component {
       showPasswordModel: false,
       selectedNotificationId: '',
       selectedAction: '',
+      refreshing: false,
     };
     this.selectedAlertOp = true;
   }
@@ -502,6 +503,12 @@ export default class NotificationMgmtScene extends Component {
       }
     }).done();
   }
+  
+   _onRefresh() {
+     this.setState({refreshing: true});
+     obj.getMyNotifications();
+   }
+
 
   /*
    This is life cycle method of the react native component.
@@ -638,6 +645,7 @@ export default class NotificationMgmtScene extends Component {
 
   //callback of getNotifications.
   onGetNotificationsDetails(e) {
+    this.setState({refreshing: false});
     console.log('----- onGetNotificationsDetails');
     NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
@@ -837,6 +845,8 @@ export default class NotificationMgmtScene extends Component {
     return (<View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
             <ListView
+               refreshControl={ <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />
+            }
               ref="listView"
               automaticallyAdjustContentInsets={false}
               dataSource={this.state.dataSource}

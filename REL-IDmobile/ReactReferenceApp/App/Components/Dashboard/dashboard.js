@@ -24,7 +24,7 @@ class Dashboard extends Component {
                 url={this.props.url}
                 title={this.props.title}
                 rdna={this.props.rdna}
-              dashboardScreenName={ClientBasedConfig.dashboard.screenName}  />
+                dashboardScreenName={ClientBasedConfig.dashboard.screenName}  />
       );
     
   }
