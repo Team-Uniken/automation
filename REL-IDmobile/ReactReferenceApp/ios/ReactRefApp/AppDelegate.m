@@ -128,17 +128,5 @@
                                                      annotation:annotation];
 }
 
--(void)onDeviceThreat:(NSString*)status{
-  UIAlertView *threatAlert = [[UIAlertView alloc]initWithTitle:@"Device is not safe." message:status delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-  [threatAlert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-  exit(0);
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-  exit(0);
-}
 
 @end
