@@ -34,7 +34,6 @@
 		1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
 		5506A35C1EE150DE00870068 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5506A33B1EE150C000870068 /* libRCTAnimation.a */; };
-		55074FA01EE7F94000BF6DC8 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */; };
 		551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
 		551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		551EE2E31E51C68D00ADAD6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
@@ -46,6 +45,7 @@
 		5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
 		6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		652652B21F25D8560052540B /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 652652B11F25D8560052540B /* libapi-sdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -331,13 +331,13 @@
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		3475BFD97D954F819B1A2E01 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		5506A3341EE150C000870068 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		55074F9B1EE7F22600BF6DC8 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		551EE2DD1E51BAE400ADAD6C /* cbc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cbc.ttf; sourceTree = "<group>"; };
 		551EE2DF1E51BB1200ADAD6C /* cbc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cbc.plist; sourceTree = "<group>"; };
 		55D17EFC1F0A322800C94FA5 /* Index.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Index.js; path = ../Index.js; sourceTree = "<group>"; };
 		5A302D3D19354BB9B400DA70 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		6524EF021EAA4A5D00E6E3CB /* account.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = account.ttf; sourceTree = "<group>"; };
+		652652AF1F25D8560052540B /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		652652B11F25D8560052540B /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		654B80D11DBE0C620052D415 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -377,8 +377,8 @@
 				55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */,
 				5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */,
 				556268641EEE65E20008AC49 /* libjschelpers.a in Frameworks */,
+				652652B21F25D8560052540B /* libapi-sdk.a in Frameworks */,
 				556268621EEE65CB0008AC49 /* libyoga.a in Frameworks */,
-				55074FA01EE7F94000BF6DC8 /* libapi-sdk.a in Frameworks */,
 				555B04CC1EE6BDF2004B7659 /* libAirMaps.a in Frameworks */,
 				555B04931EE67E99004B7659 /* libRCTFBSDK.a in Frameworks */,
 				5506A35C1EE150DE00870068 /* libRCTAnimation.a in Frameworks */,
@@ -501,31 +501,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		55074F991EE7F22600BF6DC8 /* api-sdk */ = {
-			isa = PBXGroup;
-			children = (
-				55074F9A1EE7F22600BF6DC8 /* include */,
-				55074F9C1EE7F22600BF6DC8 /* libs */,
-			);
-			path = "api-sdk";
-			sourceTree = "<group>";
-		};
-		55074F9A1EE7F22600BF6DC8 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				55074F9B1EE7F22600BF6DC8 /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		55074F9C1EE7F22600BF6DC8 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
 		5535B19A1EE01D15007AE1B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +540,31 @@
 				55F31D5A1F16063000C198C3 /* libRNFS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		652652AD1F25D8560052540B /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				652652AE1F25D8560052540B /* include */,
+				652652B01F25D8560052540B /* libs */,
+			);
+			path = "api-sdk";
+			sourceTree = "<group>";
+		};
+		652652AE1F25D8560052540B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				652652AF1F25D8560052540B /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		652652B01F25D8560052540B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				652652B11F25D8560052540B /* libapi-sdk.a */,
+			);
+			path = libs;
 			sourceTree = "<group>";
 		};
 		65281C2B1D6C34EA00F15ACE /* Products */ = {
@@ -674,8 +674,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				652652AD1F25D8560052540B /* api-sdk */,
 				55D17EFC1F0A322800C94FA5 /* Index.js */,
-				55074F991EE7F22600BF6DC8 /* api-sdk */,
 				6524EF021EAA4A5D00E6E3CB /* account.ttf */,
 				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
 				551EE2DD1E51BAE400ADAD6C /* cbc.ttf */,
