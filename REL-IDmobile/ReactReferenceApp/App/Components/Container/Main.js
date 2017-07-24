@@ -45,6 +45,7 @@ import NavButton from '../NavButton';
  */
 
 var BottomMenu = ClientBasedConfig.bottomMenu;
+var dashboardScreen = ClientBasedConfig.dashboard.screenName;
 
 let _toggleDrawer;
 let eventToggleDrawer = false;
@@ -342,6 +343,7 @@ This method is called when the component will start to load
         content={this.props.controlPanel != null && this.props.controlPanel != undefined ? <this.props.controlPanel
           toggleDrawer={this.toggleDrawer}
           closeDrawer={this.closeDrawer}
+            dashboardScreenName = {dashboardScreen}
           navigator={this.props.navigator} /> : null}
         acceptDoubleTap
         onOpen={() => {

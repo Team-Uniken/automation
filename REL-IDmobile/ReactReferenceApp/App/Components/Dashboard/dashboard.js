@@ -19,11 +19,12 @@ import {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet} from 'reac
 class Dashboard extends Component {
   render() {
       return (
-        <ClientBasedConfig.dashboard
+        <ClientBasedConfig.dashboard.screen
           navigator={this.props.navigator}
                 url={this.props.url}
                 title={this.props.title}
-                rdna={this.props.rdna}/>
+                rdna={this.props.rdna}
+              dashboardScreenName={ClientBasedConfig.dashboard.screenName}  />
       );
     
   }

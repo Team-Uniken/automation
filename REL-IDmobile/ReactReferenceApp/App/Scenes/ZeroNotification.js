@@ -12,7 +12,7 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import {StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
+import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
@@ -86,24 +86,24 @@ var SampleRow = React.createClass({
         obj.setState({
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
-        },()=>{
+        }, () => {
 
-        if (data.authlevel !== null && data.authlevel !== undefined) {
-          if (data.authlevel == "1") {
-            this.showModelForPassword();
-          } else if (data.authlevel == "2") {
-            if (Platform.OS === 'android') {
-              this.showComponentForPattern();
+          if (data.authlevel !== null && data.authlevel !== undefined) {
+            if (data.authlevel == "1") {
+              this.showModelForPassword();
+            } else if (data.authlevel == "2") {
+              if (Platform.OS === 'android') {
+                this.showComponentForPattern();
+              } else {
+                this.showModelForTouchId();
+              }
             } else {
-              this.showModelForTouchId();
+              obj.updateNotificationDetails();
             }
           } else {
             obj.updateNotificationDetails();
           }
-        } else {
-          obj.updateNotificationDetails();
-        }
-                     });
+        });
         break;
       }
     }
@@ -115,7 +115,7 @@ var SampleRow = React.createClass({
         showPasswordModel: true,
       });
     } else {
-       this.showAlertAuthNotSuppoted('Failed to get additional authentication. User not logged in using password.');
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. User not logged in using password.');
     }
   },
 
@@ -135,24 +135,25 @@ var SampleRow = React.createClass({
     }
   },
 
-    //Additional authentication not supported.
-    showAlertAuthNotSuppoted(msg){
-      Alert.alert(
-        '',
-        msg,
-        [
-          { text: 'OK' ,
+  //Additional authentication not supported.
+  showAlertAuthNotSuppoted(msg) {
+    Alert.alert(
+      '',
+      msg,
+      [
+        {
+          text: 'OK',
           onPress: () => {
             obj.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
             obj.updateNotificationDetails();
           }
-          }
-        ]
-      );
-    
+        }
+      ]
+    );
+
   },
-     
-                                  
+
+
 
   render() {
     var body = this.props.notification.message.body;
@@ -257,8 +258,8 @@ var SampleRow = React.createClass({
               <View style={Skin.notification.notificationButton}>
 
                 <TouchableHighlight style={Skin.notification.confirmbutton}
-                  onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label) }
-                  >
+                  onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label)}
+                >
                   <View style={Skin.notification.text} >
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[0].label}
@@ -266,7 +267,7 @@ var SampleRow = React.createClass({
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[1].label) }>
+                <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[1].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
@@ -274,7 +275,7 @@ var SampleRow = React.createClass({
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label) }>
+                <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[2].label}
@@ -326,7 +327,7 @@ var SampleRow = React.createClass({
 
               <View style={Skin.notification.notificationButton}>
 
-                <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label) }>
+                <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[0].label}
@@ -335,7 +336,7 @@ var SampleRow = React.createClass({
                 </TouchableHighlight>
 
 
-                <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[1].label) }>
+                <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[1].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
@@ -405,19 +406,19 @@ export default class NotificationMgmtScene extends Component {
     //   } catch (e) { }
     // }).done();
 
-   Util.getUserDataSecure("RPasswd").then((decryptedRPasswd)=>{
-        const pw = this.state.inputPassword;
-        if (pw === decryptedRPasswd) {
-          //Call update notification
-          obj.state.inputPassword='',
+    Util.getUserDataSecure("RPasswd").then((decryptedRPasswd) => {
+      const pw = this.state.inputPassword;
+      if (pw === decryptedRPasswd) {
+        //Call update notification
+        obj.state.inputPassword = '',
           this.updateNotificationDetails();
-        } else {
-          obj.state.inputPassword='',
+      } else {
+        obj.state.inputPassword = '',
           alert('Entered password does not match');
-        }
-   }).done();
+      }
+    }).done();
 
-   this.setState({ showPasswordModel: false });
+    this.setState({ showPasswordModel: false });
   }
 
   onPasswordChange(event) {
@@ -432,7 +433,7 @@ export default class NotificationMgmtScene extends Component {
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
       onClose: null,
-      operationMsg:'Enter pattern',
+      operationMsg: 'Enter pattern',
       mode: 'verify'
     });
   }
@@ -452,14 +453,15 @@ export default class NotificationMgmtScene extends Component {
           '',
           'Failed to get additional authentication. TouchID is not enabled or supported.',
           [
-            { text: 'OK' ,
-          onPress: () => {
-            obj.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
-            this.updateNotificationDetails();
+            {
+              text: 'OK',
+              onPress: () => {
+                obj.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
+                this.updateNotificationDetails();
+              }
             }
-            }
-            ]
-          );
+          ]
+        );
       });
   }
 
@@ -490,10 +492,10 @@ export default class NotificationMgmtScene extends Component {
     //   } catch (e) { }
     // }).done();
 
-    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd)=>{
-      if(encryptedRPasswd){
-        Util.decryptText(encryptedRPasswd).then((RPasswd)=>{
-          if(RPasswd){
+    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd) => {
+      if (encryptedRPasswd) {
+        Util.decryptText(encryptedRPasswd).then((RPasswd) => {
+          if (RPasswd) {
             this.updateNotificationDetails();
           }
         }).done();
@@ -511,9 +513,8 @@ export default class NotificationMgmtScene extends Component {
     if (this.props.url != null) {
       NotificationObtianedResponse = this.props.url.data;
       this.onGetNotificationsDetails(NotificationObtianedResponse);
-    } else {
-      this.getMyNotifications();
     }
+
     if (onUpdateNotificationSubscription) {
       onUpdateNotificationSubscription.remove();
       onUpdateNotificationSubscription = null;
@@ -528,19 +529,19 @@ export default class NotificationMgmtScene extends Component {
           value = JSON.parse(value);
           if (value.RPasswd) {
             isAdditionalAuthSupported.pass = true;
-            }else{
+          } else {
             isAdditionalAuthSupported.pass = false;
-            }
+          }
 
           if (value.ERPasswd && value.ERPasswd !== "empty") {
             isAdditionalAuthSupported.erpass = true;
-            }else{
-              isAdditionalAuthSupported.erpass = false;
-            }
-        } catch (e) {isAdditionalAuthSupported.erpass = false;isAdditionalAuthSupported.pass = false; }
-      }else{
+          } else {
+            isAdditionalAuthSupported.erpass = false;
+          }
+        } catch (e) { isAdditionalAuthSupported.erpass = false; isAdditionalAuthSupported.pass = false; }
+      } else {
         isAdditionalAuthSupported.erpass = false;
-        isAdditionalAuthSupported.pass = false;                                        
+        isAdditionalAuthSupported.pass = false;
       }
     });
   }
@@ -560,6 +561,9 @@ export default class NotificationMgmtScene extends Component {
    This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
+     if (this.props.url == null) {
+       this.getMyNotifications();
+     }
     var listViewScrollView = this.refs.listView.getScrollResponder();
   }
   /**
@@ -745,124 +749,146 @@ export default class NotificationMgmtScene extends Component {
       {...rowData}
       style={Skin.appointmentrow.row} />
   }
+
+  alertModal(){
+    return (<Modal
+        style={styles.modalwrap}
+        overlayOpacity={0.75}
+        offset={100}
+        open={this.state.showAlert}
+        modalDidOpen={() => console.log('modal did open')}
+        modalDidClose={() => {
+          if (this.selectedAlertOp) {
+            this.selectedAlertOp = false;
+            this.onAlertModalOk();
+          } else {
+            this.selectedAlertOp = false;
+            this.onAlertModalDismissed();
+          }
+        }}>
+        <View style={styles.modalTitleWrap}>
+          <Text style={styles.modalTitle}>
+            Alert
+      </Text>
+        </View>
+        <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+          {this.state.alertMsg}
+        </Text>
+        <View style={styles.border}></View>
+
+        <TouchableHighlight
+          onPress={() => {
+            this.selectedAlertOp = true;
+            this.setState({
+              showAlert: false
+            });
+          }}
+          underlayColor={Skin.colors.REPPLE_COLOR}
+          style={styles.modalButton}>
+          <Text style={styles.modalButtonText}>
+            OK
+      </Text>
+        </TouchableHighlight>
+      </Modal>);
+  }
+
+  checkPassModal(){
+    return (<Modal
+      style={styles.modalwrap}
+      overlayOpacity={0.75}
+      offset={100}
+      open={this.state.showPasswordModel}
+      modalDidOpen={() => console.log('modal did open')}
+      modalDidClose={() => this.setState({
+        showPasswordModel: false
+      })}>
+      <View style={styles.modalTitleWrap}>
+        <Text style={styles.modalTitle}>
+          Please enter your password
+    </Text>
+      </View>
+      <TextInput
+        autoCorrect={false}
+        ref='inputPassword'
+        label={'Enter Password'}
+        style={styles.modalInput}
+        placeholder={'Enter Password'}
+        secureTextEntry={true}
+        autoFocus={true}
+        value={this.state.inputPassword}
+        placeholderTextColor={Skin.colors.HINT_COLOR}
+        onSubmitEditing={this.checkPassword.bind(this)}
+        onChange={this.onPasswordChange.bind(this)} />
+      <View style={styles.border}></View>
+
+      <TouchableHighlight
+        onPress={this.checkPassword.bind(this)}
+        underlayColor={Skin.colors.REPPLE_COLOR}
+        style={styles.modalButton}>
+        <Text style={styles.modalButtonText}>
+          Submit
+    </Text>
+      </TouchableHighlight>
+
+    </Modal>);
+  }
+
+  renderWithoutMain(){
+    return (<View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+          <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+            <ListView
+              ref="listView"
+              automaticallyAdjustContentInsets={false}
+              dataSource={this.state.dataSource}
+              removeClippedSubviews={false}
+              renderRow={this.renderRow} />
+          </View>
+            {this.checkPassModal()}
+            {this.alertModal()}
+        </View>);
+  }
+
+  renderWithMain(){
+     return (<Main
+          drawerState={{
+            open: false,
+            disabled: true,
+          }}
+          navBar={{
+            title: 'My Notifications',
+            visible: true,
+            tint: Skin.main.NAVBAR_TINT,
+            left: {
+              text: 'Back',
+              icon: '',
+              iconStyle: {},
+              textStyle: {},
+              handler: this.props.navigator.pop,
+            },
+          }}
+          bottomMenu={{
+            visible: false,
+          }}
+          navigator={this.props.navigator}
+        >
+          <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+            <ListView
+              ref="listView"
+              automaticallyAdjustContentInsets={false}
+              dataSource={this.state.dataSource}
+              removeClippedSubviews={false}
+              renderRow={this.renderRow} />
+          </View>
+             {this.checkPassModal()}
+             {this.alertModal()}
+        </Main>);
+  }
+
   /*
    This method is used to render the componenet with all its element.
    */
   render() {
-    //console.log('in render');
-    return (
-      <Main
-        drawerState={{
-          open: false,
-          disabled: true,
-        }}
-        navBar={{
-          title: 'My Notifications',
-          visible: true,
-          tint: Skin.main.NAVBAR_TINT,
-          left: {
-            text: 'Back',
-            icon: '',
-            iconStyle: {},
-            textStyle: {},
-            handler: this.props.navigator.pop,
-          },
-        }}
-        bottomMenu={{
-          visible: false,
-        }}
-        navigator={this.props.navigator}
-        >
-
-        <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-          <ListView
-            ref="listView"
-            automaticallyAdjustContentInsets={false}
-            dataSource={this.state.dataSource}
-            removeClippedSubviews={false}
-            renderRow={this.renderRow} />
-        </View>
-
-        <Modal
-          style={styles.modalwrap}
-          overlayOpacity={0.75}
-          offset={100}
-          open={this.state.showAlert}
-          modalDidOpen={() => console.log('modal did open') }
-          modalDidClose={() => {
-            if (this.selectedAlertOp) {
-              this.selectedAlertOp = false;
-              this.onAlertModalOk();
-            } else {
-              this.selectedAlertOp = false;
-              this.onAlertModalDismissed();
-            }
-          } }>
-          <View style={styles.modalTitleWrap}>
-            <Text style={styles.modalTitle}>
-              Alert
-            </Text>
-          </View>
-          <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
-            {this.state.alertMsg}
-          </Text>
-          <View style={styles.border}></View>
-
-          <TouchableHighlight
-            onPress={() => {
-              this.selectedAlertOp = true;
-              this.setState({
-                showAlert: false
-              });
-            } }
-            underlayColor={Skin.colors.REPPLE_COLOR}
-            style={styles.modalButton}>
-            <Text style={styles.modalButtonText}>
-              OK
-            </Text>
-          </TouchableHighlight>
-        </Modal>
-
-        <Modal
-          style={styles.modalwrap}
-          overlayOpacity={0.75}
-          offset={100}
-          open={this.state.showPasswordModel}
-          modalDidOpen={() => console.log('modal did open') }
-          modalDidClose={() => this.setState({
-            showPasswordModel: false
-          }) }>
-          <View style={styles.modalTitleWrap}>
-            <Text style={styles.modalTitle}>
-              Please enter your password
-            </Text>
-          </View>
-          <TextInput
-            autoCorrect={false}
-            ref='inputPassword'
-            label={'Enter Password'}
-            style={styles.modalInput}
-            placeholder={'Enter Password'}
-            secureTextEntry={true}
-            autoFocus={true}
-            value={this.state.inputPassword}
-            placeholderTextColor={Skin.colors.HINT_COLOR}
-            onSubmitEditing={this.checkPassword.bind(this) }
-            onChange={this.onPasswordChange.bind(this) } />
-          <View style={styles.border}></View>
-
-          <TouchableHighlight
-            onPress={this.checkPassword.bind(this) }
-            underlayColor={Skin.colors.REPPLE_COLOR}
-            style={styles.modalButton}>
-            <Text style={styles.modalButtonText}>
-              Submit
-            </Text>
-          </TouchableHighlight>
-
-        </Modal>
-      </Main>
-    );
+    return (this.props.disableMain?this.renderWithoutMain():this.renderWithMain());
   }
 }
 

@@ -2,6 +2,7 @@ import Config from 'react-native-config';
 var RNFS = require('react-native-fs');
 import {Platform} from 'react-native';
 var sslCertificateFile = null;
+
 function requireClientBasedConfig() {
     var config = null;
 
@@ -97,6 +98,24 @@ function requireClientBasedConfig() {
             }
         })();
     }
+  if (Config.ENV == 'cbcverify') {
+    config = (function () {
+              return {
+              connectionProfile: require("../../../Connection_profiles/cbcverify.json"),
+              sslCertificate: {
+              data: getSSLFileContent(),
+              password: 'uniken123$',
+              },
+              img: {
+              welcome: require('../../img/cbc.png')
+              },
+              dashboard: {
+                screenName:'DashboardNotification',
+                screen:require("../Dashboard/CBCVerify/Notification").default,
+              },
+              }
+              })();
+  }
 
     return config;
 }
@@ -166,6 +185,8 @@ function getSSLFileContent() {
     }
 }
 
+
+
 module.exports = {
-    ClientBasedConfig: requireClientBasedConfig()
+  ClientBasedConfig:requireClientBasedConfig()
 }

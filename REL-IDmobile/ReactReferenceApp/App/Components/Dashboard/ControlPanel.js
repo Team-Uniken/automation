@@ -10,6 +10,9 @@
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 
+
+import {ClientBasedConfig} from '../Utils/LocalConfig';
+
 /*
  Required for this js
  */
@@ -30,6 +33,8 @@ import Web from '../../Scenes/Web';
 var constant = require('../Utils/Constants');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+
+
 
 /*
  Custome View
@@ -364,9 +369,30 @@ class ControlPanel extends Component {
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
+        
+        if(this.props.dashboardScreenName === 'DashboardNotification'){
+          if (res.pArgs.response.ResponseData.notifications.length > 0) {
+            var allScreens = this.props.navigator.getCurrentRoutes(0);
+            for (var i = 0; i < allScreens.length; i++) {
+              var screen = allScreens[i];
+              if (screen.id == 'Main') {
+                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+                mySelectedRoute.url = { "data": e };
+                Events.trigger('showNotification', e);
+                this.props.navigator.popToRoute(mySelectedRoute);
+                return;
+              }
+            }
+           
+          }else{
+             Events.trigger('showNotification', e);
+          }
+          
+          
+        }else{
+          
         if (res.pArgs.response.ResponseData.notifications.length > 0) {
           var allScreens = this.props.navigator.getCurrentRoutes(0);
-
           for (var i = 0; i < allScreens.length; i++) {
             var screen = allScreens[i];
             if (screen.id == 'NotificationMgmt') {
@@ -382,6 +408,7 @@ class ControlPanel extends Component {
           });
         } else if (this.isNotificationScreenPresent() == 1) {
           Events.trigger('showNotification', e);
+        }
         }
       } else {
         if (res.pArgs.response.StatusMsg == 'User not active or present') {
