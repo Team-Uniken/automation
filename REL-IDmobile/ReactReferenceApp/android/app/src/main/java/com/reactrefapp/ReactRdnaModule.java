@@ -1,23 +1,14 @@
 package com.reactrefapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
-import android.telecom.Call;
 import android.util.Base64;
-import android.util.Log;
-import android.util.Pair;
 
-//import com.better.workspace.lib.BetterMTD;
-//import com.better.workspace.lib.model.ThreatCategory;
-//import com.better.workspace.lib.model.ThreatType;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
@@ -31,14 +22,9 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
@@ -106,7 +92,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         System.exit(0);
     }
 
-    //CONST_AGENTINFO, CONST_RDNA_IP, CONST_RDNA_PORT, CONST_CYPHER_SPEC, CONST_CYPHER_SALT, null, (response) =>
     @ReactMethod
     public void initialize(final String agentInfo,final String authGatewayHNIP,final int authGatewayPort,final String cipherSpecs,final String cipherSalt, String proxySettings,String sslCertificate,final Callback callback) {
 
@@ -480,57 +465,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
 
         callback.invoke(writableArray);
-//
-//        new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                BetterMTD betterMTD = BetterMTD.init(context.getApplicationContext());
-//                List<Pair<ThreatCategory,ThreatType>> betterResult =  betterMTD.healthCheck(context.getApplicationContext());
-//                RDNA.RDNAStatus<RDNA> rdnaStatus = null;
-//                if(betterResult.size() == 0){
-//                    rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null,null,null, context);
-//                    rdnaObj = rdnaStatus.result;
-//
-//                    WritableMap errorMap = Arguments.createMap();
-//                    errorMap.putInt("error", rdnaStatus.errorCode);
-//
-//                    WritableArray writableArray = Arguments.createArray();
-//                    writableArray.pushMap(errorMap);
-//
-//                    callback.invoke(writableArray);
-//                }else{
-//                      Runnable runnable = new Runnable() {
-//                          @Override
-//                          public void run() {
-//                              AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context.getCurrentActivity());
-//                              alertBuilder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
-//                                  @Override
-//                                  public void onClick(DialogInterface dialogInterface, int i) {
-//                                      System.exit(0);
-//                                  }
-//                              });
-//
-//                              alertBuilder.setTitle("Alert");
-//                              alertBuilder.setMessage("This device is not safe");
-//                              alertBuilder.setCancelable(false);
-//                              alertBuilder.show();
-//                          }
-//                      };
-//
-//                      callOnMainThread(runnable);
-////                    WritableMap errorMap = Arguments.createMap();
-////                    errorMap.putInt("error",ERROR_HEALTH_CHECK_FAILED);
-////
-////                    WritableArray writableArray = Arguments.createArray();
-////                    writableArray.pushMap(errorMap);
-////
-////                    callback.invoke(writableArray);
-//                    Log.e("ReactRdnaModule","BetterMobi Health Check Failed!");
-//                }
-//            }
-//        }).start();
     }
 
     @ReactMethod
@@ -739,7 +673,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 rdnaObj = rdnaStatus.result;
                 errorMap.putInt("error", rdnaStatus.errorCode);
             } catch (JSONException e) {
-                //e.printStackTrace();
             }
 
         } else {
@@ -826,20 +759,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     public void encryptDataPacket(String scope, String cipherSpecs, String salt, String data, Callback callback)
     {
         RDNA.RDNAPrivacyScope privacyScope = null;
-//        if(scope == null)
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_DEVICE")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_AGENT")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_USER")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_SESSION")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
-//        }
 
         if(cipherSpecs == null)
             cipherSpecs = Constants.CYPHER_SPEC;
@@ -871,21 +790,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void decryptDataPacket(String scope, String cipherSpecs, String salt, String data, Callback callback){
         RDNA.RDNAPrivacyScope privacyScope = null;
-
-//        if(scope == null)
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_DEVICE")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_AGENT")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_USER")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_SESSION")){
-//            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
-//        }
 
         byte[] base64decodedData = null;
         if(data!=null && data.length() > 0){
@@ -966,30 +870,16 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         callback.invoke(writableArray);
     }
 
-    public RDNA.RDNASSLCertificate getSSLCertificate(){
-        RDNA.RDNASSLCertificate certificate = null;
-        try {
-            byte[] data = getAssetContent(getReactApplicationContext(), "cert/clientcert.p12");
-//            String base64Byte1 = Base64.encodeToString(data,Base64.DEFAULT);
-//            String base64Byte2 = Base64.encodeToString(data,Base64.CRLF);
-//            String base64Byte3 = Base64.encodeToString(data,Base64.NO_CLOSE);
-//            String base64Byte4 = Base64.encodeToString(data,Base64.NO_PADDING);
-            String base64Byte5 = Base64.encodeToString(data,Base64.NO_WRAP);
-            certificate = new RDNA.RDNASSLCertificate(base64Byte5,"uniken123$");
-//            String base64Byte6 = Base64.encodeToString(data,Base64.URL_SAFE);
+//    public RDNA.RDNASSLCertificate getSSLCertificate(){
+//        RDNA.RDNASSLCertificate certificate = null;
+//        try {
+//            byte[] data = getAssetContent(getReactApplicationContext(), "cert/clientcert.p12");
+//            String base64Byte5 = Base64.encodeToString(data,Base64.NO_WRAP);
+//            certificate = new RDNA.RDNASSLCertificate(base64Byte5,"uniken123$");
+//        }catch (Exception e){}
 //
-//            byte[] base64DecodedSud = Base64.decode(getAssetContent(getReactApplicationContext(),"baseencodedd.txt"),Base64.NO_WRAP);
-//
-//            if(Arrays.equals(data,base64DecodedSud)){
-//                Log.e("Init","Yay");
-//            }
-//
-//
-//            Log.e("Init","len" + data.length);
-        }catch (Exception e){}
-
-        return certificate;
-    }
+//        return certificate;
+//    }
 
     public static byte[] getAssetContent(Context context, String file) throws IOException {
         InputStream stream = null;
@@ -1094,8 +984,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 parentArray.pushMap(errorMap);
                 callback.invoke(parentArray);
             }
-//            if(status.errorCode == 0)
-//                errorMap.putString("response",status.result);
         }
         else{
             errorMap.putInt("error",1);
