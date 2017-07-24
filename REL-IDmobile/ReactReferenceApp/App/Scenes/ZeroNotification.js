@@ -12,7 +12,7 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS,RefreshControl } from 'react-native';
+import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS, RefreshControl } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
@@ -503,11 +503,11 @@ export default class NotificationMgmtScene extends Component {
       }
     }).done();
   }
-  
-   _onRefresh() {
-     this.setState({refreshing: true});
-     obj.getMyNotifications();
-   }
+
+  _onRefresh() {
+    this.setState({ refreshing: true });
+    obj.getMyNotifications();
+  }
 
 
   /*
@@ -568,9 +568,9 @@ export default class NotificationMgmtScene extends Component {
    This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
-     if (this.props.url == null) {
-       this.getMyNotifications();
-     }
+    if (this.props.url == null) {
+      this.getMyNotifications();
+    }
     var listViewScrollView = this.refs.listView.getScrollResponder();
   }
   /**
@@ -645,7 +645,7 @@ export default class NotificationMgmtScene extends Component {
 
   //callback of getNotifications.
   onGetNotificationsDetails(e) {
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
     console.log('----- onGetNotificationsDetails');
     NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
@@ -664,14 +664,15 @@ export default class NotificationMgmtScene extends Component {
           this.dismissAlertModal();
         }
 
-        this.setState({ notification: noti });
-        notification = noti;
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
-        });
+       
       } else {
         this.showAlertModal("You have no pending notifications");
       }
+      this.setState({ notification: noti });
+      notification = noti;
+      this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+                    });
     } else {
       console.log('Something went wrong');
     }
@@ -739,6 +740,16 @@ export default class NotificationMgmtScene extends Component {
     //Do nothing for right now
   }
 
+  _renderMessage() {
+    return (
+      <View style={styles.listEmptyView}>
+        <Text style={styles.listEmptyMessage}
+          numberOfLines={2}>You have no {'\n'} pending notifications</Text>
+      </View>
+    )
+  }
+
+
   renderListViewData(s) {
     const data = [];
     let index = -1;
@@ -758,49 +769,49 @@ export default class NotificationMgmtScene extends Component {
       style={Skin.appointmentrow.row} />
   }
 
-  alertModal(){
+  alertModal() {
     return (<Modal
-        style={styles.modalwrap}
-        overlayOpacity={0.75}
-        offset={100}
-        open={this.state.showAlert}
-        modalDidOpen={() => console.log('modal did open')}
-        modalDidClose={() => {
-          if (this.selectedAlertOp) {
-            this.selectedAlertOp = false;
-            this.onAlertModalOk();
-          } else {
-            this.selectedAlertOp = false;
-            this.onAlertModalDismissed();
-          }
-        }}>
-        <View style={styles.modalTitleWrap}>
-          <Text style={styles.modalTitle}>
-            Alert
+      style={styles.modalwrap}
+      overlayOpacity={0.75}
+      offset={100}
+      open={this.state.showAlert}
+      modalDidOpen={() => console.log('modal did open')}
+      modalDidClose={() => {
+        if (this.selectedAlertOp) {
+          this.selectedAlertOp = false;
+          this.onAlertModalOk();
+        } else {
+          this.selectedAlertOp = false;
+          this.onAlertModalDismissed();
+        }
+      }}>
+      <View style={styles.modalTitleWrap}>
+        <Text style={styles.modalTitle}>
+          Alert
       </Text>
-        </View>
-        <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
-          {this.state.alertMsg}
-        </Text>
-        <View style={styles.border}></View>
+      </View>
+      <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+        {this.state.alertMsg}
+      </Text>
+      <View style={styles.border}></View>
 
-        <TouchableHighlight
-          onPress={() => {
-            this.selectedAlertOp = true;
-            this.setState({
-              showAlert: false
-            });
-          }}
-          underlayColor={Skin.colors.REPPLE_COLOR}
-          style={styles.modalButton}>
-          <Text style={styles.modalButtonText}>
-            OK
+      <TouchableHighlight
+        onPress={() => {
+          this.selectedAlertOp = true;
+          this.setState({
+            showAlert: false
+          });
+        }}
+        underlayColor={Skin.colors.REPPLE_COLOR}
+        style={styles.modalButton}>
+        <Text style={styles.modalButtonText}>
+          OK
       </Text>
-        </TouchableHighlight>
-      </Modal>);
+      </TouchableHighlight>
+    </Modal>);
   }
 
-  checkPassModal(){
+  checkPassModal() {
     return (<Modal
       style={styles.modalwrap}
       overlayOpacity={0.75}
@@ -841,64 +852,71 @@ export default class NotificationMgmtScene extends Component {
     </Modal>);
   }
 
-  renderWithoutMain(){
+  renderWithoutMain() {
+    const listViewProportion = this.state.dataSource.getRowCount() == 0 ? 0.5 : 1
     return (<View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-          <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-            <ListView
-               refreshControl={ <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />
-            }
-              ref="listView"
-              automaticallyAdjustContentInsets={false}
-              dataSource={this.state.dataSource}
-              removeClippedSubviews={false}
-              renderRow={this.renderRow} />
-          </View>
-            {this.checkPassModal()}
-            {this.alertModal()}
-        </View>);
+
+      <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+
+        <ListView
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />
+          }
+          ref="listView"
+          automaticallyAdjustContentInsets={false}
+          dataSource={this.state.dataSource}
+          removeClippedSubviews={false}
+          renderRow={this.renderRow} />
+
+
+      </View>
+      {listViewProportion != 1 &&
+        this._renderMessage()}
+      {this.checkPassModal()}
+    </View>);
   }
 
-  renderWithMain(){
-     return (<Main
-          drawerState={{
-            open: false,
-            disabled: true,
-          }}
-          navBar={{
-            title: 'My Notifications',
-            visible: true,
-            tint: Skin.main.NAVBAR_TINT,
-            left: {
-              text: 'Back',
-              icon: '',
-              iconStyle: {},
-              textStyle: {},
-              handler: this.props.navigator.pop,
-            },
-          }}
-          bottomMenu={{
-            visible: false,
-          }}
-          navigator={this.props.navigator}
-        >
-          <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-            <ListView
-              ref="listView"
-              automaticallyAdjustContentInsets={false}
-              dataSource={this.state.dataSource}
-              removeClippedSubviews={false}
-              renderRow={this.renderRow} />
-          </View>
-             {this.checkPassModal()}
-             {this.alertModal()}
-        </Main>);
+  renderWithMain() {
+
+    return (<Main
+      drawerState={{
+        open: false,
+        disabled: true,
+      }}
+      navBar={{
+        title: 'My Notifications',
+        visible: true,
+        tint: Skin.main.NAVBAR_TINT,
+        left: {
+          text: 'Back',
+          icon: '',
+          iconStyle: {},
+          textStyle: {},
+          handler: this.props.navigator.pop,
+        },
+      }}
+      bottomMenu={{
+        visible: false,
+      }}
+      navigator={this.props.navigator}
+    >
+      <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+        <ListView
+          ref="listView"
+          automaticallyAdjustContentInsets={false}
+          dataSource={this.state.dataSource}
+          removeClippedSubviews={false}
+          renderRow={this.renderRow} />
+      </View>
+      {this.checkPassModal()}
+      {this.alertModal()}
+    </Main>);
   }
 
   /*
    This method is used to render the componenet with all its element.
    */
   render() {
-    return (this.props.disableMain?this.renderWithoutMain():this.renderWithMain());
+    return (this.props.disableMain ? this.renderWithoutMain() : this.renderWithMain());
   }
 }
 
@@ -947,6 +965,20 @@ const styles = StyleSheet.create({
     padding: 0,
     fontSize: 16,
     backgroundColor: null,
+  },
+  listEmptyMessage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'grey',
+    fontSize: 18,
+    textAlign: 'center'
+
+  },
+  listEmptyView: {
+    flex: 1,
+    alignSelf: 'center',
+    marginBottom: 80,
+
   }
 });
 
