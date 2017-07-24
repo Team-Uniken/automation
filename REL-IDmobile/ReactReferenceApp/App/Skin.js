@@ -19,7 +19,7 @@ const LANGUAGE = 'en'
 
 const BLACK = '#000000'
 const WHITE = '#FFFFFF'
-//////customization changes for NWD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const THEME_COLOR = Config.THEME_COLOR
 const CLIENT_TITLE_TEXT = Config.CLIENT_TITLE_TEXT
 const DASHBOARD_MENU_TITLE = Config.DASHBOARD_MENU_TITLE
