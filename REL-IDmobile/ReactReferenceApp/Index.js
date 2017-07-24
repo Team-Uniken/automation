@@ -53,11 +53,6 @@ import SetPassword from './App/Components/Challenges/SetPassword';              
 //Dashboard
 import Dashboard from './App/Components/Dashboard/dashboard';     //Navigate to respective flavour dashboard
 
-//NWD Dashboard
-import Deals from './App/Components/Dashboard/NWD/Deals';
-import History from './App/Components/Dashboard/NWD/History';
-import Locations from './App/Components/Dashboard/NWD/Locations';
-
 //PostLogin
 import RegisterOptionScene from './App/Components/PostLogin/RegisterOptionsDashboard';  //use for change register option
 
