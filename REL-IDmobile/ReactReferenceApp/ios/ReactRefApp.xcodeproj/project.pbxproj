@@ -34,7 +34,6 @@
 		1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */; };
 		5506A35C1EE150DE00870068 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5506A33B1EE150C000870068 /* libRCTAnimation.a */; };
-		55074FA01EE7F94000BF6DC8 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */; };
 		551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
 		551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		551EE2E31E51C68D00ADAD6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
@@ -45,10 +44,8 @@
 		556268641EEE65E20008AC49 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8427F1EE015B2006364A1 /* libjschelpers.a */; };
 		5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
-		55F31D981F17530200C198C3 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
 		6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
-		657411011F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
-		6584BA5B1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
+		652652B21F25D8560052540B /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 652652B11F25D8560052540B /* libapi-sdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -334,15 +331,13 @@
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		3475BFD97D954F819B1A2E01 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		5506A3341EE150C000870068 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		55074F9B1EE7F22600BF6DC8 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		551EE2DD1E51BAE400ADAD6C /* cbc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cbc.ttf; sourceTree = "<group>"; };
 		551EE2DF1E51BB1200ADAD6C /* cbc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cbc.plist; sourceTree = "<group>"; };
-		558654DF1E12689500B01A6A /* logo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.ttf; sourceTree = "<group>"; };
 		55D17EFC1F0A322800C94FA5 /* Index.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Index.js; path = ../Index.js; sourceTree = "<group>"; };
-		55F31D921F17530200C198C3 /* clientcert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = clientcert.p12; sourceTree = "<group>"; };
 		5A302D3D19354BB9B400DA70 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		6524EF021EAA4A5D00E6E3CB /* account.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = account.ttf; sourceTree = "<group>"; };
+		652652AF1F25D8560052540B /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		652652B11F25D8560052540B /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		65281C2A1D6C34EA00F15ACE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		654B80D11DBE0C620052D415 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -364,13 +359,9 @@
 		656228061CB50BEA00AD7F6C /* RelIDRequestInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelIDRequestInterceptor.h; sourceTree = "<group>"; };
 		656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelIDRequestInterceptor.m; sourceTree = "<group>"; };
 		6567FBCA1CC1122F00AC6A04 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; name = App; path = ../App; sourceTree = "<group>"; };
-		657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libActiveShieldSDK.a; sourceTree = "<group>"; };
 		6582FD571D9524ED0075C15D /* RCTTouchId.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTouchId.xcodeproj; path = "../node_modules/react-native-smart-touch-id/ios/RCTTouchId/RCTTouchId.xcodeproj"; sourceTree = "<group>"; };
 		6582FD601D95256E0075C15D /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		6582FD681D9526890075C15D /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		6584BA531F0D000200587C87 /* ActiveShieldSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveShieldSDK.h; sourceTree = "<group>"; };
-		6584BA541F0D000200587C87 /* bmobi.net.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = bmobi.net.cer; sourceTree = "<group>"; };
-		65D7F7B11E30A3F9009ACC25 /* ubs.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ubs.ttf; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
@@ -386,8 +377,8 @@
 				55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */,
 				5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */,
 				556268641EEE65E20008AC49 /* libjschelpers.a in Frameworks */,
+				652652B21F25D8560052540B /* libapi-sdk.a in Frameworks */,
 				556268621EEE65CB0008AC49 /* libyoga.a in Frameworks */,
-				55074FA01EE7F94000BF6DC8 /* libapi-sdk.a in Frameworks */,
 				555B04CC1EE6BDF2004B7659 /* libAirMaps.a in Frameworks */,
 				555B04931EE67E99004B7659 /* libRCTFBSDK.a in Frameworks */,
 				5506A35C1EE150DE00870068 /* libRCTAnimation.a in Frameworks */,
@@ -400,7 +391,6 @@
 				1A6151BC1E4CDF5B00B3C9B2 /* libRCTActionSheet.a in Frameworks */,
 				1A6151BD1E4CDF5B00B3C9B2 /* FBSDKCoreKit.framework in Frameworks */,
 				1A6151BE1E4CDF5B00B3C9B2 /* libRCTGeolocation.a in Frameworks */,
-				657411011F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				1A6151BF1E4CDF5B00B3C9B2 /* libRCTImage.a in Frameworks */,
 				1A6151C01E4CDF5B00B3C9B2 /* libRCTLinking.a in Frameworks */,
 				1A6151C11E4CDF5B00B3C9B2 /* libRCTNetwork.a in Frameworks */,
@@ -511,31 +501,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		55074F991EE7F22600BF6DC8 /* api-sdk */ = {
-			isa = PBXGroup;
-			children = (
-				55074F9A1EE7F22600BF6DC8 /* include */,
-				55074F9C1EE7F22600BF6DC8 /* libs */,
-			);
-			path = "api-sdk";
-			sourceTree = "<group>";
-		};
-		55074F9A1EE7F22600BF6DC8 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				55074F9B1EE7F22600BF6DC8 /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		55074F9C1EE7F22600BF6DC8 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				55074F9D1EE7F22600BF6DC8 /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
 		5535B19A1EE01D15007AE1B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,6 +540,31 @@
 				55F31D5A1F16063000C198C3 /* libRNFS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		652652AD1F25D8560052540B /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				652652AE1F25D8560052540B /* include */,
+				652652B01F25D8560052540B /* libs */,
+			);
+			path = "api-sdk";
+			sourceTree = "<group>";
+		};
+		652652AE1F25D8560052540B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				652652AF1F25D8560052540B /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		652652B01F25D8560052540B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				652652B11F25D8560052540B /* libapi-sdk.a */,
+			);
+			path = libs;
 			sourceTree = "<group>";
 		};
 		65281C2B1D6C34EA00F15ACE /* Products */ = {
@@ -637,16 +627,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6584BA521F0D000200587C87 /* ActiveShieldSDKLib */ = {
-			isa = PBXGroup;
-			children = (
-				657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */,
-				6584BA531F0D000200587C87 /* ActiveShieldSDK.h */,
-				6584BA541F0D000200587C87 /* bmobi.net.cer */,
-			);
-			path = ActiveShieldSDKLib;
-			sourceTree = "<group>";
-		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -694,19 +674,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				6584BA521F0D000200587C87 /* ActiveShieldSDKLib */,
+				652652AD1F25D8560052540B /* api-sdk */,
 				55D17EFC1F0A322800C94FA5 /* Index.js */,
-				55074F991EE7F22600BF6DC8 /* api-sdk */,
 				6524EF021EAA4A5D00E6E3CB /* account.ttf */,
 				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
 				551EE2DD1E51BAE400ADAD6C /* cbc.ttf */,
-				65D7F7B11E30A3F9009ACC25 /* ubs.ttf */,
-				55F31D921F17530200C198C3 /* clientcert.p12 */,
 				6555DE211DED7AAF0044E5EF /* ReactRefAppDeveloper.entitlements */,
 				1A7F21EE1DBEC10800D90531 /* Frameworks */,
 				654B80D11DBE0C620052D415 /* Bolts.framework */,
 				6582FD681D9526890075C15D /* libstdc++.tbd */,
-				558654DF1E12689500B01A6A /* logo.ttf */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
 				6567FBCA1CC1122F00AC6A04 /* App */,
@@ -762,6 +738,11 @@
 				TargetAttributes = {
 					1A6151AB1E4CDF5B00B3C9B2 = {
 						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -1116,9 +1097,7 @@
 			files = (
 				551EE2E31E51C68D00ADAD6C /* LaunchScreen.xib in Resources */,
 				551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */,
-				55F31D981F17530200C198C3 /* clientcert.p12 in Resources */,
 				551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */,
-				6584BA5B1F0D000200587C87 /* bmobi.net.cer in Resources */,
 				1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */,
 				6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */,
 				1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */,

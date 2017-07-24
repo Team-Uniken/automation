@@ -14,7 +14,6 @@
 #import <React/RCTEventDispatcher.h>
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
-#import "ActiveShieldSDK.h"
 #import <ReactNativeConfig/ReactNativeConfig.h>
 
 RDNA *rdnaObject;
@@ -32,8 +31,6 @@ RDNAIWACreds *rdnaIWACredsObj;
   NSMutableDictionary *jsonDictionary;
   NSMutableDictionary *dictHttpCallbacks;
   int i;
-  ActiveShield *_shield;
-  AppDelegate *delegate;
 }
 @end
 
@@ -65,15 +62,10 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
                    RDNASSLCertificate:(NSString *) sslCertificate
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"clientcert" ofType:@"p12"];
-  NSData *certData = [NSData dataWithContentsOfFile:path];
-  NSString *certString3 = [certData base64EncodedStringWithOptions:2];
-  NSString *certPassword = @"uniken123$";
   RDNASSLCertificate *rdnaSSLlCertificate = nil;
   
   __block int errorID = 0;
   localbridgeDispatcher = _bridge;
-  delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
   if(sslCertificate!=nil){
     
     NSError *error;
@@ -82,118 +74,19 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
       rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
       rdnaSSLlCertificate.p12Certificate = [dictSSLDetails valueForKey:@"data"];
       rdnaSSLlCertificate.password = [dictSSLDetails valueForKey:@"password"];
-
+      
     }
-       }
+  }
   
   
   [self initParams];
   
-  
-
-  if([[ReactNativeConfig envFor:@"BETTERMOBI"] isEqualToString:@"true"]){
-  
-  __block bool retval = YES;
-  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
-
-  _shield = [ActiveShield sharedInstance];
-  [_shield performSecurityCheckWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES) andCompletion:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors) {
-    
-    for (ASSecurityThreat *_threat in discoveredThreats)
-    {
-      switch (_threat.genus)
-      {
-        case ASSecurityThreatCategorySystem:
-          if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
-          {
-            //ok, this device is jailbroken (or in any other way compromised) :(
-            NSString *threatString =@"The device's integrity is compromised";
-            [threatSet addObject:threatString];
-             retval = NO;
-          }
-          break;
-        case ASSecurityThreatCategoryNetwork:
-          //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
-          if (_threat.implicatedNetworks.count)
-          {
-            BMNetworkId *_network = _threat.implicatedNetworks[0];
-            NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
-            [threatSet addObject:threatString];
-            retval = NO;
-          }
-          break;
-        case ASSecurityThreatCategoryApp:
-          if (_threat.implicatedApps.count)
-          {
-            NSString *_badAppBundleID = _threat.implicatedApps[0];
-            if (_threat.species == ASAppSecurityThreatRepackagedApp)
-            {
-              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-            else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
-            {
-              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-                NSString *threatString =@"Your device contains app from unknown resources";
-                [threatSet addObject:threatString];
-                retval = NO;
-              }
-            }
-            else if(_threat.species == ASAppSecurityThreatMaliciousApp)
-            {
-              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-            else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
-              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-                NSString *threatString =@"Your device contains app from unknown resources";
-                [threatSet addObject:threatString];
-                retval = NO;
-              }
-            }
-            else{
-              retval = YES;
-            }
-          }
-          break;
-          
-        default:
-          break;
-      }
-    }
-    if(retval){
-      RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
-      rdnaObject = rdna;
-      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-      callback(@[responseArray]);
-      if (errorID ==0) {
-        [self startBetterMobiMonitoring];
-      }
-    }else{
-      NSMutableString *errorString = [[NSMutableString alloc]init];
-      NSArray *threat = [threatSet allObjects];
-      for (int j =0; j<threat.count; j++) {
-        [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
-      }
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [delegate onDeviceThreat:errorString];
-      });
-    }
-  }];
-  }else{
-      RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
-      rdnaObject = rdna;
-      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-      callback(@[responseArray]);
-      
-    
-  }
+  RDNA *rdna;
+  errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
+  rdnaObject = rdna;
+  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+  callback(@[responseArray]);
 }
 
 RCT_EXPORT_METHOD (getServiceByServiceName:(NSString *)serviceName
@@ -701,12 +594,12 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   }
   
 }
-  
-  
+
+
 RCT_EXPORT_METHOD (exitApp){
-    exit(0);
+  exit(0);
 }
-  
+
 -(NSDictionary*)createJsonHttpResponse:(RDNAHTTPStatus*) status{
   
   NSMutableDictionary *dictStatusJson = [[NSMutableDictionary alloc] init];
@@ -795,7 +688,7 @@ RCT_EXPORT_METHOD (exitApp){
   [defaults setValue:nil forKey:@"sContext"];
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
   //                                                            body:@{@"response":status}];
-    [self sendEventWithName:@"onTerminate" body:@{@"response":status}];
+  [self sendEventWithName:@"onTerminate" body:@{@"response":status}];
   return 0;
 }
 
@@ -1063,101 +956,6 @@ RCT_EXPORT_METHOD (exitApp){
            
            };
   
-}
-
-#pragma mark BetterMobileSDk
-
--(void)startBetterMobiMonitoring{
-
-  ReactRdnaModule __weak *self__ = self;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [_shield addObserverWithCallback:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors)
-     {
-       [self__ _handleDiscoveredThreats:discoveredThreats andErrors:errors];
-     }];
-  });
-    [_shield startMonitoringWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES)];
-}
-
-- (void) _handleDiscoveredThreats:(NSArray<ASSecurityThreat *> *) discoveredThreats andErrors:(NSArray *)errors
-{
-  __block bool retval = YES;
-  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
-  for (ASSecurityThreat *_threat in discoveredThreats)
-  {
-    switch (_threat.genus)
-    {
-      case ASSecurityThreatCategorySystem:
-        if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
-        {
-          //ok, this device is jailbroken (or in any other way compromised) :(
-          NSString *threatString =@"The device's integrity is compromised";
-          [threatSet addObject:threatString];
-          retval = NO;
-        }
-        break;
-      case ASSecurityThreatCategoryNetwork:
-        //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
-        if (_threat.implicatedNetworks.count)
-        {
-          BMNetworkId *_network = _threat.implicatedNetworks[0];
-          NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
-          [threatSet addObject:threatString];
-          retval = NO;
-        }
-        break;
-      case ASSecurityThreatCategoryApp:
-        if (_threat.implicatedApps.count)
-        {
-          NSString *_badAppBundleID = _threat.implicatedApps[0];
-          if (_threat.species == ASAppSecurityThreatRepackagedApp)
-          {
-            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
-            [threatSet addObject:threatString];
-            retval = NO;
-          }
-          else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
-          {
-            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-              NSString *threatString =@"Your device contains app from unknown resources";
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-          }
-          else if(_threat.species == ASAppSecurityThreatMaliciousApp)
-          {
-            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
-            [threatSet addObject:threatString];
-            retval = NO;
-          }
-          else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
-            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-              NSString *threatString =@"Your device contains app from unknown resources";
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-          }
-          else{
-            retval = YES;
-          }
-        }
-        break;
-        
-      default:
-        break;
-    }
-  }
-  if(!retval){
-    NSMutableString *errorString = [[NSMutableString alloc]init];
-    NSArray *threat = [threatSet allObjects];
-    for (int j =0; j<threat.count; j++) {
-      [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [delegate onDeviceThreat:errorString];
-    });
-  }
 }
 
 @end
