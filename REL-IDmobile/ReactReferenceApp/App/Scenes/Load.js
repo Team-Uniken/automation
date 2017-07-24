@@ -142,7 +142,7 @@ class Load extends Component {
     NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
   }
   _handleConnectivityChange(isConnected) {
-       Main.isConnected = isConnected;
+       Main.isConnected = true;
   }
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
@@ -509,10 +509,12 @@ class Load extends Component {
 
     if (currentAppState == 'background') {
       console.log('App State Change background:');
-      if (Config.ENABLE_PAUSE === "true") {
+      if (Config.ENABLE_PAUSE === true) {
+        if(Main.isApiRunning == false){
         ReactRdna.pauseRuntime((response) => {
           if (response) {
             if (response[0].error == 0) {
+              Main.isPaused = true;
               AsyncStorage.setItem("savedContext", response[0].response);
             }
             console.log('Immediate response is ' + response[0].error);
@@ -521,13 +523,16 @@ class Load extends Component {
           }
         });
       }
+      }
     } else if (currentAppState == 'active') {
       console.log('App State Change active:');
       if (Config.ENABLE_PAUSE === "true") {
+        if(Main.isPaused === true){
         AsyncStorage.getItem("savedContext").then((value) => {
           if (value != null) {
             ReactRdna.resumeRuntime(value, null, (response) => {
               if (response) {
+                Main.isPaused = false;
                 console.log('Immediate response is ' + response[0].error);
               } else {
                 console.log('No response.');
@@ -535,6 +540,7 @@ class Load extends Component {
             })
           }
         }).done();
+        }
       }
     } else if (currentAppState === 'inactive') {
       console.log('App State Change Inactive');
