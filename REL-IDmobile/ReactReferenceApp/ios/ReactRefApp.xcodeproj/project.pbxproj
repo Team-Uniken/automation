@@ -1576,6 +1576,9 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = F78S5YW242;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -1586,9 +1589,19 @@
 					};
 					1A6151AB1E4CDF5B00B3C9B2 = {
 						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					5528FF9A1F21F73C00560B76 = {
 						DevelopmentTeam = F78S5YW242;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					552BB7971E1BA0B90009F274 = {
 						DevelopmentTeam = F78S5YW242;
@@ -2652,8 +2665,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.cbc.verify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
-				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
+				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
+				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
 			};
 			name = Debug;
 		};
@@ -2702,8 +2715,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.cbc.verify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
-				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
+				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
+				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
 			};
 			name = Release;
 		};
