@@ -177,7 +177,7 @@ const LOADSPEED = 0.3; // 0.3
 module.exports.icon = {
   temporary: '\ue8b5',
   permanent: '\ue000',
-  hamburger: '\ue5d2',
+  hamburger: '\ue3c7',
   user: '\ue7ff',
   settings: "\u2699",
   logo: LOGO,

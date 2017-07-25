@@ -110,7 +110,7 @@ export default class Notification extends Component {
             titleTint={'#146cc0'}
             right={''}
             left={{
-              icon: Skin.icon.user,
+              icon: Skin.icon.hamburger,
               iconStyle: {
                 fontSize: 35,
                 paddingLeft: 17,
