@@ -174,7 +174,7 @@ class History extends Component {
           titleTint={Skin.main.TITLE_COLOR}
           tintColor={'#ffffff'}
           left={{
-            icon: Skin.icon.user,
+            icon: Skin.icon.hamburger,
             iconStyle: {
               fontSize: 35,
               paddingLeft: 17,

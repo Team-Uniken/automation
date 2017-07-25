@@ -167,7 +167,7 @@ class HomePage extends Component {
             visible: true,
             navBarLine:false,
             left: {
-            icon: Skin.icon.user,
+            icon: Skin.icon.hamburger,
             iconStyle: {
             fontSize: 35,
             paddingLeft: 17,
