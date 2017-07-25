@@ -861,8 +861,7 @@ export default class NotificationMgmtScene extends Component {
       <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
         <ListView
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)}
-            title='Feching Notifications...'/>
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)}/>
           }
           ref="listView"
           automaticallyAdjustContentInsets={false}
