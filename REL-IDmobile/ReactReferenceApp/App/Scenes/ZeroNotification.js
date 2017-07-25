@@ -595,15 +595,17 @@ export default class NotificationMgmtScene extends Component {
         console.log(response);
 
         if (response[0].error !== 0) {
+          this.setState({ refreshing: false });
           console.log('----- ----- response is not 0');
           if (NotificationObtianedResponse !== null && NotificationObtianedResponse !== undefined) {
             // If error occurred reload last response
             this.onGetNotificationsDetails(NotificationObtianedResponse);
           }
+                                 
         }
       });
     } else {
-
+      this.setState({ refreshing: false });
       Alert.alert(
         '',
         'Please check your internet connection',
@@ -859,7 +861,8 @@ export default class NotificationMgmtScene extends Component {
       <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
         <ListView
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)}
+            title='Feching Notifications...'/>
           }
           ref="listView"
           automaticallyAdjustContentInsets={false}
