@@ -27,16 +27,16 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1598996407073130</string>
+				<string>fb1226276024148338</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>4.8.8</string>
 	<key>FacebookAppID</key>
-	<string>1598996407073130</string>
+	<string>1226276024148338</string>
 	<key>FacebookDisplayName</key>
-	<string>CBC</string>
+	<string>CBC Verify</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
