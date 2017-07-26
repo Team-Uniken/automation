@@ -237,6 +237,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-spinkit')
     compile project(':react-native-fs')
     compile project(':react-native-maps')
     compile project(':react-native-config')

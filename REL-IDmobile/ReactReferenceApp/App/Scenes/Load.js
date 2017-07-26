@@ -18,7 +18,7 @@ import Config from 'react-native-config';
 import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
 var PushNotification = require('react-native-push-notification');
-import {Text, DeviceEventEmitter, View, NetInfo,Animated, InteractionManager, TouchableHighlight, AppState, Image, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
+import {Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import {Navigator} from 'react-native-deprecated-custom-components'
 
@@ -35,6 +35,7 @@ import Web from './Web';
 import {ClientBasedConfig} from '../Components/Utils/LocalConfig';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
+const Spinner = require('react-native-spinkit');
 
 
 
@@ -87,16 +88,24 @@ class Load extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      r_opac_val: new Animated.Value(0),
-      i_opac_val: new Animated.Value(0),
-      d_opac_val: new Animated.Value(0),
-      relid_text_opac: new Animated.Value(0),
-      rid_top: new Animated.Value(150),
-      r_text_opac: new Animated.Value(0),
-      i_text_opac: new Animated.Value(0),
-      d_text_opac: new Animated.Value(0),
-      relid_opac_val: new Animated.Value(0),
+      // r_opac_val: new Animated.Value(0),
+      // i_opac_val: new Animated.Value(0),
+      // d_opac_val: new Animated.Value(0),
+      // relid_text_opac: new Animated.Value(0),
+      // rid_top: new Animated.Value(150),
+      // r_text_opac: new Animated.Value(0),
+      // i_text_opac: new Animated.Value(0),
+      // d_text_opac: new Animated.Value(0),
+      // relid_opac_val: new Animated.Value(0),
+      steps: new Animated.Value(0),
+      value: 0,
+      spinnerIsVisible: true,
+      spinnerSize: 50,
+      spinnnerType: 'ThreeBounce',
+      animatedTextValue: new Animated.Value(0),
     };
+
+    this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity', 'Verifying user identity', 'Setting up secure channel'];
   }
   openRoute(route) {
     this.props.navigator.push(route);
@@ -123,10 +132,23 @@ class Load extends Component {
       }
     });
   }
- /*
-  This is life cycle method of the react native component.
-  This method is called when the component will start to load
-  */
+
+  animate() {
+    this.state.steps.addListener(({value}) => this.setState({ value: this.textRange[parseInt(value, 10)] }));
+    Animated.sequence([
+
+      Animated.timing(this.state.steps, {
+        toValue: 5,
+        duration: 6000
+      }),
+
+    ]).start();
+  }
+
+  /*
+   This is life cycle method of the react native component.
+   This method is called when the component will start to load
+   */
   componentWillMount() {
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
@@ -141,9 +163,11 @@ class Load extends Component {
     NetInfo.isConnected.addEventListener('change', this._handleConnectivityChange.bind());
     NetInfo.isConnected.fetch().done(this._handleConnectivityChange);
   }
+
   _handleConnectivityChange(isConnected) {
-       Main.isConnected = isConnected;
+    Main.isConnected = isConnected;
   }
+
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
@@ -192,10 +216,10 @@ class Load extends Component {
   }
 
 
- /*
-    This is life cycle method of the react native component.
-    This method is called when the component is Mounted/Loaded.
-  */
+  /*
+     This is life cycle method of the react native component.
+     This method is called when the component is Mounted/Loaded.
+   */
   componentDidMount() {
     Obj = this;
     //push messgage adnorid configure starts
@@ -271,9 +295,9 @@ class Load extends Component {
     }
 
 
-     onPauseCompletedSubscription = onPauseCompletedModuleEvt.addListener('onPauseCompleted', function (e) {
-//    onPauseCompletedSubscription.remove();
-//    onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
+    onPauseCompletedSubscription = onPauseCompletedModuleEvt.addListener('onPauseCompleted', function (e) {
+      //    onPauseCompletedSubscription.remove();
+      //    onPauseCompletedListener = DeviceEventEmitter.addListener('onPauseCompleted', function (e) {
       Events.trigger("showLoader", true);
       appalive = false;
       console.log('On Pause Completed:');
@@ -286,10 +310,10 @@ class Load extends Component {
       }
     });
 
-    
-     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
-//    onResumeCompletedSubscription.remove();
-//    onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function (e) {
+
+    onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
+      //    onResumeCompletedSubscription.remove();
+      //    onResumeCompletedListener = DeviceEventEmitter.addListener('onResumeCompleted', function (e) {
       Events.trigger("hideLoader", true);
       console.log('On Resume Completed:');
       console.log('immediate response is' + e.response);
@@ -324,18 +348,18 @@ class Load extends Component {
       }
     });
 
-    
-    if(onInitializeSubscription){
+
+    if (onInitializeSubscription) {
       onInitializeSubscription.remove();
       onInitializeSubscription = null;
     }
 
-    
-     onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
-        if(onInitializeSubscription){
+
+    onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
+      if (onInitializeSubscription) {
         onInitializeSubscription.remove();
         onInitializeSubscription = null;
-        }
+      }
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
       console.log('immediate response is' + e.response);
@@ -350,13 +374,20 @@ class Load extends Component {
           RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {
           });
         }
-        Obj.onInitCompleted();
+ 
+        InteractionManager.runAfterInteractions(() => {
+           isRunAfterInteractions = true;
+           Obj.onInitCompleted();
+        });
         console.log('--------- onInitializeCompleted initCount ' + initCount);
       } else {
         initCount = initError;
         initErrorMsg = 'Unable to connect to server, please check the connection profile. Error code ' + responseJson.errCode;
         console.log('--------- onInitializeCompleted initCount ' + initCount);
-        Obj.onInitCompleted();
+         InteractionManager.runAfterInteractions(() => {
+           isRunAfterInteractions = true;
+           Obj.onInitCompleted();
+        });
       }
     });
 
@@ -376,9 +407,8 @@ class Load extends Component {
           for (let j = 0; j < relidArray.length; j++) {
             if (RelIdName === relidArray[j].Name) {
               profileArray[i].RelId = relidArray[j].RelId;
-              profileArray[i].imported="true"
-              profileArray[i].sslEnable=false
-
+              profileArray[i].imported = "true"
+              profileArray[i].sslEnable = false
             }
           }
         }
@@ -400,7 +430,7 @@ class Load extends Component {
         AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
           currentProfile = JSON.parse(currentProfile);
           console.log(currentProfile);
-          if (currentProfile != null && currentProfile!=undefined) {
+          if (currentProfile != null && currentProfile != undefined) {
             this.doInitialize();
           } else {
 
@@ -409,100 +439,92 @@ class Load extends Component {
 
               AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
                 this.doInitialize();
-
               });
             });
           }
         });
-
       }
-
     });
 
-    Animated.sequence([
-      Animated.parallel([
-        Animated.timing(this.state.r_opac_val, {
-          toValue: 1,
-          duration: 2000 * Skin.spd,
-          delay: 1000 * Skin.spd,
-        }),
-        Animated.timing(this.state.r_text_opac, {
-          toValue: 1,
-          duration: 2000 * Skin.spd,
-          delay: 1000 * Skin.spd,
-        }),
-      ]),
-      Animated.parallel([
-        Animated.timing(this.state.r_text_opac, {
-          toValue: 0,
-          duration: 500 * Skin.spd,
-          delay: 1000 * Skin.spd,
-        }),
-        Animated.timing(this.state.i_opac_val, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-        Animated.timing(this.state.i_text_opac, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-      ]),
-      Animated.parallel([
-        Animated.timing(this.state.i_text_opac, {
-          toValue: 0,
-          duration: 500 * Skin.spd,
-          delay: 1000 * Skin.spd,
-        }),
-        Animated.timing(this.state.d_opac_val, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-        Animated.timing(this.state.d_text_opac, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-      ]),
-      Animated.parallel([
-        Animated.timing(this.state.d_text_opac, {
-          toValue: 0,
-          duration: 500 * Skin.spd,
-          delay: 1000 * Skin.spd,
-        }),
-        Animated.timing(this.state.relid_opac_val, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-        Animated.timing(this.state.relid_text_opac, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-      ]),
-      Animated.parallel([
-        Animated.timing(this.state.relid_text_opac, {
-          toValue: 1,
-          duration: 500 * Skin.spd,
-          delay: 1500 * Skin.spd,
-        }),
-      ])
-    ]).start();
-
-
-    InteractionManager.runAfterInteractions(() => {
-      isRunAfterInteractions = true;
-      Obj.onInitCompleted();
-    });
-
+    // Animated.sequence([
+    //   Animated.parallel([
+    //     Animated.timing(this.state.r_opac_val, {
+    //       toValue: 1,
+    //       duration: 2000 * Skin.spd,
+    //       delay: 1000 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.r_text_opac, {
+    //       toValue: 1,
+    //       duration: 2000 * Skin.spd,
+    //       delay: 1000 * Skin.spd,
+    //     }),
+    //   ]),
+    //   Animated.parallel([
+    //     Animated.timing(this.state.r_text_opac, {
+    //       toValue: 0,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1000 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.i_opac_val, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.i_text_opac, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //   ]),
+    //   Animated.parallel([
+    //     Animated.timing(this.state.i_text_opac, {
+    //       toValue: 0,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1000 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.d_opac_val, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.d_text_opac, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //   ]),
+    //   Animated.parallel([
+    //     Animated.timing(this.state.d_text_opac, {
+    //       toValue: 0,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1000 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.relid_opac_val, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //     Animated.timing(this.state.relid_text_opac, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //   ]),
+    //   Animated.parallel([
+    //     Animated.timing(this.state.relid_text_opac, {
+    //       toValue: 1,
+    //       duration: 500 * Skin.spd,
+    //       delay: 1500 * Skin.spd,
+    //     }),
+    //   ])
+    // ]).start();
+    
+    this.animate();
   }
-   /*
-    This is life cycle method of the react native component.
-    This method is called when app state get change like pause, resume
-  */
+  /*
+   This is life cycle method of the react native component.
+   This method is called when app state get change like pause, resume
+ */
   _handleAppStateChange(currentAppState) {
     console.log('_handleAppStateChange');
     console.log(currentAppState);
@@ -510,36 +532,36 @@ class Load extends Component {
     if (currentAppState == 'background') {
       console.log('App State Change background:');
       if (Config.ENABLE_PAUSE === true) {
-        if(Main.isApiRunning == false){
-        ReactRdna.pauseRuntime((response) => {
-          if (response) {
-            if (response[0].error == 0) {
-              Main.isPaused = true;
-              AsyncStorage.setItem("savedContext", response[0].response);
+        if (Main.isApiRunning == false) {
+          ReactRdna.pauseRuntime((response) => {
+            if (response) {
+              if (response[0].error == 0) {
+                Main.isPaused = true;
+                AsyncStorage.setItem("savedContext", response[0].response);
+              }
+              console.log('Immediate response is ' + response[0].error);
+            } else {
+              console.log('No response.');
             }
-            console.log('Immediate response is ' + response[0].error);
-          } else {
-            console.log('No response.');
-          }
-        });
-      }
+          });
+        }
       }
     } else if (currentAppState == 'active') {
       console.log('App State Change active:');
       if (Config.ENABLE_PAUSE === "true") {
-        if(Main.isPaused === true){
-        AsyncStorage.getItem("savedContext").then((value) => {
-          if (value != null) {
-            ReactRdna.resumeRuntime(value, null, (response) => {
-              if (response) {
-                Main.isPaused = false;
-                console.log('Immediate response is ' + response[0].error);
-              } else {
-                console.log('No response.');
-              }
-            })
-          }
-        }).done();
+        if (Main.isPaused === true) {
+          AsyncStorage.getItem("savedContext").then((value) => {
+            if (value != null) {
+              ReactRdna.resumeRuntime(value, null, (response) => {
+                if (response) {
+                  Main.isPaused = false;
+                  console.log('Immediate response is ' + response[0].error);
+                } else {
+                  console.log('No response.');
+                }
+              })
+            }
+          }).done();
         }
       }
     } else if (currentAppState === 'inactive') {
@@ -547,7 +569,7 @@ class Load extends Component {
     }
   }
 
-//Perform RDNA.Initialize().
+  //Perform RDNA.Initialize().
   doInitialize() {
     initSuc = false;
     isRunAfterInteractions = false;
@@ -601,7 +623,8 @@ class Load extends Component {
       }
     }
   }
-//perform screen navigation.
+
+  //perform screen navigation.
   doNavigation() {
     console.log('doNavigation:');
     if (Main.gotNotification === true) {
@@ -665,17 +688,35 @@ class Load extends Component {
       }).done();
     }
   }
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
+
+    var currentTextValue = this.state.animatedTextValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1]
+    });
+
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
+        <Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR}/>
+
+        <Text style={{
+          position: 'absolute',
+          bottom: 100,
+          alignSelf: 'center',
+          color: Skin.main.TITLE_COLOR,
+          fontSize: 18,
+          zIndex: 5,
+        }}>{this.state.value}</Text>
 
         <Image
           source={welcome}
-          style={styles.bg} />
+          style={styles.bg}>
+        </Image>
+
         <Setting
           style={{
             position: 'absolute',
@@ -687,11 +728,13 @@ class Load extends Component {
             justifyContent: 'center',
             borderTopRightRadius: 20,
           }}
-            onPress={() => {this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
-            if(onInitializeSubscription){
-            onInitializeSubscription.remove();
-            onInitializeSubscription = null;
-            } }}/>
+          onPress={() => {
+            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+            if (onInitializeSubscription) {
+              onInitializeSubscription.remove();
+              onInitializeSubscription = null;
+            }
+          } }/>
         <Version/>
       </View>
     );
@@ -701,6 +744,7 @@ var styles = StyleSheet.create({
   bg: {
     height: Skin.SCREEN_HEIGHT,
     width: Skin.SCREEN_WIDTH,
+    alignItems: 'center'
   },
   container: {
     flex: 1,
