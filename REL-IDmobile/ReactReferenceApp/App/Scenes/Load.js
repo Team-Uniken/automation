@@ -519,7 +519,8 @@ class Load extends Component {
     //   ])
     // ]).start();
     
-    this.animate();
+    if(Config.ENABLESTARTUPANIMATION)
+      this.animate();
   }
   /*
    This is life cycle method of the react native component.
