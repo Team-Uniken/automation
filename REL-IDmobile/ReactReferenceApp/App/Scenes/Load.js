@@ -688,6 +688,22 @@ class Load extends Component {
       }).done();
     }
   }
+  
+  /*
+      This method used to render starup animation
+   */
+  
+  renderStartUpAnimation(){
+    return([<Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR}/>,<Text style={{
+           position: 'absolute',
+           bottom: 100,
+           alignSelf: 'center',
+           color: Skin.main.TITLE_COLOR,
+           fontSize: 18,
+           zIndex: 5,
+           }}>{this.state.value}</Text>]);
+  }
+  
   /*
     This method is used to render the componenet with all its element.
   */
@@ -701,16 +717,8 @@ class Load extends Component {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
-        <Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR}/>
-
-        <Text style={{
-          position: 'absolute',
-          bottom: 100,
-          alignSelf: 'center',
-          color: Skin.main.TITLE_COLOR,
-          fontSize: 18,
-          zIndex: 5,
-        }}>{this.state.value}</Text>
+        
+            {Config.ENABLESTARTUPANIMATION === 'true' && this.renderStartUpAnimation()}
 
         <Image
           source={welcome}

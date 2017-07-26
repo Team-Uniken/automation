@@ -12,6 +12,7 @@
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		0AA91AB5DBF04D6798DED797 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7058B14FFEDA44BCAE135904 /* libRNSpinkit.a */; };
 		12403A1C3EFE469CB94DAC97 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F434F749DC140C5BCDC414D /* libRCTFBSDK.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -184,6 +185,9 @@
 		558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		558C99B01E7BF7A30002C56F /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
+		559A9DD41F2896E000D8F3FD /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
+		559A9DD51F28A74B00D8F3FD /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
+		559A9DD61F28A7CA00D8F3FD /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
 		55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */; };
 		55C9249F1EB3661800DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		55C924B11EB3661900DA8083 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
@@ -489,6 +493,20 @@
 			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
 			remoteInfo = React;
 		};
+		559A9DCF1F28966900D8F3FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D42CB3511B2538DE00FD0AE2;
+			remoteInfo = RNSpinkit;
+		};
+		559A9DD11F28966900D8F3FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 641194871EC9FD4A00D4FC03;
+			remoteInfo = "RNSpinkit-tvOS";
+		};
 		55B842501EE015B2006364A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -729,6 +747,7 @@
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
 		096B4050EB024090BB820E85 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ReactRefApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -796,6 +815,7 @@
 		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesUBS.xcassets; sourceTree = "<group>"; };
 		65D7F7B11E30A3F9009ACC25 /* ubs.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ubs.ttf; sourceTree = "<group>"; };
 		6F434F749DC140C5BCDC414D /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
+		7058B14FFEDA44BCAE135904 /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
@@ -809,6 +829,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				559A9DD51F28A74B00D8F3FD /* libRNFS.a in Frameworks */,
 				5562686D1EEE6B530008AC49 /* libcxxreact.a in Frameworks */,
 				55074FA41EE81E2700BF6DC8 /* libAirMaps.a in Frameworks */,
 				55074FA31EE81CA700BF6DC8 /* libRCTFBSDK.a in Frameworks */,
@@ -842,6 +863,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				559A9DD41F2896E000D8F3FD /* libRNSpinkit.a in Frameworks */,
 				55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */,
 				5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */,
 				556268641EEE65E20008AC49 /* libjschelpers.a in Frameworks */,
@@ -877,6 +899,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				559A9DD61F28A7CA00D8F3FD /* libRNSpinkit.a in Frameworks */,
 				5528FFA41F21F73C00560B76 /* libRNFS.a in Frameworks */,
 				5528FFA51F21F73C00560B76 /* libReact.a in Frameworks */,
 				5528FFA61F21F73C00560B76 /* libjschelpers.a in Frameworks */,
@@ -1033,6 +1056,7 @@
 				CEF10CBBB34C44C2812CF73A /* libReactNativeConfig.a in Frameworks */,
 				716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */,
 				E5DD38A2A63D4833B8BF5929 /* libRNFS.a in Frameworks */,
+				0AA91AB5DBF04D6798DED797 /* libRNSpinkit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,6 +1245,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		559A9DAA1F28966900D8F3FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				559A9DD01F28966900D8F3FD /* libRNSpinkit.a */,
+				559A9DD21F28966900D8F3FD /* libRNSpinkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		55F31D341F16063000C198C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,6 +1372,7 @@
 				AD1D57AD9D504CB281F071FF /* ReactNativeConfig.xcodeproj */,
 				0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */,
 				F1B7F1E3E86E4C64AE9B5626 /* RNFS.xcodeproj */,
+				0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1737,6 +1771,10 @@
 					ProjectRef = F1B7F1E3E86E4C64AE9B5626 /* RNFS.xcodeproj */;
 				},
 				{
+					ProductGroup = 559A9DAA1F28966900D8F3FD /* Products */;
+					ProjectRef = 0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */;
+				},
+				{
 					ProductGroup = 6582FD611D95256E0075C15D /* Products */;
 					ProjectRef = 6582FD601D95256E0075C15D /* TouchID.xcodeproj */;
 				},
@@ -1852,6 +1890,20 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 555B04A91EE6AC4B004B7659 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		559A9DD01F28966900D8F3FD /* libRNSpinkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSpinkit.a;
+			remoteRef = 559A9DCF1F28966900D8F3FD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		559A9DD21F28966900D8F3FD /* libRNSpinkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSpinkit.a;
+			remoteRef = 559A9DD11F28966900D8F3FD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		55B842511EE015B2006364A1 /* libRCTImage-tvOS.a */ = {
@@ -2450,6 +2502,7 @@
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"$(PROJECT_DIR)/ActiveShieldSDKLib",
 					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2498,6 +2551,7 @@
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"$(PROJECT_DIR)/ActiveShieldSDKLib",
+					"\"$(SRCROOT)/ReactRefApp\"",
 					"\"$(SRCROOT)/ReactRefApp\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
