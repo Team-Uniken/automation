@@ -1373,6 +1373,7 @@ const notification = StyleSheet.create({
      height:56,*/
     flex: 1,
     backgroundColor: APPROVE_BUTTON_COLOR,
+    margin:2,
   },
   denybutton: {
     /* width:(SCREEN_WIDTH-32)/3,
@@ -1380,6 +1381,7 @@ const notification = StyleSheet.create({
      height:56,*/
     flex: 1,
     backgroundColor: REJECT_BUTTON_COLOR,
+    margin:2,
   },
   fraudbutton: {
     /* width:(SCREEN_WIDTH-32)/3,
@@ -1387,18 +1389,21 @@ const notification = StyleSheet.create({
      height:56,*/
     flex: 1,
     backgroundColor: FRAUD_BUTTON_COLOR,
+    margin:2,
   },
   approvebutton: {
     /* width:(SCREEN_WIDTH-32)/2,
      height:56, */
     flex: 1,
     backgroundColor: APPROVE_BUTTON_COLOR,
+    margin:2,
   },
   rejectbutton: {
     /*width:(SCREEN_WIDTH-32)/2,
     height:56, */
     flex: 1,
     backgroundColor: REJECT_BUTTON_COLOR,
+    margin:2,
   },
 });
 
