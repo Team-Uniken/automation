@@ -165,7 +165,11 @@ class Load extends Component {
   }
 
   _handleConnectivityChange(isConnected) {
-    Main.isConnected = true;
+  
+    if (__DEV__) {
+      Main.isConnected = true;
+    }else
+      Main.isConnected = isConnected;
   }
 
   _onNotification(notification) {
