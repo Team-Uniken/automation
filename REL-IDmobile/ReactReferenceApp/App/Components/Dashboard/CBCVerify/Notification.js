@@ -11,6 +11,7 @@ import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
 import ZeroNotification from '../../../Scenes/ZeroNotification';
+import PageTitle from '../../view/pagetitle.js';
 /*
   CALLED
 */
@@ -102,23 +103,9 @@ export default class Notification extends Component {
           active: 1,
         }}>
             
-          <NavBar
-            tintColor={'#fff'}
-            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-            statusBarLight={'light-content'}
-            title={'My Notifications'}
-            titleTint={'#146cc0'}
-            right={''}
-            left={{
-              icon: Skin.icon.hamburger,
-              iconStyle: {
-                fontSize: 35,
-                paddingLeft: 17,
-                width: 100,
-                color: '#146cc0',
-              },
-              handler: this.triggerDrawer
-            }} />
+    
+             <PageTitle title={'My Notifications'}
+                handler={this.triggerDrawer}/>
             
         <View style={{
                        flex: 1,

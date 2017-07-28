@@ -739,7 +739,28 @@ const navbar = module.exports.navbar = {
     color: TITLE_TEXT_COLOR,
     style: {
       fontSize: 18,
+    },
+    titleStyle: {
+       color: LOGO_COLOR,
+      textAlign: 'center',
+      fontSize: 30,
+      //backgroundColor: '#50ae3c',
+      fontFamily: LOGO_FONT,
+    },
+    titleText:{
+      color:'white',
+      paddingTop:5,
+      paddingBottom:5,
+      backgroundColor: '#146cc0',
+      alignSelf:'center',
+      textAlign:'center',
+      fontSize: 18,
+      letterSpacing: 0.5,
+      fontWeight: '500',
+      width:SCREEN_WIDTH,
+      height:30,
     }
+
   },
   base: {
     height: 57

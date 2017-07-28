@@ -6,6 +6,7 @@ import ControlPanel from '../ControlPanel';
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'
 import NavBar from '../../view/navbar.js'
+import PageTitle from '../../view/pagetitle.js';
 import { FormattedCurrency } from 'react-native-globalize';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -168,22 +169,8 @@ class History extends Component {
         bottomMenu={this.props.menuState}
         navigator={this.props.navigator}
         defaultNav={false}>
-        <NavBar
-          title={'History'}
-          right={''}
-          titleTint={Skin.main.TITLE_COLOR}
-          tintColor={'#ffffff'}
-          left={{
-            icon: Skin.icon.hamburger,
-            iconStyle: {
-              fontSize: 35,
-              paddingLeft: 17,
-              width: 100,
-              color: Skin.navbar.icon.color,
-            },
-            handler: this.triggerDrawer
-          }} />
-        <View style={{ height: 1, backgroundColor: Skin.main.TITLE_COLOR }}/>
+        <PageTitle title={'History'}
+         handler={this.triggerDrawer}/>
         <View style={Skin.layout3.split.bottom}>
           <ListView
             contentContainerStyle={{ paddingTop: 12 }}

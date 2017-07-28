@@ -13,6 +13,7 @@ import React, { Component, } from 'react';
  Required for this js
  */
 import {View, Text, } from 'react-native'
+import Config from 'react-native-config'
 
 
 /*
@@ -20,6 +21,9 @@ import {View, Text, } from 'react-native'
  */
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
+import PageTitle from '../Components/view/pagetitle';
+
+let isPageTitle = Config.ENABLEPAGETITLE;
 
 
 export default class ComingSoonScene extends Component {
@@ -27,6 +31,14 @@ export default class ComingSoonScene extends Component {
         super(props);
         console.log(this.props);
     }
+
+     /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.props.navigator.pop}/>);
+  }
     /*
   This method is used to render the componenet with all its element.
 */
@@ -37,6 +49,7 @@ export default class ComingSoonScene extends Component {
                     open: false,
                     disabled: true,
                 }}
+                defaultNav = {isPageTitle?false:true}
                 navBar={{
                     title: this.props.title || 'Coming Soon',
                     visible: true,
@@ -55,6 +68,7 @@ export default class ComingSoonScene extends Component {
                 }}
                 navigator={this.props.navigator}
                 >
+                 { isPageTitle && this.renderPageTitle(this.props.title || 'Coming Soon')}
                 <View
                     style={{
                         flex: 1,

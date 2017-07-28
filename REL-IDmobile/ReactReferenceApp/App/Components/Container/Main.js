@@ -305,6 +305,7 @@ This method is called when the component will start to load
       return (
         [<NavigationBar
           title={this.props.navBar.title}
+          titleStyle={this.props.titleStyle}
           titleTint={Skin.main.TITLE_COLOR}
           tintColor={Skin.main.NAVBAR_BG}
           statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}

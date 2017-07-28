@@ -9,6 +9,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+import Config from 'react-native-config';
 
 /*
  Required for this js
@@ -27,6 +28,7 @@ import Skin from '../../Skin';
 import MainActivation from '../Container/MainActivation';
 import Main from '../Container/Main';
 import Util from "../Utils/Util";
+import PageTitle from '../view/pagetitle';
 
 
 
@@ -44,6 +46,7 @@ import Margin from '../view/margin';
  */
 let subscriptions;
 let onGetRegistredDeviceDetailsSubscription;
+let isPageTitle = Config.ENABLEPAGETITLE;
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -839,6 +842,14 @@ This method is called when the component will start to load
     }
   }
 
+  /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.props.navigator.pop}/>);
+  }
+
   render() {
     if (this.state.url) {
       var indents = [];
@@ -957,6 +968,7 @@ This method is called when the component will start to load
           open: false,
           disabled: true,
         }}
+        defaultNav = {isPageTitle?false:true}
         navBar={{
           title: 'Profile & Settings',
           visible: true,
@@ -974,6 +986,7 @@ This method is called when the component will start to load
         }}
         navigator={this.props.navigator}
         >
+         { isPageTitle && this.renderPageTitle('Profile & Settings')}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
             {this.renderIf(this.state.showOptions,

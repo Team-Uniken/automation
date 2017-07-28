@@ -12,6 +12,7 @@ import ListItem from '../../ListItem';
 import ControlPanel from '../ControlPanel';
 import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
+import PageTitle from '../../view/pagetitle.js';
 import Events from 'react-native-simple-events';
 
 
@@ -33,23 +34,9 @@ export default class DepositsScene extends Component {
             visible: true,
             active: 3,
             }}>
-            <NavBar
-            tintColor={'#fff'}
-            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-            statusBarLight={'light-content'}
-            title={'Deposits'}
-            titleTint={'#146cc0'}
-            right={''}
-            left={{
-            icon: Skin.icon.hamburger,
-            iconStyle: {
-            fontSize: 35,
-            paddingLeft: 17,
-            width: 100,
-            color: '#146cc0',
-            },
-            handler: this.triggerDrawer
-            }} />
+            
+            <PageTitle title={'Deposits'}
+            handler={this.triggerDrawer}/>
         <View
           style={{
             flex:1,
@@ -59,6 +46,7 @@ export default class DepositsScene extends Component {
             justifyContent: 'center',
           }}
         >
+        
           <Text
             style={{
               textAlign: 'center',
@@ -73,6 +61,7 @@ export default class DepositsScene extends Component {
             Photo Deposit Feature Coming Soon!
           </Text>
         </View>
+       
       </Main>
     );
   }

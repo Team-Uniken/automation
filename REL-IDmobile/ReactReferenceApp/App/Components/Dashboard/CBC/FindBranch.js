@@ -16,6 +16,7 @@ import Skin from '../../../Skin';
 import ControlPanel from '../ControlPanel';
 import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
+import PageTitle from '../../view/pagetitle.js';
 import Events from 'react-native-simple-events';
 
 
@@ -229,25 +230,12 @@ class FindBranchScene extends Component {
                     visible: true,
                     active: 4,
                 }}>
-                <NavBar
-                    tintColor={'#fff'}
-                    statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-                    statusBarLight={'light-content'}
-                    title={'Find Branch'}
-                    titleTint={'#146cc0'}
-                    right={''}
-                    left={{
-                        icon: Skin.icon.hamburger,
-                        iconStyle: {
-                            fontSize: 35,
-                            paddingLeft: 17,
-                            width: 100,
-                            color: '#146cc0',
-                        },
-                        handler: this.triggerDrawer
-                    }} />
-
+               <PageTitle title={'Find Branch'}
+               handler={this.triggerDrawer}/>
+                   
+          
                 <View style={[{ flex: 1 }, { backgroundColor: Skin.colors.BACK_GRAY }]}>
+                    
                     <MapView
                         {...this.props}
                         ref={ref => { this.map = ref; } }
@@ -264,6 +252,7 @@ class FindBranchScene extends Component {
                     </MapView>
 
                 </View>
+                
             </Main>
         );
     }

@@ -7,6 +7,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+import Config from 'react-native-config';
 
 /*
  Required for this js
@@ -17,6 +18,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
+import PageTitle from '../Components/view/pagetitle';
 
 /*
  Use in this js
@@ -41,6 +43,7 @@ let obj;
 var notification = [];
 let onUpdateNotificationSubscription;
 let isAdditionalAuthSupported = { pass: false, erpass: false };
+let isPageTitle = Config.ENABLEPAGETITLE;
 
 /*
  *Sort notification row based on timestamp.
@@ -751,6 +754,14 @@ export default class NotificationMgmtScene extends Component {
     )
   }
 
+  /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.props.navigator.pop}/>);
+  }
+
 
   renderListViewData(s) {
     const data = [];
@@ -884,6 +895,7 @@ export default class NotificationMgmtScene extends Component {
         open: false,
         disabled: true,
       }}
+      defaultNav = {isPageTitle?false:true}
       navBar={{
         title: 'My Notifications',
         visible: true,
@@ -901,6 +913,7 @@ export default class NotificationMgmtScene extends Component {
       }}
       navigator={this.props.navigator}
     >
+    { isPageTitle && this.renderPageTitle('My Notifications')}
       <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
         <ListView
           ref="listView"

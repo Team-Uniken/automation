@@ -6,6 +6,7 @@ import ControlPanel from '../ControlPanel';
 import ListItem from '../../../Components/ListItem';
 import Events from 'react-native-simple-events'
 import NavBar from '../../view/navbar.js'
+import PageTitle from '../../view/pagetitle.js';
 
 
 
@@ -148,22 +149,10 @@ class Locations extends Component {
         bottomMenu={{ visible: true, active: 3, }}
         navigator={this.props.navigator}
         defaultNav={false}>
-        <NavBar
-          title={'Locations'}
-          titleTint={Skin.main.TITLE_COLOR}
-          tintColor={'#ffffff'}
-          right={''}
-          left={{
-            icon: Skin.icon.hamburger,
-            iconStyle: {
-              fontSize: 35,
-              paddingLeft: 17,
-              width: 100,
-              color: Skin.navbar.icon.color,
-            },
-            handler: this.triggerDrawer
-          }} />
+       PageTitle title={'Locations'}
+       handler={this.triggerDrawer}/>
         <View style={{ height: 1, backgroundColor: Skin.main.TITLE_COLOR }}/>
+        <PageTitle title={'Locations'}/>
         <View style={{
           flex: 1,
           backgroundColor: Skin.colors.BACK_GRAY

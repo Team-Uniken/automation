@@ -17,6 +17,7 @@ import Modal from 'react-native-simple-modal';
 import {View, StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, TouchableOpacity, Alert, } from 'react-native'
 import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import Config from 'react-native-config';
 
 
 
@@ -26,6 +27,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Main from '../Components/Container/Main';
 import Constants from '../Components/Utils/Constants';
 import Skin from '../Skin';
+import PageTitle from '../Components/view/pagetitle';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
@@ -42,6 +44,7 @@ let devicesList;
 let deviceHolderList;
 let devicesResponse;
 const FAKE_BOOK_DATA = [];
+let isPageTitle = Config.ENABLEPAGETITLE;
 const styles = StyleSheet.create({
   backTextWhite: {
     color: '#FFF'
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontWeight: 'bold',
     marginTop:5,
-    color:'grey',
+    color:'#5c6068',
   }
 });
 
@@ -511,6 +514,15 @@ export default class DeviceMgmtScene extends Component {
       </View>
     );
   }
+
+  /*
+    render pagetitle
+  */
+
+  renderPageTitle(){
+        return(<PageTitle title={'Connected Devices'}
+        handler={this.props.navigator.pop}/>);
+  }
   /*
      This method is used to render the componenet with all its element.
    */
@@ -521,6 +533,8 @@ export default class DeviceMgmtScene extends Component {
           open: false,
           disabled: true,
         }}
+            
+        defaultNav = {isPageTitle?false:true}
         navBar={{
           title: 'Connected Devices',
           visible: true,
@@ -538,6 +552,8 @@ export default class DeviceMgmtScene extends Component {
         }}
         navigator={this.props.navigator}
         >
+
+         { isPageTitle && this.renderPageTitle()}
         
         <View style={styles.listViewWrap}>
           <Text style={styles.msg}>Swipe to delete/edit devices</Text>

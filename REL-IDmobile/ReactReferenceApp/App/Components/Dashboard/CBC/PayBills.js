@@ -12,6 +12,7 @@ import ListItem from '../../ListItem';
 
 import ControlPanel from '../ControlPanel';
 import NavBar from '../../view/navbar.js';
+import PageTitle from '../../view/pagetitle.js';
 import Events from 'react-native-simple-events';
 
 import ListSectionHeader from '../../ListSectionHeader';
@@ -222,23 +223,8 @@ export default class PayBillsScene extends Component {
             visible: true,
             active: 2,
             }}>
-            <NavBar
-            tintColor={'#fff'}
-            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-            statusBarLight={'light-content'}
-            title={'Pay Bills'}
-            titleTint={'#146cc0'}
-            right={''}
-            left={{
-            icon: Skin.icon.hamburger,
-            iconStyle: {
-            fontSize: 35,
-            paddingLeft: 17,
-            width: 100,
-            color: '#146cc0',
-            },
-            handler: this.triggerDrawer
-            }} />
+            <PageTitle title={'Pay Bills'}
+                        handler={this.triggerDrawer}/>
         <View style={{ flex: 1, backgroundColor:Skin.main.BACKGROUND_COLOR }}>
           <ListView
             dataSource={this.state.dataSource}

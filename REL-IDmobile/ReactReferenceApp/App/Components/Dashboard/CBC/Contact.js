@@ -10,6 +10,7 @@ import ListItem from '../../ListItem';
 import ControlPanel from '../ControlPanel';
 import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
+import PageTitle from '../../view/pagetitle.js';
 import Events from 'react-native-simple-events';
 /*
   CALLED
@@ -55,26 +56,9 @@ export default class ContactScene extends Component {
             visible: true,
             active: 5,
             }}>
-            <NavBar
-            tintColor={'#fff'}
-            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-            statusBarLight={'light-content'}
-            title={'Contact'}
-            titleTint={'#146cc0'}
-            right={''}
-            left={{
-            icon: Skin.icon.hamburger,
-            iconStyle: {
-            fontSize: 35,
-            paddingLeft: 17,
-            width: 100,
-            color: '#146cc0',
-            },
-            handler: this.triggerDrawer
-            }} />
-            
-            
         
+          <PageTitle title={'Contact'}
+          handler={this.triggerDrawer}/>  
         <View
           style={{
             flex: 1,
@@ -85,7 +69,7 @@ export default class ContactScene extends Component {
             padding: 25,
           }}
         >
-            
+          
           <TouchableOpacity
             onPress={() => this.handleClick({ id: 'ComingSoon' ,title:'Chat'})}
             style={[styles.buttonwrap, { backgroundColor: '#666666' }]}

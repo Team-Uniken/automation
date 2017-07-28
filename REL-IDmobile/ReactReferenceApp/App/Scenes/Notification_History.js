@@ -8,6 +8,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+import Config from 'react-native-config';
 
 /*
  Required for this js
@@ -16,7 +17,6 @@ import DatePicker from 'react-native-datepicker'
 import ModalPicker from 'react-native-modal-picker'
 import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
-import Config from 'react-native-config'
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
 
@@ -28,6 +28,7 @@ import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import MainActivation from '../Components/Container/MainActivation';
+import PageTitle from '../Components/view/pagetitle';
 
 
 /*
@@ -44,6 +45,7 @@ var dateFormat = require('dateformat');
 var now = new Date();
 
 var Obj;
+let isPageTitle = Config.ENABLEPAGETITLE;
 
 var HISTORY = {
   "session_id": "4XF8VD5VTNUV0AJJ7S229OPAVF0W8I6XANS55ZJQPO2BW3F8X1A21AE8AEC16AD4B06AC2A9D7D0259D033EE84FED3EAE9A9838FED365B5AABB04",
@@ -443,6 +445,13 @@ class Notifications_History extends Component {
   }
 
   /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.props.navigator.pop}/>);
+  }
+  /*
      This method is used to render the componenet with all its element.
    */
   render() {
@@ -454,6 +463,7 @@ class Notifications_History extends Component {
             open: false,
             disabled: true,
           }}
+          defaultNav = {isPageTitle?false:true}
           navBar={{
             title: 'Notification History',
             visible: true,
@@ -471,7 +481,7 @@ class Notifications_History extends Component {
           }}
           navigator={this.props.navigator}
           >
-
+          { isPageTitle && this.renderPageTitle('Notification History')}
           <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
 
             <ListView

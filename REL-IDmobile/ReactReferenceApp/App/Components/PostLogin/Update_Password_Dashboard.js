@@ -9,6 +9,7 @@
  */
 import ReactNative from 'react-native';
 import React, { Component, } from 'react';
+import Config from 'react-native-config';
 
 /*
  Required for this js
@@ -25,6 +26,7 @@ import Skin from '../../Skin';
 import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
 import Util from "../Utils/Util";
+import PageTitle from '../view/pagetitle';
 
 /*
  Custom View
@@ -39,6 +41,7 @@ import Title from '../view/title';
  */
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var obj;
+let isPageTitle = Config.ENABLEPAGETITLE;
 export default class UpdatePasswordSet extends Component {
   constructor(props) {
     super(props);
@@ -228,6 +231,13 @@ export default class UpdatePasswordSet extends Component {
     }
   }
 
+  /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.close}/>);
+  }
 
   /*
      This method is used to render the componenet with all its element.
@@ -240,6 +250,7 @@ export default class UpdatePasswordSet extends Component {
           open: false,
           disabled: true,
         }}
+        defaultNav = {isPageTitle?false:true}
         navBar={{
           title: 'Change Password',
           visible: true,
@@ -257,6 +268,7 @@ export default class UpdatePasswordSet extends Component {
         }}
         navigator={this.props.navigator}
         >
+         { isPageTitle && this.renderPageTitle('Change Password')}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
             <View style={[Skin.layout1.wrap, ]}>

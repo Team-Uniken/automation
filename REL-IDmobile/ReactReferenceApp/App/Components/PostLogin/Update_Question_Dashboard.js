@@ -9,6 +9,7 @@
  */
 import ReactNative from 'react-native';
 import React, { Component, } from 'react';
+import Config from 'react-native-config';
 
 /*
  Required for this js
@@ -24,6 +25,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Skin from '../../Skin';
 import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
+import PageTitle from '../view/pagetitle';
 
 /*
  Custom View
@@ -38,6 +40,7 @@ import Title from '../view/title';
  */
 
 let obj;
+let isPageTitle = Config.ENABLEPAGETITLE;
 
 
 export default class UpdateQuestionSet extends Component {
@@ -174,6 +177,14 @@ export default class UpdateQuestionSet extends Component {
   }
 
   /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.close}/>);
+  }
+
+  /*
        This method is used to render the componenet with all its element.
      */
   render() {
@@ -191,6 +202,7 @@ export default class UpdateQuestionSet extends Component {
           open: false,
           disabled: true,
         }}
+        defaultNav = {isPageTitle?false:true}
         navBar={{
           title: 'Change Secret',
           visible: true,
@@ -205,11 +217,10 @@ export default class UpdateQuestionSet extends Component {
         }}
         bottomMenu={{
           visible: false,
-        }}
-            
-            
+        }}    
         navigator={this.props.navigator}
         >
+         { isPageTitle && this.renderPageTitle('Change Secret')}
         <View style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
           <MainActivation>
             <View

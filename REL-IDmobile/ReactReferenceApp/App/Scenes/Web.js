@@ -22,6 +22,7 @@ import Config from 'react-native-config'
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import WebViewAndroid from '../android_native_modules/nativewebview';
+import PageTitle from '../Components/view/pagetitle';
 import {Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 /*
@@ -32,6 +33,7 @@ const DEFAULT_URL = 'http://www.google.com';
 
 let onResumeCompletedSubscription = null;
 const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
+let isPageTitle = Config.ENABLEPAGETITLE;
 
 export default class Web extends Component {
 
@@ -173,6 +175,13 @@ export default class Web extends Component {
       }
     }
   }
+   /*
+    render pagetitle
+  */
+  renderPageTitle(pageTitle){
+        return(<PageTitle title={pageTitle}
+        handler={this.close}/>);
+  }
   /*
     This method is used to render the componenet with all its element.
   */
@@ -183,6 +192,7 @@ export default class Web extends Component {
           open: false,
           disabled: true,
         }}
+        defaultNav = {isPageTitle?false:true}
         navBar={{
           title: this.props.title,
           visible: true,
@@ -200,6 +210,7 @@ export default class Web extends Component {
         }}
         navigator={this.props.navigator}
         >
+        { isPageTitle && this.renderPageTitle(this.props.title)}
         <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
           {this.getWebView() }
           {this.renderBottomBar() }
