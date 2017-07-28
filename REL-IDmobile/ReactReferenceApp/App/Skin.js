@@ -749,8 +749,7 @@ const navbar = module.exports.navbar = {
     },
     titleText:{
       color:'white',
-      paddingTop:5,
-      paddingBottom:5,
+      textAlignVertical: 'center',
       backgroundColor: '#146cc0',
       alignSelf:'center',
       textAlign:'center',
@@ -759,6 +758,7 @@ const navbar = module.exports.navbar = {
       fontWeight: '500',
       width:SCREEN_WIDTH,
       height:30,
+     
     }
 
   },

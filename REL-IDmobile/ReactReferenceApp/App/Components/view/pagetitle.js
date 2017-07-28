@@ -6,8 +6,8 @@
 /*
  *ALWAYS NEED
  */
-import React, { Component, } from 'react';
-import ReactNative from 'react-native';
+import React, { Component} from 'react';
+import ReactNative, {Platform} from 'react-native';
 import NavBar from './navbar.js';
 
 /*
@@ -26,7 +26,7 @@ class PageTitle extends Component {
   render() {
     return (
    
-     <View style={{height:107}}>
+            <View style={{height:Platform.OS==='android'?87:107}}>
            <NavBar
             tintColor={'#fff'}
             statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
@@ -40,12 +40,14 @@ class PageTitle extends Component {
               iconStyle: {
                 fontSize: 35,
                 paddingLeft: 17,
-                width: 100,
+                width: 40,
                 color: '#146cc0',
               },
               handler:this.props.handler
             }} />
-        <Text style={Skin.navbar.title.titleText}>
+        <Text style={Skin.navbar.title.titleText}
+            adjustsFontSizeToFit={true}
+            numberOfLines={1}>
           {this.props.title}
               </Text>
      </View>
