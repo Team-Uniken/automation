@@ -744,6 +744,7 @@ const navbar = module.exports.navbar = {
        color: LOGO_COLOR,
       textAlign: 'center',
       fontSize: 30,
+      fontWeight: 'normal',
       //backgroundColor: '#50ae3c',
       fontFamily: LOGO_FONT,
     },
