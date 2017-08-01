@@ -113,11 +113,13 @@ var HISTORY = {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+     paddingTop: 16,
+     height:Skin.SCREEN_HEIGHT-107
   },
   list: {
     marginTop: 16,
+  
   },
   date: {
     height: 48,
@@ -485,10 +487,10 @@ class Notifications_History extends Component {
           <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
 
             <ListView
-              style={styles.list}
               dataSource={this.state.dataSource}
               renderRow={this.notification_history}
               renderSectionHeader={this.renderSectionHeader}
+              stickySectionHeadersEnabled = {false}
               />
           </View>
 

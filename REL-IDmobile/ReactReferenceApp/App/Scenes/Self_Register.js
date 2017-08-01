@@ -15,6 +15,7 @@ import Events from 'react-native-simple-events';
 import Modal from 'react-native-simple-modal';
 import hash from 'hash.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {Keyboard, StatusBar, StyleSheet, Text, View, BackHandler, TouchableHighlight, Platform, TouchableOpacity, WebView, TextInput, Slider, ScrollView, InteractionManager, Alert, AsyncStorage, Linking, NetInfo, } from 'react-native';
 
@@ -133,6 +134,7 @@ class Register extends Component {
 
   //use to clear twoFactorAuthMachine navigator
   close() {
+    dismissKeyboard();
     Events.trigger('closeStateMachine');
   }
   //check entered email is valid or not

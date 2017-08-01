@@ -372,6 +372,7 @@ class ControlPanel extends Component {
         
         if(this.props.dashboardScreenName === 'DashboardNotification'){
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
+            Events.trigger('toggleDrawer',true);
             var allScreens = this.props.navigator.getCurrentRoutes(0);
             for (var i = 0; i < allScreens.length; i++) {
               var screen = allScreens[i];

@@ -271,12 +271,16 @@ This method is called when the component will start to load
    * Toggles the drawer open and closed. Is passed down the chain to navbar.
    * @return {null}
    */
-  toggleDrawer() {
+  toggleDrawer(close) {
+    if(close){
+      this.drawer.close();
+    }else{
     console.log('in Main toggleDrawer')
     if (this.state.drawerState.open) {
       this.drawer.close();
     } else {
       this.drawer.open();
+    }
     }
   }
 

@@ -806,6 +806,7 @@ This method is called when the component will start to load
     } else {
       this.saveDefaultLoginPrefs();
       this.doNavigateDashBoard();
+      Events.trigger('updateSetting', "");
     }
   }
   // navigate to dashboard
