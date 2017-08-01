@@ -520,6 +520,7 @@ export default class NotificationMgmtScene extends Component {
   componentWillMount() {
     obj = this;
     Events.on('showNotification', 'showNotification', this.showNotification);
+    Events.on('updateSetting', 'updateSetting', this.updateSetting);
     if (this.props.url != null) {
       NotificationObtianedResponse = this.props.url.data;
       this.onGetNotificationsDetails(NotificationObtianedResponse);
@@ -533,27 +534,8 @@ export default class NotificationMgmtScene extends Component {
       obj.onUpdateNotification.bind(obj));
 
     //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
-    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-      if (value != null && value != undefined) {
-        try {
-          value = JSON.parse(value);
-          if (value.RPasswd) {
-            isAdditionalAuthSupported.pass = true;
-          } else {
-            isAdditionalAuthSupported.pass = false;
-          }
-
-          if (value.ERPasswd && value.ERPasswd !== "empty") {
-            isAdditionalAuthSupported.erpass = true;
-          } else {
-            isAdditionalAuthSupported.erpass = false;
-          }
-        } catch (e) { isAdditionalAuthSupported.erpass = false; isAdditionalAuthSupported.pass = false; }
-      } else {
-        isAdditionalAuthSupported.erpass = false;
-        isAdditionalAuthSupported.pass = false;
-      }
-    });
+    this.checkAdditionalAuthSupported();
+  
   }
   /*
    This is life cycle method of the react native component.
@@ -582,6 +564,7 @@ export default class NotificationMgmtScene extends Component {
   showNotification(args) {
     obj.onGetNotificationsDetails(args);
   }
+
   /*
    method to check is their any notification.
    */
@@ -721,6 +704,43 @@ export default class NotificationMgmtScene extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
+  }
+
+  /*
+    //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
+  */
+
+  checkAdditionalAuthSupported()
+  {
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      if (value != null && value != undefined) {
+        try {
+          value = JSON.parse(value);
+          if (value.RPasswd) {
+            isAdditionalAuthSupported.pass = true;
+          } else {
+            isAdditionalAuthSupported.pass = false;
+          }
+
+          if (value.ERPasswd && value.ERPasswd !== "empty") {
+            isAdditionalAuthSupported.erpass = true;
+          } else {
+            isAdditionalAuthSupported.erpass = false;
+          }
+        } catch (e) { isAdditionalAuthSupported.erpass = false; isAdditionalAuthSupported.pass = false; }
+      } else {
+        isAdditionalAuthSupported.erpass = false;
+        isAdditionalAuthSupported.pass = false;
+      }
+    });
+  }
+
+  /*
+      This method call when Profile and Setting changed
+   */
+  updateSetting(e)
+  {
+    obj.checkAdditionalAuthSupported();
   }
 
   showAlertModal(msg) {
