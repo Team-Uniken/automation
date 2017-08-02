@@ -156,8 +156,8 @@ android {
             signingConfig signingConfigs.releaseSandP
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -166,8 +166,8 @@ android {
             signingConfig signingConfigs.releaseNwd
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -176,8 +176,8 @@ android {
             signingConfig signingConfigs.releaseStock
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         ubs{
@@ -185,8 +185,8 @@ android {
             signingConfig signingConfigs.releaseUbs
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbc{
@@ -194,8 +194,8 @@ android {
             signingConfig signingConfigs.releaseCbc
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbcverify{
@@ -203,8 +203,8 @@ android {
             signingConfig signingConfigs.releaseCbcverify
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         relidmobile{
@@ -212,8 +212,8 @@ android {
             signingConfig signingConfigs.releaseRelidmobile
             minSdkVersion 16
             targetSdkVersion 25
-            versionCode 490
-            versionName "4.9.0"
+            versionCode 492
+            versionName "4.9.2"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
