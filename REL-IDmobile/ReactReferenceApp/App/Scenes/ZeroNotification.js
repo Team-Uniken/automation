@@ -543,6 +543,7 @@ export default class NotificationMgmtScene extends Component {
    */
   componentWillUnmount() {
     Events.rm('showNotification', 'showNotification');
+    Events.rm('updateSetting', 'updateSetting');
     if (onUpdateNotificationSubscription) {
       onUpdateNotificationSubscription.remove();
       onUpdateNotificationSubscription = null;

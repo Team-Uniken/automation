@@ -223,6 +223,7 @@ export default class ForgatePassword extends Component {
               // else {
               //   console.log('immediate response is' + response[0].response);
               // }
+              Events.trigger('updateSetting', "");
             }).done();
           } catch (e) { }
         }
