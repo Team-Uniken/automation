@@ -155,29 +155,29 @@ class Register extends Component {
   validateAndProcced() {
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
       && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
-      this.showMessage("Error", "All fields are mandatory", false);
+      this.showMessage("", "All fields are mandatory", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
-      this.showMessage("Error", "Enter valid Email ID", false);
+      this.showMessage("", "Enter valid Email ID", false);
       return;
     } else if (!(this.state.email === this.state.confirmEmail)) {
-      this.showMessage("Error", "Entered emails do not match", false);
+      this.showMessage("", "Entered emails do not match", false);
       return;
     } else if (this.state.phoneNumber.length < 10 ) {
-      this.showMessage("Error", "Enter a valid 10-digit phone number", false);
+      this.showMessage("", "Enter a valid 10-digit phone number", false);
       return;
     } else if (this.state.value < 90) {
-      this.showMessage("Error", "Please move the slider to the right.", false);
+      this.showMessage("", "Please move the slider to the right.", false);
       return;
     } else if (this.state.check) {
       if (Main.isConnected) {
         this.registerUser();
       } else {
-        this.showMessage("Error", "Please check your internet connection", false);
+        this.showMessage("", "Please check your internet connection", false);
       }
 
     } else {
-      this.showMessage("Error", "Accept Terms and Conditions", false);
+      this.showMessage("", "Please Accept Terms and Conditions", false);
     }
   }
 
