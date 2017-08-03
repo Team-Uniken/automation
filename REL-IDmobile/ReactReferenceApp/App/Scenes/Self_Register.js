@@ -163,6 +163,9 @@ class Register extends Component {
     } else if (!(this.state.email === this.state.confirmEmail)) {
       this.showMessage("Error", "Entered emails do not match", false);
       return;
+    } else if (this.state.phoneNumber.length < 10 ) {
+      this.showMessage("Error", "Enter a valid 10-digit phone number", false);
+      return;
     } else if (this.state.value < 90) {
       this.showMessage("Error", "Please move the slider to the right.", false);
       return;

@@ -192,6 +192,7 @@ module.exports.icon = {
   store: '\ue563',
   gift: '\ue8b1',
   timer: '\ue425',
+  bell:'\ue7f4'
 };
 
 // Titles
@@ -2221,6 +2222,10 @@ const collection = {
     ICON_FONT,
     CORE_FONT,
     ACC_FONT,
+    LOGO_FONT,
+  },
+  color:{
+    LOGO_COLOR,
   },
   LOAD_SCREEN_IMAGE,
   STATUS_BAR_TINT_COLOUR,
