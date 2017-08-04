@@ -368,8 +368,11 @@ This method is called when the component will start to load
           this.setState({ modalInitValue: "Select Default Login" });
         });
       }
+
       this.setState({ touchid: false });
-      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
+      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value)=>{
+         Events.trigger('updateSetting', "");    
+      });
     }
   }
   //call when we cllck on pattern option
@@ -383,9 +386,11 @@ This method is called when the component will start to load
           this.setState({ modalInitValue: "Select Default Login" });
         });
       }
-
+      
       this.setState({ pattern: false });
-      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
+      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value)=>{
+        Events.trigger('updateSetting', "");
+      });
     }
   }
 
@@ -428,6 +433,7 @@ This method is called when the component will start to load
   // callback of pattern screen
   onSetPattern(data) {
     this.props.navigator.pop();
+    Events.trigger('updateSetting', "");
     this.setState({ pattern: true });
   }
 
@@ -745,6 +751,7 @@ This method is called when the component will start to load
             // });
 
             Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {
+              Events.trigger('updateSetting', "");
               obj.setState({ touchid: true });
             }).done();
 
