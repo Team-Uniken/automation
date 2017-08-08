@@ -49,6 +49,8 @@ export default class Notification extends Component {
   constructor(props) {
     super(props);
     self = this;
+    this.state={badgeValue:0};
+     this.updateBadge = this.updateBadge.bind(this);
   }
 
   /**
@@ -57,8 +59,14 @@ export default class Notification extends Component {
    */
   componentDidMount() {
     //this.getMyNotifications();
+      Events.on('updateBadge', 'updateBadge', this.updateBadge);
   }
 
+  updateBadge(value){
+    this.state.refresh = true;
+    badgeValue = value;
+    this.setState({badgeValue:value});
+  }
 
   getMyNotifications() {
 
@@ -105,7 +113,8 @@ export default class Notification extends Component {
             
     
              <PageTitle title={'My Notifications'}
-                handler={this.triggerDrawer}/>
+                handler={this.triggerDrawer}
+                badgeValue={this.state.badgeValue}/>
             
         <View style={{
                        flex: 1,

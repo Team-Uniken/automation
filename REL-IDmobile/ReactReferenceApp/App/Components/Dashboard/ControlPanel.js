@@ -11,15 +11,15 @@ import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 
 
-import {ClientBasedConfig} from '../Utils/LocalConfig';
+import { ClientBasedConfig } from '../Utils/LocalConfig';
 
 /*
  Required for this js
  */
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
-import {Navigator} from 'react-native-deprecated-custom-components'
-import {View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter} from 'react-native';
+import { Navigator } from 'react-native-deprecated-custom-components'
+import { View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Communications from 'react-native-communications';
 
@@ -86,6 +86,8 @@ class ControlPanel extends Component {
     this.onGetConfig = this.onGetConfig.bind(this);
     this.testConfig = this.testConfig.bind(this);
     //this.getMyNotifications();
+    Events.on('getConfiguration', 'getConfiguration', this.getConfig);
+
   }
 
   showLogOffAlert() {
@@ -101,24 +103,28 @@ class ControlPanel extends Component {
       ]
     );
   }
-  
+
   showTerminateAlert() {
-    
+
     Alert.alert(
-                '',
-                'Do you want to Exit',
-                [
-                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
-                 {
-                 text: 'OK', onPress: this.terminate
-                 },
-                 ]
-                );
+      '',
+      'Do you want to Exit',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
+        {
+          text: 'OK', onPress: this.terminate
+        },
+      ]
+    );
   }
 
+
+  componentWillMount() {
+    //Events.on('getConfiguration', 'getConfiguration', this.getConfig);
+  }
   componentDidMount() {
     Events.on('logOff', 'logOff', this.logOff);
-     //This getAllChallenges call was only for updating menu options
+    //This getAllChallenges call was only for updating menu options
     this.getAllChallenges();
     constant.USER_SESSION = "YES";
     AsyncStorage.setItem("isPwdSet", "empty");
@@ -131,7 +137,12 @@ class ControlPanel extends Component {
     }
 
     onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
-                                                                                       this.onGetNotifications.bind(this));
+      this.onGetNotifications.bind(this));
+  }
+
+  componentWillUnmount() {
+    Events.rm('cancelOperation', 'cancelOperation');
+    Events.rm('logOff', 'logOff');
   }
 
   logOff() {
@@ -139,8 +150,8 @@ class ControlPanel extends Component {
       onLogOffSubscription.remove();
       onLogOffSubscription = null;
     }
-//    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
-    if(Main.isConnected){
+    //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    if (Main.isConnected) {
       onLogOffSubscription = onLogOffModuleEvt.addListener('onLogOff', this.onLogOff.bind(this));
       ReactRdna.logOff(Main.dnaUserName, (response) => {
         if (response) {
@@ -150,12 +161,12 @@ class ControlPanel extends Component {
         }
       });
     }
-    else{
+    else {
       Alert.alert(
         '',
         'Please check your internet connection',
         [
-          { text: 'OK', onPress: () => {}}
+          { text: 'OK', onPress: () => { } }
         ]
       );
     }
@@ -183,91 +194,95 @@ class ControlPanel extends Component {
       alert('Failed to Log-Off with Error ' + responseJson.errCode);
     }
   }
-  
-  
-  terminate(){
+
+
+  terminate() {
     if (onTerminateSubscription) {
       onTerminateSubscription.remove();
       onTerminateSubscription = null;
     }
     //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
-    if(Main.isConnected){
+    if (Main.isConnected) {
       onTerminateSubscription = onTerminateModuleEvt.addListener('onTerminate', this.onTerminate);
       ReactRdna.terminate((response) => {
-                       if (response) {
-                       console.log('immediate response is' + response[0].error);
-                       } else {
-                       console.log('immediate response is' + response[0].error);
-                       }
-                       });
+        if (response) {
+          console.log('immediate response is' + response[0].error);
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+      });
     }
-    else{
+    else {
       Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK', onPress: () => {}}
-                   ]
-                  );
-    }
-  }
-  
-  getConfig(){
-    
-    if (onGetConfigSubscription) {
-      onGetConfigSubscription.remove();
-      onGetConfigSubscription = null;
-    }
-    //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
-    if(Main.isConnected){
-      onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
-      ReactRdna.getConfig(JSON.stringify({userid:''}), (response) => {
-                          if (response) {
-                          console.log('immediate response is' + response[0].error);
-                          } else {
-                          console.log('immediate response is' + response[0].error);
-                          }
-                          });
-         }
-    else{
-      Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK', onPress: () => {}}
-                   ]
-                  );
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => { } }
+        ]
+      );
     }
   }
 
-  testConfig(){
-    
+  getConfig(e) {
+
     if (onGetConfigSubscription) {
       onGetConfigSubscription.remove();
       onGetConfigSubscription = null;
     }
     //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
-    if(Main.isConnected){
+    if (Main.isConnected) {
+      Events.trigger('showLoader', true);
       onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
-      ReactRdna.testConfig(JSON.stringify({userid:''}), (response) => {
-                          if (response) {
-                          console.log('immediate response is' + response[0].error);
-                          } else {
-                          console.log('immediate response is' + response[0].error);
-                          }
-                          });
-         }
-    else{
+      ReactRdna.getConfig(JSON.stringify({ chlng: 'all' }), (response) => {
+        if (response) {
+          console.log('immediate response is' + response[0].error);
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+        if (response[0].error != 0) {
+          Events.trigger('hideLoader', true);
+        }
+      });
+    }
+    else {
       Alert.alert(
-                  '',
-                  'Please check your internet connection',
-                  [
-                   { text: 'OK', onPress: () => {}}
-                   ]
-                  );
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => { } }
+        ]
+      );
     }
   }
-  
+
+  testConfig() {
+
+    if (onGetConfigSubscription) {
+      onGetConfigSubscription.remove();
+      onGetConfigSubscription = null;
+    }
+    //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
+    if (Main.isConnected) {
+      onGetConfigSubscription = onGetConfigModuleEvt.addListener('onConfigReceived', this.onGetConfig);
+      ReactRdna.testConfig(JSON.stringify({ userid: '' }), (response) => {
+        if (response) {
+          console.log('immediate response is' + response[0].error);
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+      });
+    }
+    else {
+      Alert.alert(
+        '',
+        'Please check your internet connection',
+        [
+          { text: 'OK', onPress: () => { } }
+        ]
+      );
+    }
+  }
+
   onTerminate(e) {
     if (onTerminateSubscription) {
       onTerminateSubscription.remove();
@@ -281,8 +296,9 @@ class ControlPanel extends Component {
       alert('Failed to exit with Error ' + responseJson.errCode);
     }
   }
-  
+
   onGetConfig(e) {
+    Events.trigger('hideLoader', true);
     if (onGetConfigSubscription) {
       onGetConfigSubscription.remove();
       onGetConfigSubscription = null;
@@ -290,18 +306,15 @@ class ControlPanel extends Component {
     console.log('immediate response is' + e.response);
     var responseJson = JSON.parse(e.response);
     if (responseJson.errCode == 0) {
-      alert(e.response);
+      //if (Config.GETCONFIG)
+       // alert(e.response);
+      Events.trigger('onGetConfig', responseJson.pArgs.response.ResponseData);
     } else {
       alert('Failed to get config with Error ' + responseJson.errCode);
     }
   }
-  
-  
 
-  componentWillUnmount() {
-    Events.rm('cancelOperation', 'cancelOperation');
-    Events.rm('logOff', 'logOff');
-  }
+
 
   cancelOperation(args) {
     Obj.props.toggleDrawer();
@@ -317,12 +330,12 @@ class ControlPanel extends Component {
   }
 
   onGetPostLoginChallenges(status) {
-    
+
     if (onGetPostLoginChallengesSubscription) {
       onGetPostLoginChallengesSubscription.remove();
       onGetPostLoginChallengesSubscription = null;
     }
-    
+
     Events.trigger('hideLoader', true);
     const res = JSON.parse(status.response);
     console.log(res);
@@ -358,21 +371,22 @@ class ControlPanel extends Component {
 
   onGetNotifications(e) {
     console.log('----- onGetNotifications');
-    
-//    if (onGetNotificationsSubscription) {
-//      onGetNotificationsSubscription.remove();
-//      onGetNotificationsSubscription = null;
-//    }
+
+    //    if (onGetNotificationsSubscription) {
+    //      onGetNotificationsSubscription.remove();
+    //      onGetNotificationsSubscription = null;
+    //    }
     // NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
     console.log(res);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-        
-        if(this.props.dashboardScreenName === 'DashboardNotification'){
+
+        Events.trigger('updateBadge', res.pArgs.response.ResponseData.notifications.length)
+        if (this.props.dashboardScreenName === 'DashboardNotification') {
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
-            Events.trigger('toggleDrawer',true);
+            Events.trigger('toggleDrawer', true);
             var allScreens = this.props.navigator.getCurrentRoutes(0);
             for (var i = 0; i < allScreens.length; i++) {
               var screen = allScreens[i];
@@ -384,32 +398,32 @@ class ControlPanel extends Component {
                 return;
               }
             }
-           
-          }else{
-             Events.trigger('showNotification', e);
+
+          } else {
+            Events.trigger('showNotification', e);
           }
-          
-          
-        }else{
-          
-        if (res.pArgs.response.ResponseData.notifications.length > 0) {
-          var allScreens = this.props.navigator.getCurrentRoutes(0);
-          for (var i = 0; i < allScreens.length; i++) {
-            var screen = allScreens[i];
-            if (screen.id == 'NotificationMgmt') {
-              var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
-              mySelectedRoute.url = { "data": e };
-              Events.trigger('showNotification', e);
-              this.props.navigator.popToRoute(mySelectedRoute);
-              return;
+
+
+        } else {
+
+          if (res.pArgs.response.ResponseData.notifications.length > 0) {
+            var allScreens = this.props.navigator.getCurrentRoutes(0);
+            for (var i = 0; i < allScreens.length; i++) {
+              var screen = allScreens[i];
+              if (screen.id == 'NotificationMgmt') {
+                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+                mySelectedRoute.url = { "data": e };
+                Events.trigger('showNotification', e);
+                this.props.navigator.popToRoute(mySelectedRoute);
+                return;
+              }
             }
+            InteractionManager.runAfterInteractions(() => {
+              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
+            });
+          } else if (this.isNotificationScreenPresent() == 1) {
+            Events.trigger('showNotification', e);
           }
-          InteractionManager.runAfterInteractions(() => {
-            this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
-          });
-        } else if (this.isNotificationScreenPresent() == 1) {
-          Events.trigger('showNotification', e);
-        }
         }
       } else {
         if (res.pArgs.response.StatusMsg == 'User not active or present') {
@@ -479,16 +493,16 @@ class ControlPanel extends Component {
       onGetPostLoginChallengesSubscription = null;
     }
 
-//    eventGetPostLoginChallenges = DeviceEventEmitter.addListener(
-//      'onGetPostLoginChallenges',
-//      this.onGetPostLoginChallenges.bind(this)
-//    );
-    
+    //    eventGetPostLoginChallenges = DeviceEventEmitter.addListener(
+    //      'onGetPostLoginChallenges',
+    //      this.onGetPostLoginChallenges.bind(this)
+    //    );
+
     onGetPostLoginChallengesSubscription = onGetPostLoginChallengesModuleEvt.addListener('onGetPostLoginChallenges',
-                                                                                       this.onGetPostLoginChallenges.bind(this));
+      this.onGetPostLoginChallenges.bind(this));
     challengeName = challengeToBeUpdated;
     console.log("onGetPostLoginChallenges ----- show loader");
-//    Events.trigger('showLoader', true);
+    //    Events.trigger('showLoader', true);
     console.log('----- Main.dnaUserName ' + Main.dnaUserName);
     AsyncStorage.getItem('userId').then((value) => {
       ReactRdna.getPostLoginChallenges(value, useCaseName, (response) => {
@@ -554,15 +568,15 @@ class ControlPanel extends Component {
         onGetAllChallengeStatusSubscription = null;
       }
 
-//      onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-//        'onGetAllChallengeStatus',
-//        this.onGetAllChallengeStatus.bind(this)
-//      );
+      //      onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+      //        'onGetAllChallengeStatus',
+      //        this.onGetAllChallengeStatus.bind(this)
+      //      );
       onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-                                                                                         this.onGetAllChallengeStatus.bind(this));
+        this.onGetAllChallengeStatus.bind(this));
 
       challengeName = chlngName;
-//      Events.trigger('showLoader', true);
+      //      Events.trigger('showLoader', true);
       AsyncStorage.getItem('userId').then((value) => {
         ReactRdna.getAllChallenges(value, (response) => {
           if (response) {
@@ -585,10 +599,10 @@ class ControlPanel extends Component {
   }
 
   doNavigation() {
-        if (onGetNotificationsSubscription) {
-          onGetNotificationsSubscription.remove();
-          onGetNotificationsSubscription = null;
-        }
+    if (onGetNotificationsSubscription) {
+      onGetNotificationsSubscription.remove();
+      onGetNotificationsSubscription = null;
+    }
     console.log('doNavigation:');
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
     AsyncStorage.getItem('skipwelcome').then((value) => {
@@ -607,7 +621,7 @@ class ControlPanel extends Component {
       }
     }).done();
   }
-  
+
 
   popToLoadView() {
     this.props.navigator.replace({
@@ -621,22 +635,22 @@ class ControlPanel extends Component {
       return jsx;
     }
   }
-   
 
-   //This getAllChallenges method is only for updating menu options
+
+  //This getAllChallenges method is only for updating menu options
   getAllChallenges() {
-//    Events.trigger('showLoader', true);
-    
+    //    Events.trigger('showLoader', true);
+
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
-//    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
-//      'onGetAllChallengeStatus',
-//      this.onGetAllChallengeSettingStatus.bind(this)
-//    );
-      onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-                                                                                         this.onGetAllChallengeSettingStatus.bind(this));
+    //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
+    //      'onGetAllChallengeStatus',
+    //      this.onGetAllChallengeSettingStatus.bind(this)
+    //    );
+    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+      this.onGetAllChallengeSettingStatus.bind(this));
 
     ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
       if (response) {
@@ -648,12 +662,12 @@ class ControlPanel extends Component {
   }
 
   onGetAllChallengeSettingStatus(e) {
-   
+
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
-    
+
     var $this = this;
     Events.trigger('hideLoader', true);
     const res = JSON.parse(e.response);
@@ -671,10 +685,10 @@ class ControlPanel extends Component {
     } else {
       console.log('Something went wrong');
     }
-    
+
     //Calling reset challenge as we are not going to call update imidiately after this.
     //This getAllChallenges call was only for updating menu options
-    ReactRdna.resetChallenge((response) => {/*do nothing*/});
+    ReactRdna.resetChallenge((response) => {/*do nothing*/ });
   }
 
 
@@ -764,55 +778,55 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'ComingSoon', title: 'Alerts', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
+            }}
+          />
           <MenuItem
             visibility={Config.PROFILE_SETTINGS}
             lable="Profile & Settings"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
+            }}
+          />
           <MenuItem
             visibility={Config.DEV_MANAGMENT}
             lable="Device Management"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
+            }}
+          />
           <MenuItem
             visibility={Config.NOTIFICATIONS}
             lable="Notifications"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
-        <MenuItem
+            }}
+          />
+          <MenuItem
             visibility={Config.NOTIFICATION_HISTORY}
             lable="Notification History"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
+            }}
+          />
           {
             Main.enableUpdateSecqaOption &&
             [
               <MenuItem
                 visibility={Config.CHANGEQUESTION}
                 lable="Change Secret Question"
-                onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('secqa'); } }
-                />
+                onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('secqa'); }}
+              />
             ]
           }
           <MenuItem
             visibility={Config.CHANGEPASSWORD}
             lable="Change Password"
-            onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); } }
-            />
+            onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); }}
+          />
 
           <MenuItem
             visibility={Config.HELP_SUPPORT}
@@ -820,16 +834,16 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
+            }}
+          />
           <MenuItem
             visibility={Config.SECURE_PORTAL}
             lable="Secure Portal"
             onPress={() => {
               this.props.toggleDrawer();
-              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://'+Main.gatewayHost+'/demoapp/relid.html' });
-            } }
-            />
+              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://' + Main.gatewayHost + '/demoapp/relid.html' });
+            }}
+          />
           <MenuItem
             visibility={Config.OPEN_PORTAL}
             lable="Open Portal"
@@ -847,51 +861,53 @@ class ControlPanel extends Component {
               }
               else {
                 //this.props.navigator.push({ id: 'WebView', title: 'Open Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'https://www.google.co.in/' });
-                   Communications.web('https://www.google.co.in/');
+                Communications.web('https://www.google.co.in/');
               }
             }
             }
-            />
+          />
           <MenuItem
             visibility={Config.SEND_APP_FEEDBACK}
             lable="Send App Feedback"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'ComingSoon', title: 'Send App Feedback', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
+            }}
+          />
           <MenuItem
             visibility={Config.LEGAL_INFO}
             lable="Legal Info"
             onPress={() => {
               this.props.toggleDrawer();
               this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-            } }
-            />
-            <MenuItem
+            }}
+          />
+          <MenuItem
             visibility={Config.GETCONFIG}
             lable="Config"
-            onPress={()=>{
+            onPress={() => {
               this.getConfig();
-              this.props.toggleDrawer();}}
-            />
-            <MenuItem
+              this.props.toggleDrawer();
+            }}
+          />
+          <MenuItem
             visibility={Config.TESTCONFIG}
             lable="ConfigWithTerminate"
-            onPress={()=>{
+            onPress={() => {
               this.testConfig();
-              this.props.toggleDrawer();}}
-            />
+              this.props.toggleDrawer();
+            }}
+          />
           <MenuItem
             visibility={Config.LOGOUT}
             lable="Logout"
-            onPress={this.showLogOffAlert }
-            />
-            <MenuItem
+            onPress={this.showLogOffAlert}
+          />
+          <MenuItem
             visibility={Config.EXIT}
             lable="Exit"
-            onPress={this.showTerminateAlert }
-            />
+            onPress={this.showTerminateAlert}
+          />
         </ScrollView>
 
       </View>

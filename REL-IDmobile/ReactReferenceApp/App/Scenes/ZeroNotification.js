@@ -780,7 +780,7 @@ export default class NotificationMgmtScene extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop}/>);
+        handler={this.props.navigator.pop} isBadge={true}/>);
   }
 
 

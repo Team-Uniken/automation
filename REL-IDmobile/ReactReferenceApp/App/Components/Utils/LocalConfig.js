@@ -129,8 +129,8 @@ function requireClientBasedConfig() {
                     welcome: require('../../img/cbc.png')
                 },
                 dashboard: {
-                    screenName: 'DashboardNotification',
-                    screen: require("../Dashboard/CBCVerify/Notification").default,
+                    screenName: 'Deal',
+                    screen: require("../Dashboard/CBCVerify/Accounts").default,
                 },
             }
         })();

@@ -23,7 +23,7 @@ import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import WebViewAndroid from '../android_native_modules/nativewebview';
 import PageTitle from '../Components/view/pagetitle';
-import {Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 /*
   INSTANCES
@@ -45,7 +45,7 @@ export default class Web extends Component {
       backButtonEnabled: false,
       forwardButtonEnabled: false,
       loading: true,
-      error:false,
+      error: false,
       scalesPageToFit: this.props.scale || true,
     };
 
@@ -79,14 +79,14 @@ export default class Web extends Component {
       return (
         <View style={[styles.addressBarRow]}>
           <TouchableOpacity
-            onPress={this.goBack.bind(this) }
+            onPress={this.goBack.bind(this)}
             style={this.state.backButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.backButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'<'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={this.goForward.bind(this) }
+            onPress={this.goForward.bind(this)}
             style={this.state.forwardButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.forwardButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'>'}
@@ -100,20 +100,20 @@ export default class Web extends Component {
 
   close() {
     if (onResumeCompletedSubscription) {
-        onResumeCompletedSubscription.remove();
-        onResumeCompletedSubscription = null;
+      onResumeCompletedSubscription.remove();
+      onResumeCompletedSubscription = null;
     }
     this.props.navigator.pop();
   }
 
   onResume() {
-    if(this.state.error === true){
+    if (this.state.error === true) {
       this.state.error = false;
       this.reload();
     }
   }
 
-  onError(event){
+  onError(event) {
     this.state.error = true;
   }
 
@@ -125,15 +125,15 @@ export default class Web extends Component {
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.state.url }}
+          source={{ uri: this.props.url || DEFAULT_URL }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
-          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
-          onLoad={() => { console.log('loaded') } }
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          onLoad={() => { console.log('loaded') }}
           onError={this.onError}
           scalesPageToFit={this.state.scalesPageToFit}
-          />
+        />
       );
     } else {
 
@@ -143,15 +143,15 @@ export default class Web extends Component {
             ref={WEBVIEW_REF}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
-            source={{ uri: this.state.url }}
+            source={{ uri: this.props.url || DEFAULT_URL }}
             javaScriptEnable
             domStorageEnabled
             decelerationRate="normal"
             //onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-            onLoad={() => { console.log('loaded') } }
+            onLoad={() => { console.log('loaded') }}
             scalesPageToFit={this.state.scalesPageToFit}
             javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
-            />
+          />
         );
       } else {
         return (
@@ -159,64 +159,84 @@ export default class Web extends Component {
             ref={WEBVIEW_REF}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
-            source={{ uri: this.state.url }}
+            source={{ uri: this.props.url || DEFAULT_URL }}
             javaScriptEnable
             domStorageEnabled
             decelerationRate="normal"
-            onNavigationStateChange={this.onNavigationStateChange.bind(this) }
-            onLoad={() => { console.log('loaded') } }
+            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+            onLoad={() => { console.log('loaded') }}
             webViewClient={{ params: null }}
             scalesPageToFit={this.state.scalesPageToFit}
             onError={this.onError}
             proxy={{ host: "127.0.0.1", port: this.props.proxy }}
             javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
-            />
+          />
         );
       }
     }
   }
-   /*
-    render pagetitle
-  */
-  renderPageTitle(pageTitle){
-        return(<PageTitle title={pageTitle}
-        handler={this.close}/>);
+  /*
+   render pagetitle
+ */
+  renderPageTitle(pageTitle) {
+    return (<PageTitle title={pageTitle}
+      handler={this.close} />);
   }
+
+  /*
+    Render View With Main Component
+  */
+  renderWithMain() {
+    return (<Main
+      drawerState={{
+        open: false,
+        disabled: true,
+      }}
+      defaultNav={isPageTitle ? false : true}
+      navBar={{
+        title: this.props.title,
+        visible: true,
+        tint: Skin.colors.TEXT_COLOR,
+        left: {
+          text: 'Back',
+          icon: '',
+          iconStyle: {},
+          textStyle: {},
+          handler: this.close,
+        },
+      }}
+      bottomMenu={{
+        visible: false,
+      }}
+      navigator={this.props.navigator}
+    >
+      {isPageTitle && this.renderPageTitle(this.props.title)}
+      <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
+        {this.getWebView()}
+        {this.renderBottomBar()}
+      </View>
+    </Main>);
+
+  }
+
+
+  /*
+     Render View Without Main Component
+  */
+  renderWithoutMain() {
+    return (
+      <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
+        {this.getWebView()}
+        {this.renderBottomBar()}
+      </View>
+    );
+  }
+
   /*
     This method is used to render the componenet with all its element.
   */
   render() {
-    return (
-      <Main
-        drawerState={{
-          open: false,
-          disabled: true,
-        }}
-        defaultNav = {isPageTitle?false:true}
-        navBar={{
-          title: this.props.title,
-          visible: true,
-          tint: Skin.colors.TEXT_COLOR,
-          left: {
-            text: 'Back',
-            icon: '',
-            iconStyle: {},
-            textStyle: {},
-            handler: this.close,
-          },
-        }}
-        bottomMenu={{
-          visible: false,
-        }}
-        navigator={this.props.navigator}
-        >
-        { isPageTitle && this.renderPageTitle(this.props.title)}
-        <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
-          {this.getWebView() }
-          {this.renderBottomBar() }
-        </View>
-      </Main>
-    );
+    return (this.props.disableMain ? this.renderWithoutMain() : this.renderWithMain());
   }
 
 
@@ -251,7 +271,7 @@ export default class Web extends Component {
       //this.props.navigator.pop();
       //Communications.web(this.props.url);
     }
-    
+
   }
 
 }
@@ -291,7 +311,7 @@ const styles = StyleSheet.create({
   disabledButtonText: {
     fontSize: 20,
     color: Config.THEME_COLOR,
-    opacity:0.65,
+    opacity: 0.65,
     fontWeight: 'bold',
   },
 
