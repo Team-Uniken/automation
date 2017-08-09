@@ -8,12 +8,14 @@ import android.telecom.Call;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
+import android.webkit.WebView;
 
 //import com.better.workspace.lib.BetterMTD;
 //import com.better.workspace.lib.model.ThreatCategory;
 //import com.better.workspace.lib.model.ThreatType;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -23,6 +25,9 @@ import com.facebook.react.bridge.WritableMap;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import com.facebook.react.uimanager.NativeViewHierarchyManager;
+import com.facebook.react.uimanager.UIBlock;
+import com.facebook.react.uimanager.UIManagerModule;
 import com.uniken.rdna.RDNA;
 
 import org.json.JSONException;
@@ -1102,6 +1107,34 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             parentArray.pushMap(errorMap);
             callback.invoke(parentArray);
         }
+    }
+
+    @ReactMethod
+    public void setProxy(final int reactTag,final String host,final int port, final Promise promise) {
+        ReactApplicationContext reactContext = this.getReactApplicationContext();
+        UIManagerModule uiManager = reactContext.getNativeModule(UIManagerModule.class);
+
+        uiManager.addUIBlock(new UIBlock() {
+            @Override
+            public void execute(NativeViewHierarchyManager nativeViewHierarchyManager) {
+                WebView view = null;
+
+                try {
+                    view = (WebView) nativeViewHierarchyManager.resolveView(reactTag);
+                } catch (Exception e) {
+                    promise.reject("Error", e.getMessage());
+                    return;
+                }
+
+                try {
+                    boolean success = ProxySetting.setProxy(view.getContext(), view, host, port);
+                    promise.resolve(success);
+                }
+                catch (Exception e){
+                    promise.resolve(false);
+                }
+            }
+        });
     }
 
     @ReactMethod

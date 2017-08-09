@@ -192,7 +192,9 @@ module.exports.icon = {
   store: '\ue563',
   gift: '\ue8b1',
   timer: '\ue425',
-  bell:'\ue7f4'
+  bell:'\ue7f4',
+  refresh:'\ue41a',
+  forward:'\ue037'
 };
 
 // Titles

@@ -15,7 +15,8 @@ import ReactNative from 'react-native';
  */
 import Communications from 'react-native-communications';
 import Config from 'react-native-config'
-
+import * as Progress from 'react-native-progress';
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 /*
  Use in this js
  */
@@ -25,6 +26,8 @@ import WebViewAndroid from '../android_native_modules/nativewebview';
 import PageTitle from '../Components/view/pagetitle';
 import { Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
+var webViewTag;
+
 /*
   INSTANCES
  */
@@ -40,7 +43,7 @@ export default class Web extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: this.props.url || DEFAULT_URL,
+      url: this.props.url,
       status: 'No Page Loaded',
       backButtonEnabled: false,
       forwardButtonEnabled: false,
@@ -70,6 +73,18 @@ export default class Web extends Component {
     console.log('************ Component Will Mount');
   }
 
+  componentDidMount() {
+     if(Platform.OS === "android" && this.props.secure){
+        webViewTag = this.refs[WEBVIEW_REF].getWebViewHandle();
+        ReactRdna.setProxy(webViewTag,"127.0.0.1",Web.proxy).then((vallue)=>{
+          if(value){
+            this.reload();
+          }
+        });
+     }
+    console.log('************ Component Did Mount');
+  }
+
   /**
    * Returns the back and forward button of the toolbar if navigation is allowed
    * @return {[type]} [description]
@@ -90,6 +105,13 @@ export default class Web extends Component {
             style={this.state.forwardButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.forwardButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'>'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.reload.bind(this) }
+            style={styles.navButton}>
+            <Text style={styles.refresh}>
+              {Skin.icon.refresh}
             </Text>
           </TouchableOpacity>
         </View>
@@ -119,13 +141,12 @@ export default class Web extends Component {
 
   //Return platform specific webview.
   getWebView() {
-    if (Platform.OS === 'ios') {
       return (
         <WebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.props.url || DEFAULT_URL }}
+          source={{ uri: this.props.url}}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -135,45 +156,6 @@ export default class Web extends Component {
           scalesPageToFit={this.state.scalesPageToFit}
         />
       );
-    } else {
-
-      if (!this.props.secure) {
-        return (
-          <WebViewAndroid
-            ref={WEBVIEW_REF}
-            automaticallyAdjustContentInsets={false}
-            style={styles.webView}
-            source={{ uri: this.props.url || DEFAULT_URL }}
-            javaScriptEnable
-            domStorageEnabled
-            decelerationRate="normal"
-            //onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-            onLoad={() => { console.log('loaded') }}
-            scalesPageToFit={this.state.scalesPageToFit}
-            javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
-          />
-        );
-      } else {
-        return (
-          <WebViewAndroid
-            ref={WEBVIEW_REF}
-            automaticallyAdjustContentInsets={false}
-            style={styles.webView}
-            source={{ uri: this.props.url || DEFAULT_URL }}
-            javaScriptEnable
-            domStorageEnabled
-            decelerationRate="normal"
-            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-            onLoad={() => { console.log('loaded') }}
-            webViewClient={{ params: null }}
-            scalesPageToFit={this.state.scalesPageToFit}
-            onError={this.onError}
-            proxy={{ host: "127.0.0.1", port: this.props.proxy }}
-            javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
-          />
-        );
-      }
-    }
   }
   /*
    render pagetitle
@@ -212,6 +194,7 @@ export default class Web extends Component {
     >
       {isPageTitle && this.renderPageTitle(this.props.title)}
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={5}/>}
         {this.getWebView()}
         {this.renderBottomBar()}
       </View>
@@ -226,6 +209,7 @@ export default class Web extends Component {
   renderWithoutMain() {
     return (
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={5}/>}
         {this.getWebView()}
         {this.renderBottomBar()}
       </View>
@@ -258,7 +242,7 @@ export default class Web extends Component {
   }
 
   onNavigationStateChange(navState) {
-    console.log('navstatechange');
+    console.log('navstatechange-> ' + navState.loading + " " + navState.url);
     this.setState({
       backButtonEnabled: navState.canGoBack,
       forwardButtonEnabled: navState.canGoForward,
@@ -294,6 +278,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent',
     borderColor: 'transparent',
+  },
+    refresh: {
+    fontWeight: 'normal',
+    fontSize: 20,
+    color: Config.THEME_COLOR,
+    fontFamily: Skin.font.ICON_FONT,
   },
   disabledButton: {
     width: 50,

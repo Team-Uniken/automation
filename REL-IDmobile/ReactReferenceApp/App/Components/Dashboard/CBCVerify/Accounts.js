@@ -283,6 +283,7 @@ export default class AccountsScene extends Component {
           <Web
             url={this.state.urlData}
             title={''}
+            secure
             disableMain={true}
             navigate
           />
