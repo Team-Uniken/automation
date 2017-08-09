@@ -1138,7 +1138,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void clear(final int reactTag,final Promise promise) {
+    public void clearWebViewHistory(final int reactTag,final Promise promise) {
         ReactApplicationContext reactContext = this.getReactApplicationContext();
         UIManagerModule uiManager = reactContext.getNativeModule(UIManagerModule.class);
 
@@ -1154,7 +1154,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                     return;
                 }
 
-                view.clearCache(true);
                 view.clearHistory();
                 promise.resolve(true);
             }
