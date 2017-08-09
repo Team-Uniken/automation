@@ -157,6 +157,12 @@ export default class Web extends Component {
           decelerationRate="normal"
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onLoad={() => { console.log('loaded') }}
+          onLoadStart={() => { console.log('loaded');    this.setState({
+      loading:true,
+    }); }}
+          onLoadEnd={() => { console.log('loaded') ,    this.setState({
+      loading:false,
+    });}}
           onError={this.onError}
           scalesPageToFit={this.state.scalesPageToFit}
         />
@@ -287,7 +293,6 @@ export default class Web extends Component {
       forwardButtonEnabled: navState.canGoForward,
       url: navState.url,
       status: navState.title,
-      loading: navState.loading,
       scalesPageToFit: this.state.scalesPageToFit,
     });
     if (!this.props.secure) {
