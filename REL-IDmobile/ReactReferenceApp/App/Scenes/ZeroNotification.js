@@ -680,7 +680,7 @@ export default class NotificationMgmtScene extends Component {
             break;
           }
         }
-        Events.trigger('updateBadge', notification.length);
+        
         if (notification.length <= 0) {
           this.props.navigator.pop(0);
         }
@@ -688,6 +688,7 @@ export default class NotificationMgmtScene extends Component {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
         });
+       
 
       } else {
 
@@ -706,6 +707,7 @@ export default class NotificationMgmtScene extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
+     Events.trigger('updateBadge', notification.length);
   }
 
   /*
