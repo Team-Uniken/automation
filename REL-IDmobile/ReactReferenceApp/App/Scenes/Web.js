@@ -49,6 +49,7 @@ export default class Web extends Component {
       forwardButtonEnabled: false,
       loading: true,
       error: false,
+      isProxySet:false,
       scalesPageToFit: this.props.scale || true,
     };
 
@@ -76,9 +77,12 @@ export default class Web extends Component {
   componentDidMount() {
      if(Platform.OS === "android" && this.props.secure){
         webViewTag = this.refs[WEBVIEW_REF].getWebViewHandle();
-        ReactRdna.setProxy(webViewTag,"127.0.0.1",Web.proxy).then((vallue)=>{
+        ReactRdna.setProxy(webViewTag,"127.0.0.1",Web.proxy).then((value)=>{
           if(value){
-            this.reload();
+            //this.reload();
+            ReactRdna.setProxy(webViewTag).then((value)=>{
+              this.setState({isProxySet:true})
+            });
           }
         });
      }
@@ -141,6 +145,7 @@ export default class Web extends Component {
 
   //Return platform specific webview.
   getWebView() {
+    if(Platform.OS=="ios"){
       return (
         <WebView
           ref={WEBVIEW_REF}
@@ -156,6 +161,40 @@ export default class Web extends Component {
           scalesPageToFit={this.state.scalesPageToFit}
         />
       );
+    }
+    else{
+      if(this.props.secure){
+        return (
+          <WebView
+            ref={WEBVIEW_REF}
+            automaticallyAdjustContentInsets={false}
+            style={styles.webView}
+            source={{ uri: this.state.isProxySet?this.props.url:''}}
+            javaScriptEnable
+            domStorageEnabled
+            decelerationRate="normal"
+            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+            onLoad={() => { console.log('loaded') }}
+            onError={this.onError}
+            scalesPageToFit={this.state.scalesPageToFit}
+          />
+        );
+      }else{
+        <WebView
+            ref={WEBVIEW_REF}
+            automaticallyAdjustContentInsets={false}
+            style={styles.webView}
+            source={{ uri: this.props.url}}
+            javaScriptEnable
+            domStorageEnabled
+            decelerationRate="normal"
+            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+            onLoad={() => { console.log('loaded') }}
+            onError={this.onError}
+            scalesPageToFit={this.state.scalesPageToFit}
+          />
+      }
+    }
   }
   /*
    render pagetitle

@@ -1138,6 +1138,30 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void clear(final int reactTag,final Promise promise) {
+        ReactApplicationContext reactContext = this.getReactApplicationContext();
+        UIManagerModule uiManager = reactContext.getNativeModule(UIManagerModule.class);
+
+        uiManager.addUIBlock(new UIBlock() {
+            @Override
+            public void execute(NativeViewHierarchyManager nativeViewHierarchyManager) {
+                WebView view = null;
+
+                try {
+                    view = (WebView) nativeViewHierarchyManager.resolveView(reactTag);
+                } catch (Exception e) {
+                    promise.reject("Error", e.getMessage());
+                    return;
+                }
+
+                view.clearCache(true);
+                view.clearHistory();
+                promise.resolve(true);
+            }
+        });
+    }
+
+    @ReactMethod
     public void demo(){
     }
 }
