@@ -307,8 +307,10 @@ class ControlPanel extends Component {
     console.log('immediate response is' + e.response);
     var responseJson = JSON.parse(e.response);
     if (responseJson.errCode == 0) {
-      //if (Config.GETCONFIG)
-       // alert(e.response);
+      if (Config.GETCONFIG===true){
+        alert(e.response);
+      }
+        
       Events.trigger('onGetConfig', responseJson.pArgs.response.ResponseData);
     } else {
       alert('Failed to get config with Error ' + responseJson.errCode);
