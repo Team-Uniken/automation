@@ -222,7 +222,7 @@ class TwoFactorAuthMachine extends Component {
           const pPort = res.pArgs.pxyDetails.port;
           if (pPort > 0) {
             RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
-            Web.proxy = pPort;
+            global.proxy = pPort;
           }
 
           if (Constants.USER_T0 === 'YES') {

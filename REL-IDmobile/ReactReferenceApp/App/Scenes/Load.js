@@ -326,7 +326,7 @@ class Load extends Component {
         const pPort = responseJson.pArgs.pxyDetails.port;
         if (pPort > 0) {
           RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
-          Web.proxy = pPort;
+          global.proxy = pPort;
         }
         appalive = true;
         console.log('Resume Successfull');

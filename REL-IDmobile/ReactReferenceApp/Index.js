@@ -244,7 +244,7 @@ export default class Index extends Component {
                 navigator={nav}
                 url={route.url}
                 title={route.title}
-                proxy={Web.proxy}
+                proxy={global.proxy}
                 secure
                 navigate />);
     } else if (id === 'WebView') {

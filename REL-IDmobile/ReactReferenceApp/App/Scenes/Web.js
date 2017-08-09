@@ -77,7 +77,7 @@ export default class Web extends Component {
   componentDidMount() {
     if (Platform.OS === "android" && this.props.secure) {
       webViewTag = this.refs[WEBVIEW_REF].getWebViewHandle();
-      ReactRdna.setProxy(webViewTag, "127.0.0.1", Web.proxy).then((value) => {
+      ReactRdna.setProxy(webViewTag, "127.0.0.1", global.proxy).then((value) => {
         if (value) {
           //this.reload();
           // ReactRdna.clear(webViewTag).then((value) => {
