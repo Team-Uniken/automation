@@ -584,7 +584,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getAllChallenges(String userID, Callback callback){
         // Logger.d(TAG , "----- userID " + userID);
-        int error = rdnaObj.getAllChallenges(userID);
+        int error =-1;
+        if(rdnaObj!=null)
+          error = rdnaObj.getAllChallenges(userID);
 
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);
@@ -621,9 +623,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         int intRecordCount=Integer.parseInt(recordCount);
         int intStartRecord=Integer.parseInt(startRecord);
-
-        int error = rdnaObj.getNotifications(intRecordCount, intStartRecord, enterpriseID, startDate, endDate);
-
+        int error = -1;
+        if(rdnaObj!=null) {
+            error = rdnaObj.getNotifications(intRecordCount, intStartRecord, enterpriseID, startDate, endDate);
+        }
         // Logger.d(TAG , "----- error " + error);
         WritableMap errorMap = Arguments.createMap();
         errorMap.putInt("error", error);

@@ -101,21 +101,22 @@ class PageTitle extends Component {
           {this.props.title}
         </Text>
 
-        {this.props.isBadge &&<View style={{ width: 40, position: 'absolute', right: 10 }}>
+        {this.props.isBadge &&<View style={{ width: 40,height:50, position: 'absolute', right: 10 }}>
            <TouchableHighlight underlayColor='transparent' onPress={this.onPressNotificationView}>
           <Text style={{
             color: Skin.color.LOGO_COLOR,
             textAlign: 'center',
             fontSize: 35,
+            height:50,
             fontWeight: 'normal',
-            top: Platform.OS === 'android' ? 10 : 32.5,
+            top: Platform.OS === 'android' ? 12 : 32.5,
             //backgroundColor: '#50ae3c',
             fontFamily: Skin.font.ICON_FONT
           }}>{Skin.icon.bell}</Text>
           </TouchableHighlight>
 
           {this.state.badgeValue > 0 && <Badge style={{
-            top: Platform.OS === 'android' ? -10 : -7,
+            top: Platform.OS === 'android' ? -45 : -7,
             right: -20,
           }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
             {this.state.badgeValue}
