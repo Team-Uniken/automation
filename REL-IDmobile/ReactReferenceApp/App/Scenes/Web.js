@@ -49,7 +49,7 @@ export default class Web extends Component {
       forwardButtonEnabled: false,
       loading: true,
       error: false,
-      isProxySet:false,
+      isProxySet: false,
       scalesPageToFit: this.props.scale || true,
     };
 
@@ -75,17 +75,19 @@ export default class Web extends Component {
   }
 
   componentDidMount() {
-     if(Platform.OS === "android" && this.props.secure){
-        webViewTag = this.refs[WEBVIEW_REF].getWebViewHandle();
-        ReactRdna.setProxy(webViewTag,"127.0.0.1",Web.proxy).then((value)=>{
-          if(value){
-            //this.reload();
-            ReactRdna.setProxy(webViewTag).then((value)=>{
-              this.setState({isProxySet:true})
-            });
-          }
-        });
-     }
+    if (Platform.OS === "android" && this.props.secure) {
+      webViewTag = this.refs[WEBVIEW_REF].getWebViewHandle();
+      ReactRdna.setProxy(webViewTag, "127.0.0.1", Web.proxy).then((value) => {
+        if (value) {
+          //this.reload();
+          // ReactRdna.clear(webViewTag).then((value) => {
+          //   this.setState({ isProxySet: true })
+          // });
+          this.goBack();
+          this.setState({ isProxySet: true })
+        }
+      });
+    }
     console.log('************ Component Did Mount');
   }
 
@@ -95,17 +97,24 @@ export default class Web extends Component {
    */
   renderBottomBar() {
     if (this.props.navigate) {
+      
+      if(Platform.OS == "android" && this.state.backButtonEnabled && this.state.isProxySet === true){
+        this.state.backButtonEnabled = false;
+        this.state.isProxySet=null;
+        ReactRdna.clearWebViewHistory(webViewTag);
+      }
+
       return (
         <View style={[styles.addressBarRow]}>
           <TouchableOpacity
-            onPress={this.goBack.bind(this)}
+            onPress={this.goBack.bind(this) }
             style={this.state.backButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.backButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'<'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={this.goForward.bind(this)}
+            onPress={this.goForward.bind(this) }
             style={this.state.forwardButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.forwardButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'>'}
@@ -145,63 +154,101 @@ export default class Web extends Component {
 
   //Return platform specific webview.
   getWebView() {
-    if(Platform.OS=="ios"){
+    if (Platform.OS == "ios") {
       return (
         <WebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.props.url}}
+          source={{ uri: this.props.url }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
-          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-          onLoad={() => { console.log('loaded') }}
-          onLoadStart={() => { console.log('loaded');    this.setState({
-      loading:true,
-    }); }}
-          onLoadEnd={() => { console.log('loaded') ,    this.setState({
-      loading:false,
-    });}}
+          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
+          onLoad={() => { console.log('loaded') } }
+          onLoadStart={() => {
+            console.log('loadedStart'); 
+            this.setState({
+              loading: true,
+            });
+          } }
+          onLoadEnd={() => {
+            console.log('loadedEnd'), 
+            this.setState({
+              loading: false,
+            });
+          } }
           onError={this.onError}
           scalesPageToFit={this.state.scalesPageToFit}
-        />
+          />
       );
     }
-    else{
-      if(this.props.secure){
+    else {
+      if (this.props.secure) {
         return (
           <WebView
             ref={WEBVIEW_REF}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
-            source={{ uri: this.state.isProxySet?this.props.url:''}}
+            source={this.state.isProxySet===true || this.state.isProxySet==null?{ uri: this.props.url}:undefined}
             javaScriptEnable
             domStorageEnabled
             decelerationRate="normal"
-            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-            onLoad={() => { console.log('loaded') }}
+            onNavigationStateChange={this.onNavigationStateChange.bind(this) }
+            onLoad={() => { console.log('loaded') } }
             onError={this.onError}
+            onLoadStart={() => {
+              console.log('loadStart'); 
+              this.setState({
+                loading: true,
+              });
+            } }
+            onLoadEnd={() => {
+              console.log('loadEnd'), this.setState({
+                loading: false,
+              });
+            } }
             scalesPageToFit={this.state.scalesPageToFit}
-          />
+            />
         );
-      }else{
+      } else {
         <WebView
-            ref={WEBVIEW_REF}
-            automaticallyAdjustContentInsets={false}
-            style={styles.webView}
-            source={{ uri: this.props.url}}
-            javaScriptEnable
-            domStorageEnabled
-            decelerationRate="normal"
-            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-            onLoad={() => { console.log('loaded') }}
-            onError={this.onError}
-            scalesPageToFit={this.state.scalesPageToFit}
+          ref={WEBVIEW_REF}
+          automaticallyAdjustContentInsets={false}
+          style={styles.webView}
+          source={{ uri: this.props.url }}
+          javaScriptEnable
+          domStorageEnabled
+          decelerationRate="normal"
+          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
+          onLoad={() => { console.log('loaded') } }
+          onError={this.onError}
+          onLoadStart={() => {
+            console.log('loadStart'); 
+            this.setState({
+              loading: true,
+            });
+          } }
+          onLoadEnd={() => {
+            console.log('loadEnd'), this.setState({
+              loading: false,
+            });
+          } }
+          scalesPageToFit={this.state.scalesPageToFit}
           />
       }
     }
   }
+
+  getSource(){
+    while(1){
+      if(this.state.isProxySet)
+         break;
+    }
+
+    return this.props.url;
+  }
+
   /*
    render pagetitle
  */
@@ -236,12 +283,12 @@ export default class Web extends Component {
         visible: false,
       }}
       navigator={this.props.navigator}
-    >
-      {isPageTitle && this.renderPageTitle(this.props.title)}
+      >
+      {isPageTitle && this.renderPageTitle(this.props.title) }
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
         {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={5}/>}
-        {this.getWebView()}
-        {this.renderBottomBar()}
+        {this.getWebView() }
+        {this.renderBottomBar() }
       </View>
     </Main>);
 
@@ -255,8 +302,8 @@ export default class Web extends Component {
     return (
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
         {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={5}/>}
-        {this.getWebView()}
-        {this.renderBottomBar()}
+        {this.getWebView() }
+        {this.renderBottomBar() }
       </View>
     );
   }
@@ -323,7 +370,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: 'transparent',
   },
-    refresh: {
+  refresh: {
     fontWeight: 'normal',
     fontSize: 20,
     color: Config.THEME_COLOR,
