@@ -680,6 +680,7 @@ export default class NotificationMgmtScene extends Component {
             break;
           }
         }
+        Events.trigger('updateBadge', notification.length);
         if (notification.length <= 0) {
           this.props.navigator.pop(0);
         }

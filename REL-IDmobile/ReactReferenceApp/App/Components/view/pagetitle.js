@@ -7,11 +7,12 @@
  *ALWAYS NEED
  */
 import React, { Component } from 'react';
-import ReactNative, { Platform } from 'react-native';
+import ReactNative, { Platform, TouchableHighlight} from 'react-native';
 import NavBar from './navbar.js';
 import IconBadge from 'react-native-icon-badge';
 import Badge from 'react-native-smart-badge'
 import Events from 'react-native-simple-events';
+import Main from '../Container/Main'
 
 
 /*
@@ -32,11 +33,12 @@ class PageTitle extends Component {
     super(props);
 
     this.state = {
-      badgeValue: 0,
+      badgeValue:  Main.notificationCount,
       refresh: false,
     };
     self = this;
     this.updateBadge = this.updateBadge.bind(this);
+    this.onPressNotificationView = this.onPressNotificationView.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +65,12 @@ class PageTitle extends Component {
     this.state.refresh = true;
     this.state.badgeValue = value;
     this.setState({ badgeValue: value });
+     Main.notificationCount = value;
+  }
+
+  onPressNotificationView()
+  {
+     Events.trigger('showNoticiationScreen');
   }
 
   render() {
@@ -93,20 +101,21 @@ class PageTitle extends Component {
           {this.props.title}
         </Text>
 
-        {this.props.isBadge && <View style={{ width: 40, position: 'absolute', right: 10 }}>
+        {this.props.isBadge &&<View style={{ width: 40, position: 'absolute', right: 10 }}>
+           <TouchableHighlight underlayColor='transparent' onPress={this.onPressNotificationView}>
           <Text style={{
             color: Skin.color.LOGO_COLOR,
             textAlign: 'center',
             fontSize: 35,
             fontWeight: 'normal',
-            top: Platform.OS === 'android' ? 10 : 30,
+            top: Platform.OS === 'android' ? 10 : 32.5,
             //backgroundColor: '#50ae3c',
             fontFamily: Skin.font.ICON_FONT
           }}>{Skin.icon.bell}</Text>
-
+          </TouchableHighlight>
 
           {this.state.badgeValue > 0 && <Badge style={{
-            top: -10,
+            top: Platform.OS === 'android' ? -10 : -7,
             right: -20,
           }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
             {this.state.badgeValue}
@@ -114,7 +123,7 @@ class PageTitle extends Component {
           </Badge>}
 
 
-        </View>}
+        </View> }
 
       </View>
 

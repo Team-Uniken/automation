@@ -85,6 +85,7 @@ class ControlPanel extends Component {
     this.getConfig = this.getConfig.bind(this);
     this.onGetConfig = this.onGetConfig.bind(this);
     this.testConfig = this.testConfig.bind(this);
+    this.showNoticiationScreen = this.showNoticiationScreen.bind(this);
     //this.getMyNotifications();
     Events.on('getConfiguration', 'getConfiguration', this.getConfig);
 
@@ -120,7 +121,7 @@ class ControlPanel extends Component {
 
 
   componentWillMount() {
-    //Events.on('getConfiguration', 'getConfiguration', this.getConfig);
+    Events.on('showNoticiationScreen', 'showNoticiationScreen', this.showNoticiationScreen);
   }
   componentDidMount() {
     Events.on('logOff', 'logOff', this.logOff);
@@ -383,7 +384,8 @@ class ControlPanel extends Component {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
 
-        Events.trigger('updateBadge', res.pArgs.response.ResponseData.notifications.length)
+        Events.trigger('updateBadge', res.pArgs.response.ResponseData.notifications.length);
+        Main.notificationCount = res.pArgs.response.ResponseData.notifications.length;
         if (this.props.dashboardScreenName === 'DashboardNotification') {
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
             Events.trigger('toggleDrawer', true);
@@ -484,6 +486,15 @@ class ControlPanel extends Component {
           { text: 'OK', onPress: () => this.props.navigator.pop(0) }
         ]
       );
+    }
+  }
+
+  showNoticiationScreen(){
+    this.getMyNotifications();
+    if(!this.isNotificationScreenPresent()){
+       InteractionManager.runAfterInteractions(() => {
+              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+            });
     }
   }
 
