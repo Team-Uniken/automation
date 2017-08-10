@@ -386,8 +386,9 @@ class ControlPanel extends Component {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
 
-        Events.trigger('updateBadge', res.pArgs.response.ResponseData.notifications.length);
-        Main.notificationCount = res.pArgs.response.ResponseData.notifications.length;
+        var count = res.pArgs.response.ResponseData.notifications.length;
+        Events.trigger('updateBadge', count);
+        Main.notificationCount = count;
         if (this.props.dashboardScreenName === 'DashboardNotification') {
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
             Events.trigger('toggleDrawer', true);

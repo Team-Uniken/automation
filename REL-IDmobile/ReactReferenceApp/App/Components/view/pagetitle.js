@@ -119,7 +119,7 @@ class PageTitle extends Component {
             top: Platform.OS === 'android' ? -45 : -24,
             right: -20,
           }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
-            {this.state.badgeValue}
+            {this.state.badgeValue>9?"9+":this.state.badgeValue}
 
           </Badge>}
 
