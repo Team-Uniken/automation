@@ -58,6 +58,11 @@ export default class HomePage extends Component {
    //alert("data->>>>>"+value.config[1].value);
     this.setState({urlData:'http://'+value.config[1].value});
   }
+  
+  triggerDrawer() {
+    console.log('trigger')
+    Events.trigger('toggleDrawer')
+  }
 
 
   getMyNotifications() {
