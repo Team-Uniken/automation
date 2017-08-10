@@ -521,7 +521,7 @@ export default class DeviceMgmtScene extends Component {
 
   renderPageTitle(){
         return(<PageTitle title={'Connected Devices'}
-        handler={this.props.navigator.pop}/>);
+        handler={this.props.navigator.pop} isBadge={true}/>);
   }
   /*
      This method is used to render the componenet with all its element.

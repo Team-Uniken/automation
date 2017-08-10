@@ -19,7 +19,7 @@ import Config from 'react-native-config';
 import Drawer from 'react-native-drawer';
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
-import {View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, DeviceEventEmitter, AsyncStorage } from 'react-native'
+import { View, Image, Text, TouchableHighlight, TouchableWithoutFeedback, StyleSheet, TextInput, DeviceEventEmitter, AsyncStorage } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 
@@ -28,7 +28,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
  */
 import Skin from '../../Skin';
 import Util from '../Utils/Util';
-import {ClientBasedConfig} from '../Utils/LocalConfig';
+import { ClientBasedConfig } from '../Utils/LocalConfig';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onGetpasswordModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -123,10 +123,10 @@ This method is called when the component will start to load
     onGetCredentialSubscriptions = onGetCredentialsModuleEvt.addListener('onGetCredentials',
       this.onGetCredentials.bind(this));
     onGetpasswordSubscriptions = onGetpasswordModuleEvt.addListener('onGetpassword',
-                                                                    this.onGetpassword.bind(this));
+      this.onGetpassword.bind(this));
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     if (onGetCredentialSubscriptions) {
       onGetCredentialSubscriptions.remove();
       onGetCredentialSubscriptions = null;
@@ -169,59 +169,59 @@ This method is called when the component will start to load
   close() {
     obj.setState({ open: false });
   }
-  
-  validate(){
+
+  validate() {
     const user = this.state.userName;
     const pass = this.state.password;
     if (user.length != 0) {
       obj.close();
-    }else{
+    } else {
       alert('Please enter valid data');
     }
 
   }
-  
+
   //call to get 401 credential for domainUrl
   onGetCredentials(domainUrl) {
     obj.state.baseUrl = domainUrl.response;
     obj.open();
   }
-  
+
   //to get stored password and call setCredentials  method
   onGetpassword(e) {
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
-                                          if(value){
-                                          value = JSON.parse(value);
-                                          Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
-                                                                               ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
-                                                                                                        if (response) {
-                                                                                                        console.log('immediate response is' + response[0].error);
-                                                                                                        } else {
-                                                                                                        console.log('immediate response is' + response[0].error);
-                                                                                                        }
-                                                                                                        });
-                                                                               }).catch((error)=>{
-                                                                                        ReactRdna.setCredentials(uName,"", true, (response) => {
-                                                                                                                 if (response) {
-                                                                                                                 console.log('immediate response is' + response[0].error);
-                                                                                                                 } else {
-                                                                                                                 console.log('immediate response is' + response[0].error);
-                                                                                                                 }
-                                                                                                                 });
-                                                                                        
-                                                                                        }).done();
-                                          }else{
-                                          ReactRdna.setCredentials(uName,"", true, (response) => {
-                                                                   if (response) {
-                                                                   console.log('immediate response is' + response[0].error);
-                                                                   } else {
-                                                                   console.log('immediate response is' + response[0].error);
-                                                                   }
-                                                                   });
-                                          
-                                          }
-                                          }).done();
+      if (value) {
+        value = JSON.parse(value);
+        Util.decryptText(value.RPasswd).then((decryptedRPasswd) => {
+          ReactRdna.setCredentials(uName, decryptedRPasswd, true, (response) => {
+            if (response) {
+              console.log('immediate response is' + response[0].error);
+            } else {
+              console.log('immediate response is' + response[0].error);
+            }
+          });
+        }).catch((error) => {
+          ReactRdna.setCredentials(uName, "", true, (response) => {
+            if (response) {
+              console.log('immediate response is' + response[0].error);
+            } else {
+              console.log('immediate response is' + response[0].error);
+            }
+          });
+
+        }).done();
+      } else {
+        ReactRdna.setCredentials(uName, "", true, (response) => {
+          if (response) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+          }
+        });
+
+      }
+    }).done();
   }
 
   //get user name and password from 401 dialog and call setCredentials
@@ -272,15 +272,15 @@ This method is called when the component will start to load
    * @return {null}
    */
   toggleDrawer(close) {
-    if(close){
-      this.drawer.close();
-    }else{
-    console.log('in Main toggleDrawer')
-    if (this.state.drawerState.open) {
+    if (close) {
       this.drawer.close();
     } else {
-      this.drawer.open();
-    }
+      console.log('in Main toggleDrawer')
+      if (this.state.drawerState.open) {
+        this.drawer.close();
+      } else {
+        this.drawer.open();
+      }
     }
   }
 
@@ -294,18 +294,18 @@ This method is called when the component will start to load
    *
    * @return {JSX}
    */
-//to check drawer is open or not
+  //to check drawer is open or not
   getDrawerState() {
     return this.state.drawerState.open;
   }
   //tool bar 
   buildNavBar() {
     var navBarLineHeight = 1;
-    if(this.props.navBar.navBarLine === false)
+    if (this.props.navBar.navBarLine === false)
       navBarLineHeight = 0;
-    
+
     if (this.props.defaultNav) {
-      
+
       return (
         [<NavigationBar
           title={this.props.navBar.title}
@@ -329,26 +329,26 @@ This method is called when the component will start to load
           // }
           right={''}
           left={this.props.navBar.left}
-          />,
-         <View style={{ height: navBarLineHeight, backgroundColor: Skin.main.TITLE_COLOR }}/>]
+        />,
+        <View style={{ height: navBarLineHeight, backgroundColor: Skin.main.TITLE_COLOR }} />]
       );
     }
   }
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     return (
       <Drawer
         ref={(c) => {
           console.log("Drawer  = " + c);
           this.drawer = c;
-        } }
+        }}
         type="static"
         content={this.props.controlPanel != null && this.props.controlPanel != undefined ? <this.props.controlPanel
           toggleDrawer={this.toggleDrawer}
           closeDrawer={this.closeDrawer}
-            dashboardScreenName = {dashboardScreen}
+          dashboardScreenName={dashboardScreen}
           navigator={this.props.navigator} /> : null}
         acceptDoubleTap
         onOpen={() => {
@@ -358,7 +358,7 @@ This method is called when the component will start to load
               disabled: this.state.drawerState.disabled
             }
           });
-        } }
+        }}
         onClose={() => {
           this.setState({
             drawerState: {
@@ -366,7 +366,7 @@ This method is called when the component will start to load
               disabled: this.state.drawerState.disabled
             }
           });
-        } }
+        }}
         captureGestures={false}
         tweenDuration={100}
         panThreshold={0.0}
@@ -374,30 +374,30 @@ This method is called when the component will start to load
         openDrawerOffset={() => 70}
         closedDrawerOffset={() => 0}
         panOpenMask={0.2}>
-        {this.buildNavBar() }
+        {this.buildNavBar()}
         {this.props.children}
-        {BottomMenu!=undefined && [<BottomMenu
+        {BottomMenu != undefined && [<BottomMenu
           navigator={this.props.navigator}
           bottomMenu={this.props.bottomMenu} />]}
         <Modal
           onPress={() => {
             this.setState({ userName: '', password: '', open: false }); this.cancelCreds();
-          } }
+          }}
           style={styles.modalwrap}
           overlayOpacity={0.75}
           offset={100}
           open={this.state.open}
-          modalDidOpen={() => console.log('modal did open') }
+          modalDidOpen={() => console.log('modal did open')}
           modalDidClose={() => {
             if (this.selectedDialogOp) {
               this.selectedDialogOp = false;
               this.checkCreds();
             } else {
               this.selectedDialogOp = false;
-             this.setState({ userName: '', password: '', open: false });
+              this.setState({ userName: '', password: '', open: false });
               this.cancelCreds();
             }
-          } }>
+          }}>
           <View style={styles.modalTitleWrap}>
             <Text style={styles.modalTitle}>
               401 Authentication
@@ -412,7 +412,7 @@ This method is called when the component will start to load
             style={styles.modalInput}
             placeholder={'Enter username'}
             value={this.state.userName}
-            onChange={this.onUserChange.bind(this) }
+            onChange={this.onUserChange.bind(this)}
             placeholderTextColor={Skin.colors.HINT_COLOR} />
           <View style={styles.underline}></View>
           <TextInput
@@ -422,7 +422,7 @@ This method is called when the component will start to load
             secureTextEntry
             placeholder={'Enter password'}
             value={this.state.password}
-            onChange={this.onPasswordChange.bind(this) }
+            onChange={this.onPasswordChange.bind(this)}
             placeholderTextColor={Skin.colors.HINT_COLOR} />
           <View style={styles.underline}></View>
           <View style={{
@@ -433,7 +433,7 @@ This method is called when the component will start to load
               onPress={() => {
                 this.selectedDialogOp = false;
                 this.setState({ userName: '', password: '', open: false });
-              } }
+              }}
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>
@@ -444,7 +444,7 @@ This method is called when the component will start to load
               onPress={() => {
                 this.selectedDialogOp = true;
                 this.validate();
-              } }
+              }}
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>

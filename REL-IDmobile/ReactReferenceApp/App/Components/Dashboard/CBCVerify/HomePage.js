@@ -57,9 +57,10 @@ export default class HomePage extends Component {
 
   onGetConfig(value){
    //alert("data->>>>>"+value.config[1].value);
-    this.setState({urlData:Util.replaceUrlMacros('http://'+value.config[1].value,{"__USERNAME__":Main.dnaUserName})});
-
-    ;
+      if(value){
+        var url = Util.getConfigValue('main_page_url',value.config)
+        this.setState({urlData:Util.replaceUrlMacros(url,{"__USERNAME__":Main.dnaUserName,"__CONNECTEDIP__":Main.gatewayHost})});
+      }
   }
   
   triggerDrawer() {

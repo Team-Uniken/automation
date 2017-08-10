@@ -387,7 +387,7 @@ class ControlPanel extends Component {
       if (statusCode === 100) {
 
         var count = res.pArgs.response.ResponseData.notifications.length;
-        Events.trigger('updateBadge', count);
+        //Events.trigger('updateBadge', count);
         Main.notificationCount = count;
         if (this.props.dashboardScreenName === 'DashboardNotification') {
           if (res.pArgs.response.ResponseData.notifications.length > 0) {

@@ -208,14 +208,32 @@ class Util extends Component {
   }
 
   static replaceUrlMacros(url, jsonObject) {
-    if (jsonObject != null && jsonObject != undefined) {    
+    if (url!=null && url != undefined && 
+      jsonObject != null && jsonObject != undefined) {    
       var keys = Object.keys(jsonObject).forEach((key) => {
          url = url.replace(key,jsonObject[key]);
       });
     }
     return url;
   }
+
+  static getConfigValue(configname, jsonArray){
+    var value = null;
+    if (jsonArray != null && jsonArray != undefined) { 
+      for (var i=0;i<jsonArray.length;i++){
+        var jsonObject = jsonArray[i];
+        var keys = Object.keys(jsonObject).forEach((key) => {
+        if(key === "key" && jsonObject[key]===configname){
+          value = jsonObject["value"];
+          return value;
+        }
+      });
+      }   
+    }
+    return value;
+  }
 }
+
 
 
 module.exports = Util;

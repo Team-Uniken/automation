@@ -181,7 +181,7 @@ export default class UpdateQuestionSet extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.close}/>);
+        handler={this.close} isBadge={true}/>);
   }
 
   /*

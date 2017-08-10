@@ -855,7 +855,7 @@ This method is called when the component will start to load
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop}/>);
+        handler={this.props.navigator.pop} isBadge={true}/>);
   }
 
   render() {

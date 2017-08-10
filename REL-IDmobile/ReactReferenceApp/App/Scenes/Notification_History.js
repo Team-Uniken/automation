@@ -451,7 +451,7 @@ class Notifications_History extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop}/>);
+        handler={this.props.navigator.pop} isBadge={true}/>);
   }
   /*
      This method is used to render the componenet with all its element.
