@@ -116,7 +116,7 @@ class PageTitle extends Component {
           </TouchableHighlight>
 
           {this.state.badgeValue > 0 && <Badge style={{
-            top: Platform.OS === 'android' ? -45 : -7,
+            top: Platform.OS === 'android' ? -45 : -24,
             right: -20,
           }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
             {this.state.badgeValue}
