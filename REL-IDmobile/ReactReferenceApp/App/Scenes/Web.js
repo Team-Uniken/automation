@@ -50,7 +50,7 @@ export default class Web extends Component {
       loading: true,
       error: false,
       isProxySet: false,
-      scalesPageToFit: this.props.scale || true,
+      scalesPageToFit: this.props.scale || false,
     };
 
     this.close = this.close.bind(this);
