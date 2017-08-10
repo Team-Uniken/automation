@@ -11,6 +11,7 @@ import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
 import Web from '../../../Scenes/Web';
+import Util from "../../Utils/Util";
 /*
   CALLED
 */
@@ -56,7 +57,9 @@ export default class HomePage extends Component {
 
   onGetConfig(value){
    //alert("data->>>>>"+value.config[1].value);
-    this.setState({urlData:'http://'+value.config[1].value});
+    this.setState({urlData:Util.replaceUrlMacros('http://'+value.config[1].value,{"__USERNAME__":Main.dnaUserName})});
+
+    ;
   }
   
   triggerDrawer() {

@@ -206,6 +206,15 @@ class Util extends Component {
       return null;
     }
   }
+
+  static replaceUrlMacros(url, jsonObject) {
+    if (jsonObject != null && jsonObject != undefined) {    
+      var keys = Object.keys(jsonObject).forEach((key) => {
+         url = url.replace(key,jsonObject[key]);
+      });
+    }
+    return url;
+  }
 }
 
 

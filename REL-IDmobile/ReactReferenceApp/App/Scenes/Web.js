@@ -286,7 +286,7 @@ export default class Web extends Component {
       >
       {isPageTitle && this.renderPageTitle(this.props.title) }
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
-        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={5}/>}
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'}/>}
         {this.getWebView() }
         {this.renderBottomBar() }
       </View>
@@ -301,7 +301,7 @@ export default class Web extends Component {
   renderWithoutMain() {
     return (
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
-        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={5}/>}
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'}/>}
         {this.getWebView() }
         {this.renderBottomBar() }
       </View>
