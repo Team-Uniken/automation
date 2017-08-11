@@ -7,7 +7,7 @@
  *ALWAYS NEED
  */
 import React, { Component } from 'react';
-import ReactNative, { Platform, TouchableHighlight} from 'react-native';
+import ReactNative, { Platform, TouchableHighlight,TouchableOpacity} from 'react-native';
 import NavBar from './navbar.js';
 import IconBadge from 'react-native-icon-badge';
 import Badge from 'react-native-smart-badge'
@@ -102,7 +102,7 @@ class PageTitle extends Component {
         </Text>
 
         {this.props.isBadge &&<View style={{ width: 40,height:50, position: 'absolute', right: 10 }}>
-           <TouchableHighlight underlayColor='transparent' onPress={this.onPressNotificationView}>
+           <TouchableOpacity underlayColor='transparent' onPress={this.onPressNotificationView}>
           <Text style={{
             color: Skin.color.LOGO_COLOR,
             textAlign: 'center',
@@ -113,8 +113,7 @@ class PageTitle extends Component {
             //backgroundColor: '#50ae3c',
             fontFamily: Skin.font.ICON_FONT
           }}>{Skin.icon.bell}</Text>
-          </TouchableHighlight>
-
+          
           {this.state.badgeValue > 0 && <Badge style={{
             top: Platform.OS === 'android' ? -45 : -24,
             right: -20,
@@ -122,9 +121,10 @@ class PageTitle extends Component {
             {this.state.badgeValue>9?"9+":this.state.badgeValue}
 
           </Badge>}
+</TouchableOpacity>
 
-
-        </View> }
+        </View>
+ }
 
       </View>
 
