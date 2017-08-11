@@ -47,6 +47,7 @@ class Welcome_Screen extends Component {
   */
   componentWillMount() {
     obj=this;
+    BackHandler.addEventListener('hardwareBackPress', function doNothing() { return true;})
   //  Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
   }
 
