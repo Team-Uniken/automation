@@ -634,7 +634,9 @@ export default class NotificationMgmtScene extends Component {
 
   //callback of getNotifications.
   onGetNotificationsDetails(e) {
-    this.setState({ refreshing: false });
+    if(this.state.refreshing)
+     this.setState({ refreshing: false });
+    
     console.log('----- onGetNotificationsDetails');
     NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
@@ -657,9 +659,10 @@ export default class NotificationMgmtScene extends Component {
       } else {
         this.showAlertModal("You have no pending notifications");
       }
-      this.setState({ notification: noti });
       notification = noti;
+      //this.setState({ notification: noti }); 
       this.setState({
+                    notification: noti, 
                     dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
                     });
     } else {
@@ -707,7 +710,7 @@ export default class NotificationMgmtScene extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-     //Events.trigger('updateBadge', notification.length);
+     Events.trigger('updateBadge', notification.length);
   }
 
   /*
