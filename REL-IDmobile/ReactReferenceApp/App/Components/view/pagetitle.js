@@ -101,7 +101,7 @@ class PageTitle extends Component {
           {this.props.title}
         </Text>
 
-        {this.props.isBadge &&<View style={{ width: 40,height:50, position: 'absolute', right: 10 }}>
+        {this.props.isBadge &&<View style={{ width:50,height:50, position: 'absolute', right: 10 }}>
            <TouchableOpacity underlayColor='transparent' onPress={this.onPressNotificationView}>
           <Text style={{
             color: Skin.color.LOGO_COLOR,
@@ -116,7 +116,7 @@ class PageTitle extends Component {
           
           {this.state.badgeValue > 0 && <Badge style={{
             top: Platform.OS === 'android' ? -45 : -24,
-            right: -20,
+            right: -25,
           }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
             {this.state.badgeValue>9?"9+":this.state.badgeValue}
 

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v7.appcompat.*;
-import android.support.v7.appcompat.BuildConfig;
 
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
@@ -83,7 +82,7 @@ public class MainApplication extends Application implements ReactApplication {
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
-            return false;
+            return BuildConfig.DEBUG;
         }
 
         @Override
