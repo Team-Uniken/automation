@@ -374,7 +374,7 @@ class ControlPanel extends Component {
 
   onGetNotifications(e) {
     console.log('----- onGetNotifications');
-
+    InteractionManager.runAfterInteractions(() => {
     //    if (onGetNotificationsSubscription) {
     //      onGetNotificationsSubscription.remove();
     //      onGetNotificationsSubscription = null;
@@ -443,6 +443,7 @@ class ControlPanel extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
+  });
   }
 
 
