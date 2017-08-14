@@ -33,7 +33,7 @@ class PageTitle extends Component {
     super(props);
 
     this.state = {
-      badgeValue: 1,
+      badgeValue: Main.notificationCount,
       refresh: false,
     };
     self = this;

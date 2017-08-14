@@ -707,7 +707,7 @@ export default class NotificationMgmtScene extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-     //Events.trigger('updateBadge', notification.length);
+     Events.trigger('updateBadge', notification.length);
   }
 
   /*

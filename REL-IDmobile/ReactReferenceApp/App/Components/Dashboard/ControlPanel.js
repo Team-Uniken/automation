@@ -387,7 +387,7 @@ class ControlPanel extends Component {
       if (statusCode === 100) {
 
         var count = res.pArgs.response.ResponseData.notifications.length;
-        //Events.trigger('updateBadge', count);
+        Events.trigger('updateBadge', count);
         Main.notificationCount = count;
         if (this.props.dashboardScreenName === 'DashboardNotification') {
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
@@ -423,9 +423,9 @@ class ControlPanel extends Component {
                 return;
               }
             }
-            InteractionManager.runAfterInteractions(() => {
+            //InteractionManager.runAfterInteractions(() => {
               this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
-            });
+            //});
           } else if (this.isNotificationScreenPresent() == 1) {
             Events.trigger('showNotification', e);
           }
