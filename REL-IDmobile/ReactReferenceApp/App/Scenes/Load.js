@@ -63,10 +63,15 @@ let obj1;
 let onInitializeSubscription;
 let onPauseCompletedSubscription;
 let onResumeCompletedSubscription;
+let onTerminateSubscription;
+let onSessionTimeoutSubscription;
 
 const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onTerminateCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const ononSessionTimeoutModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+
 
 /**
  * Return flavour specific connectionProfile and load image.
@@ -211,6 +216,12 @@ class Load extends Component {
 
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
+
+//      ReactRdna.terminate( (tResponse) => {
+//        console.log('----- terminate ');
+//        console.log(tResponse[0].error);
+//        
+//        });
         //                               if (NotificationObtianedResponse !== undefined) {
         //                               // If error occurred reload last response
         //
@@ -298,6 +309,11 @@ class Load extends Component {
       onResumeCompletedSubscription.remove();
       onResumeCompletedSubscription = null;
     }
+    
+    if(onTerminateSubscription){
+      onTerminateSubscription.remove();
+      onTerminateSubscription=null;
+    }
 
 
     onPauseCompletedSubscription = onPauseCompletedModuleEvt.addListener('onPauseCompleted', function (e) {
@@ -315,6 +331,25 @@ class Load extends Component {
       }
     });
 
+    onTerminateSubscription =onTerminateCompletedModuleEvt.addListener('onTerminateCompleted', function (e) {
+    
+      Obj.doInitialize();
+    });
+    
+    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
+      
+      Alert.alert(
+        '',
+        'Your session has been timed out',
+        [
+          { text: 'OK', onPress: () => {
+            Obj.doInitialize();
+          } }
+          ]
+        );
+
+      
+    });
 
     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
       //    onResumeCompletedSubscription.remove();
@@ -361,10 +396,10 @@ class Load extends Component {
 
 
     onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
-      if (onInitializeSubscription) {
-        onInitializeSubscription.remove();
-        onInitializeSubscription = null;
-      }
+//      if (onInitializeSubscription) {
+//        onInitializeSubscription.remove();
+//        onInitializeSubscription = null;
+//      }
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
       console.log('immediate response is' + e.response);

@@ -45,10 +45,11 @@ RDNAIWACreds *rdnaIWACredsObj;
 RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents {
-  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigReceived",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification",@"onGetNotificationsHistory",@"onTerminate"];
+  return @[@"onInitializeCompleted",@"onPauseCompleted",@"onResumeCompleted",@"onConfigReceived",@"onCheckChallengeResponseStatus",@"onGetAllChallengeStatus",@"onUpdateChallengeStatus",@"onForgotPasswordStatus",@"onLogOff",@"onGetpassword",@"onGetCredentials",@"onGetPostLoginChallenges",@"onGetRegistredDeviceDetails",@"onUpdateDeviceDetails",@"onUpdateDeviceStatus",@"onGetNotifications",@"onUpdateNotification",@"onGetNotificationsHistory",@"onTerminateCompleted",@"onSessionTimeout"];
 }
 
 -(void)initParams{
+// RDNAErrorID errorID= [RDNA getErrorInfo:272629808];
   rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
   dictHttpCallbacks = [[NSMutableDictionary alloc]init];
 }
@@ -85,11 +86,8 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
 
     }
        }
-  
-  
+    
   [self initParams];
-  
-  
 
   if([[ReactNativeConfig envFor:@"BETTERMOBI"] isEqualToString:@"true"]){
   
@@ -795,7 +793,7 @@ RCT_EXPORT_METHOD (exitApp){
   [defaults setValue:nil forKey:@"sContext"];
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
   //                                                            body:@{@"response":status}];
-    [self sendEventWithName:@"onTerminate" body:@{@"response":status}];
+    [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
   return 0;
 }
 
@@ -964,7 +962,10 @@ RCT_EXPORT_METHOD (exitApp){
   return tokenString;
 }
 
-
+-(int)onSessionTimeout:(NSString*)status{
+  [self sendEventWithName:@"onSessionTimeout" body:@{@"response":status}];
+  return 0;
+}
 #pragma mark http response callback methods
 
 -(int)onHttpResponse:(RDNAHTTPStatus*) status{
