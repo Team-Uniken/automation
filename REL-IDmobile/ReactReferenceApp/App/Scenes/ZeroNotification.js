@@ -1066,6 +1066,7 @@ export default class NotificationMgmtScene extends Component {
       {listViewProportion != 1 &&
         this._renderMessage() }
       {this.checkPassModal() }
+       {this.alertModal() }
     </View>);
   }
 
@@ -1099,15 +1100,13 @@ export default class NotificationMgmtScene extends Component {
         {this.renderNotificationView(this.state.dataSource) }
         { Main.notificationCount == 0 && this._renderMessage()}
        { Main.notificationCount == 0 &&
-         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,marginTop: 5,backgroundColor: Skin.color.APPROVE_BUTTON_COLOR}}
+         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,justifyContent:'center',marginTop: 5,backgroundColor: Skin.color.APPROVE_BUTTON_COLOR}}
                 onPress={() => { 
                     this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
                 } }>
-                <View style={{alignSelf:'center',backgroundColor:'center'}}>
-                 <Text style={{ fontSize: 16, alignSelf:'center',textAlign:'center', color: 'white', fontWeight: 'bold' }}>
+                <Text style={{ fontSize: 16, alignSelf:'center',textAlign:'center', color: 'white', fontWeight: 'bold' }}>
                     Notification History
                 </Text>
-                </View>
         </TouchableHighlight>
        }
       </View>
