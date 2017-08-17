@@ -573,7 +573,7 @@ class Notifications_History extends Component {
 
     return (
       <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
-        <View style={[Skin.notification.row, { marginBottom: 4 }]}>
+        <View style={[Skin.notification.historyrow, { marginBottom: 4 }]}>
           <Text style={Skin.notification.subject}>
             {notification.message.subject}
           </Text>
@@ -583,19 +583,19 @@ class Notifications_History extends Component {
         </View>
 
         <View style={{ backgroundColor: 'transparent', flex: 2, flexDirection: 'column', marginBottom: 8 }}>
-          <View style={Skin.notification.row}>
+          <View style={Skin.notification.historyrow}>
             <Text style={Skin.notification.dot}>{"\u2022"}</Text>
             <Text style={Skin.notification.body}>
               {bodyarray[0]}
             </Text>
           </View>
-          <View style={Skin.notification.row}>
+          <View style={Skin.notification.historyrow}>
             <Text style={Skin.notification.dot}>{"\u2022"}</Text>
             <Text style={Skin.notification.body}>
               {bodyarray[1]}
             </Text>
           </View>
-          <View style={Skin.notification.row}>
+          <View style={Skin.notification.historyrow}>
             <Text style={Skin.notification.dot}>{"\u2022"}</Text>
             <Text style={Skin.notification.body}>
               {bodyarray[2]}
