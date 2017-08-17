@@ -19,6 +19,7 @@ import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
+import NotificationCard from '../Components/view/notificationcard';
 
 /*
  Use in this js
@@ -261,8 +262,8 @@ var SampleRow = React.createClass({
               <View style={Skin.notification.notificationButton}>
 
                 <TouchableHighlight style={Skin.notification.confirmbutton}
-                  onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label)}
-                >
+                  onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label) }
+                  >
                   <View style={Skin.notification.text} >
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[0].label}
@@ -270,7 +271,7 @@ var SampleRow = React.createClass({
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[1].label)}>
+                <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[1].label) }>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
@@ -278,7 +279,7 @@ var SampleRow = React.createClass({
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label)}>
+                <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label) }>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[2].label}
@@ -330,7 +331,7 @@ var SampleRow = React.createClass({
 
               <View style={Skin.notification.notificationButton}>
 
-                <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label)}>
+                <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label) }>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[0].label}
@@ -339,7 +340,7 @@ var SampleRow = React.createClass({
                 </TouchableHighlight>
 
 
-                <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[1].label)}>
+                <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[1].label) }>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
@@ -365,7 +366,7 @@ export default class NotificationMgmtScene extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     notification = [];
-
+    
     this.updateNotificationDetails = this.updateNotificationDetails.bind(this);
     this.getMyNotifications = this.getMyNotifications.bind(this);
     this.onGetNotificationsDetails = this.onGetNotificationsDetails.bind(this);
@@ -378,10 +379,12 @@ export default class NotificationMgmtScene extends Component {
     this.authenticateWithTouchIDIfSupported = this.authenticateWithTouchIDIfSupported.bind(this);
     this.authenticateTouchID = this.authenticateTouchID.bind(this);
     this.onTouchIDAuthenticationDone = this.onTouchIDAuthenticationDone.bind(this);
+    this.onNotificationAction = this.onNotificationAction.bind(this);
 
     var data = this.renderListViewData(notification.sort(compare));
     this.state = {
       dataSource: ds.cloneWithRows(data),
+      dataSourceSwap:null,
       alertMsg: "",
       showAlert: false,
       inputPassword: '',
@@ -481,21 +484,6 @@ export default class NotificationMgmtScene extends Component {
   }
 
   onTouchIDAuthenticationDone() {
-    //Todo : cleanup after test
-    // AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-    //   try {
-    //     value = JSON.parse(value);
-    //     ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.ERPasswd, (response) => {
-    //       if (response) {
-    //         console.log('immediate response of encrypt data packet is is' + response[0].error);
-    //         this.updateNotificationDetails();
-    //       } else {
-    //         console.log('immediate response is' + response[0].response);
-    //       }
-    //     });
-    //   } catch (e) { }
-    // }).done();
-
     Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd) => {
       if (encryptedRPasswd) {
         Util.decryptText(encryptedRPasswd).then((RPasswd) => {
@@ -521,6 +509,7 @@ export default class NotificationMgmtScene extends Component {
     obj = this;
     Events.on('showNotification', 'showNotification', this.showNotification);
     Events.on('updateSetting', 'updateSetting', this.updateSetting);
+    Events.on('onNotificationAction', 'onNotificationAction', this.onNotificationAction);
     if (this.props.url != null) {
       NotificationObtianedResponse = this.props.url.data;
       this.onGetNotificationsDetails(NotificationObtianedResponse);
@@ -535,7 +524,7 @@ export default class NotificationMgmtScene extends Component {
 
     //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
     this.checkAdditionalAuthSupported();
-  
+
   }
   /*
    This is life cycle method of the react native component.
@@ -544,6 +533,7 @@ export default class NotificationMgmtScene extends Component {
   componentWillUnmount() {
     Events.rm('showNotification', 'showNotification');
     Events.rm('updateSetting', 'updateSetting');
+    Events.rm('onNotificationAction', 'onNotificationAction');
     if (onUpdateNotificationSubscription) {
       onUpdateNotificationSubscription.remove();
       onUpdateNotificationSubscription = null;
@@ -557,7 +547,6 @@ export default class NotificationMgmtScene extends Component {
     if (this.props.url == null) {
       this.getMyNotifications();
     }
-    var listViewScrollView = this.refs.listView.getScrollResponder();
   }
   /**
    *  show Notifications
@@ -588,7 +577,7 @@ export default class NotificationMgmtScene extends Component {
             // If error occurred reload last response
             this.onGetNotificationsDetails(NotificationObtianedResponse);
           }
-                                 
+
         }
       });
     } else {
@@ -634,9 +623,9 @@ export default class NotificationMgmtScene extends Component {
 
   //callback of getNotifications.
   onGetNotificationsDetails(e) {
-    if(this.state.refreshing)
-     this.setState({ refreshing: false });
-    
+    if (this.state.refreshing)
+      this.setState({ refreshing: false });
+
     console.log('----- onGetNotificationsDetails');
     NotificationObtianedResponse = e;
     const res = JSON.parse(e.response);
@@ -655,16 +644,16 @@ export default class NotificationMgmtScene extends Component {
           this.dismissAlertModal();
         }
 
-       
+
       } else {
-        this.showAlertModal("You have no pending notifications");
+       // this.showAlertModal("You have no pending notifications");
       }
       notification = noti;
       //this.setState({ notification: noti }); 
       this.setState({
-                    notification: noti, 
-                    dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
-                    });
+        notification: noti,
+        dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+      });
     } else {
       console.log('Something went wrong');
     }
@@ -683,7 +672,7 @@ export default class NotificationMgmtScene extends Component {
             break;
           }
         }
-        
+
         if (notification.length <= 0) {
           this.props.navigator.pop(0);
         }
@@ -691,7 +680,7 @@ export default class NotificationMgmtScene extends Component {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
         });
-       
+
 
       } else {
 
@@ -710,15 +699,14 @@ export default class NotificationMgmtScene extends Component {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-     Events.trigger('updateBadge', notification.length);
+    Events.trigger('updateBadge', notification.length);
   }
 
   /*
     //Checks if RPasswd and ERPasswd exists and updates the isAdditionalAuthSupported flag.
   */
 
-  checkAdditionalAuthSupported()
-  {
+  checkAdditionalAuthSupported() {
     AsyncStorage.getItem(Main.dnaUserName).then((value) => {
       if (value != null && value != undefined) {
         try {
@@ -745,8 +733,7 @@ export default class NotificationMgmtScene extends Component {
   /*
       This method call when Profile and Setting changed
    */
-  updateSetting(e)
-  {
+  updateSetting(e) {
     obj.checkAdditionalAuthSupported();
   }
 
@@ -784,9 +771,9 @@ export default class NotificationMgmtScene extends Component {
   /*
     render pagetitle
   */
-  renderPageTitle(pageTitle){
-        return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop} isBadge={true}/>);
+  renderPageTitle(pageTitle) {
+    return (<PageTitle title={pageTitle}
+      handler={this.props.navigator.pop} isBadge={true}/>);
   }
 
 
@@ -809,13 +796,178 @@ export default class NotificationMgmtScene extends Component {
       style={Skin.appointmentrow.row} />
   }
 
+  renderNotificationCard(notificationData) {
+    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row}  isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton}/>
+  }
+
+  onNotificationAction(bundle) {
+    const {notification, btnLabel, action} = bundle;
+    switch (action) {
+      case "accept":
+        this.showalert(notification, btnLabel);
+        break;
+      case "reject":
+        this.showalert(notification, btnLabel);
+        break;
+      case "fraud":
+        this.showalertforReject(notification, btnLabel);
+        break;
+      case "click":
+        this.swapDataSource(notification);
+        break;
+      case "hide":
+        this.restoreDataStore();
+        break;
+    }
+  }
+
+  swapDataSource(data){
+    var dataSource = this.state.dataSource;
+     var ds = new ListView.DataSource({
+      sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.state.dataSource = ds.cloneWithRows([{notification:data}]);
+    this.setState({dataSourceSwap:dataSource});
+  }
+
+  restoreDataStore(){
+    var dataSourceSwap = this.state.dataSourceSwap;
+    this.state.dataSourceSwap = null;
+    this.setState({dataSource:dataSourceSwap});
+  }
+
+  showalertforReject(notification, btnLabel) {
+    Alert.alert(
+      'Fraud Warning',
+      'You\'ve rejected this transaction, would you like to flag it as fraud?',
+      [
+        {
+          text: 'It\'s Fraud',
+          onPress: () => {
+            this.showalert(notification, btnLabel)
+          }
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            this.showalert(notification, notification.action[1].label)
+          }
+        },
+      ]
+    )
+  }
+
+  showalert(notification, btnLabel) {
+    for (var i = 0; i < notification.action.length; i++) {
+      var data = notification.action[i];
+      if (data.label == btnLabel) {
+        this.setState({
+          selectedNotificationId: notification.notification_uuid,
+          selectedAction: data.action,
+        }, () => {
+
+          if (data.authlevel !== null && data.authlevel !== undefined) {
+            if (data.authlevel == "1") {
+              this.showModelForPassword();
+            } else if (data.authlevel == "2") {
+              if (Platform.OS === 'android') {
+                this.showComponentForPattern();
+              } else {
+                this.showModelForTouchId();
+              }
+            } else {
+              this.updateNotificationDetails();
+            }
+          } else {
+            this.updateNotificationDetails();
+          }
+        });
+        break;
+      }
+    }
+  }
+
+  showModelForPassword() {
+    if (isAdditionalAuthSupported.pass === true) {
+      this.setState({
+        showPasswordModel: true,
+      });
+    } else {
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. User not logged in using password.');
+    }
+  }
+
+  showModelForTouchId() {
+    if (isAdditionalAuthSupported.erpass === true) {
+      this.authenticateWithTouchIDIfSupported();
+    } else {
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. TouchID is not enabled or supported.');
+    }
+  }
+
+  showComponentForPattern() {
+    if (isAdditionalAuthSupported.erpass === true) {
+      this.authenticateWithPattern();
+    } else {
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. Pattern is not enabled.');
+    }
+  }
+
+  //Additional authentication not supported.
+  showAlertAuthNotSuppoted(msg) {
+    Alert.alert(
+      '',
+      msg,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            this.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
+            this.updateNotificationDetails();
+          }
+        }
+      ]
+    );
+  }
+
+  renderNotificationView(dataSource) {
+    if (dataSource.getRowCount() == 1) {
+      return (
+        <View style={{ flex: 1 }}>
+          {this.renderNotificationCard.bind(
+            {
+              view: {
+                expand: true,
+                showButtons: true,
+                showHideButton: Main.notificationCount > 1
+              }
+            })(dataSource.getRowData(0, 0)) }
+        </View>
+      );
+    } else {
+      return <ListView
+        ref="listView"
+        automaticallyAdjustContentInsets={false}
+        dataSource={dataSource}
+        removeClippedSubviews={false}
+        renderRow={this.renderNotificationCard.bind(
+          {
+            view: {
+              expand: false,
+              showButtons: false
+            }
+          }) } />
+    }
+  }
+
   alertModal() {
     return (<Modal
       style={styles.modalwrap}
       overlayOpacity={0.75}
       offset={100}
       open={this.state.showAlert}
-      modalDidOpen={() => console.log('modal did open')}
+      modalDidOpen={() => console.log('modal did open') }
       modalDidClose={() => {
         if (this.selectedAlertOp) {
           this.selectedAlertOp = false;
@@ -824,11 +976,11 @@ export default class NotificationMgmtScene extends Component {
           this.selectedAlertOp = false;
           this.onAlertModalDismissed();
         }
-      }}>
+      } }>
       <View style={styles.modalTitleWrap}>
         <Text style={styles.modalTitle}>
           Alert
-      </Text>
+        </Text>
       </View>
       <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
         {this.state.alertMsg}
@@ -841,12 +993,12 @@ export default class NotificationMgmtScene extends Component {
           this.setState({
             showAlert: false
           });
-        }}
+        } }
         underlayColor={Skin.colors.REPPLE_COLOR}
         style={styles.modalButton}>
         <Text style={styles.modalButtonText}>
           OK
-      </Text>
+        </Text>
       </TouchableHighlight>
     </Modal>);
   }
@@ -857,14 +1009,14 @@ export default class NotificationMgmtScene extends Component {
       overlayOpacity={0.75}
       offset={100}
       open={this.state.showPasswordModel}
-      modalDidOpen={() => console.log('modal did open')}
+      modalDidOpen={() => console.log('modal did open') }
       modalDidClose={() => this.setState({
         showPasswordModel: false
-      })}>
+      }) }>
       <View style={styles.modalTitleWrap}>
         <Text style={styles.modalTitle}>
           Please enter your password
-    </Text>
+        </Text>
       </View>
       <TextInput
         autoCorrect={false}
@@ -876,17 +1028,17 @@ export default class NotificationMgmtScene extends Component {
         autoFocus={true}
         value={this.state.inputPassword}
         placeholderTextColor={Skin.colors.HINT_COLOR}
-        onSubmitEditing={this.checkPassword.bind(this)}
-        onChange={this.onPasswordChange.bind(this)} />
+        onSubmitEditing={this.checkPassword.bind(this) }
+        onChange={this.onPasswordChange.bind(this) } />
       <View style={styles.border}></View>
 
       <TouchableHighlight
-        onPress={this.checkPassword.bind(this)}
+        onPress={this.checkPassword.bind(this) }
         underlayColor={Skin.colors.REPPLE_COLOR}
         style={styles.modalButton}>
         <Text style={styles.modalButtonText}>
           Submit
-    </Text>
+        </Text>
       </TouchableHighlight>
 
     </Modal>);
@@ -899,7 +1051,7 @@ export default class NotificationMgmtScene extends Component {
       <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
         <ListView
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)}/>
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this) }/>
           }
           ref="listView"
           automaticallyAdjustContentInsets={false}
@@ -910,8 +1062,8 @@ export default class NotificationMgmtScene extends Component {
 
       </View>
       {listViewProportion != 1 &&
-        this._renderMessage()}
-      {this.checkPassModal()}
+        this._renderMessage() }
+      {this.checkPassModal() }
     </View>);
   }
 
@@ -922,7 +1074,7 @@ export default class NotificationMgmtScene extends Component {
         open: false,
         disabled: true,
       }}
-      defaultNav = {isPageTitle?false:true}
+      defaultNav = {isPageTitle ? false : true}
       navBar={{
         title: 'My Notifications',
         visible: true,
@@ -939,18 +1091,22 @@ export default class NotificationMgmtScene extends Component {
         visible: false,
       }}
       navigator={this.props.navigator}
-    >
-    { isPageTitle && this.renderPageTitle('My Notifications')}
-      <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-        <ListView
-          ref="listView"
-          automaticallyAdjustContentInsets={false}
-          dataSource={this.state.dataSource}
-          removeClippedSubviews={false}
-          renderRow={this.renderRow} />
+      >
+      { isPageTitle && this.renderPageTitle('My Notifications') }
+      <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
+        {this.renderNotificationView(this.state.dataSource) }
+       { Main.notificationCount == 0 && 
+         this._renderMessage() &&
+         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,marginTop: 5, alignSelf: 'center',backgroundColor: Skin.color.APPROVE_BUTTON_COLOR, alignItems: 'center' }}
+                onPress={() => { } }>
+                 <Text style={{ fontSize: 16,flex:1,backgroundColor:'transparent',textAlign:'center', color: 'white', fontStyle: 'bold' }}>
+                    Notification History
+                </Text>
+        </TouchableHighlight>
+       }
       </View>
-      {this.checkPassModal()}
-      {this.alertModal()}
+      {this.checkPassModal() }
+      {this.alertModal() }
     </Main>);
   }
 
@@ -1020,7 +1176,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
     marginBottom: 80,
-
   }
 });
 

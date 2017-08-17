@@ -2228,6 +2228,10 @@ const collection = {
   },
   color:{
     LOGO_COLOR,
+    WHITE,
+    APPROVE_BUTTON_COLOR,
+    REJECT_BUTTON_COLOR,
+    FRAUD_BUTTON_COLOR,
   },
   LOAD_SCREEN_IMAGE,
   STATUS_BAR_TINT_COLOUR,
