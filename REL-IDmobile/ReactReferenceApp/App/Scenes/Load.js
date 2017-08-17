@@ -597,7 +597,7 @@ class Load extends Component {
 
     if (currentAppState == 'background') {
       console.log('App State Change background:');
-      if (Config.ENABLE_PAUSE === true) {
+      if (Config.ENABLE_PAUSE === "true") {
         if (Main.isApiRunning == false) {
           ReactRdna.pauseRuntime((response) => {
             if (response) {
