@@ -105,7 +105,7 @@ export default class HomePage extends Component {
           visible: true,
           active: 1,
         }}>
-        <PageTitle title={'Home'}
+        <PageTitle title={'Welcome ' +Main.dnaUserName}
           handler={this.triggerDrawer}
           isBadge={true} />
 

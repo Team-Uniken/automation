@@ -110,7 +110,7 @@ class Load extends Component {
       animatedTextValue: new Animated.Value(0),
     };
 
-    this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity', 'Verifying user identity', 'Setting up secure channel'];
+    this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity', 'Verifying user identity'];
   }
   openRoute(route) {
     this.props.navigator.push(route);
