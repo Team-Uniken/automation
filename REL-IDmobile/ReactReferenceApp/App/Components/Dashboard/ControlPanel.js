@@ -497,7 +497,11 @@ class ControlPanel extends Component {
     this.getMyNotifications();
     if(!this.isNotificationScreenPresent()){
        InteractionManager.runAfterInteractions(() => {
-              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+              if(this.props.navigator.getCurrentRoutes(0).length > 1)
+                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+              else
+                 this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+              
             });
     }
   }

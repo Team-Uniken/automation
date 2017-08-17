@@ -190,7 +190,7 @@ export default class NotificationCard extends Component {
                     </TouchableWithoutFeedback>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) } }>
-                        <Text style={{ fontSize: 16, color: 'white', fontStyle: 'bold', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
+                        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
                         </Text>
                     </TouchableHighlight>}
@@ -266,7 +266,7 @@ export default class NotificationCard extends Component {
                     </TouchableWithoutFeedback>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) } }>
-                        <Text style={{ fontSize: 16, color: 'white', fontStyle: 'bold', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
+                        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
                         </Text>
                     </TouchableHighlight>}
