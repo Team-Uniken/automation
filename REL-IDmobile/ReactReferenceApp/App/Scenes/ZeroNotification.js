@@ -20,6 +20,8 @@ import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import NotificationCard from '../Components/view/notificationcard';
+import { Navigator } from 'react-native-deprecated-custom-components'
+
 
 /*
  Use in this js
@@ -1095,13 +1097,17 @@ export default class NotificationMgmtScene extends Component {
       { isPageTitle && this.renderPageTitle('My Notifications') }
       <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
         {this.renderNotificationView(this.state.dataSource) }
-       { Main.notificationCount == 0 && 
-         this._renderMessage() &&
-         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,marginTop: 5, alignSelf: 'center',backgroundColor: Skin.color.APPROVE_BUTTON_COLOR, alignItems: 'center' }}
-                onPress={() => { } }>
-                 <Text style={{ fontSize: 16,flex:1,backgroundColor:'transparent',textAlign:'center', color: 'white', fontStyle: 'bold' }}>
+        { Main.notificationCount == 0 && this._renderMessage()}
+       { Main.notificationCount == 0 &&
+         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,marginTop: 5,backgroundColor: Skin.color.APPROVE_BUTTON_COLOR}}
+                onPress={() => { 
+                    this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+                } }>
+                <View style={{alignSelf:'center',backgroundColor:'center'}}>
+                 <Text style={{ fontSize: 16, alignSelf:'center',textAlign:'center', color: 'white', fontWeight: 'bold' }}>
                     Notification History
                 </Text>
+                </View>
         </TouchableHighlight>
        }
       </View>
