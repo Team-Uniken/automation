@@ -113,9 +113,9 @@ export default class NotificationCard extends Component {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
                     } }>
-                        <View style={[style.customerow, this.props.expand ? { marginBottom: 20 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
+                        <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 20 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
 
-                            <View style={style.col}>
+                            <View style={[style.col, { flex: 1 }]}>
                                 <View style={style.row}>
                                     <Text style={style.subject}>
                                         {this.props.notification.message.subject}

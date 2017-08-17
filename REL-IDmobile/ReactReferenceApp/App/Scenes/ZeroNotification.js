@@ -1031,7 +1031,8 @@ export default class NotificationMgmtScene extends Component {
         value={this.state.inputPassword}
         placeholderTextColor={Skin.colors.HINT_COLOR}
         onSubmitEditing={this.checkPassword.bind(this) }
-        onChange={this.onPasswordChange.bind(this) } />
+        onChange={this.onPasswordChange.bind(this) }
+        underlineColorAndroid={'transparent'} />
       <View style={styles.border}></View>
 
       <TouchableHighlight
