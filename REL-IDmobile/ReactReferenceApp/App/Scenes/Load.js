@@ -231,6 +231,22 @@ class Load extends Component {
     });
   }
 
+  onSessionTimeout(e){
+    if (onSessionTimeoutSubscription) {
+      console.log("--------------- removing onSessionTimeoutSubscription");
+      onSessionTimeoutSubscription.remove();
+      onSessionTimeoutSubscription = null;
+    }
+    Alert.alert(
+      '',
+      'Your session has been timed out',
+      [
+        { text: 'OK', onPress: () => {
+        Obj.doInitialize();
+        } }
+        ]
+      );
+  }
 
   /*
      This is life cycle method of the react native component.
@@ -333,23 +349,30 @@ class Load extends Component {
 
     onTerminateSubscription =onTerminateCompletedModuleEvt.addListener('onTerminateCompleted', function (e) {
     
-      Obj.doInitialize();
+//      Obj.doInitialize();
     });
     
-    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
-      
-      Alert.alert(
-        '',
-        'Your session has been timed out',
-        [
-          { text: 'OK', onPress: () => {
-            Obj.doInitialize();
-          } }
-          ]
-        );
 
-      
-    });
+    
+   
+//    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
+//      if (onSessionTimeoutSubscription) {
+//        console.log("--------------- removing onSessionTimeoutSubscription");
+//        onSessionTimeoutSubscription.remove();
+//        onSessionTimeoutSubscription = null;
+//      }
+//      Alert.alert(
+//        '',
+//        'Your session has been timed out',
+//        [
+//          { text: 'OK', onPress: () => {
+//            Obj.doInitialize();
+//          } }
+//          ]
+//        );
+//
+//      
+//    });
 
     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
       //    onResumeCompletedSubscription.remove();
@@ -400,6 +423,8 @@ class Load extends Component {
 //        onInitializeSubscription.remove();
 //        onInitializeSubscription = null;
 //      }
+      onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout',
+        Obj.onSessionTimeout.bind(Obj));
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
       console.log('immediate response is' + e.response);
