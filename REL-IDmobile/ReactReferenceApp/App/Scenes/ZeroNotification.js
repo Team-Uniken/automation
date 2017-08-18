@@ -391,6 +391,7 @@ export default class NotificationMgmtScene extends Component {
       alertMsg: "",
       showAlert: false,
       inputPassword: '',
+      refreshUI:false,
       showPasswordModel: false,
       selectedNotificationId: '',
       selectedAction: '',
@@ -704,6 +705,7 @@ export default class NotificationMgmtScene extends Component {
       // If error occurred reload devices list with previous response
     }
     Events.trigger('updateBadge', notification.length);
+    this.setState({refreshUI:!this.state.refreshUI});
   }
 
   /*
@@ -1099,7 +1101,7 @@ export default class NotificationMgmtScene extends Component {
       >
       { isPageTitle && this.renderPageTitle( Main.notificationCount > 1 ? 'Notifications' : 'Notification' ) }
 
-      <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
+      <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
         {this.renderNotificationView(this.state.dataSource) }
         { Main.notificationCount == 0 && this._renderMessage()}
        { Main.notificationCount == 0 &&

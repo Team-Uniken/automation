@@ -484,7 +484,7 @@ class Notifications_History extends Component {
           navigator={this.props.navigator}
           >
           { isPageTitle && this.renderPageTitle('Notification History')}
-          <View style={[styles.container, { backgroundColor: '#e8e8e8' }]}>
+          <View style={[styles.container, { backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }]}>
 
             <ListView
               dataSource={this.state.dataSource}
