@@ -105,10 +105,9 @@ export default class HomePage extends Component {
           visible: true,
           active: 1,
         }}>
-        <PageTitle title={'Home'}
+        <PageTitle title={'Welcome, '+Main.dnaUserName}
           handler={this.triggerDrawer}
           isBadge={true} />
-
         <View style={{
           flex: 1,
           backgroundColor: Skin.main.BACKGROUND_COLOR
@@ -119,10 +118,9 @@ export default class HomePage extends Component {
             title={''}
             secure
             disableMain={true}
-            navigate
+            navigate          
           />
         }
-
         </View>
       </Main>
     );

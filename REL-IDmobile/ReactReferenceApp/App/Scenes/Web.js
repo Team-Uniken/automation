@@ -97,41 +97,43 @@ export default class Web extends Component {
    */
   renderBottomBar() {
     if (this.props.navigate) {
-      
-      if(Platform.OS == "android" && this.state.backButtonEnabled && this.state.isProxySet === true){
-        this.state.backButtonEnabled = false;
-        this.state.isProxySet=null;
-        ReactRdna.clearWebViewHistory(webViewTag);
-      }
 
+      if (Platform.OS == "android" && this.state.backButtonEnabled && this.state.isProxySet === true) {
+        this.state.backButtonEnabled = false;
+        this.state.isProxySet = null;
+        ReactRdna.clearWebViewHistory(webViewTag);
+      }     
       return (
         <View style={[styles.addressBarRow]}>
           <TouchableOpacity
-            onPress={this.goBack.bind(this) }
+            onPress={this.goBack.bind(this)}
             style={this.state.backButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.backButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'<'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={this.goForward.bind(this) }
+            onPress={this.goForward.bind(this)}
             style={this.state.forwardButtonEnabled ? styles.navButton : styles.disabledButton}>
             <Text style={this.state.forwardButtonEnabled ? styles.navButtonText : styles.disabledButtonText}>
               {'>'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={this.reload.bind(this) }
+            onPress={this.reload.bind(this)}
             style={styles.navButton}>
             <Text style={styles.refresh}>
               {Skin.icon.refresh}
             </Text>
           </TouchableOpacity>
         </View>
-      );
+        );
+      
     }
     return null;
   }
+
+  // commented code to remove bottom bar of web view
 
   close() {
     if (onResumeCompletedSubscription) {
@@ -164,23 +166,23 @@ export default class Web extends Component {
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
-          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
-          onLoad={() => { console.log('loaded') } }
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          onLoad={() => { console.log('loaded') }}
           onLoadStart={() => {
-            console.log('loadedStart'); 
+            console.log('loadedStart');
             this.setState({
               loading: true,
             });
-          } }
+          }}
           onLoadEnd={() => {
-            console.log('loadedEnd'), 
-            this.setState({
-              loading: false,
-            });
-          } }
+            console.log('loadedEnd'),
+              this.setState({
+                loading: false,
+              });
+          }}
           onError={this.onError}
           scalesPageToFit={this.state.scalesPageToFit}
-          />
+        />
       );
     }
     else {
@@ -190,26 +192,26 @@ export default class Web extends Component {
             ref={WEBVIEW_REF}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
-            source={this.state.isProxySet===true || this.state.isProxySet==null?{ uri: this.props.url}:undefined}
+            source={this.state.isProxySet === true || this.state.isProxySet == null ? { uri: this.props.url } : undefined}
             javaScriptEnable
             domStorageEnabled
             decelerationRate="normal"
-            onNavigationStateChange={this.onNavigationStateChange.bind(this) }
-            onLoad={() => { console.log('loaded') } }
+            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+            onLoad={() => { console.log('loaded') }}
             onError={this.onError}
             onLoadStart={() => {
-              console.log('loadStart'); 
+              console.log('loadStart');
               this.setState({
                 loading: true,
               });
-            } }
+            }}
             onLoadEnd={() => {
               console.log('loadEnd'), this.setState({
                 loading: false,
               });
-            } }
+            }}
             scalesPageToFit={this.state.scalesPageToFit}
-            />
+          />
         );
       } else {
         <WebView
@@ -220,30 +222,30 @@ export default class Web extends Component {
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
-          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
-          onLoad={() => { console.log('loaded') } }
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          onLoad={() => { console.log('loaded') }}
           onError={this.onError}
           onLoadStart={() => {
-            console.log('loadStart'); 
+            console.log('loadStart');
             this.setState({
               loading: true,
             });
-          } }
+          }}
           onLoadEnd={() => {
             console.log('loadEnd'), this.setState({
               loading: false,
             });
-          } }
+          }}
           scalesPageToFit={this.state.scalesPageToFit}
-          />
+        />
       }
     }
   }
 
-  getSource(){
-    while(1){
-      if(this.state.isProxySet)
-         break;
+  getSource() {
+    while (1) {
+      if (this.state.isProxySet)
+        break;
     }
 
     return this.props.url;
@@ -283,12 +285,12 @@ export default class Web extends Component {
         visible: false,
       }}
       navigator={this.props.navigator}
-      >
-      {isPageTitle && this.renderPageTitle(this.props.title) }
+    >
+      {isPageTitle && this.renderPageTitle(this.props.title)}
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
-        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'}/>}
-        {this.getWebView() }
-        {this.renderBottomBar() }
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'} />}
+        {this.getWebView()}
+        { this.props.showBottomBar && this.renderBottomBar()}
       </View>
     </Main>);
 
@@ -301,9 +303,9 @@ export default class Web extends Component {
   renderWithoutMain() {
     return (
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
-        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'}/>}
-        {this.getWebView() }
-        {this.renderBottomBar() }
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'} />}
+        {this.getWebView()}
+        {this.props.showBottomBar && this.renderBottomBar()}
       </View>
     );
   }
@@ -346,7 +348,6 @@ export default class Web extends Component {
       //this.props.navigator.pop();
       //Communications.web(this.props.url);
     }
-
   }
 
 }

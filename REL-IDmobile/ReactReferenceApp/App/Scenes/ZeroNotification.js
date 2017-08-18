@@ -84,6 +84,9 @@ var SampleRow = React.createClass({
   },
 
   showalert(notification, btnLabel) {
+    obj.setState({
+        showLoaderPageTitle: true
+        });
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
@@ -91,7 +94,6 @@ var SampleRow = React.createClass({
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
         }, () => {
-
           if (data.authlevel !== null && data.authlevel !== undefined) {
             if (data.authlevel == "1") {
               this.showModelForPassword();
@@ -220,7 +222,6 @@ var SampleRow = React.createClass({
 
       return (
         <View style={Skin.notification.customerow}>
-
           <View style={Skin.notification.col}>
             <View style={Skin.notification.row}>
               <Text style={Skin.notification.subject}>
@@ -391,6 +392,7 @@ export default class NotificationMgmtScene extends Component {
       showPasswordModel: false,
       selectedNotificationId: '',
       selectedAction: '',
+      showLoader : false,
       refreshing: false,
     };
     this.selectedAlertOp = true;
@@ -866,7 +868,6 @@ export default class NotificationMgmtScene extends Component {
           selectedNotificationId: notification.notification_uuid,
           selectedAction: data.action,
         }, () => {
-
           if (data.authlevel !== null && data.authlevel !== undefined) {
             if (data.authlevel == "1") {
               this.showModelForPassword();
@@ -1092,7 +1093,8 @@ export default class NotificationMgmtScene extends Component {
       }}
       navigator={this.props.navigator}
       >
-      { isPageTitle && this.renderPageTitle('My Notifications') }
+      { isPageTitle && this.renderPageTitle( Main.notificationCount > 1 ? 'Notifications' : 'Notification' ) }
+
       <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
         {this.renderNotificationView(this.state.dataSource) }
        { Main.notificationCount == 0 && 
