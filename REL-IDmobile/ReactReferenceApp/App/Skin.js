@@ -1296,6 +1296,10 @@ const notification = StyleSheet.create({
     width: SCREEN_WIDTH - 32,
 
   },
+  historyrow: {
+    flexDirection: 'row',
+    width: SCREEN_WIDTH - 62,
+  },
   notificationButton: {
     flexDirection: 'row',
     width: SCREEN_WIDTH - 32,

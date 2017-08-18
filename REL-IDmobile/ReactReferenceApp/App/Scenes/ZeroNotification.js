@@ -20,6 +20,8 @@ import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import NotificationCard from '../Components/view/notificationcard';
+import { Navigator } from 'react-native-deprecated-custom-components'
+
 
 /*
  Use in this js
@@ -1030,7 +1032,8 @@ export default class NotificationMgmtScene extends Component {
         value={this.state.inputPassword}
         placeholderTextColor={Skin.colors.HINT_COLOR}
         onSubmitEditing={this.checkPassword.bind(this) }
-        onChange={this.onPasswordChange.bind(this) } />
+        onChange={this.onPasswordChange.bind(this) }
+        underlineColorAndroid={'transparent'} />
       <View style={styles.border}></View>
 
       <TouchableHighlight
@@ -1065,6 +1068,7 @@ export default class NotificationMgmtScene extends Component {
       {listViewProportion != 1 &&
         this._renderMessage() }
       {this.checkPassModal() }
+       {this.alertModal() }
     </View>);
   }
 
@@ -1097,11 +1101,13 @@ export default class NotificationMgmtScene extends Component {
 
       <View style={{ flex: 1, backgroundColor: '#f9f9f9' }}>
         {this.renderNotificationView(this.state.dataSource) }
-       { Main.notificationCount == 0 && 
-         this._renderMessage() &&
-         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,marginTop: 5, alignSelf: 'center',backgroundColor: Skin.color.APPROVE_BUTTON_COLOR, alignItems: 'center' }}
-                onPress={() => { } }>
-                 <Text style={{ fontSize: 16,flex:1,backgroundColor:'transparent',textAlign:'center', color: 'white', fontStyle: 'bold' }}>
+        { Main.notificationCount == 0 && this._renderMessage()}
+       { Main.notificationCount == 0 &&
+         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,justifyContent:'center',marginTop: 5,backgroundColor: Skin.color.APPROVE_BUTTON_COLOR}}
+                onPress={() => { 
+                    this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+                } }>
+                <Text style={{ fontSize: 16, alignSelf:'center',textAlign:'center', color: 'white', fontWeight: 'bold' }}>
                     Notification History
                 </Text>
         </TouchableHighlight>
