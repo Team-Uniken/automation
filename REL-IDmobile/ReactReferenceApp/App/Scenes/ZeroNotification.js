@@ -20,7 +20,9 @@ import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import NotificationCard from '../Components/view/notificationcard';
-import { Navigator } from 'react-native-deprecated-custom-components'
+import { Navigator } from 'react-native-deprecated-custom-components';
+import Loader from '../Components/Utils/Loader';
+
 
 
 /*
@@ -600,6 +602,7 @@ export default class NotificationMgmtScene extends Component {
   updateNotificationDetails() {
     console.log('----- NotificationMgmt.updateNotificationDetails');
     if (Main.isConnected) {
+      this.setState({showLoader:true});
       ReactRdna.updateNotification(this.state.selectedNotificationId, this.state.selectedAction, (response) => {
         console.log('ReactRdna.updateNotificationDetails.response:');
         console.log(response);
@@ -665,6 +668,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   onUpdateNotification(e) {
+    this.setState({showLoader:false});
     const res = JSON.parse(e.response);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
@@ -1102,6 +1106,7 @@ export default class NotificationMgmtScene extends Component {
       { isPageTitle && this.renderPageTitle( Main.notificationCount > 1 ? 'Notifications' : 'Notification' ) }
 
       <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
+        <Loader visible={this.state.showLoader}/>
         {this.renderNotificationView(this.state.dataSource) }
         { Main.notificationCount == 0 && this._renderMessage()}
        { Main.notificationCount == 0 &&
