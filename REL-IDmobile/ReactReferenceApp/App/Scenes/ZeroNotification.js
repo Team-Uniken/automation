@@ -54,11 +54,11 @@ let isPageTitle = Config.ENABLEPAGETITLE;
  *Sort notification row based on timestamp.
  */
 function compare(a, b) {
-  if (a.expiry_timestamp < b.expiry_timestamp)
+  if (a.created_timestamp < b.created_timestamp)
     return 1;
-  if (a.expiry_timestamp > b.expiry_timestamp)
+  if (a.created_timestamp > b.created_timestamp)
     return -1;
-  if (a.expiry_timestamp == b.expiry_timestamp)
+  if (a.created_timestamp == b.created_timestamp)
     return 0;
 }
 
@@ -205,6 +205,7 @@ var SampleRow = React.createClass({
 
 
     var expiry_timestamp = this.props.notification.expiry_timestamp;
+  var created_timestamp = this.props.notification.created_ts;
     var timestamp = expiry_timestamp.split("EDT");
     var finaltimestamp = timestamp[0].split("T");
     var date = finaltimestamp[0].split("-");
