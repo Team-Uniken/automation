@@ -232,6 +232,20 @@ class Util extends Component {
     }
     return value;
   }
+  
+  static getFormatedDate(dateString){
+    var string = (dateString);
+    var res = string.split("T");
+    var t0 = res[0];
+    var t1 = res[1];
+    t1= t1.substring(0, t1.length - 2);
+    var cString = t0+" "+t1+" UTC";
+    var date = new Date(cString);
+    date.setHours(date.getHours() + 4);
+    date.toString();
+    var displayString = (date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes());
+    return displayString;
+  }
 }
 
 

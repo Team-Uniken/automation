@@ -16,7 +16,7 @@ import { StyleSheet, Text, TextInput, AsyncStorage, TouchableHighlight, Touchabl
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
-
+import Util from "../Utils/Util";
 /*
  Use in this js
  */
@@ -121,7 +121,8 @@ export default class NotificationCard extends Component {
                                         {this.props.notification.message.subject}
                                     </Text>
                                     <Text style={style.time}>
-                                        {date[1]}/{date[2]}/{year} {time[0]}:{time[1]}
+              
+              {Util.getFormatedDate(this.props.notification.created_ts)}
                                     </Text>
                                 </View>
 
@@ -211,7 +212,7 @@ export default class NotificationCard extends Component {
                                         {this.props.notification.message.subject}
                                     </Text>
                                     <Text style={style.time}>
-                                        {date[1]}/{date[2]}/{year} {time[0]}:{time[1]}
+                                        {Util.getFormatedDate(this.props.notification.created_ts)}
                                     </Text>
                                 </View>
 

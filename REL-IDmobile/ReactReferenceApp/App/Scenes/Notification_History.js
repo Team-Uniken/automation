@@ -19,7 +19,7 @@ import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInpu
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
-
+import Util from "../Components/Utils/Util";
 
 /*
  Use in this js
@@ -553,7 +553,7 @@ class Notifications_History extends Component {
     } else if (notification.status == "EXPIRED") {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
-          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{notification.expiry_timestamp.split("T")[0]} {Obj.removeSpace(notification.expiry_timestamp.split("T")[1].split("I")[0]) } IST
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Expired On: </Text>{Util.getFormatedDate(notification.expiry_timestamp)}
           </Text>
           <Text style={styles.action_performed}>Action performed: <Text style={{ color: Obj.highlightcolor(notification.action_performed) }}>{notification.action_performed}</Text>
           </Text>
@@ -562,7 +562,7 @@ class Notifications_History extends Component {
     } else if (notification.status == "UPDATED") {
       indents.push(
         <View style={{ flexDirection: 'column', backgroundColor: 'f00' }}>
-          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{notification.update_ts.split("T")[0]} {Obj.removeSpace(notification.update_ts.split("T")[1].split("I")[0]) } IST
+          <Text style={styles.expired_update}><Text style={{ fontWeight: 'bold' }}>Updated On: </Text>{Util.getFormatedDate(notification.update_ts)}
           </Text>
           <Text style={styles.action_performed}>Action performed: <Text style={{ color: Obj.highlightcolor(notification.action_performed) }}>{notification.action_performed}</Text>
           </Text>
@@ -578,7 +578,7 @@ class Notifications_History extends Component {
             {notification.message.subject}
           </Text>
           <Text style={Skin.notification.time}>
-            {Obj.removeSpace(notification.create_ts.split("T")[1].split("I")[0]) } IST
+            {Util.getFormatedDate(notification.create_ts)}
           </Text>
         </View>
 

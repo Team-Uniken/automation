@@ -28,6 +28,7 @@ import Main from '../Components/Container/Main';
 import Constants from '../Components/Utils/Constants';
 import Skin from '../Skin';
 import PageTitle from '../Components/view/pagetitle';
+import Util from "../Components/Utils/Util";
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
@@ -501,11 +502,11 @@ export default class DeviceMgmtScene extends Component {
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.leftLabels}>Created: </Text>
-          <Text style={styles.rightLabels}>{createdTs}</Text>
+          <Text style={styles.rightLabels}>{Util.getFormatedDate(createdTs)}</Text>
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.leftLabels}>Last Access: </Text>
-          <Text style={styles.rightLabels}>{lastAccessedTs}</Text>
+          <Text style={styles.rightLabels}>{Util.getFormatedDate(lastAccessedTs)}</Text>
         </View>
         <View style={styles.itemRow}>
           <Text style={styles.leftLabels}>Binding: </Text>

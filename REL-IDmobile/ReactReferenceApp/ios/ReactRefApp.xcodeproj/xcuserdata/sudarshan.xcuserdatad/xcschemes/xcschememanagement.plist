@@ -7,7 +7,7 @@
 		<key>REL-IDMobile.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>8</integer>
 		</dict>
 		<key>ReactRefApp-tvOS.xcscheme_^#shared#^_</key>
 		<dict>
@@ -33,6 +33,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
+		</dict>
+		<key>cbc_verify.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>44</integer>
 		</dict>
 		<key>nwd.xcscheme_^#shared#^_</key>
 		<dict>
@@ -63,6 +68,11 @@
 			<true/>
 		</dict>
 		<key>1A6151AB1E4CDF5B00B3C9B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5528FF9A1F21F73C00560B76</key>
 		<dict>
 			<key>primary</key>
 			<true/>
