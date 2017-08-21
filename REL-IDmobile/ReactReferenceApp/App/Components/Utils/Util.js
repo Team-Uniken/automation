@@ -237,9 +237,10 @@ class Util extends Component {
     var string = (dateString);
     var res = string.split("T");
     var t0 = res[0];
+    var temp = res[0].split("-");
     var t1 = res[1];
     t1= t1.substring(0, t1.length - 2);
-    var cString = t0+" "+t1+" UTC";
+    var cString = temp[1]+"/"+temp[2]+"/"+temp[0]+" " +t1+" UTC";
     var date = new Date(cString);
     date.setHours(date.getHours() + 4);
     date.toString();
