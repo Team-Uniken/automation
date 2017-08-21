@@ -54,6 +54,7 @@
     "react-native-push-notification": "git+https://github.com/hussainkantawala/react-native-push-notification.git",
     "react-native-simple-events": "^1.0.1",
     "react-native-simple-modal": "^3.0.2",
+    "react-native-simple-toast": "0.0.6",
     "react-native-slider": "^0.8.0",
     "react-native-smart-badge": "^1.1.1",
     "react-native-smart-scroll-view": "^1.3.6",

@@ -185,6 +185,13 @@
 		558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		558C99B01E7BF7A30002C56F /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
+		5599BA7F1F4AC2600025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5599BAAA1F4ADB660025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5599BACF1F4ADB6C0025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5599BAD01F4ADB7A0025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5599BAD11F4ADB860025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5599BAD21F4ADB910025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5599BAD31F4ADB9A0025538D /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
 		559A9DD41F2896E000D8F3FD /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
 		559A9DD51F28A74B00D8F3FD /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
 		559A9DD61F28A7CA00D8F3FD /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
@@ -335,6 +342,7 @@
 		716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096B4050EB024090BB820E85 /* libAirMaps.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		CEF10CBBB34C44C2812CF73A /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 617F92D6FBF04371B6760DC9 /* libReactNativeConfig.a */; };
+		E503B8B2B517431A8DB74625 /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F14994FD60A46A1B0202255 /* libLRDRCTSimpleToast.a */; };
 		E5DD38A2A63D4833B8BF5929 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3F2EC87F7048FDAE7FBB25 /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
@@ -492,6 +500,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		5599BA5A1F4AC0570025538D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 15209BEF1D250F63000D0F44;
+			remoteInfo = LRDRCTSimpleToast;
 		};
 		559A9DCF1F28966900D8F3FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -747,11 +762,13 @@
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
 		096B4050EB024090BB820E85 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		0F14994FD60A46A1B0202255 /* libLRDRCTSimpleToast.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLRDRCTSimpleToast.a; sourceTree = "<group>"; };
 		0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ReactRefApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactRefApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LRDRCTSimpleToast.xcodeproj; path = "../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast.xcodeproj"; sourceTree = "<group>"; };
 		1A6151D81E4CDF5B00B3C9B2 /* cbc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cbc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBC.xcassets; sourceTree = "<group>"; };
 		1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
@@ -829,6 +846,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BAD31F4ADB9A0025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				559A9DD51F28A74B00D8F3FD /* libRNFS.a in Frameworks */,
 				5562686D1EEE6B530008AC49 /* libcxxreact.a in Frameworks */,
 				55074FA41EE81E2700BF6DC8 /* libAirMaps.a in Frameworks */,
@@ -863,6 +881,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BACF1F4ADB6C0025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				559A9DD41F2896E000D8F3FD /* libRNSpinkit.a in Frameworks */,
 				55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */,
 				5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */,
@@ -899,6 +918,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BA7F1F4AC2600025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				559A9DD61F28A7CA00D8F3FD /* libRNSpinkit.a in Frameworks */,
 				5528FFA41F21F73C00560B76 /* libRNFS.a in Frameworks */,
 				5528FFA51F21F73C00560B76 /* libReact.a in Frameworks */,
@@ -935,6 +955,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BAD21F4ADB910025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				55074FA81EE81F0500BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				5528FF951F21DE5300560B76 /* libapi-sdk.a in Frameworks */,
 				55074FA71EE81EFE00BF6DC8 /* libRCTCamera.a in Frameworks */,
@@ -967,6 +988,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BAAA1F4ADB660025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				55074FB11EE8239A00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				657411021F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55074FB01EE8238300BF6DC8 /* libRCTFBSDK.a in Frameworks */,
@@ -998,6 +1020,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BAD11F4ADB860025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				556268731EEE6C8F0008AC49 /* libAirMaps.a in Frameworks */,
 				5528FF961F21DE5300560B76 /* libapi-sdk.a in Frameworks */,
 				556268721EEE6C8B0008AC49 /* libReactNativeConfig.a in Frameworks */,
@@ -1057,6 +1080,7 @@
 				716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */,
 				E5DD38A2A63D4833B8BF5929 /* libRNFS.a in Frameworks */,
 				0AA91AB5DBF04D6798DED797 /* libRNSpinkit.a in Frameworks */,
+				E503B8B2B517431A8DB74625 /* libLRDRCTSimpleToast.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,6 +1088,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599BAD01F4ADB7A0025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				55074FAE1EE822EA00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				657411001F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55074FAD1EE822BC00BF6DC8 /* libRCTFBSDK.a in Frameworks */,
@@ -1245,6 +1270,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5599BA561F4AC0570025538D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		559A9DAA1F28966900D8F3FD /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1373,6 +1406,7 @@
 				0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */,
 				F1B7F1E3E86E4C64AE9B5626 /* RNFS.xcodeproj */,
 				0F913840EEC54282990B8D90 /* RNSpinkit.xcodeproj */,
+				18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1703,6 +1737,10 @@
 					ProjectRef = 0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */;
 				},
 				{
+					ProductGroup = 5599BA561F4AC0570025538D /* Products */;
+					ProjectRef = 18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -1890,6 +1928,13 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 555B04A91EE6AC4B004B7659 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libLRDRCTSimpleToast.a;
+			remoteRef = 5599BA5A1F4AC0570025538D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		559A9DD01F28966900D8F3FD /* libRNSpinkit.a */ = {
@@ -2503,6 +2548,7 @@
 					"$(PROJECT_DIR)/ActiveShieldSDKLib",
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2551,6 +2597,7 @@
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"$(PROJECT_DIR)/ActiveShieldSDKLib",
+					"\"$(SRCROOT)/ReactRefApp\"",
 					"\"$(SRCROOT)/ReactRefApp\"",
 					"\"$(SRCROOT)/ReactRefApp\"",
 				);

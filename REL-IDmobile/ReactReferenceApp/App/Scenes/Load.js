@@ -17,6 +17,7 @@ import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
 import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
+import Toast from 'react-native-simple-toast';
 var PushNotification = require('react-native-push-notification');
 import {Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
@@ -70,7 +71,7 @@ const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdna
 const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onInitializeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onTerminateCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
-const ononSessionTimeoutModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
+const onSessionTimeoutModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 
 
 /**
@@ -153,16 +154,22 @@ class Load extends Component {
 
   onSessionTOut(){
   
-    Alert.alert(
-      '',
-      'Your session has been timed out',
-      [
-        { text: 'OK', onPress: () => {
-          Obj.doInitialize();
-        } }
-        ]
-      );
+    
+    // Alert.alert(
+    //   '',
+    //   'Your session has been timed out',
+    //   [
+    //     { text: 'OK', onPress: () => {
+    //       Obj.doInitialize();
+    //     } }
+    //     ]
+    //   );
+    Obj.sessionTimeOutAction();
+  }
 
+  sessionTimeOutAction(){
+    Toast.showWithGravity("Your session has been timed out",Toast.LONG,Toast.BOTTOM);
+    Obj.doInitialize();
   }
   
   /*
@@ -252,15 +259,17 @@ class Load extends Component {
       onSessionTimeoutSubscription.remove();
       onSessionTimeoutSubscription = null;
     }
-    Alert.alert(
-      '',
-      'Your session has been timed out',
-      [
-        { text: 'OK', onPress: () => {
-        Obj.doInitialize();
-        } }
-        ]
-      );
+  
+    // Alert.alert(
+    //   '',
+    //   'Your session has been timed out',
+    //   [
+    //     { text: 'OK', onPress: () => {
+    //     Obj.doInitialize();
+    //     } }
+    //     ]
+    //   );
+    Obj.sessionTimeOutAction();
   }
 
   /*
@@ -438,7 +447,7 @@ class Load extends Component {
 //        onInitializeSubscription.remove();
 //        onInitializeSubscription = null;
 //      }
-      onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout',
+      onSessionTimeoutSubscription = onSessionTimeoutModuleEvt.addListener('onSessionTimeout',
         Obj.onSessionTimeout.bind(Obj));
       AsyncStorage.setItem("savedContext", "");
       console.log('On Initialize Completed:');
