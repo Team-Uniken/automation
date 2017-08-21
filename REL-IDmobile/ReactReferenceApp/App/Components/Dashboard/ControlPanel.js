@@ -472,8 +472,9 @@ class ControlPanel extends Component {
         console.log('----- NotificationMgmt.getMyNotifications.response ');
         console.log(response);
 
-        if (response[0].error !== 0) {
+        if (response[0].error!== 0) {
           console.log('----- ----- response is not 0');
+           Events.trigger('onSessionTOut');
           //                               if (NotificationObtianedResponse !== undefined) {
           //                               // If error occurred reload last response
           //

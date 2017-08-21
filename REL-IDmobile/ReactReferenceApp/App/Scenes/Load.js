@@ -110,7 +110,7 @@ class Load extends Component {
       animatedTextValue: new Animated.Value(0),
     };
 
-    this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity', 'Verifying user identity'];
+    this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
   openRoute(route) {
     this.props.navigator.push(route);
@@ -151,6 +151,20 @@ class Load extends Component {
     ]).start();
   }
 
+  onSessionTOut(){
+  
+    Alert.alert(
+      '',
+      'Your session has been timed out',
+      [
+        { text: 'OK', onPress: () => {
+          Obj.doInitialize();
+        } }
+        ]
+      );
+
+  }
+  
   /*
    This is life cycle method of the react native component.
    This method is called when the component will start to load
@@ -158,6 +172,7 @@ class Load extends Component {
   componentWillMount() {
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
+    Events.on('onSessionTOut', 'onSessionTOut', this.onSessionTOut);
     console.log('test logs');
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
@@ -216,7 +231,7 @@ class Load extends Component {
 
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
-
+      Events.trigger('onSessionTOut');
 //      ReactRdna.terminate( (tResponse) => {
 //        console.log('----- terminate ');
 //        console.log(tResponse[0].error);

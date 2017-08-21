@@ -121,7 +121,7 @@ export default class NotificationCard extends Component {
                                         {this.props.notification.message.subject}
                                     </Text>
                                     <Text style={style.time}>
-                                        {date[1]}/{date[2]}/{year}
+                                        {date[1]}/{date[2]}/{year} {time[0]}:{time[1]}
                                     </Text>
                                 </View>
 
@@ -211,7 +211,7 @@ export default class NotificationCard extends Component {
                                         {this.props.notification.message.subject}
                                     </Text>
                                     <Text style={style.time}>
-                                        {date[1]}/{date[2]}/{year}
+                                        {date[1]}/{date[2]}/{year} {time[0]}:{time[1]}
                                     </Text>
                                 </View>
 
