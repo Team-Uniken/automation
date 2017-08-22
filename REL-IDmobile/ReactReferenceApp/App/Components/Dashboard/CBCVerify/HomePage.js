@@ -38,6 +38,14 @@ export default class HomePage extends Component {
     this.state = {urlData:"" };
      this.onGetConfig = this.onGetConfig.bind(this);
     self = this;
+    this.sessionID = 0;
+    ReactRdna.getSessionID( (response) => {
+      if(response[0].error==0){
+        this.sessionID = response[0].response; 
+      }
+             
+   });
+   
   }
 
   /**
@@ -59,7 +67,7 @@ export default class HomePage extends Component {
    //alert("data->>>>>"+value.config[1].value);
       if(value){
         var url = Util.getConfigValue('main_page_url',value.config)
-        this.setState({urlData:Util.replaceUrlMacros(url,{"__USERNAME__":Main.dnaUserName,"__CONNECTEDIP__":Main.gatewayHost})});
+        this.setState({urlData:Util.replaceUrlMacros(url,{"__USERNAME__":Main.dnaUserName,"__CONNECTEDIP__":Main.gatewayHost,"__SESSIONID__":this.sessionID})});
       }
   }
   
@@ -90,6 +98,10 @@ export default class HomePage extends Component {
       }
 
     });
+
+ 
+
+
   }
 
 
