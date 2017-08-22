@@ -462,6 +462,22 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 callOnMainThread(runnable);
                 return 0;
             }
+
+            @Override
+            public int onSessionTimeout(final String s) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onSessionTimeout", params);
+                    }
+                };
+                callOnMainThread(runnable);
+                return 0;
+            }
         };
 
         RDNA.RDNAStatus<RDNA> rdnaStatus = null;
@@ -1161,6 +1177,24 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 promise.resolve(true);
             }
         });
+    }
+
+    @ReactMethod
+    public void getSessionID(Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            RDNA.RDNAStatus<String> status =   rdnaObj.getSessionID();
+            errorMap.putInt("error", status.errorCode);
+            if(status.errorCode == 0)
+                errorMap.putString("response",status.result);
+        }
+        else{
+            errorMap.putInt("error",1);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
     }
 
     @ReactMethod
