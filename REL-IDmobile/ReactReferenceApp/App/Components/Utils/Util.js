@@ -3,6 +3,7 @@
 import ReactNative from 'react-native';
 import Main from '../Container/Main';
 import {Buffer} from 'buffer';
+import moment from 'moment';
 
 import {AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
 import React, { Component, } from 'react';
@@ -234,18 +235,10 @@ class Util extends Component {
   }
   
   static getFormatedDate(dateString){
-    var string = (dateString);
-    var res = string.split("T");
-    var t0 = res[0];
-    var temp = res[0].split("-");
-    var t1 = res[1];
-    t1= t1.substring(0, t1.length - 2);
-    var cString = temp[1]+"/"+temp[2]+"/"+temp[0]+" " +t1+" UTC";
-    var date = new Date(cString);
-    date.setHours(date.getHours() + 4);
-    date.toString();
-    var displayString = (date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes());
-    return displayString;
+    var testDateUtc = moment.utc(dateString.replace('EDT','')).add(4, 'hours');
+    var localDate = moment(testDateUtc).local();
+    var s = localDate.format("DD/MM/YYYY HH:mm");
+    return s;
   }
 }
 
