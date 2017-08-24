@@ -89,8 +89,8 @@ var SampleRow = React.createClass({
 
   showalert(notification, btnLabel) {
     obj.setState({
-        showLoaderPageTitle: true
-        });
+      showLoaderPageTitle: true
+    });
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
@@ -205,7 +205,7 @@ var SampleRow = React.createClass({
 
 
     var expiry_timestamp = this.props.notification.expiry_timestamp;
-  var created_timestamp = this.props.notification.created_ts;
+    var created_timestamp = this.props.notification.created_ts;
     var timestamp = expiry_timestamp.split("EDT");
     var finaltimestamp = timestamp[0].split("T");
     var date = finaltimestamp[0].split("-");
@@ -268,8 +268,8 @@ var SampleRow = React.createClass({
               <View style={Skin.notification.notificationButton}>
 
                 <TouchableHighlight style={Skin.notification.confirmbutton}
-                  onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label) }
-                  >
+                  onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label)}
+                >
                   <View style={Skin.notification.text} >
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[0].label}
@@ -277,7 +277,7 @@ var SampleRow = React.createClass({
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[1].label) }>
+                <TouchableHighlight style={Skin.notification.denybutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[1].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
@@ -285,7 +285,7 @@ var SampleRow = React.createClass({
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label) }>
+                <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[2].label}
@@ -337,7 +337,7 @@ var SampleRow = React.createClass({
 
               <View style={Skin.notification.notificationButton}>
 
-                <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label) }>
+                <TouchableHighlight style={Skin.notification.approvebutton} onPress={() => this.showalert(this.props.notification, this.props.notification.action[0].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[0].label}
@@ -346,7 +346,7 @@ var SampleRow = React.createClass({
                 </TouchableHighlight>
 
 
-                <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[1].label) }>
+                <TouchableHighlight style={Skin.notification.rejectbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[1].label)}>
                   <View style={Skin.notification.text}>
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
@@ -372,7 +372,7 @@ export default class NotificationMgmtScene extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     notification = [];
-    
+
     this.updateNotificationDetails = this.updateNotificationDetails.bind(this);
     this.getMyNotifications = this.getMyNotifications.bind(this);
     this.onGetNotificationsDetails = this.onGetNotificationsDetails.bind(this);
@@ -390,15 +390,15 @@ export default class NotificationMgmtScene extends Component {
     var data = this.renderListViewData(notification.sort(compare));
     this.state = {
       dataSource: ds.cloneWithRows(data),
-      dataSourceSwap:null,
+      dataSourceSwap: null,
       alertMsg: "",
       showAlert: false,
       inputPassword: '',
-      refreshUI:false,
+      refreshUI: false,
       showPasswordModel: false,
       selectedNotificationId: '',
       selectedAction: '',
-      showLoader : false,
+      showLoader: false,
       refreshing: false,
     };
     this.selectedAlertOp = true;
@@ -579,7 +579,7 @@ export default class NotificationMgmtScene extends Component {
         console.log(response);
 
         if (response[0].error !== 0) {
-        Events.trigger('onSessionTOut');
+          Events.trigger('onSessionTOut');
           this.setState({ refreshing: false });
           console.log('----- ----- response is not 0');
           if (NotificationObtianedResponse !== null && NotificationObtianedResponse !== undefined) {
@@ -604,13 +604,13 @@ export default class NotificationMgmtScene extends Component {
   updateNotificationDetails() {
     console.log('----- NotificationMgmt.updateNotificationDetails');
     if (Main.isConnected) {
-      this.setState({showLoader:true});
+      this.setState({ showLoader: true });
       ReactRdna.updateNotification(this.state.selectedNotificationId, this.state.selectedAction, (response) => {
         console.log('ReactRdna.updateNotificationDetails.response:');
         console.log(response);
 
         if (response[0].error !== 0) {
-        Events.trigger('onSessionTOut');
+          Events.trigger('onSessionTOut');
           console.log('----- ----- response is not 0');
           if (NotificationObtianedResponse !== null && NotificationObtianedResponse !== undefined) {
 
@@ -657,21 +657,50 @@ export default class NotificationMgmtScene extends Component {
 
 
       } else {
-       // this.showAlertModal("You have no pending notifications");
+        // this.showAlertModal("You have no pending notifications");
       }
       notification = noti;
       //this.setState({ notification: noti }); 
+
+      //logic for tapped notifiaction show first on screen
+      /*if (!Main.notificationId || Main.notificationId !== null) {
+
+        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare)));
+        var arrayLength = notification.length;
+        var isSelected = false;
+        for (var i = 0; i < arrayLength; i++) {
+          var tappedNotification = notification[i];
+          if (tappedNotification.notificationId === Main.notificationId)
+            this.swapDataSource(tappedNotification);
+          isSelected = true;
+          break;
+        }
+        if (!isSelected) {
+          this.setState({
+            notification: noti,
+            dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+          });
+        }
+
+      } else {
+        this.setState({
+          notification: noti,
+          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+        });
+      }*/
+
       this.setState({
         notification: noti,
         dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
       });
+
     } else {
       console.log('Something went wrong');
     }
   }
 
   onUpdateNotification(e) {
-    this.setState({showLoader:false});
+    this.setState({ showLoader: false });
     const res = JSON.parse(e.response);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
@@ -712,7 +741,7 @@ export default class NotificationMgmtScene extends Component {
       // If error occurred reload devices list with previous response
     }
     Events.trigger('updateBadge', notification.length);
-    this.setState({refreshUI:!this.state.refreshUI});
+    this.setState({ refreshUI: !this.state.refreshUI });
   }
 
   /*
@@ -786,7 +815,7 @@ export default class NotificationMgmtScene extends Component {
   */
   renderPageTitle(pageTitle) {
     return (<PageTitle title={pageTitle}
-      handler={this.props.navigator.pop} isBadge={true}/>);
+      handler={this.props.navigator.pop} isBadge={true} />);
   }
 
 
@@ -810,11 +839,11 @@ export default class NotificationMgmtScene extends Component {
   }
 
   renderNotificationCard(notificationData) {
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row}  isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton}/>
+    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} />
   }
 
   onNotificationAction(bundle) {
-    const {notification, btnLabel, action} = bundle;
+    const { notification, btnLabel, action } = bundle;
     switch (action) {
       case "accept":
         this.showalert(notification, btnLabel);
@@ -834,20 +863,20 @@ export default class NotificationMgmtScene extends Component {
     }
   }
 
-  swapDataSource(data){
+  swapDataSource(data) {
     var dataSource = this.state.dataSource;
-     var ds = new ListView.DataSource({
+    var ds = new ListView.DataSource({
       sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.state.dataSource = ds.cloneWithRows([{notification:data}]);
-    this.setState({dataSourceSwap:dataSource});
+    this.state.dataSource = ds.cloneWithRows([{ notification: data }]);
+    this.setState({ dataSourceSwap: dataSource });
   }
 
-  restoreDataStore(){
+  restoreDataStore() {
     var dataSourceSwap = this.state.dataSourceSwap;
     this.state.dataSourceSwap = null;
-    this.setState({dataSource:dataSourceSwap});
+    this.setState({ dataSource: dataSourceSwap });
   }
 
   showalertforReject(notification, btnLabel) {
@@ -954,7 +983,7 @@ export default class NotificationMgmtScene extends Component {
                 showButtons: true,
                 showHideButton: Main.notificationCount > 1
               }
-            })(dataSource.getRowData(0, 0)) }
+            })(dataSource.getRowData(0, 0))}
         </View>
       );
     } else {
@@ -969,7 +998,7 @@ export default class NotificationMgmtScene extends Component {
               expand: false,
               showButtons: false
             }
-          }) } />
+          })} />
     }
   }
 
@@ -979,7 +1008,7 @@ export default class NotificationMgmtScene extends Component {
       overlayOpacity={0.75}
       offset={100}
       open={this.state.showAlert}
-      modalDidOpen={() => console.log('modal did open') }
+      modalDidOpen={() => console.log('modal did open')}
       modalDidClose={() => {
         if (this.selectedAlertOp) {
           this.selectedAlertOp = false;
@@ -988,7 +1017,7 @@ export default class NotificationMgmtScene extends Component {
           this.selectedAlertOp = false;
           this.onAlertModalDismissed();
         }
-      } }>
+      }}>
       <View style={styles.modalTitleWrap}>
         <Text style={styles.modalTitle}>
           Alert
@@ -1005,7 +1034,7 @@ export default class NotificationMgmtScene extends Component {
           this.setState({
             showAlert: false
           });
-        } }
+        }}
         underlayColor={Skin.colors.REPPLE_COLOR}
         style={styles.modalButton}>
         <Text style={styles.modalButtonText}>
@@ -1021,10 +1050,10 @@ export default class NotificationMgmtScene extends Component {
       overlayOpacity={0.75}
       offset={100}
       open={this.state.showPasswordModel}
-      modalDidOpen={() => console.log('modal did open') }
+      modalDidOpen={() => console.log('modal did open')}
       modalDidClose={() => this.setState({
         showPasswordModel: false
-      }) }>
+      })}>
       <View style={styles.modalTitleWrap}>
         <Text style={styles.modalTitle}>
           Please enter your password
@@ -1040,13 +1069,13 @@ export default class NotificationMgmtScene extends Component {
         autoFocus={true}
         value={this.state.inputPassword}
         placeholderTextColor={Skin.colors.HINT_COLOR}
-        onSubmitEditing={this.checkPassword.bind(this) }
-        onChange={this.onPasswordChange.bind(this) }
+        onSubmitEditing={this.checkPassword.bind(this)}
+        onChange={this.onPasswordChange.bind(this)}
         underlineColorAndroid={'transparent'} />
       <View style={styles.border}></View>
 
       <TouchableHighlight
-        onPress={this.checkPassword.bind(this) }
+        onPress={this.checkPassword.bind(this)}
         underlayColor={Skin.colors.REPPLE_COLOR}
         style={styles.modalButton}>
         <Text style={styles.modalButtonText}>
@@ -1064,7 +1093,7 @@ export default class NotificationMgmtScene extends Component {
       <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
         <ListView
-          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this) }/>
+          refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />
           }
           ref="listView"
           automaticallyAdjustContentInsets={false}
@@ -1075,9 +1104,9 @@ export default class NotificationMgmtScene extends Component {
 
       </View>
       {listViewProportion != 1 &&
-        this._renderMessage() }
-      {this.checkPassModal() }
-       {this.alertModal() }
+        this._renderMessage()}
+      {this.checkPassModal()}
+      {this.alertModal()}
     </View>);
   }
 
@@ -1088,7 +1117,7 @@ export default class NotificationMgmtScene extends Component {
         open: false,
         disabled: true,
       }}
-      defaultNav = {isPageTitle ? false : true}
+      defaultNav={isPageTitle ? false : true}
       navBar={{
         title: 'My Notifications',
         visible: true,
@@ -1105,26 +1134,26 @@ export default class NotificationMgmtScene extends Component {
         visible: false,
       }}
       navigator={this.props.navigator}
-      >
-      { isPageTitle && this.renderPageTitle( Main.notificationCount > 1 ? 'Notifications' : 'Notification' ) }
+    >
+      {isPageTitle && this.renderPageTitle(Main.notificationCount > 1 ? 'Notifications' : 'Notification')}
 
       <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
-        <Loader visible={this.state.showLoader}/>
-        {this.renderNotificationView(this.state.dataSource) }
-        { Main.notificationCount == 0 && this._renderMessage()}
-       { Main.notificationCount == 0 &&
-         <TouchableHighlight style={{ height: 40, width:Skin.SCREEN_WIDTH,justifyContent:'center',marginTop: 5,backgroundColor: Skin.color.APPROVE_BUTTON_COLOR}}
-                onPress={() => { 
-                    this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-                } }>
-                <Text style={{ fontSize: 16, alignSelf:'center',textAlign:'center', color: 'white', fontWeight: 'bold' }}>
-                    Notification History
+        <Loader visible={this.state.showLoader} />
+        {this.renderNotificationView(this.state.dataSource)}
+        {Main.notificationCount == 0 && this._renderMessage()}
+        {Main.notificationCount == 0 &&
+          <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
+            onPress={() => {
+              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+            }}>
+            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
+              Notification History
                 </Text>
-        </TouchableHighlight>
-       }
+          </TouchableHighlight>
+        }
       </View>
-      {this.checkPassModal() }
-      {this.alertModal() }
+      {this.checkPassModal()}
+      {this.alertModal()}
     </Main>);
   }
 

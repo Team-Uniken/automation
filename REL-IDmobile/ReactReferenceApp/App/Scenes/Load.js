@@ -66,6 +66,7 @@ let onPauseCompletedSubscription;
 let onResumeCompletedSubscription;
 let onTerminateSubscription;
 let onSessionTimeoutSubscription;
+let appState;
 
 const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
@@ -177,6 +178,8 @@ class Load extends Component {
    This method is called when the component will start to load
    */
   componentWillMount() {
+
+    Main.notificationId = null;
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
     Events.on('onSessionTOut', 'onSessionTOut', this.onSessionTOut);
@@ -185,6 +188,15 @@ class Load extends Component {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
       PushNotificationIOS.addEventListener('notification', this._onNotification);
       PushNotificationIOS.requestPermissions();
+      PushNotificationIOS.getInitialNotification()
+      .then((notification) => {
+      
+          // usually there is no notification; don't act in those scenarios
+          if(!notification || notification === null || !notification.hasOwnProperty('_data')) {
+              return;
+          }
+        Main.notificationId = notification._data.notificationId;
+      });
     } else {
       //Android push notification listeners to be added here.
     }
@@ -202,6 +214,12 @@ class Load extends Component {
 
   _onNotification(notification) {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
+    
+    if(appState == 'inactive'|| appState == 'background'){
+        Main.notificationId = notification._data.notificationId;
+    }else{
+      Main.notificationId = null;
+    }
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
     for (var i = 0; i < allScreens.length; i++) {
       var screen = allScreens[i];
@@ -618,6 +636,7 @@ class Load extends Component {
   _handleAppStateChange(currentAppState) {
     console.log('_handleAppStateChange');
     console.log(currentAppState);
+    appState = currentAppState;
 
     if (currentAppState == 'background') {
       console.log('App State Change background:');
