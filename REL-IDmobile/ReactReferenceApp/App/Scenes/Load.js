@@ -217,8 +217,6 @@ class Load extends Component {
     
     if(appState == 'inactive'|| appState == 'background'){
         Main.notificationId = notification._data.notificationId;
-    }else{
-      Main.notificationId = null;
     }
     var allScreens = Obj.props.navigator.getCurrentRoutes(0);
     for (var i = 0; i < allScreens.length; i++) {

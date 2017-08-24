@@ -663,18 +663,22 @@ export default class NotificationMgmtScene extends Component {
       //this.setState({ notification: noti }); 
 
       //logic for tapped notifiaction show first on screen
-      /*if (!Main.notificationId || Main.notificationId !== null) {
+      /*if (Main.notificationId) {
 
         this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare)));
         var arrayLength = notification.length;
         var isSelected = false;
         for (var i = 0; i < arrayLength; i++) {
           var tappedNotification = notification[i];
-          if (tappedNotification.notificationId === Main.notificationId)
+          if (tappedNotification.notificationId === Main.notificationId){
             this.swapDataSource(tappedNotification);
+          
           isSelected = true;
           break;
+          }
+
         }
+        Main.notificationId = null;
         if (!isSelected) {
           this.setState({
             notification: noti,
