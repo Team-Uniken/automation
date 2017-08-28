@@ -62,7 +62,7 @@ function compare(a, b) {
   // if (a.created_timestamp == b.created_timestamp)
   //   return 0;
 
-  return moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
+  return moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
 }
 
 /*
@@ -696,15 +696,15 @@ export default class NotificationMgmtScene extends Component {
         });
       }*/
 
+       notification = notification.sort(compare);
       var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
       if(notifiactionObj){
-        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare)));
+        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
         this.swapDataSource(notifiactionObj);
       }else{
 
         this.setState({
-          notification: noti,
-          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification)),
         });
     }
     
@@ -735,17 +735,19 @@ export default class NotificationMgmtScene extends Component {
 
         var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
         if(notifiactionObj){
+          this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
           this.swapDataSource(notifiactionObj);
         }else{
 
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification)),
         });
       }
 
 
       } else {
 
+        setTimeout(() => {
         Alert.alert(
           'Alert',
           res.pArgs.response.StatusMsg,
@@ -753,10 +755,12 @@ export default class NotificationMgmtScene extends Component {
             { text: 'OK', onPress: () => this.getMyNotifications() }
           ]
         )
+      }, 100);
 
         // If error occurred reload devices list with previous response
 
       }
+
     } else {
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
