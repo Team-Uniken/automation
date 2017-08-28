@@ -698,6 +698,7 @@ export default class NotificationMgmtScene extends Component {
 
       var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
       if(notifiactionObj){
+        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare)));
         this.swapDataSource(notifiactionObj);
       }else{
 
