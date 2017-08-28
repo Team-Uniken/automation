@@ -13,6 +13,7 @@ import Config from 'react-native-config';
  Required for this js
  */
 import Events from 'react-native-simple-events';
+import moment from 'moment';
 import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS, RefreshControl } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
@@ -54,12 +55,14 @@ let isPageTitle = Config.ENABLEPAGETITLE;
  *Sort notification row based on timestamp.
  */
 function compare(a, b) {
-  if (a.created_timestamp < b.created_timestamp)
-    return 1;
-  if (a.created_timestamp > b.created_timestamp)
-    return -1;
-  if (a.created_timestamp == b.created_timestamp)
-    return 0;
+  // if (a.created_timestamp < b.created_timestamp)
+  //   return 1;
+  // if (a.created_timestamp > b.created_timestamp)
+  //   return -1;
+  // if (a.created_timestamp == b.created_timestamp)
+  //   return 0;
+
+  return moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
 }
 
 /*
@@ -693,10 +696,17 @@ export default class NotificationMgmtScene extends Component {
         });
       }*/
 
-      this.setState({
-        notification: noti,
-        dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
-      });
+      var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
+      if(notifiactionObj){
+        this.swapDataSource(notifiactionObj);
+      }else{
+
+        this.setState({
+          notification: noti,
+          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
+        });
+    }
+    
 
     } else {
       console.log('Something went wrong');
@@ -722,9 +732,15 @@ export default class NotificationMgmtScene extends Component {
           this.props.navigator.pop(0);
         }
 
+        var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
+        if(notifiactionObj){
+          this.swapDataSource(notifiactionObj);
+        }else{
+
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
         });
+      }
 
 
       } else {
@@ -822,6 +838,26 @@ export default class NotificationMgmtScene extends Component {
       handler={this.props.navigator.pop} isBadge={true} />);
   }
 
+
+  sortNotificationWithinMinutes(minute,notifiactionArray){
+    var millis = minute*60000;
+    var currMill = Date.now();
+    var millis2minsBefore = currMill - millis;
+   if( notifiactionArray.length > 0){
+       var notification = notifiactionArray[0];
+
+       var date1 = new Date(millis2minsBefore);
+       var testDateUtc = moment.utc(notification.created_ts.replace('EDT','')).add(4, 'hours');
+       var localDate = moment(testDateUtc).local();
+       var s = localDate.format("YYYY-MM-DDTHH:mm:ssZ");
+       var newDateObj = new Date(s);
+       var currNotificationTime = newDateObj.getTime()
+       if(currNotificationTime>millis2minsBefore){
+          return notification;
+       }
+   }
+   return null;
+  }
 
   renderListViewData(s) {
     const data = [];
