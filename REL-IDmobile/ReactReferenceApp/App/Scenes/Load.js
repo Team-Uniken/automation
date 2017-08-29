@@ -58,7 +58,6 @@ let onInitCompletedListener;
 let onPauseCompletedListener;
 let onResumeCompletedListener;
 let savedUserName;
-let gotNotification = false;
 let appalive = false;
 let obj1;
 let onInitializeSubscription;
@@ -67,6 +66,7 @@ let onResumeCompletedSubscription;
 let onTerminateSubscription;
 let onSessionTimeoutSubscription;
 let appState;
+let savedNotification;
 
 const onPauseCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
@@ -169,8 +169,10 @@ class Load extends Component {
   }
 
   sessionTimeOutAction(){
+    setTimeout(() => {
     Toast.showWithGravity("Your session has been timed out",Toast.LONG,Toast.BOTTOM);
     Obj.doInitialize();
+    }, 100);
   }
   
   /*
@@ -213,24 +215,34 @@ class Load extends Component {
   }
 
   _onNotification(notification) {
+    savedNotification = notification;
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
-    
-    if(appState == 'inactive'|| appState == 'background'){
-        Main.notificationId = notification._data.notificationId;
+
+    if (appState == 'inactive' || appState == 'background') {
+      Main.notificationId = notification._data.notificationId;
     }
-    var allScreens = Obj.props.navigator.getCurrentRoutes(0);
-    for (var i = 0; i < allScreens.length; i++) {
-      var screen = allScreens[i];
-      if (screen.id == 'Main') {
-        console.log('-----getMyNotifications called when notication comes-----');
-        gotNotification = true;
-        Obj.getMyNotifications();
-        break;
-      } else {
-        gotNotification = false;
+
+    if (Config.ENABLE_PAUSE === "false") {
+      var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+      var isMainScreen = false;
+      for (var i = 0; i < allScreens.length; i++) {
+        var screen = allScreens[i];
+        if (screen.id == 'Main') {
+          isMainScreen = true;
+          console.log('-----getMyNotifications called when notication comes-----');
+            Obj.getMyNotifications();    
+          break;
+        }
       }
+        if (isMainScreen == false) {
+            Obj.showNotificationAlert(notification);
+        }
+      
     }
-    if (gotNotification == false) {
+  }
+
+  showNotificationAlert(notification){
+    setTimeout(() => {
       AlertIOS.alert(
         '',
         notification.getMessage(), [{
@@ -238,8 +250,9 @@ class Load extends Component {
           onPress: null,
         }]
       );
-    }
+    }, 100);
   }
+
   //Call getNotifications api.
   getMyNotifications() {
     var recordCount = "0";
@@ -307,8 +320,6 @@ class Load extends Component {
 
           Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
           console.log('NOTIFICATION:', notification);
-          gotNotification = true;
-
           if (appalive == true) {
             Obj.getMyNotifications();
           }
@@ -429,19 +440,21 @@ class Load extends Component {
         }
         appalive = true;
         console.log('Resume Successfull');
-        if (gotNotification == true) {
-          Obj.getMyNotifications();
-          gotNotification = false;
-        }
+       
 
         var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+        var isMainScreen = false;
         for (var i = 0; i < allScreens.length; i++) {
           var screen = allScreens[i];
           if (screen.id == 'Main') {
+            isMainScreen = true;
             console.log('-----getMyNotifications called when notication comes-----');
             Obj.getMyNotifications();
             break;
           }
+        }
+        if(isMainScreen==false){
+            Obj.showNotificationAlert(savedNotification);
         }
 
         AsyncStorage.setItem("savedContext", "");
