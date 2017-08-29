@@ -748,14 +748,14 @@ export default class NotificationMgmtScene extends Component {
       } else {
 
         setTimeout(() => {
-        Alert.alert(
-          'Alert',
-          res.pArgs.response.StatusMsg,
-          [
-            { text: 'OK', onPress: () => this.getMyNotifications() }
-          ]
-        )
-      }, 100);
+          Alert.alert(
+            'Alert',
+            res.pArgs.response.StatusMsg,
+            [
+              { text: 'OK', onPress: () => this.getMyNotifications() }
+            ]
+          )
+        }, 100);
 
         // If error occurred reload devices list with previous response
 
