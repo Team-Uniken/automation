@@ -657,8 +657,6 @@ export default class NotificationMgmtScene extends Component {
         if (this.state.showAlert === true) {
           this.dismissAlertModal();
         }
-
-
       } else {
         // this.showAlertModal("You have no pending notifications");
       }
@@ -666,51 +664,42 @@ export default class NotificationMgmtScene extends Component {
       //this.setState({ notification: noti }); 
 
       //logic for tapped notifiaction show first on screen
-      /*if (Main.notificationId) {
+      notification = notification.sort(compare);
+      if (Main.notificationId) {
 
-        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare)));
+        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
         var arrayLength = notification.length;
         var isSelected = false;
         for (var i = 0; i < arrayLength; i++) {
           var tappedNotification = notification[i];
-          if (tappedNotification.notificationId === Main.notificationId){
+          if (tappedNotification.notification_uuid === Main.notificationId) {
             this.swapDataSource(tappedNotification);
-          
-          isSelected = true;
-          break;
+            isSelected = true;
+            break;
           }
-
         }
         Main.notificationId = null;
         if (!isSelected) {
-          this.setState({
-            notification: noti,
-            dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
-          });
+          this.showNotificationWithinMinutes();
         }
-
       } else {
-        this.setState({
-          notification: noti,
-          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification.sort(compare))),
-        });
-      }*/
-
-       notification = notification.sort(compare);
-      var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
-      if(notifiactionObj){
-        this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
-        this.swapDataSource(notifiactionObj);
-      }else{
-
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification)),
-        });
-    }
-    
-
+        this.showNotificationWithinMinutes();
+      }
     } else {
       console.log('Something went wrong');
+    }
+  }
+
+  showNotificationWithinMinutes() {
+    var notifiactionObj = this.sortNotificationWithinMinutes(2, notification);
+    if (notifiactionObj) {
+      this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
+      this.swapDataSource(notifiactionObj);
+    } else {
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification)),
+      });
     }
   }
 
@@ -732,17 +721,8 @@ export default class NotificationMgmtScene extends Component {
         if (notification.length <= 0) {
           this.props.navigator.pop(0);
         }
-
-        var notifiactionObj = this.sortNotificationWithinMinutes(2,notification);
-        if(notifiactionObj){
-          this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
-          this.swapDataSource(notifiactionObj);
-        }else{
-
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification)),
-        });
-      }
+       this.showNotificationWithinMinutes();
+      
 
 
       } else {

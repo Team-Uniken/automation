@@ -237,7 +237,7 @@ class Util extends Component {
   static getFormatedDate(dateString){
     var testDateUtc = moment.utc(dateString.replace('EDT','')).add(4, 'hours');
     var localDate = moment(testDateUtc).local();
-    var s = localDate.format("DD/MM/YYYY HH:mm");
+    var s = localDate.format("DD/MM/YYYY HH:mm:ss");
     return s;
   }
 }

@@ -331,9 +331,8 @@ const style = StyleSheet.create({
         color: Skin.BLACK_TEXT_COLOR,
         textAlign: 'right',
         opacity: 0.6,
-        alignSelf: 'flex-end',
         backgroundColor: 'transparent',
-        width: SCREEN_WIDTH - 236,
+        width: SCREEN_WIDTH - 230,
     },
     body: {
         fontSize: 16,

@@ -1341,7 +1341,7 @@ const notification = StyleSheet.create({
     fontSize: 16,
     color: BLACK_TEXT_COLOR,
     textAlign: 'right',
-    width: SCREEN_WIDTH - 236,
+    width: SCREEN_WIDTH - 230,
     opacity: 0.6,
     marginRight: 8,
     marginTop: 8,

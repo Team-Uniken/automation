@@ -197,7 +197,7 @@ class Load extends Component {
           if(!notification || notification === null || !notification.hasOwnProperty('_data')) {
               return;
           }
-        Main.notificationId = notification._data.notificationId;
+        Main.notificationId = notification._data.hiddenMessage;
       });
     } else {
       //Android push notification listeners to be added here.
@@ -219,10 +219,10 @@ class Load extends Component {
     Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
 
     if (appState == 'inactive' || appState == 'background') {
-      Main.notificationId = notification._data.notificationId;
+      Main.notificationId = notification._data.hiddenMessage;
     }
 
-    if (Config.ENABLE_PAUSE === "false") {
+    if (appalive == true || Config.ENABLE_PAUSE === "false") {
       var allScreens = Obj.props.navigator.getCurrentRoutes(0);
       var isMainScreen = false;
       for (var i = 0; i < allScreens.length; i++) {
