@@ -359,7 +359,9 @@ class Load extends Component {
       if (responseJson.errCode == 0) {
         console.log('Pause Successfull');
       } else {
-        alert('Failed to Pause with Error ' + responseJson.errCode);
+        setTimeout(() => {
+          alert('Failed to Pause with Error ' + responseJson.errCode);
+        }, 100);
       }
     });
 
@@ -405,7 +407,9 @@ class Load extends Component {
         AsyncStorage.setItem("savedContext", "");
       } else {
         AsyncStorage.setItem("savedContext", "");
-        alert('Failed to Resume with Error ' + responseJson.errCode + '. Please restart application.');
+        setTimeout(() => {
+          alert('Failed to Resume with Error ' + responseJson.errCode + '. Please restart application.');
+        }, 100);
       }
     });
 

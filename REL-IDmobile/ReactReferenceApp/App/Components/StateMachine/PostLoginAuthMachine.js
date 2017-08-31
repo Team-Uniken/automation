@@ -390,7 +390,9 @@ class PostLoginAuthMachine extends Component {
           this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
         }
         else {
-          alert("Challenge not configured");
+          setTimeout(() => {
+           alert("Challenge not configured");
+          }, 100);
           this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
           this.props.navigator.push({ id: 'Main', title: 'DashBoard', url: '' });
         }
@@ -400,7 +402,9 @@ class PostLoginAuthMachine extends Component {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
-        alert(res.pArgs.response.StatusMsg);
+        setTimeout(() => {
+         alert(res.pArgs.response.StatusMsg);
+        }, 100);
       }
     } else {
       console.log('Something went wrong');
