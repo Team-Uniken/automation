@@ -153,20 +153,6 @@ class Load extends Component {
     ]).start();
   }
 
-  onSessionTOut(){
-  
-    
-    // Alert.alert(
-    //   '',
-    //   'Your session has been timed out',
-    //   [
-    //     { text: 'OK', onPress: () => {
-    //       Obj.doInitialize();
-    //     } }
-    //     ]
-    //   );
-    Obj.sessionTimeOutAction();
-  }
 
   sessionTimeOutAction(){
     setTimeout(() => {
@@ -184,7 +170,6 @@ class Load extends Component {
     Main.notificationId = null;
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
-    Events.on('onSessionTOut', 'onSessionTOut', this.onSessionTOut);
     console.log('test logs');
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
@@ -267,18 +252,8 @@ class Load extends Component {
 
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
-      Events.trigger('onSessionTOut');
-//      ReactRdna.terminate( (tResponse) => {
-//        console.log('----- terminate ');
-//        console.log(tResponse[0].error);
-//        
-//        });
-        //                               if (NotificationObtianedResponse !== undefined) {
-        //                               // If error occurred reload last response
-        //
-        //                                                              }
       }
-
+ 
     });
   }
 
@@ -288,16 +263,6 @@ class Load extends Component {
       onSessionTimeoutSubscription.remove();
       onSessionTimeoutSubscription = null;
     }
-  
-    // Alert.alert(
-    //   '',
-    //   'Your session has been timed out',
-    //   [
-    //     { text: 'OK', onPress: () => {
-    //     Obj.doInitialize();
-    //     } }
-    //     ]
-    //   );
     Obj.sessionTimeOutAction();
   }
 
@@ -404,26 +369,6 @@ class Load extends Component {
     });
     
 
-    
-   
-//    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
-//      if (onSessionTimeoutSubscription) {
-//        console.log("--------------- removing onSessionTimeoutSubscription");
-//        onSessionTimeoutSubscription.remove();
-//        onSessionTimeoutSubscription = null;
-//      }
-//      Alert.alert(
-//        '',
-//        'Your session has been timed out',
-//        [
-//          { text: 'OK', onPress: () => {
-//            Obj.doInitialize();
-//          } }
-//          ]
-//        );
-//
-//      
-//    });
 
     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
       //    onResumeCompletedSubscription.remove();

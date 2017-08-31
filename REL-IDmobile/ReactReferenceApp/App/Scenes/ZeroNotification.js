@@ -582,7 +582,6 @@ export default class NotificationMgmtScene extends Component {
         console.log(response);
 
         if (response[0].error !== 0) {
-          Events.trigger('onSessionTOut');
           this.setState({ refreshing: false });
           console.log('----- ----- response is not 0');
           if (NotificationObtianedResponse !== null && NotificationObtianedResponse !== undefined) {
@@ -613,7 +612,6 @@ export default class NotificationMgmtScene extends Component {
         console.log(response);
 
         if (response[0].error !== 0) {
-          Events.trigger('onSessionTOut');
           console.log('----- ----- response is not 0');
           if (NotificationObtianedResponse !== null && NotificationObtianedResponse !== undefined) {
 

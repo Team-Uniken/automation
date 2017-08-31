@@ -474,12 +474,8 @@ class ControlPanel extends Component {
 
         if (response[0].error!== 0) {
           console.log('----- ----- response is not 0');
-           Events.trigger('onSessionTOut');
-          //                               if (NotificationObtianedResponse !== undefined) {
-          //                               // If error occurred reload last response
-          //
-          //                                                              }
         }
+        
 
       });
     } else {
