@@ -84,7 +84,7 @@ var welcome = ClientBasedConfig.img.welcome;
 var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
-console.log = function () { }
+//console.log = function () { }
 
 BackHandler.addEventListener('hardwareBackPress', function () {
   return true;
@@ -153,9 +153,9 @@ class Load extends Component {
     ]).start();
   }
 
-  onSessionTOut(){
-  
-    
+  onSessionTOut() {
+
+
     // Alert.alert(
     //   '',
     //   'Your session has been timed out',
@@ -168,13 +168,13 @@ class Load extends Component {
     Obj.sessionTimeOutAction();
   }
 
-  sessionTimeOutAction(){
+  sessionTimeOutAction() {
     setTimeout(() => {
-    Toast.showWithGravity("Your session has been timed out",Toast.LONG,Toast.BOTTOM);
-    Obj.doInitialize();
+      Toast.showWithGravity("Your session has been timed out", Toast.LONG, Toast.BOTTOM);
+      Obj.doInitialize();
     }, 100);
   }
-  
+
   /*
    This is life cycle method of the react native component.
    This method is called when the component will start to load
@@ -191,14 +191,14 @@ class Load extends Component {
       PushNotificationIOS.addEventListener('notification', this._onNotification);
       PushNotificationIOS.requestPermissions();
       PushNotificationIOS.getInitialNotification()
-      .then((notification) => {
-      
+        .then((notification) => {
+
           // usually there is no notification; don't act in those scenarios
-          if(!notification || notification === null || !notification.hasOwnProperty('_data')) {
-              return;
+          if (!notification || notification === null || !notification.hasOwnProperty('_data')) {
+            return;
           }
-        Main.notificationId = notification._data.hiddenMessage;
-      });
+          Main.notificationId = notification._data.hiddenMessage;
+        });
     } else {
       //Android push notification listeners to be added here.
     }
@@ -207,10 +207,10 @@ class Load extends Component {
   }
 
   _handleConnectivityChange(isConnected) {
-  
+
     if (__DEV__) {
       Main.isConnected = true;
-    }else
+    } else
       Main.isConnected = isConnected;
   }
 
@@ -230,22 +230,27 @@ class Load extends Component {
         if (screen.id == 'Main') {
           isMainScreen = true;
           console.log('-----getMyNotifications called when notication comes-----');
-            Obj.getMyNotifications();    
+          Obj.getMyNotifications();
           break;
         }
       }
-        if (isMainScreen == false) {
-            Obj.showNotificationAlert(notification);
-        }
-      
+      if (isMainScreen == false) {
+        Obj.showNotificationAlert(notification);
+      }
+
     }
   }
 
-  showNotificationAlert(notification){
+  showNotificationAlert(notification) {
+    var msg = "";
+    if (Platform.OS === 'ios')
+      msg = notification.getMessage();
+    else
+      msg = notification.message;
     setTimeout(() => {
-      AlertIOS.alert(
+      Alert.alert(
         '',
-        notification.getMessage(), [{
+        msg, [{
           text: 'Dismiss',
           onPress: null,
         }]
@@ -264,15 +269,14 @@ class Load extends Component {
 
       console.log('----- NotificationMgmt.getMyNotifications.response ');
       console.log(response);
-
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
-      Events.trigger('onSessionTOut');
-//      ReactRdna.terminate( (tResponse) => {
-//        console.log('----- terminate ');
-//        console.log(tResponse[0].error);
-//        
-//        });
+        //Events.trigger('onSessionTOut');
+        //      ReactRdna.terminate( (tResponse) => {
+        //        console.log('----- terminate ');
+        //        console.log(tResponse[0].error);
+        //        
+        //        });
         //                               if (NotificationObtianedResponse !== undefined) {
         //                               // If error occurred reload last response
         //
@@ -282,13 +286,13 @@ class Load extends Component {
     });
   }
 
-  onSessionTimeout(e){
+  onSessionTimeout(e) {
     if (onSessionTimeoutSubscription) {
       console.log("--------------- removing onSessionTimeoutSubscription");
       onSessionTimeoutSubscription.remove();
       onSessionTimeoutSubscription = null;
     }
-  
+
     // Alert.alert(
     //   '',
     //   'Your session has been timed out',
@@ -317,12 +321,46 @@ class Load extends Component {
         },
         // (required) Called when a remote or local notification is opened or received
         onNotification: function (notification) {
+           savedNotification = notification;
+          if (notification.userInteraction == true) {
+            Main.notificationId = notification.hiddenMessage;
+          }
 
           Main.gotNotification = false;//for screen hide on notification make Main.gotNotification = true
           console.log('NOTIFICATION:', notification);
-          if (appalive == true) {
-            Obj.getMyNotifications();
+          // alert("calling getNotifications = " + (global.savedContext == null || global.savedContext==undefined));
+          // if (global.savedContext == null || global.savedContext == undefined) {
+          //   //alert("callnotification");
+          //   Obj.getMyNotifications();
+          // }
+
+          if (appalive == true || Config.ENABLE_PAUSE === "false") {
+            var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+            var isMainScreen = false;
+            for (var i = 0; i < allScreens.length; i++) {
+              var screen = allScreens[i];
+              if (screen.id == 'Main') {
+                isMainScreen = true;
+                console.log('-----getMyNotifications called when notication comes-----');
+                Obj.getMyNotifications();
+                break;
+              }
+            }
+            if (isMainScreen == false) {
+              Obj.showNotificationAlert(notification);
+            }
+
           }
+          //else{
+          // ReactRdna.resumeRuntime(global.savedContext, null, (response) => {
+          //     if (response) {
+          //       //Main.isPaused = false;
+          //       console.log('Immediate response is ' + response[0].error);
+          //     } else {
+          //       console.log('No response.');
+          //     }
+          //   });
+          //}
 
           // Obj.getMyNotifications();
 
@@ -376,10 +414,10 @@ class Load extends Component {
       onResumeCompletedSubscription.remove();
       onResumeCompletedSubscription = null;
     }
-    
-    if(onTerminateSubscription){
+
+    if (onTerminateSubscription) {
       onTerminateSubscription.remove();
-      onTerminateSubscription=null;
+      onTerminateSubscription = null;
     }
 
 
@@ -392,38 +430,48 @@ class Load extends Component {
       console.log('immediate response is' + e.response);
       responseJson = JSON.parse(e.response);
       if (responseJson.errCode == 0) {
+        if (AppState.currentState == 'active' && global.savedContext) {
+          ReactRdna.resumeRuntime(global.savedContext, null, (response) => {
+            if (response) {
+              //Main.isPaused = false;
+              console.log('Immediate response is ' + response[0].error);
+            } else {
+              console.log('No response.');
+            }
+          });
+        }
         console.log('Pause Successfull');
       } else {
         alert('Failed to Pause with Error ' + responseJson.errCode);
       }
     });
 
-    onTerminateSubscription =onTerminateCompletedModuleEvt.addListener('onTerminateCompleted', function (e) {
-    
-//      Obj.doInitialize();
-    });
-    
+    onTerminateSubscription = onTerminateCompletedModuleEvt.addListener('onTerminateCompleted', function (e) {
 
-    
-   
-//    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
-//      if (onSessionTimeoutSubscription) {
-//        console.log("--------------- removing onSessionTimeoutSubscription");
-//        onSessionTimeoutSubscription.remove();
-//        onSessionTimeoutSubscription = null;
-//      }
-//      Alert.alert(
-//        '',
-//        'Your session has been timed out',
-//        [
-//          { text: 'OK', onPress: () => {
-//            Obj.doInitialize();
-//          } }
-//          ]
-//        );
-//
-//      
-//    });
+      //      Obj.doInitialize();
+    });
+
+
+
+
+    //    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
+    //      if (onSessionTimeoutSubscription) {
+    //        console.log("--------------- removing onSessionTimeoutSubscription");
+    //        onSessionTimeoutSubscription.remove();
+    //        onSessionTimeoutSubscription = null;
+    //      }
+    //      Alert.alert(
+    //        '',
+    //        'Your session has been timed out',
+    //        [
+    //          { text: 'OK', onPress: () => {
+    //            Obj.doInitialize();
+    //          } }
+    //          ]
+    //        );
+    //
+    //      
+    //    });
 
     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
       //    onResumeCompletedSubscription.remove();
@@ -433,6 +481,7 @@ class Load extends Component {
       console.log('immediate response is' + e.response);
       responseJson = JSON.parse(e.response);
       if (responseJson.errCode == 0) {
+        global.savedContext = null;
         const pPort = responseJson.pArgs.pxyDetails.port;
         if (pPort > 0) {
           RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
@@ -440,7 +489,7 @@ class Load extends Component {
         }
         appalive = true;
         console.log('Resume Successfull');
-       
+
 
         var allScreens = Obj.props.navigator.getCurrentRoutes(0);
         var isMainScreen = false;
@@ -453,8 +502,8 @@ class Load extends Component {
             break;
           }
         }
-        if(isMainScreen==false){
-            Obj.showNotificationAlert(savedNotification);
+        if (isMainScreen == false) {
+          Obj.showNotificationAlert(savedNotification);
         }
 
         AsyncStorage.setItem("savedContext", "");
@@ -472,10 +521,10 @@ class Load extends Component {
 
 
     onInitializeSubscription = onInitializeCompletedModuleEvt.addListener('onInitializeCompleted', function (e) {
-//      if (onInitializeSubscription) {
-//        onInitializeSubscription.remove();
-//        onInitializeSubscription = null;
-//      }
+      //      if (onInitializeSubscription) {
+      //        onInitializeSubscription.remove();
+      //        onInitializeSubscription = null;
+      //      }
       onSessionTimeoutSubscription = onSessionTimeoutModuleEvt.addListener('onSessionTimeout',
         Obj.onSessionTimeout.bind(Obj));
       AsyncStorage.setItem("savedContext", "");
@@ -492,19 +541,19 @@ class Load extends Component {
           RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => {
           });
         }
- 
+
         InteractionManager.runAfterInteractions(() => {
-           isRunAfterInteractions = true;
-           Obj.onInitCompleted();
+          isRunAfterInteractions = true;
+          Obj.onInitCompleted();
         });
         console.log('--------- onInitializeCompleted initCount ' + initCount);
       } else {
         initCount = initError;
         initErrorMsg = 'Unable to connect to server, please check the connection profile. Error code ' + responseJson.errCode;
         console.log('--------- onInitializeCompleted initCount ' + initCount);
-         InteractionManager.runAfterInteractions(() => {
-           isRunAfterInteractions = true;
-           Obj.onInitCompleted();
+        InteractionManager.runAfterInteractions(() => {
+          isRunAfterInteractions = true;
+          Obj.onInitCompleted();
         });
       }
     });
@@ -636,8 +685,8 @@ class Load extends Component {
     //     }),
     //   ])
     // ]).start();
-    
-    if(Config.ENABLESTARTUPANIMATION)
+
+    if (Config.ENABLESTARTUPANIMATION)
       this.animate();
   }
   /*
@@ -645,7 +694,7 @@ class Load extends Component {
    This method is called when app state get change like pause, resume
  */
   _handleAppStateChange(currentAppState) {
-    console.log('_handleAppStateChange');
+    console.log('_handleAppStateChange = ' + currentAppState);
     console.log(currentAppState);
     appState = currentAppState;
 
@@ -656,8 +705,9 @@ class Load extends Component {
           ReactRdna.pauseRuntime((response) => {
             if (response) {
               if (response[0].error == 0) {
-                Main.isPaused = true;
-                AsyncStorage.setItem("savedContext", response[0].response);
+                // Main.isPaused = true;
+                //AsyncStorage.setItem("savedContext", response[0].response);
+                global.savedContext = response[0].response;
               }
               console.log('Immediate response is ' + response[0].error);
             } else {
@@ -669,20 +719,20 @@ class Load extends Component {
     } else if (currentAppState == 'active') {
       console.log('App State Change active:');
       if (Config.ENABLE_PAUSE === "true") {
-        if (Main.isPaused === true) {
-          AsyncStorage.getItem("savedContext").then((value) => {
-            if (value != null) {
-              ReactRdna.resumeRuntime(value, null, (response) => {
-                if (response) {
-                  Main.isPaused = false;
-                  console.log('Immediate response is ' + response[0].error);
-                } else {
-                  console.log('No response.');
-                }
-              })
+        // if (Main.isPaused === true) {
+        // AsyncStorage.getItem("savedContext").then((value) => {
+        if (global.savedContext != null && global.savedContext != undefined) {
+          ReactRdna.resumeRuntime(global.savedContext, null, (response) => {
+            if (response) {
+              //Main.isPaused = false
+              console.log('Immediate response is ' + response[0].error);
+            } else {
+              console.log('No response.');
             }
-          }).done();
+          });
         }
+        // }).done();
+        // }
       }
     } else if (currentAppState === 'inactive') {
       console.log('App State Change Inactive');
@@ -739,7 +789,7 @@ class Load extends Component {
               onPress: () => this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
             },
           ],
-           { cancelable: false }
+          { cancelable: false }
         )
       }
     }
@@ -809,22 +859,22 @@ class Load extends Component {
       }).done();
     }
   }
-  
+
   /*
       This method used to render starup animation
    */
-  
-  renderStartUpAnimation(){
-    return([<Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR}/>,<Text style={{
-           position: 'absolute',
-           bottom: 100,
-           alignSelf: 'center',
-           color: Skin.main.TITLE_COLOR,
-           fontSize: 18,
-           zIndex: 5,
-           }}>{this.state.value}</Text>]);
+
+  renderStartUpAnimation() {
+    return ([<Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR}/>, <Text style={{
+      position: 'absolute',
+      bottom: 100,
+      alignSelf: 'center',
+      color: Skin.main.TITLE_COLOR,
+      fontSize: 18,
+      zIndex: 5,
+    }}>{this.state.value}</Text>]);
   }
-  
+
   /*
     This method is used to render the componenet with all its element.
   */
@@ -838,8 +888,8 @@ class Load extends Component {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
-        
-            {Config.ENABLESTARTUPANIMATION === 'true' && this.renderStartUpAnimation()}
+
+        {Config.ENABLESTARTUPANIMATION === 'true' && this.renderStartUpAnimation() }
 
         <Image
           source={welcome}
