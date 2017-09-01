@@ -347,7 +347,9 @@ class Notifications_History extends Component {
         }
       }
     } else {
-      alert("onGetNotificationHistory errCode" + res.errCode);
+      setTimeout(() => {
+       alert("onGetNotificationHistory errCode" + res.errCode);
+      }, 100);
     }
   }
   /**

@@ -330,6 +330,7 @@ class Register extends Component {
 
         }
       } else {
+        setTimeout(() => {
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
@@ -372,6 +373,7 @@ class Register extends Component {
             style: 'cancel',
           }]
         );
+        }, 100);           
       }
     } else {
       console.log(e);

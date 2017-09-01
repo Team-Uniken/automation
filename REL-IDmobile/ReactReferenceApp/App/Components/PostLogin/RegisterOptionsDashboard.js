@@ -327,7 +327,9 @@ This method is called when the component will start to load
           this.props.navigator.pop();
         }
       } else {
-        alert(res.pArgs.response.StatusMsg);
+        setTimeout(() => {
+         alert(res.pArgs.response.StatusMsg);
+        }, 100);
       }
     } else {
       console.log('Something went wrong');
@@ -553,6 +555,7 @@ This method is called when the component will start to load
 
         }
       } else {
+        setTimeout(() => {
         Alert.alert(
           'Error',
           res.pArgs.response.StatusMsg, [{
@@ -595,10 +598,13 @@ This method is called when the component will start to load
             style: 'cancel',
           }]
         );
+        }, 100);
       }
     } else {
       //console.log(e);
+      setTimeout(() => {
       alert('Internal system error occurred.' + res.errCode);
+      }, 100);           
     }
   }
 

@@ -153,21 +153,6 @@ class Load extends Component {
     ]).start();
   }
 
-  onSessionTOut() {
-
-
-    // Alert.alert(
-    //   '',
-    //   'Your session has been timed out',
-    //   [
-    //     { text: 'OK', onPress: () => {
-    //       Obj.doInitialize();
-    //     } }
-    //     ]
-    //   );
-    Obj.sessionTimeOutAction();
-  }
-
   sessionTimeOutAction() {
     setTimeout(() => {
       Toast.showWithGravity("Your session has been timed out", Toast.LONG, Toast.BOTTOM);
@@ -184,7 +169,6 @@ class Load extends Component {
     Main.notificationId = null;
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
-    Events.on('onSessionTOut', 'onSessionTOut', this.onSessionTOut);
     console.log('test logs');
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
@@ -271,18 +255,8 @@ class Load extends Component {
       console.log(response);
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
-        //Events.trigger('onSessionTOut');
-        //      ReactRdna.terminate( (tResponse) => {
-        //        console.log('----- terminate ');
-        //        console.log(tResponse[0].error);
-        //        
-        //        });
-        //                               if (NotificationObtianedResponse !== undefined) {
-        //                               // If error occurred reload last response
-        //
-        //                                                              }
       }
-
+ 
     });
   }
 
@@ -293,15 +267,6 @@ class Load extends Component {
       onSessionTimeoutSubscription = null;
     }
 
-    // Alert.alert(
-    //   '',
-    //   'Your session has been timed out',
-    //   [
-    //     { text: 'OK', onPress: () => {
-    //     Obj.doInitialize();
-    //     } }
-    //     ]
-    //   );
     Obj.sessionTimeOutAction();
   }
 
@@ -442,7 +407,9 @@ class Load extends Component {
         }
         console.log('Pause Successfull');
       } else {
-        alert('Failed to Pause with Error ' + responseJson.errCode);
+        setTimeout(() => {
+          alert('Failed to Pause with Error ' + responseJson.errCode);
+        }, 100);
       }
     });
 
@@ -450,28 +417,6 @@ class Load extends Component {
 
       //      Obj.doInitialize();
     });
-
-
-
-
-    //    onSessionTimeoutSubscription = ononSessionTimeoutModuleEvt.addListener('onSessionTimeout', function (e) {
-    //      if (onSessionTimeoutSubscription) {
-    //        console.log("--------------- removing onSessionTimeoutSubscription");
-    //        onSessionTimeoutSubscription.remove();
-    //        onSessionTimeoutSubscription = null;
-    //      }
-    //      Alert.alert(
-    //        '',
-    //        'Your session has been timed out',
-    //        [
-    //          { text: 'OK', onPress: () => {
-    //            Obj.doInitialize();
-    //          } }
-    //          ]
-    //        );
-    //
-    //      
-    //    });
 
     onResumeCompletedSubscription = onResumeCompletedModuleEvt.addListener('onResumeCompleted', function (e) {
       //    onResumeCompletedSubscription.remove();
@@ -509,7 +454,9 @@ class Load extends Component {
         AsyncStorage.setItem("savedContext", "");
       } else {
         AsyncStorage.setItem("savedContext", "");
-        alert('Failed to Resume with Error ' + responseJson.errCode + '. Please restart application.');
+        setTimeout(() => {
+          alert('Failed to Resume with Error ' + responseJson.errCode + '. Please restart application.');
+        }, 100);
       }
     });
 

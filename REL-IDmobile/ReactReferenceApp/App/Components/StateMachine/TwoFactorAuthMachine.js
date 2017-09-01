@@ -569,8 +569,9 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
-
-        alert(res.pArgs.response.StatusMsg);
+        setTimeout(() => {
+          alert(res.pArgs.response.StatusMsg);
+        }, 100);          
       }
     } else {
       console.log('Something went wrong');
