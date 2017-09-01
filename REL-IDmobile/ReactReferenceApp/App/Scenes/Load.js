@@ -111,7 +111,8 @@ class Load extends Component {
       spinnnerType: 'ThreeBounce',
       animatedTextValue: new Animated.Value(0),
     };
-
+    
+    Main.isApiRunning = false;
     this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
   openRoute(route) {
@@ -226,6 +227,7 @@ class Load extends Component {
   }
 
   showNotificationAlert(notification) {
+    savedNotification = null;
     var msg = "";
     if (Platform.OS === 'ios')
       msg = notification.getMessage();
@@ -447,7 +449,7 @@ class Load extends Component {
             break;
           }
         }
-        if (isMainScreen == false) {
+        if (isMainScreen == false && savedNotification) {
           Obj.showNotificationAlert(savedNotification);
         }
 
