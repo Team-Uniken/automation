@@ -606,7 +606,9 @@ export default class NotificationMgmtScene extends Component {
   updateNotificationDetails() {
     console.log('----- NotificationMgmt.updateNotificationDetails');
     if (Main.isConnected) {
+      if(this.state.showLoader===false)
       this.setState({ showLoader: true });
+
       ReactRdna.updateNotification(this.state.selectedNotificationId, this.state.selectedAction, (response) => {
         console.log('ReactRdna.updateNotificationDetails.response:');
         console.log(response);
@@ -733,7 +735,7 @@ export default class NotificationMgmtScene extends Component {
               { text: 'OK', onPress: () => this.getMyNotifications() }
             ]
           )
-        }, 100);
+        }, 120);
 
         // If error occurred reload devices list with previous response
 
