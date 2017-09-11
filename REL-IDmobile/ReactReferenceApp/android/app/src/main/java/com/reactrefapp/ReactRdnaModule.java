@@ -1146,6 +1146,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 }
 
                 try {
+                    view.clearCache(true);
                     boolean success = ProxySetting.setProxy(view.getContext(), view, host, port);
                     promise.resolve(success);
                 }
