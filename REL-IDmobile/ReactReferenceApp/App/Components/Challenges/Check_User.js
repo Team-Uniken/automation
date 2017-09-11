@@ -118,7 +118,8 @@ class UserLogin extends Component {
    */
   checkUsername() {
     this.state.progress = 0;
-    let un = this.state.inputUsername;
+    var un = this.state.inputUsername;
+    un = un.trim();
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
