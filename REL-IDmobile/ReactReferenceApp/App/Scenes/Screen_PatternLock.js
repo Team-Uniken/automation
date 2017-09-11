@@ -159,6 +159,7 @@ class PatternLock extends Component {
             }
           }
           else {
+            this.refs["patternView"].clearPattern();
             alert("Pattern should atleast be of 4 dots");
           }
         }
@@ -175,6 +176,7 @@ class PatternLock extends Component {
               }).done();
             }
             else {
+              this.refs["patternView"].clearPattern();
               alert("Confirm pattern does not match");
             }
           }
