@@ -2,14 +2,14 @@
  * This is the starting point for Uniken's REL-ID Reference Application developed in react-native for ios
  * This source code for reference app is made available to mobile developers to understand how to integrate with REL-ID SDK
  * Developers can use this source code OR any module or part of this source code as is, without warrenty
- *    
- * Application Name : REL-ID Reference App 
+ *
+ * Application Name : REL-ID Reference App
  * https://github.com/Team-Uniken/REL-ID_internal.git
  */
 
 'use strict';
 
-// Loading react library 
+// Loading react library
 import React from 'react';
 import {Navigator} from 'react-native-deprecated-custom-components'
 import { FormattedWrapper } from 'react-native-globalize';            //Provides access to all formatting options as well as easy-to-use React Native components
@@ -19,7 +19,7 @@ import { Component } from 'react';
 
 /**
  * The application has various screens, staring from initial splash screen i.e load.js, followed by REL-ID user activation and authentication screens.
- * Once user is authenticated into REL-ID, Application shows feature specific screens (Dashboard) 
+ * Once user is authenticated into REL-ID, Application shows feature specific screens (Dashboard)
  */
 
 
@@ -35,9 +35,9 @@ import Welcome_Screen from './App/Scenes/Welcome_Screen';                    // 
 import Select_Login from './App/Scenes/Select_Login';            // Select login mode (password / pattern etc)
 import Self_Register from './App/Scenes/Self_Register';                  // screen for self-registration
 import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';     // generate access code for new device
-import DeviceMgmtScene from './App/Scenes/DeviceMgmt';                  // Device Management for edit or delete device 
+import DeviceMgmtScene from './App/Scenes/DeviceMgmt';                  // Device Management for edit or delete device
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';    // import new connection profile or select existing profile for initialization
-import LoadScene from './App/Scenes/Load';                              // splash screen perform initialization 
+import LoadScene from './App/Scenes/Load';                              // splash screen perform initialization
 import Web from './App/Scenes/Web';                                               // retun platform specific WebView
 import NotificationMgmtScene from './App/Scenes/ZeroNotification';                // notification screen
 import Notification_History from './App/Scenes/Notification_History';                    //Notification_History Screen
@@ -74,27 +74,27 @@ import DepositsScene from './App/Components/Dashboard/CBC/Deposits';
 import FindBranchScene from './App/Components/Dashboard/CBC/FindBranch';
 
 const FadeIn = {
-  opacity: {
-    from: 0,
-    to: 1,
-    min: 0, // 0.5,
-    max: 1,
-    type: 'linear',
-    extrapolate: true,
-    round: 1000,
-  },
+opacity: {
+from: 0,
+to: 1,
+min: 0, // 0.5,
+max: 1,
+type: 'linear',
+extrapolate: true,
+round: 1000,
+},
 };
 
 const FadeOut = {
-  opacity: {
-    from: 1,
-    to: 0,
-    min: 0,
-    max: 1, // 0.5,
-    type: 'linear',
-    extrapolate: true,
-    round: 1000,
-  },
+opacity: {
+from: 1,
+to: 0,
+min: 0,
+max: 1, // 0.5,
+type: 'linear',
+extrapolate: true,
+round: 1000,
+},
 };
 
 
@@ -340,14 +340,14 @@ const FadeOut = {
 //                              let config = Navigator.SceneConfigs.FadeAndroid;
 //                              // var config = Navigator.SceneConfigs.FloatFromRight
 //                              config = {
-//                          
+//
 //                                // Rebound spring parameters when transitioning FROM this scene
 //                                springFriction: 26,
 //                                springTension: 200,
-//                          
+//
 //                                // Velocity to start at when transitioning without gesture
 //                                defaultTransitionVelocity: 3.5,
-//                          
+//
 //                                gestures: null,
 //                                animationInterpolators: {
 //                                  into: buildStyleInterpolator(FadeIn),
@@ -371,35 +371,22 @@ import SelfRegisterScreen from './App/Scenes/Self_Register';
 import StateMachine from './App/Components/StateMachine/TwoFactorAuthMachine';
 import Check_UserScreen from './App/Components/Challenges/Check_User';
 import pass from './App/Scenes/Select_Login';
-//import Check_UserScreen from './App/Components/Challenges/Check_User';
 
-
-
-//const StateNavigator = StackNavigator({
-//  
-//checkuser: {
-//screen: Check_UserScreen,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-//SelfRegisterScreen: {
-//screen: SelfRegisterScreen,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//
-//StateMachine: {
-//screen: StateMachine,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  }
-//  
-//})
-//  
+import Activation from './App/Components/Challenges/Activation_Code';
+import AccessCode from './App/Components/Challenges/Access_Code';
+import PasswordSet from './App/Components/Challenges/SetPassword';
+import Forgot_Password from './App/Components/Challenges/Forgot_Password';
+import Otp from './App/Components/Challenges/Activation_Code';
+import QuestionSet from './App/Components/Challenges/SetQuestion';
+import QuestionVerification from './App/Components/Challenges/Question_Verification';
+import UserLogin from './App/Components/Challenges/Check_User';
+import DeviceBinding from './App/Components/Challenges/Device_Binding';
+import DeviceName from './App/Components/Challenges/Device_Name';
+import PasswordVerification from './App/Components/Challenges/Password_Verification';
+import RegisterOption from './App/Scenes/Register_Options';
+//import PatternLock from './App/Scenes/Screen_PatternLock';
+//import ScreenHider from '../Utils/ScreenHider';
+import SelectLogin from './App/Scenes/Select_Login';
 
 
 
@@ -433,7 +420,7 @@ navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
-
+  
 StateMachine: {
 screen: StateMachine,
 navigationOptions: ({navigation}) => ({
@@ -441,28 +428,73 @@ header: false
   }),
   },
   
-checkuser: {
-screen: Check_UserScreen,
-navigationOptions: ({navigation}) => ({
-header: false
-  }),
-  },
-  
-  
 DashBoard: {
 screen: Dashboard,
 navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
-  
-pass: {
-screen: pass,
+
+SelfRegister: {
+screen: SelfRegisterScreen,
 navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
-
+//actcode: {
+//screen: Activation,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+//actcode: {
+//screen: Activation,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+//otp: {
+//screen: AccessCode,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+//secqa: {
+//screen: QuestionVerification,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+//devname: {
+//screen: DeviceName,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+//devbind: {
+//screen: DeviceBinding,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+// RegisterOption: {
+// screen: RegisterOption,
+// navigationOptions: ({navigation}) => ({
+// header: false
+//   }),
+//   },
+pattern: {
+screen: PatternLock,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
   
   }, {
 transitionConfig: () => ({

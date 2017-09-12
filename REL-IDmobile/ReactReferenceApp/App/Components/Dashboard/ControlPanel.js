@@ -448,16 +448,17 @@ class ControlPanel extends Component {
 
 
   isNotificationScreenPresent() {
-    var allScreens = this.props.navigator.getCurrentRoutes(0);
-    var status = 0;
-    for (var i = 0; i < allScreens.length; i++) {
-      var screen = allScreens[i];
-      if (screen.id == 'NotificationMgmt') {
-        status = 1;
-        return status;
-      }
-    }
-    return status;
+     return 0;
+//    var allScreens = this.props.navigator.getCurrentRoutes(0);
+//    var status = 0;
+//    for (var i = 0; i < allScreens.length; i++) {
+//      var screen = allScreens[i];
+//      if (screen.id == 'NotificationMgmt') {
+//        status = 1;
+//        return status;
+//      }
+//    }
+//    return status;
   }
 
   getMyNotifications() {

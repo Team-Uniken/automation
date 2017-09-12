@@ -84,7 +84,7 @@ var welcome = ClientBasedConfig.img.welcome;
 var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
-console.log = function () { }
+//console.log = function () { }
 
 BackHandler.addEventListener('hardwareBackPress', function () {
   return true;

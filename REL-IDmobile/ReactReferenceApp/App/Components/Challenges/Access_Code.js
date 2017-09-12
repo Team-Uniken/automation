@@ -132,27 +132,27 @@ class AccessCode extends Component {
     This method is called when the component is Updated.
   */
   componentWillUpdate() {
-    var allScreens = this.props.navigator.getCurrentRoutes(0);
-    if (allScreens[allScreens.length - 1].id == 'otp') {
-      if (this.state.isPoped) {
-        obj.state.barCodeFlag = true;
-        this.state.showCamera = true;
-        dismissKeyboard();
-      }
-    }
+//    var allScreens = this.props.navigator.getCurrentRoutes(0);
+//    if (allScreens[allScreens.length - 1].id == 'otp') {
+//      if (this.state.isPoped) {
+//        obj.state.barCodeFlag = true;
+//        this.state.showCamera = true;
+//        dismissKeyboard();
+//      }
+//    }
   }
 
   componentDidUpdate() {
-    var allScreens = this.props.navigator.getCurrentRoutes(0);
-    if (allScreens[allScreens.length - 1].id == 'otp') {
-      if (this.state.isPoped) {
-        if (this.state.showCamera) {
-          //this.refs[CAMERA_REF].setCameraMode("on");
-        }
-
-        this.state.isPoped = false;
-      }
-    }
+//    var allScreens = this.props.navigator.getCurrentRoutes(0);
+//    if (allScreens[allScreens.length - 1].id == 'otp') {
+//      if (this.state.isPoped) {
+//        if (this.state.showCamera) {
+//          //this.refs[CAMERA_REF].setCameraMode("on");
+//        }
+//
+//        this.state.isPoped = false;
+//      }
+//    }
   }
 
   /*
