@@ -139,15 +139,16 @@ class TwoFactorAuthMachine extends Component {
       this.isTouchPresent();
     }
 
-    currentIndex = 0;
-    challengeJson = this.props.navigation.state.params.url.chlngJson;
-    if (saveChallengeJson == null) {
-      saveChallengeJson = this.props.navigation.state.params.url.chlngJson;
-    }
-    if (challengeJson.length == 0) {
-      challengeJson = saveChallengeJson;
-    }
-    challengeJsonArr = challengeJson.chlng;
+//    currentIndex = 0;
+//    challengeJson = this.props.navigation.state.params.url.chlngJson;
+//    if (saveChallengeJson == null) {
+//      saveChallengeJson = this.props.navigation.state.params.url.chlngJson;
+//    }
+//    if (challengeJson.length == 0) {
+//      challengeJson = saveChallengeJson;
+//    }
+//    challengeJsonArr = challengeJson.chlng;
+    
     // console.log('------ challengeJson ' + JSON.stringify(challengeJson));
     // console.log('------ challengeJsonArray ' + JSON.stringify(challengeJsonArr));
     // console.log('------- current Element ' + JSON.stringify(challengeJsonArr[currentIndex]));
@@ -218,6 +219,18 @@ class TwoFactorAuthMachine extends Component {
       if (statusCode == 100) {
         if (res.pArgs.response.ResponseData) {
           //  obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
+          
+          
+          currentIndex = 0;
+          challengeJson = res.pArgs.response.ResponseData;
+          if (saveChallengeJson == null) {
+            saveChallengeJson = res.pArgs.response.ResponseData;
+          }
+          if (challengeJson.length == 0) {
+            challengeJson = saveChallengeJson;
+          }
+          challengeJsonArr = challengeJson.chlng;
+          
           console.log('TwoFactorAuthMachine - ResponseData ' + JSON.stringify(res.pArgs.response.ResponseData));
           const chlngJson = res.pArgs.response.ResponseData;
           this.showFirstChallenge(chlngJson, 0);
@@ -505,6 +518,8 @@ class TwoFactorAuthMachine extends Component {
         }
 
         if (result.challenge) {
+          
+          //old
 //          this.stateNavigator.push({
 //            id: result.challenge.chlng_name,
 //            url: {
@@ -514,12 +529,17 @@ class TwoFactorAuthMachine extends Component {
 //            },
 //            title: this.props.title,
 //          });
+          
+          //Push
 //          var name =result.challenge.chlng_name
-//          this.props.navigation.navigate(name,{url: {
-//                          chlngJson: result.challenge,
-//                          chlngsCount: challengeJsonArr.length,
-//                          currentIndex: currentIndex + 1,
-//                        }})
+//          this.props.navigation.navigate('StateMachine',{url: {
+//          chlngJson: result.challenge,
+//          chlngsCount: challengeJsonArr.length,
+//          currentIndex: currentIndex + 1,
+//          screenId: name
+//            },title:name})
+          
+          //Reset
           var name =result.challenge.chlng_name
           const showNextChallengefor = NavigationActions.reset({
           index: 0,
@@ -538,6 +558,8 @@ class TwoFactorAuthMachine extends Component {
           this.callCheckChallenge();
         }
       } else {
+        
+        //old
 //        this.stateNavigator.push({
 //          id: result.challenge.chlng_name,
 //          url: {
@@ -548,24 +570,16 @@ class TwoFactorAuthMachine extends Component {
 //          title: this.props.title,
 //        });
         
+        //push
 //        var name =result.challenge.chlng_name
-//        this.props.navigation.navigate(name,{url: {
+//        this.props.navigation.navigate('StateMachine',{url: {
 //        chlngJson: result.challenge,
 //        chlngsCount: challengeJsonArr.length,
 //        currentIndex: currentIndex + 1,
-//          }})
-//        var name =result.challenge.chlng_name
-//        const showNextChallengefor1 = NavigationActions.reset({
-//        index: 0,
-//        actions: [
-//          NavigationActions.navigate({ routeName: name,params:{url: {
-//          chlngJson: result.challenge,
-//          chlngsCount: challengeJsonArr.length,
-//          currentIndex: currentIndex + 1,
-//            },title:name}})
-//          ]
-//          })
-//        this.props.navigation.dispatch(showNextChallengefor1)
+//        screenId: name
+//          },title:name})
+        
+        //reset
         var name =result.challenge.chlng_name
         const resetActionshowNextChallenge = NavigationActions.reset({
         index: 0,
@@ -769,7 +783,6 @@ getComponentByName(route, nav) {
   }
 
   render() {
-//    currentIndex = this.props.navigation.state.params.url.currentIndex;
     var sId = this.props.navigation.state.params.url.screenId;
     if(sId=='RegisterOption'){
       var params = {id:sId,
@@ -781,6 +794,25 @@ getComponentByName(route, nav) {
       }, title:this.props.navigation.state.params.url.screenId};
       
       return(this.getComponentByName(params,this.props.navigation))
+    }else if(sId=='checkuser'){
+          currentIndex = 0;
+          challengeJson = this.props.navigation.state.params.url.chlngJson;
+          if (saveChallengeJson == null) {
+            saveChallengeJson = this.props.navigation.state.params.url.chlngJson;
+          }
+          if (challengeJson.length == 0) {
+            challengeJson = saveChallengeJson;
+          }
+          challengeJsonArr = challengeJson.chlng;
+      var params = {id:sId,
+      url:{
+      chlngJson: this.getCurrentChallenge(),
+      chlngsCount: challengeJsonArr.length,
+      currentIndex: currentIndex + 1,
+      }, title:this.props.navigation.state.params.url.screenId};
+      
+      return(this.getComponentByName(params,this.props.navigation))
+    
     }else{
     var params = {id:sId,
     url:{
