@@ -131,15 +131,19 @@ class Load extends Component {
       }
     }
 
-    obj1.props.navigator.resetTo({
-      id: "Welcome_Screen",
-      //id: "Select_Login",
-      title: "nextChlngName",
-      url: {
-        "chlngJson": chlngJson,
-        "screenId": nextChlngName
-      }
-    });
+//    obj1.props.navigator.resetTo({
+//      id: "Welcome_Screen",
+//      //id: "Select_Login",
+//      title: "nextChlngName",
+//      url: {
+//        "chlngJson": chlngJson,
+//        "screenId": nextChlngName
+//      }
+//    });
+    this.props.navigation.navigate('WelcomeScreen',{url: {
+      "chlngJson": chlngJson,
+      "screenId": nextChlngName
+      }})
   }
 
   animate() {
@@ -735,7 +739,9 @@ class Load extends Component {
           initErrorMsg, [
             {
               text: 'Connection Profiles',
-              onPress: () => this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+              onPress: () =>
+//            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+              this.props.navigation.navigate('ConnectionProfileScreen')
             },
           ],
           { cancelable: false }
@@ -754,37 +760,58 @@ class Load extends Component {
             Main.gotNotification = false;
             AsyncStorage.getItem('skipwelcome').then((value) => {
               if (value === "true") {
-                this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+//                this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+              this.props.navigation.navigate('StateMachine',{url: {
+                "chlngJson": chlngJson,
+                "screenId": nextChlngName
+                }})
+              
               } else {
-                this.props.navigator.resetTo({
-                  id: "Welcome_Screen",
-                  //id: "Select_Login",
-                  title: "nextChlngName",
-                  url: {
-                    "chlngJson": chlngJson,
-                    "screenId": nextChlngName
-                  }
-                });
+//                this.props.navigator.resetTo({
+//                  id: "Welcome_Screen",
+//                  //id: "Select_Login",
+//                  title: "nextChlngName",
+//                  url: {
+//                    "chlngJson": chlngJson,
+//                    "screenId": nextChlngName
+//                  }
+//                });
+              this.props.navigation.navigate('WelcomeScreen',{url: {
+                                    "chlngJson": chlngJson,
+                                    "screenId": nextChlngName
+                }})
               }
             }).done();
           } else {
-            this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+//            this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        this.props.navigation.navigate('StateMachine',{url: {
+          "chlngJson": chlngJson,
+          "screenId": nextChlngName
+          }})
           }
         } else {
           Main.gotNotification = false;
           AsyncStorage.getItem('skipwelcome').then((value) => {
             if (value === "true") {
-              this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+            this.props.navigation.navigate('StateMachine',{url: {
+              "chlngJson": chlngJson,
+              "screenId": nextChlngName
+              }})
+//              this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
             } else {
-              this.props.navigator.resetTo({
-                id: "Welcome_Screen",
-                //id: "Select_Login",
-                title: "nextChlngName",
-                url: {
-                  "chlngJson": chlngJson,
-                  "screenId": nextChlngName
-                }
-              });
+//              this.props.navigator.resetTo({
+//                id: "Welcome_Screen",
+//                //id: "Select_Login",
+//                title: "nextChlngName",
+//                url: {
+//                  "chlngJson": chlngJson,
+//                  "screenId": nextChlngName
+//                }
+//              });
+            this.props.navigation.navigate('WelcomeScreen',{url: {
+              "chlngJson": chlngJson,
+              "screenId": nextChlngName
+              }})
             }
           }).done();
         }
@@ -793,17 +820,25 @@ class Load extends Component {
       Main.gotNotification = false;
       AsyncStorage.getItem('skipwelcome').then((value) => {
         if (value === "true") {
-          this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+//          this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+        this.props.navigation.navigate('StateMachine',{url: {
+          "chlngJson": chlngJson,
+          "screenId": nextChlngName
+          }})
         } else {
-          this.props.navigator.resetTo({
-            id: "Welcome_Screen",
-            //id: "Select_Login",
-            title: "nextChlngName",
-            url: {
-              "chlngJson": chlngJson,
-              "screenId": nextChlngName
-            }
-          });
+//          this.props.navigator.resetTo({
+//            id: "Welcome_Screen",
+//            //id: "Select_Login",
+//            title: "nextChlngName",
+//            url: {
+//              "chlngJson": chlngJson,
+//              "screenId": nextChlngName
+//            }
+//          });
+        this.props.navigation.navigate('WelcomeScreen',{url: {
+          "chlngJson": chlngJson,
+          "screenId": nextChlngName
+          }})
         }
       }).done();
     }
@@ -857,7 +892,8 @@ class Load extends Component {
             borderTopRightRadius: 20,
           }}
           onPress={() => {
-            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+              this.props.navigation.navigate('ConnectionProfileScreen')
+//            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
             if (onInitializeSubscription) {
               onInitializeSubscription.remove();
               onInitializeSubscription = null;

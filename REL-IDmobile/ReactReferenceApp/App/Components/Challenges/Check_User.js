@@ -34,6 +34,7 @@ import Button from '../view/button';
 import Input from '../view/input';
 import Title from '../view/title';
 
+import { NavigationActions } from 'react-navigation'
 /*
  INSTANCES
  */
@@ -52,7 +53,7 @@ class UserLogin extends Component {
       login_button_text: 'Login',
       loginAttempts: 5,
       passAttempts: 5,
-      challenge: this.props.url.chlngJson,
+//      challenge: this.props.url.chlngJson,
       failureMessage: '',
       isLoaderVisible: false,
     };
@@ -67,7 +68,7 @@ class UserLogin extends Component {
     obj = this;
     constant.USER_SESSION = "NO";
     constant.USER_T0 = "NO";
-    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+//    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 
     AsyncStorage.getItem('rememberuser').then((value) => {
       if (value == undefined || value == null || value === 'empty') {
@@ -142,15 +143,22 @@ class UserLogin extends Component {
   clearText(fieldName) {
     this.refs[fieldName].setNativeProps({ text: '' });
   }
+  
+  
   //use to clear twoFactorAuthMachine navigator
   close() {
     dismissKeyboard();
-    Events.trigger('closeStateMachine');
+//    Events.trigger('closeStateMachine');
+    const backAction = NavigationActions.back({
+    key: null
+      })
+    this.props.navigator.dispatch(backAction);
   }
   /*
    This method is used to render the componenet with all its element.
    */
   render() {
+    
     return (
       <MainActivation>
         <View style={Skin.layout0.wrap.container}>

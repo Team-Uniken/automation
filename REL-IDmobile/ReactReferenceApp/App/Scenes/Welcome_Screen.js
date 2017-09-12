@@ -54,27 +54,19 @@ class Welcome_Screen extends Component {
 //call on click of already a member to show next challenge(checkUser).
   selectReg() {
     console.log('doNavigation:');
-    this.props.navigator.push({
-      id: "Machine",
-      title: "nextChlngName",
-      url: {
-        "chlngJson": this.props.url.chlngJson,
-        "screenId": this.props.url.screenId
-      }
-    });
+    this.props.navigation.navigate('StateMachine',{url: {
+      "chlngJson": this.props.navigation.state.params.url.chlngJson,
+      "screenId": this.props.navigation.state.params.url.screenId
+      }})
   }
+  
 //call on click of register to show SelfRegister screen.
   register() {
     console.log('doNavigation:');
-    this.props.navigator.push({
-                              id: "Machine",
-                              //id: "Select_Login",
-                              title: "SelfRegister",
-                              url: {
-                              "chlngJson": this.props.url.chlngJson,
-                              "screenId": "SelfRegister"
-                              }
-                              });
+    this.props.navigation.navigate('SelfRegisterScreen',{url: {
+      "chlngJson": this.props.navigation.state.params.url.chlngJson,
+      "screenId": "SelfRegister"
+      }})
   }
 /*
   This method is used to render the componenet with all its element.
@@ -117,7 +109,10 @@ class Welcome_Screen extends Component {
             justifyContent: 'center',
             borderTopRightRadius: 20,
           }}
-          onPress={() => this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight }) }/>
+          onPress={() =>
+//            this.props.navigator.push({ id: 'ConnectionProfile',sceneConfig: Navigator.SceneConfigs.PushFromRight })
+              this.props.navigation.navigate('ConnectionProfileScreen')
+          }/>
         </View>
        
       </View>

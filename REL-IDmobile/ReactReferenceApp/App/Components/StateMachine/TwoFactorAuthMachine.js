@@ -43,7 +43,7 @@ import Main from '../Container/Main';
 // Secondary Scenes
 
 // SECURITY SCENES
-import SelfRegister from '../../Scenes/Self_Register';
+//import SelfRegister from '../../Scenes/Self_Register';
 import Activation from '../Challenges/Activation_Code';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
@@ -71,6 +71,11 @@ import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import {Navigator} from 'react-native-deprecated-custom-components'
+//import { NavigationActions } from 'react-navigation';
+import {StackNavigator, NavigationActions} from 'react-navigation';
+import WelcomeScreen from '../../Scenes/Welcome_Screen';
+import SelfRegisterScreen from '../../Scenes/Self_Register';
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator'
 
 /*
  Instantiaions
@@ -116,7 +121,7 @@ class TwoFactorAuthMachine extends Component {
     this.finishForgotPasswordFlow = this.finishForgotPasswordFlow.bind(this);
     this.initiateForgotPasswordFlow = this.initiateForgotPasswordFlow.bind(this);
     this.mode = mode;
-    this.renderScene = this.renderScene.bind(this);
+    // this.renderScene = this.renderScene.bind(this);
     this.isTouchIDPresent = false;
     this.onGetAllChallengeStatus = this.onGetAllChallengeStatus.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
@@ -138,9 +143,9 @@ class TwoFactorAuthMachine extends Component {
     }
 
     currentIndex = 0;
-    challengeJson = this.props.url.chlngJson;
+    challengeJson = this.props.navigation.state.params.url.chlngJson;
     if (saveChallengeJson == null) {
-      saveChallengeJson = this.props.url.chlngJson;
+      saveChallengeJson = this.props.navigation.state.params.url.chlngJson;
     }
     if (challengeJson.length == 0) {
       challengeJson = saveChallengeJson;
@@ -169,6 +174,8 @@ class TwoFactorAuthMachine extends Component {
     onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
       this.onGetAllChallengeStatus.bind(this));
   }
+  
+
 
   /*
     This is life cycle method of the react native component.
@@ -248,7 +255,10 @@ class TwoFactorAuthMachine extends Component {
                 Util.saveUserDataSecure("RPasswd",Main.dnaPasswd).done();
               }
               Main.gotNotification = false;
-              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+//              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+              
+              onGetAllChallengeStatusSubscription.remove();
+              this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard'})
             }
           }
         }
@@ -284,14 +294,24 @@ class TwoFactorAuthMachine extends Component {
                 if (chlngJson != null) {
                   console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
                   //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-                  this.props.navigator.resetTo({
-                    id: 'Machine',
-                    title: nextChlngName,
-                    url: {
-                      chlngJson,
-                      screenId: nextChlngName,
-                    },
-                  });
+//                  this.props.navigator.resetTo({
+//                    id: 'Machine',
+//                    title: nextChlngName,
+//                    url: {
+//                      chlngJson,
+//                      screenId: nextChlngName,
+//                    },
+//                  });
+            const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+                chlngJson,
+              screenId: nextChlngName,
+                },title:nextChlngName}})
+              ]
+              })
+            this.props.navigation.dispatch(resetAction)
                 }
               }
               else {
@@ -395,19 +415,34 @@ class TwoFactorAuthMachine extends Component {
           var chlngJson1;
           chlngJson1 = saveChallengeJson;
           const nextChlngName = chlngJson1.chlng[0].chlng_name;
-          const chlngJson = chlngJson1.chlng[0];
+//          const chlngJson = chlngJson1.chlng[0];
+      const chlngJson = saveChallengeJson;
           console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
           //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          obj.stateNavigator.push({
-            id: nextChlngName,
-            title: nextChlngName,
-            url: {
-              reset: true,
-              chlngJson,
-              screenId: nextChlngName,
-            },
-          });
-        
+//          obj.stateNavigator.push({
+//            id: nextChlngName,
+//            title: nextChlngName,
+//            url: {
+//              reset: true,
+//              chlngJson,
+//              screenId: nextChlngName,
+//            },
+//          });
+      
+      const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+                                reset: true,
+                                chlngJson,
+                                screenId: nextChlngName,
+                              },title:nextChlngName}})
+        ]
+        })
+      this.props.navigation.dispatch(resetAction)
+      
+
+      
       } else {
         console.log('immediate response is' + response[0].error);
         alert(response[0].error);
@@ -580,8 +615,10 @@ class TwoFactorAuthMachine extends Component {
 
 
   //render screen based on a id pass to it.
-  renderScene(route, nav) {
-    const id = route.id;
+//  renderScene(route, nav) {
+getComponentByName(route, nav) {
+  const id = route.id;
+  const ur = route.url;
     console.log('---------- renderScene ' + id + ' url ' + route.url);
 
     let challengeOperation;
@@ -644,45 +681,18 @@ class TwoFactorAuthMachine extends Component {
     } else if (id === 'pattern') {
       return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
     }
-    return (<Text>Error</Text>);
+    return (<Text></Text>);
   }
 
   render() {
-    return (
-      <Navigator
-        ref={(ref) => { this.stateNavigator = ref; return ref; }}
-        renderScene={this.renderScene}
-        initialRoute={{
-          id: this.props.url.screenId,
-          url: {
-            chlngJson: this.getCurrentChallenge(),
-            chlngsCount: challengeJsonArr.length,
-            currentIndex: currentIndex + 1,
-          },
-          title: this.props.title,
-        }}
-        configureScene={
-          (route) => {
-            let config = Navigator.SceneConfigs.FloatFromRight;
-            config = {
-              // Rebound spring parameters when transitioning FROM this scene
-              springFriction: 26,
-              springTension: 200,
-
-              // Velocity to start at when transitioning without gesture
-              defaultTransitionVelocity: 1.5,
-
-              // Animation interpolators for horizontal transitioning:
-              animationInterpolators: {
-                into: buildStyleInterpolator(Skin.transforms.FromTheRight),
-                out: buildStyleInterpolator(Skin.transforms.ToTheLeft),
-              },
-            };
-            return config;
-          }
-        }
-      />
-    );
+    var params = {id:this.props.navigation.state.params.url.screenId,
+    url:{
+    chlngJson: this.getCurrentChallenge(),
+    chlngsCount: challengeJsonArr.length,
+    currentIndex: currentIndex + 1,
+    }, title:this.props.navigation.state.params.url.screenId};
+    
+    return(this.getComponentByName(params,this.props.navigation))
   }
 
   /**
@@ -706,11 +716,26 @@ class TwoFactorAuthMachine extends Component {
    
   }
 
+  getChallengeByChallengeName(name,challengeJson){
+    console.log(challengeJson);
+    var temp = challengeJson.chlng;
+    for(var i =0;i<temp.length;i++){
+     var currentChlng = temp[i]
+      if(currentChlng.chlng_name === name){
+        return currentChlng;
+      }
+    }
+  }
   /**
    * Shows the first challenge screen, based on challenge array and startIndex.
    * If challenge at index startIndex is tbacred then it skips the tbacred challenge and shows the next.  
    */
   showFirstChallenge(chlngJson, startIndex) {
+    Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+    Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+    Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
+    Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
+    Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
     if (chlngJson.chlng && chlngJson.chlng.length > startIndex) {
       const firstChlngName = chlngJson.chlng[startIndex].chlng_name;
       console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
@@ -720,14 +745,24 @@ class TwoFactorAuthMachine extends Component {
         || firstChlngName === 'devname') {
         this.showFirstChallenge(chlngJson, startIndex + 1);
       } else {
-        this.props.navigator.resetTo({
-          id: 'Machine',
-          title: firstChlngName,
-          url: {
-            chlngJson,
-            screenId: firstChlngName,
-          },
-        });
+        
+        currentIndex = 0;
+        challengeJson = chlngJson;
+        if (saveChallengeJson == null) {
+          saveChallengeJson = chlngJson;
+        }
+        if (challengeJson.length == 0) {
+          challengeJson = saveChallengeJson;
+        }
+        challengeJsonArr = challengeJson.chlng;
+        
+        
+        var chlngJson = this.getChallengeByChallengeName(firstChlngName,chlngJson);
+        this.props.navigation.navigate(firstChlngName,{url: {
+          chlngJson,
+          screenId: firstChlngName
+          }})
+
       }
     }
   }
@@ -901,6 +936,7 @@ class TwoFactorAuthMachine extends Component {
     }
   }
 }
+
 
 
 module.exports = TwoFactorAuthMachine;

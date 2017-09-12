@@ -63,6 +63,7 @@
     "react-native-spinkit": "^1.0.3",
     "react-native-swipe-list-view": "0.3.1",
     "react-native-touch-id": "^2.0.4",
+    "react-navigation": "^1.0.0-beta.11",
     "react-timer-mixin": "^0.13.3"
   },
   "devDependencies": {

@@ -21,9 +21,8 @@ class Dashboard extends Component {
       return (
         <ClientBasedConfig.dashboard.screen
           navigator={this.props.navigator}
-                url={this.props.url}
-                title={this.props.title}
-                rdna={this.props.rdna}
+                url={this.props.navigation.state.params.url}
+                title={this.props.navigation.state.params.title}
                 dashboardScreenName={ClientBasedConfig.dashboard.screenName}  />
       );
     

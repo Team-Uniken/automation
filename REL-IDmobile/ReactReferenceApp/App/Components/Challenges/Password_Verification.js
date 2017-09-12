@@ -85,7 +85,7 @@ This method is called when the component is Mounted/Loaded.
       //Util.saveUserDataSecure("RPasswd",pw).done();
       // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: pw }), null);  Todo: To be removed after testing
 
-      responseJson = this.props.url.chlngJson;
+      responseJson = this.props.url.chlngJson//this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = pw;
       Events.trigger('showNextChallenge', {
         response: responseJson

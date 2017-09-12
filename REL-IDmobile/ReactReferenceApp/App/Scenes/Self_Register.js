@@ -38,7 +38,7 @@ import Button from '../Components/view/button';
 import Checkbox from '../Components/view/checkbox';
 import Input from '../Components/view/input';
 
-
+import { NavigationActions } from 'react-navigation'
 /*
   INSTANCES
  */
@@ -135,7 +135,11 @@ class Register extends Component {
   //use to clear twoFactorAuthMachine navigator
   close() {
     dismissKeyboard();
-    Events.trigger('closeStateMachine');
+//    Events.trigger('closeStateMachine');
+    const backAction = NavigationActions.back({
+    key: null
+      })
+    this.props.navigation.dispatch(backAction);
   }
   //check entered email is valid or not
   validateEmail(email) {

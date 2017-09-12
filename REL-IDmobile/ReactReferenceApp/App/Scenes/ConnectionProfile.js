@@ -16,7 +16,7 @@ import Modal from 'react-native-simple-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Text, View, ListView, TouchableHighlight, AsyncStorage, TextInput, Alert, Image, StyleSheet, BackHandler, Switch, } from 'react-native'
 
-
+import { NavigationActions } from 'react-navigation';
 
 /*
  Use in this js
@@ -60,9 +60,10 @@ class ConnectionProfileScene extends Component {
   */
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', function () {
-      this.props.navigator.resetTo({
-        id: 'Load'
-      });
+//      this.props.navigator.resetTo({
+//        id: 'Load'
+//      });
+      this.props.navigation.dispatch(ResetToLoadScreen)
       return true;
     }.bind(this));
 
@@ -307,9 +308,10 @@ class ConnectionProfileScene extends Component {
                 inputURL: '', open: false,
               });
                 AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(connectionprofile1), () => {
-                  this.props.navigator.replace({
-                    id: "Load"
-                  });
+//                  this.props.navigator.replace({
+//                    id: "Load"
+//                  });
+                  this.props.navigation.dispatch(ResetToLoadScreen)
                 });
               }
             },
@@ -392,6 +394,16 @@ class ConnectionProfileScene extends Component {
     This method is used to render the componenet with all its element.
   */
   render() {
+    
+    const ResetToLoadScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'ConnectionProfileScreen'}),
+      NavigationActions.navigate({routeName: 'LoadScreen'})
+      ]
+      });
+      
     return (
       <Main
         drawerState={{
@@ -409,9 +421,11 @@ class ConnectionProfileScene extends Component {
             iconStyle: {},
             textStyle: {},
             handler: () => {
-              console.log('inside'); this.props.navigator.resetTo({
-                id: 'Load'
-              });
+              console.log('inside');
+//      this.props.navigator.resetTo({
+//                id: 'Load'
+//              });
+      this.props.navigation.dispatch(ResetToLoadScreen)
             },
           },
         }}

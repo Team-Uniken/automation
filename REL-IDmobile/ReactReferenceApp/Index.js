@@ -98,269 +98,406 @@ const FadeOut = {
 };
 
 
-export default class Index extends Component {
-  constructor(props) {
-    super(props);
+//export default class Index extends Component {
+//  constructor(props) {
+//    super(props);
+//}
+//
+//  renderScene(route, nav) {
+//    let id = route.id;
+//
+//    if (id === 'Load') {
+//     // id = 'Accounts'
+//
+//    // id = 'UserLogin';
+//    // id = 'Activation';
+//    // id = "PasswordSet";
+//    // id = 'PasswordVerification';
+//    // id = 'ConnectionProfile';
+//    // id = 'Device';
+//    // id = 'PayBills';
+//    // id = 'QuestionSet';
+//    // id = 'DevBind';
+//    // id = 'Deposits';
+//    // id = 'ActivateNewDevice';
+//    // id = 'SecureWebView';
+//    // id = 'QuestionSet';
+//    // id = 'QuestionVerification';
+//    // id = 'Contact';
+//    // id = 'Self_Register'
+//    // id = 'Screen_1_2_activation'
+//    // id = 'Register_Options'
+//    // id = 'Screen_1_3_setPassword'
+//    // id = 'Deals'
+//    // id = 'History'
+//    // id = 'Locations'
+//    }
+//
+//    if (id === 'Accounts') {
+//      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'PayBills') {
+//      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'Contact') {
+//      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'Deposits') {
+//      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'FindBranch') {
+//      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
+//    } else if (id === 'Main') {
+//      return (<Dashboard
+//              navigator={nav}
+//              url={route.url}
+//              title={route.title}
+//              rdna={route.DnaObject} />);
+//    } else if (id === 'Accounts') {
+//      return (<Deals
+//              navigator={nav}
+//              url={route.url}
+//              title={route.title}
+//              rdna={route.DnaObject} />);
+//    }else if (id === 'Welcome_Screen') {
+//      return (<Welcome_Screen
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Select_Login') {
+//      return (<Select_Login
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Self_Register') {
+//      return (<Self_Register
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Activation_Code') {
+//      return (<Activation_Code
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'SetPassword') {
+//      return (<SetPassword
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Register_Options') {
+//      return (<Register_Options
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Deals') {
+//      return (<Deals
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'History') {
+//      return (<History
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Locations') {
+//      return (<Locations
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'demo') {
+//      return (<Demo
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'Load') {
+//      return (<LoadScene navigator={nav} />);
+//
+//    // SECONDARY SCENES
+//    } else if (id === 'ComingSoon') {
+//      return (<ComingSoonScene
+//                navigator={nav}
+//                title={route.title} />);
+//    /*
+//     } else if (id === 'QBank') {
+//     return (<QBank navigator={nav} url={route.url} title={route.title} />);
+//     } else if (id === 'SecureChat') {
+//     return (<SecureChat navigator={nav} />);
+//     */
+//    }else if (id === 'ActivateNewDevice') {
+//      return (<ActivateNewDeviceScene
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title} />);
+//    } else if (id === 'ConnectionProfile') {
+//      return (<ConnectionProfileScene
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title} />);
+//    } else if (id === 'SecureWebView') {
+//      return (<Web
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                proxy={global.proxy}
+//                secure
+//                navigate />);
+//    } else if (id === 'WebView') {
+//      return (<Web
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                navigate />);
+//
+//    // SECURITY SCENES
+//    } else if (id === 'Machine') {
+//      return (<Machine
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title} />);
+//    } else if (id === 'UpdateMachine') {
+//      return (<UpdateMachine
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title} />);
+//    } else if (id === 'PostLoginAuthMachine') {
+//      return (<PostLoginAuthMachine
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                challengesToBeUpdated={route.challengesToBeUpdated} />);
+//    } else if (id === 'DeviceMgmt') {
+//      return (<DeviceMgmtScene
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'QuestionSet') {
+//      return (<QuestionSet
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title} />);
+//    } else if (id === 'QuestionVerification') {
+//      return (<QuestionVerification
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    } else if (id === 'DevBind') {
+//      return (<DeviceBinding
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title} />);
+//    } else if (id === 'NotificationMgmt') {
+//      return (<NotificationMgmtScene
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//    }else if (id === 'Notification_History') {
+//      return (<Notification_History
+//        navigator={nav}
+//        url={route.url}
+//        title={route.title}
+//        rdna={route.DnaObject} />);
+//    }else if (id === 'RegisterOptionScene') {
+//      return (<RegisterOptionScene
+//                navigator={nav}
+//                url={route.url}
+//                title={route.title}
+//                rdna={route.DnaObject} />);
+//
+//    }else if (id === 'pattern') {
+//      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} operationMsg={route.operationMsg} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
+//    }
+//
+//
+//    return (<Text>
+//              Error
+//            </Text>);
+//  }
+//
+//  render() {
+//    return (
+//      <FormattedWrapper
+//        locale="en"
+//        currency="USD">
+//        <Navigator
+//          renderScene={this.renderScene}
+//          initialRoute={{
+//                          id: 'Load',
+//                          title: 'REL-IDmobile'
+//                        }}
+//          configureScene={(route) => {
+//                            if (route.sceneConfig) {
+//                              return route.sceneConfig;
+//                            } else {
+//                              let config = Navigator.SceneConfigs.FadeAndroid;
+//                              // var config = Navigator.SceneConfigs.FloatFromRight
+//                              config = {
+//                          
+//                                // Rebound spring parameters when transitioning FROM this scene
+//                                springFriction: 26,
+//                                springTension: 200,
+//                          
+//                                // Velocity to start at when transitioning without gesture
+//                                defaultTransitionVelocity: 3.5,
+//                          
+//                                gestures: null,
+//                                animationInterpolators: {
+//                                  into: buildStyleInterpolator(FadeIn),
+//                                  out: buildStyleInterpolator(FadeOut),
+//                                },
+//                              };
+//                              return config;
+//                            }
+//                          }} />
+//      </FormattedWrapper>
+//      );
+//  }
+//}
+
+import {StackNavigator, NavigationActions} from 'react-navigation';
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator'
+import LoadScreen from './App/Scenes/Load';
+import ConnectionProfileScreen from './App/Scenes/ConnectionProfile';
+import WelcomeScreen from './App/Scenes/Welcome_Screen';
+import SelfRegisterScreen from './App/Scenes/Self_Register';
+import StateMachine from './App/Components/StateMachine/TwoFactorAuthMachine';
+import Check_UserScreen from './App/Components/Challenges/Check_User';
+import pass from './App/Scenes/Select_Login';
+//import Check_UserScreen from './App/Components/Challenges/Check_User';
+
+
+
+//const StateNavigator = StackNavigator({
+//  
+//checkuser: {
+//screen: Check_UserScreen,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//  
+//SelfRegisterScreen: {
+//screen: SelfRegisterScreen,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
+//
+//StateMachine: {
+//screen: StateMachine,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  }
+//  
+//})
+//  
+
+
+
+
+const IndexNavigator = StackNavigator({
+  
+LoadScreen: {
+screen: LoadScreen,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+ConnectionProfileScreen: {
+screen: ConnectionProfileScreen,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+WelcomeScreen: {
+screen: WelcomeScreen,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+SelfRegisterScreen: {
+screen: SelfRegisterScreen,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+
+StateMachine: {
+screen: StateMachine,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+checkuser: {
+screen: Check_UserScreen,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+  
+DashBoard: {
+screen: Dashboard,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+pass: {
+screen: pass,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+
+  
+  }, {
+transitionConfig: () => ({
+screenInterpolator: (sceneProps) => {
+  if (sceneProps.index === 0 && sceneProps.scene.route.routeName !== 'LoadScreen' && sceneProps.scenes.length > 2)
+    return null
+    return CardStackStyleInterpolator.forHorizontal(sceneProps)
+    }
+    })
+  }, {initialRouteName: 'LoadScreen'})
+
+function separateRoot(WrappedComponent) {
+  const EnhencedComponent = class extends React.Component {
+    static navigationOptions = {
+    header: null
+    };
+    render() {
+      return <WrappedComponent
+      screenProps={{
+      outerNavigation: this.props.navigation
+      }}/>
+    }
+  }
+  EnhencedComponent.navigationOptions = WrappedComponent.navigationOptions
+  return EnhencedComponent
 }
 
-  renderScene(route, nav) {
-    let id = route.id;
-
-    if (id === 'Load') {
-     // id = 'Accounts'
-
-    // id = 'UserLogin';
-    // id = 'Activation';
-    // id = "PasswordSet";
-    // id = 'PasswordVerification';
-    // id = 'ConnectionProfile';
-    // id = 'Device';
-    // id = 'PayBills';
-    // id = 'QuestionSet';
-    // id = 'DevBind';
-    // id = 'Deposits';
-    // id = 'ActivateNewDevice';
-    // id = 'SecureWebView';
-    // id = 'QuestionSet';
-    // id = 'QuestionVerification';
-    // id = 'Contact';
-    // id = 'Self_Register'
-    // id = 'Screen_1_2_activation'
-    // id = 'Register_Options'
-    // id = 'Screen_1_3_setPassword'
-    // id = 'Deals'
-    // id = 'History'
-    // id = 'Locations'
-    }
-
-    if (id === 'Accounts') {
-      return (<AccountsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'PayBills') {
-      return (<PayBillsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Contact') {
-      return (<ContactScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Deposits') {
-      return (<DepositsScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'FindBranch') {
-      return (<FindBranchScene navigator={nav} url={route.url} title={route.title} rdna={route.DnaObject} />);
-    } else if (id === 'Main') {
-      return (<Dashboard
-              navigator={nav}
-              url={route.url}
-              title={route.title}
-              rdna={route.DnaObject} />);
-    } else if (id === 'Accounts') {
-      return (<Deals
-              navigator={nav}
-              url={route.url}
-              title={route.title}
-              rdna={route.DnaObject} />);
-    }else if (id === 'Welcome_Screen') {
-      return (<Welcome_Screen
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Select_Login') {
-      return (<Select_Login
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Self_Register') {
-      return (<Self_Register
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Activation_Code') {
-      return (<Activation_Code
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'SetPassword') {
-      return (<SetPassword
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Register_Options') {
-      return (<Register_Options
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Deals') {
-      return (<Deals
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'History') {
-      return (<History
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Locations') {
-      return (<Locations
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'demo') {
-      return (<Demo
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'Load') {
-      return (<LoadScene navigator={nav} />);
-
-    // SECONDARY SCENES
-    } else if (id === 'ComingSoon') {
-      return (<ComingSoonScene
-                navigator={nav}
-                title={route.title} />);
-    /*
-     } else if (id === 'QBank') {
-     return (<QBank navigator={nav} url={route.url} title={route.title} />);
-     } else if (id === 'SecureChat') {
-     return (<SecureChat navigator={nav} />);
-     */
-    }else if (id === 'ActivateNewDevice') {
-      return (<ActivateNewDeviceScene
-                navigator={nav}
-                url={route.url}
-                title={route.title} />);
-    } else if (id === 'ConnectionProfile') {
-      return (<ConnectionProfileScene
-                navigator={nav}
-                url={route.url}
-                title={route.title} />);
-    } else if (id === 'SecureWebView') {
-      return (<Web
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                proxy={global.proxy}
-                secure
-                navigate />);
-    } else if (id === 'WebView') {
-      return (<Web
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                navigate />);
-
-    // SECURITY SCENES
-    } else if (id === 'Machine') {
-      return (<Machine
-                navigator={nav}
-                url={route.url}
-                title={route.title} />);
-    } else if (id === 'UpdateMachine') {
-      return (<UpdateMachine
-                navigator={nav}
-                url={route.url}
-                title={route.title} />);
-    } else if (id === 'PostLoginAuthMachine') {
-      return (<PostLoginAuthMachine
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                challengesToBeUpdated={route.challengesToBeUpdated} />);
-    } else if (id === 'DeviceMgmt') {
-      return (<DeviceMgmtScene
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'QuestionSet') {
-      return (<QuestionSet
-                navigator={nav}
-                url={route.url}
-                title={route.title} />);
-    } else if (id === 'QuestionVerification') {
-      return (<QuestionVerification
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    } else if (id === 'DevBind') {
-      return (<DeviceBinding
-                navigator={nav}
-                url={route.url}
-                title={route.title} />);
-    } else if (id === 'NotificationMgmt') {
-      return (<NotificationMgmtScene
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-    }else if (id === 'Notification_History') {
-      return (<Notification_History
-        navigator={nav}
-        url={route.url}
-        title={route.title}
-        rdna={route.DnaObject} />);
-    }else if (id === 'RegisterOptionScene') {
-      return (<RegisterOptionScene
-                navigator={nav}
-                url={route.url}
-                title={route.title}
-                rdna={route.DnaObject} />);
-
-    }else if (id === 'pattern') {
-      return (<PatternLock navigator={nav} mode={route.mode} data={route.data} operationMsg={route.operationMsg} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
-    }
-
-
-    return (<Text>
-              Error
-            </Text>);
-  }
-
+class Index extends Component {
+  static navigationOptions = {
+  header: null
+  };
   render() {
-    return (
-      <FormattedWrapper
-        locale="en"
-        currency="USD">
-        <Navigator
-          renderScene={this.renderScene}
-          initialRoute={{
-                          id: 'Load',
-                          title: 'REL-IDmobile'
-                        }}
-          configureScene={(route) => {
-                            if (route.sceneConfig) {
-                              return route.sceneConfig;
-                            } else {
-                              let config = Navigator.SceneConfigs.FadeAndroid;
-                              // var config = Navigator.SceneConfigs.FloatFromRight
-                              config = {
-                          
-                                // Rebound spring parameters when transitioning FROM this scene
-                                springFriction: 26,
-                                springTension: 200,
-                          
-                                // Velocity to start at when transitioning without gesture
-                                defaultTransitionVelocity: 3.5,
-                          
-                                gestures: null,
-                                animationInterpolators: {
-                                  into: buildStyleInterpolator(FadeIn),
-                                  out: buildStyleInterpolator(FadeOut),
-                                },
-                              };
-                              return config;
-                            }
-                          }} />
-      </FormattedWrapper>
-      );
+    return (<IndexNavigator/>)
   }
 }
-
+module.exports = Index
 
 

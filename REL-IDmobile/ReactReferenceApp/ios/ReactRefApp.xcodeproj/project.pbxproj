@@ -340,6 +340,14 @@
 		65D7F7631E309469009ACC25 /* ubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65D7F7621E309469009ACC25 /* ubs.plist */; };
 		65D7F7891E309A1F009ACC25 /* ImagesUBS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */; };
 		65D7F7B21E30A3FA009ACC25 /* ubs.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65D7F7B11E30A3F9009ACC25 /* ubs.ttf */; };
+		65F4B5781F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B5791F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B57A1F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B57B1F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B57C1F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B57D1F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B57E1F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		65F4B57F1F629265009A7D22 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
 		716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096B4050EB024090BB820E85 /* libAirMaps.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		CEF10CBBB34C44C2812CF73A /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 617F92D6FBF04371B6760DC9 /* libReactNativeConfig.a */; };
@@ -832,6 +840,7 @@
 		65D7F7621E309469009ACC25 /* ubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ubs.plist; sourceTree = "<group>"; };
 		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesUBS.xcassets; sourceTree = "<group>"; };
 		65D7F7B11E30A3F9009ACC25 /* ubs.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ubs.ttf; sourceTree = "<group>"; };
+		65F4B5771F629265009A7D22 /* index.ios.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = index.ios.js; sourceTree = "<group>"; };
 		6F434F749DC140C5BCDC414D /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		7058B14FFEDA44BCAE135904 /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -1425,6 +1434,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				65F4B5771F629265009A7D22 /* index.ios.js */,
 				657B6D421F4AF17D00AA65B5 /* cbcverify.plist */,
 				657B6D351F4AF15E00AA65B5 /* api-sdk */,
 				6584BA521F0D000200587C87 /* ActiveShieldSDKLib */,
@@ -2111,6 +2121,7 @@
 				1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */,
 				55F31D941F17530200C198C3 /* clientcert.p12 in Resources */,
 				6567FBCB1CC1122F00AC6A04 /* App in Resources */,
+				65F4B5791F629265009A7D22 /* index.ios.js in Resources */,
 				6584BA571F0D000200587C87 /* bmobi.net.cer in Resources */,
 				656227ED1CB50B2300AD7F6C /* gothic_0.TTF in Resources */,
 				55C924B31EB3661B00DA8083 /* account.ttf in Resources */,
@@ -2127,6 +2138,7 @@
 				551EE2E21E51BDC200ADAD6C /* gothic_0.TTF in Resources */,
 				55F31D981F17530200C198C3 /* clientcert.p12 in Resources */,
 				551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */,
+				65F4B57D1F629265009A7D22 /* index.ios.js in Resources */,
 				6584BA5B1F0D000200587C87 /* bmobi.net.cer in Resources */,
 				1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */,
 				6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */,
@@ -2144,6 +2156,7 @@
 				5528FFC21F21F73C00560B76 /* gothic_0.TTF in Resources */,
 				5528FFC31F21F73C00560B76 /* clientcert.p12 in Resources */,
 				5528FFC41F21F73C00560B76 /* cbc.ttf in Resources */,
+				65F4B57F1F629265009A7D22 /* index.ios.js in Resources */,
 				5528FFC51F21F73C00560B76 /* bmobi.net.cer in Resources */,
 				5528FFD21F21F88500560B76 /* ImagesCBCVerify.xcassets in Resources */,
 				5528FFC71F21F73C00560B76 /* account.ttf in Resources */,
@@ -2161,6 +2174,7 @@
 				552BB7B61E1BA0B90009F274 /* icomoon.ttf in Resources */,
 				552BB7B71E1BA0B90009F274 /* App in Resources */,
 				55C924B41EB3661C00DA8083 /* account.ttf in Resources */,
+				65F4B57A1F629265009A7D22 /* index.ios.js in Resources */,
 				6584BA581F0D000200587C87 /* bmobi.net.cer in Resources */,
 				55F31D951F17530200C198C3 /* clientcert.p12 in Resources */,
 				552BB7B81E1BA0B90009F274 /* gothic_0.TTF in Resources */,
@@ -2177,6 +2191,7 @@
 				558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */,
 				55F31D991F17530200C198C3 /* clientcert.p12 in Resources */,
 				558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */,
+				65F4B57E1F629265009A7D22 /* index.ios.js in Resources */,
 				6584BA5C1F0D000200587C87 /* bmobi.net.cer in Resources */,
 				55C924B11EB3661900DA8083 /* account.ttf in Resources */,
 				558C99B01E7BF7A30002C56F /* App in Resources */,
@@ -2194,6 +2209,7 @@
 				55D351871E1E0F7C00806F82 /* icomoon.ttf in Resources */,
 				55D351881E1E0F7C00806F82 /* App in Resources */,
 				55C924B51EB3661C00DA8083 /* account.ttf in Resources */,
+				65F4B57B1F629265009A7D22 /* index.ios.js in Resources */,
 				6584BA591F0D000200587C87 /* bmobi.net.cer in Resources */,
 				55F31D961F17530200C198C3 /* clientcert.p12 in Resources */,
 				55D351891E1E0F7C00806F82 /* gothic_0.TTF in Resources */,
@@ -2206,6 +2222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F4B5781F629265009A7D22 /* index.ios.js in Resources */,
 				65127E101D795B4000FB36E1 /* LaunchScreen.xib in Resources */,
 				55F31D931F17530200C198C3 /* clientcert.p12 in Resources */,
 				65127E111D795B4000FB36E1 /* icomoon.ttf in Resources */,
@@ -2231,6 +2248,7 @@
 				65D7F7401E308FC8009ACC25 /* icomoon.ttf in Resources */,
 				65D7F7411E308FC8009ACC25 /* App in Resources */,
 				55C9249F1EB3661800DA8083 /* account.ttf in Resources */,
+				65F4B57C1F629265009A7D22 /* index.ios.js in Resources */,
 				6584BA5A1F0D000200587C87 /* bmobi.net.cer in Resources */,
 				55F31D971F17530200C198C3 /* clientcert.p12 in Resources */,
 				65D7F7421E308FC8009ACC25 /* gothic_0.TTF in Resources */,
