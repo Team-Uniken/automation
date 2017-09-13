@@ -157,17 +157,17 @@ class TwoFactorAuthMachine extends Component {
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
 
 
-    if (onGetAllChallengeStatusSubscription) {
-      onGetAllChallengeStatusSubscription.remove();
-      onGetAllChallengeStatusSubscription = null;
-    }
+    // if (onGetAllChallengeStatusSubscription) {
+    //   onGetAllChallengeStatusSubscription.remove();
+    //   onGetAllChallengeStatusSubscription = null;
+    // }
 
     //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
     //      'onGetAllChallengeStatus',
     //      this.onGetAllChallengeStatus
     //    );
-    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-      this.onGetAllChallengeStatus.bind(this));
+    // onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+    //   this.onGetAllChallengeStatus.bind(this));
   }
 
   /*
@@ -228,6 +228,11 @@ class TwoFactorAuthMachine extends Component {
           if (Constants.USER_T0 === 'YES') {
             AsyncStorage.getItem('userId').then((value) => {
               Events.trigger('showLoader', true);
+              if (onGetAllChallengeStatusSubscription) {
+                onGetAllChallengeStatusSubscription.remove();
+                onGetAllChallengeStatusSubscription = null;
+              }
+              onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus', this.onGetAllChallengeStatus.bind(this));
               ReactRdna.getAllChallenges(value, (response) => {
                 if (response) {
                   console.log('getAllChallenges immediate response is' + response[0].error);
@@ -243,9 +248,9 @@ class TwoFactorAuthMachine extends Component {
             } else {
               if (Main.isOtherLogin === true) {
                 Main.isOtherLogin = false;
-              //  AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => { }).done();
-              }else{
-                Util.saveUserDataSecure("RPasswd",Main.dnaPasswd).done();
+                //  AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: "empty" }), null).then((error) => { }).done();
+              } else {
+                Util.saveUserDataSecure("RPasswd", Main.dnaPasswd).done();
               }
               Main.gotNotification = false;
               this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
@@ -256,8 +261,8 @@ class TwoFactorAuthMachine extends Component {
         if (Main.isOtherLogin === true) {
           Main.isOtherLogin = false;
         }
-         const chlngJson = res.pArgs.response.ResponseData;
-      
+        const chlngJson = res.pArgs.response.ResponseData;
+
 
         //Removing user preference when user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
@@ -267,42 +272,42 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("rememberuser", "empty");
         }
 
-        
+
         setTimeout(() => {
 
-        Alert.alert(
-          'Error',
-          res.pArgs.response.StatusMsg, [{
-            text: 'OK',
-            onPress: () => {
-              var chlngJson;
+          Alert.alert(
+            'Error',
+            res.pArgs.response.StatusMsg, [{
+              text: 'OK',
+              onPress: () => {
+                var chlngJson;
 
-              Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
-              if (res.pArgs.response.ResponseData != null && res.pArgs.response.ResponseData.chlng.length > 0) {
-                chlngJson = res.pArgs.response.ResponseData;
-                const nextChlngName = chlngJson.chlng[0].chlng_name;
-                if (chlngJson != null) {
-                  console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-                  //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-                  this.props.navigator.resetTo({
-                    id: 'Machine',
-                    title: nextChlngName,
-                    url: {
-                      chlngJson,
-                      screenId: nextChlngName,
-                    },
-                  });
+                Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+                if (res.pArgs.response.ResponseData != null && res.pArgs.response.ResponseData.chlng.length > 0) {
+                  chlngJson = res.pArgs.response.ResponseData;
+                  const nextChlngName = chlngJson.chlng[0].chlng_name;
+                  if (chlngJson != null) {
+                    console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+                    //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+                    this.props.navigator.resetTo({
+                      id: 'Machine',
+                      title: nextChlngName,
+                      url: {
+                        chlngJson,
+                        screenId: nextChlngName,
+                      },
+                    });
+                  }
                 }
-              }
-              else {
-                this.resetChallenge();
-              }
-            },
-            style: 'cancel',
-          }],
-           { cancelable: false }
-        );
-                                              }, 100);
+                else {
+                  this.resetChallenge();
+                }
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
+        }, 100);
       }
     } else {
       if (Main.isOtherLogin === true) {
@@ -310,21 +315,21 @@ class TwoFactorAuthMachine extends Component {
       }
       console.log(e);
       //Show alert as errorCode is not 0 and call resetChallenge
-      
-       setTimeout(() => {
-      Alert.alert(
-        'Error',
-        'Internal system error occurred.', [{
-          text: 'OK',
-          onPress: () => {
-            Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
-            obj.resetChallenge();
-          },
-          style: 'cancel',
-        }],
-         { cancelable: false }
-      );
-                   }, 100);
+
+      setTimeout(() => {
+        Alert.alert(
+          'Error',
+          'Internal system error occurred.', [{
+            text: 'OK',
+            onPress: () => {
+              Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
+              obj.resetChallenge();
+            },
+            style: 'cancel',
+          }],
+          { cancelable: false }
+        );
+      }, 100);
     }
   }
 
@@ -394,25 +399,25 @@ class TwoFactorAuthMachine extends Component {
         currentIndex = 0;
         challengeJsonArr = saveChallengeJson.chlng;
         console.log('immediate response is' + response[0].error);
-          var chlngJson1;
-          chlngJson1 = saveChallengeJson;
-          const nextChlngName = chlngJson1.chlng[0].chlng_name;
-          const chlngJson = chlngJson1.chlng[0];
-          console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-          //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-          obj.stateNavigator.push({
-            id: nextChlngName,
-            title: nextChlngName,
-            url: {
-              reset: true,
-              chlngJson,
-              screenId: nextChlngName,
-            },
-          });
-        
+        var chlngJson1;
+        chlngJson1 = saveChallengeJson;
+        const nextChlngName = chlngJson1.chlng[0].chlng_name;
+        const chlngJson = chlngJson1.chlng[0];
+        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+        //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+        obj.stateNavigator.push({
+          id: nextChlngName,
+          title: nextChlngName,
+          url: {
+            reset: true,
+            chlngJson,
+            screenId: nextChlngName,
+          },
+        });
+
       } else {
         console.log('immediate response is' + response[0].error);
-       // alert(response[0].error);
+        // alert(response[0].error);
       }
     });
 
@@ -510,7 +515,6 @@ class TwoFactorAuthMachine extends Component {
    * are provided in status else it navigates to Dashboard screen.
    */
   onGetAllChallengeStatus(e) {
-
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
@@ -573,7 +577,7 @@ class TwoFactorAuthMachine extends Component {
         }
         setTimeout(() => {
           alert(res.pArgs.response.StatusMsg);
-        }, 100);          
+        }, 100);
       }
     } else {
       console.log('Something went wrong');
@@ -652,7 +656,7 @@ class TwoFactorAuthMachine extends Component {
   render() {
     return (
       <Navigator
-        ref={(ref) => { this.stateNavigator = ref; return ref; }}
+        ref={(ref) => { this.stateNavigator = ref; return ref; } }
         renderScene={this.renderScene}
         initialRoute={{
           id: this.props.url.screenId,
@@ -683,7 +687,7 @@ class TwoFactorAuthMachine extends Component {
             return config;
           }
         }
-      />
+        />
     );
   }
 
@@ -693,19 +697,19 @@ class TwoFactorAuthMachine extends Component {
   hasNextChallenge() {
     return challengeJsonArr.length > currentIndex;
   }
-  
-  
-  checkForPasswordChallenge(chlngJson){
-    if(chlngJson!=null && chlngJson.chlng!=null){
-      
-      for(var i = 0; i<chlngJson.chlng.length; i++){
-        if( chlngJson.chlng[i].chlng_name === 'pass'){
+
+
+  checkForPasswordChallenge(chlngJson) {
+    if (chlngJson != null && chlngJson.chlng != null) {
+
+      for (var i = 0; i < chlngJson.chlng.length; i++) {
+        if (chlngJson.chlng[i].chlng_name === 'pass') {
           return true;
         }
       }
-         }
+    }
     return false;
-   
+
   }
 
   /**
@@ -717,7 +721,7 @@ class TwoFactorAuthMachine extends Component {
       const firstChlngName = chlngJson.chlng[startIndex].chlng_name;
       console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
       //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-    
+
       if (firstChlngName === 'tbacred' || firstChlngName === 'devbind'
         || firstChlngName === 'devname') {
         this.showFirstChallenge(chlngJson, startIndex + 1);
