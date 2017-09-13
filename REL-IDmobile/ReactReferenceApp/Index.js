@@ -388,7 +388,8 @@ import RegisterOption from './App/Scenes/Register_Options';
 //import ScreenHider from '../Utils/ScreenHider';
 import SelectLogin from './App/Scenes/Select_Login';
 
-
+import Update_Password_Dashboard from './App/Components/PostLogin/Update_Password_Dashboard';
+import Update_Question_Dashboard from './App/Components/PostLogin/Update_Question_Dashboard';
 
 
 const IndexNavigator = StackNavigator({
@@ -406,6 +407,13 @@ navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
+  
+//WelcomeScreen: {
+//screen: Dashboard,
+//navigationOptions: ({navigation}) => ({
+//header: false
+//  }),
+//  },
   
 WelcomeScreen: {
 screen: WelcomeScreen,
@@ -476,8 +484,63 @@ navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
-
   
+DeviceMgmt: {
+screen: DeviceMgmtScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+RegisterOptionScene: {
+screen: RegisterOptionScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+NotificationMgmt: {
+screen: NotificationMgmtScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+Notification_History: {
+screen: Notification_History,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+ComingSoon: {
+screen: ComingSoonScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+SecureWebView: {
+screen: Web,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+Update_Question_Dashboard: {
+screen: Update_Question_Dashboard,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+Update_Password_Dashboard: {
+screen: Update_Password_Dashboard,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+
 pattern: {
 screen: PatternLock,
 navigationOptions: ({navigation}) => ({
@@ -488,9 +551,26 @@ header: false
   }, {
 transitionConfig: () => ({
 screenInterpolator: (sceneProps) => {
-  if (sceneProps.index === 0 && sceneProps.scene.route.routeName !== 'LoadScreen' && sceneProps.scenes.length > 2)
-    return null
+  if (sceneProps.index === 0 && sceneProps.scene.route.routeName !== 'LoadScreen' && sceneProps.scenes.length > 2){
+  return null
+  }else if (sceneProps.scene.route.routeName == 'Accounts' ){
+  return null
+  }
+  else if (sceneProps.scene.route.routeName == 'PayBills' ){
+  return null
+  }
+  else if (sceneProps.scene.route.routeName == 'Deposits' ){
+  return null
+  }
+  else if (sceneProps.scene.route.routeName == 'FindBranch' ){
+  return null
+  }
+  else if (sceneProps.scene.route.routeName == 'Contact' ){
+  return null
+  }
+ else{
     return CardStackStyleInterpolator.forHorizontal(sceneProps)
+  }
     }
     })
   }, {initialRouteName: 'LoadScreen'})

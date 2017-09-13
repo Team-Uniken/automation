@@ -149,16 +149,21 @@ class UserLogin extends Component {
   close() {
     dismissKeyboard();
 //    Events.trigger('closeStateMachine');
-    const resetActionshowFirstChallenge = NavigationActions.reset({
-    index: 0,
-    actions: [
-      NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-              "chlngJson": this.props.navigator.state.params.url.chlngJson,
-              "screenId": this.props.navigator.state.params.url.screenId
-              },title:this.props.navigator.state.params.url.screenId}})
-      ]
-      })
-    this.props.navigator.dispatch(resetActionshowFirstChallenge)
+//    const resetActionshowFirstChallenge = NavigationActions.reset({
+//    index: 0,
+//    actions: [
+//      NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+//              "chlngJson": this.props.navigator.state.params.url.chlngJson,
+//              "screenId": this.props.navigator.state.params.url.screenId
+//              },title:this.props.navigator.state.params.url.screenId}})
+//      ]
+//      })
+//    this.props.navigator.dispatch(resetActionshowFirstChallenge)
+    
+    this.props.navigator.navigate('WelcomeScreen',{url: {
+      "chlngJson": this.props.navigator.state.params.url.chlngJson,
+      "screenId": this.props.navigator.state.params.url.screenId
+      }})
   }
   /*
    This method is used to render the componenet with all its element.
