@@ -200,11 +200,7 @@ export default class PayBillsScene extends Component {
           </View>
           <View style={styles.totalwrap}>
             <View style={{ flex: 1 }}>
-              <FormattedCurrency
-                value={cleanData.total}
-                currency="USD"
-                style={[styles.totaltext, { color: cleanData.totalcolor }]}
-              />
+             
             </View>
           </View>
         </View>

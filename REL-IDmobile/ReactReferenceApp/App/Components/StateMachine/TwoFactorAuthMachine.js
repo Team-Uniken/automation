@@ -270,7 +270,7 @@ class TwoFactorAuthMachine extends Component {
                 onGetAllChallengeStatusSubscription.remove();
                 onGetAllChallengeStatusSubscription = null;
               }
-              this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard'})
+              this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
             }
           }
         }
@@ -444,7 +444,7 @@ class TwoFactorAuthMachine extends Component {
       const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: nextChlngName,params:{url: {
+        NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
                                 reset: true,
                                 chlngJson,
                                 screenId: nextChlngName,
@@ -679,7 +679,7 @@ class TwoFactorAuthMachine extends Component {
               onGetAllChallengeStatusSubscription.remove();
               onGetAllChallengeStatusSubscription = null;
               }
-              this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard'})
+             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
             });
           }
         } else {
@@ -691,7 +691,7 @@ class TwoFactorAuthMachine extends Component {
             onGetAllChallengeStatusSubscription.remove();
             onGetAllChallengeStatusSubscription = null;
             }
-            this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard'})
+            this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
           });
         }
       } else {
@@ -900,10 +900,12 @@ getComponentByName(route, nav) {
    * screen can be poped based on current index , it calls resetChallenge().
    */
   showPreviousChallenge() {
-    console.log('---------- showPreviousChallenge ' + currentIndex);
+    console.log('---------- showPreviousChallenge ' + currentIndex + JSON.stringify(challengeJson));
     if (currentIndex > 0) {
       currentIndex--;
-      obj.stateNavigator.pop();
+//      obj.stateNavigator.pop();
+      obj.showFirstChallenge(challengeJson,currentIndex)
+      
     } else {
       obj.resetChallenge();
     }
@@ -1002,7 +1004,7 @@ getComponentByName(route, nav) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
-    this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard'})
+    this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
     Events.rm('onPostForgotPassword', 'onPostForgotPassword');
     Events.rm('finishForgotPasswordFlow', 'finishForgotPasswordFlow');
   }

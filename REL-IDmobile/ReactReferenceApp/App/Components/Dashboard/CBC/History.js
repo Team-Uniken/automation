@@ -138,10 +138,7 @@ class History extends Component {
           </View>
           <View style={Skin.layout3.row.totalwrap}>
             <View style={{ flex: 1 }}>
-              <FormattedCurrency
-                value={cleanData.bal}
-                currency="USD"
-                style={Skin.layout3.row.baltext} />
+              
               <Text
                 numberOfLines={1}
                 style={Skin.layout3.row.ptstext}>

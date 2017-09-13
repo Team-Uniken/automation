@@ -441,54 +441,43 @@ navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
-//actcode: {
-//screen: Activation,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-//actcode: {
-//screen: Activation,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-//otp: {
-//screen: AccessCode,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-//secqa: {
-//screen: QuestionVerification,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-//devname: {
-//screen: DeviceName,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-//devbind: {
-//screen: DeviceBinding,
-//navigationOptions: ({navigation}) => ({
-//header: false
-//  }),
-//  },
-//  
-// RegisterOption: {
-// screen: RegisterOption,
-// navigationOptions: ({navigation}) => ({
-// header: false
-//   }),
-//   },
+
+Accounts: {
+screen: AccountsScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+
+PayBills: {
+screen: PayBillsScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+Contact: {
+screen: ContactScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
+Deposits: {
+screen: DepositsScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+
+FindBranch: {
+screen: FindBranchScene,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+
+  
 pattern: {
 screen: PatternLock,
 navigationOptions: ({navigation}) => ({
