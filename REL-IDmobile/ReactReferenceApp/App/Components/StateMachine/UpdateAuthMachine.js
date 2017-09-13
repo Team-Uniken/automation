@@ -299,7 +299,7 @@ class UpdateAuthMachine extends Component {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
-    } else if (id === 'pattern') {
+    } else if (id === 'pattern') {p
       return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
     }
     return (<Text>Error</Text>);
@@ -376,9 +376,8 @@ class UpdateAuthMachine extends Component {
      * This method is called by UpdateAuthMachine to submit the challenges with responses.
      * It calls updateChallenges of Native Bridge which inturn calls updateChallenges of RDNA. 
      */
-  callUpdateChallenge() {
-    if (Main.isConnected) {
-
+  callUpdateChallenge() { 
+    if (Main.isConnected) { 
       Events.trigger('showLoader', true);
       console.log('----- Main.dnaUserName ' + Main.dnaUserName);
       AsyncStorage.getItem('userId').then((value) => {
@@ -387,7 +386,7 @@ class UpdateAuthMachine extends Component {
             console.log('immediate response is' + response[0].error);
           } else {
             console.log('immediate response is' + response[0].error);
-            alert(response[0].error);
+            //alert(response[0].error);
           }
         });
       }).done();
@@ -396,6 +395,4 @@ class UpdateAuthMachine extends Component {
     }
   }
 }
-
-
 module.exports = UpdateAuthMachine;
