@@ -733,7 +733,8 @@ export default class NotificationMgmtScene extends Component {
             res.pArgs.response.StatusMsg,
             [
               { text: 'OK', onPress: () => this.getMyNotifications() }
-            ]
+            ],
+      { cancelable: false }
           )
         }, 120);
 

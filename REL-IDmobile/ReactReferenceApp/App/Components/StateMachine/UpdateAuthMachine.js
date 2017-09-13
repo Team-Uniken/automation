@@ -223,7 +223,8 @@ class UpdateAuthMachine extends Component {
               }
             },
             style: 'cancel',
-          }]
+          }],
+           { cancelable: false }
         );
        }, 100);
       }

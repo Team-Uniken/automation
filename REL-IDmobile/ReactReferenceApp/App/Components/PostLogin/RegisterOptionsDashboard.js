@@ -353,7 +353,6 @@ This method is called when the component will start to load
       });
   }
 
-
   //back to dashboard on click of cross button or android back button.
   close() {
     this.doNavigateDashBoard();
@@ -596,7 +595,8 @@ This method is called when the component will start to load
 
             },
             style: 'cancel',
-          }]
+          }],
+          { cancelable: false }
         );
         }, 100);
       }
@@ -623,6 +623,7 @@ This method is called when the component will start to load
       if (data) {
         var callback = function (error, result) {
           if (error) {
+            console.log("faceboook checkValidityOfAccessToken: "+JSON.stringify(error));
             $this.doFacebookLogin();
           } else {
             $this.facebookResponseCallback(null, result)
@@ -657,6 +658,7 @@ This method is called when the component will start to load
     LoginManager.logInWithReadPermissions(['public_profile']).then(
       function (result) {
         if (result.isCancelled) {
+          console.log("facebook doFacebookLogin : " + JSON.stringify(result));
           Events.trigger('hideLoader', true);
         } else {
           AccessToken.getCurrentAccessToken().then((data) => {
@@ -685,6 +687,7 @@ This method is called when the component will start to load
         }
       },
       function (error) {
+        console.log("facebook doFacebookLogin errorHandler : " + JSON.stringify(error));
         Events.trigger('hideLoader', true);
       }).done();
   }
