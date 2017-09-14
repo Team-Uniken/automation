@@ -16,7 +16,7 @@ import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
 import {View, Text, BackHandler, StatusBar} from 'react-native';
 import {Navigator} from 'react-native-deprecated-custom-components'
-
+import { NavigationActions} from 'react-navigation';
 
 /*
  Use in this js
@@ -54,10 +54,23 @@ class Welcome_Screen extends Component {
 //call on click of already a member to show next challenge(checkUser).
   selectReg() {
     console.log('doNavigation:');
-    this.props.navigation.navigate('StateMachine',{url: {
-      "chlngJson": this.props.navigation.state.params.url.chlngJson,
-      "screenId": this.props.navigation.state.params.url.screenId
-      }})
+//    this.props.navigation.navigate('StateMachine',{url: {
+//      "chlngJson": this.props.navigation.state.params.url.chlngJson,
+//      "screenId": this.props.navigation.state.params.url.screenId,
+//      "currentIndex":0
+//      }})
+    
+    const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+        "chlngJson":this.props.navigation.state.params.url.chlngJson,
+      "screenId": this.props.navigation.state.params.url.screenId,
+      "currentIndex":0
+        },title:''}})
+      ]
+      })
+    this.props.navigation.dispatch(resetAction)
   }
   
 //call on click of register to show SelfRegister screen.

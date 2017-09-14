@@ -84,7 +84,7 @@ var welcome = ClientBasedConfig.img.welcome;
 var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
-//console.log = function () { }
+console.log = function () { }
 
 BackHandler.addEventListener('hardwareBackPress', function () {
   return true;
@@ -763,7 +763,8 @@ class Load extends Component {
 //                this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
               this.props.navigation.navigate('StateMachine',{url: {
                 "chlngJson": chlngJson,
-                "screenId": nextChlngName
+                "screenId": nextChlngName,
+                "currentIndex":0
                 }})
               
               } else {
@@ -786,7 +787,8 @@ class Load extends Component {
 //            this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
         this.props.navigation.navigate('StateMachine',{url: {
           "chlngJson": chlngJson,
-          "screenId": nextChlngName
+          "screenId": nextChlngName,
+          "currentIndex":0
           }})
           }
         } else {
@@ -795,7 +797,8 @@ class Load extends Component {
             if (value === "true") {
             this.props.navigation.navigate('StateMachine',{url: {
               "chlngJson": chlngJson,
-              "screenId": nextChlngName
+              "screenId": nextChlngName,
+              "currentIndex":0
               }})
 //              this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
             } else {
@@ -823,7 +826,8 @@ class Load extends Component {
 //          this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
         this.props.navigation.navigate('StateMachine',{url: {
           "chlngJson": chlngJson,
-          "screenId": nextChlngName
+          "screenId": nextChlngName,
+          "currentIndex":0,
           }})
         } else {
 //          this.props.navigator.resetTo({

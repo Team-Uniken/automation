@@ -320,6 +320,7 @@ class TwoFactorAuthMachine extends Component {
               NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
                 chlngJson,
               screenId: nextChlngName,
+              currentIndex:0
                 },title:nextChlngName}})
               ]
               })
@@ -448,6 +449,7 @@ class TwoFactorAuthMachine extends Component {
                                 reset: true,
                                 chlngJson,
                                 screenId: nextChlngName,
+                                currentIndex:0,
                               },title:nextChlngName}})
         ]
         })
@@ -644,7 +646,7 @@ class TwoFactorAuthMachine extends Component {
               index: 0,
               actions: [
                 NavigationActions.navigate({ routeName: 'StateMachine',params:{
-                url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent },screenId: 'RegisterOption' },
+                url: { chlngJson: { "chlng": arrTba },currentIndex:0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent },screenId: 'RegisterOption' },
                 title:'RegisterOption'}})
                 ]
                 })
@@ -658,7 +660,7 @@ class TwoFactorAuthMachine extends Component {
               index: 0,
               actions: [
                 NavigationActions.navigate({ routeName: 'StateMachine',params:{
-                url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent },screenId: 'RegisterOption' },
+                url: { chlngJson: { "chlng": arrTba },currentIndex:0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent },screenId: 'RegisterOption' },
                 title:'RegisterOption'}})
                 ]
                 })
@@ -784,6 +786,7 @@ getComponentByName(route, nav) {
 
   render() {
     var sId = this.props.navigation.state.params.url.screenId;
+    currentIndex = this.props.navigation.state.params.url.currentIndex;
     if(sId=='RegisterOption'){
       var params = {id:sId,
       url:{
@@ -795,7 +798,7 @@ getComponentByName(route, nav) {
       
       return(this.getComponentByName(params,this.props.navigation))
     }else if(sId=='checkuser'){
-          currentIndex = 0;
+//          currentIndex = 0;
           challengeJson = this.props.navigation.state.params.url.chlngJson;
           if (saveChallengeJson == null) {
             saveChallengeJson = this.props.navigation.state.params.url.chlngJson;
@@ -881,6 +884,7 @@ getComponentByName(route, nav) {
           NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
             chlngJson,
           screenId: firstChlngName,
+          currentIndex:startIndex,
             },title:firstChlngName}})
           ]
           })
