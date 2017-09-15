@@ -41,6 +41,8 @@ import Checkbox from '../view/checkbox';
 import Input from '../view/input';
 import Margin from '../view/margin';
 
+import { NavigationActions} from 'react-navigation';
+
 /*
   INSTANCES
  */
@@ -112,6 +114,7 @@ class RegisterOptionScene extends Component {
     this.getDeviceUUID = this.getDeviceUUID.bind(this);
     this.getRegisteredDeviceDetails = this.getRegisteredDeviceDetails.bind(this);
     this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
+    this.doNavigateDashBoard = this.doNavigateDashBoard.bind(this);
   }
 
   /*
@@ -142,7 +145,7 @@ This method is called when the component will start to load
     }.bind(this));
     InteractionManager.runAfterInteractions(() => {
       if (Main.isConnected) {
-        Events.trigger('showLoader', true);
+//        Events.trigger('showLoader', true);
         ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
           if (response) {
             console.log('getAllChallenges immediate response is' + response[0].error);
@@ -156,7 +159,7 @@ This method is called when the component will start to load
           '',
           'Please check your internet connection',
           [
-            { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+            { text: 'OK', onPress: () => this.doNavigateDashBoard() }
           ]
         );
       }
@@ -321,10 +324,14 @@ This method is called when the component will start to load
                                                         }
             }).done();
           } else {
-            this.props.navigator.pop();
+//            this.props.navigator.pop();
+//            this.props.navigation.goBack();
+            this.doNavigateDashBoard();
           }
         } else {
-          this.props.navigator.pop();
+//          this.props.navigator.pop();
+//          this.props.navigation.goBack();
+          this.doNavigateDashBoard();
         }
       } else {
         setTimeout(() => {
@@ -434,7 +441,9 @@ This method is called when the component will start to load
 
   // callback of pattern screen
   onSetPattern(data) {
-    this.props.navigator.pop();
+//    this.props.navigator.pop();
+//    this.props.navigation.goBack();
+    this.doNavigateDashBoard();
     Events.trigger('updateSetting', "");
     this.setState({ pattern: true });
   }
@@ -561,37 +570,37 @@ This method is called when the component will start to load
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
             onPress: () => {
-              var chlngJson;
-              if (res.pArgs.response.ResponseData == null) {
-                chlngJson = saveChallengeJson;
-              } else {
-                chlngJson = res.pArgs.response.ResponseData;
-              }
-
-              const currentChlng = challengeJsonArr[--currentIndex];
-              for (var i = 0; i < chlngJson.chlng.length; i++) {
-                var chlng = chlngJson.chlng[i];
-                if (chlng.chlng_name === currentChlng.chlng_name) {
-
-                } else {
-                  chlngJson.chlng.splice(i, 1);
-                  i--;
-                }
-              }
-
-              const nextChlngName = chlngJson.chlng[0].chlng_name;
-              if (chlngJson != null) {
-                console.log('UpdateAuthMachine - onUpdateChallengeStatus - chlngJson != null');
-                //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-                this.props.navigator.push({
-                  id: 'UpdateMachine',
-                  title: nextChlngName,
-                  url: {
-                    chlngJson,
-                    screenId: nextChlngName,
-                  },
-                });
-              }
+//              var chlngJson;
+//              if (res.pArgs.response.ResponseData == null) {
+//                chlngJson = saveChallengeJson;
+//              } else {
+//                chlngJson = res.pArgs.response.ResponseData;
+//              }
+//
+//              const currentChlng = challengeJsonArr[--currentIndex];
+//              for (var i = 0; i < chlngJson.chlng.length; i++) {
+//                var chlng = chlngJson.chlng[i];
+//                if (chlng.chlng_name === currentChlng.chlng_name) {
+//
+//                } else {
+//                  chlngJson.chlng.splice(i, 1);
+//                  i--;
+//                }
+//              }
+//
+//              const nextChlngName = chlngJson.chlng[0].chlng_name;
+//              if (chlngJson != null) {
+//                console.log('UpdateAuthMachine - onUpdateChallengeStatus - chlngJson != null');
+//                //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
+//                this.props.navigator.push({
+//                  id: 'UpdateMachine',
+//                  title: nextChlngName,
+//                  url: {
+//                    chlngJson,
+//                    screenId: nextChlngName,
+//                  },
+//                });
+//              }
 
 
             },
@@ -793,7 +802,7 @@ This method is called when the component will start to load
 
 
         AsyncStorage.getItem('userId').then((value) => {
-          Events.trigger('showLoader', true);
+//          Events.trigger('showLoader', true);
           ReactRdna.updateChallenges(JSON.stringify(this.state.url.chlngJson), value, (response) => {
             if (response[0].error === 0) {
               console.log('immediate response is' + response[0].error);
@@ -824,7 +833,15 @@ This method is called when the component will start to load
   }
   // navigate to dashboard
   doNavigateDashBoard() {
-    this.props.navigator.popToTop();
+  
+    const navigateToDashboard = NavigationActions.reset({
+    index: 0,
+    key:this.props.navigation.state.key,
+    actions: [
+      NavigationActions.navigate({ routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      })
+    this.props.navigation.dispatch(navigateToDashboard)
   }
 
   selectCheckBox(args) {
@@ -861,7 +878,13 @@ This method is called when the component will start to load
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop} isBadge={true}/>);
+          handler={this.goBack.bind(this)} isBadge={true}/>);
+
+  }
+  
+  goBack(){
+//    this.props.navigation.goBack();
+    this.doNavigateDashBoard();
   }
 
   render() {
@@ -992,13 +1015,13 @@ This method is called when the component will start to load
             icon: '',
             iconStyle: {},
             textStyle: {},
-            handler: this.props.navigator.pop,
+            handler: '',
           },
         }}
         bottomMenu={{
           visible: false,
         }}
-        navigator={this.props.navigator}
+        navigator={this.props.navigation}
         >
          { isPageTitle && this.renderPageTitle('Profile & Settings')}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>

@@ -147,7 +147,7 @@ class Locations extends Component {
         controlPanel={ControlPanel}
         drawerState={{ open: false, disabled: false }}
         bottomMenu={{ visible: true, active: 3, }}
-        navigator={this.props.navigator}
+        navigator={this.props.navigation}
         defaultNav={false}>
        PageTitle title={'Locations'}
        handler={this.triggerDrawer}/>

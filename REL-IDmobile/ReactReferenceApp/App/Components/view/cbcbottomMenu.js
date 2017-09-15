@@ -14,8 +14,8 @@ var SCREEN_HEIGHT = require('Dimensions').get('window').height;
 */
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var NavigationBar = require('react-native-navbar');
-
-
+import { NavigationActions } from 'react-navigation'
+import Events from 'react-native-simple-events';
 
 class BottomMenu extends React.Component{
 
@@ -85,7 +85,17 @@ class BottomMenu extends React.Component{
 		//console.log(this);
 		//console.log(i);
 		//console.log({id:this.props.list[i].link});
-    this.props.navigator.navigate(this.props.list[i].link,{navigator:this.props.navigator})
+//    this.props.navigator.navigate(this.props.list[i].link)
+//    Events.trigger('registerDrawer');
+    var temp = this.props.list[i].link;
+    const resetActionshowFirstChallenge = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: temp})
+      ]
+      })
+    this.props.navigator.dispatch(resetActionshowFirstChallenge)
+    
 //		this.props.navigator.push({id:this.props.list[i].link});
   		/*
   		var routeStack = this.props.navigator.state.routeStack;

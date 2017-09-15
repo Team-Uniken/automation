@@ -270,7 +270,14 @@ class TwoFactorAuthMachine extends Component {
                 onGetAllChallengeStatusSubscription.remove();
                 onGetAllChallengeStatusSubscription = null;
               }
-              this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+//              this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+              const navigateToDashboard = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigator}})
+                ]
+                })
+              this.props.navigation.dispatch(navigateToDashboard)
             }
           }
         }
@@ -681,7 +688,15 @@ class TwoFactorAuthMachine extends Component {
               onGetAllChallengeStatusSubscription.remove();
               onGetAllChallengeStatusSubscription = null;
               }
-             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+//             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+              
+              const navigateToDashboard = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigator}})
+                ]
+                })
+              this.props.navigation.dispatch(navigateToDashboard)
             });
           }
         } else {
@@ -693,7 +708,14 @@ class TwoFactorAuthMachine extends Component {
             onGetAllChallengeStatusSubscription.remove();
             onGetAllChallengeStatusSubscription = null;
             }
-            this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+//            this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+            const navigateToDashboard = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigator}})
+              ]
+              })
+            this.props.navigation.dispatch(navigateToDashboard)
           });
         }
       } else {
@@ -1008,7 +1030,14 @@ getComponentByName(route, nav) {
       onGetAllChallengeStatusSubscription.remove();
       onGetAllChallengeStatusSubscription = null;
     }
-    this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+//    this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+    const navigateToDashboard = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigator}})
+      ]
+      })
+    this.props.navigation.dispatch(navigateToDashboard)
     Events.rm('onPostForgotPassword', 'onPostForgotPassword');
     Events.rm('finishForgotPasswordFlow', 'finishForgotPasswordFlow');
   }

@@ -50,7 +50,7 @@ export default class ContactScene extends Component {
             <Main
             controlPanel={ControlPanel}
             drawerState={this.props.drawerState}
-            navigator={this.props.navigator}
+            navigator={this.props.navigation}
             defaultNav={false}
             bottomMenu={{
             visible: true,

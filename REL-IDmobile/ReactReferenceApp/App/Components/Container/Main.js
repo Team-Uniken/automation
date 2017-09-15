@@ -155,11 +155,11 @@ This method is called when the component will start to load
     This method is called after the component is Updated.
   */
   componentDidUpdate() {
-    if (eventToggleDrawer === true) {
-      Events.rm('toggleDrawer', 'toggleDrawerID')
-    }
-
-    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+//    if (eventToggleDrawer === true) {
+//      Events.rm('toggleDrawer', 'toggleDrawerID')
+//    }
+//
+//    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
   }
   //to open 401 dialog
   open() {

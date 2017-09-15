@@ -20,10 +20,11 @@ class Dashboard extends Component {
   render() {
       return (
         <ClientBasedConfig.dashboard.screen
+        {...this.props}
           navigator={this.props.navigation}
                 url={this.props.navigation.state.params.url}
                 title={this.props.navigation.state.params.title}
-                dashboardScreenName={ClientBasedConfig.dashboard.screenName}  />
+                dashboardScreenName={ClientBasedConfig.dashboard.screenName}/>
       );
     
   }
