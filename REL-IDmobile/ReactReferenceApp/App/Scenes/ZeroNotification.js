@@ -157,7 +157,7 @@ var SampleRow = React.createClass({
         {
           text: 'OK',
           onPress: () => {
-            obj.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
+            obj.setState({ selectedAction: 'AUTH_UNSUPPORTED',showTouchOrPattern:false });
             obj.updateNotificationDetails();
           }
         }
@@ -389,6 +389,7 @@ export default class NotificationMgmtScene extends Component {
     this.authenticateTouchID = this.authenticateTouchID.bind(this);
     this.onTouchIDAuthenticationDone = this.onTouchIDAuthenticationDone.bind(this);
     this.onNotificationAction = this.onNotificationAction.bind(this);
+    this.onPatternClose = this.onPatternClose.bind(this);
 
     var data = this.renderListViewData(notification.sort(compare));
     this.state = {
@@ -400,6 +401,8 @@ export default class NotificationMgmtScene extends Component {
       refreshUI: false,
       showPasswordModel: false,
       selectedNotificationId: '',
+      showTouchOrPattern:false,
+      showingOtherAlerts:false,
       selectedAction: '',
       showLoader: false,
       refreshing: false,
@@ -456,10 +459,18 @@ export default class NotificationMgmtScene extends Component {
     });
   }
 
+  onPatternClose(){
+    this.props.navigator.pop();
+    this.state.showTouchOrPattern = false;
+  }
+
   //patten login callback.
   onPatternUnlock(args) {
-    this.updateNotificationDetails();
+    this.state.showTouchOrPattern = false;
     this.props.navigator.pop();
+    setTimeout(()=>{
+      this.updateNotificationDetails();
+    },100);
   }
 
   authenticateWithTouchIDIfSupported() {
@@ -486,9 +497,11 @@ export default class NotificationMgmtScene extends Component {
   authenticateTouchID() {
     return TouchID.authenticate()
       .then(success => {
+        this.state.showTouchOrPattern =false;
         this.onTouchIDAuthenticationDone();
       })
       .catch(error => {
+        this.state.showTouchOrPattern =false;
         console.log(error)
         AlertIOS.alert(error.message);
       });
@@ -691,6 +704,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showNotificationWithinMinutes() {
+    if(this.state.showPasswordModel == false && this.state.showTouchOrPattern == false && this.state.showingOtherAlerts == false){
     var notifiactionObj = this.sortNotificationWithinMinutes(2, notification);
     if (notifiactionObj) {
       this.state.dataSource = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
@@ -700,6 +714,9 @@ export default class NotificationMgmtScene extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(this.renderListViewData(notification)),
       });
+    }
+    }else{
+      this.state.dataSourceSwap = this.state.dataSource.cloneWithRows(this.renderListViewData(notification));
     }
   }
 
@@ -906,6 +923,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showalertforReject(notification, btnLabel) {
+    this.state.showingOtherAlerts = true;
     Alert.alert(
       'Fraud Warning',
       'You\'ve rejected this transaction, would you like to flag it as fraud?',
@@ -913,16 +931,19 @@ export default class NotificationMgmtScene extends Component {
         {
           text: 'It\'s Fraud',
           onPress: () => {
+            this.state.showingOtherAlerts = false;
             this.showalert(notification, btnLabel)
           }
         },
         {
           text: 'No',
           onPress: () => {
+            this.state.showingOtherAlerts = false;
             this.showalert(notification, notification.action[1].label)
           }
         },
-      ]
+      ],
+      {cancelable:false}
     )
   }
 
@@ -966,6 +987,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showModelForTouchId() {
+    this.state.showTouchOrPattern = true;
     if (isAdditionalAuthSupported.erpass === true) {
       this.authenticateWithTouchIDIfSupported();
     } else {
@@ -974,6 +996,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showComponentForPattern() {
+    this.state.showTouchOrPattern = true;
     if (isAdditionalAuthSupported.erpass === true) {
       this.authenticateWithPattern();
     } else {
@@ -990,7 +1013,7 @@ export default class NotificationMgmtScene extends Component {
         {
           text: 'OK',
           onPress: () => {
-            this.setState({ selectedAction: 'AUTH_UNSUPPORTED' });
+            this.setState({ selectedAction: 'AUTH_UNSUPPORTED',showTouchOrPattern:false });
             this.updateNotificationDetails();
           }
         }
