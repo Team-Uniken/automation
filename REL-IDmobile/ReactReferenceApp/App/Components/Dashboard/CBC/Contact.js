@@ -24,7 +24,7 @@ const SCREEN_WIDTH = require('Dimensions').get('window').width;
 
 
 
-export default class ContactScene extends Component {
+ class ContactScene extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -47,18 +47,9 @@ export default class ContactScene extends Component {
 
   render() {
     return (
-            <Main
-            controlPanel={ControlPanel}
-            drawerState={this.props.drawerState}
-            navigator={this.props.navigation}
-            defaultNav={false}
-            bottomMenu={{
-            visible: true,
-            active: 5,
-            }}>
+      
         
-          <PageTitle title={'Contact'}
-          handler={this.triggerDrawer}/>  
+      
         <View
           style={{
             flex: 1,
@@ -116,11 +107,11 @@ export default class ContactScene extends Component {
             </View>
           </TouchableOpacity>
         </View>
-      </Main>
+      
     );
   }
 }
-
+module.exports = ContactScene;
 const styles = StyleSheet.create({
   buttonwrap: {
     flex: 1,

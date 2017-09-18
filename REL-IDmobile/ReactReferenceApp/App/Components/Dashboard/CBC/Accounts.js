@@ -10,12 +10,19 @@ import Events from 'react-native-simple-events';
 import Skin from '../../../Skin';
 import Main from '../../Container/Main';
 import ListItem from '../../ListItem';
+import ContactScene from './Contact';
+import PayBillsScene from './PayBills';
+import DepositsScene from './Deposits';
+import FindBranchScene from './FindBranch';
+
 /*
   CALLED
 */
 import ListSectionHeader from '../../ListSectionHeader';
 import { FormattedCurrency } from 'react-native-globalize';
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+
+var titleStringArray = ["ACCOUNTS","PAY BILLS","DEPOSITS","FIND BRANCH","CONTACT"];
 /*
   Instantiaions
 */
@@ -27,7 +34,7 @@ import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
 import PageTitle from '../../view/pagetitle.js';
 
-
+var sud =0;
 let self;
 const headers = {
   1: 'Savings',
@@ -51,8 +58,9 @@ export default class AccountsScene extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
-    this.state = { dataSource: ds.cloneWithRowsAndSections([]), };
+    this.state = { dataSource: ds.cloneWithRowsAndSections([]), tabChanged:1,activeTab :1,titleString:"Accounts"};
     self = this;
+    this.tabChanged = this.tabChanged.bind(this);
   }
 
   /**
@@ -62,6 +70,7 @@ export default class AccountsScene extends Component {
   componentDidMount() {
     this.getMyNotifications();
     this.getAccountDetails();
+      Events.on('tabChanged', 'tabChanged', this.tabChanged);
   }
 
 
@@ -241,8 +250,33 @@ export default class AccountsScene extends Component {
       </ListItem>
       );
   }
+  
+  tabChanged(e){
+  
+    this.setState({ tabChanged: e ,activeTab:e,titleString :titleStringArray[e-1]});
+  }
+  
+  getComponent(){
+    if(this.state.tabChanged===1){
+      return(<ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        renderSectionHeader={this.renderSectionHeader} />)
+    }else if(this.state.tabChanged===2){
+      return(<PayBillsScene/>)
+    }else if(this.state.tabChanged===3){
+      return(<DepositsScene/>)
+    }
+    else if(this.state.tabChanged===4){
+      return(<FindBranchScene/>)
+    }
+    else{
+      return(<ContactScene/>)
+    }
+  }
 
   render() {
+    
     return (
      <Main
         controlPanel={ControlPanel}
@@ -251,11 +285,11 @@ export default class AccountsScene extends Component {
         defaultNav={false}
          bottomMenu={{
           visible: true,
-          active: 1,
+          active: this.state.tabChanged,
         }}>
             
         
-               <PageTitle title={'Accounts'}
+               <PageTitle title={this.state.titleString}
                 handler={this.triggerDrawer}/>
     
         <View style={{
@@ -263,17 +297,13 @@ export default class AccountsScene extends Component {
                        backgroundColor: Skin.main.BACKGROUND_COLOR
                      }}>
 
-                  
-                 
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={this.renderRow}
-            renderSectionHeader={this.renderSectionHeader} />
+      
+      {this.getComponent()}
         </View>
       </Main>
       );
   }
-
+  
 }
 
 const styles = StyleSheet.create({

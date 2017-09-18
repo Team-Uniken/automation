@@ -16,7 +16,7 @@ import PageTitle from '../../view/pagetitle.js';
 import Events from 'react-native-simple-events';
 
 
-export default class DepositsScene extends Component {
+ class DepositsScene extends Component {
 
   triggerDrawer() {
     console.log('trigger')
@@ -25,18 +25,7 @@ export default class DepositsScene extends Component {
   
   render () {
     return (
-            <Main
-            controlPanel={ControlPanel}
-            drawerState={this.props.drawerState}
-            navigator={this.props.navigation}
-            defaultNav={false}
-            bottomMenu={{
-            visible: true,
-            active: 3,
-            }}>
-            
-            <PageTitle title={'Deposits'}
-            handler={this.triggerDrawer}/>
+      
         <View
           style={{
             flex:1,
@@ -62,7 +51,7 @@ export default class DepositsScene extends Component {
           </Text>
         </View>
        
-      </Main>
+      
     );
   }
 }

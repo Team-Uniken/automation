@@ -833,15 +833,16 @@ This method is called when the component will start to load
   }
   // navigate to dashboard
   doNavigateDashBoard() {
-  
-    const navigateToDashboard = NavigationActions.reset({
-    index: 0,
-    key:this.props.navigation.state.key,
+    
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
     actions: [
-      NavigationActions.navigate({ routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      NavigationActions.navigate({routeName: 'RegisterOptionScene'}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
       ]
-      })
-    this.props.navigation.dispatch(navigateToDashboard)
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
   }
 
   selectCheckBox(args) {

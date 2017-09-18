@@ -45,7 +45,7 @@ const iconcolor = {
   2: Skin.colors.POSITIVE_ACCENT,
 };
 
-export default class PayBillsScene extends Component {
+class PayBillsScene extends Component {
 
   constructor(props) {
     super(props);
@@ -210,17 +210,7 @@ export default class PayBillsScene extends Component {
 
   render() {
     return (
-            <Main
-            controlPanel={ControlPanel}
-            drawerState={this.props.drawerState}
-            navigator={this.props.navigation}
-            defaultNav={false}
-            bottomMenu={{
-            visible: true,
-            active: 2,
-            }}>
-            <PageTitle title={'Pay Bills'}
-                        handler={this.triggerDrawer}/>
+      
         <View style={{ flex: 1, backgroundColor:Skin.main.BACKGROUND_COLOR }}>
           <ListView
             dataSource={this.state.dataSource}
@@ -228,7 +218,7 @@ export default class PayBillsScene extends Component {
             renderSectionHeader={this.renderSectionHeader}
           />
         </View>
-      </Main>
+     
     );
   }
 }

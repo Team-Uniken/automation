@@ -221,17 +221,7 @@ class FindBranchScene extends Component {
         coordinate = this.state.myPosition;
 
         return (
-            <Main
-                controlPanel={ControlPanel}
-                drawerState={this.props.drawerState}
-                navigator={this.props.navigation}
-                defaultNav={false}
-                bottomMenu={{
-                    visible: true,
-                    active: 4,
-                }}>
-               <PageTitle title={'Find Branch'}
-               handler={this.triggerDrawer}/>
+          
                    
           
                 <View style={[{ flex: 1 }, { backgroundColor: Skin.colors.BACK_GRAY }]}>
@@ -253,13 +243,12 @@ class FindBranchScene extends Component {
 
                 </View>
                 
-            </Main>
-        );
+                    );
     }
 }
 
 
 
-module.exports = FindBranchScene;
-FindBranchScene.propTypes = propTypes;
 
+FindBranchScene.propTypes = propTypes;
+module.exports = FindBranchScene;

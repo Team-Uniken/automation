@@ -32,7 +32,7 @@ class BottomMenu extends React.Component{
 		if(this.state.visible){
 			return (
 				<View style={Skin.botmenu.wrap}>
-					{this.buildboxes(this.state.active)}
+					{this.buildboxes(this.props.bottomMenu.active)}
 				</View>
 			);
 		}
@@ -82,27 +82,9 @@ class BottomMenu extends React.Component{
 	}
 
 	handleClick(i) {
-		//console.log(this);
-		//console.log(i);
-		//console.log({id:this.props.list[i].link});
 //    this.props.navigator.navigate(this.props.list[i].link)
 //    Events.trigger('registerDrawer');
-    var temp = this.props.list[i].link;
-    const resetActionshowFirstChallenge = NavigationActions.reset({
-    index: 0,
-    actions: [
-      NavigationActions.navigate({ routeName: temp})
-      ]
-      })
-    this.props.navigator.dispatch(resetActionshowFirstChallenge)
-    
-//		this.props.navigator.push({id:this.props.list[i].link});
-  		/*
-  		var routeStack = this.props.navigator.state.routeStack;
-  		routeStack.push({id:this.props.list[i].link});
-  		this.props.navigator.immediatelyResetRouteStack(routeStack);
-    	/* */
-    	//this.props.navigator.push({id:this.props.list[i].link});
+    Events.trigger('tabChanged',i);
   	}
  };
 
