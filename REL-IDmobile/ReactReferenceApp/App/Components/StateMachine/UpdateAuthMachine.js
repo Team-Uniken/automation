@@ -300,7 +300,7 @@ class UpdateAuthMachine extends Component {
       return (<DeviceBinding navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'ConnectionProfile') {
       return (<ConnectionProfile navigator={obj.props.navigator} url={route.url} title={route.title} />);
-    } else if (id === 'pattern') {p
+    } else if (id === 'pattern') {
       return (<PatternLock navigator={this.props.navigator} mode="set" data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose}/>);
     }
     return (<Text>Error</Text>);

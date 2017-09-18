@@ -315,7 +315,6 @@ const style = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 14,
     },
     subject: {
         fontSize: 16,
