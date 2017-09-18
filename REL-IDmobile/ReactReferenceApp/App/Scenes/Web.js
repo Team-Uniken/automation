@@ -27,6 +27,7 @@ import PageTitle from '../Components/view/pagetitle';
 import { Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import { NavigationActions} from 'react-navigation';
+//import Config from 'react-native-config';
 var webViewTag;
 
 /*
@@ -167,13 +168,19 @@ export default class Web extends Component {
 
   //Return platform specific webview.
   getWebView() {
+    var tempUrl
+    if (Config.ENV === 'cbcverify') {
+      tempUrl = this.props.url;
+    }else{
+      tempUrl = this.props.navigation.state.params.url;
+    }
     if (Platform.OS == "ios") {
       return (
         <WebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.props.navigation.state.params.url }}
+          source={{ uri: tempUrl }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -203,7 +210,7 @@ export default class Web extends Component {
             ref={WEBVIEW_REF}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
-            source={this.state.isProxySet === true || this.state.isProxySet == null ? { uri: this.props.navigation.state.params.url } : undefined}
+            source={this.state.isProxySet === true || this.state.isProxySet == null ? { uri: tempUrl } : undefined}
             javaScriptEnable
             domStorageEnabled
             decelerationRate="normal"
@@ -229,7 +236,7 @@ export default class Web extends Component {
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.props.navigation.state.params.url }}
+          source={{ uri: tempUrl }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
