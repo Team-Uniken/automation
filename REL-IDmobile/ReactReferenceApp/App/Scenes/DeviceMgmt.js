@@ -30,8 +30,7 @@ import Skin from '../Skin';
 import PageTitle from '../Components/view/pagetitle';
 import Util from "../Components/Utils/Util";
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
-
+import { NavigationActions} from 'react-navigation';
 /*
   INSTANCES
  */
@@ -522,7 +521,23 @@ export default class DeviceMgmtScene extends Component {
 
   renderPageTitle(){
         return(<PageTitle title={'Connected Devices'}
-        handler={this.props.navigator.pop} isBadge={true}/>);
+        handler={this.goBack.bind(this)} isBadge={true}/>);
+  }
+  
+  
+  goBack(){
+//    this.props.navigation.goBack();
+    this.props.navigation.goBack();
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'DeviceMgmt'}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
+    
   }
   /*
      This method is used to render the componenet with all its element.
@@ -545,13 +560,13 @@ export default class DeviceMgmtScene extends Component {
             icon: '',
             iconStyle: {},
             textStyle: {},
-            handler: this.props.navigator.pop,
+            handler: this.goBack.bind(this),
           },
         }}
         bottomMenu={{
           visible: false,
         }}
-        navigator={this.props.navigator}
+        navigator={this.props.navigation}
         >
 
          { isPageTitle && this.renderPageTitle()}

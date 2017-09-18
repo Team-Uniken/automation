@@ -26,6 +26,7 @@ import WebViewAndroid from '../android_native_modules/nativewebview';
 import PageTitle from '../Components/view/pagetitle';
 import { Platform, StyleSheet, Text, TouchableOpacity, View, WebView, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
+import { NavigationActions} from 'react-navigation';
 var webViewTag;
 
 /*
@@ -140,7 +141,17 @@ export default class Web extends Component {
       onResumeCompletedSubscription.remove();
       onResumeCompletedSubscription = null;
     }
-    this.props.navigator.pop();
+//    this.props.navigator.pop();
+//        this.props.navigation.goBack();
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'SecureWebView',params:{url: '',title:'SecureWebView',navigator:this.props.navigation}}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
   }
 
   onResume() {
@@ -162,7 +173,7 @@ export default class Web extends Component {
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.props.url }}
+          source={{ uri: this.props.navigation.state.params.url }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -192,7 +203,7 @@ export default class Web extends Component {
             ref={WEBVIEW_REF}
             automaticallyAdjustContentInsets={false}
             style={styles.webView}
-            source={this.state.isProxySet === true || this.state.isProxySet == null ? { uri: this.props.url } : undefined}
+            source={this.state.isProxySet === true || this.state.isProxySet == null ? { uri: this.props.navigation.state.params.url } : undefined}
             javaScriptEnable
             domStorageEnabled
             decelerationRate="normal"
@@ -218,7 +229,7 @@ export default class Web extends Component {
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          source={{ uri: this.props.url }}
+          source={{ uri: this.props.navigation.state.params.url }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -248,7 +259,7 @@ export default class Web extends Component {
         break;
     }
 
-    return this.props.url;
+    return this.props.navigation.state.params.url;
   }
 
   /*
@@ -270,7 +281,7 @@ export default class Web extends Component {
       }}
       defaultNav={isPageTitle ? false : true}
       navBar={{
-        title: this.props.title,
+        title: this.props.navigation.state.params.title,
         visible: true,
         tint: Skin.colors.TEXT_COLOR,
         left: {
@@ -284,9 +295,9 @@ export default class Web extends Component {
       bottomMenu={{
         visible: false,
       }}
-      navigator={this.props.navigator}
+      navigator={this.props.navigation}
     >
-      {isPageTitle && this.renderPageTitle(this.props.title)}
+      {isPageTitle && this.renderPageTitle(this.props.navigation.state.params.title)}
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
         {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'} />}
         {this.getWebView()}

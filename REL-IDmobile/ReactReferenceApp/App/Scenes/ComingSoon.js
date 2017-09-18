@@ -22,7 +22,7 @@ import Config from 'react-native-config'
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import PageTitle from '../Components/view/pagetitle';
-
+import { NavigationActions} from 'react-navigation';
 let isPageTitle = Config.ENABLEPAGETITLE;
 
 
@@ -37,9 +37,22 @@ export default class ComingSoonScene extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop}/>);
+          handler={this.goBack.bind(this)}/>);
   }
-    /*
+  
+  goBack(){
+//  this.props.navigation.goBack();
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'ComingSoon'}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
+  }
+/*
   This method is used to render the componenet with all its element.
 */
     render() {
@@ -59,7 +72,7 @@ export default class ComingSoonScene extends Component {
                         icon: '',
                         iconStyle: {},
                         textStyle: {},
-                        handler: this.props.navigator.pop
+        handler:this.goBack.bind(this)
                     },
                 }}
                 bottomMenu={{
