@@ -550,7 +550,13 @@ class ControlPanel extends Component {
         console.log("PostAuth ------ getAllChallenges ---  " + JSON.stringify(chlngJson));
         if (chlngJson.chlng.length > 0) {
           const nextChlngName = chlngJson.chlng[0].chlng_name;
-          this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+//          this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+//          this.props.navigator.navigate('Update_Password_Dashboard',{title:'Secure Portal',url: 'http://' + Main.gatewayHost + '/demoapp/relid.html'})
+          if(nextChlngName === "pass"){
+            this.props.navigator.navigate('Update_Password_Dashboard',{url: { "chlngJson": chlngJson, "screenId": nextChlngName }})
+          }else{
+            this.props.navigator.navigate('Update_Question_Dashboard',{url: { "chlngJson": chlngJson, "screenId": nextChlngName }})
+          }
         }
         else {
           alert("Challenge not configured");
@@ -859,7 +865,9 @@ class ControlPanel extends Component {
               <MenuItem
                 visibility={Config.CHANGEQUESTION}
                 lable="Change Secret Question"
-                onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('secqa'); }}
+                onPress={() => {
+              this.props.toggleDrawer(); this.getChallengesByName('secqa');
+              }}
               />
             ]
           }
