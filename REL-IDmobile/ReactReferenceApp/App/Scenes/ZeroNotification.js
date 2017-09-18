@@ -23,7 +23,7 @@ import PageTitle from '../Components/view/pagetitle';
 import NotificationCard from '../Components/view/notificationcard';
 import { Navigator } from 'react-native-deprecated-custom-components';
 import Loader from '../Components/Utils/Loader';
-
+import { NavigationActions} from 'react-navigation';
 
 
 /*
@@ -555,6 +555,7 @@ export default class NotificationMgmtScene extends Component {
    This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
+    global.isNotificationScreenonTop = true;
     if (this.props.url == null) {
       this.getMyNotifications();
     }
@@ -597,7 +598,7 @@ export default class NotificationMgmtScene extends Component {
         '',
         'Please check your internet connection',
         [
-          { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+          { text: 'OK', onPress: () => this.goBack() }
         ]
       );
     }
@@ -719,7 +720,8 @@ export default class NotificationMgmtScene extends Component {
         }
 
         if (notification.length <= 0) {
-          this.props.navigator.pop(0);
+//          this.props.navigator.pop(0);
+          this.goBack();
         }
        this.showNotificationWithinMinutes();
       
@@ -799,7 +801,8 @@ export default class NotificationMgmtScene extends Component {
   }
 
   onAlertModalOk() {
-    this.props.navigator.pop();
+//    this.props.navigator.pop();
+    this.goBack();
   }
 
   onAlertModalDismissed() {
@@ -815,12 +818,26 @@ export default class NotificationMgmtScene extends Component {
     )
   }
 
+  goBack(){
+    //  this.props.navigation.goBack();
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'NotificationMgmt',params:{url: '',title:'DashBoard',navigator:this.props.navigation}}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
+  }
+
+  
   /*
     render pagetitle
   */
   renderPageTitle(pageTitle) {
     return (<PageTitle title={pageTitle}
-      handler={this.props.navigator.pop} isBadge={true} />);
+      handler={this.goBack.bind(this)} isBadge={true} />);
   }
 
 
@@ -1152,7 +1169,7 @@ export default class NotificationMgmtScene extends Component {
           icon: '',
           iconStyle: {},
           textStyle: {},
-          handler: this.props.navigator.pop,
+          handler: this.goBack.bind(this),
         },
       }}
       bottomMenu={{
@@ -1169,7 +1186,8 @@ export default class NotificationMgmtScene extends Component {
         {Main.notificationCount == 0 &&
           <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
-              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+//              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+      this.props.navigation.navigate('Notification_History',{title:'Notification History'})
             }}>
             <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
               Notification History

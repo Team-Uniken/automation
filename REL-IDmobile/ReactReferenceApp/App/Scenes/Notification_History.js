@@ -29,7 +29,7 @@ import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import MainActivation from '../Components/Container/MainActivation';
 import PageTitle from '../Components/view/pagetitle';
-
+import { NavigationActions} from 'react-navigation';
 
 /*
  Custome View
@@ -404,6 +404,19 @@ class Notifications_History extends Component {
     return str.replace(/\s+/g, '');
   }
 
+  goBack(){
+    //  this.props.navigation.goBack();
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'Notification_History',params:{url: '',title:'DashBoard',navigator:this.props.navigation}}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
+  }
+
 
   go() {
     if (this.state.startdate == '') {
@@ -453,7 +466,7 @@ class Notifications_History extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.props.navigator.pop} isBadge={true}/>);
+        handler={this.goBack.bind(this)} isBadge={true}/>);
   }
   /*
      This method is used to render the componenet with all its element.
@@ -477,7 +490,7 @@ class Notifications_History extends Component {
               icon: '',
               iconStyle: {},
               textStyle: {},
-              handler: this.props.navigator.pop,
+              handler: this.goBack.bind(this),
             },
           }}
           bottomMenu={{

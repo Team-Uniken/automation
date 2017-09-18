@@ -89,6 +89,7 @@ class ControlPanel extends Component {
     this.showNoticiationScreen = this.showNoticiationScreen.bind(this);
     //this.getMyNotifications();
     Events.on('getConfiguration', 'getConfiguration', this.getConfig);
+    
 
   }
 
@@ -390,47 +391,31 @@ class ControlPanel extends Component {
         var count = res.pArgs.response.ResponseData.notifications.length;
         Events.trigger('updateBadge', count);
         Main.notificationCount = count;
-        if (this.props.dashboardScreenName === 'DashboardNotification') {
-          if (res.pArgs.response.ResponseData.notifications.length > 0) {
-            Events.trigger('toggleDrawer', true);
-            var allScreens = this.props.navigator.getCurrentRoutes(0);
-            for (var i = 0; i < allScreens.length; i++) {
-              var screen = allScreens[i];
-              if (screen.id == 'Main') {
-                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
-                mySelectedRoute.url = { "data": e };
-                Events.trigger('showNotification', e);
-                this.props.navigator.popToRoute(mySelectedRoute);
-                return;
-              }
-            }
-
-          } else {
-            Events.trigger('showNotification', e);
-          }
-
-
-        } else {
 
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
-            var allScreens = this.props.navigator.getCurrentRoutes(0);
-            for (var i = 0; i < allScreens.length; i++) {
-              var screen = allScreens[i];
-              if (screen.id == 'NotificationMgmt') {
-                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
-                mySelectedRoute.url = { "data": e };
-                Events.trigger('showNotification', e);
-                this.props.navigator.popToRoute(mySelectedRoute);
-                return;
-              }
-            }
+//            var allScreens = this.props.navigator.getCurrentRoutes(0);
+//            for (var i = 0; i < allScreens.length; i++) {
+//              var screen = allScreens[i];
+//              if (screen.id == 'NotificationMgmt') {
+//                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+//                mySelectedRoute.url = { "data": e };
+//                Events.trigger('showNotification', e);
+//                this.props.navigator.popToRoute(mySelectedRoute);
+//                return;
+//              }
+//            }
+      if(global.isNotificationScreenonTop){
+      Events.trigger('showNotification', e);
+      return;
+      }
             //InteractionManager.runAfterInteractions(() => {
-              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
+//              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
+                this.props.navigator.navigate('NotificationMgmt',{url: { "data": e }})
+      
             //});
           } else if (this.isNotificationScreenPresent() == 1) {
             Events.trigger('showNotification', e);
           }
-        }
       } else {
         if (res.pArgs.response.StatusMsg == 'User not active or present') {
           console.log('User not active or present');
@@ -449,7 +434,7 @@ class ControlPanel extends Component {
 
 
   isNotificationScreenPresent() {
-     return 0;
+     return global.isNotificationScreenonTop;
 //    var allScreens = this.props.navigator.getCurrentRoutes(0);
 //    var status = 0;
 //    for (var i = 0; i < allScreens.length; i++) {
@@ -496,11 +481,12 @@ class ControlPanel extends Component {
     this.getMyNotifications();
     if(!this.isNotificationScreenPresent()){
        InteractionManager.runAfterInteractions(() => {
-              if(this.props.navigator.getCurrentRoutes(0).length > 1)
-                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
-              else
-                 this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
-              
+//              if(this.props.navigator.getCurrentRoutes(0).length > 1)
+//                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+//              else
+//                 this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+         this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'});
+         
             });
     }
   }
@@ -625,27 +611,59 @@ class ControlPanel extends Component {
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value != null && value != undefined && value === "true") {
-        this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+      
+//        this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+      
+      
+      const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+          chlngJson,
+        screenId: nextChlngName,
+        currentIndex:0,
+          },title:nextChlngName}})
+        ]
+        })
+      this.props.navigator.dispatch(resetAction)
+      
       } else {
-        this.props.navigator.resetTo({
-          id: "Welcome_Screen",
-          //id: "Select_Login",
-          title: "nextChlngName",
-          url: {
-            "chlngJson": chlngJson,
-            "screenId": nextChlngName
-          }
-        });
+//        this.props.navigator.resetTo({
+//          id: "Welcome_Screen",
+//          //id: "Select_Login",
+//          title: "nextChlngName",
+//          url: {
+//            "chlngJson": chlngJson,
+//            "screenId": nextChlngName
+//          }
+//        });
+      const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+          chlngJson,
+        screenId: nextChlngName,
+        currentIndex:0,
+          },title:nextChlngName}})
+        ]
+        })
+      this.props.navigator.dispatch(resetAction)
       }
     }).done();
   }
 
 
   popToLoadView() {
-    this.props.navigator.replace({
-      id: 'Load'
-    });
-
+//    this.props.navigator.replace({
+//      id: 'Load'
+//    });
+    const resetToLoad = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'Load',params:{url: '',title:''}})
+      ]
+      })
+    this.props.navigator.dispatch(resetToLoad)
   }
 
   renderIf(condition, jsx) {

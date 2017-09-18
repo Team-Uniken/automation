@@ -23,7 +23,7 @@ var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 */
 // const ReactRdna = React.NativeModules.ReactRdnaModule;
 const RDNARequestUtility = ReactNative.NativeModules.RDNARequestUtility;
-
+import { NavigationActions} from 'react-navigation';
 import ControlPanel from '../ControlPanel';
 import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
@@ -91,6 +91,19 @@ export default class Notification extends Component {
     });
   }
 
+
+  goBack(){
+    //  this.props.navigation.goBack();
+    const ResetToDashboardScreen = NavigationActions.reset({
+      
+    index: 1,
+    actions: [
+      NavigationActions.navigate({routeName: 'NotificationMgmt',params:{url: '',title:'DashBoard',navigator:this.props.navigation}}),
+      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+      ]
+      });
+    this.props.navigation.dispatch(ResetToDashboardScreen)
+  }
 
 
   triggerDrawer() {
