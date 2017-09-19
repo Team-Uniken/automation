@@ -206,7 +206,7 @@ class ControlPanel extends Component {
     }
     //    eventLogOff = DeviceEventEmitter.addListener('onLogOff', this.onLogOff);
     if (Main.isConnected) {
-      onTerminateSubscription = onTerminateModuleEvt.addListener('onTerminate', this.onTerminate);
+      onTerminateSubscription = onTerminateModuleEvt.addListener('onTerminateCompleted', this.onTerminate);
       ReactRdna.terminate((response) => {
         if (response) {
           console.log('immediate response is' + response[0].error);
