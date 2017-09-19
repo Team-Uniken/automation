@@ -540,6 +540,14 @@ navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
+  
+UpdateMachine: {
+screen: UpdateMachine,
+navigationOptions: ({navigation}) => ({
+header: false
+  }),
+  },
+  
 
 pattern: {
 screen: PatternLock,

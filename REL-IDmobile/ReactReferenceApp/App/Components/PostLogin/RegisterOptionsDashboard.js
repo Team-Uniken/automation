@@ -833,16 +833,19 @@ This method is called when the component will start to load
   }
   // navigate to dashboard
   doNavigateDashBoard() {
-    
-    const ResetToDashboardScreen = NavigationActions.reset({
-      
-    index: 1,
-    actions: [
-      NavigationActions.navigate({routeName: 'RegisterOptionScene'}),
-      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
-      ]
-      });
-    this.props.navigation.dispatch(ResetToDashboardScreen)
+    this.props.navigation.goBack();
+//    const ResetToDashboardScreen = NavigationActions.reset({
+//      
+//    index: 1,
+//    actions: [
+//      NavigationActions.navigate({routeName: 'RegisterOptionScene'}),
+//      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
+//      ]
+//      });
+//    this.props.navigation.dispatch(ResetToDashboardScreen)
+  }
+  componentWillUnmount(){
+    this.props.navigation.state.params.onClose();
   }
 
   selectCheckBox(args) {
@@ -1006,6 +1009,7 @@ This method is called when the component will start to load
           open: false,
           disabled: true,
         }}
+    
         defaultNav = {isPageTitle?false:true}
         navBar={{
           title: 'Profile & Settings',

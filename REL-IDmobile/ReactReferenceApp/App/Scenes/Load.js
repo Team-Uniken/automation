@@ -84,7 +84,7 @@ var welcome = ClientBasedConfig.img.welcome;
 var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
-console.log = function () { }
+//console.log = function () { }
 
 BackHandler.addEventListener('hardwareBackPress', function () {
   return true;
@@ -281,6 +281,7 @@ class Load extends Component {
      This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
+    global.MainCount = 0;
     Obj = this;
     //push messgage adnorid configure starts
     if (Platform.OS === 'android') {

@@ -67,7 +67,10 @@ export default class Main extends Component {
       userName: '',
       password: '',
       baseUrl: '',
+    tempVariable:0,
     };
+    global.MainCount= global.MainCount+1;
+    this.state.tempVariable = global.MainCount;
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.cancelCreds = this.cancelCreds.bind(this);
     this.checkCreds = this.checkCreds.bind(this);
@@ -112,6 +115,7 @@ This is life cycle method of the react native component.
 This method is called when the component will start to load
 */
   componentWillMount() {
+    
     if (onGetCredentialSubscriptions) {
       onGetCredentialSubscriptions.remove();
       onGetCredentialSubscriptions = null;
@@ -142,6 +146,8 @@ This method is called when the component will start to load
  This method is called when the component is Mounted/Loaded.
 */
   componentDidMount() {
+//    alert("In Did Mount"+this.state.tempVariable);
+    console.log("$$$$$$$$$$########### In Did Mount"+this.state.tempVariable);
     obj = this;
     console.log("eventToggleDrawer = " + eventToggleDrawer);
     if (eventToggleDrawer === true) {
@@ -149,17 +155,32 @@ This method is called when the component will start to load
     }
     Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
     eventToggleDrawer = true;
+    
+     Events.on('registerDrawer', 'registerDrawerID', this.registerDrawer.bind(this));
+  }
+  
+  registerDrawer(){
+  
+    if (eventToggleDrawer === true) {
+      Events.rm('toggleDrawer', 'toggleDrawerID')
+    }
+    
+    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
   }
   /*
     This is life cycle method of the react native component.
     This method is called after the component is Updated.
   */
-  componentDidUpdate() {
-//    if (eventToggleDrawer === true) {
-//      Events.rm('toggleDrawer', 'toggleDrawerID')
+    
+  componentWillAppear() {
+    console.log("$$$$$$$$$$########### In componentWillAppear"+this.state.tempVariable);
+//    if (this.instance) {
+//      if (!this.instance.componentWillAppear) {
+//        console.warn('You called connectFocus with a component that failed to implement componentWillAppear', this.instance);
+//      } else {
+//        this.instance.componentWillAppear();
+//      }
 //    }
-//
-//    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
   }
   //to open 401 dialog
   open() {
@@ -272,6 +293,7 @@ This method is called when the component will start to load
    * @return {null}
    */
   toggleDrawer(close) {
+      console.log("$$$$$$$$$$########### In Toggle drawer"+this.state.tempVariable);
     if (close) {
       this.drawer.close();
     } else {
@@ -344,9 +366,11 @@ This method is called when the component will start to load
           console.log("Drawer  = " + c);
           this.drawer = c;
         }}
+      
         type="static"
         content={this.props.controlPanel != null && this.props.controlPanel != undefined ? <this.props.controlPanel
           toggleDrawer={this.toggleDrawer}
+      registerDrawer={()=>{this.registerDrawer()}}
           closeDrawer={this.closeDrawer}
           dashboardScreenName={dashboardScreen}
           navigator={this.props.navigator} /> : null}

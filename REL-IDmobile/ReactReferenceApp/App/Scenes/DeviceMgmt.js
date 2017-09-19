@@ -526,18 +526,12 @@ export default class DeviceMgmtScene extends Component {
   
   
   goBack(){
-//    this.props.navigation.goBack();
     this.props.navigation.goBack();
-    const ResetToDashboardScreen = NavigationActions.reset({
-      
-    index: 1,
-    actions: [
-      NavigationActions.navigate({routeName: 'DeviceMgmt'}),
-      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
-      ]
-      });
-    this.props.navigation.dispatch(ResetToDashboardScreen)
-    
+  
+  }
+ 
+  componentWillUnmount(){
+    this.props.navigation.state.params.onClose();
   }
   /*
      This method is used to render the componenet with all its element.

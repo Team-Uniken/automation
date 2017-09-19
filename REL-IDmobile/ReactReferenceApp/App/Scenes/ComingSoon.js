@@ -41,16 +41,12 @@ export default class ComingSoonScene extends Component {
   }
   
   goBack(){
-//  this.props.navigation.goBack();
-    const ResetToDashboardScreen = NavigationActions.reset({
-      
-    index: 1,
-    actions: [
-      NavigationActions.navigate({routeName: 'ComingSoon'}),
-      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
-      ]
-      });
-    this.props.navigation.dispatch(ResetToDashboardScreen)
+    this.props.navigation.goBack();
+    
+  }
+  
+  componentWillUnmount(){
+    this.props.navigation.state.params.onClose();
   }
 /*
   This method is used to render the componenet with all its element.

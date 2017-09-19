@@ -280,7 +280,6 @@ export default class AccountsScene extends Component {
     return (
      <Main
         controlPanel={ControlPanel}
-        drawerState={this.props.drawerState}
         navigator={this.props.navigation}
         defaultNav={false}
          bottomMenu={{

@@ -142,17 +142,12 @@ export default class Web extends Component {
       onResumeCompletedSubscription.remove();
       onResumeCompletedSubscription = null;
     }
-//    this.props.navigator.pop();
-//        this.props.navigation.goBack();
-    const ResetToDashboardScreen = NavigationActions.reset({
-      
-    index: 1,
-    actions: [
-      NavigationActions.navigate({routeName: 'SecureWebView',params:{url: '',title:'SecureWebView',navigator:this.props.navigation}}),
-      NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation}})
-      ]
-      });
-    this.props.navigation.dispatch(ResetToDashboardScreen)
+    this.props.navigation.goBack();
+    
+  }
+  
+  componentWillUnmount(){
+    this.props.navigation.state.params.onClose();
   }
 
   onResume() {
