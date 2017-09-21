@@ -37,6 +37,7 @@ class Setting extends Component {
           textAlign: 'right',
           paddingRight: 5,
           justifyContent: 'center',
+          backgroundColor:'#ffffff',
         }}
         >v{ReactRdna.AppVersion}</Text>
 
