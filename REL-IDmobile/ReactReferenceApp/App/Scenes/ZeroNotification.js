@@ -820,7 +820,7 @@ export default class NotificationMgmtScene extends Component {
 
   goBack(){
     this.props.navigation.goBack();
-    
+    global.isNotificationScreenonTop = false;
   }
   
   
@@ -1173,30 +1173,29 @@ export default class NotificationMgmtScene extends Component {
 
       <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
         <Loader visible={this.state.showLoader} />
-        {this.renderNotificationView(this.state.dataSource)}
-        {Main.notificationCount == 0 && this._renderMessage()}
+        {this.renderNotificationView(this.state.dataSource) }
+        {Main.notificationCount == 0 && this._renderMessage() }
         {Main.notificationCount == 0 &&
           <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
-//              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-//      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
+              //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
+              //      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
 
-      
-//      this.props.navigation.dispatch(
-//        {"type":"ReplaceCurrentScreen/RESET","index":0,"actions":[{"type":"Navigation/NAVIGATE","routeName":"Notification_History","params":{"url":"","title":"Notification History"}}]});
-//      
-      this.props.navigation.dispatch({
-      key: 'Notification_History',
-      type: 'ReplaceCurrentScreen',
-      routeName: 'Notification_History',
-        
-        });
 
-      
-            }}>
+              //      this.props.navigation.dispatch(
+              //        {"type":"ReplaceCurrentScreen/RESET","index":0,"actions":[{"type":"Navigation/NAVIGATE","routeName":"Notification_History","params":{"url":"","title":"Notification History"}}]});
+              //
+
+              global.isNotificationScreenonTop = false;      
+              this.props.navigation.dispatch({
+                key: 'Notification_History',
+                type: 'ReplaceCurrentScreen',
+                routeName: 'Notification_History',
+              });
+            } }>
             <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
               Notification History
-                </Text>
+            </Text>
           </TouchableHighlight>
         }
       </View>

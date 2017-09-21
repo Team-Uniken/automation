@@ -378,75 +378,75 @@ class ControlPanel extends Component {
   onGetNotifications(e) {
     console.log('----- onGetNotifications');
     InteractionManager.runAfterInteractions(() => {
-    //    if (onGetNotificationsSubscription) {
-    //      onGetNotificationsSubscription.remove();
-    //      onGetNotificationsSubscription = null;
-    //    }
-    // NotificationObtianedResponse = e;
-    const res = JSON.parse(e.response);
-    console.log(res);
-    if (res.errCode === 0) {
-      const statusCode = res.pArgs.response.StatusCode;
-      if (statusCode === 100) {
+      //    if (onGetNotificationsSubscription) {
+      //      onGetNotificationsSubscription.remove();
+      //      onGetNotificationsSubscription = null;
+      //    }
+      // NotificationObtianedResponse = e;
+      const res = JSON.parse(e.response);
+      console.log(res);
+      if (res.errCode === 0) {
+        const statusCode = res.pArgs.response.StatusCode;
+        if (statusCode === 100) {
 
-        var count = res.pArgs.response.ResponseData.notifications.length;
-        Events.trigger('updateBadge', count);
-        Main.notificationCount = count;
+          var count = res.pArgs.response.ResponseData.notifications.length;
+          Events.trigger('updateBadge', count);
+          Main.notificationCount = count;
 
           if (res.pArgs.response.ResponseData.notifications.length > 0) {
-//            var allScreens = this.props.navigator.getCurrentRoutes(0);
-//            for (var i = 0; i < allScreens.length; i++) {
-//              var screen = allScreens[i];
-//              if (screen.id == 'NotificationMgmt') {
-//                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
-//                mySelectedRoute.url = { "data": e };
-//                Events.trigger('showNotification', e);
-//                this.props.navigator.popToRoute(mySelectedRoute);
-//                return;
-//              }
-//            }
-      if(global.isNotificationScreenonTop){
-      Events.trigger('showNotification', e);
-      return;
-      }
+            //            var allScreens = this.props.navigator.getCurrentRoutes(0);
+            //            for (var i = 0; i < allScreens.length; i++) {
+            //              var screen = allScreens[i];
+            //              if (screen.id == 'NotificationMgmt') {
+            //                var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+            //                mySelectedRoute.url = { "data": e };
+            //                Events.trigger('showNotification', e);
+            //                this.props.navigator.popToRoute(mySelectedRoute);
+            //                return;
+            //              }
+            //            }
+            if (global.isNotificationScreenonTop === true) {
+              Events.trigger('showNotification', e);
+              return;
+            }
             //InteractionManager.runAfterInteractions(() => {
-//              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
-                this.props.navigator.navigate('NotificationMgmt',{url: { "data": e }})
-      
+            //              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
+            this.props.navigator.navigate('NotificationMgmt', { url: { "data": e } })
+
             //});
-          } else if (this.isNotificationScreenPresent() == 1) {
+          } else if (global.isNotificationScreenonTop === true) {
             Events.trigger('showNotification', e);
           }
-      } else {
-        if (res.pArgs.response.StatusMsg == 'User not active or present') {
-          console.log('User not active or present');
-        } else if (res.pArgs.response.StatusMsg == 'User is not active or is not present') {
-          console.log('User is not active or is not present');
+        } else {
+          if (res.pArgs.response.StatusMsg == 'User not active or present') {
+            console.log('User not active or present');
+          } else if (res.pArgs.response.StatusMsg == 'User is not active or is not present') {
+            console.log('User is not active or is not present');
+          }
+          else
+            alert(res.pArgs.response.StatusMsg);
         }
-        else
-          alert(res.pArgs.response.StatusMsg);
+      } else {
+        console.log('Something went wrong');
+        // If error occurred reload devices list with previous response
       }
-    } else {
-      console.log('Something went wrong');
-      // If error occurred reload devices list with previous response
-    }
-  });
+    });
   }
 
 
-  isNotificationScreenPresent() {
-     return global.isNotificationScreenonTop;
-//    var allScreens = this.props.navigator.getCurrentRoutes(0);
-//    var status = 0;
-//    for (var i = 0; i < allScreens.length; i++) {
-//      var screen = allScreens[i];
-//      if (screen.id == 'NotificationMgmt') {
-//        status = 1;
-//        return status;
-//      }
-//    }
-//    return status;
-  }
+//   isNotificationScreenPresent() {
+//      return global.isNotificationScreenonTop;
+// //    var allScreens = this.props.navigator.getCurrentRoutes(0);
+// //    var status = 0;
+// //    for (var i = 0; i < allScreens.length; i++) {
+// //      var screen = allScreens[i];
+// //      if (screen.id == 'NotificationMgmt') {
+// //        status = 1;
+// //        return status;
+// //      }
+// //    }
+// //    return status;
+//   }
 
   getMyNotifications() {
     if (Main.isConnected) {
@@ -480,7 +480,7 @@ class ControlPanel extends Component {
 
   showNoticiationScreen(){
     this.getMyNotifications();
-    if(!this.isNotificationScreenPresent()){
+    if(global.isNotificationScreenonTop === false){
        InteractionManager.runAfterInteractions(() => {
 //              if(this.props.navigator.getCurrentRoutes(0).length > 1)
 //                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
