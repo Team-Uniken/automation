@@ -160,17 +160,12 @@ class TwoFactorAuthMachine extends Component {
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
 
 
-    if (onGetAllChallengeStatusSubscription) {
-      onGetAllChallengeStatusSubscription.remove();
-      onGetAllChallengeStatusSubscription = null;
-    }
-
     //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
     //      'onGetAllChallengeStatus',
     //      this.onGetAllChallengeStatus
     //    );
-    onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
-      this.onGetAllChallengeStatus.bind(this));
+    // onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',
+    //   this.onGetAllChallengeStatus.bind(this));
   }
   
 
@@ -245,6 +240,11 @@ class TwoFactorAuthMachine extends Component {
           if (Constants.USER_T0 === 'YES') {
             AsyncStorage.getItem('userId').then((value) => {
               Events.trigger('showLoader', true);
+              if (onGetAllChallengeStatusSubscription) {
+                onGetAllChallengeStatusSubscription.remove();
+                onGetAllChallengeStatusSubscription = null;
+              }
+              onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus',this.onGetAllChallengeStatus.bind(this));
               ReactRdna.getAllChallenges(value, (response) => {
                 if (response) {
                   console.log('getAllChallenges immediate response is' + response[0].error);
