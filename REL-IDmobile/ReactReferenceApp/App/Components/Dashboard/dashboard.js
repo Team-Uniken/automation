@@ -26,9 +26,13 @@ class Dashboard extends Component {
         disabled: false
       }
     };
-
+    
     this.toggleDrawer = this.toggleDrawer.bind(this);
     Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+  }
+
+  componentDidMount(){
+    global.isLoggedIn = true;
   }
 
     /**

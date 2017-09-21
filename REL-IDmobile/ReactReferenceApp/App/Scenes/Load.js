@@ -37,7 +37,7 @@ import {ClientBasedConfig} from '../Components/Utils/LocalConfig';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const Spinner = require('react-native-spinkit');
-
+global.isLoggedIn = false;
 
 
 /*
@@ -170,7 +170,6 @@ class Load extends Component {
    This method is called when the component will start to load
    */
   componentWillMount() {
-
     Main.notificationId = null;
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
@@ -212,21 +211,13 @@ class Load extends Component {
     }
 
     if (appalive == true || Config.ENABLE_PAUSE === "false") {
-      var allScreens = Obj.props.navigator.getCurrentRoutes(0);
-      var isMainScreen = false;
-      for (var i = 0; i < allScreens.length; i++) {
-        var screen = allScreens[i];
-        if (screen.id == 'Main') {
-          isMainScreen = true;
+      if(global.isLoggedIn === true){
           console.log('-----getMyNotifications called when notication comes-----');
           Obj.getMyNotifications();
-          break;
-        }
       }
-      if (isMainScreen == false) {
+      else{
         Obj.showNotificationAlert(notification);
       }
-
     }
   }
 
@@ -307,21 +298,14 @@ class Load extends Component {
           // }
 
           if (appalive == true || Config.ENABLE_PAUSE === "false") {
-            var allScreens = Obj.props.navigator.getCurrentRoutes(0);
-            var isMainScreen = false;
-            for (var i = 0; i < allScreens.length; i++) {
-              var screen = allScreens[i];
-              if (screen.id == 'Main') {
-                isMainScreen = true;
-                console.log('-----getMyNotifications called when notication comes-----');
-                Obj.getMyNotifications();
-                break;
-              }
+          
+            if (global.isLoggedIn === true) {
+              console.log('-----getMyNotifications called when notication comes-----');
+              Obj.getMyNotifications();
             }
-            if (isMainScreen == false) {
+            else {
               Obj.showNotificationAlert(notification);
             }
-
           }
           //else{
           // ReactRdna.resumeRuntime(global.savedContext, null, (response) => {
@@ -442,19 +426,12 @@ class Load extends Component {
         appalive = true;
         console.log('Resume Successfull');
 
-
-        var allScreens = Obj.props.navigator.getCurrentRoutes(0);
-        var isMainScreen = false;
-        for (var i = 0; i < allScreens.length; i++) {
-          var screen = allScreens[i];
-          if (screen.id == 'Main') {
-            isMainScreen = true;
-            console.log('-----getMyNotifications called when notication comes-----');
-            Obj.getMyNotifications();
-            break;
-          }
+        if (global.isLoggedIn === true) {
+          console.log('-----getMyNotifications called when notication comes-----');
+          Obj.getMyNotifications();
         }
-        if (isMainScreen == false && savedNotification) {
+
+        if (global.isLoggedIn === false && savedNotification) {
           Obj.showNotificationAlert(savedNotification);
         }
 

@@ -184,6 +184,7 @@ class ControlPanel extends Component {
     console.log('immediate response is' + e.response);
     var responseJson = JSON.parse(e.response);
     if (responseJson.errCode == 0) {
+      global.isLoggedIn = false;
       console.log('LogOff Successfull');
       chlngJson = responseJson.pArgs.response.ResponseData;
       nextChlngName = chlngJson.chlng[0].chlng_name
