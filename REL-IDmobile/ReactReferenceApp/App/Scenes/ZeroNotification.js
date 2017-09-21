@@ -823,10 +823,6 @@ export default class NotificationMgmtScene extends Component {
     
   }
   
-  componentWillUnmount(){
-    this.props.navigation.state.params.onClose();
-  }
-
   
   /*
     render pagetitle

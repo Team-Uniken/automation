@@ -530,9 +530,7 @@ export default class DeviceMgmtScene extends Component {
   
   }
  
-  componentWillUnmount(){
-    this.props.navigation.state.params.onClose();
-  }
+
   /*
      This method is used to render the componenet with all its element.
    */

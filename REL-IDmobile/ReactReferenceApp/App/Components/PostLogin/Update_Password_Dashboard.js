@@ -242,6 +242,11 @@ export default class UpdatePasswordSet extends Component {
   /*
      This method is used to render the componenet with all its element.
    */
+  goBack(){
+    //    this.props.navigation.goBack();
+    this.props.navigator.goBack();
+  }
+  
   render() {
     return (
       <Main
@@ -260,7 +265,7 @@ export default class UpdatePasswordSet extends Component {
             icon: '',
             iconStyle: {},
             textStyle: {},
-            handler: this.close,
+    handler: this.goBack.bind(this),
           },
         }}
         bottomMenu={{

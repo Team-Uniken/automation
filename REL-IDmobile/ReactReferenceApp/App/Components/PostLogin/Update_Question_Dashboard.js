@@ -183,6 +183,12 @@ export default class UpdateQuestionSet extends Component {
         return(<PageTitle title={pageTitle}
         handler={this.close} isBadge={true}/>);
   }
+  
+  goBack(){
+    //    this.props.navigation.goBack();
+    this.props.navigator.goBack();
+  }
+  
 
   /*
        This method is used to render the componenet with all its element.
@@ -212,7 +218,7 @@ export default class UpdateQuestionSet extends Component {
             icon: '',
             iconStyle: {},
             textStyle: {},
-            handler: this.close,
+            handler: this.goBack.bind(this),
           },
         }}
         bottomMenu={{

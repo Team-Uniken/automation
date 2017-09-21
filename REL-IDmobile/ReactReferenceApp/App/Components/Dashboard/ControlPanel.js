@@ -554,9 +554,9 @@ class ControlPanel extends Component {
 //          this.props.navigator.push({ id: "UpdateMachine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
 //          this.props.navigator.navigate('Update_Password_Dashboard',{title:'Secure Portal',url: 'http://' + Main.gatewayHost + '/demoapp/relid.html'})
           if(nextChlngName === "pass"){
-            this.props.navigator.navigate('UpdateMachine',{url: { "chlngJson": chlngJson, "screenId": nextChlngName,currentIndex:0 },onClose:()=>{    this.props.registerDrawer();}})
+            this.props.navigator.navigate('UpdateMachine',{url: { "chlngJson": chlngJson, "screenId": nextChlngName,currentIndex:0 }})
           }else{
-            this.props.navigator.navigate('UpdateMachine',{url: { "chlngJson": chlngJson, "screenId": nextChlngName ,currentIndex:0},onClose:()=>{    this.props.registerDrawer();}})
+            this.props.navigator.navigate('UpdateMachine',{url: { "chlngJson": chlngJson, "screenId": nextChlngName ,currentIndex:0}})
           }
         }
         else {
@@ -830,7 +830,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('RegisterOptionScene',{title:'Profile & Settings',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('RegisterOptionScene',{title:'Profile & Settings'})
             }}
           />
           <MenuItem
@@ -839,7 +839,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('DeviceMgmt',{title:'Self Device Managment',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('DeviceMgmt',{title:'Self Device Managment'})
             }}
           />
           <MenuItem
@@ -848,7 +848,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'})
             }}
           />
           <MenuItem
@@ -857,7 +857,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('Notification_History',{title:'Notification History',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('Notification_History',{title:'Notification History'})
             }}
           />
           {
@@ -884,7 +884,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('ComingSoon',{title:'Help & Support',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('ComingSoon',{title:'Help & Support'})
             }}
           />
           <MenuItem
@@ -893,7 +893,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://' + Main.gatewayHost + '/demoapp/relid.html' });
-      this.props.navigator.navigate('SecureWebView',{title:'Secure Portal',url: 'http://' + Main.gatewayHost + '/demoapp/relid.html',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('SecureWebView',{title:'Secure Portal',url: 'http://' + Main.gatewayHost + '/demoapp/relid.html'})
 
             }}
           />
@@ -925,7 +925,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Send App Feedback', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('ComingSoon',{title:'Send App Feedback',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('ComingSoon',{title:'Send App Feedback'})
             }}
           />
           <MenuItem
@@ -934,7 +934,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('ComingSoon',{title:'Legal Info',onClose:()=>{    this.props.registerDrawer();}})
+      this.props.navigator.navigate('ComingSoon',{title:'Legal Info'})
             }}
           />
           <MenuItem

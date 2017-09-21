@@ -145,10 +145,6 @@ export default class Web extends Component {
     this.props.navigation.goBack();
     
   }
-  
-  componentWillUnmount(){
-    this.props.navigation.state.params.onClose();
-  }
 
   onResume() {
     if (this.state.error === true) {

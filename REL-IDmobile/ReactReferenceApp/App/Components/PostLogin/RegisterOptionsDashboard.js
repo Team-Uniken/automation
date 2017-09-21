@@ -844,9 +844,7 @@ This method is called when the component will start to load
 //      });
 //    this.props.navigation.dispatch(ResetToDashboardScreen)
   }
-  componentWillUnmount(){
-    this.props.navigation.state.params.onClose();
-  }
+
 
   selectCheckBox(args) {
     if (args === 'facebook') {

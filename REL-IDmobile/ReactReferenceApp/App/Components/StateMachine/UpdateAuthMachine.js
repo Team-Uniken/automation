@@ -929,9 +929,6 @@ class UpdateAuthMachine extends Component {
     
   }
   
-  componentWillUnmount(){
-    this.props.navigation.state.params.onClose();
-  }
 
   }
 
