@@ -392,7 +392,7 @@ import Update_Password_Dashboard from './App/Components/PostLogin/Update_Passwor
 import Update_Question_Dashboard from './App/Components/PostLogin/Update_Question_Dashboard';
 
 
-const IndexNavigator = StackNavigator({
+export const IndexNavigator = StackNavigator({
   
 LoadScreen: {
 screen: LoadScreen,
@@ -582,6 +582,24 @@ screenInterpolator: (sceneProps) => {
     }
     })
   }, {initialRouteName: 'LoadScreen'})
+
+const getStateForAction = IndexNavigator.router.getStateForAction;
+
+IndexNavigator.router.getStateForAction = (action, state) => {
+    if (state && action.type === 'ReplaceCurrentScreen') {
+      const routes = state.routes.slice(0, state.routes.length - 1);
+      routes.push(action);
+      return {
+        ...state,
+        routes,
+      index: routes.length - 1,
+      };
+    }
+    return getStateForAction(action, state);
+
+  
+};
+
 
 function separateRoot(WrappedComponent) {
   const EnhencedComponent = class extends React.Component {

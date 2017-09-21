@@ -409,9 +409,6 @@ class Notifications_History extends Component {
     
   }
   
-  componentWillUnmount(){
-    this.props.navigation.state.params.onClose();
-  }
 
 
   go() {

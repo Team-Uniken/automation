@@ -1183,18 +1183,18 @@ export default class NotificationMgmtScene extends Component {
           <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
 //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
+//      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
+
       
-//      const ResetToDashboardScreen = NavigationActions.reset({
-//        
-//      index: 1,
-//      actions: [
-//        NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation,onClose:this.props.navigation.state.params.onClose}}),
-//        NavigationActions.navigate({routeName: 'Notification_History',params:{url: '',title:'Notification History',navigator:this.props.navigation,onClose:this.props.navigation.state.params.onClose}})
-//        
-//        ]
-//        });
-//      this.props.navigation.dispatch(ResetToDashboardScreen)
+//      this.props.navigation.dispatch(
+//        {"type":"ReplaceCurrentScreen/RESET","index":0,"actions":[{"type":"Navigation/NAVIGATE","routeName":"Notification_History","params":{"url":"","title":"Notification History"}}]});
+//      
+      this.props.navigation.dispatch({
+      key: 'Notification_History',
+      type: 'ReplaceCurrentScreen',
+      routeName: 'Notification_History',
+        
+        });
 
       
             }}>
