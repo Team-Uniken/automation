@@ -110,7 +110,7 @@ class PageTitle extends Component {
             height:50,
             fontWeight: 'normal',
             top: Platform.OS === 'android' ? 12 : 32.5,
-            //backgroundColor: '#50ae3c',
+            backgroundColor: 'transparent',
             fontFamily: Skin.font.ICON_FONT
           }}>{Skin.icon.bell}</Text>
           

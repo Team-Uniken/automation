@@ -236,7 +236,7 @@ export default class UpdatePasswordSet extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-        handler={this.close} isBadge={true}/>);
+        handler={this.goBack.bind(this)} isBadge={true}/>);
   }
 
   /*
