@@ -859,6 +859,7 @@ class Load extends Component {
       bottom: 100,
       alignSelf: 'center',
       color: Skin.main.TITLE_COLOR,
+      backgroundColor:'#ffffff',
       fontSize: 18,
       zIndex: 5,
     }}>{this.state.value}</Text>]);

@@ -43,7 +43,7 @@ import Main from '../Container/Main';
 // Secondary Scenes
 
 // SECURITY SCENES
-//import SelfRegister from '../../Scenes/Self_Register';
+import SelfRegister from '../../Scenes/Self_Register';
 import Activation from '../Challenges/Activation_Code';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
@@ -819,12 +819,14 @@ getComponentByName(route, nav) {
       }, title:this.props.navigation.state.params.url.screenId};
       
       return(this.getComponentByName(params,this.props.navigation))
-    }else if(sId=='checkuser'){
+    }else if((sId=='checkuser')||(sId=='SelfRegister')){
 //          currentIndex = 0;
           challengeJson = this.props.navigation.state.params.url.chlngJson;
+      if(sId=='checkuser'){
           if (saveChallengeJson == null) {
             saveChallengeJson = this.props.navigation.state.params.url.chlngJson;
           }
+      }
           if (challengeJson.length == 0) {
             challengeJson = saveChallengeJson;
           }

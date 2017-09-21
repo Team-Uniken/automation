@@ -41,7 +41,7 @@ import Title from '../view/title';
  */
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 var obj;
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 export default class UpdatePasswordSet extends Component {
   constructor(props) {
     super(props);

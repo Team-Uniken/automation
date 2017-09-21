@@ -3,7 +3,7 @@
  * it contain drawer, and child.
  *this screen use in Dashboard
  */
-
+ 
 'use strict';
 
 /*
@@ -71,7 +71,7 @@ export default class Main extends Component {
     };
     global.MainCount= global.MainCount+1;
     this.state.tempVariable = global.MainCount;
-    this.toggleDrawer = this.toggleDrawer.bind(this);
+    
     this.cancelCreds = this.cancelCreds.bind(this);
     this.checkCreds = this.checkCreds.bind(this);
     this.selectedDialogOp = false;
@@ -88,7 +88,7 @@ export default class Main extends Component {
     this.state.navBar.left.icon = this.props.navBar.left.icon || '';
     this.state.navBar.left.iconStyle = this.props.navBar.left.iconStyle || {};
     this.state.navBar.left.textStyle = this.props.navBar.left.textStyle || {};
-    this.state.navBar.left.handler = this.props.navBar.left.handler || this.toggleDrawer;
+    this.state.navBar.left.handler = this.props.navBar.left.handler;
 
     this.state.navBar.right = {};
     this.props.navBar.right = {};
@@ -96,19 +96,12 @@ export default class Main extends Component {
     this.state.navBar.right.icon = this.props.navBar.right.icon || '';
     this.state.navBar.right.iconStyle = this.props.navBar.right.iconStyle || {};
     this.state.navBar.right.textStyle = this.props.navBar.right.textStyle || {};
-    this.state.navBar.right.handler = this.props.navBar.right.handler || this.toggleDrawer;
+    //this.state.navBar.right.handler = this.props.navBar.right.handler || this.toggleDrawer;
 
     this.state.bottomMenu = {
       visible: this.props.bottomMenu.visible,
       active: this.props.bottomMenu.active,
     };
-    this.state.drawerState = {
-      open: this.props.drawerState.open || false,
-      disabled: this.props.drawerState.disabled || false,
-    };
-
-    _toggleDrawer = this.toggleDrawer;
-
   }
   /*
 This is life cycle method of the react native component.
@@ -149,39 +142,29 @@ This method is called when the component will start to load
 //    alert("In Did Mount"+this.state.tempVariable);
     console.log("$$$$$$$$$$########### In Did Mount"+this.state.tempVariable);
     obj = this;
-    console.log("eventToggleDrawer = " + eventToggleDrawer);
-    if (eventToggleDrawer === true) {
-      Events.rm('toggleDrawer', 'toggleDrawerID')
-    }
-    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
-    eventToggleDrawer = true;
+    // console.log("eventToggleDrawer = " + eventToggleDrawer);
+    // if (eventToggleDrawer === true) {
+    //   Events.rm('toggleDrawer', 'toggleDrawerID')
+    // }
+    // Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+    // eventToggleDrawer = true;
     
-     Events.on('registerDrawer', 'registerDrawerID', this.registerDrawer.bind(this));
+    //  Events.on('registerDrawer', 'registerDrawerID', this.registerDrawer.bind(this));
   }
   
   registerDrawer(){
   
-    if (eventToggleDrawer === true) {
-      Events.rm('toggleDrawer', 'toggleDrawerID')
-    }
+    // if (eventToggleDrawer === true) {
+    //   Events.rm('toggleDrawer', 'toggleDrawerID')
+    // }
     
-    Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
+    // Events.on('toggleDrawer', 'toggleDrawerID', this.toggleDrawer);
   }
   /*
     This is life cycle method of the react native component.
     This method is called after the component is Updated.
   */
     
-  componentWillAppear() {
-    console.log("$$$$$$$$$$########### In componentWillAppear"+this.state.tempVariable);
-//    if (this.instance) {
-//      if (!this.instance.componentWillAppear) {
-//        console.warn('You called connectFocus with a component that failed to implement componentWillAppear', this.instance);
-//      } else {
-//        this.instance.componentWillAppear();
-//      }
-//    }
-  }
   //to open 401 dialog
   open() {
     obj.setState({ open: true });
@@ -288,23 +271,7 @@ This method is called when the component will start to load
     this.setState(newstate);
   }
 
-  /**
-   * Toggles the drawer open and closed. Is passed down the chain to navbar.
-   * @return {null}
-   */
-  toggleDrawer(close) {
-      console.log("$$$$$$$$$$########### In Toggle drawer"+this.state.tempVariable);
-    if (close) {
-      this.drawer.close();
-    } else {
-      console.log('in Main toggleDrawer')
-      if (this.state.drawerState.open) {
-        this.drawer.close();
-      } else {
-        this.drawer.open();
-      }
-    }
-  }
+
 
   /**
    * Builds the main wrapper elements of the post-login screen.
@@ -316,10 +283,7 @@ This method is called when the component will start to load
    *
    * @return {JSX}
    */
-  //to check drawer is open or not
-  getDrawerState() {
-    return this.state.drawerState.open;
-  }
+
   //tool bar 
   buildNavBar() {
     var navBarLineHeight = 1;
@@ -361,43 +325,7 @@ This method is called when the component will start to load
   */
   render() {
     return (
-      <Drawer
-        ref={(c) => {
-          console.log("Drawer  = " + c);
-          this.drawer = c;
-        }}
-      
-        type="static"
-        content={this.props.controlPanel != null && this.props.controlPanel != undefined ? <this.props.controlPanel
-          toggleDrawer={this.toggleDrawer}
-      registerDrawer={()=>{this.registerDrawer()}}
-          closeDrawer={this.closeDrawer}
-          dashboardScreenName={dashboardScreen}
-          navigator={this.props.navigator} /> : null}
-        acceptDoubleTap
-        onOpen={() => {
-          this.setState({
-            drawerState: {
-              open: true,
-              disabled: this.state.drawerState.disabled
-            }
-          });
-        }}
-        onClose={() => {
-          this.setState({
-            drawerState: {
-              open: false,
-              disabled: this.state.drawerState.disabled
-            }
-          });
-        }}
-        captureGestures={false}
-        tweenDuration={100}
-        panThreshold={0.0}
-        disabled={this.state.drawerState.disabled}
-        openDrawerOffset={() => 70}
-        closedDrawerOffset={() => 0}
-        panOpenMask={0.2}>
+      <View style={{flex:1}}>
         {this.buildNavBar()}
         {this.props.children}
         {BottomMenu != undefined && [<BottomMenu
@@ -477,7 +405,7 @@ This method is called when the component will start to load
             </TouchableHighlight>
           </View>
         </Modal>
-      </Drawer>
+        </View>
     );
   }
 
@@ -488,10 +416,10 @@ This method is called when the component will start to load
  * @type {Object}
  */
 Main.propTypes = {
-  drawerState: React.PropTypes.object,
+  //drawerState: React.PropTypes.object,
   navBar: React.PropTypes.object,
   bottomMenu: React.PropTypes.object,
-  toggleDrawer: React.PropTypes.func,
+ // toggleDrawer: React.PropTypes.func,
   navigator: React.PropTypes.object,
   children: React.PropTypes.object,
 };
@@ -502,10 +430,10 @@ Main.propTypes = {
  */
 Main.defaultProps = {
   defaultNav: true,
-  drawerState: {
-    open: false,
-    disabled: false,
-  },
+  // drawerState: {
+  //   open: false,
+  //   disabled: false,
+  // },
   navBar: {
     title: '',
     visible: true,

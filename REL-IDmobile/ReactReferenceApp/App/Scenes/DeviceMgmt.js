@@ -44,7 +44,7 @@ let devicesList;
 let deviceHolderList;
 let devicesResponse;
 const FAKE_BOOK_DATA = [];
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 const styles = StyleSheet.create({
   backTextWhite: {
     color: '#FFF'

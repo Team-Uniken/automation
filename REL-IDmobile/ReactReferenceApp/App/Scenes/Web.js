@@ -38,7 +38,7 @@ const DEFAULT_URL = 'http://www.google.com';
 
 let onResumeCompletedSubscription = null;
 const onResumeCompletedModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 
 export default class Web extends Component {
 

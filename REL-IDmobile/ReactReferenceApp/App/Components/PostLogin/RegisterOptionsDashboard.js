@@ -48,7 +48,7 @@ import { NavigationActions} from 'react-navigation';
  */
 let subscriptions;
 let onGetRegistredDeviceDetailsSubscription;
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -1020,7 +1020,7 @@ This method is called when the component will start to load
             icon: '',
             iconStyle: {},
             textStyle: {},
-            handler: '',
+            handler: this.goBack.bind(this)
           },
         }}
         bottomMenu={{

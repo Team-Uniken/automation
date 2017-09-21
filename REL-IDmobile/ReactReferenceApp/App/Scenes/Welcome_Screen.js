@@ -76,10 +76,19 @@ class Welcome_Screen extends Component {
 //call on click of register to show SelfRegister screen.
   register() {
     console.log('doNavigation:');
-    this.props.navigation.navigate('SelfRegisterScreen',{url: {
-      "chlngJson": this.props.navigation.state.params.url.chlngJson,
-      "screenId": "SelfRegister"
-      }})
+    const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+        "chlngJson":this.props.navigation.state.params.url.chlngJson,
+        "screenId": "SelfRegister",
+        "currentIndex":0
+        },title:''}})
+      ]
+      })
+    this.props.navigation.dispatch(resetAction)
+    
+    
   }
 /*
   This method is used to render the componenet with all its element.

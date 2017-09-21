@@ -136,10 +136,20 @@ class Register extends Component {
   close() {
     dismissKeyboard();
 //    Events.trigger('closeStateMachine');
-    const backAction = NavigationActions.back({
-    key: null
+//    const backAction = NavigationActions.back({
+//    key: null
+//      })
+//    this.props.navigation.dispatch(backAction);
+    const resetActionshowFirstChallenge = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+        "chlngJson": this.props.navigator.state.params.url.chlngJson,
+        "screenId": "checkuser"
+        },title:this.props.navigator.state.params.url.screenId}})
+      ]
       })
-    this.props.navigation.dispatch(backAction);
+    this.props.navigator.dispatch(resetActionshowFirstChallenge)
   }
   //check entered email is valid or not
   validateEmail(email) {

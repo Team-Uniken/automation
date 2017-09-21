@@ -23,7 +23,7 @@ import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import PageTitle from '../Components/view/pagetitle';
 import { NavigationActions} from 'react-navigation';
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 
 
 export default class ComingSoonScene extends Component {

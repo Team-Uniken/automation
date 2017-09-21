@@ -40,7 +40,7 @@ import Title from '../view/title';
  */
 
 let obj;
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 
 
 export default class UpdateQuestionSet extends Component {

@@ -49,7 +49,7 @@ let obj;
 var notification = [];
 let onUpdateNotificationSubscription;
 let isAdditionalAuthSupported = { pass: false, erpass: false };
-let isPageTitle = Config.ENABLEPAGETITLE;
+let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 
 /*
  *Sort notification row based on timestamp.
@@ -1183,7 +1183,20 @@ export default class NotificationMgmtScene extends Component {
           <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
 //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigation.navigate('Notification_History',{title:'Notification History'})
+      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
+      
+//      const ResetToDashboardScreen = NavigationActions.reset({
+//        
+//      index: 1,
+//      actions: [
+//        NavigationActions.navigate({routeName: 'DashBoard',params:{url: '',title:'DashBoard',navigator:this.props.navigation,onClose:this.props.navigation.state.params.onClose}}),
+//        NavigationActions.navigate({routeName: 'Notification_History',params:{url: '',title:'Notification History',navigator:this.props.navigation,onClose:this.props.navigation.state.params.onClose}})
+//        
+//        ]
+//        });
+//      this.props.navigation.dispatch(ResetToDashboardScreen)
+
+      
             }}>
             <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
               Notification History
