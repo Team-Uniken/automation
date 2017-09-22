@@ -438,7 +438,7 @@ class AccessCode extends Component {
               </View>
               <View style={[{ width: Skin.SCREEN_WIDTH, position: 'absolute', alignItems: 'center', justifyContent: 'center', bottom: 0 }]}>
                 <Input
-                  placeholder={'or Enter Numeric Code'}
+                  placeholder={'or Enter Access Code'}
                   ref={'accessCode'}
                   autoFocus={false}
                   autoCorrect={false}

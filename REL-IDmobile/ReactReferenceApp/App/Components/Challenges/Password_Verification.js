@@ -80,6 +80,7 @@ This method is called when the component is Mounted/Loaded.
   */
   checkPassword() {
     var pw = this.state.inputPassword;
+    pw = pw.trim();
     if (pw.length > 0) {
       Main.dnaPasswd = pw;
       //Util.saveUserDataSecure("RPasswd",pw).done();

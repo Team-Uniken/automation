@@ -22,7 +22,7 @@ import { Navigator } from 'react-native-deprecated-custom-components'
 import { View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Communications from 'react-native-communications';
-
+var dismissKeyboard = require('react-native-dismiss-keyboard');
 
 /*
  Use in this js
@@ -409,6 +409,8 @@ class ControlPanel extends Component {
               Events.trigger('showNotification', e);
               return;
             }
+      dismissKeyboard();
+
             //InteractionManager.runAfterInteractions(() => {
             //              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
             this.props.navigator.navigate('NotificationMgmt', { url: { "data": e } })

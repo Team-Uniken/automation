@@ -261,7 +261,8 @@ class UpdateAuthMachine extends Component {
               }
               },
             style: 'cancel',
-              }]
+              }],
+            { cancelable: false }
             );
           }, 100);
       }
@@ -582,7 +583,7 @@ class UpdateAuthMachine extends Component {
           console.log('immediate response is' + response[0].error);
           } else {
           console.log('immediate response is' + response[0].error);
-          alert(response[0].error);
+//          alert(response[0].error);
           }
           });
         }).done();

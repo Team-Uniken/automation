@@ -606,7 +606,8 @@ This method is called when the component will start to load
 
             },
             style: 'cancel',
-          }]
+            }],
+          { cancelable: false }
         );
         }, 100);
       }

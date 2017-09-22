@@ -339,7 +339,9 @@ class TwoFactorAuthMachine extends Component {
               }
             },
             style: 'cancel',
-          }]
+            }],
+          { cancelable: false }
+
         );
                                               }, 100);
       }
@@ -360,7 +362,8 @@ class TwoFactorAuthMachine extends Component {
             obj.resetChallenge();
           },
           style: 'cancel',
-        }]
+          }],
+        { cancelable: false }
       );
                    }, 100);
     }
@@ -466,7 +469,7 @@ class TwoFactorAuthMachine extends Component {
       
       } else {
         console.log('immediate response is' + response[0].error);
-        alert(response[0].error);
+//        alert(response[0].error);
       }
     });
 
@@ -1074,7 +1077,7 @@ getComponentByName(route, nav) {
           console.log('immediate response is' + response[0].error);
         } else {
           console.log('immediate response is' + response[0].error);
-          alert(response[0].error);
+//          alert(response[0].error);
         }
       });
 
@@ -1111,7 +1114,7 @@ getComponentByName(route, nav) {
             Main.isApiRunning = true;
           } else {
             console.log('immediate response is' + response[0].error);
-            alert(response[0].error);
+//            alert(response[0].error);
             Events.trigger('hideLoader', true);
           }
         });
