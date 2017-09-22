@@ -36,7 +36,7 @@ import Constants from '../Utils/Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 var Main = require('../Container/Main');
 import {Navigator} from 'react-native-deprecated-custom-components'
-
+import { NavigationActions} from 'react-navigation';
 
 /*
  Instantiaions
@@ -211,7 +211,7 @@ class UpdateAuthMachine extends Component {
               } else {
               chlngJson = res.pArgs.response.ResponseData;
               }
-              
+              currentIndex=0;
               const currentChlng = challengeJsonArr[currentIndex];
               
               for (var i = 0; i < chlngJson.chlng.length; i++) {
@@ -236,17 +236,28 @@ class UpdateAuthMachine extends Component {
 //              screenId: nextChlngName,
 //                },
 //                });
-              const resetAction = NavigationActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'UpdateMachine',params:{url: {
-                  chlngJson,
-                screenId: nextChlngName,
-                currentIndex:0
-                  },title:nextChlngName}})
-                ]
-                })
-              this.props.navigation.dispatch(resetAction)
+//              const resetAction = NavigationActions.reset({
+//              index: 0,
+//              actions: [
+//                NavigationActions.navigate({ routeName: 'UpdateMachine',params:{url: {
+//                  chlngJson,
+//                screenId: nextChlngName,
+//                currentIndex:0
+//                  },title:nextChlngName}})
+//                ]
+//                })
+//              this.props.navigation.dispatch(resetAction)
+              
+              this.props.navigation.dispatch({
+              key: 'UpdateMachine',
+              type: 'ReplaceCurrentScreen',
+              routeName: 'UpdateMachine',
+              params:{url: {
+                chlngJson,
+              screenId: nextChlngName,
+              currentIndex:0
+                },title:nextChlngName}
+                });
               }
               },
             style: 'cancel',
@@ -304,38 +315,62 @@ class UpdateAuthMachine extends Component {
           }
         
         if (result.challenge) {var name =result.challenge.chlng_name
-          const showNextChallengefor = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'UpdateMachine',params:{url: {
-            chlngJson: result.challenge,
-            chlngsCount: challengeJsonArr.length,
-            currentIndex: currentIndex + 1,
-            screenId: name
-              },title:name}})
-            ]
-            })
-          this.props.navigation.dispatch(showNextChallengefor)
+//          const showNextChallengefor = NavigationActions.reset({
+//          index: 0,
+//          actions: [
+//            NavigationActions.navigate({ routeName: 'UpdateMachine',params:{url: {
+//            chlngJson: result.challenge,
+//            chlngsCount: challengeJsonArr.length,
+//            currentIndex: currentIndex + 1,
+//            screenId: name
+//              },title:name}})
+//            ]
+//            })
+//          this.props.navigation.dispatch(showNextChallengefor)
+          this.props.navigation.dispatch({
+          key: 'UpdateMachine',
+          type: 'ReplaceCurrentScreen',
+          routeName: 'UpdateMachine',
+          params:{url: {
+                        chlngJson: result.challenge,
+                        chlngsCount: challengeJsonArr.length,
+                        currentIndex: currentIndex + 1,
+                        screenId: name
+                          },title:name}
+            });
         }
         else {
           obj.callUpdateChallenge();
         }
       } else {
         var name =result.challenge.chlng_name
-        const resetActionshowNextChallenge = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'UpdateMachine',params:{
-          url: {
-          chlngJson: result.challenge,
-          chlngsCount: challengeJsonArr.length,
-          currentIndex: currentIndex + 1,
-          screenId: name
-            },
-          title:name}})
-          ]
-          })
-        this.props.navigation.dispatch(resetActionshowNextChallenge)
+//        const resetActionshowNextChallenge = NavigationActions.reset({
+//        index: 0,
+//        actions: [
+//          NavigationActions.navigate({ routeName: 'UpdateMachine',params:{
+//          url: {
+//          chlngJson: result.challenge,
+//          chlngsCount: challengeJsonArr.length,
+//          currentIndex: currentIndex + 1,
+//          screenId: name
+//            },
+//          title:name}})
+//          ]
+//          })
+//        this.props.navigation.dispatch(resetActionshowNextChallenge)
+        this.props.navigation.dispatch({
+        key: 'UpdateMachine',
+        type: 'ReplaceCurrentScreen',
+        routeName: 'UpdateMachine',
+        params:{
+                    url: {
+                    chlngJson: result.challenge,
+                    chlngsCount: challengeJsonArr.length,
+                    currentIndex: currentIndex + 1,
+                    screenId: name
+                      },
+                    title:name}
+          });
       }
     } else {
       // Call checkChallenge
@@ -453,17 +488,27 @@ class UpdateAuthMachine extends Component {
           this.showFirstChallenge(chlngJson, startIndex + 1);
         } else {
           
-          const resetActionshowFirstChallenge = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'UpdateMachine',params:{url: {
-              chlngJson,
-            screenId: firstChlngName,
-            currentIndex:startIndex,
-              },title:firstChlngName}})
-            ]
-            })
-          this.props.navigation.dispatch(resetActionshowFirstChallenge)
+//          const resetActionshowFirstChallenge = NavigationActions.reset({
+//          index: 0,
+//          actions: [
+//            NavigationActions.navigate({ routeName: 'UpdateMachine',params:{url: {
+//              chlngJson,
+//            screenId: firstChlngName,
+//            currentIndex:startIndex,
+//              },title:firstChlngName}})
+//            ]
+//            })
+//          this.props.navigation.dispatch(resetActionshowFirstChallenge)
+          this.props.navigation.dispatch({
+          key: 'UpdateMachine',
+          type: 'ReplaceCurrentScreen',
+          routeName: 'UpdateMachine',
+          params:{url: {
+                          chlngJson,
+                        screenId: firstChlngName,
+                        currentIndex:startIndex,
+                          },title:firstChlngName}
+            });
           
         }
     }
