@@ -130,23 +130,23 @@ class FindBranchScene extends Component {
                 //                lon:position.coords.longitude,
                 //              });
 
-                fetch(
-                    'https://maps.googleapis.com/maps/api/place/textsearch/json?location=' + lat + ',' + lon + '&radius=5000&query=ATMs&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
-                    //'https://maps.googleapis.com/maps/api/directions/json?origin=41.13694,-73.359778&destination=41.13546,-73.35997&mode=driver&sensor=true&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
-                )
-                    .then(
-                    (response) => response.text()
-                    )
-                    .then(
-                    (responseText) => {
-                        //console.log(responseText);
-                    }
-                    )
-                    .catch(
-                    (error) => {
-                        console.warn(error);
-                    }
-                    );
+//                fetch(
+//                    'https://maps.googleapis.com/maps/api/place/textsearch/json?location=' + lat + ',' + lon + '&radius=5000&query=ATMs&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
+//                    //'https://maps.googleapis.com/maps/api/directions/json?origin=41.13694,-73.359778&destination=41.13546,-73.35997&mode=driver&sensor=true&key=AIzaSyDibnF5vLSMkxIsOWP41lqXNNTJ-q6oBMM'
+//                )
+//                    .then(
+//                    (response) => response.text()
+//                    )
+//                    .then(
+//                    (responseText) => {
+//                        //console.log(responseText);
+//                    }
+//                    )
+//                    .catch(
+//                    (error) => {
+//                        console.warn(error);
+//                    }
+//                    );
             },
             (error) => { },
             //(error) => alert(error.message),
