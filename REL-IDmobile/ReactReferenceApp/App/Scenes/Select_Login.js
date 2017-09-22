@@ -365,12 +365,18 @@ class SelectLogin extends Component {
 
   //navigate to pattern screen
   doPatternLogin() {
-    this.props.navigator.push({
+    // this.props.navigator.push({
+    //   id: 'pattern',
+    //   onUnlock: this.onPatternUnlock,
+    //   onClose: null,
+    //   mode: 'verify'
+    // });
+    this.props.navigator.navigate('pattern',{url: {
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
       onClose: null,
       mode: 'verify'
-    });
+      }})
   }
 
   //return logintypebutton depends on item supply.

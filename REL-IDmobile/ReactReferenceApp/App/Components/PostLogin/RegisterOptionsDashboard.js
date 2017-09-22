@@ -440,10 +440,11 @@ This method is called when the component will start to load
   }
 
   // callback of pattern screen
-  onSetPattern(data) {
+  onSetPattern(navigation,data) {
+    navigation.goBack();
 //    this.props.navigator.pop();
 //    this.props.navigation.goBack();
-    this.doNavigateDashBoard();
+    //this.doNavigateDashBoard();
     Events.trigger('updateSetting', "");
     this.setState({ pattern: true });
   }
@@ -619,11 +620,16 @@ This method is called when the component will start to load
 
   //navigate to pattern screen
   doPatternSet() {
-    this.props.navigator.push({
+    // this.props.navigator.push({
+    //   id: 'pattern',
+    //   onSetPattern: this.onSetPattern,
+    //   mode: 'set'
+    // });
+    this.props.navigation.navigate('pattern',{url: {
       id: 'pattern',
       onSetPattern: this.onSetPattern,
       mode: 'set'
-    });
+      }})
   }
 
   checkValidityOfAccessToken() {
@@ -833,7 +839,7 @@ This method is called when the component will start to load
   }
   // navigate to dashboard
   doNavigateDashBoard() {
-    this.props.navigation.goBack();
+     this.props.navigation.goBack();
 //    const ResetToDashboardScreen = NavigationActions.reset({
 //      
 //    index: 1,

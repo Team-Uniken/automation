@@ -38,7 +38,7 @@ class PatternLock extends Component {
 
   constructor(props) {
     super(props);
-    this.mode = this.props.mode;
+    this.mode = this.props.navigation.state.params.url.mode;
     this.clearTimers = null;
     this.currentPattern = "";
     this.disableClose = false;
@@ -72,7 +72,7 @@ class PatternLock extends Component {
     }
     this.operationMsg = "";
 
-    if(this.props.disableClose!=null && this.props.disableClose!=undefined){
+    if(this.props.navigation.state.params.url.disableClose!=null && this.props.navigation.state.params.url.disableClose!=undefined){
       this.disableClose = true;
     }else{
       this.disableClose = false;
@@ -82,8 +82,8 @@ class PatternLock extends Component {
   componentWillMount() {
     dismissKeyboard();
     if (this.mode === "verify") {
-      if (this.props.operationMsg)
-        this.operationMsg = this.props.operationMsg;
+      if (this.props.navigation.state.params.url.operationMsg)
+        this.operationMsg = this.props.navigation.state.params.url.operationMsg;
       else
         this.operationMsg = "Provide pattern to login";
     }
@@ -137,7 +137,7 @@ class PatternLock extends Component {
       if (this.mode == "set") {
         if (this.state.screen === "set") {
           if (patternSize >= MIN_DOTS) {
-            if (this.props.disableConfirmation === true) {
+            if (this.props.navigation.state.params.url.disableConfirmation === true) {
               this.currentPattern = pattern;
               AsyncStorage.getItem(Main.dnaUserName).then((value) => {
                 if (value) {
@@ -198,8 +198,8 @@ class PatternLock extends Component {
     if (this.mode == "set") {
       try {
         Util.saveUserDataSecureWithSalt("ERPasswd", dataStr, pattern).then((result) => {
-          if (this.props.onSetPattern)
-            this.props.onSetPattern(this.props.data);
+          if (this.props.navigation.state.params.url.onSetPattern)
+            this.props.navigation.state.params.url.onSetPattern(this.props.navigation,this.props.navigation.state.params.url.data);
         }).catch((error) => {
           this.state.screen = "set";
           alert("Could not register pattern");
@@ -222,11 +222,11 @@ class PatternLock extends Component {
               this.msg = "";
               var resp = {
                 password: decryptedRPasswd,
-                data: this.props.data
+                data: this.props.navigation.state.params.url.data
               }
 
-              if (this.props.onUnlock)
-                this.props.onUnlock(resp);
+              if (this.props.navigation.state.params.url.onUnlock)
+                this.props.navigation.state.params.url.onUnlock(resp);
             }).done();
           }
           else {
@@ -335,16 +335,16 @@ class PatternLock extends Component {
         this.clearTimers();
       }
 
-      if (this.props.onClose)
-        this.props.onClose();
+      if (this.props.navigation.state.params.url.onClose)
+        this.props.navigation.state.params.url.onClose();
       else
-        this.props.navigator.pop();
+        this.props.navigation.goBack();
     } else {
       if (this.state.screen === "set") {
-        if (this.props.onClose)
-          this.props.onClose();
+        if (this.props.navigation.state.params.url.onClose)
+          this.props.navigation.state.params.url.onClose();
         else
-          this.props.navigator.pop();
+          this.props.navigation.goBack();
       } else if (this.state.screen === "confirm") {
         this.state.screen = "set";
         this.setState({ screen: "set" });

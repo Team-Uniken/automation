@@ -97,7 +97,7 @@ export default class UpdatePasswordSet extends Component {
     return passwordregex.test(textval);
   }
 
-  /*
+  /*   
      onTextchange method for Password TextInput
    */
   onPasswordChange(event) {
@@ -110,7 +110,7 @@ export default class UpdatePasswordSet extends Component {
     this.state.cPassword = event.nativeEvent.text.trim();
   }
   //
-  onSetPattern(data) {
+  onSetPattern(navigation,data) {
     this.close();
   }
 
@@ -129,15 +129,23 @@ export default class UpdatePasswordSet extends Component {
           this.close();
         } else if (Platform.OS == 'android' && this.state.erpasswd) {
           AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
-          this.props.navigator.push(
-            {
+          // this.props.navigator.push(
+          //   {
+          //     id: 'pattern',
+          //     data: '',
+          //     onSetPattern: this.onSetPattern,
+          //    // onClose: this.onPatternClose,
+          //     disableClose:true,
+          //     mode: "set"
+          //   });
+            this.props.navigator.navigate('pattern',{url: {
               id: 'pattern',
               data: '',
               onSetPattern: this.onSetPattern,
              // onClose: this.onPatternClose,
               disableClose:true,
               mode: "set"
-            });
+              }})
         }
         else {
           this.close();

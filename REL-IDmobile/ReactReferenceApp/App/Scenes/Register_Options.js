@@ -221,8 +221,8 @@ class Register extends Component {
     }
   }
 
-  onSetPattern(data) {
-    this.props.navigator.pop();
+  onSetPattern(navigation,data) {
+    navigation.goBack();
     this.setState({ pattern: true });
   }
 
@@ -382,11 +382,16 @@ class Register extends Component {
   }
 
   doPatternSet() {
-    this.props.navigator.push({
+    // this.props.navigator.push({
+    //   id: 'pattern',
+    //   onSetPattern: this.onSetPattern,
+    //   mode: 'set'
+    // });
+    this.props.navigator.navigate('pattern',{url: {
       id: 'pattern',
       onSetPattern: this.onSetPattern,
       mode: 'set'
-    });
+      }})
   }
 
   checkValidityOfAccessToken() {

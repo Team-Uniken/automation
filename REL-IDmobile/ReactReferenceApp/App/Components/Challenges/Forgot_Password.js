@@ -109,7 +109,7 @@ export default class ForgatePassword extends Component {
     this.state.cPassword = event.nativeEvent.text.trim();
   }
 
-  onSetPattern(data) {
+  onSetPattern(navigation,data) {
     Events.trigger('finishForgotPasswordFlow', null);
   }
 
