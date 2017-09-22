@@ -353,7 +353,7 @@ class Register extends Component {
   */
   render() {
     return (
-      <View style={[Skin.layout1.wrap, { flex: 1 }]}>
+      <View style={[Skin.layout0.wrap.container, { flex: 1 }]}>
         <MainActivation>
           <View style={Skin.layout1.wrap}>
             <StatusBar

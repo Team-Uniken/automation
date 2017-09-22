@@ -284,7 +284,7 @@ export default class UpdatePasswordSet extends Component {
          { isPageTitle && this.renderPageTitle('Change Password')}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
-            <View style={[Skin.layout1.wrap, ]}>
+            <View style={[Skin.layout0.wrap.container, ]}>
             <ScrollView style={[Skin.layout1.content.scrollwrap]} keyboardShouldPersistTaps={true}
             contentContainerStyle={{justifyContent:'center',flexGrow:1}}>
                 <View style={Skin.layout1.content.wrap}>

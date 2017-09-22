@@ -464,6 +464,7 @@ module.exports.layout0 = {
     container: {
       flex: 1,
       justifyContent: "center",
+      backgroundColor: BACKGROUND_COLOR,
     },
   },
   smalltext: {

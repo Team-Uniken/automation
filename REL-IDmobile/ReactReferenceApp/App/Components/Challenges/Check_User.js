@@ -182,7 +182,7 @@ class UserLogin extends Component {
               onClose={() => {
                 this.close();
               }}>
-            </Title>
+            </Title> 
             <Text style={[Skin.layout0.top.icon]}>
               {Skin.icon.logo}
             </Text>

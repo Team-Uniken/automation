@@ -333,8 +333,7 @@ class PatternLock extends Component {
     if (this.mode === "verify") {
       if (this.clearTimers) {
         this.clearTimers();
-      }
-
+      }      
       if (this.props.navigation.state.params.url.onClose)
         this.props.navigation.state.params.url.onClose();
       else
@@ -371,7 +370,7 @@ class PatternLock extends Component {
 
     if (Platform.OS == "android") {
       return (
-        <View style={[Skin.layout1.wrap, { flex: 1 }]}>
+        <View style={[Skin.layout0.wrap.container, { flex: 1 }]}>
           <StatusBar
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}

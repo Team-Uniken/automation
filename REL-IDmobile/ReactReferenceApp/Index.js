@@ -384,7 +384,7 @@ import DeviceBinding from './App/Components/Challenges/Device_Binding';
 import DeviceName from './App/Components/Challenges/Device_Name';
 import PasswordVerification from './App/Components/Challenges/Password_Verification';
 import RegisterOption from './App/Scenes/Register_Options';
-//import PatternLock from './App/Scenes/Screen_PatternLock';
+// import PatternLock from './App/Scenes/Screen_PatternLock';
 //import ScreenHider from '../Utils/ScreenHider';
 import SelectLogin from './App/Scenes/Select_Login';
 
@@ -556,33 +556,34 @@ header: false
   }),
   },
   
-  }, {
-transitionConfig: () => ({
-screenInterpolator: (sceneProps) => {
-  if (sceneProps.index === 0 && sceneProps.scene.route.routeName !== 'LoadScreen' && sceneProps.scenes.length > 2){
-  return null
-  }else if (sceneProps.scene.route.routeName == 'Accounts' ){
-  return null
-  }
-  else if (sceneProps.scene.route.routeName == 'PayBills' ){
-  return null
-  }
-  else if (sceneProps.scene.route.routeName == 'Deposits' ){
-  return null
-  }
-  else if (sceneProps.scene.route.routeName == 'FindBranch' ){
-  return null
-  }
-  else if (sceneProps.scene.route.routeName == 'Contact' ){
-  return null
-  }
- else{
-    return CardStackStyleInterpolator.forHorizontal(sceneProps)
-  }
-    }
-    })
   }, {initialRouteName: 'LoadScreen'})
 
+  // {
+  //   transitionConfig: () => ({
+  //   screenInterpolator: (sceneProps) => {
+  //     if (sceneProps.index === 0 && sceneProps.scene.route.routeName !== 'LoadScreen' && sceneProps.scenes.length > 2){
+  //     return null
+  //     }else if (sceneProps.scene.route.routeName == 'Accounts' ){
+  //     return null
+  //     }
+  //     else if (sceneProps.scene.route.routeName == 'PayBills' ){
+  //     return null
+  //     }
+  //     else if (sceneProps.scene.route.routeName == 'Deposits' ){
+  //     return null
+  //     }
+  //     else if (sceneProps.scene.route.routeName == 'FindBranch' ){
+  //     return null
+  //     }
+  //     else if (sceneProps.scene.route.routeName == 'Contact' ){
+  //     return null
+  //     }
+  //    else{
+  //       return CardStackStyleInterpolator.forHorizontal(sceneProps)
+  //     }
+  //       }
+  //       })
+  //     }
 const getStateForAction = IndexNavigator.router.getStateForAction;
 
 IndexNavigator.router.getStateForAction = (action, state) => {

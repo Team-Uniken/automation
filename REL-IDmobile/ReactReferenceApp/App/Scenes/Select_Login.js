@@ -411,7 +411,7 @@ class SelectLogin extends Component {
       case type.pattern.key:
         this.doPatternLogin();
         break;
-      case type.wechat.key:
+      case type.wechat.key: 
         alert("todo:");
         break;
     }

@@ -121,7 +121,7 @@ This method is called when the component is Mounted/Loaded.
   render() {
     return (
       <MainActivation>
-        <View style={[Skin.layout1.wrap, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this) }>
+        <View style={[Skin.layout0.wrap.container, { flex: 1 }]} onStartShouldSetResponder={this.containerTouched.bind(this) }>
           <StatusBar
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
