@@ -127,15 +127,23 @@ export default class ForgatePassword extends Component {
         Events.trigger('finishForgotPasswordFlow', null);
       } else if (Platform.OS == 'android' && this.state.erpasswd) {
         AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
-        this.props.navigator.push(
-          {
+        // this.props.navigator.push(
+        //   {
+        //     id: 'pattern',
+        //     data: '',
+        //     onSetPattern: this.onSetPattern,
+        //    // onClose: this.onPatternClose,
+        //     disableClose:true,
+        //     mode: "set"
+        //   });
+        this.props.navigator.navigate('pattern',{url: {
             id: 'pattern',
             data: '',
             onSetPattern: this.onSetPattern,
            // onClose: this.onPatternClose,
             disableClose:true,
             mode: "set"
-          });
+          }})
       } else {
         Events.trigger('finishForgotPasswordFlow', null);
       }

@@ -300,7 +300,7 @@ class SelectLogin extends Component {
     }
   }
   //patten login callback.
-  onPatternUnlock(args) {
+  onPatternUnlock(nav, args) {
      Main.dnaPasswd = args.password;
     this.onDoPasswordCheckChallenge(args.password);
   }

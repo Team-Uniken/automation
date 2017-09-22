@@ -285,7 +285,7 @@ var SampleRow = React.createClass({
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
                     </Text>
-                  </View>
+                  </View> 
                 </TouchableHighlight>
 
                 <TouchableHighlight style={Skin.notification.fraudbutton} onPress={() => this.showalertforReject(this.props.notification, this.props.notification.action[2].label)}>
@@ -447,19 +447,27 @@ export default class NotificationMgmtScene extends Component {
 
   //navigate to pattern screen
   authenticateWithPattern() {
-    this.props.navigator.push({
+    // this.props.navigator.push({
+    //   id: 'pattern',
+    //   onUnlock: this.onPatternUnlock,
+    //   onClose: null,
+    //   operationMsg: 'Enter pattern',
+    //   mode: 'verify'
+    // });
+    this.props.navigation.navigate('pattern',{url: {
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
       onClose: null,
       operationMsg: 'Enter pattern',
       mode: 'verify'
-    });
+      }})
   }
 
   //patten login callback.
-  onPatternUnlock(args) {
+  onPatternUnlock(nav, args) {
     this.updateNotificationDetails();
-    this.props.navigator.pop();
+    nav.goBack();
+    //this.goBack();
   }
 
   authenticateWithTouchIDIfSupported() {

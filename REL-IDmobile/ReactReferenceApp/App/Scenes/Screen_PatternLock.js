@@ -226,7 +226,7 @@ class PatternLock extends Component {
               }
 
               if (this.props.navigation.state.params.url.onUnlock)
-                this.props.navigation.state.params.url.onUnlock(resp);
+                this.props.navigation.state.params.url.onUnlock(this.props.navigation, resp);
             }).done();
           }
           else {

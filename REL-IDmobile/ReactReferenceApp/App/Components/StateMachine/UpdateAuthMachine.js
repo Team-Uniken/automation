@@ -3,7 +3,7 @@
 /*
  ALWAYS NEED
  */
-import React, { Component, } from 'react';
+import React, { Component, } from 'react'; 
 import ReactNative from 'react-native';
 import Skin from '../../Skin';
 
