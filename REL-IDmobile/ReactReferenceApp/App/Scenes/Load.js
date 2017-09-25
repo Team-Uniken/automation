@@ -22,7 +22,7 @@ var PushNotification = require('react-native-push-notification');
 import {Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import {Navigator} from 'react-native-deprecated-custom-components'
-
+import { NavigationActions} from 'react-navigation';
 
 /*
  Use in this js
@@ -140,10 +140,21 @@ class Load extends Component {
 //        "screenId": nextChlngName
 //      }
 //    });
-    this.props.navigation.navigate('WelcomeScreen',{url: {
-      "chlngJson": chlngJson,
-      "screenId": nextChlngName
-      }})
+//    this.props.navigation.navigate('WelcomeScreen',{url: {
+//      "chlngJson": chlngJson,
+//      "screenId": nextChlngName
+//      }})
+    const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+        "chlngJson": chlngJson,
+        "screenId": nextChlngName,
+        "currentIndex":0,
+        }}})
+      ]
+      })
+    this.props.navigation.dispatch(resetAction)
   }
 
   animate() {
@@ -739,11 +750,22 @@ class Load extends Component {
             AsyncStorage.getItem('skipwelcome').then((value) => {
               if (value === "true") {
 //                this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-              this.props.navigation.navigate('StateMachine',{url: {
-                "chlngJson": chlngJson,
-                "screenId": nextChlngName,
-                "currentIndex":0
-                }})
+//              this.props.navigation.navigate('StateMachine',{url: {
+//                "chlngJson": chlngJson,
+//                "screenId": nextChlngName,
+//                "currentIndex":0
+//                }})
+              const resetAction = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+                  "chlngJson": chlngJson,
+                  "screenId": nextChlngName,
+                  "currentIndex":0,
+                  }}})
+                ]
+                })
+              this.props.navigation.dispatch(resetAction)
               
               } else {
 //                this.props.navigator.resetTo({
@@ -755,10 +777,21 @@ class Load extends Component {
 //                    "screenId": nextChlngName
 //                  }
 //                });
-              this.props.navigation.navigate('WelcomeScreen',{url: {
-                                    "chlngJson": chlngJson,
-                                    "screenId": nextChlngName
-                }})
+//              this.props.navigation.navigate('WelcomeScreen',{url: {
+//                                    "chlngJson": chlngJson,
+//                                    "screenId": nextChlngName
+//                }})
+              const resetAction = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+                  "chlngJson": chlngJson,
+                  "screenId": nextChlngName,
+                  "currentIndex":0,
+                  }}})
+                ]
+                })
+              this.props.navigation.dispatch(resetAction)
               }
             }).done();
           } else {
@@ -773,11 +806,22 @@ class Load extends Component {
           Main.gotNotification = false;
           AsyncStorage.getItem('skipwelcome').then((value) => {
             if (value === "true") {
-            this.props.navigation.navigate('StateMachine',{url: {
-              "chlngJson": chlngJson,
-              "screenId": nextChlngName,
-              "currentIndex":0
-              }})
+//            this.props.navigation.navigate('StateMachine',{url: {
+//              "chlngJson": chlngJson,
+//              "screenId": nextChlngName,
+//              "currentIndex":0
+//              }})
+            const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+                "chlngJson": chlngJson,
+                "screenId": nextChlngName,
+                "currentIndex":0,
+                }}})
+              ]
+              })
+            this.props.navigation.dispatch(resetAction)
 //              this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
             } else {
 //              this.props.navigator.resetTo({
@@ -789,10 +833,21 @@ class Load extends Component {
 //                  "screenId": nextChlngName
 //                }
 //              });
-            this.props.navigation.navigate('WelcomeScreen',{url: {
-              "chlngJson": chlngJson,
-              "screenId": nextChlngName
-              }})
+//            this.props.navigation.navigate('WelcomeScreen',{url: {
+//              "chlngJson": chlngJson,
+//              "screenId": nextChlngName
+//              }})
+            const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+                "chlngJson": chlngJson,
+                "screenId": nextChlngName,
+                "currentIndex":0,
+                }}})
+              ]
+              })
+            this.props.navigation.dispatch(resetAction)
             }
           }).done();
         }
@@ -802,11 +857,24 @@ class Load extends Component {
       AsyncStorage.getItem('skipwelcome').then((value) => {
         if (value === "true") {
 //          this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-        this.props.navigation.navigate('StateMachine',{url: {
-          "chlngJson": chlngJson,
-          "screenId": nextChlngName,
-          "currentIndex":0,
-          }})
+//        this.props.navigation.navigate('StateMachine',{url: {
+//          "chlngJson": chlngJson,
+//          "screenId": nextChlngName,
+//          "currentIndex":0,
+//          }})
+        
+        const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName,
+            "currentIndex":0,
+            }}})
+          ]
+          })
+        this.props.navigation.dispatch(resetAction)
+        
         } else {
 //          this.props.navigator.resetTo({
 //            id: "Welcome_Screen",
@@ -817,10 +885,22 @@ class Load extends Component {
 //              "screenId": nextChlngName
 //            }
 //          });
-        this.props.navigation.navigate('WelcomeScreen',{url: {
-          "chlngJson": chlngJson,
-          "screenId": nextChlngName
-          }})
+//        this.props.navigation.navigate('WelcomeScreen',{url: {
+//          "chlngJson": chlngJson,
+//          "screenId": nextChlngName
+//          }})
+        
+        const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
+            "chlngJson": chlngJson,
+            "screenId": nextChlngName,
+            "currentIndex":0,
+            }}})
+          ]
+          })
+        this.props.navigation.dispatch(resetAction)
         }
       }).done();
     }
