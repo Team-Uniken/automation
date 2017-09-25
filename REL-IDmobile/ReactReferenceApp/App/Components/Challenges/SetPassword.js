@@ -152,7 +152,7 @@ This method is called when the component will start to load
   render() {
     return (
       <MainActivation>
-        <View style={Skin.layout1.wrap}>
+        <View style={Skin.layout0.wrap.container}>
           <StatusBar
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'}

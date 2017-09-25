@@ -974,7 +974,7 @@ This method is called when the component will start to load
                 selected={this.state.touchid}
                 labelSide={"right"}
                 >
-                Enable TouchID Login
+                Enable TouchID Login 
               </Checkbox>
             );
           }
@@ -1013,8 +1013,7 @@ This method is called when the component will start to load
         drawerState={{
           open: false,
           disabled: true,
-        }}
-    
+        }}    
         defaultNav = {isPageTitle?false:true}
         navBar={{
           title: 'Profile & Settings',
@@ -1037,7 +1036,7 @@ This method is called when the component will start to load
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
             {this.renderIf(this.state.showOptions,
-              <View style={[Skin.layout1.wrap, { marginTop: 20 }]}>
+              <View style={[Skin.layout0.wrap.container]}>
                 <ScrollView style={Skin.layout1.content.scrollwrap}>
                   <View style={Skin.layout1.content.wrap}>
                     <View style={Skin.layout1.content.container}>

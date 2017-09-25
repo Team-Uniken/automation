@@ -89,8 +89,6 @@ class ControlPanel extends Component {
     this.showNoticiationScreen = this.showNoticiationScreen.bind(this);
     //this.getMyNotifications();
     Events.on('getConfiguration', 'getConfiguration', this.getConfig);
-    
-
   }
 
   showLogOffAlert() {
@@ -123,6 +121,15 @@ class ControlPanel extends Component {
 
 
   componentWillMount() {
+    global.isNotificationScreenonTop = false;
+    if (onGetNotificationsSubscription) {
+      onGetNotificationsSubscription.remove();
+      onGetNotificationsSubscription = null;
+    }
+
+    onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
+      this.onGetNotifications.bind(this));
+      
     Events.on('showNoticiationScreen', 'showNoticiationScreen', this.showNoticiationScreen);
   }
   componentDidMount() {
@@ -134,13 +141,7 @@ class ControlPanel extends Component {
     Obj = this;
     Events.on('cancelOperation', 'cancelOperation', this.cancelOperation);
 
-    if (onGetNotificationsSubscription) {
-      onGetNotificationsSubscription.remove();
-      onGetNotificationsSubscription = null;
-    }
-
-    onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
-      this.onGetNotifications.bind(this));
+   
   }
 
   componentWillUnmount() {
@@ -409,7 +410,7 @@ class ControlPanel extends Component {
               Events.trigger('showNotification', e);
               return;
             }
-      dismissKeyboard();
+          dismissKeyboard();
 
             //InteractionManager.runAfterInteractions(() => {
             //              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: { "data": e } });
@@ -458,18 +459,13 @@ class ControlPanel extends Component {
       var startDate = "";
       var endDate = "";
       ReactRdna.getNotifications(recordCount, startIndex, enterpriseID, startDate, endDate, (response) => {
-
         console.log('----- NotificationMgmt.getMyNotifications.response ');
         console.log(response);
-
         if (response[0].error!== 0) {
           console.log('----- ----- response is not 0');
         }
-        
-
       });
     } else {
-
       Alert.alert(
         '',
         'Please check your internet connection',
@@ -488,8 +484,7 @@ class ControlPanel extends Component {
 //                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
 //              else
 //                 this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
-         this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'});
-         
+         this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'});         
             });
     }
   }

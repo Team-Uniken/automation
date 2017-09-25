@@ -63,7 +63,7 @@ class Welcome_Screen extends Component {
     const resetAction = NavigationActions.reset({
     index: 0,
     actions: [
-      NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
+      NavigationActions.navigate({ routeName: 'StateMachine',params:{url: { 
         "chlngJson":this.props.navigation.state.params.url.chlngJson,
       "screenId": this.props.navigation.state.params.url.screenId,
       "currentIndex":0

@@ -74,7 +74,7 @@ class UserLogin extends Component {
       if (value == undefined || value == null || value === 'empty') {
 
       } else {
-        if (this.props.url.reset) {
+        if (this.props.navigator.state.params.url.reset) {
         } else {
           InteractionManager.runAfterInteractions(() => {
             obj.setState({ inputUsername: value }, () => {

@@ -716,7 +716,7 @@ class Register extends Component {
 
     return (
       <MainActivation>
-        <View style={Skin.layout1.wrap}>
+        <View style={Skin.layout0.wrap.container}>
           <StatusBar
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
