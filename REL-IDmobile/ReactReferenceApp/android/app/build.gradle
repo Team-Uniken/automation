@@ -157,7 +157,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -167,7 +167,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
@@ -177,7 +177,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         ubs{
@@ -186,7 +186,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbc{
@@ -195,7 +195,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         cbcverify{
@@ -204,7 +204,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         relidmobile{
@@ -213,7 +213,7 @@ android {
             minSdkVersion 16
             targetSdkVersion 25
             versionCode 495
-            versionName "4.9.5"
+            versionName "5.0.0"
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
