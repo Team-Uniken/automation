@@ -35,7 +35,6 @@ import Events from 'react-native-simple-events';
 import Constants from '../Utils/Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 var Main = require('../Container/Main');
-import {Navigator} from 'react-native-deprecated-custom-components'
 import { NavigationActions} from 'react-navigation';
 
 /*

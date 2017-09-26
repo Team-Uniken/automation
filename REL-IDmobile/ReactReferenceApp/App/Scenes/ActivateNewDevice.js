@@ -14,7 +14,7 @@ import ReactNative from 'react-native';
  */
 import { FormattedCurrency } from 'react-native-globalize';
 import {View, Text, TouchableHighlight, StyleSheet, ScrollView, AsyncStorage, } from 'react-native'
-import {Navigator} from 'react-native-deprecated-custom-components'
+
 
 
 /*

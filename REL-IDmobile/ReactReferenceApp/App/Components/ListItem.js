@@ -1,4 +1,4 @@
-import {Navigator} from 'react-native-deprecated-custom-components'
+
 import ReactNative, {
 	View,
 	Text,

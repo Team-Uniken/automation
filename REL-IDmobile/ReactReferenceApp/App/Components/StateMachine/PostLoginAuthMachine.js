@@ -38,7 +38,6 @@ import ConnectionProfile from '../../Scenes/ConnectionProfile';
 import Events from 'react-native-simple-events';
 import Constants from '../Utils/Constants';
 import { NativeModules, NativeEventEmitter } from 'react-native'
-import {Navigator} from 'react-native-deprecated-custom-components'
 
 const onCheckChallengeResponseStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule)

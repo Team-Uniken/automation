@@ -11,7 +11,7 @@
 
 // Loading react library
 import React from 'react';
-import {Navigator} from 'react-native-deprecated-custom-components'
+
 import { FormattedWrapper } from 'react-native-globalize';            //Provides access to all formatting options as well as easy-to-use React Native components
 import buildStyleInterpolator from 'buildStyleInterpolator';
 import { AppRegistry, Text } from 'react-native';

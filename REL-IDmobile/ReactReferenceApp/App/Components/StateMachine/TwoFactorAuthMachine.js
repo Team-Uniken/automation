@@ -70,7 +70,6 @@ import RegisterOption from '../../Scenes/Register_Options';
 import Web from '../../Scenes/Web';
 import TouchID from 'react-native-touch-id';
 import { NativeModules, NativeEventEmitter } from 'react-native';
-import {Navigator} from 'react-native-deprecated-custom-components'
 import { NavigationActions} from 'react-navigation';
 
 

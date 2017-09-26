@@ -21,7 +21,6 @@ import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import NotificationCard from '../Components/view/notificationcard';
-import { Navigator } from 'react-native-deprecated-custom-components';
 import Loader from '../Components/Utils/Loader';
 import { NavigationActions} from 'react-navigation';
 

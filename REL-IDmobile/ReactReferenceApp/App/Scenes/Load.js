@@ -21,7 +21,6 @@ import Toast from 'react-native-simple-toast';
 var PushNotification = require('react-native-push-notification');
 import {Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
-import {Navigator} from 'react-native-deprecated-custom-components'
 import { NavigationActions} from 'react-navigation';
 
 /*
@@ -84,7 +83,7 @@ var welcome = ClientBasedConfig.img.welcome;
 var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
-//console.log = function () { }
+console.log = function () { }
 
 BackHandler.addEventListener('hardwareBackPress', function () {
   return true;

@@ -1033,10 +1033,7 @@ RCT_EXPORT_METHOD (exitApp){
   NSString *base64String;
   if ([plainData respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
     base64String = [plainData base64EncodedStringWithOptions:kNilOptions];  // iOS 7+
-  } else {
-    base64String = [plainData base64Encoding];                              // pre iOS7
   }
-  
   return base64String;
 }
 
