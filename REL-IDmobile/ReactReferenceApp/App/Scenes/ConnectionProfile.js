@@ -63,6 +63,14 @@ class ConnectionProfileScene extends Component {
 //      this.props.navigator.resetTo({
 //        id: 'Load'
 //      });
+      const ResetToLoadScreen = NavigationActions.reset({
+        
+      index: 1,
+      actions: [
+        NavigationActions.navigate({routeName: 'ConnectionProfileScreen'}),
+        NavigationActions.navigate({routeName: 'LoadScreen'})
+        ]
+        });
       this.props.navigation.dispatch(ResetToLoadScreen)
       return true;
     }.bind(this));
@@ -311,6 +319,14 @@ class ConnectionProfileScene extends Component {
 //                  this.props.navigator.replace({
 //                    id: "Load"
 //                  });
+                  const ResetToLoadScreen = NavigationActions.reset({
+                    
+                  index: 1,
+                  actions: [
+                    NavigationActions.navigate({routeName: 'ConnectionProfileScreen'}),
+                    NavigationActions.navigate({routeName: 'LoadScreen'})
+                    ]
+                    });
                   this.props.navigation.dispatch(ResetToLoadScreen)
                 });
               }
@@ -395,14 +411,14 @@ class ConnectionProfileScene extends Component {
   */
   render() {
     
-    const ResetToLoadScreen = NavigationActions.reset({
-      
-    index: 1,
-    actions: [
-      NavigationActions.navigate({routeName: 'ConnectionProfileScreen'}),
-      NavigationActions.navigate({routeName: 'LoadScreen'})
-      ]
-      });
+//    const ResetToLoadScreen = NavigationActions.reset({
+//      
+//    index: 1,
+//    actions: [
+//      NavigationActions.navigate({routeName: 'ConnectionProfileScreen'}),
+//      NavigationActions.navigate({routeName: 'LoadScreen'})
+//      ]
+//      });
       
     return (
       <Main
@@ -425,6 +441,14 @@ class ConnectionProfileScene extends Component {
 //      this.props.navigator.resetTo({
 //                id: 'Load'
 //              });
+      const ResetToLoadScreen = NavigationActions.reset({
+        
+      index: 1,
+      actions: [
+        NavigationActions.navigate({routeName: 'ConnectionProfileScreen'}),
+        NavigationActions.navigate({routeName: 'LoadScreen'})
+        ]
+        });
       this.props.navigation.dispatch(ResetToLoadScreen)
             },
           },
