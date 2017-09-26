@@ -599,7 +599,7 @@ class TwoFactorAuthMachine extends Component {
           url: {
                         chlngJson: result.challenge,
                         chlngsCount: challengeJsonArr.length,
-                        currentIndex: currentIndex + 1,
+                        currentIndex: currentIndex,
                         screenId: name
                       },
           title:name}})
@@ -816,7 +816,7 @@ getComponentByName(route, nav) {
       url:{
       chlngJson: this.props.navigation.state.params.url.chlngJson,
       chlngsCount: challengeJsonArr.length,
-      currentIndex: currentIndex + 1,
+      
       touchCred:this.props.navigation.state.params.url.touchCred,
       }, title:this.props.navigation.state.params.url.screenId};
       
@@ -837,7 +837,7 @@ getComponentByName(route, nav) {
       url:{
       chlngJson: this.getCurrentChallenge(),
       chlngsCount: challengeJsonArr.length,
-      currentIndex: currentIndex + 1,
+      
       }, title:this.props.navigation.state.params.url.screenId};
       
       return(this.getComponentByName(params,this.props.navigation))
@@ -847,7 +847,7 @@ getComponentByName(route, nav) {
     url:{
     chlngJson: this.getCurrentChallenge(),
     chlngsCount: challengeJsonArr.length,
-    currentIndex: currentIndex + 1,
+    
     }, title:this.props.navigation.state.params.url.screenId};
     
     return(this.getComponentByName(params,this.props.navigation))

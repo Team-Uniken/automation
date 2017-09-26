@@ -277,10 +277,13 @@ export default class DeviceMgmtScene extends Component {
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
       if (statusCode === 100) {
-        if(logOff === true)
+        if(logOff === true){
+          AsyncStorage.setItem("rememberuser", 'empty');
           Events.trigger("logOff",null);
-        else 
+        }
+        else{
           this.getRegisteredDeviceDetails();
+        }
       } else {
         alert(res.pArgs.response.StatusMsg);
         // If error occurred reload devices list with previous response
