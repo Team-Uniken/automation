@@ -284,7 +284,7 @@ class TwoFactorAuthMachine extends Component {
         if (Main.isOtherLogin === true) {
           Main.isOtherLogin = false;
         }
-         const chlngJson = res.pArgs.response.ResponseData;
+         //const chlngJson = res.pArgs.response.ResponseData;
       
 
         //Removing user preference when user is blocked or suspended 
@@ -303,13 +303,15 @@ class TwoFactorAuthMachine extends Component {
           res.pArgs.response.StatusMsg, [{
             text: 'OK',
             onPress: () => {
-              var chlngJson;
+             // var chlngJson;
 
               Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
               if (res.pArgs.response.ResponseData != null && res.pArgs.response.ResponseData.chlng.length > 0) {
-                chlngJson = res.pArgs.response.ResponseData;
-                const nextChlngName = chlngJson.chlng[0].chlng_name;
-                if (chlngJson != null) {
+                challengeJson = res.pArgs.response.ResponseData;
+                challengeJsonArr = challengeJson.chlng;
+
+                const nextChlngName = challengeJson.chlng[0].chlng_name;
+                if (challengeJson != null) {
                   console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
                   //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
 //                  this.props.navigator.resetTo({
@@ -324,7 +326,7 @@ class TwoFactorAuthMachine extends Component {
             index: 0,
             actions: [
               NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
-                chlngJson,
+                challengeJson,
               screenId: nextChlngName,
               currentIndex:0
                 },title:nextChlngName}})
