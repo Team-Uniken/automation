@@ -565,7 +565,7 @@ class TwoFactorAuthMachine extends Component {
                   url: {
                     chlngJson: result.challenge,
                     chlngsCount: challengeJsonArr.length,
-                    currentIndex: currentIndex + 1,
+                    currentIndex: currentIndex,
                     screenId: name
                   }, title: name
                 }

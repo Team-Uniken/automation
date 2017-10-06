@@ -23,16 +23,16 @@ class Title extends Component {
   render() {
     if (this.props.close == 0) {
       return (
-        <View style={[Skin.layout1.title.container, { marginTop: (Platform.OS === 'ios') ? 20 : 0, }]}>
-          <Text style={[Skin.layout1.title.base, { width: Skin.SCREEN_WIDTH }]}>{this.props.children}</Text>
+        <View style={[Skin.layout1.title.container, { marginTop: (Platform.OS === 'ios') ? 20 : 0,backgroundColor:'transparent' }]}>
+          <Text style={[Skin.layout1.title.base, { width: Skin.SCREEN_WIDTH,backgroundColor:'transparent' }]}>{this.props.children}</Text>
         </View>
       );
     }
     else {
       return (
-        <View style={[Skin.layout1.title.container, { marginTop: (Platform.OS === 'ios') ? 20 : 0, }]}>
+        <View style={[Skin.layout1.title.container, { marginTop: (Platform.OS === 'ios') ? 20 : 0, backgroundColor:'transparent'}]}>
           <TouchableHighlight
-            style={Skin.layout1.title.crosshighlight}
+            style={[Skin.layout1.title.crosshighlight,{backgroundColor:'transparent'}]}
             onPress={this.props.onClose }
             underlayColor={Skin.colors.REPPLE_COLOR}>
             <Text style={Skin.layout1.title.button}>{Skin.icon.close}</Text>
