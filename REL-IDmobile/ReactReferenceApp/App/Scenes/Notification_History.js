@@ -436,7 +436,7 @@ class Notifications_History extends Component {
   }
 
   onAlertModalOk() {
-    this.props.navigator.pop();
+    this.goBack();
   }
 
   onAlertModalDismissed() {
