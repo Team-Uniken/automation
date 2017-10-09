@@ -6,7 +6,7 @@
 
 /*
  ALWAYS NEED
- */
+ */ 
 import React, { Component, } from 'react';
 
 /*
@@ -17,7 +17,7 @@ import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar } from 'react-native'
+import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native';
 
 /*
  Use in this js
@@ -179,46 +179,43 @@ class UserLogin extends Component {
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'} />
-          <View style={Skin.layout0.top.container}>
+            <View style={[ Skin.layout1.wrap, { flex: 1 },{justifyContent: 'center', backgroundColor: 'transparent'} ]}>
+            <View style={[Skin.layout1.title.wrap, { backgroundColor: 'transparent' } ]}>
             <Title
               onClose={() => {
                 this.close();
               }}>
             </Title> 
-            <Text style={[Skin.layout0.top.icon]}>
-              {Skin.icon.logo}
-            </Text>
-            <Text style={Skin.layout0.top.subtitle}>
-              {Skin.text['2']['1'].subtitle}
-            </Text>
-            <Text style={Skin.layout0.top.prompt}>
-              {Skin.text['2']['1'].prompt}
-            </Text>
+            </View>
+              <View style={[Skin.layout0.wrap.container, { justifyContent: "center",  alignItems: 'center', marginBottom: 20}]}>
+                <Text style={[Skin.layout0.top.icon]}>
+                  {Skin.icon.logo}
+                </Text>
+                <Text style={Skin.layout0.top.subtitle}>
+                  {Skin.text['2']['1'].subtitle}
+                </Text>
+                <Text style={Skin.layout0.top.prompt}>
+                  {Skin.text['2']['1'].prompt}
+                </Text> 
+                <Input
+                    ref='inputUsername'
+                    returnKeyType={'next'}
+                    keyboardType={'email-address'}
+                    placeholder={'Enter Username/Email'}
+                    autoFocus={true}
+                    autoCorrect={false}
+                    autoCapitalize={false}
+                    autoComplete={false}
+                    value={this.state.inputUsername}
+                    onSubmitEditing={this.checkUsername.bind(this)}
+                    onChange={this.onUsernameChange.bind(this)} />
+                  <Button
+                    label={Skin.text['2']['1'].submit_button}
+                    onPress={this.checkUsername.bind(this)} />
+                </View>       
+                <KeyboardAvoidingView  behavior='padding' keyboardVerticalOffset={40}/>
+              </View>
           </View>
-
-          <View style={[Skin.layout0.bottom.container, { justifyContent: "flex-start" }]}>
-            <View style={[Skin.layout0.wrap.container,{justifyContent: "flex-start"}]}>
-             <View style={[Skin.layout0.wrap.container, { maxHeight: 120 }]}>
-              <Input
-                ref='inputUsername'
-                returnKeyType={'next'}
-                keyboardType={'email-address'}
-                placeholder={'Enter Username/Email'}
-                autoFocus={true}
-                autoCorrect={false}
-                autoCapitalize={false}
-                autoComplete={false}
-                value={this.state.inputUsername}
-                onSubmitEditing={this.checkUsername.bind(this)}
-                onChange={this.onUsernameChange.bind(this)} />
-              <Button
-                label={Skin.text['2']['1'].submit_button}
-                onPress={this.checkUsername.bind(this)} />
-             </View>
-            <KeyboardSpacer topSpacing={0} />
-          </View>
-        </View>
-        </View>
       </MainActivation >
     );
   }
