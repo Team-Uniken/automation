@@ -854,7 +854,9 @@ export default class NotificationMgmtScene extends Component {
 
   goBack(){
     this.props.navigation.goBack();
+    Events.trigger('getNoticiationHistory');
     global.isNotificationScreenonTop = false;
+
   }
   
   
@@ -1227,11 +1229,13 @@ export default class NotificationMgmtScene extends Component {
               //
 
               global.isNotificationScreenonTop = false;      
+             
               this.props.navigation.dispatch({
                 key: 'Notification_History',
                 type: 'ReplaceCurrentScreen',
                 routeName: 'Notification_History',
               });
+              Events.trigger('getNoticiationHistory');
             } }>
             <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
               Notification History

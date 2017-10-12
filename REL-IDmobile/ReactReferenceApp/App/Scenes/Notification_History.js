@@ -248,7 +248,15 @@ class Notifications_History extends Component {
     this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
     this.onAlertModalOk = this.onAlertModalOk.bind(this);
     this.dismissAlertModal = this.dismissAlertModal.bind(this);
+    this.getNoticiationHistory = this.getNoticiationHistory.bind(this);
+    Events.on('getNoticiationHistory', 'getNoticiationHistory', this.getNoticiationHistory);
   }
+
+
+  getNoticiationHistory(){
+    this.componentDidMount();
+  }
+
   /*
    This is life cycle method of the react native component.
    This method is called when the component will start to load
