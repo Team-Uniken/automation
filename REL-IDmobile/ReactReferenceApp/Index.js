@@ -587,18 +587,28 @@ header: false
 const getStateForAction = IndexNavigator.router.getStateForAction;
 
 IndexNavigator.router.getStateForAction = (action, state) => {
-    if (state && action.type === 'ReplaceCurrentScreen') {
-      const routes = state.routes.slice(0, state.routes.length - 1);
-      routes.push(action);
-      return {
-        ...state,
-        routes,
-      index: routes.length - 1,
-      };
-    }
-    return getStateForAction(action, state);
+  if (state && action.type === 'ReplaceCurrentScreen') {
 
+    const dupRoutes = state.routes;
+    var previousRouteObject;
+    var currentRouteIndex = state.routes.length -1;;
+    for (var i = 0; i < dupRoutes.length; i++) {
+      previousRouteObject = dupRoutes[i];
+      if (previousRouteObject.routeName === action.routeName) {
+        currentRouteIndex = i;
+        break;
+      }
+    }
+    const routes = state.routes.slice(0, currentRouteIndex);
+    routes.push(action);
+    return {
+      ...state,
+      routes,
+      index: currentRouteIndex,
+    };
   
+  }
+  return getStateForAction(action, state);
 };
 
 
