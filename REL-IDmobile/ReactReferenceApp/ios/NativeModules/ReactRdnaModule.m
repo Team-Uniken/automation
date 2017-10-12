@@ -362,7 +362,13 @@ RCT_EXPORT_METHOD (decryptDataPacket:(RDNAPrivacyScope)privacyScope
   int errorID = 0;
   NSString *plainText;
   errorID = [rdnaObject decryptDataPacket:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:cipherText Into:&plainText];
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":plainText};
+  NSDictionary *dictionary;
+  if((plainText==nil)&&(plainText.length==0)){
+    plainText = @"";
+    dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":plainText};
+  }else{
+  dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":plainText};
+  }
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   callback(@[responseArray]);
   

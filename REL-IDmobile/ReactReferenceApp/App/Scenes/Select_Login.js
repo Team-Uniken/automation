@@ -36,8 +36,7 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
  */
 import LoginTypeButton from '../Components/view/logintypebutton';
 import Title from '../Components/view/title';
-
-
+import Toast from 'react-native-simple-toast';
 /*
   INSTANCES
  */
@@ -77,6 +76,7 @@ class SelectLogin extends Component {
     this.onPatternUnlock = this.onPatternUnlock.bind(this);
     this.goBackToSelectLogin = this.goBackToSelectLogin.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
+    this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
 
     this.checkForRegisteredCredsAndShow();
     if (Platform.OS === 'ios') {
@@ -345,10 +345,20 @@ class SelectLogin extends Component {
       if (encryptedRPasswd) {
         Util.decryptText(encryptedRPasswd).then((RPasswd) => {
           if (RPasswd) {
+          if(RPasswd.length>0){
             Main.dnaPasswd = RPasswd;
             obj.onDoPasswordCheckChallenge(RPasswd);
+          }else{
+          Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+          this.goToPasswordWhenAdditonalAuthFails();
+          }
+          }else{
+          
           }
         }).done();
+      }else{
+      Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+        this.goToPasswordWhenAdditonalAuthFails();
       }
     }).done();
   }
@@ -420,6 +430,16 @@ class SelectLogin extends Component {
   close() {
     Events.trigger('showPreviousChallenge');
   }
+  
+  goToPasswordWhenAdditonalAuthFails(){
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value)=>{
+      });
+    this.state.isRegistered = false;
+    this.fillAdditionalLoginOptions();
+  this.setState({ showPasswordVerify: true });
+
+  }
+  
   //call when get back from PasswordVerification screen.
   goBackToSelectLogin() {
     this.setState({ showPasswordVerify: false });
