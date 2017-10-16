@@ -107,7 +107,6 @@
 		5528FFC21F21F73C00560B76 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		5528FFC31F21F73C00560B76 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
 		5528FFC41F21F73C00560B76 /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
-		5528FFC51F21F73C00560B76 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
 		5528FFC71F21F73C00560B76 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		5528FFC81F21F73C00560B76 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		5528FFC91F21F73C00560B76 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
@@ -269,6 +268,22 @@
 		654B80DB1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */; };
 		654B80DC1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */; };
 		654B80E21DBE11780052D415 /* ReactRefAppDeveloper-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 654B80E01DBE11780052D415 /* ReactRefAppDeveloper-Info.plist */; };
+		654E0DC51F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DC61F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DC71F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DC81F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DC91F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DCA1F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DCB1F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0DCC1F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */; };
+		654E0E241F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E251F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E261F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E271F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E281F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E291F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E2A1F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
+		654E0E2B1F87A69D00EF868E /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 654E0E231F87A69D00EF868E /* libapi-sdk.a */; };
 		654F81611CC9129C009E6168 /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
 		654F81CF1CC9FAD5009E6168 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		654F81D01CC9FAD5009E6168 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
@@ -287,14 +302,6 @@
 		657411001F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
 		657411011F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
 		657411021F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */; };
-		657B6D3A1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D3B1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D3C1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D3D1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D3E1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D3F1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D401F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
-		657B6D411F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */; };
 		657B6D431F4AF17D00AA65B5 /* cbcverify.plist in Resources */ = {isa = PBXBuildFile; fileRef = 657B6D421F4AF17D00AA65B5 /* cbcverify.plist */; };
 		6582FD5E1D9525000075C15D /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
 		6582FD5F1D9525050075C15D /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
@@ -302,13 +309,14 @@
 		6582FD671D95257D0075C15D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
 		6582FD691D9526890075C15D /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
 		6582FD6A1D9526920075C15D /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
-		6584BA561F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA571F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA581F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA591F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA5A1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA5B1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
-		6584BA5C1F0D000200587C87 /* bmobi.net.cer in Resources */ = {isa = PBXBuildFile; fileRef = 6584BA541F0D000200587C87 /* bmobi.net.cer */; };
+		65B5B61C1F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B61D1F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B61E1F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B61F1F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B6201F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B6211F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B6221F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
+		65B5B6231F94B7B20002073F /* starfield.cer in Resources */ = {isa = PBXBuildFile; fileRef = 65B5B61B1F94B7B20002073F /* starfield.cer */; };
 		65D7F71F1E308FC8009ACC25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		65D7F7201E308FC8009ACC25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		65D7F7211E308FC8009ACC25 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -808,6 +816,9 @@
 		654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		654B80E01DBE11780052D415 /* ReactRefAppDeveloper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ReactRefAppDeveloper-Info.plist"; sourceTree = "<group>"; };
+		654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libActiveShieldSDK.a; sourceTree = "<group>"; };
+		654E0E211F87A69D00EF868E /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		654E0E231F87A69D00EF868E /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		654F815F1CC9129C009E6168 /* ReactRdnaModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactRdnaModule.h; sourceTree = "<group>"; };
 		654F81601CC9129C009E6168 /* ReactRdnaModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactRdnaModule.m; sourceTree = "<group>"; };
 		654F81C51CC9FAD5009E6168 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -828,14 +839,13 @@
 		6567FBCA1CC1122F00AC6A04 /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; name = App; path = ../App; sourceTree = "<group>"; };
 		656D4F061E7C0B6000965ED6 /* relidmobile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = relidmobile.plist; sourceTree = "<group>"; };
 		657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libActiveShieldSDK.a; sourceTree = "<group>"; };
-		657B6D371F4AF15E00AA65B5 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		657B6D421F4AF17D00AA65B5 /* cbcverify.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cbcverify.plist; sourceTree = "<group>"; };
 		6582FD571D9524ED0075C15D /* RCTTouchId.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTTouchId.xcodeproj; path = "../node_modules/react-native-smart-touch-id/ios/RCTTouchId/RCTTouchId.xcodeproj"; sourceTree = "<group>"; };
 		6582FD601D95256E0075C15D /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		6582FD681D9526890075C15D /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		6584BA531F0D000200587C87 /* ActiveShieldSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveShieldSDK.h; sourceTree = "<group>"; };
-		6584BA541F0D000200587C87 /* bmobi.net.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = bmobi.net.cer; sourceTree = "<group>"; };
+		65B5B61A1F94B77B0002073F /* ActiveShieldSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveShieldSDK.h; sourceTree = "<group>"; };
+		65B5B61B1F94B7B20002073F /* starfield.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = starfield.cer; sourceTree = "<group>"; };
 		65D7F74B1E308FC8009ACC25 /* ubs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ubs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D7F7621E309469009ACC25 /* ubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ubs.plist; sourceTree = "<group>"; };
 		65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesUBS.xcassets; sourceTree = "<group>"; };
@@ -872,14 +882,15 @@
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				654B80D71DBE0C620052D415 /* FBSDKCoreKit.framework in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
+				654E0E251F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				657410FD1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
+				654E0DC61F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				657B6D3B1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				654B80DB1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */,
 				654B80D51DBE0C620052D415 /* Bolts.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
@@ -895,6 +906,7 @@
 				559A9DD41F2896E000D8F3FD /* libRNSpinkit.a in Frameworks */,
 				55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */,
 				5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */,
+				654E0E291F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				556268641EEE65E20008AC49 /* libjschelpers.a in Frameworks */,
 				556268621EEE65CB0008AC49 /* libyoga.a in Frameworks */,
 				555B04CC1EE6BDF2004B7659 /* libAirMaps.a in Frameworks */,
@@ -912,12 +924,12 @@
 				657411011F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				1A6151BF1E4CDF5B00B3C9B2 /* libRCTImage.a in Frameworks */,
 				1A6151C01E4CDF5B00B3C9B2 /* libRCTLinking.a in Frameworks */,
-				657B6D3F1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				1A6151C11E4CDF5B00B3C9B2 /* libRCTNetwork.a in Frameworks */,
 				1A6151C21E4CDF5B00B3C9B2 /* libRCTSettings.a in Frameworks */,
 				1A6151C31E4CDF5B00B3C9B2 /* libRCTText.a in Frameworks */,
 				1A6151C41E4CDF5B00B3C9B2 /* libRCTVibration.a in Frameworks */,
 				1A6151C51E4CDF5B00B3C9B2 /* FBSDKShareKit.framework in Frameworks */,
+				654E0DCA1F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				1A6151C61E4CDF5B00B3C9B2 /* Bolts.framework in Frameworks */,
 				1A6151C71E4CDF5B00B3C9B2 /* libRCTWebSocket.a in Frameworks */,
 				1A6151C91E4CDF5B00B3C9B2 /* libRCTCamera.a in Frameworks */,
@@ -932,6 +944,7 @@
 				559A9DD61F28A7CA00D8F3FD /* libRNSpinkit.a in Frameworks */,
 				5528FFA41F21F73C00560B76 /* libRNFS.a in Frameworks */,
 				5528FFA51F21F73C00560B76 /* libReact.a in Frameworks */,
+				654E0E2B1F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				5528FFA61F21F73C00560B76 /* libjschelpers.a in Frameworks */,
 				5528FFA71F21F73C00560B76 /* libyoga.a in Frameworks */,
 				5528FFA81F21F73C00560B76 /* libAirMaps.a in Frameworks */,
@@ -949,12 +962,12 @@
 				5528FFB41F21F73C00560B76 /* libActiveShieldSDK.a in Frameworks */,
 				5528FFB51F21F73C00560B76 /* libRCTImage.a in Frameworks */,
 				5528FFB61F21F73C00560B76 /* libRCTLinking.a in Frameworks */,
-				657B6D411F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				5528FFB71F21F73C00560B76 /* libRCTNetwork.a in Frameworks */,
 				5528FFB81F21F73C00560B76 /* libRCTSettings.a in Frameworks */,
 				5528FFB91F21F73C00560B76 /* libRCTText.a in Frameworks */,
 				5528FFBA1F21F73C00560B76 /* libRCTVibration.a in Frameworks */,
 				5528FFBC1F21F73C00560B76 /* FBSDKShareKit.framework in Frameworks */,
+				654E0DCC1F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				5528FFBD1F21F73C00560B76 /* Bolts.framework in Frameworks */,
 				5528FFBE1F21F73C00560B76 /* libRCTWebSocket.a in Frameworks */,
 				5528FFBF1F21F73C00560B76 /* libRCTCamera.a in Frameworks */,
@@ -968,19 +981,20 @@
 				5599BAD21F4ADB910025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				55074FA81EE81F0500BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				55074FA71EE81EFE00BF6DC8 /* libRCTCamera.a in Frameworks */,
+				654E0E261F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				55074FA61EE81EF800BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074FA51EE81EF200BF6DC8 /* libAirMaps.a in Frameworks */,
 				55074F941EE7EF0700BF6DC8 /* libRCTAnimation.a in Frameworks */,
 				552BB7A11E1BA0B90009F274 /* libstdc++.tbd in Frameworks */,
 				552BB7A21E1BA0B90009F274 /* libTouchID.a in Frameworks */,
 				552BB7A31E1BA0B90009F274 /* libRCTTouchId.a in Frameworks */,
-				657B6D3C1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				552BB7A41E1BA0B90009F274 /* libRCTPushNotification.a in Frameworks */,
 				552BB7A51E1BA0B90009F274 /* libReact.a in Frameworks */,
 				552BB7A61E1BA0B90009F274 /* libRCTActionSheet.a in Frameworks */,
 				552BB7A71E1BA0B90009F274 /* FBSDKCoreKit.framework in Frameworks */,
 				552BB7A91E1BA0B90009F274 /* libRCTGeolocation.a in Frameworks */,
 				552BB7AA1E1BA0B90009F274 /* libRCTImage.a in Frameworks */,
+				654E0DC71F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				552BB7AB1E1BA0B90009F274 /* libRCTLinking.a in Frameworks */,
 				552BB7AC1E1BA0B90009F274 /* FBSDKShareKit.framework in Frameworks */,
 				552BB7AD1E1BA0B90009F274 /* libRCTNetwork.a in Frameworks */,
@@ -999,7 +1013,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5599BAAA1F4ADB660025538D /* libLRDRCTSimpleToast.a in Frameworks */,
-				657B6D401F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				55074FB11EE8239A00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				657411021F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55074FB01EE8238300BF6DC8 /* libRCTFBSDK.a in Frameworks */,
@@ -1008,11 +1021,13 @@
 				558C99981E7BF7A30002C56F /* FBSDKLoginKit.framework in Frameworks */,
 				558C99991E7BF7A30002C56F /* libRCTTouchId.a in Frameworks */,
 				558C999A1E7BF7A30002C56F /* libTouchID.a in Frameworks */,
+				654E0E2A1F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				558C999B1E7BF7A30002C56F /* libRCTPushNotification.a in Frameworks */,
 				558C999C1E7BF7A30002C56F /* libReact.a in Frameworks */,
 				558C999D1E7BF7A30002C56F /* libRCTActionSheet.a in Frameworks */,
 				558C999E1E7BF7A30002C56F /* FBSDKCoreKit.framework in Frameworks */,
 				558C999F1E7BF7A30002C56F /* libRCTGeolocation.a in Frameworks */,
+				654E0DCB1F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				558C99A01E7BF7A30002C56F /* libRCTImage.a in Frameworks */,
 				558C99A11E7BF7A30002C56F /* libRCTLinking.a in Frameworks */,
 				558C99A21E7BF7A30002C56F /* libRCTNetwork.a in Frameworks */,
@@ -1033,19 +1048,20 @@
 				5599BAD11F4ADB860025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				556268731EEE6C8F0008AC49 /* libAirMaps.a in Frameworks */,
 				556268721EEE6C8B0008AC49 /* libReactNativeConfig.a in Frameworks */,
+				654E0E271F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				55074FAB1EE8220D00BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074F951EE7EF1300BF6DC8 /* libRCTAnimation.a in Frameworks */,
 				55D3516F1E1E0F7C00806F82 /* libstdc++.tbd in Frameworks */,
 				55D351701E1E0F7C00806F82 /* FBSDKLoginKit.framework in Frameworks */,
 				55D351711E1E0F7C00806F82 /* libRCTTouchId.a in Frameworks */,
 				55D351721E1E0F7C00806F82 /* libTouchID.a in Frameworks */,
-				657B6D3D1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				55D351731E1E0F7C00806F82 /* libRCTPushNotification.a in Frameworks */,
 				55D351741E1E0F7C00806F82 /* libReact.a in Frameworks */,
 				55D351751E1E0F7C00806F82 /* libRCTActionSheet.a in Frameworks */,
 				55D351761E1E0F7C00806F82 /* FBSDKCoreKit.framework in Frameworks */,
 				55D351771E1E0F7C00806F82 /* libRCTGeolocation.a in Frameworks */,
 				55D351781E1E0F7C00806F82 /* libRCTImage.a in Frameworks */,
+				654E0DC81F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				55D351791E1E0F7C00806F82 /* libRCTLinking.a in Frameworks */,
 				55D3517A1E1E0F7C00806F82 /* libRCTNetwork.a in Frameworks */,
 				55D3517B1E1E0F7C00806F82 /* libRCTSettings.a in Frameworks */,
@@ -1079,14 +1095,15 @@
 				65127E091D795B4000FB36E1 /* libRCTNetwork.a in Frameworks */,
 				654B80DA1DBE0C620052D415 /* FBSDKLoginKit.framework in Frameworks */,
 				654B80D61DBE0C620052D415 /* Bolts.framework in Frameworks */,
+				654E0E241F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				65127E0B1D795B4000FB36E1 /* libRCTSettings.a in Frameworks */,
+				654E0DC51F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				65127E0C1D795B4000FB36E1 /* libRCTText.a in Frameworks */,
 				65127E0D1D795B4000FB36E1 /* libRCTVibration.a in Frameworks */,
 				65127E0E1D795B4000FB36E1 /* libRCTWebSocket.a in Frameworks */,
 				12403A1C3EFE469CB94DAC97 /* libRCTFBSDK.a in Frameworks */,
 				657410FC1F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				CEF10CBBB34C44C2812CF73A /* libReactNativeConfig.a in Frameworks */,
-				657B6D3A1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				716EE941AB1046FAAEE2643A /* libAirMaps.a in Frameworks */,
 				E5DD38A2A63D4833B8BF5929 /* libRNFS.a in Frameworks */,
 				0AA91AB5DBF04D6798DED797 /* libRNSpinkit.a in Frameworks */,
@@ -1099,7 +1116,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5599BAD01F4ADB7A0025538D /* libLRDRCTSimpleToast.a in Frameworks */,
-				657B6D3E1F4AF15E00AA65B5 /* libapi-sdk.a in Frameworks */,
 				55074FAE1EE822EA00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				657411001F14E76F00405E18 /* libActiveShieldSDK.a in Frameworks */,
 				55074FAD1EE822BC00BF6DC8 /* libRCTFBSDK.a in Frameworks */,
@@ -1108,11 +1124,13 @@
 				65D7F7291E308FC8009ACC25 /* FBSDKLoginKit.framework in Frameworks */,
 				65D7F72A1E308FC8009ACC25 /* libRCTTouchId.a in Frameworks */,
 				65D7F72B1E308FC8009ACC25 /* libTouchID.a in Frameworks */,
+				654E0E281F87A69D00EF868E /* libapi-sdk.a in Frameworks */,
 				65D7F72C1E308FC8009ACC25 /* libRCTPushNotification.a in Frameworks */,
 				65D7F72D1E308FC8009ACC25 /* libReact.a in Frameworks */,
 				65D7F72E1E308FC8009ACC25 /* libRCTActionSheet.a in Frameworks */,
 				65D7F72F1E308FC8009ACC25 /* FBSDKCoreKit.framework in Frameworks */,
 				65D7F7301E308FC8009ACC25 /* libRCTGeolocation.a in Frameworks */,
+				654E0DC91F866B8100EF868E /* libActiveShieldSDK.a in Frameworks */,
 				65D7F7311E308FC8009ACC25 /* libRCTImage.a in Frameworks */,
 				65D7F7321E308FC8009ACC25 /* libRCTLinking.a in Frameworks */,
 				65D7F7331E308FC8009ACC25 /* libRCTNetwork.a in Frameworks */,
@@ -1290,6 +1308,41 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		654E0DBF1F866B8100EF868E /* ActiveShieldSDKLib */ = {
+			isa = PBXGroup;
+			children = (
+				65B5B61A1F94B77B0002073F /* ActiveShieldSDK.h */,
+				654E0DC11F866B8100EF868E /* libActiveShieldSDK.a */,
+				65B5B61B1F94B7B20002073F /* starfield.cer */,
+			);
+			path = ActiveShieldSDKLib;
+			sourceTree = "<group>";
+		};
+		654E0E1F1F87A69D00EF868E /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				654E0E201F87A69D00EF868E /* include */,
+				654E0E221F87A69D00EF868E /* libs */,
+			);
+			path = "api-sdk";
+			sourceTree = "<group>";
+		};
+		654E0E201F87A69D00EF868E /* include */ = {
+			isa = PBXGroup;
+			children = (
+				654E0E211F87A69D00EF868E /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		654E0E221F87A69D00EF868E /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				654E0E231F87A69D00EF868E /* libapi-sdk.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1333,32 +1386,6 @@
 			path = NativeModules;
 			sourceTree = "<group>";
 		};
-		657B6D351F4AF15E00AA65B5 /* api-sdk */ = {
-			isa = PBXGroup;
-			children = (
-				657B6D361F4AF15E00AA65B5 /* include */,
-				657B6D381F4AF15E00AA65B5 /* libs */,
-			);
-			name = "api-sdk";
-			path = "../../../../svn/api-sdk.out/react_iOS/release/api-sdk";
-			sourceTree = "<group>";
-		};
-		657B6D361F4AF15E00AA65B5 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				657B6D371F4AF15E00AA65B5 /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		657B6D381F4AF15E00AA65B5 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				657B6D391F4AF15E00AA65B5 /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
 		6582FD581D9524ED0075C15D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1380,7 +1407,6 @@
 			children = (
 				657410FB1F14E76F00405E18 /* libActiveShieldSDK.a */,
 				6584BA531F0D000200587C87 /* ActiveShieldSDK.h */,
-				6584BA541F0D000200587C87 /* bmobi.net.cer */,
 			);
 			path = ActiveShieldSDKLib;
 			sourceTree = "<group>";
@@ -1434,9 +1460,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				654E0E1F1F87A69D00EF868E /* api-sdk */,
+				654E0DBF1F866B8100EF868E /* ActiveShieldSDKLib */,
 				65F4B5771F629265009A7D22 /* index.ios.js */,
 				657B6D421F4AF17D00AA65B5 /* cbcverify.plist */,
-				657B6D351F4AF15E00AA65B5 /* api-sdk */,
 				6584BA521F0D000200587C87 /* ActiveShieldSDKLib */,
 				55D17EFC1F0A322800C94FA5 /* Index.js */,
 				6524EF021EAA4A5D00E6E3CB /* account.ttf */,
@@ -2120,9 +2147,9 @@
 				654F81D01CC9FAD5009E6168 /* LaunchScreen.xib in Resources */,
 				1A6FB9CC1D0771E40058BB47 /* icomoon.ttf in Resources */,
 				55F31D941F17530200C198C3 /* clientcert.p12 in Resources */,
+				65B5B61D1F94B7B20002073F /* starfield.cer in Resources */,
 				6567FBCB1CC1122F00AC6A04 /* App in Resources */,
 				65F4B5791F629265009A7D22 /* index.ios.js in Resources */,
-				6584BA571F0D000200587C87 /* bmobi.net.cer in Resources */,
 				656227ED1CB50B2300AD7F6C /* gothic_0.TTF in Resources */,
 				55C924B31EB3661B00DA8083 /* account.ttf in Resources */,
 				654F81D11CC9FAD5009E6168 /* Images.xcassets in Resources */,
@@ -2139,9 +2166,9 @@
 				55F31D981F17530200C198C3 /* clientcert.p12 in Resources */,
 				551EE2E11E51BC5000ADAD6C /* cbc.ttf in Resources */,
 				65F4B57D1F629265009A7D22 /* index.ios.js in Resources */,
-				6584BA5B1F0D000200587C87 /* bmobi.net.cer in Resources */,
 				1A6151EE1E4CE75000B3C9B2 /* ImagesCBC.xcassets in Resources */,
 				6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */,
+				65B5B6211F94B7B20002073F /* starfield.cer in Resources */,
 				1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */,
 				1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */,
 			);
@@ -2157,7 +2184,7 @@
 				5528FFC31F21F73C00560B76 /* clientcert.p12 in Resources */,
 				5528FFC41F21F73C00560B76 /* cbc.ttf in Resources */,
 				65F4B57F1F629265009A7D22 /* index.ios.js in Resources */,
-				5528FFC51F21F73C00560B76 /* bmobi.net.cer in Resources */,
+				65B5B6231F94B7B20002073F /* starfield.cer in Resources */,
 				5528FFD21F21F88500560B76 /* ImagesCBCVerify.xcassets in Resources */,
 				5528FFC71F21F73C00560B76 /* account.ttf in Resources */,
 				5528FFC81F21F73C00560B76 /* icomoon.ttf in Resources */,
@@ -2175,7 +2202,7 @@
 				552BB7B71E1BA0B90009F274 /* App in Resources */,
 				55C924B41EB3661C00DA8083 /* account.ttf in Resources */,
 				65F4B57A1F629265009A7D22 /* index.ios.js in Resources */,
-				6584BA581F0D000200587C87 /* bmobi.net.cer in Resources */,
+				65B5B61E1F94B7B20002073F /* starfield.cer in Resources */,
 				55F31D951F17530200C198C3 /* clientcert.p12 in Resources */,
 				552BB7B81E1BA0B90009F274 /* gothic_0.TTF in Resources */,
 				65079D151E1F7FDD005D9A11 /* sandp.plist in Resources */,
@@ -2190,9 +2217,9 @@
 				55AF31931E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets in Resources */,
 				558C99AE1E7BF7A30002C56F /* LaunchScreen.xib in Resources */,
 				55F31D991F17530200C198C3 /* clientcert.p12 in Resources */,
+				65B5B6221F94B7B20002073F /* starfield.cer in Resources */,
 				558C99AF1E7BF7A30002C56F /* icomoon.ttf in Resources */,
 				65F4B57E1F629265009A7D22 /* index.ios.js in Resources */,
-				6584BA5C1F0D000200587C87 /* bmobi.net.cer in Resources */,
 				55C924B11EB3661900DA8083 /* account.ttf in Resources */,
 				558C99B01E7BF7A30002C56F /* App in Resources */,
 				656D4F071E7C0B6000965ED6 /* relidmobile.plist in Resources */,
@@ -2210,7 +2237,7 @@
 				55D351881E1E0F7C00806F82 /* App in Resources */,
 				55C924B51EB3661C00DA8083 /* account.ttf in Resources */,
 				65F4B57B1F629265009A7D22 /* index.ios.js in Resources */,
-				6584BA591F0D000200587C87 /* bmobi.net.cer in Resources */,
+				65B5B61F1F94B7B20002073F /* starfield.cer in Resources */,
 				55F31D961F17530200C198C3 /* clientcert.p12 in Resources */,
 				55D351891E1E0F7C00806F82 /* gothic_0.TTF in Resources */,
 				65079D171E1F7FE5005D9A11 /* stock.plist in Resources */,
@@ -2228,7 +2255,7 @@
 				65127E111D795B4000FB36E1 /* icomoon.ttf in Resources */,
 				65127E121D795B4000FB36E1 /* App in Resources */,
 				551EE2DE1E51BAE400ADAD6C /* cbc.ttf in Resources */,
-				6584BA561F0D000200587C87 /* bmobi.net.cer in Resources */,
+				65B5B61C1F94B7B20002073F /* starfield.cer in Resources */,
 				65127E131D795B4000FB36E1 /* gothic_0.TTF in Resources */,
 				65127E141D795B4000FB36E1 /* Images.xcassets in Resources */,
 				654B80E21DBE11780052D415 /* ReactRefAppDeveloper-Info.plist in Resources */,
@@ -2249,7 +2276,7 @@
 				65D7F7411E308FC8009ACC25 /* App in Resources */,
 				55C9249F1EB3661800DA8083 /* account.ttf in Resources */,
 				65F4B57C1F629265009A7D22 /* index.ios.js in Resources */,
-				6584BA5A1F0D000200587C87 /* bmobi.net.cer in Resources */,
+				65B5B6201F94B7B20002073F /* starfield.cer in Resources */,
 				55F31D971F17530200C198C3 /* clientcert.p12 in Resources */,
 				65D7F7421E308FC8009ACC25 /* gothic_0.TTF in Resources */,
 				65D7F7B21E30A3FA009ACC25 /* ubs.ttf in Resources */,
@@ -3408,6 +3435,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_MODULE_NAME = cbc;
+				PRODUCT_NAME = cbc;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3455,6 +3485,9 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_MODULE_NAME = cbc;
+				PRODUCT_NAME = cbc;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

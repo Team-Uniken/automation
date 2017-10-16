@@ -52,9 +52,26 @@ export default class NotificationCard extends Component {
 
     render() {
         var body = this.props.notification.message.body;
-        var bodyarray = body.split("\n");
+        var bodyarray = body.split("<br>");
         var amount = bodyarray[3];
         var font = 22;
+      
+      var bulletList = [];
+      
+      for(let i = 0; i < bodyarray.length; i++){
+        
+        bulletList.push(
+          <View key = {i}>
+          <View style={style.row}>
+          <Text style={style.dot}>{"\u2022"}</Text>
+          <Text style={style.body}>
+          {bodyarray[i]}
+          </Text>
+          </View>
+          </View>
+          )
+      }
+      
 
         if (typeof amount == "undefined") {
             amount = '';
@@ -128,24 +145,8 @@ export default class NotificationCard extends Component {
 
                                 <View style={[style.col, { marginTop: 4 }]}>
 
-                                    <View style={style.row}>
-                                        <Text style={style.dot}>{"\u2022"}</Text>
-                                        <Text style={style.body}>
-                                            {bodyarray[0]}
-                                        </Text>
-                                    </View>
-                                    <View style={style.row}>
-                                        <Text style={style.dot}>{"\u2022"}</Text>
-                                        <Text style={style.body}>
-                                            {bodyarray[1]}
-                                        </Text>
-                                    </View>
-                                    <View style={style.row}>
-                                        <Text style={style.dot}>{"\u2022"}</Text>
-                                        <Text style={style.body}>
-                                            {bodyarray[2]}
-                                        </Text>
-                                    </View>
+                                    { bulletList }
+              
                                     <View style={style.row}>
                                         <Text style={style.bold}>
                                             {amount}
@@ -218,24 +219,8 @@ export default class NotificationCard extends Component {
 
                                 <View style={[style.col, { marginTop: 4 }]}>
 
-                                    <View style={style.row}>
-                                        <Text style={style.dot}>{"\u2022"}</Text>
-                                        <Text style={style.body2}>
-                                            {bodyarray[0]}
-                                        </Text>
-                                    </View>
-                                    <View style={style.row}>
-                                        <Text style={style.dot}>{"\u2022"}</Text>
-                                        <Text style={style.body2}>
-                                            {bodyarray[1]}
-                                        </Text>
-                                    </View>
-                                    <View style={style.row}>
-                                        <Text style={style.dot}>{"\u2022"}</Text>
-                                        <Text style={style.body2}>
-                                            {bodyarray[2]}
-                                        </Text>
-                                    </View>
+                                  { bulletList }
+              
                                 </View>
 
                                 {this.props.expand && <View style={{ flex: 1 }}/>}
