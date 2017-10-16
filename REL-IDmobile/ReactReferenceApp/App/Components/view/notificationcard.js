@@ -69,7 +69,7 @@ export default class NotificationCard extends Component {
       
       for(let i = 0; i < bodyarray.length; i++){
         var bodyStr = bodyarray[i];
-        bodyStr = this.replaceString('<br>','\n',bodyStr);
+        bodyStr = this.replaceString('<br/>','\n',bodyStr);
         bulletList.push(
           <View key = {i}>
           <View style={style.row}>
