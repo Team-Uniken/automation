@@ -49,23 +49,33 @@ export default class NotificationCard extends Component {
 
         Events.trigger("onNotificationAction", bundle);
     }
-
+  
+    replaceString(find, replace, str)
+    {
+      while( str.indexOf(find) > -1)
+      {
+        str = str.replace(find, replace);
+      }
+      return str;
+    }
+  
     render() {
         var body = this.props.notification.message.body;
-        var bodyarray = body.split("<br>");
+        var bodyarray = body.split("\n");
         var amount = bodyarray[3];
         var font = 22;
       
       var bulletList = [];
       
       for(let i = 0; i < bodyarray.length; i++){
-        
+        var bodyStr = bodyarray[i];
+        bodyStr = this.replaceString('<br>','\n',bodyStr);
         bulletList.push(
           <View key = {i}>
           <View style={style.row}>
           <Text style={style.dot}>{"\u2022"}</Text>
           <Text style={style.body}>
-          {bodyarray[i]}
+          {bodyStr}
           </Text>
           </View>
           </View>
