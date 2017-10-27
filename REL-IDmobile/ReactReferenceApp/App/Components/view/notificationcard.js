@@ -49,16 +49,7 @@ export default class NotificationCard extends Component {
 
         Events.trigger("onNotificationAction", bundle);
     }
-  
-    replaceString(find, replace, str)
-    {
-      while( str.indexOf(find) > -1)
-      {
-        str = str.replace(find, replace);
-      }
-      return str;
-    }
-  
+
     render() {
         var body = this.props.notification.message.body;
         var bodyarray = body.split("\n");
@@ -69,7 +60,7 @@ export default class NotificationCard extends Component {
       
       for(let i = 0; i < bodyarray.length; i++){
         var bodyStr = bodyarray[i];
-        bodyStr = this.replaceString('<br/>','\n',bodyStr);
+        bodyStr = Util.replaceString('<br/>','\n',bodyStr);
         bulletList.push(
           <View key = {i}>
           <View style={style.row}>

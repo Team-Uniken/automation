@@ -561,6 +561,23 @@ class Notifications_History extends Component {
    */
   notification_history(notification) {
     var bodyarray = notification.message.body.split("\n");
+    var bulletList = [];
+    
+    for(let i = 0; i < bodyarray.length; i++){
+      var bodyStr = bodyarray[i];
+      bodyStr = Util.replaceString('<br/>','\n',bodyStr);
+      bulletList.push(
+        <View key = {i}>
+          <View style={Skin.notification.historyrow}>
+          <Text style={Skin.notification.dot}>{"\u2022"}</Text>
+          <Text style={Skin.notification.body}>
+            {bodyStr}
+          </Text>
+        </View>
+        </View>
+        )
+    }
+    
     var indents = [];
     if (notification.status == 'ACTIVE') {
       indents.push(
@@ -585,8 +602,6 @@ class Notifications_History extends Component {
         </View>
       );
     }
-
-
     return (
       <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
         <View style={[Skin.notification.historyrow, { marginBottom: 4 }]}>
@@ -598,25 +613,9 @@ class Notifications_History extends Component {
           </Text>
         </View>
 
+
         <View style={{ backgroundColor: 'transparent', flex: 2, flexDirection: 'column', marginBottom: 8 }}>
-          <View style={Skin.notification.historyrow}>
-            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-            <Text style={Skin.notification.body}>
-              {bodyarray[0]}
-            </Text>
-          </View>
-          <View style={Skin.notification.historyrow}>
-            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-            <Text style={Skin.notification.body}>
-              {bodyarray[1]}
-            </Text>
-          </View>
-          <View style={Skin.notification.historyrow}>
-            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-            <Text style={Skin.notification.body}>
-              {bodyarray[2]}
-            </Text>
-          </View>
+         {bulletList}
         </View>
         {indents}
       </View>

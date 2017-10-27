@@ -240,6 +240,13 @@ class Util extends Component {
     var s = localDate.format("DD/MM/YYYY HH:mm:ss");
     return s;
   }
+
+  static replaceString(find, replace, str){
+    while( str.indexOf(find) > -1){
+      str = str.replace(find, replace);
+    }
+    return str;
+  }
 }
 
 
