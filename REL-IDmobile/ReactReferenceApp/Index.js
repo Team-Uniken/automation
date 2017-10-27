@@ -363,7 +363,7 @@ round: 1000,
 //}
 
 import {StackNavigator, NavigationActions} from 'react-navigation';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator'
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import LoadScreen from './App/Scenes/Load';
 import ConnectionProfileScreen from './App/Scenes/ConnectionProfile';
 import WelcomeScreen from './App/Scenes/Welcome_Screen';

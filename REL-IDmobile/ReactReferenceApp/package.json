@@ -9,7 +9,7 @@
     "android-sandp": "ENVFILE=env.sandp react-native run-android"
   },
   "dependencies": {
-    "@exponent/react-native-navigator": "^0.4.2",
+    "@expo/react-native-navigator": "^0.4.2",
     "buffer": "^5.0.6",
     "dateformat": "^1.0.12",
     "eslint-plugin-import": "^1.7.0",
@@ -20,13 +20,13 @@
     "lodash.isequal": "^4.5.0",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
-    "react": "16.0.0-alpha.6",
-    "react-native": "0.44.2",
+    "react": "16.0.0-alpha.12",
+    "react-native": "0.49.0",
     "react-native-calendar": "0.3.1",
     "react-native-camera": "^0.6.0",
     "react-native-checkbox-field": "^1.1.0",
     "react-native-communications": "^1.0.1",
-    "react-native-config": "git+https://github.com/hussainkantawala/react-native-config.git#6b5216e0a587906166936091cb3b348fef0e8b32",
+    "react-native-config": "git+https://github.com/abhayUniken/react-native-config.git",
     "react-native-datepicker": "1.6.0",
     "react-native-dismiss-keyboard": "^1.0.0",
     "react-native-drawer": "^2.0.0",
@@ -76,6 +76,6 @@
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "1.9.2",
     "jest": "20.0.4",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-test-renderer": "16.0.0-alpha.12"
   }
 }
