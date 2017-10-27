@@ -637,6 +637,48 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		55B94DD41FA3146200AE0D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DBE0D001F3B181A0099AA32;
+			remoteInfo = fishhook;
+		};
+		55B94DD61FA3146200AE0D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DBE0D0D1F3B181C0099AA32;
+			remoteInfo = "fishhook-tvOS";
+		};
+		55B94DE31FA3146200AE0D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		55B94DE51FA3146200AE0D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
+			remoteInfo = "third-party-tvOS";
+		};
+		55B94DE71FA3146200AE0D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
+		};
+		55B94DE91FA3146200AE0D58 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
+			remoteInfo = "double-conversion-tvOS";
+		};
 		55F31D571F16063000C198C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F1B7F1E3E86E4C64AE9B5626 /* RNFS.xcodeproj */;
@@ -1203,6 +1245,8 @@
 			children = (
 				139FDEF41B06529B00C62182 /* libRCTWebSocket.a */,
 				55B8426B1EE015B2006364A1 /* libRCTWebSocket-tvOS.a */,
+				55B94DD51FA3146200AE0D58 /* libfishhook.a */,
+				55B94DD71FA3146200AE0D58 /* libfishhook-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1218,6 +1262,10 @@
 				55B8427D1EE015B2006364A1 /* libcxxreact.a */,
 				55B8427F1EE015B2006364A1 /* libjschelpers.a */,
 				55B842811EE015B2006364A1 /* libjschelpers.a */,
+				55B94DE41FA3146200AE0D58 /* libthird-party.a */,
+				55B94DE61FA3146200AE0D58 /* libthird-party.a */,
+				55B94DE81FA3146200AE0D58 /* libdouble-conversion.a */,
+				55B94DEA1FA3146200AE0D58 /* libdouble-conversion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1288,6 +1336,20 @@
 				559A9DD21F28966900D8F3FD /* libRNSpinkit.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		55B94DB91FA3146200AE0D58 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				6F434F749DC140C5BCDC414D /* libRCTFBSDK.a */,
+				617F92D6FBF04371B6760DC9 /* libReactNativeConfig.a */,
+				096B4050EB024090BB820E85 /* libAirMaps.a */,
+				9F3F2EC87F7048FDAE7FBB25 /* libRNFS.a */,
+				7058B14FFEDA44BCAE135904 /* libRNSpinkit.a */,
+				0F14994FD60A46A1B0202255 /* libLRDRCTSimpleToast.a */,
+				88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		55F31D341F16063000C198C3 /* Products */ = {
@@ -1488,6 +1550,7 @@
 				654F81C41CC9FAD5009E6168 /* ReactRefApp */,
 				654F81D61CC9FAE3009E6168 /* ReactRefAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				55B94DB91FA3146200AE0D58 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -2088,6 +2151,48 @@
 			remoteRef = 55B842801EE015B2006364A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		55B94DD51FA3146200AE0D58 /* libfishhook.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libfishhook.a;
+			remoteRef = 55B94DD41FA3146200AE0D58 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55B94DD71FA3146200AE0D58 /* libfishhook-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libfishhook-tvOS.a";
+			remoteRef = 55B94DD61FA3146200AE0D58 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55B94DE41FA3146200AE0D58 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 55B94DE31FA3146200AE0D58 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55B94DE61FA3146200AE0D58 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 55B94DE51FA3146200AE0D58 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55B94DE81FA3146200AE0D58 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 55B94DE71FA3146200AE0D58 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55B94DEA1FA3146200AE0D58 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 55B94DE91FA3146200AE0D58 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		55F31D581F16063000C198C3 /* libRNFS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2299,7 +2404,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		1A6151D31E4CDF5B00B3C9B2 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2313,7 +2418,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		5528FFCA1F21F73C00560B76 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2327,7 +2432,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		552BB7BE1E1BA0B90009F274 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2341,7 +2446,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		558C99B51E7BF7A30002C56F /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2355,7 +2460,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		55D351901E1E0F7C00806F82 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2369,7 +2474,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		65127E171D795B4000FB36E1 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2383,7 +2488,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		65D7F7461E308FC8009ACC25 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2397,7 +2502,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
