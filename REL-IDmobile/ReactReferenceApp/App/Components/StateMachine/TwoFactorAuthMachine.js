@@ -323,7 +323,7 @@ class TwoFactorAuthMachine extends Component {
                         NavigationActions.navigate({
                           routeName: 'StateMachine', params: {
                             url: {
-                              challengeJson,
+                              chlngJson:challengeJson,
                               screenId: nextChlngName,
                               currentIndex: 0
                             }, title: nextChlngName
