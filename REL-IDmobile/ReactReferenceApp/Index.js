@@ -12,7 +12,7 @@
 // Loading react library
 import React from 'react';
 
-import { FormattedWrapper } from 'react-native-globalize';            //Provides access to all formatting options as well as easy-to-use React Native components
+//import { FormattedWrapper } from 'react-native-globalize';            //Provides access to all formatting options as well as easy-to-use React Native components
 import buildStyleInterpolator from 'buildStyleInterpolator';
 import { AppRegistry, Text } from 'react-native';
 import { Component } from 'react';
@@ -363,7 +363,7 @@ round: 1000,
 //}
 
 import {StackNavigator, NavigationActions} from 'react-navigation';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
+//import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator'
 import LoadScreen from './App/Scenes/Load';
 import ConnectionProfileScreen from './App/Scenes/ConnectionProfile';
 import WelcomeScreen from './App/Scenes/Welcome_Screen';
