@@ -1,4 +1,4 @@
-/**
+ /**
  *  Update Password screen. 
  */
 
@@ -172,7 +172,8 @@ export default class UpdateQuestionSet extends Component {
        This method is used to handle the cancel button click or back button.
      */
   close() {
-    this.props.parentnav.pop();
+    //this.props.parentnav.pop();
+    this.props.navigator.goBack();
     return true;
   }
 
@@ -284,7 +285,7 @@ export default class UpdateQuestionSet extends Component {
             label= {this.btnText() }
             onPress={this.setSecrets.bind(this) }/>
             </View>
-<KeyboardSpacer topSpacing={0}/>
+                  <KeyboardSpacer topSpacing={0}/>
                 </View>
             
            </ScrollView>
@@ -299,9 +300,7 @@ export default class UpdateQuestionSet extends Component {
 
   }
 }
-
 module.exports = UpdateQuestionSet;
-
 const styles = StyleSheet.create({
   listViewWrap: {
     backgroundColor: 'white',
