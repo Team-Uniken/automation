@@ -63,7 +63,7 @@ export default class NotificationCard extends Component {
         bodyStr = Util.replaceString('<br/>','\n',bodyStr);
         bulletList.push(
           <View key = {i}>
-          <View style={style.row}>
+          <View style={[style.row,{width: SCREEN_WIDTH - 62}]}>
           <Text style={style.dot}>{"\u2022"}</Text>
           <Text style={style.body}>
           {bodyStr}
@@ -307,6 +307,7 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         color: Skin.BLACK_TEXT_COLOR,
         width: 188,
+        flex:3,
         textAlign: 'left',
         opacity: 1,
         backgroundColor: 'transparent',
@@ -316,8 +317,9 @@ const style = StyleSheet.create({
         color: Skin.BLACK_TEXT_COLOR,
         textAlign: 'right',
         opacity: 0.6,
+        flex:2,
         backgroundColor: 'transparent',
-        width: SCREEN_WIDTH - 230,
+        //width: SCREEN_WIDTH - 230,
     },
     body: {
         fontSize: 16,
