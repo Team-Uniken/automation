@@ -266,7 +266,7 @@ class MainActivation extends Component {
           <View style={Skin.activationStyle.container} onPress={this.dismiss} >
 
 
-            <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH }]}>
+            <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH },this.props.style?this.props.style:{}]}>
               {this.props.children}
             </View>
 
