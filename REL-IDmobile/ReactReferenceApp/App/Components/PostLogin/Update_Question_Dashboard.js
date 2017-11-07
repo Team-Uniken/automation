@@ -1,6 +1,6 @@
- /**
- *  Update Password screen. 
- */
+/**
+*  Update Password screen. 
+*/
 
 'use strict';
 
@@ -14,7 +14,7 @@ import Config from 'react-native-config';
 /*
  Required for this js
  */
-import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackHandler, ScrollView, } from 'react-native';
+import {View, Text, TouchableHighlight, TouchableOpacity, ListView, TextInput, StyleSheet, StatusBar, InteractionManager, BackHandler, ScrollView, Platform,} from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -107,15 +107,15 @@ export default class UpdateQuestionSet extends Component {
     } else {
       dismissKeyboard();
       InteractionManager.runAfterInteractions(() => {
-        if (kSecQ.trim().length == 0 ){
-        alert('Please enter question');
-        return 0;
+        if (kSecQ.trim().length == 0) {
+          alert('Please enter question');
+          return 0;
         }
-        else if (vSecA.trim().length == 0 ){
-        alert('Please enter answer');
+        else if (vSecA.trim().length == 0) {
+          alert('Please enter answer');
         }
-        else{
-        
+        else {
+
         }
       });
     }
@@ -180,16 +180,16 @@ export default class UpdateQuestionSet extends Component {
   /*
     render pagetitle
   */
-  renderPageTitle(pageTitle){
-        return(<PageTitle title={pageTitle}
-        handler={this.goBack.bind(this)} isBadge={true}/>);
+  renderPageTitle(pageTitle) {
+    return (<PageTitle title={pageTitle}
+      handler={this.goBack.bind(this) } isBadge={true}/>);
   }
-  
-  goBack(){
+
+  goBack() {
     //    this.props.navigation.goBack();
     this.props.navigator.goBack();
   }
-  
+
 
   /*
        This method is used to render the componenet with all its element.
@@ -209,7 +209,7 @@ export default class UpdateQuestionSet extends Component {
           open: false,
           disabled: true,
         }}
-        defaultNav = {isPageTitle?false:true}
+        defaultNav = {isPageTitle ? false : true}
         navBar={{
           title: 'Change Secret',
           visible: true,
@@ -224,74 +224,70 @@ export default class UpdateQuestionSet extends Component {
         }}
         bottomMenu={{
           visible: false,
-        }}    
+        }}
         navigator={this.props.navigator}
         >
-         { isPageTitle && this.renderPageTitle('Change Secret')}
-        <View style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
-          <MainActivation>
-            <View
-            style={[{ justifyContent: 'center' },{flex:1},{marginBottom:80}]}>
-            <View style={[{ justifyContent: 'center',alignItems:'center' }]}>
-            <ScrollView style={[Skin.layout1.content.scrollwrap]} keyboardShouldPersistTaps={true}
-            overScrollMode='never'
-            bounces='false'
-            contentContainerStyle={{justifyContent:'center',flexGrow:1}}>
-            <View style={[{justifyContent: 'center',alignItems:'center' ,
-                           
-                              }]}>
-                  <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
-                  <Margin
-                    space={16}/>
-                  <Input
-                    value={this.state.secQue}
-                    style = {Skin.baseline.textinput.base}
-                    autoCorrect={false}
-                    placeholder={'Type/Select question'}
-                    returnKeyType = {"next"}
-                    placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
-                    onChange={this.onQuestionChange.bind(this) }
-                    onSubmitEditing={() => {
-                      this.refs.secAnswer.focus();
-                    } }
-                    />
-                  <Margin
-                    space={8}/>
-                  <View style={styles.listViewWrap}>
-                    <ListView
-                      ref="listView"
-                      automaticallyAdjustContentInsets={false}
-                      dataSource={this.state.dataSource}
-                      renderRow={this.renderRow.bind(this) }
-                      renderSeperator={this.renderSeperator.bind(this) }
-                      style={styles.listView}
-                      showsVerticalScrollIndicator
+        { isPageTitle && this.renderPageTitle('Change Secret') }
+        <View style={[{ justifyContent: 'center' }, { flex: 1 }, {  }]}>
+          <MainActivation style={{flex:1, backgroundColor: Skin.main.BACKGROUND_COLOR}}>
+                <ScrollView  keyboardShouldPersistTaps={true} showsVerticalScrollIndicator={false}
+                  overScrollMode='never'
+                  bounces='false'
+                  contentContainerStyle={{justifyContent: 'center',alignItems:'center', flexGrow: 1 }}>
+                  <View style={[{
+                    flexDirection:"column",
+                    justifyContent: 'center', alignSelf: 'center'
+                  }]}>
+                    <Text style={Skin.layout0.top.subtitle}>Secret Question and Answer</Text>
+                    <Margin
+                      space={16}/>
+                    <Input
+                      value={this.state.secQue}
+                      style = {Skin.baseline.textinput.base}
+                      autoCorrect={false}
+                      placeholder={'Type/Select question'}
+                      returnKeyType = {"next"}
+                      placeholderTextColor={Skin.baseline.textinput.placeholderTextColor}
+                      onChange={this.onQuestionChange.bind(this) }
+                      onSubmitEditing={() => {
+                        this.refs.secAnswer.focus();
+                      } }
                       />
+                    <Margin
+                      space={8}/>
+                    <View style={styles.listViewWrap}>
+                      <ListView
+                        ref="listView"
+                        automaticallyAdjustContentInsets={false}
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderRow.bind(this) }
+                        renderSeperator={this.renderSeperator.bind(this) }
+                        style={styles.listView}
+                        showsVerticalScrollIndicator
+                        /> 
+                    </View>
+                    <Margin
+                      space={16}/>
+                    <View style={[{
+                      justifyContent: 'center', alignItems: 'center',
+                    }]}>
+                      <Input
+                        ref={'secAnswer'}
+                        placeholder={'Enter your secret answers'}
+                        autoCorrect={false}
+                        onSubmitEditing={this.setSecrets.bind(this) }
+                        onChange={this.onAnswerChange.bind(this)
+                        }/>
+
+                      <Button
+                        label= {this.btnText() }
+                        onPress={this.setSecrets.bind(this) }/>
+                    </View>
                   </View>
-                  <Margin
-                    space={16}/>
-            <View style={[{justifyContent: 'center',alignItems:'center' ,
-                          
-                          }]}>
-                  <Input
-                    ref={'secAnswer'}
-                    placeholder={'Enter your secret answer'}
-                    autoCorrect={false}
-                    onSubmitEditing={this.setSecrets.bind(this) }
-                    onChange={this.onAnswerChange.bind(this)
-                    }
-                    />
-            <Button
-            label= {this.btnText() }
-            onPress={this.setSecrets.bind(this) }/>
-            </View>
-                  <KeyboardSpacer topSpacing={0}/>
-                </View>
-            
-           </ScrollView>
-            
-              </View>
-            </View>
+                </ScrollView>
+                <View style={{height:5}}/>
+                {Platform.OS === 'ios' &&  <KeyboardSpacer topSpacing={0}/>}
+                
           </MainActivation>
         </View>
       </Main >
