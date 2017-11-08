@@ -311,7 +311,7 @@ class ControlPanel extends Component {
     console.log('immediate response is' + e.response);
     var responseJson = JSON.parse(e.response);
     if (responseJson.errCode == 0) {
-      if (Config.GETCONFIG===true){
+      if (Config.GETCONFIG==="true"){
         alert(e.response);
       }
         
