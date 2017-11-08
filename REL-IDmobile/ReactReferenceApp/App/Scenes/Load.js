@@ -627,7 +627,7 @@ class Load extends Component {
     //   ])
     // ]).start();
 
-    if (Config.ENABLESTARTUPANIMATION)
+    if (Config.ENABLESTARTUPANIMATION === "true")
       this.animate();
   }
   /*
