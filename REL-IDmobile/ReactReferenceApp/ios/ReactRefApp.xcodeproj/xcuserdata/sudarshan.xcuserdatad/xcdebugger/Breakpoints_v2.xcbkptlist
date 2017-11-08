@@ -46,19 +46,13 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-            timestampString = "531817671.392192"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1848"
-            endingLineNumber = "1848"
-            landmarkName = "performDeviceSecurityChecks()"
-            landmarkType = "9">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -68,23 +62,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-            timestampString = "531817677.459902"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2014"
-            endingLineNumber = "2014"
-            landmarkName = "-_handleDiscoveredThreats:andErrors:andAppCallback:andThreatLevelJson:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-            timestampString = "531817897.137327"
+            timestampString = "531833232.387328"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
@@ -100,11 +78,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-            timestampString = "531817948.254408"
+            timestampString = "531834153.971968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1390"
-            endingLineNumber = "1390"
+            startingLineNumber = "1393"
+            endingLineNumber = "1393"
             landmarkName = "onDnaStatusUpdate_cb()"
             landmarkType = "9">
          </BreakpointContent>
@@ -116,11 +94,75 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-            timestampString = "531819501.859485"
+            timestampString = "531834153.971968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1921"
-            endingLineNumber = "1921"
+            startingLineNumber = "1811"
+            endingLineNumber = "1811"
+            landmarkName = "performDeviceSecurityChecks()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
+            timestampString = "531834153.971968"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1848"
+            endingLineNumber = "1848"
+            landmarkName = "performDeviceSecurityChecks()"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "performDeviceSecurityChecks"
+                  moduleName = "cbc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sudarshan/Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
+                  timestampString = "531834334.200648"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1848"
+                  endingLineNumber = "1848"
+                  offsetFromSymbolStart = "2181">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__performDeviceSecurityChecks_block_invoke"
+                  moduleName = "cbc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sudarshan/Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
+                  timestampString = "531834334.202203"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1850"
+                  endingLineNumber = "1850"
+                  offsetFromSymbolStart = "140">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
+            timestampString = "531834153.971968"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1850"
+            endingLineNumber = "1850"
             landmarkName = "performDeviceSecurityChecks()"
             landmarkType = "9">
          </BreakpointContent>
@@ -132,45 +174,125 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-            timestampString = "531819609.125831"
+            timestampString = "531834153.971968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1846"
-            endingLineNumber = "1846"
+            startingLineNumber = "1979"
+            endingLineNumber = "1979"
+            landmarkName = "-startBetterMobiMonitoring:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/core/core-api.c"
+            timestampString = "531833852.893024"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3899"
+            endingLineNumber = "3899"
+            landmarkName = "coreResumeRuntime()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/core/core-api.c"
+            timestampString = "531833915.264844"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3494"
+            endingLineNumber = "3494"
+            landmarkName = "corePauseRuntime()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/core/core-api.c"
+            timestampString = "531833926.489687"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2561"
+            endingLineNumber = "2561"
+            landmarkName = "serialize_core_ctx()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/core/core-api.c"
+            timestampString = "531833935.755669"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2620"
+            endingLineNumber = "2620"
+            landmarkName = "serialize_core_ctx()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/core/core-api.c"
+            timestampString = "531834007.596668"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2196"
+            endingLineNumber = "2196"
+            landmarkName = "deserialize_core_ctx()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/core/core-api.c"
+            timestampString = "531834047.345169"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3900"
+            endingLineNumber = "3900"
+            landmarkName = "coreResumeRuntime()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
+            timestampString = "531834344.042866"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1822"
+            endingLineNumber = "1822"
             landmarkName = "performDeviceSecurityChecks()"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "performDeviceSecurityChecks"
-                  moduleName = "cbc"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sudarshan/Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-                  timestampString = "531826612.504414"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1846"
-                  endingLineNumber = "1846"
-                  offsetFromSymbolStart = "1696">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__performDeviceSecurityChecks_block_invoke"
-                  moduleName = "cbc"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sudarshan/Desktop/betterSVN/api-sdk/src/libs/wrapper/react_ios_objc/RDNA.m"
-                  timestampString = "531826612.506289"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1848"
-                  endingLineNumber = "1848"
-                  offsetFromSymbolStart = "144">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
