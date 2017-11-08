@@ -14,7 +14,7 @@
 #import <React/RCTEventDispatcher.h>
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
-#import "ActiveShieldSDK.h"
+//#import "ActiveShieldSDK.h"
 #import <ReactNativeConfig/ReactNativeConfig.h>
 
 RDNA *rdnaObject;
@@ -32,7 +32,7 @@ RDNAIWACreds *rdnaIWACredsObj;
   NSMutableDictionary *jsonDictionary;
   NSMutableDictionary *dictHttpCallbacks;
   int i;
-  ActiveShield *_shield;
+  //  ActiveShield *_shield;
   AppDelegate *delegate;
 }
 @end
@@ -49,7 +49,7 @@ RCT_EXPORT_MODULE();
 }
 
 -(void)initParams{
-// RDNAErrorID errorID= [RDNA getErrorInfo:272629808];
+  // RDNAErrorID errorID= [RDNA getErrorInfo:272629808];
   rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
   dictHttpCallbacks = [[NSMutableDictionary alloc]init];
 }
@@ -83,113 +83,121 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
       rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
       rdnaSSLlCertificate.p12Certificate = [dictSSLDetails valueForKey:@"data"];
       rdnaSSLlCertificate.password = [dictSSLDetails valueForKey:@"password"];
-
-    }
-       }
-    
-  [self initParams];
-
-  if([[ReactNativeConfig envFor:@"BETTERMOBI"] isEqualToString:@"true"]){
-  
-  __block bool retval = YES;
-  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
-
-  _shield = [ActiveShield sharedInstance];
-  [_shield performSecurityCheckWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES) andCompletion:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors) {
-    
-    for (ASSecurityThreat *_threat in discoveredThreats)
-    {
-      switch (_threat.genus)
-      {
-        case ASSecurityThreatCategorySystem:
-          if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
-          {
-            //ok, this device is jailbroken (or in any other way compromised) :(
-            NSString *threatString =@"The device's integrity is compromised";
-            [threatSet addObject:threatString];
-             retval = NO;
-          }
-          break;
-        case ASSecurityThreatCategoryNetwork:
-          //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
-          if (_threat.implicatedNetworks.count)
-          {
-            BMNetworkId *_network = _threat.implicatedNetworks[0];
-            NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
-            [threatSet addObject:threatString];
-            retval = NO;
-          }
-          break;
-        case ASSecurityThreatCategoryApp:
-          if (_threat.implicatedApps.count)
-          {
-            NSString *_badAppBundleID = _threat.implicatedApps[0];
-            if (_threat.species == ASAppSecurityThreatRepackagedApp)
-            {
-              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-            else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
-            {
-              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-                NSString *threatString =@"Your device contains app from unknown resources";
-                [threatSet addObject:threatString];
-                retval = NO;
-              }
-            }
-            else if(_threat.species == ASAppSecurityThreatMaliciousApp)
-            {
-              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-            else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
-              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-                NSString *threatString =@"Your device contains app from unknown resources";
-                [threatSet addObject:threatString];
-                retval = NO;
-              }
-            }
-            else{
-              retval = YES;
-            }
-          }
-          break;
-          
-        default:
-          break;
-      }
-    }
-    if(retval){
-      RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
-      rdnaObject = rdna;
-      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-      callback(@[responseArray]);
-      if (errorID ==0) {
-        [self startBetterMobiMonitoring];
-      }
-    }else{
-      NSMutableString *errorString = [[NSMutableString alloc]init];
-      NSArray *threat = [threatSet allObjects];
-      for (int j =0; j<threat.count; j++) {
-        [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
-      }
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [delegate onDeviceThreat:errorString];
-      });
-    }
-  }];
-  }else{
-      RDNA *rdna;
-      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
-      rdnaObject = rdna;
-      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-      callback(@[responseArray]);
       
+    }
+  }
+  
+  [self initParams];
+  
+  if([[ReactNativeConfig envFor:@"BETTERMOBI"] isEqualToString:@"true"]){
+    
+    __block bool retval = YES;
+    __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
+    
+    //  _shield = [ActiveShield sharedInstance];
+    //  [_shield performSecurityCheckWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES) andCompletion:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors) {
+    //
+    //    for (ASSecurityThreat *_threat in discoveredThreats)
+    //    {
+    //      switch (_threat.genus)
+    //      {
+    //        case ASSecurityThreatCategorySystem:
+    //          if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
+    //          {
+    //            //ok, this device is jailbroken (or in any other way compromised) :(
+    //            NSString *threatString =@"The device's integrity is compromised";
+    //            [threatSet addObject:threatString];
+    //             retval = NO;
+    //          }
+    //          break;
+    //        case ASSecurityThreatCategoryNetwork:
+    //          //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
+    //          if (_threat.implicatedNetworks.count)
+    //          {
+    //            BMNetworkId *_network = _threat.implicatedNetworks[0];
+    //            NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
+    //            [threatSet addObject:threatString];
+    //            retval = NO;
+    //          }
+    //          break;
+    //        case ASSecurityThreatCategoryApp:
+    //          if (_threat.implicatedApps.count)
+    //          {
+    //            NSString *_badAppBundleID = _threat.implicatedApps[0];
+    //            if (_threat.species == ASAppSecurityThreatRepackagedApp)
+    //            {
+    //              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
+    //              [threatSet addObject:threatString];
+    //              retval = NO;
+    //            }
+    //            else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
+    //            {
+    //              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+    //                NSString *threatString =@"Your device contains app from unknown resources";
+    //                [threatSet addObject:threatString];
+    //                retval = NO;
+    //              }
+    //            }
+    //            else if(_threat.species == ASAppSecurityThreatMaliciousApp)
+    //            {
+    //              NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
+    //              [threatSet addObject:threatString];
+    //              retval = NO;
+    //            }
+    //            else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
+    //              if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+    //                NSString *threatString =@"Your device contains app from unknown resources";
+    //                [threatSet addObject:threatString];
+    //                retval = NO;
+    //              }
+    //            }
+    //            else{
+    //              retval = YES;
+    //            }
+    //          }
+    //          break;
+    //
+    //        default:
+    //          break;
+    //      }
+    //    }
+    //    if(retval){
+    //      RDNA *rdna;
+    //      errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
+    //      rdnaObject = rdna;
+    //      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+    //      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    //      callback(@[responseArray]);
+    //      if (errorID ==0) {
+    //        [self startBetterMobiMonitoring];
+    //      }
+    //    }else{
+    //      NSMutableString *errorString = [[NSMutableString alloc]init];
+    //      NSArray *threat = [threatSet allObjects];
+    //      for (int j =0; j<threat.count; j++) {
+    //        [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
+    //      }
+    //      dispatch_async(dispatch_get_main_queue(), ^{
+    //        [delegate onDeviceThreat:errorString];
+    //      });
+    //    }
+    //  }];
+  }else{
+    
+    RDNA *rdna;
+    //    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //    dispatch_async(queue, ^{
+    errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil AppContext:self];
+    
+    rdnaObject = rdna;
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      callback(@[responseArray]);
+    });
+    
+    //      });
     
   }
 }
@@ -202,7 +210,9 @@ RCT_EXPORT_METHOD (getServiceByServiceName:(NSString *)serviceName
   errorID = [rdnaObject getServiceByServiceName:serviceName ServiceInfo:&service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -215,7 +225,9 @@ RCT_EXPORT_METHOD (getServiceByTargetCoordinate:(NSString *)targetHNIP
   errorID = [rdnaObject getServiceByTargetCoordinate:targetHNIP TargetPort:targetPORT ServicesInfo:&service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -226,7 +238,9 @@ RCT_EXPORT_METHOD (getAllServices:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject getAllServices:&service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -237,7 +251,9 @@ RCT_EXPORT_METHOD (serviceAccessStart:(NSString *)service
   errorID = [rdnaObject serviceAccessStart:service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -248,7 +264,9 @@ RCT_EXPORT_METHOD (serviceAccessStop:(NSString *)service
   errorID = [rdnaObject serviceAccessStop:service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -258,7 +276,9 @@ RCT_EXPORT_METHOD (serviceAccessStartAll:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject serviceAccessStartAll];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -268,7 +288,9 @@ RCT_EXPORT_METHOD (serviceAccessStopAll:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject serviceAccessStopAll];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -279,7 +301,9 @@ RCT_EXPORT_METHOD (pauseRuntime:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject pauseRuntime:&state];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
 }
 
 RCT_EXPORT_METHOD (resumeRuntime:(NSString *)state
@@ -293,7 +317,9 @@ RCT_EXPORT_METHOD (resumeRuntime:(NSString *)state
   rdnaObject = rdna;
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -303,7 +329,9 @@ RCT_EXPORT_METHOD (getSDKVersion:(RCTResponseSenderBlock)callback){
   NSString *sdkVersion = [RDNA getSDKVersion];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":sdkVersion};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
 }
 
 RCT_EXPORT_METHOD (getErrorInfo:(int)errorCode
@@ -312,7 +340,9 @@ RCT_EXPORT_METHOD (getErrorInfo:(int)errorCode
   RDNAErrorID error = [RDNA getErrorInfo:errorCode];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:error]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -323,7 +353,9 @@ RCT_EXPORT_METHOD (getDefaultCipherSpec:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject getDefaultCipherSpec:&cipherSpecs];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":cipherSpecs};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -334,7 +366,9 @@ RCT_EXPORT_METHOD (getDefaultCipherSalt:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject getDefaultCipherSalt:&cipherSalt];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":cipherSalt};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -349,7 +383,9 @@ RCT_EXPORT_METHOD (encryptDataPacket:(RDNAPrivacyScope)privacyScope
   errorID = [rdnaObject encryptDataPacket:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:plainText Into:&cipherText];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":cipherText};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -367,10 +403,12 @@ RCT_EXPORT_METHOD (decryptDataPacket:(RDNAPrivacyScope)privacyScope
     plainText = @"";
     dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":plainText};
   }else{
-  dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":plainText};
+    dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":plainText};
   }
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -385,7 +423,9 @@ RCT_EXPORT_METHOD (encryptHttpRequest:(RDNAPrivacyScope)privacyScope
   errorID = [rdnaObject encryptHttpRequest:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:request Into:&transformedRequest];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":transformedRequest};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -400,7 +440,9 @@ RCT_EXPORT_METHOD (decryptHttpResponse:(RDNAPrivacyScope)privacyScope
   errorID = [rdnaObject decryptHttpResponse:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:transformedResponse Into:&response];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":response};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -410,7 +452,9 @@ RCT_EXPORT_METHOD (terminate:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject terminate];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -426,7 +470,9 @@ RCT_EXPORT_METHOD (getSessionID:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject getSessionID:&sessionId];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":sessionId};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -437,7 +483,9 @@ RCT_EXPORT_METHOD (getAgentID:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject getAgentID:&agentId];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":agentId};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -448,7 +496,9 @@ RCT_EXPORT_METHOD (getDeviceID:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject getDeviceID:&deviceId];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":deviceId};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
 }
 
 RCT_EXPORT_METHOD (getConfig:(NSString *)userID
@@ -458,7 +508,9 @@ RCT_EXPORT_METHOD (getConfig:(NSString *)userID
   errorID = [rdnaObject getConfig:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -470,7 +522,9 @@ RCT_EXPORT_METHOD (testConfig:(NSString *)userID
   [rdnaObject terminate];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -481,7 +535,9 @@ RCT_EXPORT_METHOD (getAllChallenges:(NSString *)userID
   errorID = [rdnaObject getAllChallenges:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -491,7 +547,9 @@ RCT_EXPORT_METHOD (resetChallenge:(RCTResponseSenderBlock)callback){
   errorID = [rdnaObject resetChallenge];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -505,7 +563,9 @@ RCT_EXPORT_METHOD (checkChallenges:(NSString *)challengeRequestString
   errorID = [rdnaObject checkChallengeResponse:challengeRequestString forUserID:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
 }
 
 RCT_EXPORT_METHOD (updateChallenges:(NSString *)challengeRequestString
@@ -516,7 +576,9 @@ RCT_EXPORT_METHOD (updateChallenges:(NSString *)challengeRequestString
   errorID = [rdnaObject updateChallenges:challengeRequestString forUserID:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -527,7 +589,9 @@ RCT_EXPORT_METHOD (logOff:(NSString *)userID
   errorID = [rdnaObject logOff:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -538,7 +602,9 @@ RCT_EXPORT_METHOD (forgotPassword:(NSString *)userID
   errorID = [rdnaObject forgotPassword:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -549,7 +615,9 @@ RCT_EXPORT_METHOD (setDNSServers:(NSArray *)DNSServers
   //errorID = [RDNA setDNSServers:DNSServers];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -567,7 +635,9 @@ RCT_EXPORT_METHOD (createPrivacyStreamFor:(RDNAStreamType)streamType
   privacyStreamObject = privacyStream;
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -578,7 +648,9 @@ RCT_EXPORT_METHOD (getPostLoginChallenges:(NSString *)userID
   errorID = [rdnaObject getPostLoginChallenges:userID withUseCaseName:useCaseName];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
 }
 
 RCT_EXPORT_METHOD (getRegisteredDeviceDetails:(NSString *)userID
@@ -587,7 +659,9 @@ RCT_EXPORT_METHOD (getRegisteredDeviceDetails:(NSString *)userID
   errorID = [rdnaObject getRegisteredDeviceDetails:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -598,7 +672,9 @@ RCT_EXPORT_METHOD (updateDeviceDetails:(NSString *)userID
   errorID = [rdnaObject updateDeviceDetails:userID withDevices:devices];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -613,7 +689,9 @@ RCT_EXPORT_METHOD (getNotifications:(NSString *)recordCount
   errorID = [rdnaObject getNotifications:[recordCount intValue] withStartIndex:[startIndex intValue] withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -634,7 +712,9 @@ RCT_EXPORT_METHOD (getNotificationHistory:(int)recordCount
   errorID = [rdnaObject getNotificationHistory:recordCount withStartIndex:startIndex withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate withNotificationStatus:notificationStatus withActionPerformed:actionPerformed withKeywordSearch:keywordSearch withDeviceID:deviceID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -645,7 +725,9 @@ RCT_EXPORT_METHOD (updateNotification:(NSString *)notificationID
   errorID = [rdnaObject updateNotification:notificationID withResponse:response];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
 }
 
@@ -656,7 +738,9 @@ RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)passwo
   rdnaIWACredsObj.authStatus = action==YES?RDNA_IWA_AUTH_SUCCESS:RDNA_IWA_AUTH_CANCELLED;
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:0]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  callback(@[responseArray]);
+  dispatch_async(dispatch_get_main_queue(), ^{
+    callback(@[responseArray]);
+  });
   
   dispatch_semaphore_signal(semaphore);
   
@@ -705,12 +789,12 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   }
   
 }
-  
-  
+
+
 RCT_EXPORT_METHOD (exitApp){
-    exit(0);
+  exit(0);
 }
-  
+
 -(NSDictionary*)createJsonHttpResponse:(RDNAHTTPStatus*) status{
   
   NSMutableDictionary *dictStatusJson = [[NSMutableDictionary alloc] init];
@@ -770,7 +854,9 @@ RCT_EXPORT_METHOD (exitApp){
   i =0;
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onInitializeCompleted"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onInitializeCompleted" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^(){
+    [self sendEventWithName:@"onInitializeCompleted" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -778,7 +864,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onPauseCompleted"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onPauseCompleted" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onPauseCompleted" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -788,7 +876,10 @@ RCT_EXPORT_METHOD (exitApp){
   [defaults setValue:nil forKey:@"sContext"];
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onResumeCompleted"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onResumeCompleted" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onResumeCompleted" body:@{@"response":status}];
+  });
+  
   return 0;
 }
 
@@ -799,7 +890,9 @@ RCT_EXPORT_METHOD (exitApp){
   [defaults setValue:nil forKey:@"sContext"];
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onTerminateCompleted"
   //                                                            body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
     [self sendEventWithName:@"onTerminateCompleted" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -821,7 +914,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onConfigRecieved"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onConfigReceived" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onConfigReceived" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -829,7 +924,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onCheckChallengeResponseStatus"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onCheckChallengeResponseStatus" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onCheckChallengeResponseStatus" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -837,7 +934,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetAllChallengeStatus"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onGetAllChallengeStatus" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onGetAllChallengeStatus" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -846,7 +945,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateChallengeStatus"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onUpdateChallengeStatus" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onUpdateChallengeStatus" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -854,7 +955,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onForgotPasswordStatus"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onForgotPasswordStatus" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onForgotPasswordStatus" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -862,7 +965,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onLogOff"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onLogOff" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onLogOff" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -878,13 +983,17 @@ RCT_EXPORT_METHOD (exitApp){
     
     //    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"getpasswordSubscriptions"
     //                                                              body:@{@"response":name}];
-    [self sendEventWithName:@"onGetpassword" body:@{@"response":name}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self sendEventWithName:@"onGetpassword" body:@{@"response":name}];
+    });
     i++;
   }else{
     
     //    [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetCredentials"
     //                                                              body:@{@"response":domainUrl}];
-    [self sendEventWithName:@"onGetCredentials" body:@{@"response":domainUrl}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self sendEventWithName:@"onGetCredentials" body:@{@"response":domainUrl}];
+    });
   }
   semaphore = dispatch_semaphore_create(0);
   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
@@ -901,7 +1010,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetPostLoginChallenges"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onGetPostLoginChallenges" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onGetPostLoginChallenges" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -909,7 +1020,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetRegistredDeviceDetails"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onGetRegistredDeviceDetails" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onGetRegistredDeviceDetails" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -917,7 +1030,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceDetails"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onUpdateDeviceDetails" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onUpdateDeviceDetails" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -925,7 +1040,9 @@ RCT_EXPORT_METHOD (exitApp){
   
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateDeviceStatus"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onUpdateDeviceStatus" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onUpdateDeviceStatus" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -940,7 +1057,9 @@ RCT_EXPORT_METHOD (exitApp){
 - (int)onGetNotifications:(NSString *)status{
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onGetNotifications"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onGetNotifications" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onGetNotifications" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -948,12 +1067,16 @@ RCT_EXPORT_METHOD (exitApp){
 - (int)onUpdateNotification:(NSString *)status{
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onUpdateNotification"
   //                                                            body:@{@"response":status}];
-  [self sendEventWithName:@"onUpdateNotification" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onUpdateNotification" body:@{@"response":status}];
+  });
   return 0;
 }
 
 -(int)onGetNotificationsHistory:(NSString*)status{
-  [self sendEventWithName:@"onGetNotificationsHistory" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onGetNotificationsHistory" body:@{@"response":status}];
+  });
   return 0;
 }
 
@@ -969,9 +1092,21 @@ RCT_EXPORT_METHOD (exitApp){
 }
 
 -(int)onSessionTimeout:(NSString*)status{
-  [self sendEventWithName:@"onSessionTimeout" body:@{@"response":status}];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self sendEventWithName:@"onSessionTimeout" body:@{@"response":status}];
+  });
   return 0;
 }
+
+-(int)onSecurityThreat:(NSString*)status{
+  dispatch_async(dispatch_get_main_queue(), ^(){
+    AppDelegate *appdelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [appdelegate onDeviceThreat:status];
+  });
+  
+  return 0;
+}
+
 #pragma mark http response callback methods
 
 -(int)onHttpResponse:(RDNAHTTPStatus*) status{
@@ -1072,97 +1207,97 @@ RCT_EXPORT_METHOD (exitApp){
 #pragma mark BetterMobileSDk
 
 -(void)startBetterMobiMonitoring{
-
-  ReactRdnaModule __weak *self__ = self;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    [_shield addObserverWithCallback:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors)
-     {
-       [self__ _handleDiscoveredThreats:discoveredThreats andErrors:errors];
-     }];
-  });
-    [_shield startMonitoringWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES)];
+  
+  //  ReactRdnaModule __weak *self__ = self;
+  //  static dispatch_once_t onceToken;
+  //  dispatch_once(&onceToken, ^{
+  //    [_shield addObserverWithCallback:^(NSArray<ASSecurityThreat *> * _Nonnull discoveredThreats, NSArray<NSError *> * _Nonnull errors)
+  //     {
+  //       [self__ _handleDiscoveredThreats:discoveredThreats andErrors:errors];
+  //     }];
+  //  });
+  //    [_shield startMonitoringWithOptions:ASSecurityCheckOptionsMake(YES, YES, YES)];
 }
 
-- (void) _handleDiscoveredThreats:(NSArray<ASSecurityThreat *> *) discoveredThreats andErrors:(NSArray *)errors
-{
-  __block bool retval = YES;
-  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
-  for (ASSecurityThreat *_threat in discoveredThreats)
-  {
-    switch (_threat.genus)
-    {
-      case ASSecurityThreatCategorySystem:
-        if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
-        {
-          //ok, this device is jailbroken (or in any other way compromised) :(
-          NSString *threatString =@"The device's integrity is compromised";
-          [threatSet addObject:threatString];
-          retval = NO;
-        }
-        break;
-      case ASSecurityThreatCategoryNetwork:
-        //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
-        if (_threat.implicatedNetworks.count)
-        {
-          BMNetworkId *_network = _threat.implicatedNetworks[0];
-          NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
-          [threatSet addObject:threatString];
-          retval = NO;
-        }
-        break;
-      case ASSecurityThreatCategoryApp:
-        if (_threat.implicatedApps.count)
-        {
-          NSString *_badAppBundleID = _threat.implicatedApps[0];
-          if (_threat.species == ASAppSecurityThreatRepackagedApp)
-          {
-            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
-            [threatSet addObject:threatString];
-            retval = NO;
-          }
-          else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
-          {
-            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-              NSString *threatString =@"Your device contains app from unknown resources";
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-          }
-          else if(_threat.species == ASAppSecurityThreatMaliciousApp)
-          {
-            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
-            [threatSet addObject:threatString];
-            retval = NO;
-          }
-          else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
-            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
-              NSString *threatString =@"Your device contains app from unknown resources";
-              [threatSet addObject:threatString];
-              retval = NO;
-            }
-          }
-          else{
-            retval = YES;
-          }
-        }
-        break;
-        
-      default:
-        break;
-    }
-  }
-  if(!retval){
-    NSMutableString *errorString = [[NSMutableString alloc]init];
-    NSArray *threat = [threatSet allObjects];
-    for (int j =0; j<threat.count; j++) {
-      [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [delegate onDeviceThreat:errorString];
-    });
-  }
-}
+//- (void) _handleDiscoveredThreats:(NSArray<ASSecurityThreat *> *) discoveredThreats andErrors:(NSArray *)errors
+//{
+//  __block bool retval = YES;
+//  __block NSMutableSet *threatSet = [[NSMutableSet alloc]init];
+//  for (ASSecurityThreat *_threat in discoveredThreats)
+//  {
+//    switch (_threat.genus)
+//    {
+//      case ASSecurityThreatCategorySystem:
+//        if (_threat.species == ASSysSecurityThreatIntegrityCompromised)
+//        {
+//          //ok, this device is jailbroken (or in any other way compromised) :(
+//          NSString *threatString =@"The device's integrity is compromised";
+//          [threatSet addObject:threatString];
+//          retval = NO;
+//        }
+//        break;
+//      case ASSecurityThreatCategoryNetwork:
+//        //we have a network threat, ie. mitm attack, ARP spoofing, SSL strip etc..
+//        if (_threat.implicatedNetworks.count)
+//        {
+//          BMNetworkId *_network = _threat.implicatedNetworks[0];
+//          NSString *threatString =[NSString stringWithFormat:@" Network Threat is detected on %@\n", _network.friendlyId];
+//          [threatSet addObject:threatString];
+//          retval = NO;
+//        }
+//        break;
+//      case ASSecurityThreatCategoryApp:
+//        if (_threat.implicatedApps.count)
+//        {
+//          NSString *_badAppBundleID = _threat.implicatedApps[0];
+//          if (_threat.species == ASAppSecurityThreatRepackagedApp)
+//          {
+//            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ is repackaged!\n", _badAppBundleID];
+//            [threatSet addObject:threatString];
+//            retval = NO;
+//          }
+//          else if (_threat.species == ASAppSecurityThreatUnknownSourceApp)
+//          {
+//            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+//              NSString *threatString =@"Your device contains app from unknown resources";
+//              [threatSet addObject:threatString];
+//              retval = NO;
+//            }
+//          }
+//          else if(_threat.species == ASAppSecurityThreatMaliciousApp)
+//          {
+//            NSString *threatString =[NSString stringWithFormat:@"The app with the bundle ID %@ could be malicious!\n", _badAppBundleID];
+//            [threatSet addObject:threatString];
+//            retval = NO;
+//          }
+//          else if(_threat.species == ASAppSecurityThreatEnterpriseBlacklistedApp){
+//            if (![_threat.implicatedApps[0] hasPrefix:@"com.uniken"]) {
+//              NSString *threatString =@"Your device contains app from unknown resources";
+//              [threatSet addObject:threatString];
+//              retval = NO;
+//            }
+//          }
+//          else{
+//            retval = YES;
+//          }
+//        }
+//        break;
+//
+//      default:
+//        break;
+//    }
+//  }
+//  if(!retval){
+//    NSMutableString *errorString = [[NSMutableString alloc]init];
+//    NSArray *threat = [threatSet allObjects];
+//    for (int j =0; j<threat.count; j++) {
+//      [errorString appendString:[NSString stringWithFormat:@"\n %@",[threat objectAtIndex:j]]];
+//    }
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//      [delegate onDeviceThreat:errorString];
+//    });
+//  }
+//}
 
 @end
 
