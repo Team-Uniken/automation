@@ -299,7 +299,14 @@ RCT_EXPORT_METHOD (pauseRuntime:(RCTResponseSenderBlock)callback){
   int errorID = 0;
   NSString *state = nil;
   errorID = [rdnaObject pauseRuntime:&state];
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+//  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+   NSDictionary *dictionary;
+  if((state==nil)&&(state.length==0)){
+    state = @"";
+    dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+  }else{
+    dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+  }
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
