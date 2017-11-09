@@ -174,54 +174,52 @@ class UserLogin extends Component {
     
     return (
       <MainActivation>
-        <View style={Skin.layout0.wrap.container}>
-          <StatusBar
+        <View style={Skin.layout0.wrap.container}>          
+          <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center', backgroundColor: 'transparent' }]}>
+            <View style={[Skin.layout1.title.wrap, { position: 'absolute',top:0,  backgroundColor: 'transparent' }]}>
+            <StatusBar
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'} />
-            <View style={[ Skin.layout1.wrap, { flex: 1 },{justifyContent: 'center', backgroundColor: 'transparent'} ]}>
-            <View style={[Skin.layout1.title.wrap, { backgroundColor: 'transparent' } ]}>
-            <Title
-              onClose={() => {
-                this.close();
-              }}>
-            </Title> 
+              <Title
+                onClose={() => {
+                  this.close();
+                }}>
+              </Title>
             </View>
-              <View style={[Skin.layout0.wrap.container, { justifyContent: "center",  alignItems: 'center', marginBottom: 20}]}>
-                <Text style={[Skin.layout0.top.icon]}>
-                  {Skin.icon.logo}
-                </Text>
-                <Text style={Skin.layout0.top.subtitle}>
-                  {Skin.text['2']['1'].subtitle}
-                </Text>
-                <Text style={Skin.layout0.top.prompt}>
-                  {Skin.text['2']['1'].prompt}
-                </Text> 
-                <Input
-                    ref='inputUsername'
-                    returnKeyType={'next'}
-                    keyboardType={'email-address'}
-                    placeholder={'Enter Username/Email'}
-                    autoFocus={true}
-                    autoCorrect={false}
-                    autoCapitalize={false}
-                    autoComplete={false}
-                    value={this.state.inputUsername}
-                    onSubmitEditing={this.checkUsername.bind(this)}
-                    onChange={this.onUsernameChange.bind(this)} />
-                  <Button
-                    label={Skin.text['2']['1'].submit_button}
-                    onPress={this.checkUsername.bind(this)} />
-                </View>       
-                <KeyboardAvoidingView  behavior='padding' keyboardVerticalOffset={40}/>
-              </View>
+            <View style={[Skin.layout0.wrap.container, { position: 'absolute', zIndex : 99, flex: 1, height:Skin.SCREEN_HEIGHT, top : 0,alignSelf:'center',  flexDirection: 'column', justifyContent: "center", alignItems: 'center', marginBottom: 0 },Platform.OS==="ios"?{paddingTop:20}:{}]}>
+              <Text style={[Skin.layout0.top.icon]}>  
+                {Skin.icon.logo}
+              </Text>
+              <Text style={Skin.layout0.top.subtitle}>
+                {Skin.text['2']['1'].subtitle}
+              </Text>
+              <Text style={Skin.layout0.top.prompt}>
+                {Skin.text['2']['1'].prompt}
+              </Text>
+              <Input
+                ref='inputUsername'
+                returnKeyType={'next'}
+                keyboardType={'email-address'}
+                placeholder={'Enter Username/Email'}
+                autoFocus={true}
+                autoCorrect={false}
+                autoCapitalize={false}
+                autoComplete={false}
+                value={this.state.inputUsername}
+                onSubmitEditing={this.checkUsername.bind(this)}
+                onChange={this.onUsernameChange.bind(this)} />
+              <Button
+                label={Skin.text['2']['1'].submit_button}
+                onPress={this.checkUsername.bind(this)} />
+                <KeyboardSpacer/>
+            </View>
+            
           </View>
+        </View>
       </MainActivation >
     );
   }
 }
-
-
-
 
 module.exports = UserLogin;
