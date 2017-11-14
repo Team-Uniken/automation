@@ -215,7 +215,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release135_cares130_libevent128_oreo', ext: 'aar')
+    compile(name: 'app-sdk-release_branch_v1.3.7', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
     compile project(':react-native-push-notification')

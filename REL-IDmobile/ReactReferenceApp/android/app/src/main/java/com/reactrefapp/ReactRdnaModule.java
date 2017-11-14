@@ -478,6 +478,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 callOnMainThread(runnable);
                 return 0;
             }
+
+            @Override
+            public int onSdkLogPrintRequest(RDNA.RDNALoggingLevel rdnaLoggingLevel,final String s) {
+                Log.e("RDNA-CORE",s);
+                return 0;
+            }
         };
 
         RDNA.RDNAStatus<RDNA> rdnaStatus = null;
@@ -491,7 +497,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }catch (Exception e){}
 
         final RDNA.RDNASSLCertificate rdnaSSLCert = rdnaSSLCertificate;
-        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, context);
+        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS,context);
         rdnaObj = rdnaStatus.result;
 
         WritableMap errorMap = Arguments.createMap();
