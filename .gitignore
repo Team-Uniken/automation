@@ -8,10 +8,8 @@ TODOs.md
 /REL-IDmobile/ReactReferenceApp/android/local.properties
 /REL-IDmobile/ReactReferenceApp/android/ReactRefApp.iml
 /REL-IDmobile/ReactReferenceApp/android/app/build
-/REL-IDmobile/ReactReferenceApp/android/app/libs
 /REL-IDmobile/ReactReferenceApp/android/app/app.iml
 /REL-IDmobile/ReactReferenceApp/android/app/BUCK
-/REL-IDmobile/ReactReferenceApp/ios/api-sdk
 /REL-IDmobile/ReactReferenceApp/node_modules/*
 # Xcode
 #
