@@ -24,10 +24,10 @@ import dismissKeyboard from 'react-native-dismiss-keyboard';
  Use in this js
  */
 import Skin from '../../Skin';
-import Loader from '../Utils/Loader';
 import Main from './Main';
 import Util from "../Utils/Util";
 var constant = require('../Utils/Constants');
+const Spinner = require('react-native-spinkit');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 import { NativeModules, NativeEventEmitter } from 'react-native';
@@ -41,14 +41,13 @@ let obj;
 let onGetCredentialSubscriptions;
 let onGetpasswordSubscriptions;
 
-
 class MainActivation extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ColorProp: 'rgba(255,255,255,1)',
       color: '#4fadd8',
-      visible: this.props.visible,
+      visible: this.props.visible == undefined || this.prop.visible == null ? false:this.props.visible,
       opacity: 1,
       loadertext: 0,
       open: false,
@@ -60,6 +59,11 @@ class MainActivation extends Component {
 
     this.cancelCreds = this.cancelCreds.bind(this);
     this.checkCreds = this.checkCreds.bind(this);
+    this.hideLoader = this.hideLoader.bind(this);
+    this.showLoader = this.showLoader.bind(this);
+    this.hideLoaderView = this.hideLoaderView.bind(this);
+    this.showLoaderView = this.showLoaderView.bind(this);
+    this.loaderView = this.loaderView.bind(this);
    this.selectedDialogOp = false;
     this.scrollEnabled = true;
     if (this.props.scroll != null && this.props.scroll != undefined) {
@@ -97,6 +101,11 @@ class MainActivation extends Component {
 */
   componentDidMount() {
     obj = this;
+
+      //Events.rm('hideLoader','hideLoader');
+     // Events.rm('showLoader','showLoader');
+  
+    console.log("loader visible : "+ this.state.visible + " MainActivation : ");
     Events.on('hideLoader', 'hideLoader', this.hideLoader);
     Events.on('showLoader', 'showLoader', this.showLoader);
   }
@@ -111,6 +120,17 @@ class MainActivation extends Component {
       onGetpasswordSubscriptions = null;
     }
   }
+
+  loaderView() {
+    if(this.state.visible === true){
+      return(
+      <View style={{position:'absolute',zIndex:5,height: Skin.SCREEN_HEIGHT,justifyContent:'center',alignItems:'center', width: Skin.SCREEN_WIDTH,backgroundColor:'transparent'}}> 
+        <Spinner style={{zIndex: 5 }} isVisible={true} size={50} type="FadingCircleAlt" color={Skin.main.TITLE_COLOR}/>
+      </View>
+      );
+    }
+  }
+
 
   //to open 401 dialog 
   open() {
@@ -225,52 +245,55 @@ class MainActivation extends Component {
 //Hide spinner progress view
   hideLoader(args) {
     console.log('\n in hideLoader of main activation');
-    obj.hideLoaderView();
+    this.hideLoaderView();
   }
 //Show spinner progress view
   showLoader(args) {
-    console.log('\n in hideLoader of main activation');
-    obj.showLoaderView();
+    console.log('\n in showLoader of main activation');
+    this.showLoaderView();
   }
 //Hide spinner progress view
   hideLoaderView() {
     console.log('\n in hide Loader view of main activation');
-    obj.setState({ visible: false });
-    obj.setState({ opacity: 1 });
-    obj.setState({ loadertext: 0 });
-    obj.setState({ isSettingButtonHide: 1 });
-    console.log(obj.state.visible);
+    this.setState({ 
+      opacity: 1,
+      loadertext: 0 ,
+      visible:false, 
+      isSettingButtonHide: 1,
+    });
   }
 //Show spinner progress view
   showLoaderView() {
     console.log('\n in show Loader view of main activation');
-    this.setState({ visible: true });
-    this.setState({ opacity: 0 });
-    this.setState({ loadertext: 1 });
-    this.setState({ isSettingButtonHide: 0 });
-    console.log(this.state.visible);
+    this.setState({
+      opacity: 0 , 
+      loadertext: 1,
+      visible:true,
+      isSettingButtonHide: 0
+    });  
   }
-
 
 
 /*
   This method is used to render the componenet with all its element.
 */
   render() {
-    console.log('\n\n\n  Main Activation render called again');
+    console.log('\n\n\n  Main Activation render called again , loader visible = ' + this.state.visible);
     //    this.state.visible = this.props.visible;
   
       return (
         <TouchableWithoutFeedback onPress={this.dismiss}
               disabled={this.props.disabled}>
-          <View style={Skin.activationStyle.container} onPress={this.dismiss} >
 
+          
+          <View style={Skin.activationStyle.container} onPress={this.dismiss} >
+            {this.loaderView()}
 
             <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH },this.props.style?this.props.style:{}]}>
               {this.props.children}
             </View>
 
-            <Loader visible={this.state.visible}/>
+           
               <Modal
               onPress={() => {
               this.setState({ userName: '', password: '', open: false });this.cancelCreds();
