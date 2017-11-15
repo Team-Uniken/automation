@@ -97,7 +97,8 @@ class AccessCode extends Component {
                                                                                                            } else {
                                                                                                            return Linking.openURL('app-settings:');
                                                                                                            }
-                                                                                                           }).catch(err => console.error('An error occurred', err));Events.trigger('showPreviousChallenge');
+                                                                                                           }).catch(err => console.error('An error occurred', err));
+                                                                                                           //Events.trigger('showPreviousChallenge');
                                                                   }
                                                                   }]
                                                                  );

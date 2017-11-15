@@ -243,7 +243,7 @@ class Register extends Component {
             return;
           }
           if (res.isError == false) {
-            obj.showMessage("Activation Code Sent to", this.state.confirmEmail + "\nPlease check the email for more instruction.", true);
+            obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instruction.", true);
           } else {
 
             setTimeout(() => {
