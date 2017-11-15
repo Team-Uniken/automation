@@ -21,8 +21,8 @@ import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import NotificationCard from '../Components/view/notificationcard';
-import Loader from '../Components/Utils/Loader';
 import { NavigationActions} from 'react-navigation';
+const Spinner = require('react-native-spinkit');
 
 
 /*
@@ -1162,6 +1162,17 @@ export default class NotificationMgmtScene extends Component {
     </Modal>);
   }
 
+
+  loaderView() {
+    if(this.state.showLoader === true){
+      return(
+      <View style={{position:'absolute',zIndex:5,height: Skin.SCREEN_HEIGHT,justifyContent:'center',alignItems:'center', width: Skin.SCREEN_WIDTH,backgroundColor:'transparent'}}> 
+        <Spinner style={{zIndex: 5 }} isVisible={true} size={50} type="FadingCircleAlt" color={Skin.main.TITLE_COLOR}/>
+      </View>
+      );
+    }
+  }
+
   renderWithoutMain() {
     const listViewProportion = this.state.dataSource.getRowCount() == 0 ? 0.5 : 1
     return (<View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
@@ -1212,9 +1223,8 @@ export default class NotificationMgmtScene extends Component {
       navigator={this.props.navigator}
     >
       {isPageTitle && this.renderPageTitle(Main.notificationCount > 1 ? 'Notifications' : 'Notification')}
-
+      {this.loaderView()}
       <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
-        <Loader visible={this.state.showLoader} />
         {this.renderNotificationView(this.state.dataSource) }
         {Main.notificationCount == 0 && this._renderMessage() }
         {Main.notificationCount == 0 &&
