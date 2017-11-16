@@ -259,8 +259,8 @@ text = {
     '0': {
       '1': {
         subtitle: 'Welcome to ' + CLIENT_TITLE_TEXT,
-        need_to_register_button: 'I need to register',
-        already_member: 'I\'m already a member',
+        need_to_register_button: 'I am a new customer',
+        already_member: 'I am already a customer',
         prompt: '',
       },
       '2': {
