@@ -215,12 +215,13 @@ export default class DeviceMgmtScene extends Component {
       this.getCurrentDeviceId();
       this.getRegisteredDeviceDetails();
     } else {
-
+      
       Alert.alert(
         '',
         'Please check your internet connection',
         [
-          { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+          //{ text: 'OK', onPress: () => this.props.navigator.pop(0) }
+          { text: 'OK', onPress: () => this.props.navigation.goBack() }
         ]
       );
     }
