@@ -8,7 +8,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-
+import { NavigationActions} from 'react-navigation';
 /*
  Required for this js
  */
@@ -585,7 +585,14 @@ class Register extends Component {
 
   doNavigateDashBoard() {
 //    this.props.parentnav.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
-    this.props.navigator.navigate('DashBoard',{url: '',title:'DashBoard'})
+//    this.props.navigator.navigate('DashBoard',{url: '',title:'DashBoard'})
+    const navigateToDashboard = NavigationActions.reset({
+    index: 0,
+    actions: [
+      NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
+      ]
+      })
+    this.props.navigator.dispatch(navigateToDashboard)
   }
 
   selectCheckBox(args) {

@@ -367,7 +367,7 @@ class Register extends Component {
                 Registration
               </Title>
             </View>
-            <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true}>
+            <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true} >
               <View style={Skin.layout1.content.wrap}>
                 <View style={Skin.layout1.content.container}>
                   <View>
@@ -380,7 +380,7 @@ class Register extends Component {
                       autoFocus={true}
                       autoCorrect={false}
                       autoComplete={false}
-                      autoCapitalize={true}
+                      autoCapitalize={'none'}
                       onChange={this.onFirstNameChange.bind(this) }
                       onSubmitEditing={() => {
                         this.refs.lastname.focus();
@@ -394,7 +394,7 @@ class Register extends Component {
                       autoFocus={false}
                       autoCorrect={false}
                       autoComplete={false}
-                      autoCapitalize={true}
+                      autoCapitalize={'none'}
                       onChange={this.onLastNameChange.bind(this) }
                       onSubmitEditing={() => {
                         this.refs.email.focus();
@@ -407,7 +407,7 @@ class Register extends Component {
                       enablesReturnKeyAutomatically={true}
                       autoFocus={false}
                       autoCorrect={false}
-                      autoCapitalize={false}
+                      autoCapitalize={'none'}
                       autoComplete={false}
                       onChange={this.onEmailChange.bind(this) }
                       onSubmitEditing={() => {
@@ -421,7 +421,7 @@ class Register extends Component {
                       enablesReturnKeyAutomatically={true}
                       autoFocus={false}
                       autoCorrect={false}
-                      autoCapitalize={false}
+                      autoCapitalize={'none'}
                       autoComplete={false}
                       onChange={this.onConfirmEmailChange.bind(this) }
                       onSubmitEditing={() => {
@@ -434,7 +434,7 @@ class Register extends Component {
                       enablesReturnKeyAutomatically={true}
                       autoFocus={false}
                       autoCorrect={false}
-                      autoCapitalize={false}
+                      autoCapitalize={'none'}
                       autoComplete={false}
                       returnKeyType={"done"}
                       value={this.state.phoneNumber}
@@ -470,14 +470,15 @@ class Register extends Component {
                 </View>
               </View>
             </ScrollView>
-            <View style={Skin.layout1.bottom.wrap}>
+      <KeyboardSpacer/>
+      <View style={Skin.layout1.bottom.wrap}>
               <View style={Skin.layout1.bottom.container}>
                 <Button
                   label={Skin.text['1']['1'].submit_button}
                   onPress={this.validateAndProcced.bind(this) } />
               </View>
             </View>
-            <KeyboardSpacer topSpacing={-55} />
+      
           </View>
         </MainActivation>
         <Modal

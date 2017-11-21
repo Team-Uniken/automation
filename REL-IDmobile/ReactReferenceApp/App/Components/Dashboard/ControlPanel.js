@@ -470,7 +470,7 @@ class ControlPanel extends Component {
         '',
         'Please check your internet connection',
         [
-          { text: 'OK', onPress: () => this.props.navigator.pop(0) }
+          { text: 'OK', onPress: () => {}}
         ]
       );
     }
@@ -478,14 +478,16 @@ class ControlPanel extends Component {
 
   showNoticiationScreen(){
     this.getMyNotifications();
-    if(global.isNotificationScreenonTop === false){
-       InteractionManager.runAfterInteractions(() => {
-//              if(this.props.navigator.getCurrentRoutes(0).length > 1)
-//                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
-//              else
-//                 this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
-         this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'});         
-            });
+    if(Main.isConnected){
+      if(global.isNotificationScreenonTop === false){
+        InteractionManager.runAfterInteractions(() => {
+  //              if(this.props.navigator.getCurrentRoutes(0).length > 1)
+  //                 this.props.navigator.replace({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+  //              else
+  //                 this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight,  });
+          this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'});         
+              });
+      }
     }
   }
 
