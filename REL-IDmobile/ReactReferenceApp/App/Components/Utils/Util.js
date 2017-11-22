@@ -235,11 +235,17 @@ class Util extends Component {
   }
   
   static getFormatedDate(dateString){
-    var testDateUtc = moment.utc(dateString.replace('EDT','')).add(4, 'hours');
+    var testDateUtc ;
+    if( dateString.includes("EDT") )
+      testDateUtc = moment.utc(dateString.replace('EDT','')).add(4, 'hours');
+    else if ( dateString.includes("EST") )
+      testDateUtc = moment.utc(dateString.replace('EST','')).add(5, 'hours');
+    else if ( dateString.includes("UTC") )
+      testDateUtc = moment.utc(dateString.replace('UTC',''));
     var localDate = moment(testDateUtc).local();
     var s = localDate.format("DD/MM/YYYY HH:mm:ss");
     return s;
-  }
+  } 
 
   static replaceString(find, replace, str){
     while( str.indexOf(find) > -1){
