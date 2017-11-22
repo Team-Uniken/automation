@@ -37,7 +37,7 @@ const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const Spinner = require('react-native-spinkit');
 global.isLoggedIn = false;
-
+global.isnotificationAlertShown = false;
 
 /*
   INSTANCES
@@ -238,17 +238,21 @@ class Load extends Component {
       msg = notification.getMessage();
     else
       msg = notification.message;
+    
+    if(!global.isnotificationAlertShown){
+      global.isnotificationAlertShown=true;
     setTimeout(() => {
       Alert.alert(
         '',
         msg, [{
           text: 'Dismiss',
-          onPress: null,
+        onPress: ()=>{global.isnotificationAlertShown=false;
+},
         }]
       );
     }, 100);
+    }
   }
-
   //Call getNotifications api.
   getMyNotifications() {
     var recordCount = "0";
