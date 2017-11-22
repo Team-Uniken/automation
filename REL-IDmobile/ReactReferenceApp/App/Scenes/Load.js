@@ -710,6 +710,9 @@ class Load extends Component {
         ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, sslDetails, (response) => {
           if (response) {
             console.log('immediate response is' + response[0].error);
+            if(response[0].error!=0){
+              alert("Invalid Connection profile")
+              }
           } else {
             console.log('immediate response is' + response[0].error);
           }
