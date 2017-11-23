@@ -1205,6 +1205,16 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getErrorInfo(int errorCode,Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        RDNA.RDNAErrorID rdnaErrorID =   RDNA.getErrorInfo(errorCode);
+        errorMap.putInt("error", rdnaErrorID.intValue);
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
     public void demo(){
     }
 }
