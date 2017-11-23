@@ -19,9 +19,9 @@ import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
 import Toast from 'react-native-simple-toast';
 var PushNotification = require('react-native-push-notification');
-import {Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
+import { Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
-import { NavigationActions} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 /*
  Use in this js
@@ -31,8 +31,10 @@ import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
 import Setting from '../Components/view/setting';
 import Version from '../Components/view/version';
+import Constants from '../Components/Utils/Constants';
+import Util from '../Components/Utils/Util';
 import Web from './Web';
-import {ClientBasedConfig} from '../Components/Utils/LocalConfig';
+import { ClientBasedConfig } from '../Components/Utils/LocalConfig';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const Spinner = require('react-native-spinkit');
@@ -110,7 +112,7 @@ class Load extends Component {
       spinnnerType: 'ThreeBounce',
       animatedTextValue: new Animated.Value(0),
     };
-    
+
     Main.isApiRunning = false;
     this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
@@ -130,34 +132,38 @@ class Load extends Component {
       }
     }
 
-//    obj1.props.navigator.resetTo({
-//      id: "Welcome_Screen",
-//      //id: "Select_Login",
-//      title: "nextChlngName",
-//      url: {
-//        "chlngJson": chlngJson,
-//        "screenId": nextChlngName
-//      }
-//    });
-//    this.props.navigation.navigate('WelcomeScreen',{url: {
-//      "chlngJson": chlngJson,
-//      "screenId": nextChlngName
-//      }})
+    //    obj1.props.navigator.resetTo({
+    //      id: "Welcome_Screen",
+    //      //id: "Select_Login",
+    //      title: "nextChlngName",
+    //      url: {
+    //        "chlngJson": chlngJson,
+    //        "screenId": nextChlngName
+    //      }
+    //    });
+    //    this.props.navigation.navigate('WelcomeScreen',{url: {
+    //      "chlngJson": chlngJson,
+    //      "screenId": nextChlngName
+    //      }})
     const resetAction = NavigationActions.reset({
-    index: 0,
-    actions: [
-      NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-        "chlngJson": chlngJson,
-        "screenId": nextChlngName,
-        "currentIndex":0,
-        }}})
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'WelcomeScreen', params: {
+            url: {
+              "chlngJson": chlngJson,
+              "screenId": nextChlngName,
+              "currentIndex": 0,
+            }
+          }
+        })
       ]
-      })
+    })
     this.props.navigation.dispatch(resetAction)
   }
 
   animate() {
-    this.state.steps.addListener(({value}) => this.setState({ value: this.textRange[parseInt(value, 10)] }));
+    this.state.steps.addListener(({ value }) => this.setState({ value: this.textRange[parseInt(value, 10)] }));
     Animated.sequence([
 
       Animated.timing(this.state.steps, {
@@ -221,11 +227,11 @@ class Load extends Component {
     }
 
     if (appalive == true || Config.ENABLE_PAUSE === "false") {
-      if(global.isLoggedIn === true){
-          console.log('-----getMyNotifications called when notication comes-----');
-          Obj.getMyNotifications();
+      if (global.isLoggedIn === true) {
+        console.log('-----getMyNotifications called when notication comes-----');
+        Obj.getMyNotifications();
       }
-      else{
+      else {
         Obj.showNotificationAlert(notification);
       }
     }
@@ -238,19 +244,20 @@ class Load extends Component {
       msg = notification.getMessage();
     else
       msg = notification.message;
-    
-    if(!global.isnotificationAlertShown){
-      global.isnotificationAlertShown=true;
-    setTimeout(() => {
-      Alert.alert(
-        '',
-        msg, [{
-          text: 'Dismiss',
-        onPress: ()=>{global.isnotificationAlertShown=false;
-},
-        }]
-      );
-    }, 100);
+
+    if (!global.isnotificationAlertShown) {
+      global.isnotificationAlertShown = true;
+      setTimeout(() => {
+        Alert.alert(
+          '',
+          msg, [{
+            text: 'Dismiss',
+            onPress: () => {
+            global.isnotificationAlertShown = false;
+            },
+          }]
+        );
+      }, 100);
     }
   }
   //Call getNotifications api.
@@ -267,7 +274,7 @@ class Load extends Component {
       if (response[0].error !== 0) {
         console.log('----- ----- response is not 0');
       }
- 
+
     });
   }
 
@@ -298,7 +305,7 @@ class Load extends Component {
         },
         // (required) Called when a remote or local notification is opened or received
         onNotification: function (notification) {
-           savedNotification = notification;
+          savedNotification = notification;
           if (notification.userInteraction == true) {
             Main.notificationId = notification.hiddenMessage;
           }
@@ -312,7 +319,7 @@ class Load extends Component {
           // }
 
           if (appalive == true || Config.ENABLE_PAUSE === "false") {
-          
+
             if (global.isLoggedIn === true) {
               console.log('-----getMyNotifications called when notication comes-----');
               Obj.getMyNotifications();
@@ -678,7 +685,7 @@ class Load extends Component {
         }
         // }).done();
         // }
-      }else{
+      } else {
         if (global.isLoggedIn === true) {
           console.log('-----getMyNotifications called when notication comes-----');
           Obj.getMyNotifications();
@@ -715,9 +722,13 @@ class Load extends Component {
         ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, sslDetails, (response) => {
           if (response) {
             console.log('immediate response is' + response[0].error);
-            if(response[0].error!=0){
-              alert("Invalid Connection profile")
-              }
+            if (response[0].error != 0) {
+              // Conversion of error code to error message
+              // Util.getErrorMessage(response[0].error, (error) => {
+              //   alert(Constants.errorInfo[error])
+              // })
+              alert(response[0].error)
+            }
           } else {
             console.log('immediate response is' + response[0].error);
           }
@@ -725,7 +736,6 @@ class Load extends Component {
       });
     });
   }
-
 
   //callback of RDNA.initialize.
   onInitCompleted() {
@@ -740,8 +750,8 @@ class Load extends Component {
             {
               text: 'Connection Profiles',
               onPress: () =>
-//            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
-              this.props.navigation.navigate('ConnectionProfileScreen')
+                //            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+                this.props.navigation.navigate('ConnectionProfileScreen')
             },
           ],
           { cancelable: false }
@@ -760,105 +770,123 @@ class Load extends Component {
             Main.gotNotification = false;
             AsyncStorage.getItem('skipwelcome').then((value) => {
               if (value === "true") {
-//                this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-//              this.props.navigation.navigate('StateMachine',{url: {
-//                "chlngJson": chlngJson,
-//                "screenId": nextChlngName,
-//                "currentIndex":0
-//                }})
-              const resetAction = NavigationActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
-                  "chlngJson": chlngJson,
-                  "screenId": nextChlngName,
-                  "currentIndex":0,
-                  }}})
-                ]
+                //                this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+                //              this.props.navigation.navigate('StateMachine',{url: {
+                //                "chlngJson": chlngJson,
+                //                "screenId": nextChlngName,
+                //                "currentIndex":0
+                //                }})
+                const resetAction = NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({
+                      routeName: 'StateMachine', params: {
+                        url: {
+                          "chlngJson": chlngJson,
+                          "screenId": nextChlngName,
+                          "currentIndex": 0,
+                        }
+                      }
+                    })
+                  ]
                 })
-              this.props.navigation.dispatch(resetAction)
-              
+                this.props.navigation.dispatch(resetAction)
+
               } else {
-//                this.props.navigator.resetTo({
-//                  id: "Welcome_Screen",
-//                  //id: "Select_Login",
-//                  title: "nextChlngName",
-//                  url: {
-//                    "chlngJson": chlngJson,
-//                    "screenId": nextChlngName
-//                  }
-//                });
-//              this.props.navigation.navigate('WelcomeScreen',{url: {
-//                                    "chlngJson": chlngJson,
-//                                    "screenId": nextChlngName
-//                }})
-              const resetAction = NavigationActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-                  "chlngJson": chlngJson,
-                  "screenId": nextChlngName,
-                  "currentIndex":0,
-                  }}})
-                ]
+                //                this.props.navigator.resetTo({
+                //                  id: "Welcome_Screen",
+                //                  //id: "Select_Login",
+                //                  title: "nextChlngName",
+                //                  url: {
+                //                    "chlngJson": chlngJson,
+                //                    "screenId": nextChlngName
+                //                  }
+                //                });
+                //              this.props.navigation.navigate('WelcomeScreen',{url: {
+                //                                    "chlngJson": chlngJson,
+                //                                    "screenId": nextChlngName
+                //                }})
+                const resetAction = NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({
+                      routeName: 'WelcomeScreen', params: {
+                        url: {
+                          "chlngJson": chlngJson,
+                          "screenId": nextChlngName,
+                          "currentIndex": 0,
+                        }
+                      }
+                    })
+                  ]
                 })
-              this.props.navigation.dispatch(resetAction)
+                this.props.navigation.dispatch(resetAction)
               }
             }).done();
           } else {
-//            this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-        this.props.navigation.navigate('StateMachine',{url: {
-          "chlngJson": chlngJson,
-          "screenId": nextChlngName,
-          "currentIndex":0
-          }})
+            //            this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+            this.props.navigation.navigate('StateMachine', {
+              url: {
+                "chlngJson": chlngJson,
+                "screenId": nextChlngName,
+                "currentIndex": 0
+              }
+            })
           }
         } else {
           Main.gotNotification = false;
           AsyncStorage.getItem('skipwelcome').then((value) => {
             if (value === "true") {
-//            this.props.navigation.navigate('StateMachine',{url: {
-//              "chlngJson": chlngJson,
-//              "screenId": nextChlngName,
-//              "currentIndex":0
-//              }})
-            const resetAction = NavigationActions.reset({
-            index: 0,
-            actions: [
-              NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
-                "chlngJson": chlngJson,
-                "screenId": nextChlngName,
-                "currentIndex":0,
-                }}})
-              ]
+              //            this.props.navigation.navigate('StateMachine',{url: {
+              //              "chlngJson": chlngJson,
+              //              "screenId": nextChlngName,
+              //              "currentIndex":0
+              //              }})
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'StateMachine', params: {
+                      url: {
+                        "chlngJson": chlngJson,
+                        "screenId": nextChlngName,
+                        "currentIndex": 0,
+                      }
+                    }
+                  })
+                ]
               })
-            this.props.navigation.dispatch(resetAction)
-//              this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+              this.props.navigation.dispatch(resetAction)
+              //              this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
             } else {
-//              this.props.navigator.resetTo({
-//                id: "Welcome_Screen",
-//                //id: "Select_Login",
-//                title: "nextChlngName",
-//                url: {
-//                  "chlngJson": chlngJson,
-//                  "screenId": nextChlngName
-//                }
-//              });
-//            this.props.navigation.navigate('WelcomeScreen',{url: {
-//              "chlngJson": chlngJson,
-//              "screenId": nextChlngName
-//              }})
-            const resetAction = NavigationActions.reset({
-            index: 0,
-            actions: [
-              NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-                "chlngJson": chlngJson,
-                "screenId": nextChlngName,
-                "currentIndex":0,
-                }}})
-              ]
+              //              this.props.navigator.resetTo({
+              //                id: "Welcome_Screen",
+              //                //id: "Select_Login",
+              //                title: "nextChlngName",
+              //                url: {
+              //                  "chlngJson": chlngJson,
+              //                  "screenId": nextChlngName
+              //                }
+              //              });
+              //            this.props.navigation.navigate('WelcomeScreen',{url: {
+              //              "chlngJson": chlngJson,
+              //              "screenId": nextChlngName
+              //              }})
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'WelcomeScreen', params: {
+                      url: {
+                        "chlngJson": chlngJson,
+                        "screenId": nextChlngName,
+                        "currentIndex": 0,
+                      }
+                    }
+                  })
+                ]
               })
-            this.props.navigation.dispatch(resetAction)
+              this.props.navigation.dispatch(resetAction)
             }
           }).done();
         }
@@ -867,51 +895,59 @@ class Load extends Component {
       Main.gotNotification = false;
       AsyncStorage.getItem('skipwelcome').then((value) => {
         if (value === "true") {
-//          this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-//        this.props.navigation.navigate('StateMachine',{url: {
-//          "chlngJson": chlngJson,
-//          "screenId": nextChlngName,
-//          "currentIndex":0,
-//          }})
-        
-        const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
-            "chlngJson": chlngJson,
-            "screenId": nextChlngName,
-            "currentIndex":0,
-            }}})
-          ]
+          //          this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+          //        this.props.navigation.navigate('StateMachine',{url: {
+          //          "chlngJson": chlngJson,
+          //          "screenId": nextChlngName,
+          //          "currentIndex":0,
+          //          }})
+
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    "chlngJson": chlngJson,
+                    "screenId": nextChlngName,
+                    "currentIndex": 0,
+                  }
+                }
+              })
+            ]
           })
-        this.props.navigation.dispatch(resetAction)
-        
+          this.props.navigation.dispatch(resetAction)
+
         } else {
-//          this.props.navigator.resetTo({
-//            id: "Welcome_Screen",
-//            //id: "Select_Login",
-//            title: "nextChlngName",
-//            url: {
-//              "chlngJson": chlngJson,
-//              "screenId": nextChlngName
-//            }
-//          });
-//        this.props.navigation.navigate('WelcomeScreen',{url: {
-//          "chlngJson": chlngJson,
-//          "screenId": nextChlngName
-//          }})
-        
-        const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-            "chlngJson": chlngJson,
-            "screenId": nextChlngName,
-            "currentIndex":0,
-            }}})
-          ]
+          //          this.props.navigator.resetTo({
+          //            id: "Welcome_Screen",
+          //            //id: "Select_Login",
+          //            title: "nextChlngName",
+          //            url: {
+          //              "chlngJson": chlngJson,
+          //              "screenId": nextChlngName
+          //            }
+          //          });
+          //        this.props.navigation.navigate('WelcomeScreen',{url: {
+          //          "chlngJson": chlngJson,
+          //          "screenId": nextChlngName
+          //          }})
+
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'WelcomeScreen', params: {
+                  url: {
+                    "chlngJson": chlngJson,
+                    "screenId": nextChlngName,
+                    "currentIndex": 0,
+                  }
+                }
+              })
+            ]
           })
-        this.props.navigation.dispatch(resetAction)
+          this.props.navigation.dispatch(resetAction)
         }
       }).done();
     }
@@ -922,12 +958,12 @@ class Load extends Component {
    */
 
   renderStartUpAnimation() {
-    return ([<Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR}/>, <Text style={{
+    return ([<Spinner style={{ position: 'absolute', bottom: 50, alignSelf: 'center', zIndex: 5 }} isVisible={this.state.spinnerIsVisible} size={this.state.spinnerSize} type={this.state.spinnnerType} color={Skin.main.TITLE_COLOR} />, <Text style={{
       position: 'absolute',
       bottom: 100,
       alignSelf: 'center',
       color: Skin.main.TITLE_COLOR,
-      backgroundColor:'#ffffff',
+      backgroundColor: '#ffffff',
       fontSize: 18,
       zIndex: 5,
     }}>{this.state.value}</Text>]);
@@ -945,9 +981,9 @@ class Load extends Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG}/>
+        <StatusBar backgroundColor={Skin.main.STATUS_BAR_BG} />
 
-        {Config.ENABLESTARTUPANIMATION === 'true' && this.renderStartUpAnimation() }
+        {Config.ENABLESTARTUPANIMATION === 'true' && this.renderStartUpAnimation()}
 
         <Image
           source={welcome}
@@ -966,14 +1002,14 @@ class Load extends Component {
             borderTopRightRadius: 20,
           }}
           onPress={() => {
-              this.props.navigation.navigate('ConnectionProfileScreen')
-//            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
+            this.props.navigation.navigate('ConnectionProfileScreen')
+            //            this.props.navigator.push({ id: 'ConnectionProfile', sceneConfig: Navigator.SceneConfigs.PushFromRight })
             if (onInitializeSubscription) {
               onInitializeSubscription.remove();
               onInitializeSubscription = null;
             }
-          } }/>
-        <Version/>
+          }} />
+        <Version />
       </View>
     );
   }

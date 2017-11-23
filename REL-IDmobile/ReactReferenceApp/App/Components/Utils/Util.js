@@ -253,8 +253,15 @@ class Util extends Component {
     }
     return str;
   }
+
+  static getErrorMessage(errorCode, callback){
+    ReactRdna.getErrorInfo(errorCode,(response) => {
+      if (response)  callback(response[0].error);
+      else callback(null); 
+      
+    });
+  }
+
 }
-
-
 
 module.exports = Util;
