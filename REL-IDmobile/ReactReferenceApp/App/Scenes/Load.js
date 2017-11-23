@@ -678,6 +678,11 @@ class Load extends Component {
         }
         // }).done();
         // }
+      }else{
+        if (global.isLoggedIn === true) {
+          console.log('-----getMyNotifications called when notication comes-----');
+          Obj.getMyNotifications();
+        }
       }
     } else if (currentAppState === 'inactive') {
       console.log('App State Change Inactive');
