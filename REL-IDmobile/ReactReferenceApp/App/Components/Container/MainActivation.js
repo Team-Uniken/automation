@@ -47,7 +47,7 @@ class MainActivation extends Component {
     this.state = {
       ColorProp: 'rgba(255,255,255,1)',
       color: '#4fadd8',
-      visible: this.props.visible == undefined || this.prop.visible == null ? false:this.props.visible,
+      visible: this.props.visible == undefined || this.prop.visible == null ? false : this.props.visible,
       opacity: 1,
       loadertext: 0,
       open: false,
@@ -55,6 +55,9 @@ class MainActivation extends Component {
       password: '',
       baseUrl: '',
       isSettingButtonHide: 1.0,
+      notificationAlertMsg: "",
+      showNotificationAlert: false,
+      refresh:false
     };
 
     this.cancelCreds = this.cancelCreds.bind(this);
@@ -64,7 +67,12 @@ class MainActivation extends Component {
     this.hideLoaderView = this.hideLoaderView.bind(this);
     this.showLoaderView = this.showLoaderView.bind(this);
     this.loaderView = this.loaderView.bind(this);
-   this.selectedDialogOp = false;
+    this.onNotificationAlertModalDismissed = this.onNotificationAlertModalDismissed.bind(this);
+    this.onNotificationAlertModalOk = this.onNotificationAlertModalOk.bind(this);
+    this.notificationAlertModal = this.notificationAlertModal.bind(this);
+    this.showNotificationAlertModal = this.showNotificationAlertModal.bind(this);
+    this.selectedDialogOp = false;
+    this.selectedNotifcationAlertOp = true;
     this.scrollEnabled = true;
     if (this.props.scroll != null && this.props.scroll != undefined) {
       this.scrollEnabled = this.props.scroll;
@@ -102,15 +110,16 @@ class MainActivation extends Component {
   componentDidMount() {
     obj = this;
 
-      //Events.rm('hideLoader','hideLoader');
-     // Events.rm('showLoader','showLoader');
-  
-    console.log("loader visible : "+ this.state.visible + " MainActivation : ");
+    //Events.rm('hideLoader','hideLoader');
+    // Events.rm('showLoader','showLoader');
+
+    console.log("loader visible : " + this.state.visible + " MainActivation : ");
     Events.on('hideLoader', 'hideLoader', this.hideLoader);
     Events.on('showLoader', 'showLoader', this.showLoader);
+    Events.on('showNotificationAlert', 'showNotificationAlert', this.showNotificationAlertModal)
   }
 
- componentWillUnmount(){
+  componentWillUnmount() {
     if (onGetCredentialSubscriptions) {
       onGetCredentialSubscriptions.remove();
       onGetCredentialSubscriptions = null;
@@ -121,12 +130,30 @@ class MainActivation extends Component {
     }
   }
 
+  onNotificationAlertModalOk() {
+    //Do nothing for right now
+  }
+
+  onNotificationAlertModalDismissed() {
+    //Do nothing for right now
+  }
+
+
+  showNotificationAlertModal(args) {
+    var msg = args && args.msg ? args.msg : "";
+    
+    this.setState({
+      showNotificationAlert: true,
+      notificationAlertMsg: msg
+    });
+  }
+
   loaderView() {
-    if(this.state.visible === true){
-      return(
-      <View style={{position:'absolute',zIndex:5,height: Skin.SCREEN_HEIGHT,justifyContent:'center',alignItems:'center', width: Skin.SCREEN_WIDTH,backgroundColor:'transparent'}}> 
-        <Spinner style={{zIndex: 5 }} isVisible={true} size={50} type="FadingCircleAlt" color={Skin.main.TITLE_COLOR}/>
-      </View>
+    if (this.state.visible === true) {
+      return (
+        <View style={{ position: 'absolute', zIndex: 5, height: Skin.SCREEN_HEIGHT, justifyContent: 'center', alignItems: 'center', width: Skin.SCREEN_WIDTH, backgroundColor: 'transparent' }}>
+          <Spinner style={{ zIndex: 5 }} isVisible={true} size={50} type="FadingCircleAlt" color={Skin.main.TITLE_COLOR}/>
+        </View>
       );
     }
   }
@@ -144,18 +171,18 @@ class MainActivation extends Component {
       open: false
     });
   }
-  
-  validate(){
+
+  validate() {
     const user = this.state.userName;
     const pass = this.state.password;
     if (user.length != 0) {
       this.close();
-    }else{
+    } else {
       alert('Please enter valid data');
     }
-    
+
   }
-  
+
   //to close keyboard
   dismiss() {
     dismissKeyboard();
@@ -170,36 +197,36 @@ class MainActivation extends Component {
   onGetpassword(e) {
     let uName = e.response;
     AsyncStorage.getItem(e.response).then((value) => {
-                                          if(value){
+      if (value) {
         value = JSON.parse(value);
-        Util.decryptText(value.RPasswd).then((decryptedRPasswd)=>{
-          ReactRdna.setCredentials(uName,decryptedRPasswd, true, (response) => {
+        Util.decryptText(value.RPasswd).then((decryptedRPasswd) => {
+          ReactRdna.setCredentials(uName, decryptedRPasswd, true, (response) => {
             if (response) {
               console.log('immediate response is' + response[0].error);
             } else {
               console.log('immediate response is' + response[0].error);
             }
           });
-        }).catch((error)=>{
-                    ReactRdna.setCredentials(uName,"", true, (response) => {
-                                                                          if (response) {
-                                                                          console.log('immediate response is' + response[0].error);
-                                                                          } else {
-                                                                          console.log('immediate response is' + response[0].error);
-                                                                          }
-                                                                          });
-                                                 
-                                                 }).done();
-                                          }else{
-                                          ReactRdna.setCredentials(uName,"", true, (response) => {
-                                                                   if (response) {
-                                                                   console.log('immediate response is' + response[0].error);
-                                                                   } else {
-                                                                   console.log('immediate response is' + response[0].error);
-                                                                   }
-                                                                   });
+        }).catch((error) => {
+          ReactRdna.setCredentials(uName, "", true, (response) => {
+            if (response) {
+              console.log('immediate response is' + response[0].error);
+            } else {
+              console.log('immediate response is' + response[0].error);
+            }
+          });
 
-                                          }
+        }).done();
+      } else {
+        ReactRdna.setCredentials(uName, "", true, (response) => {
+          if (response) {
+            console.log('immediate response is' + response[0].error);
+          } else {
+            console.log('immediate response is' + response[0].error);
+          }
+        });
+
+      }
     }).done();
   }
 
@@ -242,86 +269,130 @@ class MainActivation extends Component {
     this.setState(newstate);
   }
 
-//Hide spinner progress view
+  //Hide spinner progress view
   hideLoader(args) {
     console.log('\n in hideLoader of main activation');
     this.hideLoaderView();
   }
-//Show spinner progress view
+  //Show spinner progress view
   showLoader(args) {
     console.log('\n in showLoader of main activation');
     this.showLoaderView();
   }
-//Hide spinner progress view
+  //Hide spinner progress view
   hideLoaderView() {
     console.log('\n in hide Loader view of main activation');
-    this.setState({ 
+    this.setState({
       opacity: 1,
-      loadertext: 0 ,
-      visible:false, 
+      loadertext: 0,
+      visible: false,
       isSettingButtonHide: 1,
     });
   }
-//Show spinner progress view
+  //Show spinner progress view
   showLoaderView() {
     console.log('\n in show Loader view of main activation');
     this.setState({
-      opacity: 0 , 
+      opacity: 0,
       loadertext: 1,
-      visible:true,
+      visible: true,
       isSettingButtonHide: 0
-    });  
+    });
+  }
+
+  notificationAlertModal() {
+    return (<Modal
+      style={styles.modalwrapNotification}
+      overlayOpacity={0.75}
+      offset={100}
+      open={this.state.showNotificationAlert}
+      modalDidOpen={() => console.log('modal did open') }
+      modalDidClose={() => {
+        this.setState({showNotificationAlert:false});
+        if (this.selectedNotifcationAlertOp) {
+          this.selectedNotifcationAlertOp = false;
+          this.onNotificationAlertModalOk();
+        } else {
+          this.selectedNotifcationAlertOp = false;
+          this.onNotificationAlertModalDismissed();
+        }
+      } }>
+      <View style={styles.modalTitleWrapNotification}>
+        <Text style={styles.modalTitleNotification}>
+          Alert
+        </Text>
+      </View>
+      <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
+        {this.state.notificationAlertMsg}
+      </Text>
+      <View style={styles.borderNotification}></View>
+
+      <TouchableHighlight
+        onPress={() => {
+          this.selectedNotifcationAlertOp = true;
+          this.setState({
+            showNotificationAlert: false
+          });
+        } }
+        underlayColor={Skin.colors.REPPLE_COLOR}
+        style={styles.modalButtonNotification}>
+        <Text style={styles.modalButtonTextNotification}>
+          Dismiss
+        </Text>
+      </TouchableHighlight>
+    </Modal>);
   }
 
 
-/*
-  This method is used to render the componenet with all its element.
-*/
+  /*
+    This method is used to render the componenet with all its element.
+  */
   render() {
     console.log('\n\n\n  Main Activation render called again , loader visible = ' + this.state.visible);
     //    this.state.visible = this.props.visible;
-  
-      return (
-        <TouchableWithoutFeedback onPress={this.dismiss}
-              disabled={this.props.disabled}>
 
-          
-          <View style={Skin.activationStyle.container} onPress={this.dismiss} >
-            {this.loaderView()}
+    return (
+      <TouchableWithoutFeedback onPress={this.dismiss}
+        disabled={this.props.disabled}>
 
-            <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH },this.props.style?this.props.style:{}]}>
-              {this.props.children}
-            </View>
 
-           
-              <Modal
-              onPress={() => {
-              this.setState({ userName: '', password: '', open: false });this.cancelCreds();
-              } }
-              style={styles.modalwrap}
-              overlayOpacity={0.75}
-              offset={100}
-              open={this.state.open}
-              modalDidOpen={() => console.log('modal did open') }
-              modalDidClose={() => {
+        <View style={Skin.activationStyle.container} onPress={this.dismiss} >
+          {this.loaderView() }
+
+          <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH }, this.props.style ? this.props.style : {}]}>
+            {this.props.children}
+          </View>
+
+          {this.notificationAlertModal() }
+
+          <Modal
+            onPress={() => {
+              this.setState({ userName: '', password: '', open: false }); this.cancelCreds();
+            } }
+            style={styles.modalwrap}
+            overlayOpacity={0.75}
+            offset={100}
+            open={this.state.open}
+            modalDidOpen={() => console.log('modal did open') }
+            modalDidClose={() => {
               if (this.selectedDialogOp) {
-              this.selectedDialogOp = false;
-              this.checkCreds();
+                this.selectedDialogOp = false;
+                this.checkCreds();
               } else {
-              this.selectedDialogOp = false;
-              this.setState({ userName: '', password: '', open: false });
-              this.cancelCreds();
+                this.selectedDialogOp = false;
+                this.setState({ userName: '', password: '', open: false });
+                this.cancelCreds();
               }
-              } }>
-              <View style={styles.modalTitleWrap}>
+            } }>
+            <View style={styles.modalTitleWrap}>
               <Text style={styles.modalTitle}>
-              401 Authentication
-              {'\n'}
-              {this.state.baseUrl}
+                401 Authentication
+                {'\n'}
+                {this.state.baseUrl}
               </Text>
               <View style={styles.border}></View>
-              </View>
-              <TextInput
+            </View>
+            <TextInput
               autoCorrect={false}
               ref='userName'
               style={styles.modalInput}
@@ -329,8 +400,8 @@ class MainActivation extends Component {
               value={this.state.userName}
               onChange={this.onUserChange.bind(this) }
               placeholderTextColor={Skin.colors.HINT_COLOR} />
-              <View style={styles.underline}></View>
-              <TextInput
+            <View style={styles.underline}></View>
+            <TextInput
               autoCorrect={false}
               ref='password'
               style={styles.modalInput}
@@ -339,112 +410,147 @@ class MainActivation extends Component {
               value={this.state.password}
               onChange={this.onPasswordChange.bind(this) }
               placeholderTextColor={Skin.colors.HINT_COLOR} />
-              <View style={styles.underline}></View>
-              <View style={{
+            <View style={styles.underline}></View>
+            <View style={{
               flex: 1,
               flexDirection: 'row'
-              }}>
+            }}>
               <TouchableHighlight
-              onPress={() => {
-              this.selectedDialogOp = false;
-              this.setState({ userName: '', password: '', open: false });
-              } }
-              underlayColor={Skin.colors.REPPLE_COLOR}
-              style={styles.modalButton}>
-              <Text style={styles.modalButtonText}>
-              CANCEL
-              </Text>
+                onPress={() => {
+                  this.selectedDialogOp = false;
+                  this.setState({ userName: '', password: '', open: false });
+                } }
+                underlayColor={Skin.colors.REPPLE_COLOR}
+                style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>
+                  CANCEL
+                </Text>
               </TouchableHighlight>
               <TouchableHighlight
-              onPress={() => {
-              this.selectedDialogOp = true;
-              this.validate();
-              } }
-              underlayColor={Skin.colors.REPPLE_COLOR}
-              style={styles.modalButton}>
-              <Text style={styles.modalButtonText}>
-              SUBMIT
-              </Text>
+                onPress={() => {
+                  this.selectedDialogOp = true;
+                  this.validate();
+                } }
+                underlayColor={Skin.colors.REPPLE_COLOR}
+                style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>
+                  SUBMIT
+                </Text>
               </TouchableHighlight>
-              </View>
-              </Modal>
-
-          </View>
-        </TouchableWithoutFeedback>
-      );
-    
-
+            </View>
+          </Modal>
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 }
+
 const styles = StyleSheet.create({
-                                 modalwrap: {
-                                 height: 180,
-                                 flexDirection: 'column',
-                                 borderRadius: 15,
-                                 backgroundColor: '#fff',
-                                 },
-                                 modalTitleWrap: {
-                                 justifyContent: 'center',
-                                 flex: 1,
-                                 },
-                                 modalTitle: {
-                                 color: Skin.colors.PRIMARY_TEXT,
-                                 textAlign: 'center',
-                                 justifyContent: 'center',
-                                 alignItems: 'center',
-                                 fontSize: 18,
-                                 fontWeight: 'bold',
-                                 backgroundColor: 'transparent',
-                                 marginTop: 10,
-                                 
-                                 },
-                                 modalButton: {
-                                 flex: 1,
-                                 alignItems: 'center',
-                                 justifyContent: 'center',
-                                 padding: 10,
-                                 },
-                                 modalButtonText: {
-                                 textAlign: 'center',
-                                 },
-                                 modalInput: {
-                                 textAlign: 'center',
-                                 color: Skin.colors.PRIMARY_TEXT,
-                                 height: 38,
-                                 fontSize: 16,
-                                 backgroundColor: null
-                                 
-                                 },
-                                 border: {
-                                 height: 1,
-                                 marginBottom: 16,
-                                 backgroundColor: Skin.colors.DIVIDER_COLOR,
-                                 },
-                                 underline: {
-                                 height: 2,
-                                 backgroundColor: Skin.colors.DIVIDER_COLOR,
-                                 },
-                                 DeviceListView: {
-                                 justifyContent: 'center',
-                                 backgroundColor: 'transparent',
-                                 },
-                                 button: {
-                                 height: 48,
-                                 width: 48,
-                                 opacity: 0.6,
-                                 justifyContent: "center",
-                                 marginTop: 4,
-                                 },
-                                 images: {
-                                 width: 18,
-                                 height: 18,
-                                 margin: 16,
-                                 },
-                                 customerow: {
-                                 flexDirection: 'row',
-                                 height: 56,
-                                 backgroundColor: 'transparent',
-                                 },
-                                 });
+
+modalwrapNotification: {
+    height: 150,
+    flexDirection: 'column',
+    borderRadius: 15,
+    backgroundColor: '#fff',
+  },
+  modalTitleWrapNotification: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalTitleNotification: {
+    color: Skin.colors.PRIMARY_TEXT,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+  },
+  modalButtonNotification: {
+    height: 40,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  modalButtonTextNotification: {
+    textAlign: 'center',
+    color: '#268CFE',
+    fontSize: 16,
+  },
+  borderNotification: {
+    height: 1,
+    marginTop: 16,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+  },
+
+  modalwrap: {
+    height: 180,
+    flexDirection: 'column',
+    borderRadius: 15,
+    backgroundColor: '#fff',
+  },
+  modalTitleWrap: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalTitle: {
+    color: Skin.colors.PRIMARY_TEXT,
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+    marginTop: 10,
+
+  },
+  modalButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  modalButtonText: {
+    textAlign: 'center',
+  },
+  modalInput: {
+    textAlign: 'center',
+    color: Skin.colors.PRIMARY_TEXT,
+    height: 38,
+    fontSize: 16,
+    backgroundColor: null
+
+  },
+  border: {
+    height: 1,
+    marginBottom: 16,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+  },
+  underline: {
+    height: 2,
+    backgroundColor: Skin.colors.DIVIDER_COLOR,
+  },
+  DeviceListView: {
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  button: {
+    height: 48,
+    width: 48,
+    opacity: 0.6,
+    justifyContent: "center",
+    marginTop: 4,
+  },
+  images: {
+    width: 18,
+    height: 18,
+    margin: 16,
+  },
+  customerow: {
+    flexDirection: 'row',
+    height: 56,
+    backgroundColor: 'transparent',
+  },
+});
 
 module.exports = MainActivation;

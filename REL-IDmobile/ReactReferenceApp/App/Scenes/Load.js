@@ -245,20 +245,21 @@ class Load extends Component {
     else
       msg = notification.message;
 
-    if (!global.isnotificationAlertShown) {
+   // if (!global.isnotificationAlertShown) {
       global.isnotificationAlertShown = true;
       setTimeout(() => {
-        Alert.alert(
-          '',
-          msg, [{
-            text: 'Dismiss',
-            onPress: () => {
-            global.isnotificationAlertShown = false;
-            },
-          }]
-        );
+        // Alert.alert(
+        //   '',
+        //   msg, [{
+        //     text: 'Dismiss',
+        //     onPress: () => {
+        //     global.isnotificationAlertShown = false;
+        //     },
+        //   }]
+        // );
+        Events.trigger("showNotificationAlert",{msg})
       }, 100);
-    }
+   // }
   }
   //Call getNotifications api.
   getMyNotifications() {
