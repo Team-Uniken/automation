@@ -61,7 +61,8 @@ function compare(a, b) {
   // if (a.created_timestamp == b.created_timestamp)
   //   return 0;
 
-  return moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
+//  return moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
+   return moment.utc(b.created_ts.replace('UTC','')).local().toDate() - moment.utc(a.created_ts.replace('UTC','')).local().toDate()
 }
 
 /*
@@ -209,7 +210,9 @@ var SampleRow = React.createClass({
 
     var expiry_timestamp = this.props.notification.expiry_timestamp;
     var created_timestamp = this.props.notification.created_ts;
-    var timestamp = expiry_timestamp.split("EDT");
+   // var timestamp = expiry_timestamp.split("EDT");
+  var timestamp = expiry_timestamp.split("UTC");
+
     var finaltimestamp = timestamp[0].split("T");
     var date = finaltimestamp[0].split("-");
     var time = finaltimestamp[1].split(":");
@@ -877,7 +880,8 @@ export default class NotificationMgmtScene extends Component {
        var notification = notifiactionArray[0];
 
        var date1 = new Date(millis2minsBefore);
-       var testDateUtc = moment.utc(notification.created_ts.replace('EDT','')).add(4, 'hours');
+     var testDateUtc = moment.utc(notification.created_ts.replace('UTC',''));
+//       var testDateUtc = moment.utc(notification.created_ts.replace('EDT','')).add(4, 'hours');
        var localDate = moment(testDateUtc).local();
        var s = localDate.format("YYYY-MM-DDTHH:mm:ssZ");
        var newDateObj = new Date(s);
