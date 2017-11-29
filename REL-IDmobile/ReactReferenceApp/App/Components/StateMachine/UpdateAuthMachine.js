@@ -248,10 +248,11 @@ class UpdateAuthMachine extends Component {
 //              this.props.navigation.dispatch(resetAction)
               
               this.props.navigation.dispatch({
-              key: 'UpdateMachine',
+              key: 'UpdateMachine'+Date.now().toLocaleString(),
               type: 'ReplaceCurrentScreen',
               routeName: 'UpdateMachine',
-              params:{url: {
+              params:{
+                url: {
                 chlngJson,
               screenId: nextChlngName,
               currentIndex:0
@@ -397,7 +398,7 @@ class UpdateAuthMachine extends Component {
         //return (<PasswordVerification navigator={nav} url={route.url} title={route.title} />);
       }
       else {
-        return (<UpdatePasswordSet navigator={nav} parentnav={this.props.navigator} url={route.url} title={route.title} />);
+        return (<UpdatePasswordSet key={Date.now().toLocaleString()} navigator={nav} parentnav={this.props.navigator} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {
       return (<Otp navigator={nav} url={route.url} title={route.title} />);
