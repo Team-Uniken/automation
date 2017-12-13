@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    app:layout_collapseParallaxMultiplier="1.0">
+
+        <EditText
+            android:id="@+id/txtLoginId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Login ID"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/card_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Card Number"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/card_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Card PIN"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/regMPIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="MPIN"
+            android:inputType="numberPassword" />
+
+        <EditText
+            android:id="@+id/confMPIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="confirm MPIN"
+            android:inputType="numberPassword" />
+
+        <Button
+            android:id="@+id/btnDoRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="registerClicked"
+            android:text="Register" />
+
+        <EditText
+            android:id="@+id/editText7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.51"
+            android:ems="10"
+            android:inputType="textMultiLine|textPersonName"
+            android:text="This is a demo app used for POC purpose.\n This app does not perform a real transaction"
+            android:textAlignment="center" />
+
+</LinearLayout>
