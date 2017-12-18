@@ -89,10 +89,8 @@
 - (int)initializeRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)callback {
   
   int errorID = 0;
-   // [UserSessionState getSharedInstance].isRDNAIntilized = NO;
-    //[UserSessionState getSharedInstance].proxyPort = 0;
-    
-    clientCallbacks = self;
+
+  clientCallbacks = self;
   rdnaClientCallback = callback;
     RDNA *rdna;
     if ([CLLocationManager locationServicesEnabled] == NO) {
@@ -412,6 +410,11 @@
   NSLog(@"\n\n %@",logData);
   return 0;
 }
+
+/**
+ * @brief onSecurityThreat - .
+ * @param status                -
+ */
 -(int)onSecurityThreat:(NSString*)status{
   dispatch_async(dispatch_get_main_queue(), ^(){
     UIAlertView *threatAlert = [[UIAlertView alloc]initWithTitle:@"Device is not safe." message:status delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -443,18 +446,6 @@
       }
     }
   }
-}
-
-/**
- * @brief This method is used to fetch the currently running services.
- */
-- (NSArray *)fetchAllServices {
-  
-  NSArray *allServiceArray;
-  int errorgetAllServiceArray = [rdnaObject getAllServices:&allServiceArray];
-  return [allServiceArray copy];
-  //  [getAllServiceArray addObjectsFromArray:getAllServiceArray];
-  //  return errorgetAllServiceArray;
 }
 
 /**
