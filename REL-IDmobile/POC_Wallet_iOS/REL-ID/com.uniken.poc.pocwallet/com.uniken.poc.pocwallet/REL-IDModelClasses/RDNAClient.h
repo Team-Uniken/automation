@@ -27,7 +27,7 @@
 
 @property (assign) int proxyPort;
 /**
- * @brief This method initilizes the RDNA with the provided host, port, cipher specs, cipher salt, proxy settings.
+ * @brief This method initilizes the RDNA with the provided host, port, cipher specs, cipher salt, proxy settings, DNS server list, SSL certificate details,SDK log level, app context.
  * It also returns an RDNA object which needs to be used futher when we want to invoke any api of the rdna client.
  */
 - (int)initializeRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)callback;

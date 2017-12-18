@@ -114,7 +114,7 @@
         rdnaSSLlCertificate.password = certPassword;
         
         
-        errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
+        errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
         rdnaObject = rdna;
       }
     }
