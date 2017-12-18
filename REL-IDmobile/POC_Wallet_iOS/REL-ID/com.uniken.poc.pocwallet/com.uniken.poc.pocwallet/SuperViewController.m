@@ -9,6 +9,8 @@
 #import "SuperViewController.h"
 #import "UIView+FormScroll.h"
 #import "Constants.h"
+#import "RDNAConstants.h"
+#import "UIView+Toast.h"
 @interface SuperViewController ()<UITextFieldDelegate>{
   UITextField *aTextField;
 }
@@ -32,6 +34,23 @@
   [self.view addGestureRecognizer:tap];
   // Do any additional setup after loading the view.
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(sessionTimeout:)
+                                               name:kNotificationSessionTimeout                                             object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+  
+  [super viewWillDisappear:animated];
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:kNotificationSessionTimeout
+                                                object:nil];
+}
+
 
 -(void)setupViews{
   
@@ -159,6 +178,21 @@
   AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
   [appDel.window.rootViewController presentViewController:alertController animated:YES completion:nil];
 }
+
+# pragma mark - Session timeout notication handled
+
+-(void)sessionTimeout:(NSNotification *)notification{
+  
+  if(self.navigationController) {
+    [self.navigationController.view makeToast:notification.object
+                                     duration:3.0
+                                     position:CSToastPositionCenter];
+    
+    [self.navigationController popToRootViewControllerAnimated:NO];
+  }
+}
+
+
 
 
 @end

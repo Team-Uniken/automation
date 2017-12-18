@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5556FA4E1FE78280007F7B76 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5556FA481FE78217007F7B76 /* libapi-sdk.a */; };
 		5599EA3C1FE3ABF300A543FB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA3B1FE3ABF300A543FB /* Utility.m */; };
 		5599EA591FE3CB4100A543FB /* DoneCancelNumberPadToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */; };
 		5599EA691FE3E30100A543FB /* RDNAClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA5C1FE3DBCB00A543FB /* RDNAClient.m */; };
@@ -22,6 +21,8 @@
 		5599EA731FE3E9C800A543FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA721FE3E9C800A543FB /* CoreLocation.framework */; };
 		5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA741FE3E9CF00A543FB /* CoreTelephony.framework */; };
 		5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA761FE3E9DC00A543FB /* AdSupport.framework */; };
+		55F1FC541FE7D9F300EC7409 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1FC4E1FE7D9D600EC7409 /* libapi-sdk.a */; };
+		55F1FC581FE7E42300EC7409 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1FC571FE7E42300EC7409 /* UIView+Toast.m */; };
 		654F25281FE282BA00069E02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25271FE282BA00069E02 /* main.m */; };
 		654F252B1FE282BA00069E02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F252A1FE282BA00069E02 /* AppDelegate.m */; };
 		654F25311FE282BA00069E02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F252F1FE282BA00069E02 /* Main.storyboard */; };
@@ -47,9 +48,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5556FA471FE78217007F7B76 /* PBXContainerItemProxy */ = {
+		55F1FC4D1FE7D9D600EC7409 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 5556FA411FE78216007F7B76 /* api-sdk.xcodeproj */;
+			containerPortal = 55F1FC471FE7D9D500EC7409 /* api-sdk.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 6573EF001BA40E250085584E;
 			remoteInfo = "api-sdk";
@@ -71,9 +72,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5556FA411FE78216007F7B76 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../openssl/api-sdk/build/ios/api-sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
-		5556FA4B1FE78234007F7B76 /* RDNA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		5556FA4D1FE78234007F7B76 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		5599EA3A1FE3ABF300A543FB /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		5599EA3B1FE3ABF300A543FB /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoneCancelNumberPadToolbar.m; sourceTree = "<group>"; };
@@ -87,6 +85,11 @@
 		5599EA721FE3E9C800A543FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5599EA741FE3E9CF00A543FB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5599EA761FE3E9DC00A543FB /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		55F1FC471FE7D9D500EC7409 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../../../Android-SVN/openssl/api-sdk/build/ios/api-sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
+		55F1FC511FE7D9EA00EC7409 /* RDNA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		55F1FC531FE7D9EA00EC7409 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		55F1FC561FE7E42300EC7409 /* UIView+Toast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		55F1FC571FE7E42300EC7409 /* UIView+Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		654F25231FE282BA00069E02 /* com.uniken.poc.pocwallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.uniken.poc.pocwallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F25271FE282BA00069E02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		654F25291FE282BA00069E02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -135,7 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5556FA4E1FE78280007F7B76 /* libapi-sdk.a in Frameworks */,
+				55F1FC541FE7D9F300EC7409 /* libapi-sdk.a in Frameworks */,
 				5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */,
 				5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */,
 				5599EA731FE3E9C800A543FB /* CoreLocation.framework in Frameworks */,
@@ -159,40 +162,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5556FA421FE78216007F7B76 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				5556FA481FE78217007F7B76 /* libapi-sdk.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5556FA491FE78234007F7B76 /* api-sdk */ = {
-			isa = PBXGroup;
-			children = (
-				5556FA4A1FE78234007F7B76 /* include */,
-				5556FA4C1FE78234007F7B76 /* libs */,
-			);
-			name = "api-sdk";
-			path = "../../../../openssl/api-sdk.out/iOS/release/api-sdk";
-			sourceTree = "<group>";
-		};
-		5556FA4A1FE78234007F7B76 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				5556FA4B1FE78234007F7B76 /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		5556FA4C1FE78234007F7B76 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				5556FA4D1FE78234007F7B76 /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
 		5599EA5A1FE3DBCA00A543FB /* REL-IDModelClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,10 +185,45 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		55F1FC481FE7D9D500EC7409 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F1FC4E1FE7D9D600EC7409 /* libapi-sdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F1FC4F1FE7D9EA00EC7409 /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				55F1FC501FE7D9EA00EC7409 /* include */,
+				55F1FC521FE7D9EA00EC7409 /* libs */,
+			);
+			name = "api-sdk";
+			path = "../../../../../Android-SVN/openssl/api-sdk.out/iOS/release/api-sdk";
+			sourceTree = "<group>";
+		};
+		55F1FC501FE7D9EA00EC7409 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				55F1FC511FE7D9EA00EC7409 /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		55F1FC521FE7D9EA00EC7409 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				55F1FC531FE7D9EA00EC7409 /* libapi-sdk.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
 		654F251A1FE282BA00069E02 = {
 			isa = PBXGroup;
 			children = (
-				5556FA411FE78216007F7B76 /* api-sdk.xcodeproj */,
+				55F1FC4F1FE7D9EA00EC7409 /* api-sdk */,
+				55F1FC471FE7D9D500EC7409 /* api-sdk.xcodeproj */,
 				654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */,
 				654F25421FE282BA00069E02 /* com.uniken.poc.pocwalletTests */,
 				654F254D1FE282BB00069E02 /* com.uniken.poc.pocwalletUITests */,
@@ -241,7 +245,6 @@
 		654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */ = {
 			isa = PBXGroup;
 			children = (
-				5556FA491FE78234007F7B76 /* api-sdk */,
 				5599EA5A1FE3DBCA00A543FB /* REL-IDModelClasses */,
 				654F25681FE2890400069E02 /* Utility */,
 				654F25621FE287E700069E02 /* View */,
@@ -296,6 +299,8 @@
 		654F25621FE287E700069E02 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				55F1FC561FE7E42300EC7409 /* UIView+Toast.h */,
+				55F1FC571FE7E42300EC7409 /* UIView+Toast.m */,
 				654F25631FE2880100069E02 /* CustomView.h */,
 				654F25641FE2880100069E02 /* CustomView.m */,
 				654F25721FE28DFE00069E02 /* NavigationHeader.h */,
@@ -422,8 +427,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 5556FA421FE78216007F7B76 /* Products */;
-					ProjectRef = 5556FA411FE78216007F7B76 /* api-sdk.xcodeproj */;
+					ProductGroup = 55F1FC481FE7D9D500EC7409 /* Products */;
+					ProjectRef = 55F1FC471FE7D9D500EC7409 /* api-sdk.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -436,11 +441,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		5556FA481FE78217007F7B76 /* libapi-sdk.a */ = {
+		55F1FC4E1FE7D9D600EC7409 /* libapi-sdk.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libapi-sdk.a";
-			remoteRef = 5556FA471FE78217007F7B76 /* PBXContainerItemProxy */;
+			remoteRef = 55F1FC4D1FE7D9D600EC7409 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -497,6 +502,7 @@
 				654F255E1FE283CD00069E02 /* MainViewController.m in Sources */,
 				654F25841FE294E700069E02 /* RegisterViewController.m in Sources */,
 				5599EA6C1FE3E31000A543FB /* RDNAConstants.m in Sources */,
+				55F1FC581FE7E42300EC7409 /* UIView+Toast.m in Sources */,
 				654F257A1FE28E1400069E02 /* ProcessingScreen.m in Sources */,
 				654F25281FE282BA00069E02 /* main.m in Sources */,
 			);
