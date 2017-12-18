@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/sudarshan/Desktop/ReactNativeSRA/ReactRefrenceApp/ReactRefereneApp/ios/ReactRefApp.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

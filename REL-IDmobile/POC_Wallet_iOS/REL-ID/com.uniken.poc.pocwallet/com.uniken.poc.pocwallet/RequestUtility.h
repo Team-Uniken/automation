@@ -7,17 +7,13 @@
 
 @interface RequestUtility : NSObject <NSURLSessionDelegate,NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 
-typedef void(^myCompletion)(bool status, NSDictionary  *response);
 extern NSString *const kBaseUrl;
 extern NSString *const kAddAmount;
 extern NSString *const kRegister;
 extern NSString *const kUpdate;
 extern NSString *const kLogin;
+extern NSString *const kDummyText;
 
-@property (nonatomic, copy, readwrite) myCompletion block;
-@property (nonatomic, assign) BOOL isProxy;
 + (RequestUtility *)sharedRequestUtility;
 -(void)doPostRequestfor:(NSString*)url withParameters:(NSDictionary*)params onComplete:(void (^)(bool status, NSDictionary  *response))completionBlock;
-
--(void)doPostRequestfromRelID:(NSString*)url withParameters:(NSDictionary*)params onComplete:(void (^)(bool status, NSDictionary  *response))completionBlock;
 @end

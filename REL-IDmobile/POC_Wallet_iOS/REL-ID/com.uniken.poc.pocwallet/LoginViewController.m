@@ -23,45 +23,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.txtLabel.text = @"This is a demo app used for POC purpose.\n This app does not perform a real transaction";
+  self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"POC Wallet";
     // Do any additional setup after loading the view.
   
   DoneCancelNumberPadToolbar *toolbar = [[DoneCancelNumberPadToolbar alloc] initWithTextField:_MPinTxtFld];
   toolbar.delegate = self;
   _MPinTxtFld.inputAccessoryView = toolbar;
-  
-
-    
-  
-#ifdef DEBUG
-  self.loginIdTxtFld.text = @"9637418458";
-  self.MPinTxtFld.text = @"uniken123$";
-  // Something to log your sensitive data here
-  
-#else
-  
-  //
-  
-#endif
 }
 
 
 #pragma -mark NumberPad keyboard button delegates
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField{
-  NSLog(@"%@", textField.text);
   [textField resignFirstResponder] ;
 }
 
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField{
-  NSLog(@"Canceled: %@", [textField description]);
    [textField resignFirstResponder] ;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
   [super viewDidAppear:animated];
- // NumberPadButton *numberPadDoneButton = [[NumberPadButton alloc]initWithFrame:CGRectMake(0, 0, 1, 1)];
-  //self.MPinTxtFld.inputAccessoryView = numberPadDoneButton;
 }
 - (IBAction)loginBtnClick:(id)sender {
   
@@ -98,7 +80,6 @@
     if (status && [responseDictionary objectForKey:@"error"] == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         [self hideProcessingScreen];
-        NSLog(@"response:%@",responseDictionary);
         [self parsedoAddAmountResponse:responseDictionary];
       });
     }else{

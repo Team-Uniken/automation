@@ -66,6 +66,7 @@
  */
 - (void)EnterBackground;
 
+
 -(int)RDNAClientOpenHttpConnection:(RDNAHTTPRequest*)req withCallback:(id<RDNAClientCallbacks>)callback;
 
 

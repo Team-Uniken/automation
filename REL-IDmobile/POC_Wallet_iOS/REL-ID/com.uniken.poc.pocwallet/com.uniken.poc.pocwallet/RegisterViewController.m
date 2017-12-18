@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  self.txtLabel.text = @"This is a demo app used for POC purpose.\n This app does not perform a real transaction";
+  self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"Register";
   
   DoneCancelNumberPadToolbar *numberPadCardPinTxtFld = [[DoneCancelNumberPadToolbar alloc] initWithTextField:self.cardPinTxtFld];
@@ -100,7 +100,6 @@
     if (status && [responseDictionary objectForKey:@"error"] == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         [self hideProcessingScreen];
-        NSLog(@"response:%@",responseDictionary);
         [self parsedoRegisterResponse:responseDictionary];
       });
     }else{
@@ -141,13 +140,11 @@
 
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField
 {
-  NSLog(@"%@", textField.text);
   [textField resignFirstResponder] ;
 }
 
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField
 {
-  NSLog(@"Canceled: %@", [textField description]);
   [textField resignFirstResponder] ;
 }
 

@@ -13,6 +13,7 @@ NSString *const kAddAmount = @"balance";
 NSString *const kRegister = @"register";
 NSString *const kUpdate = @"update";
 NSString *const kLogin = @"login";
+NSString *const kDummyText = @"This is a demo app used for POC purpose.\n This app does not perform a real transaction";
 
 
 

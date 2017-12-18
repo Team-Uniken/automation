@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9fC-zv-mSi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9fC-zv-mSi">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -209,6 +209,7 @@
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="m8S-vd-c3h">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -265,9 +266,12 @@
                                     <outlet property="delegate" destination="qaD-48-ulp" id="NkF-ji-Nad"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="MGR-bg-GYm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="MGR-bg-GYm">
                                 <rect key="frame" x="137" y="84.5" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="TOJ-uU-VgR"/>
+                                    <constraint firstAttribute="height" constant="100" id="i0r-tv-PMI"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkp-ym-ypW" customClass="UICustomButton">
                                 <rect key="frame" x="112" y="545" width="151" height="30"/>
@@ -322,12 +326,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="MGR-bg-GYm" firstAttribute="centerX" secondItem="LMk-t9-bWV" secondAttribute="centerX" id="2B6-eo-HOo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2iv-QM-9UY" secondAttribute="trailing" constant="26" id="3WM-HN-09O"/>
                             <constraint firstItem="LIV-p9-Zqk" firstAttribute="leading" secondItem="LMk-t9-bWV" secondAttribute="leading" id="3ai-TK-bca"/>
                             <constraint firstItem="Rx8-Vv-zgS" firstAttribute="top" secondItem="dCJ-Et-fpJ" secondAttribute="bottom" constant="15" id="4Da-wJ-RTW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dCJ-Et-fpJ" secondAttribute="trailing" constant="26" id="7iV-bi-6xo"/>
                             <constraint firstItem="dCJ-Et-fpJ" firstAttribute="leading" secondItem="LMk-t9-bWV" secondAttribute="leadingMargin" constant="27" id="8Um-5A-5Iz"/>
                             <constraint firstItem="2iv-QM-9UY" firstAttribute="top" secondItem="Rx8-Vv-zgS" secondAttribute="bottom" constant="15" id="C0M-E4-oU6"/>
+                            <constraint firstItem="MGR-bg-GYm" firstAttribute="top" secondItem="Ma4-Yf-W7u" secondAttribute="bottom" constant="64.5" id="CT4-gQ-KxZ"/>
                             <constraint firstItem="6KH-tY-Qxg" firstAttribute="top" secondItem="2iv-QM-9UY" secondAttribute="bottom" constant="15" id="DKQ-N9-WnS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6KH-tY-Qxg" secondAttribute="trailing" constant="26" id="EES-WD-pI7"/>
                             <constraint firstItem="6KH-tY-Qxg" firstAttribute="leading" secondItem="LMk-t9-bWV" secondAttribute="leadingMargin" constant="27" id="LUF-kj-OcD"/>
@@ -380,9 +386,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.27000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="f4S-21-WrE">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="f4S-21-WrE">
                                 <rect key="frame" x="137" y="84.5" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="E2X-WX-WeV"/>
+                                    <constraint firstAttribute="width" constant="100" id="dVc-1m-HEx"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tmy-6d-D6E" customClass="UICustomButton">
                                 <rect key="frame" x="112" y="545" width="151" height="30"/>
@@ -434,6 +443,7 @@
                             <constraint firstItem="bP3-hO-G0h" firstAttribute="leading" secondItem="ZD9-xs-mIR" secondAttribute="leading" id="4Ae-Ef-A6Z"/>
                             <constraint firstItem="bP3-hO-G0h" firstAttribute="top" secondItem="Tmy-6d-D6E" secondAttribute="bottom" constant="41" id="5hY-p1-DQF"/>
                             <constraint firstItem="dRC-GA-HMp" firstAttribute="leading" secondItem="ZD9-xs-mIR" secondAttribute="leading" id="62g-kC-hfZ"/>
+                            <constraint firstItem="f4S-21-WrE" firstAttribute="top" secondItem="1tv-B0-rHn" secondAttribute="bottom" constant="64.5" id="Bj6-S6-HqJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jbC-1K-98n" secondAttribute="trailing" constant="26" id="Hks-HY-KiJ"/>
                             <constraint firstAttribute="trailing" secondItem="n6J-mq-03Q" secondAttribute="trailing" id="I7B-eo-1jG"/>
                             <constraint firstItem="M4A-MV-Txr" firstAttribute="top" secondItem="bP3-hO-G0h" secondAttribute="bottom" id="Iyu-mc-AuY"/>
@@ -445,6 +455,7 @@
                             <constraint firstItem="n6J-mq-03Q" firstAttribute="centerY" secondItem="ZD9-xs-mIR" secondAttribute="centerY" id="lgJ-i6-ZQT"/>
                             <constraint firstItem="jbC-1K-98n" firstAttribute="top" secondItem="dRC-GA-HMp" secondAttribute="bottom" constant="34" id="rJ7-vy-2fg"/>
                             <constraint firstItem="dRC-GA-HMp" firstAttribute="top" secondItem="n6J-mq-03Q" secondAttribute="bottom" constant="10" id="sUs-co-Stl"/>
+                            <constraint firstItem="f4S-21-WrE" firstAttribute="centerX" secondItem="ZD9-xs-mIR" secondAttribute="centerX" id="w7c-7b-7oh"/>
                         </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>

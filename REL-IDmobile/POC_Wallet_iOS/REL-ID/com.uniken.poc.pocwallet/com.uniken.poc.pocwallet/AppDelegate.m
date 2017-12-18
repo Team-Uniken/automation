@@ -25,10 +25,6 @@
   
    self.rdnaclient = [[RDNAClient alloc]init];
    [NSURLProtocol registerClass:[RelIDRequestInterceptor class]];
-   RequestUtility *utility = [RequestUtility sharedRequestUtility];
-   utility.isProxy = NO;
-  
-  
   return YES;
 }
 

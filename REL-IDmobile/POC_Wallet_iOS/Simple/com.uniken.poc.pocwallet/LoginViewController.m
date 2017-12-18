@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.txtLabel.text = @"This is a demo app used for POC purpose.\n This app does not perform a real transaction";
+  self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"POC Wallet";
     // Do any additional setup after loading the view.
   

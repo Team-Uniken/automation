@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-
+#import "RequestUtility.h"
 @interface MainViewController ()
 
 @end
@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  self.txtLabel.text = @"This is a demo app used for POC purpose.\n This app does not perform a real transaction";
+  self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"POC Wallet";
   self.navigationheader.navigationLeftButton.hidden = YES;
     // Do any additional setup after loading the view.
@@ -48,7 +48,7 @@
   if(errorCode>0)
   [self showErrorWithMessage:[NSString stringWithFormat:@"REL-ID init failed : %d",errorCode]];
   else
-    [self showErrorWithMessage:@"REL-ID initialization done"];
+    NSLog(@"Initiliaze success");
   
 }
 
