@@ -32,10 +32,6 @@
   toolbar.delegate = self;
   _MPinTxtFld.inputAccessoryView = toolbar;
   
-#ifdef DEBUG
-  self.loginIdTxtFld.text = @"9860818913";
-  self.MPinTxtFld.text =@"1111" ;
-#endif
 
 }
 

@@ -38,14 +38,6 @@
   numberPadConfirmMpinTxtFld.delegate = self;
   self.confirmMpinTxtFld.inputAccessoryView = numberPadConfirmMpinTxtFld;
   
-#ifdef DEBUG
-  NSString *temp = @"9860818913";
-  self.loginIDTxtFld.text = @"9860818913";
-  self.cardNuberTxtFld.text = @"1111111111111119";
-  self.cardPinTxtFld.text = @"1111";
-  self.mPinTxtFld.text = @"1111";
-  self.confirmMpinTxtFld.text = @"1111";
-#endif
 
     // Do any additional setup after loading the view.
 }
