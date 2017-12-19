@@ -19,7 +19,7 @@
 
 @implementation TwoFactorState
 
-@synthesize cardPin,userID,actCode,rdna,rdnaChallenges;
+@synthesize mPin,userID,actCode,rdna,rdnaChallenges;
 
 + (TwoFactorState *)sharedTwoFactorState {
   __strong static TwoFactorState *sharedTwoFactorState = nil;
@@ -42,10 +42,10 @@
       [self setResponseForChallenge:challenge andKey:@"" andValue:self.actCode];
     }
     else if ([challenge.name isEqualToString:kSecretQuestionAndAnswer]) {
-      [self setResponseForChallenge:challenge andKey:@"uniken" andValue:@"uniken123$"];
+      [self setResponseForChallenge:challenge andKey:@"sampleQuestion" andValue:@"sampleAnswer"];
     }
     else if ([challenge.name isEqualToString:kPassword]) {
-      [self setResponseForChallenge:challenge andKey:@"" andValue:self.cardPin];
+      [self setResponseForChallenge:challenge andKey:@"" andValue:self.mPin];
     }
     else if ([challenge.name isEqualToString:kDeviceBinding]) {
       [self setResponseForChallenge:challenge andKey:@"" andValue:@"true"];
@@ -53,7 +53,7 @@
     else if ([challenge.name isEqualToString:kDeviceName]) {
       [self setResponseForChallenge:challenge andKey:@"" andValue:userID];
     }else{
-      NSLog(@"%@",[NSString stringWithFormat:@"not intrested in challenge : %@",challenge.name]);
+      NSLog(@"%@",[NSString stringWithFormat:@"not intrested in TBA challenge : %@",challenge.name]);
     }
   }
   

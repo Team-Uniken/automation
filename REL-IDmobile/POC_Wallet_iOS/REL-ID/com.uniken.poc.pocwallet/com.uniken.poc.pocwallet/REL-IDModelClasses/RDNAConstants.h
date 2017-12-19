@@ -32,13 +32,9 @@ extern NSString *const kSecretQuestionAndAnswer;
 extern NSString *const kPassword;
 extern NSString *const kDeviceBinding;
 extern NSString *const kDashboard;
-extern NSString *const kOTP;
 extern NSString *const kSecretQuestionAndAnswer;
 extern NSString *const kSecondarySecretQuestionAndAnswer;
 extern NSString *const kDeviceName;
-
-/** constants dashboard url ***/
-extern NSString *const kDashBoardUrl;
 
 
 extern NSString *const kNotificationSessionTimeout;

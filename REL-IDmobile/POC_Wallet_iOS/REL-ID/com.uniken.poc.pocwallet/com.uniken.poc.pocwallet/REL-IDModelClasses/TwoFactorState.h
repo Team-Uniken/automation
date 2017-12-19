@@ -16,7 +16,7 @@
 @property (nonatomic,strong) NSString *walletID;
 @property (nonatomic,strong) NSString *balance;
 @property (nonatomic,strong) NSString *userID;
-@property (nonatomic,strong) NSString *cardPin;
+@property (nonatomic,strong) NSString *mPin;
 @property (nonatomic,strong) NSArray *rdnaChallenges;
 -(int)startTwoFactorFlowWithChallenge:(NSArray*)RdnaChallenges;
 @end

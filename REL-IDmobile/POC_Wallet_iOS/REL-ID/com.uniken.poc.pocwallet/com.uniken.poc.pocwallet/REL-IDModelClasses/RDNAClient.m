@@ -203,8 +203,6 @@
     [self fetchProxyPort:status.services];
     [RelIDRequestInterceptor applyProxySettingWithHost:kRdnaProxyHost withPort:status.pxyDetails.port];
     self.proxyPort = status.pxyDetails.port;
-
-    [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
   }
   dispatch_async(dispatch_get_main_queue(), ^{
     [rdnaClientCallback initialize:status.errCode];
@@ -286,7 +284,7 @@
         [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
         [[TwoFactorState sharedTwoFactorState]startTwoFactorFlowWithChallenge:status.challenges];
       }else{
-        NSLog(@"success");
+        NSLog(@"success for Two factor challenge authentication");
         dispatch_async(dispatch_get_main_queue(), ^{
           [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAllChallengeSuccess
                                                               object:nil];

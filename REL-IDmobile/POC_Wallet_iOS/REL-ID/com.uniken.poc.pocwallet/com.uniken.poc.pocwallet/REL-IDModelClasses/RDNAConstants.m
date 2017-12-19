@@ -25,7 +25,6 @@ NSString *const kDeviceNameKey = @"devname";
 
 NSString *const kCheckUser = @"checkuser";
 NSString *const kActivateUser = @"actcode";
-NSString *const kOTP = @"otp";
 NSString *const kSecretQuestionAndAnswer = @"secqa";
 NSString *const kSecondarySecretQuestionAndAnswer = @"secondarySecqa";
 
@@ -33,9 +32,6 @@ NSString *const kPassword = @"pass";
 NSString *const kDeviceBinding = @"devbind";
 NSString *const kDeviceName = @"devname";
 NSString *const kDashboard = @"dashboard";
-
-//NSString *const kDashBoardUrl = @"http://10.0.14.229:8080/cp/cp.html";
-NSString *const kDashBoardUrl = @"http://apisdkdemo.uniken.com/CP/ios.html";
 
 NSString *const kNotificationSessionTimeout = @"SessionTimeout";
 

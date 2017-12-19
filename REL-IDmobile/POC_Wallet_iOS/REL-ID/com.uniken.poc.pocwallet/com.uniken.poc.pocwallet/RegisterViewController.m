@@ -130,7 +130,7 @@
   
    TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
   
-  objTwoFactorState.cardPin = [NSString stringWithFormat:@"%@",self.mPinTxtFld.text];
+  objTwoFactorState.mPin = [NSString stringWithFormat:@"%@",self.mPinTxtFld.text];
   objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIDTxtFld.text];
   objTwoFactorState.actCode = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"act_code"]];
   objTwoFactorState.walletID = wallet_id;

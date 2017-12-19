@@ -38,7 +38,6 @@
   numberPadConfirmMpinTxtFld.delegate = self;
   self.confirmMpinTxtFld.inputAccessoryView = numberPadConfirmMpinTxtFld;
   
-  
     // Do any additional setup after loading the view.
 }
 - (IBAction)registerButtonClick:(id)sender {

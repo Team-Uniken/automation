@@ -112,7 +112,7 @@
   objTwoFactorState.walletID = wallet_id;
   objTwoFactorState.balance = balance;
   objTwoFactorState.userName = user_name;
-  objTwoFactorState.cardPin = self.MPinTxtFld.text;
+  objTwoFactorState.mPin = self.MPinTxtFld.text;
   [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
 }
 
