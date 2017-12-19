@@ -43,4 +43,9 @@ extern NSString *const kDashBoardUrl;
 
 extern NSString *const kNotificationSessionTimeout;
 
+extern NSString *const kMsgInternalError;
+
+extern NSString *const kNotificationAllChallengeSuccess;
+extern NSString *const kNotificationProcessingScreen;
+
 @end

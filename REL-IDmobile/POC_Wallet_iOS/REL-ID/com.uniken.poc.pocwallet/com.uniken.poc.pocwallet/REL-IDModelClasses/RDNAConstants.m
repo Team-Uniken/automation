@@ -40,4 +40,9 @@ NSString *const kDashBoardUrl = @"http://apisdkdemo.uniken.com/CP/ios.html";
 NSString *const kNotificationSessionTimeout = @"SessionTimeout";
 
 
+NSString *const kMsgInternalError = @"Internal system error, please exit and log in again";
+NSString *const kNotificationAllChallengeSuccess = @"success";
+NSString *const kNotificationProcessingScreen = @"processing_screen";
+
+
 @end

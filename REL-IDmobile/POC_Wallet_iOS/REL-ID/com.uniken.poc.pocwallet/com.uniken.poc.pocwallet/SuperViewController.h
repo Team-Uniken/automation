@@ -10,6 +10,7 @@
 #import "NavigationHeader.h"
 #import "ProcessingScreen.h"
 #import "AppDelegate.h"
+#import "TwoFactorState.h"
 
 @interface SuperViewController : UIViewController
 @property (nonatomic, strong) NavigationHeader *navigationheader;

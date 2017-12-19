@@ -10,6 +10,7 @@
 #import "RequestUtility.h"
 #import "AddAmountViewController.h"
 #import "DoneCancelNumberPadToolbar.h"
+
 @interface LoginViewController ()<DoneCancelNumberPadToolbarDelegate>{
   NSString *user_id;
   NSString *user_name;
@@ -30,6 +31,12 @@
   DoneCancelNumberPadToolbar *toolbar = [[DoneCancelNumberPadToolbar alloc] initWithTextField:_MPinTxtFld];
   toolbar.delegate = self;
   _MPinTxtFld.inputAccessoryView = toolbar;
+  
+#ifdef DEBUG
+  self.loginIdTxtFld.text = @"9860818913";
+  self.MPinTxtFld.text =@"1111" ;
+#endif
+
 }
 
 
@@ -98,7 +105,15 @@
   user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_name"]];
   balance = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"balance"]];
   wallet_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"wallet_id"]];
-    [self performSegueWithIdentifier:@"loginToAddAmount" sender:nil];
+  
+  
+  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIdTxtFld.text];
+  objTwoFactorState.walletID = wallet_id;
+  objTwoFactorState.balance = balance;
+  objTwoFactorState.userName = user_name;
+  objTwoFactorState.cardPin = self.MPinTxtFld.text;
+  [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
 }
 
 

@@ -38,7 +38,15 @@
   numberPadConfirmMpinTxtFld.delegate = self;
   self.confirmMpinTxtFld.inputAccessoryView = numberPadConfirmMpinTxtFld;
   
-  
+#ifdef DEBUG
+  NSString *temp = @"9860818913";
+  self.loginIDTxtFld.text = @"9860818913";
+  self.cardNuberTxtFld.text = @"1111111111111119";
+  self.cardPinTxtFld.text = @"1111";
+  self.mPinTxtFld.text = @"1111";
+  self.confirmMpinTxtFld.text = @"1111";
+#endif
+
     // Do any additional setup after loading the view.
 }
 - (IBAction)registerButtonClick:(id)sender {
@@ -118,7 +126,19 @@
   user_name = [ResponseDictionary valueForKey:@"user_name"];
   balance = [ResponseDictionary valueForKey:@"balance"];
   wallet_id = [ResponseDictionary valueForKey:@"wallet_id"];
-  [self performSegueWithIdentifier:@"registerToAddAmount" sender:nil];
+  
+  
+   TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  
+  objTwoFactorState.cardPin = [NSString stringWithFormat:@"%@",self.mPinTxtFld.text];
+  objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIDTxtFld.text];
+  objTwoFactorState.actCode = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"act_code"]];
+  objTwoFactorState.walletID = wallet_id;
+  objTwoFactorState.balance = balance;
+  objTwoFactorState.userName = user_name;
+  
+  [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
+  //[self performSegueWithIdentifier:@"registerToAddAmount" sender:nil];
 }
 
 

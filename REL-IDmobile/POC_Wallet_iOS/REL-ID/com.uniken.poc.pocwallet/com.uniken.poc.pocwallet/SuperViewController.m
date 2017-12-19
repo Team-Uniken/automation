@@ -11,6 +11,8 @@
 #import "Constants.h"
 #import "RDNAConstants.h"
 #import "UIView+Toast.h"
+#import "AddAmountViewController.h"
+
 @interface SuperViewController ()<UITextFieldDelegate>{
   UITextField *aTextField;
 }
@@ -20,8 +22,8 @@
 @implementation SuperViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
+  // Do any additional setup after loading the view.
   [self setupViews];
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent
                                               animated:NO];
@@ -40,17 +42,53 @@
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(sessionTimeout:)
                                                name:kNotificationSessionTimeout                                             object:nil];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(success:)
+                                               name:kNotificationAllChallengeSuccess
+                                             object:nil];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(actionProcessingScreen:)
+                                               name:kNotificationProcessingScreen
+                                             object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
   
   [super viewWillDisappear:animated];
-
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kNotificationSessionTimeout
                                                 object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:kNotificationAllChallengeSuccess
+                                                object:nil];
 }
 
+-(void)success:(NSNotification *)notification{
+  
+  AddAmountViewController *viewController = (AddAmountViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AddAmountViewControllerID"];
+  
+  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  viewController.user_id = objTwoFactorState.userID;
+  viewController.user_name = objTwoFactorState.userName;
+  viewController.balance = objTwoFactorState.balance;
+  viewController.wallet_id = objTwoFactorState.walletID;
+  [self.navigationController pushViewController:viewController animated:YES];
+  
+}
+
+-(void)actionProcessingScreen:(NSNotification *)notification{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    
+    if([notification.object boolValue]==YES){
+      [self addProccessingScreenWithText:@"Please wait..."];
+    }else{
+      [self hideProcessingScreen];
+    }
+   });
+}
 
 -(void)setupViews{
   
@@ -108,8 +146,8 @@
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 -(void)dismissKeyboard
@@ -141,27 +179,31 @@
 
 #pragma mark AlertView Show
 
-+ (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode;{
++ (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode{
   
-  UIAlertController *alertController = [UIAlertController
-                                        alertControllerWithTitle:kAlertMessageTitle
-                                        message:msg
-                                        preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction *okAction = [UIAlertAction
-                             actionWithTitle:NSLocalizedString(kBnameOK, @"OK action")
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction *action)
-                             {
-                               
-                             }];
-  
-  [alertController addAction:okAction];
-  AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
-  [appDel.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:kAlertMessageTitle
+                                          message:errorCode == 0 ?  msg : [NSString stringWithFormat:@"%@ \n Error code: %d",kMsgInternalError, errorCode]
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(kBnameOK, @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                 
+                               }];
+    
+    [alertController addAction:okAction];
+    AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
+    [appDel.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    
+  });
   
 }
 
-- (void)showErrorWithMessage:(NSString *)msg;{
+- (void)showErrorWithMessage:(NSString *)msg{
   UIAlertController *alertController = [UIAlertController
                                         alertControllerWithTitle:kAlertMessageTitle
                                         message:msg

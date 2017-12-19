@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "RelIDRequestInterceptor.h"
 #import "SuperViewController.h"
-
+#import "TwoFactorState.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 
@@ -89,33 +89,33 @@
 - (int)initializeRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)callback {
   
   int errorID = 0;
-
+  
   clientCallbacks = self;
   rdnaClientCallback = callback;
-    RDNA *rdna;
-    if ([CLLocationManager locationServicesEnabled] == NO) {
-      NSLog(@"locationServicesEnabled false");
-      [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0];
+  RDNA *rdna;
+  if ([CLLocationManager locationServicesEnabled] == NO) {
+    NSLog(@"locationServicesEnabled false");
+    [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0];
+  } else {
+    CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
+    if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
+      NSLog(@"authorizationStatus failed");
     } else {
-      CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
-      if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
-        NSLog(@"authorizationStatus failed");
-      } else {
-        RDNAProxySettings *ppxy = nil;
-       
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"clientcert" ofType:@"p12"];
-        NSData *certData = [NSData dataWithContentsOfFile:path];
-        NSString *certString3 = [certData base64EncodedStringWithOptions:2];
-        NSString *certPassword = @"your password";
-        RDNASSLCertificate *rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
-        rdnaSSLlCertificate.p12Certificate = certString3;
-        rdnaSSLlCertificate.password = certPassword;
-        
-        
-        errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
-        rdnaObject = rdna;
-      }
+      RDNAProxySettings *ppxy = nil;
+      
+      NSString *path = [[NSBundle mainBundle] pathForResource:@"clientcert" ofType:@"p12"];
+      NSData *certData = [NSData dataWithContentsOfFile:path];
+      NSString *certString3 = [certData base64EncodedStringWithOptions:2];
+      NSString *certPassword = @"your password";
+      RDNASSLCertificate *rdnaSSLlCertificate = [[RDNASSLCertificate alloc]init];
+      rdnaSSLlCertificate.p12Certificate = certString3;
+      rdnaSSLlCertificate.password = certPassword;
+      
+      
+      errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      rdnaObject = rdna;
     }
+  }
   
   return errorID;
 }
@@ -197,16 +197,18 @@
   
   NSLog(@"\n\n $$$$$ Notify runtime status of client called reason {%ld : %d} $$$$ \n\n",(long)[RDNA getErrorInfo:status.errCode],status.errCode);
   if (status.errCode == 0) {
+    [TwoFactorState sharedTwoFactorState].rdna = rdnaObject;
+    [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
     [rdnaObject serviceAccessStartAll];
     [self fetchProxyPort:status.services];
     [RelIDRequestInterceptor applyProxySettingWithHost:kRdnaProxyHost withPort:status.pxyDetails.port];
     self.proxyPort = status.pxyDetails.port;
+
+    [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
   }
   dispatch_async(dispatch_get_main_queue(), ^{
-     [rdnaClientCallback initialize:status.errCode];
+    [rdnaClientCallback initialize:status.errCode];
   });
-  
-  
   return 1;
 }
 
@@ -276,6 +278,26 @@
  * It returns the RDNAStatusCheckChallengesResponse class object.
  */
 - (int)onCheckChallengeResponseStatus:(RDNAStatusCheckChallengeResponse *) status {
+  [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
+                                                      object:[NSNumber numberWithInt:0]];
+  if (status.errCode == RDNA_ERR_NONE) {
+    if(status.status.statusCode == RDNA_RESP_STATUS_SUCCESS){
+      if (status.challenges.count != 0 ) {
+        [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
+        [[TwoFactorState sharedTwoFactorState]startTwoFactorFlowWithChallenge:status.challenges];
+      }else{
+        NSLog(@"success");
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAllChallengeSuccess
+                                                              object:nil];
+        });
+      }
+    }else{
+      [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0];
+    }
+  }else{
+    [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode];
+  }
   return 1;
 }
 
@@ -436,12 +458,12 @@
       RDNAService *service = [serviceArray objectAtIndex:i];
       RDNAPort *rdnaPort = service.portInfo;
       if (rdnaPort.portType == RDNA_PORT_TYPE_PROXY) {
-       // UserSessionState *sessionState = [UserSessionState getSharedInstance];
+        // UserSessionState *sessionState = [UserSessionState getSharedInstance];
         if ((rdnaPort.port > 0)&&(rdnaPort.isStarted)) {
-//sessionState.proxyPort = rdnaPort.port;
-//          if (sessionState.proxyPort > 0) {
-//            break;
-//          }
+          //sessionState.proxyPort = rdnaPort.port;
+          //          if (sessionState.proxyPort > 0) {
+          //            break;
+          //          }
         }
       }
     }
@@ -494,7 +516,6 @@
   
   [self pauseRDNA];
 }
-
 
 -(int)RDNAClientOpenHttpConnection:(RDNAHTTPRequest*)req withCallback:(id<RDNAClientCallbacks>)callback{
   rdnaClientCallback = callback;
