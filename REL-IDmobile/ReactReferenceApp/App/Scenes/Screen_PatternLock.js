@@ -9,11 +9,12 @@ import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
 
-import PatternView from '../Components/PatternView';
+import PatternView from '../Components/PatternView'; 
 import dismissKeyboard from 'dismissKeyboard';
 import Title from '../Components/view/title';
 import Events from 'react-native-simple-events';
 import Util from "../Components/Utils/Util";
+import Constants from '../Components/Utils/Constants';
 
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -199,7 +200,7 @@ class PatternLock extends Component {
 
     if (this.mode == "set") {
       try {
-        Util.saveUserDataSecureWithSalt("ERPasswd", dataStr, pattern).then((result) => {
+        Util.saveUserDataSecureWithSalt(Constants.JSONKey.ENCRIPTED_PATTERN_PASSWORD, dataStr, pattern).then((result) => {
           if (this.props.navigation.state.params.url.onSetPattern)
             this.props.navigation.state.params.url.onSetPattern(this.props.navigation,this.props.navigation.state.params.url.data);
         }).catch((error) => {
@@ -216,7 +217,7 @@ class PatternLock extends Component {
 
   decryptUserData(pattern) {
     if (this.mode === "verify") {
-      Util.getUserDataSecureWithSalt("ERPasswd", pattern)
+      Util.getUserDataSecureWithSalt(Constants.JSONKey.ENCRIPTED_PATTERN_PASSWORD, pattern)
         .then((userDataStr) => {
           var userData = JSON.parse(userDataStr);
           if (userData.pattern === this.currentPattern) {

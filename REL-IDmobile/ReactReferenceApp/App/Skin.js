@@ -3,7 +3,7 @@
 */
 
 // ALWAYS NEED
-'use strict';
+'use strict'; 
 
 import Config from 'react-native-config'
 
@@ -18,7 +18,7 @@ const MAX_HEIGHT = 600;
 const LANGUAGE = 'en'
 
 const BLACK = '#000000'
-const WHITE = '#FFFFFF'
+const WHITE = '#FFFFFF' 
 //////customization changes for NWD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const THEME_COLOR = Config.THEME_COLOR
 const CLIENT_TITLE_TEXT = Config.CLIENT_TITLE_TEXT
@@ -184,6 +184,7 @@ module.exports.icon = {
   logo: LOGO,
   wechat: '\ue935',
   facebook: '\ue932',
+  androidTouchId: '\ue90d',
   iProov: '\ue932',
   password: '\ue7ff',
   touchid: '\ue90d',
@@ -282,6 +283,10 @@ text = {
           'pattern': {
             key: 'pattern',
             label: 'Pattern'
+          },
+          'androidTouchId': {
+            key: 'androidTouchId',
+            label: 'TouchID'
           },
           'password': {
             key: 'password',
@@ -456,7 +461,7 @@ module.exports.baseline = {
   }
 }
 
-
+ 
 
 
 module.exports.layout0 = {
@@ -465,6 +470,27 @@ module.exports.layout0 = {
       flex: 1,
       justifyContent: "center",
       backgroundColor: BACKGROUND_COLOR,
+    },
+    modalContainer: {
+      top: 0,
+      right: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      height: SCREEN_HEIGHT,
+      width: SCREEN_WIDTH,
+      position: 'absolute',
+      backgroundColor: BLACK,
+      opacity: 0.7
+    },
+    connectionTypeContainer: {
+      flexDirection: 'row',
+      marginTop: 30,
+    },
+    connectionType: {
+      color: BUTTON_BG_COLOR,
+      alignItems: "center",
+      fontSize: 20,
+      marginTop: 30
     },
   },
   smalltext: {

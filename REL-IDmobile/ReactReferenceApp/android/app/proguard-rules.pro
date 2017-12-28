@@ -95,5 +95,10 @@
 -dontwarn com.amazonaws.util.**
 -dontwarn android.text.StaticLayout
 
+#android-touch-id.
+-dontwarn com.github.ajalt.reprint.**
+-keepattributes EnclosingMethod
+
+
 
 

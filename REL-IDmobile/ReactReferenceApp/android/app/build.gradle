@@ -207,6 +207,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-touch-id-android')
     compile project(':react-native-spinkit')
     compile project(':react-native-fs')
     compile project(':react-native-maps')

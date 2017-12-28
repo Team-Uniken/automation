@@ -8,6 +8,9 @@ import android.support.v7.appcompat.*;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
+import co.eleken.react_native_touch_id_android.FingerprintPackage;
+
+import com.github.ajalt.reprint.core.Reprint;
 import com.react.rnspinkit.RNSpinkitPackage;
 import com.rnfs.RNFSPackage;
 
@@ -48,7 +51,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Reprint.initialize(this);
 
         //  if(BuildConfig.DEBUG) {
 //        Stetho.initializeWithDefaults(this);
@@ -73,7 +76,7 @@ public class MainApplication extends Application implements ReactApplication {
 //            }
 //        } catch (PackageManager.NameNotFoundException e) {
 //
-//        } catch (NoSuchAlgorithmException e) {
+//        } catch (NoSuchAlg    orithmException e) {
 //
 //        }
     }
@@ -89,7 +92,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new RNSpinkitPackage(),
+                    new FingerprintPackage(),
+                    new RNSpinkitPackage(),
                     new RNFSPackage(),
                     new MapsPackage(),
                     new ReactNativeConfigPackage(),

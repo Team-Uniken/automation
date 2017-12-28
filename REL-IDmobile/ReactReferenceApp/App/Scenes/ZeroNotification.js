@@ -14,12 +14,13 @@ import Config from 'react-native-config';
  */
 import Events from 'react-native-simple-events';
 import moment from 'moment';
-import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS, RefreshControl } from 'react-native';
+import { StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS, RefreshControl, BackHandler } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
 import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
+import AndroidAuth from "../Components/view/AndroidTouch"
 import NotificationCard from '../Components/view/notificationcard';
 import { NavigationActions} from 'react-navigation';
 const Spinner = require('react-native-spinkit');
@@ -47,7 +48,7 @@ let NotificationObtianedResponse;
 let obj;
 var notification = [];
 let onUpdateNotificationSubscription;
-let isAdditionalAuthSupported = { pass: false, erpass: false };
+let isAdditionalAuthSupported = { pass: false, erpass: false, erPattern: false };
 let isPageTitle = JSON.parse(Config.ENABLEPAGETITLE);
 
 /*
@@ -106,7 +107,10 @@ var SampleRow = React.createClass({
               this.showModelForPassword();
             } else if (data.authlevel == "2") {
               if (Platform.OS === 'android') {
-                this.showComponentForPattern();
+                if( isAdditionalAuthSupported.erpass )
+                  this.showModelForTouchId();
+                else if( isAdditionalAuthSupported.erPattern )
+                  this.showComponentForPattern();
               } else {
                 this.showModelForTouchId();
               }
@@ -357,7 +361,7 @@ var SampleRow = React.createClass({
                     <Text style={Skin.notification.buttontext}>
                       {this.props.notification.action[1].label}
                     </Text>
-                  </View>
+                  </View> 
                 </TouchableHighlight>
               </View>
             </View>
@@ -389,6 +393,8 @@ export default class NotificationMgmtScene extends Component {
     this.onPatternUnlock = this.onPatternUnlock.bind(this);
     this.authenticateWithPattern = this.authenticateWithPattern.bind(this);
     this.authenticateWithTouchIDIfSupported = this.authenticateWithTouchIDIfSupported.bind(this);
+    this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
+    this.androidAuth = this.androidAuth.bind(this);
     this.authenticateTouchID = this.authenticateTouchID.bind(this);
     this.onTouchIDAuthenticationDone = this.onTouchIDAuthenticationDone.bind(this);
     this.onNotificationAction = this.onNotificationAction.bind(this);
@@ -407,6 +413,7 @@ export default class NotificationMgmtScene extends Component {
       selectedNotificationId: '',
       showTouchOrPattern:false,
       showingOtherAlerts:false,
+      showAndroidAuth : false,
       selectedAction: '',
       showLoader: false,
       refreshing: false,
@@ -489,8 +496,34 @@ export default class NotificationMgmtScene extends Component {
     //this.goBack();
   }
 
+  isAndroidTouchAvailable() {
+    Util.isAndroidTouchSensorAvailable()
+      .then((success) => {   
+        this.androidAuth();    
+      })
+      .catch((error) => {
+        console.log('Handle rejected promise (' + error + ') here.');
+      });
+  }
+
+  androidAuth() {    
+    this.setState({ showAndroidAuth : true });
+    Util.androidTouchAuth()
+      .then((success) => {   
+        this.setState({ showAndroidAuth : false });
+        this.state.showTouchOrPattern =false;
+        this.onTouchIDAuthenticationDone();
+      })
+      .catch((error) => {
+        this.setState({ showAndroidAuth : false });
+        this.state.showTouchOrPattern =false;
+        console.log('Handle rejected android auth promise (' + error + ') here.');
+      });
+  }
+
   authenticateWithTouchIDIfSupported() {
     console.log(TouchID);
+    if (Platform.OS === 'ios') {
     TouchID.isSupported()
       .then(this.authenticateTouchID)
       .catch(error => {
@@ -508,6 +541,9 @@ export default class NotificationMgmtScene extends Component {
           ]
         );
       });
+    }else {
+      this.isAndroidTouchAvailable();
+    }
   }
 
   authenticateTouchID() {
@@ -584,6 +620,11 @@ export default class NotificationMgmtScene extends Component {
    This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', function () {
+      if( this.state.showAndroidAuth )
+        this.setState({ showAndroidAuth : false });
+      return true;
+    }.bind(this));
     global.isNotificationScreenonTop = true;
     if (this.props.url == null) {
       this.getMyNotifications();
@@ -808,10 +849,19 @@ export default class NotificationMgmtScene extends Component {
           } else {
             isAdditionalAuthSupported.erpass = false;
           }
-        } catch (e) { isAdditionalAuthSupported.erpass = false; isAdditionalAuthSupported.pass = false; }
+
+          if( value.ERPattern && value.ERPattern !== "empty" )
+            isAdditionalAuthSupported.erPattern = true;
+          else
+            isAdditionalAuthSupported.erPattern = false;
+        } catch (e) { 
+          isAdditionalAuthSupported.erpass = false; 
+          isAdditionalAuthSupported.pass = false; 
+          isAdditionalAuthSupported.erPattern = false;}
       } else {
         isAdditionalAuthSupported.erpass = false;
         isAdditionalAuthSupported.pass = false;
+        isAdditionalAuthSupported.erPattern = false;
       }
     });
   }
@@ -991,7 +1041,10 @@ export default class NotificationMgmtScene extends Component {
               this.showModelForPassword();
             } else if (data.authlevel == "2") {
               if (Platform.OS === 'android') {
-                this.showComponentForPattern();
+                if( isAdditionalAuthSupported.erpass )
+                  this.showModelForTouchId();
+                else if( isAdditionalAuthSupported.erPattern )
+                  this.showComponentForPattern();
               } else {
                 this.showModelForTouchId();
               }
@@ -1028,7 +1081,7 @@ export default class NotificationMgmtScene extends Component {
 
   showComponentForPattern() {
     this.state.showTouchOrPattern = true;
-    if (isAdditionalAuthSupported.erpass === true) {
+    if (isAdditionalAuthSupported.erPattern === true) {
       this.authenticateWithPattern();
     } else {
       this.showAlertAuthNotSuppoted('Failed to get additional authentication. Pattern is not enabled.');
@@ -1198,6 +1251,7 @@ export default class NotificationMgmtScene extends Component {
         this._renderMessage()}
       {this.checkPassModal()}
       {this.alertModal()}
+      {this.state.showAndroidAuth && <AndroidAuth/>}
     </View>);
   }
 
@@ -1221,8 +1275,8 @@ export default class NotificationMgmtScene extends Component {
           handler: this.goBack.bind(this),
         },
       }}
-      bottomMenu={{
-        visible: false,
+      bottomMenu={{ 
+        visible: false, 
       }}
       navigator={this.props.navigator}
     >
@@ -1259,6 +1313,7 @@ export default class NotificationMgmtScene extends Component {
       </View>
       {this.checkPassModal()}
       {this.alertModal()}
+      {this.state.showAndroidAuth && <AndroidAuth/>}
     </Main>);
   }
 
@@ -1266,7 +1321,9 @@ export default class NotificationMgmtScene extends Component {
    This method is used to render the componenet with all its element.
    */
   render() {
-    return (this.props.disableMain ? this.renderWithoutMain() : this.renderWithMain());
+    return (
+      this.props.disableMain ? this.renderWithoutMain() : this.renderWithMain()
+    );
   }
 }
 

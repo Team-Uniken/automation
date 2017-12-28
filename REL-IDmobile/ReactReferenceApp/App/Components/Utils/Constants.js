@@ -11,6 +11,10 @@ module.exports = {
   USER_T0:"NO",
 };
 
+const JSONKey = module.exports.JSONKey ={
+  ENCRIPTED_PATTERN_PASSWORD : 'ERPattern'
+}
+
 const errorInfo = module.exports.errorInfo ={
   null : 'Something went wrong, please try again.',
   0	: '',   /* RDNA_ERR_NONE = 0,   No Error */

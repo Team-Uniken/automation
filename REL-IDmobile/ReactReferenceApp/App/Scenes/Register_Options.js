@@ -8,7 +8,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
-import { NavigationActions} from 'react-navigation';
+import { NavigationActions} from 'react-navigation'; 
 /*
  Required for this js
  */
@@ -18,6 +18,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
 import ModalPicker from 'react-native-modal-picker'
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import AndroidAuth from "../Components/view/AndroidTouch";
 
 /*
  Use in this js
@@ -76,12 +77,14 @@ class Register extends Component {
       modalInitValue: "Select Default Login",
       devname: "Device Name",
       devnameopacity: 0,
+      showAndroidAuth : false
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.checkValidityOfAccessToken = this.checkValidityOfAccessToken.bind(this);
     this.onSetPattern = this.onSetPattern.bind(this);
     this.close = this.close.bind(this);
+    this.androidAuth = this.androidAuth.bind(this);
     this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
   }
   /*
@@ -89,7 +92,6 @@ class Register extends Component {
   This method is called when the component will start to load
   */
   componentWillMount() {
-
     Events.trigger('hideLoader', true);
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
       if (userPrefs) {
@@ -266,16 +268,13 @@ class Register extends Component {
     }
 
     if (this.props.url.touchCred.isTouch == true) {
-      if (Platform.OS === 'android') {
-        data.push(Skin.text['0']['2'].credTypes['pattern']);
-      } else {
-        data.push(Skin.text['0']['2'].credTypes['touchid']);
-      }
+      data.push(Skin.text['0']['2'].credTypes['touchid']);      
     } else if (this.state.pattern) {
       data.push(Skin.text['0']['2'].credTypes['pattern']);
     } else if (this.state.touchid) {
       data.push(Skin.text['0']['2'].credTypes['touchid']);
-    }
+    } else if (this.props.url.touchCred.isPattern == true)
+      data.push(Skin.text['0']['2'].credTypes['pattern']);
     return data
   }
 
@@ -497,11 +496,14 @@ class Register extends Component {
 
   _clickHandler() {
     console.log(TouchID);
+    if( Platform.os == 'ios' ){
     TouchID.isSupported()
       .then(this.authenticate)
       .catch(error => {
         passcodeAuth();
       });
+    }else
+      this.androidAuth();
   }
 
   authenticate() {
@@ -520,8 +522,6 @@ class Register extends Component {
   }
 
   encrypytPasswdiOS() {
-
-    if (Platform.OS === 'ios') {
       AsyncStorage.getItem(Main.dnaUserName).then((value) => {
         if (value) {
           try {
@@ -543,7 +543,7 @@ class Register extends Component {
           } catch (e) { }
         }
       }).done();
-    }
+    
   }
 
   doUpdate() {
@@ -619,9 +619,25 @@ class Register extends Component {
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', function () {
+      if( this.state.showAndroidAuth )
+        this.setState({ showAndroidAuth : false });
       return true;
     }.bind(this));
 
+  }
+
+  androidAuth() {   
+    this.setState({showAndroidAuth : true });    
+    Util.androidTouchAuth()
+      .then((success) => {
+        obj.encrypytPasswdiOS();
+        this.setState({showAndroidAuth : false });    
+      })
+      .catch((error) => {
+        //this.state.isAndroidTouchPresent = false;
+        this.setState({showAndroidAuth : false });    
+        console.log('Handle rejected android auth promise (' + error + ') here.');
+      });
   }
 
   render() {
@@ -655,7 +671,7 @@ class Register extends Component {
                 >
                 {"Enable " + Skin.text['0']['2'].credTypes[promts.cred_type].label + " Login"}
               </Checkbox>
-            );
+            ); 
             // <CheckBox
             // value={this.state[promts[0].credType]}
             // onSelect={() => { this.selectCheckBox(promts[0].credType) } }
@@ -682,7 +698,8 @@ class Register extends Component {
         // value={this.state.pattern}
         // onSelect={this.selectpattern.bind(this) }
         // lable="Enable Pattern Login"/>);
-      } else {
+      
+      } 
         if (this.props.url.touchCred.isSupported == true) {
           indents.push(
             <Checkbox
@@ -699,7 +716,8 @@ class Register extends Component {
         // value={this.state.touchid}
         // onSelect={this.selecttouchid.bind(this) }
         // lable="Enable TouchID Login"/>);
-      }
+      
+   
     }
     indents.push(
       <Checkbox
@@ -775,6 +793,7 @@ class Register extends Component {
           </View>
           <KeyboardSpacer topSpacing={-55}/>
         </View >
+        {this.state.isAndroidTouchPresent && this.state.showAndroidAuth && <AndroidAuth/>}
       </MainActivation>
     );
   }

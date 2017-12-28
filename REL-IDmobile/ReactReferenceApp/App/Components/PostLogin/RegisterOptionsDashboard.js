@@ -6,7 +6,7 @@
 
 /*
  ALWAYS NEED
- */
+ */ 
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 import Config from 'react-native-config';
@@ -29,7 +29,7 @@ import MainActivation from '../Container/MainActivation';
 import Main from '../Container/Main';
 import Util from "../Utils/Util";
 import PageTitle from '../view/pagetitle';
-
+import AndroidAuth from "../view/AndroidTouch"
 
 
 /*
@@ -100,9 +100,10 @@ class RegisterOptionScene extends Component {
       initDefaultLoginValue: true,
       open: false,
       rpass: null,
+      showAndroidAuth : false
     };
 
-    this.isTouchIDPresent = true;
+    this.isTouchIDPresent = false;
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
     this.checkValidityOfAccessToken = this.checkValidityOfAccessToken.bind(this);
     this.onGetAllChallengeStatus = this.onGetAllChallengeStatus.bind(this);
@@ -112,6 +113,8 @@ class RegisterOptionScene extends Component {
     this.renderIf = this.renderIf.bind(this);
     this.isTouchPresent = this.isTouchPresent.bind(this);
     this.getDeviceUUID = this.getDeviceUUID.bind(this);
+    this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
+    this.androidAuth = this.androidAuth.bind(this);
     this.getRegisteredDeviceDetails = this.getRegisteredDeviceDetails.bind(this);
     this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
     this.doNavigateDashBoard = this.doNavigateDashBoard.bind(this);
@@ -121,9 +124,11 @@ class RegisterOptionScene extends Component {
 This is life cycle method of the react native component.
 This method is called when the component will start to load
 */
-  componentWillMount() {
+  componentWillMount() { 
     if (Platform.OS === "ios")
       this.isTouchPresent();
+    else 
+      this.isAndroidTouchAvailable();
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
@@ -141,6 +146,8 @@ This method is called when the component will start to load
 */
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', function () {
+      if( this.state.showAndroidAuth )
+        this.setState({ showAndroidAuth : false });
       return true;
     }.bind(this));
     InteractionManager.runAfterInteractions(() => {
@@ -307,20 +314,20 @@ This method is called when the component will start to load
                   value = JSON.parse(value);
                   this.state.rpass = value.RPasswd;
                   if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } };
-                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } } });
                   } else {
 
-                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
-                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
+                    this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } };
+                    this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } } });
                   }
 
                   // this.forceUpdate();
                 } catch (e) { }
                                                         }else{
                                                         
-                                                        this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } };
-                                                        this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
+                                                        this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : false } };
+                                                        this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : false } } });
                                                         }
             }).done();
           } else {
@@ -342,7 +349,7 @@ This method is called when the component will start to load
       console.log('Something went wrong');
       // If error occurred reload devices list with previous response
     }
-  }
+  } 
 
   //check device touchid feature supported or not
   isTouchPresent() {
@@ -360,6 +367,31 @@ This method is called when the component will start to load
       });
   }
 
+  isAndroidTouchAvailable() {
+    //this.state.touchid = true;
+    Util.isAndroidTouchSensorAvailable()
+      .then((success) => {
+        this.isTouchIDPresent = true;
+      })
+      .catch((error) => {
+        this.isTouchIDPresent = false;
+        console.log('Handle rejected promise (' + error + ') here.');
+      });
+  }
+
+  androidAuth() {   
+    this.setState({showAndroidAuth : true });    
+    Util.androidTouchAuth()
+      .then((success) => {
+        obj.encrypytPasswdiOS();
+        this.setState({showAndroidAuth : false });    
+      })
+      .catch((error) => {
+        //this.state.isAndroidTouchPresent = false;
+        this.setState({showAndroidAuth : false });    
+        console.log('Handle rejected android auth promise (' + error + ') here.');
+      });
+  }
 
   //back to dashboard on click of cross button or android back button.
   close() {
@@ -377,7 +409,6 @@ This method is called when the component will start to load
           this.setState({ modalInitValue: "Select Default Login" });
         });
       }
-
       this.setState({ touchid: false });
       AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value)=>{
          Events.trigger('updateSetting', "");    
@@ -397,7 +428,7 @@ This method is called when the component will start to load
       }
       
       this.setState({ pattern: false });
-      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value)=>{
+      AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPattern: "empty" }), null).then((value)=>{
         Events.trigger('updateSetting', "");
       });
     }
@@ -493,6 +524,9 @@ This method is called when the component will start to load
         if (Platform.OS === 'android') {
           if (this.state.pattern) {
             data.push(Skin.text['0']['2'].credTypes['pattern']);
+          }
+          if (this.state.touchid) {
+            data.push(Skin.text['0']['2'].credTypes['touchid']);
           }
         } else {
           if (this.state.touchid) {
@@ -733,11 +767,14 @@ This method is called when the component will start to load
 
   _clickHandler() {
     console.log(TouchID);
+    if (Platform.OS === "ios") {
     TouchID.isSupported()
       .then(this.authenticate)
       .catch(error => {
         passcodeAuth();
       });
+    }else
+      this.androidAuth();
   }
 
   authenticate() {
@@ -756,7 +793,6 @@ This method is called when the component will start to load
   }
 
   encrypytPasswdiOS() {
-    if (Platform.OS === 'ios') {
       AsyncStorage.getItem(Main.dnaUserName).then((value) => {
         if (value) {
           try {
@@ -780,7 +816,6 @@ This method is called when the component will start to load
           } catch (e) { }
         }
       }).done();
-    }
   }
 
 
@@ -946,7 +981,7 @@ This method is called when the component will start to load
       }
 
       if (this.state.initTouchAndPatternState) {
-        this.state.pattern = this.state.url.touchCred.isTouch;
+        this.state.pattern = this.state.url.touchCred.isPattern;
         this.state.touchid = this.state.url.touchCred.isTouch;
         this.state.initTouchAndPatternState = false;
       }
@@ -962,12 +997,9 @@ This method is called when the component will start to load
               Enable Pattern Login
             </Checkbox>
           );
-          // <CheckBox
-          // value={this.state.pattern}
-          // onSelect={this.selectpattern.bind(this) }
-          // lable="Enable Pattern Login"/>);
-        } else {
-          if (this.isTouchIDPresent === true) {
+        
+        } 
+          if (this.isTouchIDPresent) {
             indents.push(
               <Checkbox
                 onSelect={this.selecttouchid.bind(this) }
@@ -978,12 +1010,7 @@ This method is called when the component will start to load
               </Checkbox>
             );
           }
-
-          // <CheckBox
-          // value={this.state.touchid}
-          // onSelect={this.selecttouchid.bind(this) }
-          // lable="Enable TouchID Login"/>);
-        }
+        
       }
 
       indents.push(
@@ -1082,6 +1109,7 @@ This method is called when the component will start to load
             ) }
           </MainActivation>
         </View>
+        {this.isTouchIDPresent && this.state.showAndroidAuth && <AndroidAuth/>}
       </Main>
     );
   }

@@ -2,10 +2,11 @@
 
 import ReactNative from 'react-native';
 import Main from '../Container/Main';
-import {Buffer} from 'buffer';
+import { Buffer } from 'buffer';
 import moment from 'moment';
-
-import {AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
+import Finger from 'react-native-touch-id-android'
+ 
+import { AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
 import React, { Component, } from 'react';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -209,57 +210,86 @@ class Util extends Component {
   }
 
   static replaceUrlMacros(url, jsonObject) {
-    if (url!=null && url != undefined && 
-      jsonObject != null && jsonObject != undefined) {    
+    if (url != null && url != undefined &&
+      jsonObject != null && jsonObject != undefined) {
       var keys = Object.keys(jsonObject).forEach((key) => {
-         url = url.replace(key,jsonObject[key]);
+        url = url.replace(key, jsonObject[key]);
       });
     }
     return url;
   }
 
-  static getConfigValue(configname, jsonArray){
+  static getConfigValue(configname, jsonArray) {
     var value = null;
-    if (jsonArray != null && jsonArray != undefined) { 
-      for (var i=0;i<jsonArray.length;i++){
+    if (jsonArray != null && jsonArray != undefined) {
+      for (var i = 0; i < jsonArray.length; i++) {
         var jsonObject = jsonArray[i];
         var keys = Object.keys(jsonObject).forEach((key) => {
-        if(key === "key" && jsonObject[key]===configname){
-          value = jsonObject["value"];
-          return value;
-        }
-      });
-      }   
+          if (key === "key" && jsonObject[key] === configname) {
+            value = jsonObject["value"];
+            return value;
+          }
+        });
+      }
     }
     return value;
   }
-  
-  static getFormatedDate(dateString){
-    var testDateUtc ;
-    if( dateString.includes("EDT") )
-      testDateUtc = moment.utc(dateString.replace('EDT','')).add(4, 'hours');
-    else if ( dateString.includes("EST") )
-      testDateUtc = moment.utc(dateString.replace('EST','')).add(5, 'hours');
-    else if ( dateString.includes("UTC") )
-      testDateUtc = moment.utc(dateString.replace('UTC',''));
+
+  static getFormatedDate(dateString) {
+    var testDateUtc;
+    if (dateString.includes("EDT"))
+      testDateUtc = moment.utc(dateString.replace('EDT', '')).add(4, 'hours');
+    else if (dateString.includes("EST"))
+      testDateUtc = moment.utc(dateString.replace('EST', '')).add(5, 'hours');
+    else if (dateString.includes("UTC"))
+      testDateUtc = moment.utc(dateString.replace('UTC', ''));
     var localDate = moment(testDateUtc).local();
     var s = localDate.format("DD/MM/YYYY HH:mm:ss");
     return s;
-  } 
+  }
 
-  static replaceString(find, replace, str){
-    while( str.indexOf(find) > -1){
+  static replaceString(find, replace, str) {
+    while (str.indexOf(find) > -1) {
       str = str.replace(find, replace);
     }
     return str;
   }
 
-  static getErrorMessage(errorCode, callback){
-    ReactRdna.getErrorInfo(errorCode,(response) => {
-      if (response)  callback(response[0].error);
-      else callback(null); 
-      
+  static getErrorMessage(errorCode, callback) {
+    ReactRdna.getErrorInfo(errorCode, (response) => {
+      if (response) callback(response[0].error);
+      else callback(null);
+
     });
+  }
+
+  static isAndroidTouchSensorAvailable() {
+    return new Promise(function (resolve, reject) {
+      Finger.isSensorAvailable()
+        .then((isAvailable) => {
+          resolve('success');
+        }) 
+        .catch(error => {
+          reject(error);
+          //alert('Sensor is not available');
+        });
+    })
+  }
+
+  static androidTouchAuth(){
+    return new Promise(function (resolve, reject) {
+      Finger.requestTouch()
+      .then(success => {
+        resolve('success');
+      })
+      .catch(error => {        
+        reject(error);
+        if( String(error) === 'LOCKED_OUT' )
+          alert('You have made 5 wrong fingerprint attempts, please try after 30 seconds');
+        else
+          alert(error);
+      });
+    })
   }
 
 }

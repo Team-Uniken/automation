@@ -11,13 +11,13 @@
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 
-/*
+/* 
  Required for this js
  */
 import Events from 'react-native-simple-events';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
-import {Text, View, Platform, BackHandler, AsyncStorage, StatusBar} from 'react-native'
+import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar } from 'react-native'
 const FBSDK = require('react-native-fbsdk');
 
 /*
@@ -28,8 +28,9 @@ import PasswordVerification from '../Components/Challenges/Password_Verification
 import MainActivation from '../Components/Container/MainActivation';
 import Main from '../Components/Container/Main';
 import Util from "../Components/Utils/Util";
+import AndroidAuth from "../Components/view/AndroidTouch"
+import Constants from '../Components/Utils/Constants';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
-
 
 /*
  Custome View
@@ -52,8 +53,6 @@ const {
   AccessToken,
 } = FBSDK;
 
-
-
 class SelectLogin extends Component {
 
   constructor(props) {
@@ -61,9 +60,11 @@ class SelectLogin extends Component {
     this.state = {
       dataSource: [],
       isRegistered: false,
+      isAndroidPattern : false,
       refresh: false,
       showPasswordVerify: false,
       isTouchIDPresent: false,
+      showAndroidAuth : false
     }
 
     this.loginWith = this.loginWith.bind(this);
@@ -74,14 +75,17 @@ class SelectLogin extends Component {
     this.checkForRegisteredCredsAndShow = this.checkForRegisteredCredsAndShow.bind(this);
     this.doPatternLogin = this.doPatternLogin.bind(this);
     this.onPatternUnlock = this.onPatternUnlock.bind(this);
-    this.goBackToSelectLogin = this.goBackToSelectLogin.bind(this);
+    this.goBackToSelectLogin = this.goBackToSelectLogin.bind(this); 
     this.isTouchPresent = this.isTouchPresent.bind(this);
+    this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
+    this.androidAuth = this.androidAuth.bind(this);
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
 
     this.checkForRegisteredCredsAndShow();
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios') 
       this.isTouchPresent().done();
-    }
+    else
+      this.isAndroidTouchAvailable();
 
   }
   /*
@@ -89,7 +93,7 @@ class SelectLogin extends Component {
   This method is called when the component will start to load
   */
   componentWillMount() {
-    obj = this;
+    obj = this;    
   }
   /*
        This is life cycle method of the react native component.
@@ -106,19 +110,21 @@ class SelectLogin extends Component {
             if (userPrefs.defaultLogin === 'pattern'
               || userPrefs.defaultLogin === 'touchid') {
               if (userPrefs.ERPasswd != null && userPrefs.ERPasswd !== 'empty') {
-
                 $this.loginWith(userPrefs.defaultLogin);
-              }
+              }else if ( userPrefs.ERPattern != null && userPrefs.ERPattern != 'empty' )
+                $this.loginWith(userPrefs.defaultLogin);
             } else {
               $this.loginWith(userPrefs.defaultLogin);
             }
           }
         }
-        catch (e) { }
+        catch (e) { } 
       }
     });
 
     BackHandler.addEventListener('hardwareBackPress', function () {
+      if( this.state.showAndroidAuth )
+        this.setState({showAndroidAuth : false });   
       return true;
     }.bind(this));
   }
@@ -173,23 +179,46 @@ class SelectLogin extends Component {
       }
     }
 
-    if (Platform.OS == 'android') {
-      if (this.state.isRegistered) {
-        if (this.state.dataSource) {
+    if( this.state.isAndroidPattern ){
+        if ( this.state.dataSource ) {
           this.state.dataSource.push({ cred_type: 'pattern', is_registered: true });
-        }
       }
-    } else {
+    } 
       if (this.state.isRegistered) {
         if (this.state.dataSource) {
           this.state.dataSource.push({ cred_type: 'touchid', is_registered: true });
         }
       }
-    }
+    
 
     if (this.state.dataSource.length > 0) {
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
+  }
+
+  isAndroidTouchAvailable() {
+    Util.isAndroidTouchSensorAvailable()
+      .then((success) => {
+        this.state.isTouchIDPresent = true;
+        this.fillAdditionalLoginOptions();
+        this.setState( {isTouchIDPresent : true } );        
+      })
+      .catch((error) => {
+        console.log('Handle rejected promise (' + error + ') here.');
+      });
+  }
+
+  androidAuth() {   
+    this.setState({showAndroidAuth : true });    
+    Util.androidTouchAuth()
+      .then((success) => {
+        obj.onTouchIDVerificationDone();
+        this.setState({showAndroidAuth : false });    
+      })
+      .catch((error) => {
+        this.setState({showAndroidAuth : false });    
+        console.log('Handle rejected android auth promise (' + error + ') here.');
+      });
   }
 
   /**
@@ -235,6 +264,15 @@ class SelectLogin extends Component {
           }
           else {
             this.state.isRegistered = true;
+            this.fillAdditionalLoginOptions();
+            this.setState({ refresh: !this.state.refresh });
+          }
+          if( value.ERPattern ==null || value.ERPattern === 'empty'){
+            this.state.isAndroidPattern = false;
+            this.fillAdditionalLoginOptions();
+            this.setState({ refresh: !this.state.refresh });
+          }else{
+            this.state.isAndroidPattern = true;
             this.fillAdditionalLoginOptions();
             this.setState({ refresh: !this.state.refresh });
           }
@@ -301,17 +339,20 @@ class SelectLogin extends Component {
   }
   //patten login callback.
   onPatternUnlock(nav, args) {
-     Main.dnaPasswd = args.password;
+    Main.dnaPasswd = args.password;
     this.onDoPasswordCheckChallenge(args.password);
   }
 
   _clickHandler() {
     console.log(TouchID);
+    if (Platform.OS === 'ios') {
     TouchID.isSupported()
       .then(this.authenticate)
       .catch(error => {
         passcodeAuth();
       });
+    }else
+      this.androidAuth();
   }
 
   authenticate() {
@@ -345,19 +386,19 @@ class SelectLogin extends Component {
       if (encryptedRPasswd) {
         Util.decryptText(encryptedRPasswd).then((RPasswd) => {
           if (RPasswd) {
-          if(RPasswd.length>0){
-            Main.dnaPasswd = RPasswd;
-            obj.onDoPasswordCheckChallenge(RPasswd);
-          }else{
-          Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
-          this.goToPasswordWhenAdditonalAuthFails();
-          }
-          }else{
-          
+            if (RPasswd.length > 0) {
+              Main.dnaPasswd = RPasswd;
+              obj.onDoPasswordCheckChallenge(RPasswd);
+            } else {
+              Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+              this.goToPasswordWhenAdditonalAuthFails();
+            }
+          } else {
+
           }
         }).done();
-      }else{
-      Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+      } else {
+        Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
         this.goToPasswordWhenAdditonalAuthFails();
       }
     }).done();
@@ -381,12 +422,14 @@ class SelectLogin extends Component {
     //   onClose: null,
     //   mode: 'verify'
     // });
-    this.props.navigator.navigate('pattern',{url: {
-      id: 'pattern',
-      onUnlock: this.onPatternUnlock,
-      onClose: null,
-      mode: 'verify'
-      }})
+    this.props.navigator.navigate('pattern', {
+      url: {
+        id: 'pattern',
+        onUnlock: this.onPatternUnlock,
+        onClose: null,
+        mode: 'verify'
+      }
+    })
   }
 
   //return logintypebutton depends on item supply.
@@ -395,7 +438,7 @@ class SelectLogin extends Component {
       <View style={Skin.layout0.bottom.loginbutton.wrap}>
         <LoginTypeButton
           label={Skin.icon[item.cred_type]}
-          onPress={() => { this.loginWith(item.cred_type); } }
+          onPress={() => { this.loginWith(item.cred_type); }}
           text={Skin.text['0']['2'].credTypes[item.cred_type].label} />
       </View>
     );
@@ -421,25 +464,29 @@ class SelectLogin extends Component {
       case type.pattern.key:
         this.doPatternLogin();
         break;
-      case type.wechat.key: 
+      case type.wechat.key:
         alert("todo:");
         break;
+      // case type.androidTouchId.key:
+      //   this.androidAuth();
+      //   break;
     }
   }
+
   //show previous challenge on click of cross button or android back button.
   close() {
     Events.trigger('showPreviousChallenge');
   }
-  
-  goToPasswordWhenAdditonalAuthFails(){
-    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value)=>{
-      });
+
+  goToPasswordWhenAdditonalAuthFails() {
+    AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null).then((value) => {
+    });
     this.state.isRegistered = false;
     this.fillAdditionalLoginOptions();
-  this.setState({ showPasswordVerify: true });
+    this.setState({ showPasswordVerify: true });
 
   }
-  
+
   //call when get back from PasswordVerification screen.
   goBackToSelectLogin() {
     this.setState({ showPasswordVerify: false });
@@ -459,7 +506,7 @@ class SelectLogin extends Component {
             <View style={Skin.layout1.title.wrap}>
               <Title onClose={() => {
                 this.close();
-              } }>
+              }}>
               </Title>
             </View>
             <View style={Skin.layout0.top.container}>
@@ -482,15 +529,16 @@ class SelectLogin extends Component {
                 items={this.state.dataSource}
                 itemsPerRow={LOGIN_TYPE_PER_ROW}
                 renderItem={this.renderItem}
-                />
+              />
             </View>
           </View>
+        {this.state.isTouchIDPresent && this.state.showAndroidAuth && <AndroidAuth/>}
         </MainActivation>
       );
     }
     else {
 
-            return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.state.dataSource.length > 0 ? this.goBackToSelectLogin : null}/>);
+      return (<PasswordVerification navigator={this.props.navigator} url={this.props.url} title={this.props.title} onBack={this.state.dataSource.length > 0 ? this.goBackToSelectLogin : null} />);
     }
   }
 }

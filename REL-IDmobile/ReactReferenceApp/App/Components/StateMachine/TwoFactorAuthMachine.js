@@ -125,6 +125,7 @@ class TwoFactorAuthMachine extends Component {
     this.canShowNextChallenge = this.canShowNextChallenge.bind(this);
     this.showNextChallenge = this.showNextChallenge.bind(this);
     this.resetChallenge = this.resetChallenge.bind(this);
+    this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
   }
 
   /** 
@@ -137,6 +138,9 @@ class TwoFactorAuthMachine extends Component {
     if (Platform.OS === 'ios') {
       this.isTouchPresent();
     }
+    else 
+      this.isAndroidTouchAvailable();
+
 
     //    currentIndex = 0;
     //    challengeJson = this.props.navigation.state.params.url.chlngJson;
@@ -413,6 +417,17 @@ class TwoFactorAuthMachine extends Component {
       });
   }
 
+  isAndroidTouchAvailable() {
+    Util.isAndroidTouchSensorAvailable()
+      .then((success) => {
+        this.isTouchIDPresent = true;    
+      })
+      .catch((error) => {
+        $this.isTouchIDPresent = false;
+        console.log('Handle rejected promise (' + error + ') here.');
+      });
+  }
+
   /**
    * This method is called to reset the state of RDNA, this is called when you want 
      to start the new flow without ending the current flow properly i.e when you get error.
@@ -668,10 +683,10 @@ class TwoFactorAuthMachine extends Component {
                       actions: [
                         NavigationActions.navigate({
                           routeName: 'StateMachine', params: {
-                            url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent }, screenId: 'RegisterOption' },
+                            url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
                             title: 'RegisterOption'
                           }
-                        })
+                        }) 
                       ]
                     })
                     this.props.navigation.dispatch(resetActionshowRegisterOption)
@@ -685,7 +700,7 @@ class TwoFactorAuthMachine extends Component {
                       actions: [
                         NavigationActions.navigate({
                           routeName: 'StateMachine', params: {
-                            url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent }, screenId: 'RegisterOption' },
+                            url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
                             title: 'RegisterOption'
                           }
                         })
@@ -885,7 +900,7 @@ class TwoFactorAuthMachine extends Component {
   }
 
 
-  checkForPasswordChallenge(chlngJson) {
+  checkForPasswordChallenge(chlngJson) { 
     if (chlngJson != null && chlngJson.chlng != null) {
 
       for (var i = 0; i < chlngJson.chlng.length; i++) {
