@@ -496,7 +496,7 @@ class Register extends Component {
 
   _clickHandler() {
     console.log(TouchID);
-    if( Platform.os == 'ios' ){
+    if( Platform.OS == 'ios' ){
     TouchID.isSupported()
       .then(this.authenticate)
       .catch(error => {
