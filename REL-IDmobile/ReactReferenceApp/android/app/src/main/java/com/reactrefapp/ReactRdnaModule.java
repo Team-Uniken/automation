@@ -497,7 +497,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }catch (Exception e){}
 
         final RDNA.RDNASSLCertificate rdnaSSLCert = rdnaSSLCertificate;
-        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS,context);
+        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
         rdnaObj = rdnaStatus.result;
 
         WritableMap errorMap = Arguments.createMap();
@@ -765,7 +765,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         if(rdnaObj != null) {
             try {
                 JSONObject jsonObject = new JSONObject(state);
-                RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, context);
+                RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
                 rdnaObj = rdnaStatus.result;
                 errorMap.putInt("error", rdnaStatus.errorCode);
             } catch (JSONException e) {
