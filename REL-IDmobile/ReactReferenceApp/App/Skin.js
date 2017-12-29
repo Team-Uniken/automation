@@ -487,7 +487,7 @@ module.exports.layout0 = {
       marginTop: 30,
     },
     connectionType: {
-      color: BUTTON_BG_COLOR,
+      color: WHITE,
       alignItems: "center",
       fontSize: 20,
       marginTop: 30
