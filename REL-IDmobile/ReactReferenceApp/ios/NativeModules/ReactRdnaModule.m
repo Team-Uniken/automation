@@ -187,7 +187,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
     RDNA *rdna;
     //    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     //    dispatch_async(queue, ^{
-    errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
+    errorID = [RDNA initialize:&rdna AgentInfo:agentInfo Callbacks:self GatewayHost:authGatewayHNIP GatewayPort:[authGatewayPORT intValue] CipherSpec:cipherSpec  CipherSalt:cipherSalt ProxySettings:nil RDNASSLCertificate:rdnaSSLlCertificate DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
     
     rdnaObject = rdna;
     NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
