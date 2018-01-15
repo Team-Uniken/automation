@@ -17,6 +17,11 @@
 @property (nonatomic, strong) ProcessingScreen *processingScreen;
 -(void)addProccessingScreenWithText:(NSString*)text;
 -(void)hideProcessingScreen;
-+ (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode;
++ (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode andCompletionHandler:(void (^)(BOOL result))completionHandler;
 - (void)showErrorWithMessage:(NSString *)msg;
+-(void)success:(NSNotification *)notification;
+
++(void)handleErrorCode:(RDNAErrorID)erroCode;
++(void)handleStatus:(RDNAResponseStatusCode)erroCode;
+
 @end

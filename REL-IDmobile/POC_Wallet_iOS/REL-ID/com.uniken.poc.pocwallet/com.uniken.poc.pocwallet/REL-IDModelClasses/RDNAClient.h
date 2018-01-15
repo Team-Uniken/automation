@@ -66,6 +66,17 @@
  */
 - (void)EnterBackground;
 
+/**
+ * @brief This method checks for any pending challenges and then invokes the CheckChallenges api of the RDNA for the
+ * given userID. Challenges response is obtained in the callBack i.e onChallengeRecieved function.
+ */
+- (void)RDNAClientCheckChallenges:(NSArray *)challengeArray forUserID:(NSString *)userID;
+
+/**
+ * @brief This method is used for get current session id on server
+ */
+-(NSString*)RDNAGetSessionID;
+
 
 -(int)RDNAClientOpenHttpConnection:(RDNAHTTPRequest*)req withCallback:(id<RDNAClientCallbacks>)callback;
 

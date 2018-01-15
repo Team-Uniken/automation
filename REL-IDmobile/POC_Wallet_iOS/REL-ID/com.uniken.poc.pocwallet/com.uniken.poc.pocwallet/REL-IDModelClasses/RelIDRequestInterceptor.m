@@ -153,12 +153,12 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
   
   NSDictionary *proxyDict = @{
                               @"HTTPEnable"  : [NSNumber numberWithInt:1],
-                              (NSString *)kCFStreamPropertyHTTPProxyHost  : proxyHost,
-                              (NSString *)kCFStreamPropertyHTTPProxyPort  : [NSNumber numberWithInt:proxyPort],
+                              @"HTTPProxy"  : proxyHost,
+                              @"HTTPPort"  : [NSNumber numberWithInt:proxyPort],
                               
                               @"HTTPSEnable" : [NSNumber numberWithInt:1],
-                              (NSString *)kCFStreamPropertyHTTPSProxyHost : proxyHost,
-                              (NSString *)kCFStreamPropertyHTTPSProxyPort : [NSNumber numberWithInt:proxyPort],
+                              @"HTTPSProxy" : proxyHost,
+                              @"HTTPSPort" : [NSNumber numberWithInt:proxyPort],
                               };
   
   

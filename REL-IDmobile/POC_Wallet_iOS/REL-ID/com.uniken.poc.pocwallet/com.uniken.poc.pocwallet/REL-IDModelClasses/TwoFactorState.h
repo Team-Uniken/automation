@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RDNA.h"
+#import "RDNAClient.h"
 @interface TwoFactorState : NSObject
 + (TwoFactorState *)sharedTwoFactorState;
-@property (nonatomic,strong) RDNA *rdna;
 @property (nonatomic,strong) NSString *actCode;
 @property (nonatomic,strong) NSString *userName;
 @property (nonatomic,strong) NSString *walletID;
@@ -18,5 +17,6 @@
 @property (nonatomic,strong) NSString *userID;
 @property (nonatomic,strong) NSString *mPin;
 @property (nonatomic,strong) NSArray *rdnaChallenges;
+@property (nonatomic,strong) NSArray *rdnaInitialChallenges;
 -(int)startTwoFactorFlowWithChallenge:(NSArray*)RdnaChallenges;
 @end

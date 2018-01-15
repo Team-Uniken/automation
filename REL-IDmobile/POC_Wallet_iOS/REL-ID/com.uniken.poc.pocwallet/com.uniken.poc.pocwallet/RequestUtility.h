@@ -13,6 +13,7 @@ extern NSString *const kRegister;
 extern NSString *const kUpdate;
 extern NSString *const kLogin;
 extern NSString *const kDummyText;
+extern NSString *const kEnroll;
 
 + (RequestUtility *)sharedRequestUtility;
 -(void)doPostRequestfor:(NSString*)url withParameters:(NSDictionary*)params onComplete:(void (^)(bool status, NSDictionary  *response))completionBlock;

@@ -12,6 +12,8 @@
 #import "RDNAConstants.h"
 #import "UIView+Toast.h"
 #import "AddAmountViewController.h"
+#import "MainViewController.h"
+#import "RegisterViewController.h"
 
 @interface SuperViewController ()<UITextFieldDelegate>{
   UITextField *aTextField;
@@ -179,7 +181,7 @@
 
 #pragma mark AlertView Show
 
-+ (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode{
++ (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode andCompletionHandler:(void (^)(BOOL result))completionHandler{
   
   dispatch_async(dispatch_get_main_queue(), ^{
     
@@ -192,7 +194,7 @@
                                style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *action)
                                {
-                                 
+                                 completionHandler(YES);
                                }];
     
     [alertController addAction:okAction];
@@ -231,6 +233,44 @@
                                      position:CSToastPositionCenter];
     
     [self.navigationController popToRootViewControllerAnimated:NO];
+  }
+}
+
++(void)handleErrorCode:(RDNAErrorID)erroCode{
+  AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
+  UINavigationController *navVC = (UINavigationController*)appDel.window.rootViewController;
+  NSArray *arrVC = navVC.viewControllers;
+  
+  MainViewController *mainVC = nil;
+  for (UIViewController *vc in arrVC) {
+    if([vc isKindOfClass:[MainViewController class]]){
+      mainVC = (MainViewController*)vc;
+      break;
+    }
+  }
+  
+  if(erroCode == RDNA_ERR_INVALID_USER_MR_STATE){
+    RegisterViewController *viewController = (RegisterViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RegisterViewControllerID"];
+    [navVC pushViewController:viewController animated:YES];
+  }
+  
+}
++(void)handleStatus:(RDNAResponseStatusCode)erroCode{
+  AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
+  UINavigationController *navVC = (UINavigationController*)appDel.window.rootViewController;
+  NSArray *arrVC = navVC.viewControllers;
+  
+  MainViewController *mainVC = nil;
+  for (UIViewController *vc in arrVC) {
+    if([vc isKindOfClass:[MainViewController class]]){
+      mainVC = (MainViewController*)vc;
+      break;
+    }
+  }
+  
+  if(erroCode == RDNA_RESP_STATUS_USER_SUSPENDED){
+    RegisterViewController *viewController = (RegisterViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RegisterViewControllerID"];
+    [navVC pushViewController:viewController animated:YES];
   }
 }
 

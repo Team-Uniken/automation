@@ -45,7 +45,8 @@
   
   if ([CLLocationManager locationServicesEnabled] == NO) {
     NSLog(@"locationServicesEnabled false");
-    [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0];
+    [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0 andCompletionHandler:^(BOOL result) {
+    }];
   } else {
     CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
     if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
@@ -95,7 +96,9 @@
   RDNA *rdna;
   if ([CLLocationManager locationServicesEnabled] == NO) {
     NSLog(@"locationServicesEnabled false");
-    [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0];
+    [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0 andCompletionHandler:^(BOOL result) {
+      
+    }];
   } else {
     CLAuthorizationStatus authorizationStatus= [CLLocationManager authorizationStatus];
     if(authorizationStatus == kCLAuthorizationStatusDenied || authorizationStatus == kCLAuthorizationStatusRestricted){
@@ -112,7 +115,7 @@
       rdnaSSLlCertificate.password = certPassword;
       
       
-      errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
       rdnaObject = rdna;
     }
   }
@@ -197,7 +200,7 @@
   
   NSLog(@"\n\n $$$$$ Notify runtime status of client called reason {%ld : %d} $$$$ \n\n",(long)[RDNA getErrorInfo:status.errCode],status.errCode);
   if (status.errCode == 0) {
-    [TwoFactorState sharedTwoFactorState].rdna = rdnaObject;
+    [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges = status.challenges;
     [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
     [rdnaObject serviceAccessStartAll];
     [self fetchProxyPort:status.services];
@@ -221,7 +224,9 @@
   }else{
     NSLog(@"Failed to Pause RDNA");
     dispatch_async(dispatch_get_main_queue(), ^{
-      [SuperViewController showErrorWithMessage:NSStringFromSelector(_cmd) withErrorCode:status.errCode];
+      [SuperViewController showErrorWithMessage:NSStringFromSelector(_cmd) withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
+        
+      }];
     });
   }
   return 1;
@@ -240,7 +245,9 @@
   }else{
     NSLog(@"Failed to Resume RDNA");
     dispatch_async(dispatch_get_main_queue(), ^{
-      [SuperViewController showErrorWithMessage:NSStringFromSelector(_cmd) withErrorCode:status.errCode];
+      [SuperViewController showErrorWithMessage:NSStringFromSelector(_cmd) withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
+        
+      }];
     });
   }
   return 1;
@@ -276,6 +283,7 @@
  * It returns the RDNAStatusCheckChallengesResponse class object.
  */
 - (int)onCheckChallengeResponseStatus:(RDNAStatusCheckChallengeResponse *) status {
+  
   [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
                                                       object:[NSNumber numberWithInt:0]];
   if (status.errCode == RDNA_ERR_NONE) {
@@ -290,11 +298,28 @@
                                                               object:nil];
         });
       }
-    }else{
-      [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0];
+    }else if(status.status.statusCode == RDNA_RESP_STATUS_USER_SUSPENDED){
+      [rdnaObject resetChallenge];
+      [TwoFactorState sharedTwoFactorState].rdnaChallenges = [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
+      [SuperViewController handleStatus:RDNA_RESP_STATUS_USER_SUSPENDED];
     }
-  }else{
-    [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode];
+    else{
+      [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
+      [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0 andCompletionHandler:^(BOOL result) {
+        
+      }];
+    }
+  }else if(status.errCode == RDNA_ERR_INVALID_USER_MR_STATE){
+    [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
+      [rdnaObject resetChallenge];
+      [TwoFactorState sharedTwoFactorState].rdnaChallenges = [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
+      [SuperViewController handleErrorCode:RDNA_ERR_INVALID_USER_MR_STATE];
+    }];
+  }
+  else{
+    [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
+      
+    }];
   }
   return 1;
 }
@@ -502,7 +527,9 @@
   int errorCode = [self resumeRDNA];
   if (errorCode > 0) {
     dispatch_async(dispatch_get_main_queue(), ^{
-      [SuperViewController showErrorWithMessage:NSStringFromSelector(_cmd) withErrorCode:errorCode];
+      [SuperViewController showErrorWithMessage:NSStringFromSelector(_cmd) withErrorCode:errorCode andCompletionHandler:^(BOOL result) {
+        
+      }];
     });
   }
 }
@@ -513,6 +540,31 @@
 - (void)EnterBackground {
   
   [self pauseRDNA];
+}
+
+
+- (void)RDNAClientCheckChallenges:(NSArray *)challengeArray forUserID:(NSString *)userID {
+  
+  int err = [rdnaObject checkChallengeResponse:challengeArray forUserID:userID];
+  NSLog(@"err: %d",err);
+  if(err == RDNA_ERR_NONE){
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
+                                                        object:[NSNumber numberWithInt:1]];
+    
+  }else{
+    [SuperViewController showErrorWithMessage:@"" withErrorCode:err andCompletionHandler:^(BOOL result) {
+      
+    }];
+  }
+}
+
+/**
+ * @brief This method is used for get current session id on server
+ */
+-(NSString*)RDNAGetSessionID{
+  NSMutableString *strSessionID = [[NSMutableString alloc]init];
+  [rdnaObject getSessionID:&strSessionID];
+  return strSessionID;
 }
 
 -(int)RDNAClientOpenHttpConnection:(RDNAHTTPRequest*)req withCallback:(id<RDNAClientCallbacks>)callback{

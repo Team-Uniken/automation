@@ -9,9 +9,11 @@
 #import "RelIDRequestInterceptor.h"
 
 @implementation RequestUtility
-NSString *const kBaseUrl = @"http://poc5-uniken.com:8080/DummyWalletAPI2/";
+//NSString *const kBaseUrl = @"http://poc5-uniken.com:8080/DummyWalletAPI2/";
+NSString *const kBaseUrl = @"http://54.169.244.38:8443/DummyWalletAPI2/";
 NSString *const kAddAmount = @"balance";
 NSString *const kRegister = @"register";
+NSString *const kEnroll = @"enroll";
 NSString *const kUpdate = @"update";
 NSString *const kLogin = @"login";
 NSString *const kDummyText = @"This is a demo app used for POC purpose.\n This app does not perform a real transaction";

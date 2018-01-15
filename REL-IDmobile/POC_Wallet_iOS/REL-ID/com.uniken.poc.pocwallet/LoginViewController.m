@@ -51,7 +51,7 @@
 - (IBAction)loginBtnClick:(id)sender {
   
   if([self doValidate])
-  [self doLogin];
+  [self doLoginInRelID];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,6 +70,19 @@
     return false;
   } 
   return true;
+}
+
+
+-(void)doLoginInRelID{
+  
+  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIdTxtFld.text];
+  objTwoFactorState.walletID = @"";
+  objTwoFactorState.balance = @"";
+  objTwoFactorState.userName = @"";
+  objTwoFactorState.mPin = self.MPinTxtFld.text;
+  [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
+  
 }
 
 -(void)doLogin{
@@ -95,6 +108,11 @@
 }
 
 
+-(void)success:(NSNotification *)notification{
+  [self doLogin];
+}
+
+
 -(void)parsedoAddAmountResponse:(NSDictionary*)ResponseDictionary{
   
   user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_id"]];
@@ -102,14 +120,8 @@
   balance = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"balance"]];
   wallet_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"wallet_id"]];
   
-  
-  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
-  objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIdTxtFld.text];
-  objTwoFactorState.walletID = wallet_id;
-  objTwoFactorState.balance = balance;
-  objTwoFactorState.userName = user_name;
-  objTwoFactorState.mPin = self.MPinTxtFld.text;
-  [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
+  [super success:nil];
+ 
 }
 
 

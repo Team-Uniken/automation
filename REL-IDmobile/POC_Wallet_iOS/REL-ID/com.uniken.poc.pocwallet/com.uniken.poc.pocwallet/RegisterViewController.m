@@ -40,6 +40,18 @@
   
 
     // Do any additional setup after loading the view.
+#if DEBUG
+  self.loginIDTxtFld.text = @"9860818913";
+  self.cardNuberTxtFld.text = @"111111";
+  self.mPinTxtFld.text = @"1111";
+  self.confirmMpinTxtFld.text = @"1111";
+  self.cardPinTxtFld.text = @"1111";
+  
+  
+#else
+  
+  
+#endif
 }
 - (IBAction)registerButtonClick:(id)sender {
   if([self doValidate])
@@ -88,13 +100,15 @@
 
 -(void)doRegister{
   [self addProccessingScreenWithText:@"Please wait.."];
+  AppDelegate *appDel = (AppDelegate*)[UIApplication sharedApplication].delegate;
   RequestUtility *utility = [RequestUtility sharedRequestUtility];
-  NSString *url = kRegister;
+  NSString *url = kEnroll;
   NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
   [params setValue:self.loginIDTxtFld.text forKey:@"login_id"];
   [params setValue:self.mPinTxtFld.text forKey:@"password"];
   [params setValue:self.cardNuberTxtFld.text forKey:@"card_no"];
   [params setValue:self.cardPinTxtFld.text forKey:@"card_pin"];
+  [params setValue:[appDel.rdnaclient RDNAGetSessionID] forKey:@"session_id"];
 
   [utility doPostRequestfor:url withParameters:params onComplete:^(bool status, NSDictionary *responseDictionary){
     if (status && [responseDictionary objectForKey:@"error"] == nil) {

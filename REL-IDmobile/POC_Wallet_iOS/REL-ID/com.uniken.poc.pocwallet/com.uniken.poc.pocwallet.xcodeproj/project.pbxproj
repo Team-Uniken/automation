@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5567851F1FE8E20C00EC7F6D /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5567851E1FE8E20100EC7F6D /* libapi-sdk.a */; };
+		55128B5F20089890004C5D90 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55128B5E2008988A004C5D90 /* libapi-sdk.a */; };
 		556785201FE8E27200EC7F6D /* TwoFactorState.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F95C771FE8DC6400C92126 /* TwoFactorState.m */; };
 		5599EA3C1FE3ABF300A543FB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA3B1FE3ABF300A543FB /* Utility.m */; };
 		5599EA591FE3CB4100A543FB /* DoneCancelNumberPadToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */; };
@@ -49,6 +49,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		55128B582008984C004C5D90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55128B532008984C004C5D90 /* api-sdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6573EF001BA40E250085584E;
+			remoteInfo = "api-sdk";
+		};
+		55128B672008F30E004C5D90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55128B532008984C004C5D90 /* api-sdk.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6573EFEF1BA410430085584E;
+			remoteInfo = "Universalapi-sdk";
+		};
 		654F25401FE282BA00069E02 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 654F251B1FE282BA00069E02 /* Project object */;
@@ -66,8 +80,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5567851C1FE8E20100EC7F6D /* RDNA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		5567851E1FE8E20100EC7F6D /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
+		55128B532008984C004C5D90 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../../../Android-SVN/openssl/api-sdk/build/ios/api-sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
+		55128B5C2008988A004C5D90 /* RDNA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		55128B5E2008988A004C5D90 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		5599EA3A1FE3ABF300A543FB /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		5599EA3B1FE3ABF300A543FB /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoneCancelNumberPadToolbar.m; sourceTree = "<group>"; };
@@ -133,8 +148,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55128B5F20089890004C5D90 /* libapi-sdk.a in Frameworks */,
 				5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */,
-				5567851F1FE8E20C00EC7F6D /* libapi-sdk.a in Frameworks */,
 				5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */,
 				5599EA731FE3E9C800A543FB /* CoreLocation.framework in Frameworks */,
 			);
@@ -157,27 +172,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5567851A1FE8E20100EC7F6D /* api-sdk */ = {
+		55128B542008984C004C5D90 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5567851B1FE8E20100EC7F6D /* include */,
-				5567851D1FE8E20100EC7F6D /* libs */,
+				55128B592008984C004C5D90 /* libapi-sdk.a */,
 			);
-			path = "api-sdk";
+			name = Products;
 			sourceTree = "<group>";
 		};
-		5567851B1FE8E20100EC7F6D /* include */ = {
+		55128B5A2008988A004C5D90 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
-				5567851C1FE8E20100EC7F6D /* RDNA.h */,
+				55128B5B2008988A004C5D90 /* include */,
+				55128B5D2008988A004C5D90 /* libs */,
+			);
+			name = "api-sdk";
+			path = "../../../../../Android-SVN/openssl/api-sdk.out/iOS/release/api-sdk";
+			sourceTree = "<group>";
+		};
+		55128B5B2008988A004C5D90 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				55128B5C2008988A004C5D90 /* RDNA.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		5567851D1FE8E20100EC7F6D /* libs */ = {
+		55128B5D2008988A004C5D90 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				5567851E1FE8E20100EC7F6D /* libapi-sdk.a */,
+				55128B5E2008988A004C5D90 /* libapi-sdk.a */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -210,7 +234,8 @@
 		654F251A1FE282BA00069E02 = {
 			isa = PBXGroup;
 			children = (
-				5567851A1FE8E20100EC7F6D /* api-sdk */,
+				55128B5A2008988A004C5D90 /* api-sdk */,
+				55128B532008984C004C5D90 /* api-sdk.xcodeproj */,
 				654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */,
 				654F25421FE282BA00069E02 /* com.uniken.poc.pocwalletTests */,
 				654F254D1FE282BB00069E02 /* com.uniken.poc.pocwalletUITests */,
@@ -333,6 +358,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55128B682008F30E004C5D90 /* PBXTargetDependency */,
 			);
 			name = com.uniken.poc.pocwallet;
 			productName = com.uniken.poc.pocwallet;
@@ -412,6 +438,12 @@
 			mainGroup = 654F251A1FE282BA00069E02;
 			productRefGroup = 654F25241FE282BA00069E02 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 55128B542008984C004C5D90 /* Products */;
+					ProjectRef = 55128B532008984C004C5D90 /* api-sdk.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				654F25221FE282BA00069E02 /* com.uniken.poc.pocwallet */,
@@ -420,6 +452,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		55128B592008984C004C5D90 /* libapi-sdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libapi-sdk.a";
+			remoteRef = 55128B582008984C004C5D90 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		654F25211FE282BA00069E02 /* Resources */ = {
@@ -505,6 +547,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		55128B682008F30E004C5D90 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Universalapi-sdk";
+			targetProxy = 55128B672008F30E004C5D90 /* PBXContainerItemProxy */;
+		};
 		654F25411FE282BA00069E02 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 654F25221FE282BA00069E02 /* com.uniken.poc.pocwallet */;

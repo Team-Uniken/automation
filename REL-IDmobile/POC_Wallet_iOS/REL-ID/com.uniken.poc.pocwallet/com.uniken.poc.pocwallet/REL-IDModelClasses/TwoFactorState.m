@@ -9,7 +9,9 @@
 #import "TwoFactorState.h"
 #import "RequestUtility.h"
 #import "RDNAConstants.h"
-#import "SuperViewController.h"
+#import "AppDelegate.h"
+
+
 
 @interface TwoFactorState(){
   
@@ -19,7 +21,7 @@
 
 @implementation TwoFactorState
 
-@synthesize mPin,userID,actCode,rdna,rdnaChallenges;
+@synthesize mPin,userID,actCode,rdnaChallenges;
 
 + (TwoFactorState *)sharedTwoFactorState {
   __strong static TwoFactorState *sharedTwoFactorState = nil;
@@ -29,6 +31,7 @@
   });
   return sharedTwoFactorState;
 }
+
 
 -(int)startTwoFactorFlowWithChallenge:(NSArray*)RdnaChallenges{
   
@@ -57,7 +60,8 @@
     }
   }
   
-  [self RDNAClientCheckChallenges:RdnaChallenges forUserID:userID];
+  AppDelegate *appDel = (AppDelegate*) [UIApplication sharedApplication].delegate;
+  [appDel.rdnaclient RDNAClientCheckChallenges:RdnaChallenges forUserID:userID];
   return 0;
 }
 
@@ -72,17 +76,6 @@
   return 0;
 }
 
-- (void)RDNAClientCheckChallenges:(NSArray *)challengeArray forUserID:(NSString *)userID {
 
-    int err = [rdna checkChallengeResponse:challengeArray forUserID:userID];
-    NSLog(@"err: %d",err);
-  if(err == RDNA_ERR_NONE){
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
-                                                      object:[NSNumber numberWithInt:1]];
-    
-  }else{
-    [SuperViewController showErrorWithMessage:@"" withErrorCode:err];
-  }
-}
 
 @end
