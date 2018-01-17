@@ -19,6 +19,7 @@
 @required
 - (void)terminate:(int)errorCode;
 -(void)initialize:(int)errorCode;
+-(void)logOff:(int)errorCode;
 -(void)openHttpResponse:(RDNAHTTPStatus*)response;
 @end
 
@@ -49,10 +50,18 @@
 - (int)resumeRDNA;
 
 
+
+/**
+ * @brief This method invokes the logOff api of the RDNA for the given userID.
+ * If logOff is successful user gets the appSession Config in the callBack.
+ */
+- (int)RDNAClientLogOffForUserID:(NSString *)userID withCallbackDelegate:(id<RDNACallbacks>)_logOffCallback;
+
 /**
  * @brief This method is used to terminate the rdna client execution.
  */
 - (int)terminateRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)_terminateCallback;
+
 
 
 /**
@@ -76,6 +85,13 @@
  * @brief This method is used for get current session id on server
  */
 -(NSString*)RDNAGetSessionID;
+
+
+/**
+ * @brief This method used to reset the challenge for reset the flow.
+ */
+- (int)RDNAClientResetChallenge;
+
 
 
 -(int)RDNAClientOpenHttpConnection:(RDNAHTTPRequest*)req withCallback:(id<RDNAClientCallbacks>)callback;

@@ -15,7 +15,6 @@
   NSString *user_id;
   NSString *user_name;
   NSString *balance;
-  NSString *wallet_id;
 }
 
 @end
@@ -32,6 +31,15 @@
   toolbar.delegate = self;
   _MPinTxtFld.inputAccessoryView = toolbar;
   
+#if DEBUG
+  self.loginIdTxtFld.text = @"9860818913";
+  self.MPinTxtFld.text = @"1111";
+   
+  
+#else
+  
+  
+#endif
 
 }
 
@@ -76,10 +84,9 @@
 -(void)doLoginInRelID{
   
   TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
-  objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIdTxtFld.text];
-  objTwoFactorState.walletID = @"";
+  objTwoFactorState.userName = [NSString stringWithFormat:@"%@",self.loginIdTxtFld.text];
   objTwoFactorState.balance = @"";
-  objTwoFactorState.userName = @"";
+  objTwoFactorState.userID = @"";
   objTwoFactorState.mPin = self.MPinTxtFld.text;
   [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
   
@@ -115,11 +122,13 @@
 
 -(void)parsedoAddAmountResponse:(NSDictionary*)ResponseDictionary{
   
-  user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_id"]];
-  user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_name"]];
+  user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"id"]];
+  user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"login_id"]];
   balance = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"balance"]];
-  wallet_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"wallet_id"]];
-  
+  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  objTwoFactorState.userName = user_name;
+  objTwoFactorState.balance = balance;
+  objTwoFactorState.userID = user_id;
   [super success:nil];
  
 }
@@ -129,15 +138,6 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  
-  if ([segue.identifier isEqualToString:@"loginToAddAmount"]) {
-    AddAmountViewController *vc = [segue destinationViewController];
-    vc.user_id = user_id;
-    vc.user_name = user_name;
-    vc.balance = balance;
-    vc.wallet_id = wallet_id;
-    
-  }
 }
 
 

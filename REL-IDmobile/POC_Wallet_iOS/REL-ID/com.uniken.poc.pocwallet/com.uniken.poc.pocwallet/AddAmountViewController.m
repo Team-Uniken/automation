@@ -9,18 +9,19 @@
 #import "AddAmountViewController.h"
 #import "RequestUtility.h"
 #import "DoneCancelNumberPadToolbar.h"
-@interface AddAmountViewController ()<DoneCancelNumberPadToolbarDelegate>
+#import "LoginViewController.h"
+@interface AddAmountViewController ()<DoneCancelNumberPadToolbarDelegate,RDNAClientCallbacks>
 
 @end
 
 @implementation AddAmountViewController
-@synthesize user_id,user_name,balance,wallet_id;
+@synthesize user_id,user_name,balance;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
   self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"Add Amount";
-  self.navigationheader.navigationLeftButton.hidden = YES;
+  self.navigationheader.navigationLeftButton.hidden = NO;
   
   self.welcomeLbl.text = [NSString stringWithFormat:@"Welcome %@",user_name];
   self.walletBalanceLbl.text = [NSString stringWithFormat:@"Your Wallet balance is : %@",balance];
@@ -33,6 +34,41 @@
   if([self doValidate])
   [self doAddAmount];
 }
+
+
+-(void)logOff:(int)errorCode{
+  if (errorCode > 0) {
+    [SuperViewController showErrorWithMessage:@"" withErrorCode:errorCode andCompletionHandler:^(BOOL result) {
+      exit(0);
+    }];
+  }else{
+     [self hideProcessingScreen];
+    [TwoFactorState sharedTwoFactorState].rdnaChallenges =  [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
+     NSArray *arrVC= self.navigationController.viewControllers;
+    for (UIViewController *vc in arrVC) {
+      if([vc isKindOfClass:[LoginViewController class]]){
+        [self.navigationController popToViewController:vc animated:YES];
+        break;
+      }
+    }
+  }
+    
+  
+}
+- (IBAction)navigationHeaderBackButtonClick:(id)sender {
+  [self addProccessingScreenWithText:@"Please wait.."];
+  int errorCode = [self.appDelegate.rdnaclient RDNAClientLogOffForUserID:user_id withCallbackDelegate:self];
+  if (errorCode > 0) {
+    [self hideProcessingScreen];
+    [SuperViewController showErrorWithMessage:@"" withErrorCode:errorCode andCompletionHandler:^(BOOL result) {
+      exit(0);
+    }];
+  }
+ 
+ 
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -56,7 +92,7 @@
   NSString *url = kUpdate;
   NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
   [params setValue:user_name forKey:@"login_id"];
-  [params setValue:self.addAmountTxtfld.text forKey:@"amount"];
+  [params setValue:[Utility  removeSpaceLeadingAndTrailingFromString:self.addAmountTxtfld.text] forKey:@"amount"];
   [utility doPostRequestfor:url withParameters:params onComplete:^(bool status, NSDictionary *responseDictionary){
     if (status && [responseDictionary objectForKey:@"error"] == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -76,10 +112,9 @@
 
 -(void)parsedoAddAmountResponse:(NSDictionary*)ResponseDictionary{
   
-  user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_id"]];
-  user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_name"]];
+  user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"id"]];
+  user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"login_id"]];
   balance = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"balance"]];
-  wallet_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"wallet_id"]];
   if (user_name.length>0) {
     self.welcomeLbl.text = [NSString stringWithFormat:@"Welcome %@",user_name];
     self.walletBalanceLbl.text = [NSString stringWithFormat:@"Your Wallet balance is : %@",balance];

@@ -14,6 +14,7 @@
 #import "AddAmountViewController.h"
 #import "MainViewController.h"
 #import "RegisterViewController.h"
+#import "LoginViewController.h"
 
 @interface SuperViewController ()<UITextFieldDelegate>{
   UITextField *aTextField;
@@ -36,6 +37,8 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
   
   [self.view addGestureRecognizer:tap];
+  
+   self.appDelegate= (AppDelegate*) [UIApplication sharedApplication].delegate;
   // Do any additional setup after loading the view.
 }
 
@@ -76,7 +79,6 @@
   viewController.user_id = objTwoFactorState.userID;
   viewController.user_name = objTwoFactorState.userName;
   viewController.balance = objTwoFactorState.balance;
-  viewController.wallet_id = objTwoFactorState.walletID;
   [self.navigationController pushViewController:viewController animated:YES];
   
 }
@@ -143,7 +145,6 @@
   
 }
 - (IBAction)navigationHeaderBackButtonClick:(id)sender {
-  
   [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -241,36 +242,50 @@
   UINavigationController *navVC = (UINavigationController*)appDel.window.rootViewController;
   NSArray *arrVC = navVC.viewControllers;
   
-  MainViewController *mainVC = nil;
-  for (UIViewController *vc in arrVC) {
-    if([vc isKindOfClass:[MainViewController class]]){
-      mainVC = (MainViewController*)vc;
-      break;
+  
+  if(erroCode == RDNA_ERR_INVALID_USER_MR_STATE){
+    for (UIViewController *vc in arrVC) {
+      if([vc isKindOfClass:[LoginViewController class]]){
+        [navVC popToViewController:vc animated:NO];
+        RegisterViewController *viewController = (RegisterViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RegisterViewControllerID"];
+        [navVC pushViewController:viewController animated:YES];
+        break;
+      }
+    }
+  }else{
+    for (UIViewController *vc in arrVC) {
+      if([vc isKindOfClass:[LoginViewController class]]){
+        [navVC popToViewController:vc animated:NO];
+        break;
+      }
     }
   }
   
-  if(erroCode == RDNA_ERR_INVALID_USER_MR_STATE){
-    RegisterViewController *viewController = (RegisterViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RegisterViewControllerID"];
-    [navVC pushViewController:viewController animated:YES];
-  }
+ 
   
 }
 +(void)handleStatus:(RDNAResponseStatusCode)erroCode{
   AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
   UINavigationController *navVC = (UINavigationController*)appDel.window.rootViewController;
   NSArray *arrVC = navVC.viewControllers;
+
   
-  MainViewController *mainVC = nil;
-  for (UIViewController *vc in arrVC) {
-    if([vc isKindOfClass:[MainViewController class]]){
-      mainVC = (MainViewController*)vc;
-      break;
+  if(erroCode == RDNA_RESP_STATUS_USER_SUSPENDED || erroCode == RDNA_RESP_STATUS_NO_USER_ID || RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED){
+    for (UIViewController *vc in arrVC) {
+      if([vc isKindOfClass:[LoginViewController class]]){
+        [navVC popToViewController:vc animated:NO];
+        RegisterViewController *viewController = (RegisterViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RegisterViewControllerID"];
+        [navVC pushViewController:viewController animated:YES];
+        break;
+      }
     }
-  }
-  
-  if(erroCode == RDNA_RESP_STATUS_USER_SUSPENDED){
-    RegisterViewController *viewController = (RegisterViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RegisterViewControllerID"];
-    [navVC pushViewController:viewController animated:YES];
+  }else{
+    for (UIViewController *vc in arrVC) {
+      if([vc isKindOfClass:[LoginViewController class]]){
+        [navVC popToViewController:vc animated:NO];
+        break;
+      }
+    }
   }
 }
 

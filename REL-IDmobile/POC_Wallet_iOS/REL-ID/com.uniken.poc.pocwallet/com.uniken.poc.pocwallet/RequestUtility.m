@@ -10,7 +10,7 @@
 
 @implementation RequestUtility
 //NSString *const kBaseUrl = @"http://poc5-uniken.com:8080/DummyWalletAPI2/";
-NSString *const kBaseUrl = @"http://54.169.244.38:8443/DummyWalletAPI2/";
+NSString *const kBaseUrl = @"http://10.0.5.23:8080/DummyWalletAPI2/";
 NSString *const kAddAmount = @"balance";
 NSString *const kRegister = @"register";
 NSString *const kEnroll = @"enroll";
@@ -36,6 +36,8 @@ NSString *const kDummyText = @"This is a demo app used for POC purpose.\n This a
       NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
       configuration.protocolClasses = @[[RelIDRequestInterceptor class]];
       NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+      configuration.timeoutIntervalForRequest = 30.0;
+      configuration.timeoutIntervalForResource = 60.0;
       NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
                                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                          timeoutInterval:60.0];

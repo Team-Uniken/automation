@@ -21,7 +21,7 @@
 
 @implementation TwoFactorState
 
-@synthesize mPin,userID,actCode,rdnaChallenges;
+@synthesize mPin,userName,actCode,rdnaChallenges;
 
 + (TwoFactorState *)sharedTwoFactorState {
   __strong static TwoFactorState *sharedTwoFactorState = nil;
@@ -39,7 +39,7 @@
     RDNAChallenge *challenge = [RdnaChallenges objectAtIndex:i];
     
     if ([challenge.name isEqualToString:kCheckUser]) {
-      [self setResponseForChallenge:challenge andKey:@"" andValue:userID];
+      [self setResponseForChallenge:challenge andKey:@"" andValue:userName];
     }
     else if ([challenge.name isEqualToString:kActivateUser]) {
       [self setResponseForChallenge:challenge andKey:@"" andValue:self.actCode];
@@ -54,14 +54,14 @@
       [self setResponseForChallenge:challenge andKey:@"" andValue:@"true"];
     }
     else if ([challenge.name isEqualToString:kDeviceName]) {
-      [self setResponseForChallenge:challenge andKey:@"" andValue:userID];
+      [self setResponseForChallenge:challenge andKey:@"" andValue:[[UIDevice currentDevice] name]];
     }else{
       NSLog(@"%@",[NSString stringWithFormat:@"not intrested in TBA challenge : %@",challenge.name]);
     }
   }
   
   AppDelegate *appDel = (AppDelegate*) [UIApplication sharedApplication].delegate;
-  [appDel.rdnaclient RDNAClientCheckChallenges:RdnaChallenges forUserID:userID];
+  [appDel.rdnaclient RDNAClientCheckChallenges:RdnaChallenges forUserID:userName];
   return 0;
 }
 

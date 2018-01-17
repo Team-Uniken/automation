@@ -9,7 +9,7 @@
 #import "Utility.h"
 
 @implementation Utility
--(NSString*)removeSpaceLeadingAndTrailingFromString:(NSString*)str{
++(NSString*)removeSpaceLeadingAndTrailingFromString:(NSString*)str{
   return [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 

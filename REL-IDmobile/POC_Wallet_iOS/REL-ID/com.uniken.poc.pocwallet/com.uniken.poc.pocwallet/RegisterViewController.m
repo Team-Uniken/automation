@@ -14,7 +14,6 @@
   NSString *user_id;
   NSString *user_name;
   NSString *balance;
-  NSString *wallet_id;
 }
 
 @end
@@ -98,11 +97,12 @@
   return true;
 }
 
+
 -(void)doRegister{
   [self addProccessingScreenWithText:@"Please wait.."];
   AppDelegate *appDel = (AppDelegate*)[UIApplication sharedApplication].delegate;
   RequestUtility *utility = [RequestUtility sharedRequestUtility];
-  NSString *url = kEnroll;
+  NSString *url = kRegister;
   NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
   [params setValue:self.loginIDTxtFld.text forKey:@"login_id"];
   [params setValue:self.mPinTxtFld.text forKey:@"password"];
@@ -128,23 +128,19 @@
 
 -(void)parsedoRegisterResponse:(NSDictionary*)ResponseDictionary{
   
-  user_id = [ResponseDictionary valueForKey:@"user_id"];
-  user_name = [ResponseDictionary valueForKey:@"user_name"];
+  user_id = [ResponseDictionary valueForKey:@"id"];
+  user_name = [ResponseDictionary valueForKey:@"login_id"];
   balance = [ResponseDictionary valueForKey:@"balance"];
-  wallet_id = [ResponseDictionary valueForKey:@"wallet_id"];
-  
-  
+ 
    TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
   
   objTwoFactorState.mPin = [NSString stringWithFormat:@"%@",self.mPinTxtFld.text];
-  objTwoFactorState.userID = [NSString stringWithFormat:@"%@",self.loginIDTxtFld.text];
+  objTwoFactorState.userID = user_id;
   objTwoFactorState.actCode = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"act_code"]];
-  objTwoFactorState.walletID = wallet_id;
   objTwoFactorState.balance = balance;
   objTwoFactorState.userName = user_name;
   
   [objTwoFactorState startTwoFactorFlowWithChallenge:objTwoFactorState.rdnaChallenges];
-  //[self performSegueWithIdentifier:@"registerToAddAmount" sender:nil];
 }
 
 
@@ -152,17 +148,13 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-  
-  if ([segue.identifier isEqualToString:@"registerToAddAmount"]) {
-    AddAmountViewController *vc = [segue destinationViewController];
-    vc.user_id = user_id;
-    vc.user_name = user_name;
-    vc.balance = balance;
-    vc.wallet_id = wallet_id;
-    
-  }
+
 }
 
+- (IBAction)navigationHeaderBackButtonClick:(id)sender {
+  [self.appDelegate.rdnaclient RDNAClientResetChallenge];
+  [super navigationHeaderBackButtonClick:sender];
+}
 
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField
 {

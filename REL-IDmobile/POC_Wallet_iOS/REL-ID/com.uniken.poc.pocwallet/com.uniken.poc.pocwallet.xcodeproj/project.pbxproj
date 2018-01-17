@@ -56,13 +56,6 @@
 			remoteGlobalIDString = 6573EF001BA40E250085584E;
 			remoteInfo = "api-sdk";
 		};
-		55128B672008F30E004C5D90 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55128B532008984C004C5D90 /* api-sdk.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6573EFEF1BA410430085584E;
-			remoteInfo = "Universalapi-sdk";
-		};
 		654F25401FE282BA00069E02 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 654F251B1FE282BA00069E02 /* Project object */;
@@ -358,7 +351,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55128B682008F30E004C5D90 /* PBXTargetDependency */,
 			);
 			name = com.uniken.poc.pocwallet;
 			productName = com.uniken.poc.pocwallet;
@@ -547,11 +539,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		55128B682008F30E004C5D90 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Universalapi-sdk";
-			targetProxy = 55128B672008F30E004C5D90 /* PBXContainerItemProxy */;
-		};
 		654F25411FE282BA00069E02 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 654F25221FE282BA00069E02 /* com.uniken.poc.pocwallet */;
@@ -678,9 +665,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = com.uniken.poc.pocwallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -694,10 +682,10 @@
 					"-Objc",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.poc.pocwallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE = "ff734511-7695-4041-bd97-36e4d4800c90";
+				PROVISIONING_PROFILE_SPECIFIER = "developer stock profile";
 			};
 			name = Debug;
 		};
@@ -708,6 +696,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = com.uniken.poc.pocwallet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -721,10 +710,10 @@
 					"-Objc",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.poc.pocwallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE = "eea64af7-b42c-44d1-ad74-14f15603c926";
+				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
 			};
 			name = Release;
 		};

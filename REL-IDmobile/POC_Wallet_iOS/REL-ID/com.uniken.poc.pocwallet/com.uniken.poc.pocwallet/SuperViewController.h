@@ -11,12 +11,15 @@
 #import "ProcessingScreen.h"
 #import "AppDelegate.h"
 #import "TwoFactorState.h"
+#import "Utility.h"
 
 @interface SuperViewController : UIViewController
 @property (nonatomic, strong) NavigationHeader *navigationheader;
 @property (nonatomic, strong) ProcessingScreen *processingScreen;
+@property (nonatomic,strong)AppDelegate *appDelegate;
 -(void)addProccessingScreenWithText:(NSString*)text;
 -(void)hideProcessingScreen;
+- (IBAction)navigationHeaderBackButtonClick:(id)sender;
 + (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode andCompletionHandler:(void (^)(BOOL result))completionHandler;
 - (void)showErrorWithMessage:(NSString *)msg;
 -(void)success:(NSNotification *)notification;

@@ -12,7 +12,6 @@
 + (TwoFactorState *)sharedTwoFactorState;
 @property (nonatomic,strong) NSString *actCode;
 @property (nonatomic,strong) NSString *userName;
-@property (nonatomic,strong) NSString *walletID;
 @property (nonatomic,strong) NSString *balance;
 @property (nonatomic,strong) NSString *userID;
 @property (nonatomic,strong) NSString *mPin;

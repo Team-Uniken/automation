@@ -169,6 +169,17 @@
 }
 
 /**
+ * @brief This method invokes the logOff api of the RDNA for the given userID.
+ * If logOff is successful user gets the appSession Config in the callBack.
+ */
+- (int)RDNAClientLogOffForUserID:(NSString *)userID withCallbackDelegate:(id<RDNAClientCallbacks>)_logOffCallback;{
+  NSLog(@"coming inside terminateRDNA");
+  rdnaClientCallback = _logOffCallback;
+  int errLogOff = [rdnaObject logOff:userID];
+  return errLogOff;
+}
+
+/**
  * @brief This method is invoked by RDNA when there is error in retrieving location.
  */
 - (int)ShowLocationDailogue {
@@ -283,7 +294,7 @@
  * It returns the RDNAStatusCheckChallengesResponse class object.
  */
 - (int)onCheckChallengeResponseStatus:(RDNAStatusCheckChallengeResponse *) status {
-  
+   dispatch_async(dispatch_get_main_queue(), ^{
   [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
                                                       object:[NSNumber numberWithInt:0]];
   if (status.errCode == RDNA_ERR_NONE) {
@@ -293,34 +304,40 @@
         [[TwoFactorState sharedTwoFactorState]startTwoFactorFlowWithChallenge:status.challenges];
       }else{
         NSLog(@"success for Two factor challenge authentication");
+        [RelIDRequestInterceptor applyProxySettingWithHost:kRdnaProxyHost withPort:status.pxyDetails.port];
+        self.proxyPort = status.pxyDetails.port;
         dispatch_async(dispatch_get_main_queue(), ^{
           [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAllChallengeSuccess
                                                               object:nil];
         });
       }
-    }else if(status.status.statusCode == RDNA_RESP_STATUS_USER_SUSPENDED){
-      [rdnaObject resetChallenge];
-      [TwoFactorState sharedTwoFactorState].rdnaChallenges = [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
-      [SuperViewController handleStatus:RDNA_RESP_STATUS_USER_SUSPENDED];
+    }else if(status.status.statusCode == RDNA_RESP_STATUS_USER_SUSPENDED || status.status.statusCode == RDNA_RESP_STATUS_NO_USER_ID || status.status.statusCode == RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED){
+      
+      [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0 andCompletionHandler:^(BOOL result) {
+        [self RDNAClientResetChallenge];
+        [SuperViewController handleStatus:status.status.statusCode];
+      }];
+      
     }
     else{
       [TwoFactorState sharedTwoFactorState].rdnaChallenges = status.challenges;
       [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0 andCompletionHandler:^(BOOL result) {
-        
       }];
     }
   }else if(status.errCode == RDNA_ERR_INVALID_USER_MR_STATE){
     [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
-      [rdnaObject resetChallenge];
+       [self RDNAClientResetChallenge];
       [TwoFactorState sharedTwoFactorState].rdnaChallenges = [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
       [SuperViewController handleErrorCode:RDNA_ERR_INVALID_USER_MR_STATE];
     }];
   }
   else{
     [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
-      
+      [self RDNAClientResetChallenge];
+      [SuperViewController handleErrorCode:status.errCode];
     }];
   }
+      });
   return 1;
 }
 
@@ -386,6 +403,15 @@
  * It returns the RDNAStatusLogOff class object.
  */
 - (int)onLogOff: (RDNAStatusLogOff *)status {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    if (rdnaClientCallback) {
+      if (status.errCode > 0) {
+        [RelIDRequestInterceptor applyProxySettingWithHost:kRdnaProxyHost withPort:status.pxyDetails.port];
+        self.proxyPort = status.pxyDetails.port;
+      }
+      [rdnaClientCallback logOff:status.errCode];
+    }
+  });
   return 1;
 }
 
@@ -565,6 +591,17 @@
   NSMutableString *strSessionID = [[NSMutableString alloc]init];
   [rdnaObject getSessionID:&strSessionID];
   return strSessionID;
+}
+
+/**
+ * @brief This method used to reset the challenge for reset the flow.
+ */
+- (int)RDNAClientResetChallenge {
+  
+  int retval = 0;
+  retval = [rdnaObject resetChallenge];
+ [TwoFactorState sharedTwoFactorState].rdnaChallenges = [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
+  return retval;
 }
 
 -(int)RDNAClientOpenHttpConnection:(RDNAHTTPRequest*)req withCallback:(id<RDNAClientCallbacks>)callback{
