@@ -38,11 +38,11 @@
   
   [self.view addGestureRecognizer:tap];
   
-   self.appDelegate= (AppDelegate*) [UIApplication sharedApplication].delegate;
+  self.appDelegate= (AppDelegate*) [UIApplication sharedApplication].delegate;
   // Do any additional setup after loading the view.
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(sessionTimeout:)
@@ -59,7 +59,7 @@
                                              object:nil];
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated {
   
   [super viewWillDisappear:animated];
   
@@ -71,17 +71,11 @@
                                                 object:nil];
 }
 
--(void)success:(NSNotification *)notification{
-  
-  AddAmountViewController *viewController = (AddAmountViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AddAmountViewControllerID"];
-  
-  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
-  viewController.user_id = objTwoFactorState.userID;
-  viewController.user_name = objTwoFactorState.userName;
-  viewController.balance = objTwoFactorState.balance;
-  [self.navigationController pushViewController:viewController animated:YES];
-  
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
+
 
 -(void)actionProcessingScreen:(NSNotification *)notification{
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -91,7 +85,7 @@
     }else{
       [self hideProcessingScreen];
     }
-   });
+  });
 }
 
 -(void)setupViews{
@@ -122,7 +116,7 @@
   [self hideProcessingScreen];
 }
 
--(void)addProccessingScreenWithText:(NSString*)text{
+-(void)addProccessingScreenWithText:(NSString*)text {
   self.processingScreen.hidden = NO;
   self.processingScreen.activityIndicator.hidden = NO;
   [self.processingScreen.activityIndicator startAnimating];
@@ -137,41 +131,65 @@
   
 }
 
-
--(void)hideProcessingScreen{
+-(void)hideProcessingScreen {
   [self.processingScreen removeFromSuperview];
   [self.processingScreen.activityIndicator stopAnimating];
   self.processingScreen.hidden = YES;
   
 }
+
+-(void)dismissKeyboard {
+  [aTextField resignFirstResponder];
+}
+
+#pragma -mark Back Button Action
 - (IBAction)navigationHeaderBackButtonClick:(id)sender {
   [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+#pragma mark - Success Callback
+-(void)success:(NSNotification *)notification {
+  
+  AddAmountViewController *viewController = (AddAmountViewController*)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AddAmountViewControllerID"];
+  
+  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  viewController.user_id = objTwoFactorState.userID;
+  viewController.user_name = objTwoFactorState.userName;
+  viewController.balance = objTwoFactorState.balance;
+  [self.navigationController pushViewController:viewController animated:YES];
+  
 }
+# pragma mark - Session timeout notication handled
 
--(void)dismissKeyboard
-{
-  [aTextField resignFirstResponder];
+-(void)sessionTimeout:(NSNotification *)notification{
+  
+  if(self.navigationController) {
+    [self.navigationController.view makeToast:notification.object
+                                     duration:3.0
+                                     position:CSToastPositionCenter];
+    
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    UINavigationController *navVC = (UINavigationController*)self.appDelegate.window.rootViewController;
+    [navVC.topViewController viewDidLoad];
+    
+    
+  }
 }
 
 #pragma mark - textField delegate methods
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
   
   [self.view scrollToView:textField];
   aTextField = textField;
 }
 
--(void) textFieldDidEndEditing:(UITextField *)textField{
+-(void) textFieldDidEndEditing:(UITextField *)textField {
   
   [self.view scrollToY:0];
   [textField resignFirstResponder];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
   
   [self.view scrollToY:0];
   [textField resignFirstResponder];
@@ -181,7 +199,6 @@
 
 
 #pragma mark AlertView Show
-
 + (void)showErrorWithMessage:(NSString *)msg withErrorCode:(int)errorCode andCompletionHandler:(void (^)(BOOL result))completionHandler{
   
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -224,24 +241,12 @@
   [appDel.window.rootViewController presentViewController:alertController animated:YES completion:nil];
 }
 
-# pragma mark - Session timeout notication handled
 
--(void)sessionTimeout:(NSNotification *)notification{
-  
-  if(self.navigationController) {
-    [self.navigationController.view makeToast:notification.object
-                                     duration:3.0
-                                     position:CSToastPositionCenter];
-    
-    [self.navigationController popToRootViewControllerAnimated:NO];
-  }
-}
-
+#pragma -mark Respose code and Error code handle methods
 +(void)handleErrorCode:(RDNAErrorID)erroCode{
   AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
   UINavigationController *navVC = (UINavigationController*)appDel.window.rootViewController;
   NSArray *arrVC = navVC.viewControllers;
-  
   
   if(erroCode == RDNA_ERR_INVALID_USER_MR_STATE){
     for (UIViewController *vc in arrVC) {
@@ -261,16 +266,16 @@
     }
   }
   
- 
+  
   
 }
 +(void)handleStatus:(RDNAResponseStatusCode)erroCode{
   AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
   UINavigationController *navVC = (UINavigationController*)appDel.window.rootViewController;
   NSArray *arrVC = navVC.viewControllers;
-
   
-  if(erroCode == RDNA_RESP_STATUS_USER_SUSPENDED || erroCode == RDNA_RESP_STATUS_NO_USER_ID || RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED){
+  
+  if(erroCode == RDNA_RESP_STATUS_USER_SUSPENDED || erroCode == RDNA_RESP_STATUS_NO_USER_ID || erroCode ==RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED){
     for (UIViewController *vc in arrVC) {
       if([vc isKindOfClass:[LoginViewController class]]){
         [navVC popToViewController:vc animated:NO];

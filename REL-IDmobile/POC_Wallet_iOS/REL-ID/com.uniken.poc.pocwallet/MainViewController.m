@@ -15,11 +15,11 @@
 @implementation MainViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"POC Wallet";
   self.navigationheader.navigationLeftButton.hidden = YES;
-    // Do any additional setup after loading the view.
+  // Do any additional setup after loading the view.
   
   AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
   int error = [delegate.rdnaclient initializeRDNAWithCallbackDelegate:self] ;
@@ -33,8 +33,8 @@
 
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 - (IBAction)registerButtonClick:(id)sender {
 }
@@ -47,7 +47,7 @@
 -(void)initialize:(int)errorCode{
   [self hideProcessingScreen];
   if(errorCode>0)
-  [self showErrorWithMessage:[NSString stringWithFormat:@"REL-ID init failed : %d",errorCode]];
+    [self showErrorWithMessage:[NSString stringWithFormat:@"REL-ID init failed : %d",errorCode]];
   else
     NSLog(@"Initiliaze success");
   
@@ -55,13 +55,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -21,7 +21,7 @@
 @implementation RegisterViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"Register";
   
@@ -36,39 +36,26 @@
   DoneCancelNumberPadToolbar *numberPadConfirmMpinTxtFld = [[DoneCancelNumberPadToolbar alloc] initWithTextField:self.confirmMpinTxtFld];
   numberPadConfirmMpinTxtFld.delegate = self;
   self.confirmMpinTxtFld.inputAccessoryView = numberPadConfirmMpinTxtFld;
-  
-
-    // Do any additional setup after loading the view.
-#if DEBUG
-  self.loginIDTxtFld.text = @"9860818913";
-  self.cardNuberTxtFld.text = @"111111";
-  self.mPinTxtFld.text = @"1111";
-  self.confirmMpinTxtFld.text = @"1111";
-  self.cardPinTxtFld.text = @"1111";
-  
-  
-#else
-  
-  
-#endif
-}
-- (IBAction)registerButtonClick:(id)sender {
-  if([self doValidate])
-  [self doRegister];
+  // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 
--(BOOL)doValidate{  
+- (IBAction)registerButtonClick:(id)sender {
+  if([self doValidate])
+    [self doRegister];
+}
+
+-(BOOL)doValidate {
   if(self.loginIDTxtFld.text.length <= 0){
     [self showErrorWithMessage:@"Please enter loginID"];
     return false;
   }
-
+  
   if(self.cardNuberTxtFld.text.length <= 0){
     [self showErrorWithMessage:@"Please enter card number"];
     return false;
@@ -80,7 +67,7 @@
   }
   
   if(self.mPinTxtFld.text.length <= 0){
-    [self showErrorWithMessage:@"Please enter MPIN"];
+    [self showErrorWithMessage:@"Please enter RPIN"];
     return false;
   }
   
@@ -90,7 +77,7 @@
   }
   
   if(![self.mPinTxtFld.text isEqualToString:self.confirmMpinTxtFld.text]){
-    [self showErrorWithMessage:@"MPIN and confirm MPIN should be same"];
+    [self showErrorWithMessage:@"RPIN and Confirm RPIN should be same"];
     return false;
   }
   
@@ -98,7 +85,7 @@
 }
 
 
--(void)doRegister{
+-(void)doRegister {
   [self addProccessingScreenWithText:@"Please wait.."];
   AppDelegate *appDel = (AppDelegate*)[UIApplication sharedApplication].delegate;
   RequestUtility *utility = [RequestUtility sharedRequestUtility];
@@ -109,7 +96,7 @@
   [params setValue:self.cardNuberTxtFld.text forKey:@"card_no"];
   [params setValue:self.cardPinTxtFld.text forKey:@"card_pin"];
   [params setValue:[appDel.rdnaclient RDNAGetSessionID] forKey:@"session_id"];
-
+  
   [utility doPostRequestfor:url withParameters:params onComplete:^(bool status, NSDictionary *responseDictionary){
     if (status && [responseDictionary objectForKey:@"error"] == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -125,14 +112,13 @@
   }];
 }
 
-
--(void)parsedoRegisterResponse:(NSDictionary*)ResponseDictionary{
+-(void)parsedoRegisterResponse:(NSDictionary*)ResponseDictionary {
   
   user_id = [ResponseDictionary valueForKey:@"id"];
   user_name = [ResponseDictionary valueForKey:@"login_id"];
   balance = [ResponseDictionary valueForKey:@"balance"];
- 
-   TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
+  
+  TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
   
   objTwoFactorState.mPin = [NSString stringWithFormat:@"%@",self.mPinTxtFld.text];
   objTwoFactorState.userID = user_id;
@@ -148,32 +134,32 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+  
 }
 
+#pragma -mark Back Button Action
 - (IBAction)navigationHeaderBackButtonClick:(id)sender {
   [self.appDelegate.rdnaclient RDNAClientResetChallenge];
   [super navigationHeaderBackButtonClick:sender];
 }
 
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField
-{
+#pragma -mark NumberPad keyboard button delegates
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField{
   [textField resignFirstResponder] ;
 }
 
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField
-{
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField{
   [textField resignFirstResponder] ;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

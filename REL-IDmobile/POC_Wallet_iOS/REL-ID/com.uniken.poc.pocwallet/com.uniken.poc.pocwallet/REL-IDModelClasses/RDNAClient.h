@@ -16,7 +16,7 @@
 
 @protocol RDNAClientCallbacks
 
-@required
+@optional
 - (void)terminate:(int)errorCode;
 -(void)initialize:(int)errorCode;
 -(void)logOff:(int)errorCode;

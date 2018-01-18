@@ -313,7 +313,7 @@
       }
     }else if(status.status.statusCode == RDNA_RESP_STATUS_USER_SUSPENDED || status.status.statusCode == RDNA_RESP_STATUS_NO_USER_ID || status.status.statusCode == RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED){
       
-      [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0 andCompletionHandler:^(BOOL result) {
+      [SuperViewController showErrorWithMessage:[NSString stringWithFormat:@"%@ Please register again.",status.status.message] withErrorCode:0 andCompletionHandler:^(BOOL result) {
         [self RDNAClientResetChallenge];
         [SuperViewController handleStatus:status.status.statusCode];
       }];
@@ -324,8 +324,8 @@
       [SuperViewController showErrorWithMessage:status.status.message withErrorCode:0 andCompletionHandler:^(BOOL result) {
       }];
     }
-  }else if(status.errCode == RDNA_ERR_INVALID_USER_MR_STATE){
-    [SuperViewController showErrorWithMessage:@"" withErrorCode:status.errCode andCompletionHandler:^(BOOL result) {
+  }else if([RDNA getErrorInfo:status.errCode] == RDNA_ERR_INVALID_USER_MR_STATE){
+    [SuperViewController showErrorWithMessage:@"User state is not valid ,please register again." withErrorCode:0 andCompletionHandler:^(BOOL result) {
        [self RDNAClientResetChallenge];
       [TwoFactorState sharedTwoFactorState].rdnaChallenges = [TwoFactorState sharedTwoFactorState].rdnaInitialChallenges;
       [SuperViewController handleErrorCode:RDNA_ERR_INVALID_USER_MR_STATE];
@@ -403,6 +403,7 @@
  * It returns the RDNAStatusLogOff class object.
  */
 - (int)onLogOff: (RDNAStatusLogOff *)status {
+   NSLog(@"onLogOff callback error code : %d",status.errCode);
   dispatch_async(dispatch_get_main_queue(), ^{
     if (rdnaClientCallback) {
       if (status.errCode > 0) {
@@ -487,9 +488,11 @@
  * @param status                -
  */
 -(int)onSecurityThreat:(NSString*)status{
+
   dispatch_async(dispatch_get_main_queue(), ^(){
-    UIAlertView *threatAlert = [[UIAlertView alloc]initWithTitle:@"Device is not safe." message:status delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [threatAlert show];
+    [SuperViewController showErrorWithMessage:status withErrorCode:0 andCompletionHandler:^(BOOL result) {
+      exit(0);
+    }];
   });
   
   return 0;

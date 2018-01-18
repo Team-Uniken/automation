@@ -22,66 +22,61 @@
 @implementation LoginViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
   self.txtLabel.text = kDummyText;
   self.navigationheader.titleLabel.text = @"POC Wallet";
-    // Do any additional setup after loading the view.
+  // Do any additional setup after loading the view.
   
   DoneCancelNumberPadToolbar *toolbar = [[DoneCancelNumberPadToolbar alloc] initWithTextField:_MPinTxtFld];
   toolbar.delegate = self;
   _MPinTxtFld.inputAccessoryView = toolbar;
-  
-#if DEBUG
-  self.loginIdTxtFld.text = @"9860818913";
-  self.MPinTxtFld.text = @"1111";
-   
-  
-#else
-  
-  
-#endif
+}
 
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+  self.loginIdTxtFld.text = @"";
+  self.MPinTxtFld.text = @"";
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
 }
 
 
 #pragma -mark NumberPad keyboard button delegates
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField{
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField {
   [textField resignFirstResponder] ;
 }
 
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField{
-   [textField resignFirstResponder] ;
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField {
+  [textField resignFirstResponder] ;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-  [super viewDidAppear:animated];
-}
+
 - (IBAction)loginBtnClick:(id)sender {
   
   if([self doValidate])
-  [self doLoginInRelID];
+    [self doLoginInRelID];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(BOOL)doValidate{
+-(BOOL)doValidate {
   
   if(self.loginIdTxtFld.text.length <= 0){
-     [self showErrorWithMessage:@"Please enter loginID" ];
+    [self showErrorWithMessage:@"Please enter loginID" ];
     return false;
   }
   if(self.MPinTxtFld.text.length <= 0){
-     [self showErrorWithMessage:@"Please enter MPIN" ];
+    [self showErrorWithMessage:@"Please enter RPIN" ];
     return false;
-  } 
+  }
   return true;
 }
 
-
--(void)doLoginInRelID{
+-(void)doLoginInRelID {
   
   TwoFactorState *objTwoFactorState= [TwoFactorState sharedTwoFactorState];
   objTwoFactorState.userName = [NSString stringWithFormat:@"%@",self.loginIdTxtFld.text];
@@ -92,7 +87,7 @@
   
 }
 
--(void)doLogin{
+-(void)doLogin {
   [self addProccessingScreenWithText:@"Please wait.."];
   RequestUtility *utility = [RequestUtility sharedRequestUtility];
   NSString *url = kLogin;
@@ -114,14 +109,7 @@
   }];
 }
 
-
--(void)success:(NSNotification *)notification{
-  [self doLogin];
-}
-
-
--(void)parsedoAddAmountResponse:(NSDictionary*)ResponseDictionary{
-  
+-(void)parsedoAddAmountResponse:(NSDictionary*)ResponseDictionary {
   user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"id"]];
   user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"login_id"]];
   balance = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"balance"]];
@@ -130,9 +118,12 @@
   objTwoFactorState.balance = balance;
   objTwoFactorState.userID = user_id;
   [super success:nil];
- 
 }
 
+#pragma mark - Success Callback
+-(void)success:(NSNotification *)notification {
+  [self doLogin];
+}
 
 #pragma mark - Navigation
 
