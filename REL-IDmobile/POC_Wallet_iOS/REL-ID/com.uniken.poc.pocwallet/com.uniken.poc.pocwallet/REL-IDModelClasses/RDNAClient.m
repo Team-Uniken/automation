@@ -306,10 +306,9 @@
         NSLog(@"success for Two factor challenge authentication");
         [RelIDRequestInterceptor applyProxySettingWithHost:kRdnaProxyHost withPort:status.pxyDetails.port];
         self.proxyPort = status.pxyDetails.port;
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAllChallengeSuccess
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationAllChallengeSuccess
                                                               object:nil];
-        });
+       
       }
     }else if(status.status.statusCode == RDNA_RESP_STATUS_USER_SUSPENDED || status.status.statusCode == RDNA_RESP_STATUS_NO_USER_ID || status.status.statusCode == RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED){
       

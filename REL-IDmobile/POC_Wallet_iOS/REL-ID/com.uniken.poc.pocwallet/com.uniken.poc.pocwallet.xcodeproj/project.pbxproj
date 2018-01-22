@@ -56,13 +56,6 @@
 			remoteGlobalIDString = 6573EF001BA40E250085584E;
 			remoteInfo = "api-sdk";
 		};
-		55B88FE12010CB120050C7E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55B88FD92010CADF0050C7E5 /* api-sdk.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6573EFEF1BA410430085584E;
-			remoteInfo = "Universalapi-sdk";
-		};
 		654F25401FE282BA00069E02 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 654F251B1FE282BA00069E02 /* Project object */;
@@ -358,7 +351,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55B88FE22010CB120050C7E5 /* PBXTargetDependency */,
 			);
 			name = com.uniken.poc.pocwallet;
 			productName = com.uniken.poc.pocwallet;
@@ -547,11 +539,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		55B88FE22010CB120050C7E5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Universalapi-sdk";
-			targetProxy = 55B88FE12010CB120050C7E5 /* PBXContainerItemProxy */;
-		};
 		654F25411FE282BA00069E02 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 654F25221FE282BA00069E02 /* com.uniken.poc.pocwallet */;
