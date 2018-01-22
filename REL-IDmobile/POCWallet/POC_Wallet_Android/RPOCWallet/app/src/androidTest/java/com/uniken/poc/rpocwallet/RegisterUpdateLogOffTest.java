@@ -32,6 +32,19 @@ public class RegisterUpdateLogOffTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
+    public void performTest20Time(){
+        performTest(20);
+    }
+
+    public void performTest(int n){
+        try {
+            for (int i = 0; i < n; i++) {
+                registerUpdateLogOffTest();
+            }
+        }
+        catch (Exception e){}
+    }
+
     public void registerUpdateLogOffTest() {
         ViewInteraction button = onView(
                 allOf(withId(R.id.btnRegister),
