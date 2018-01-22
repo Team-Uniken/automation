@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++3" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++3" : 9223372036854775807,
+    "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E5A7C238-A6DB-4A0E-A889-B5117B46B215",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6e416058-ee1f-40bc-b3a3-9c790494852a++3" : "svn\/",
+    "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F" : "GIT\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "com.uniken.poc.pocwallet",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "REL-IDmobile\/POC_Wallet_iOS\/REL-ID\/com.uniken.poc.pocwallet\/com.uniken.poc.pocwallet.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Team-Uniken\/REL-ID_internal.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1FB2F2EBB37797E265C23D340FA16BBC8515EC3F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/10.0.0.10\/svn\/relidapisdk",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6e416058-ee1f-40bc-b3a3-9c790494852a++3"
+    }
+  ]
+}
