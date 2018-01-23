@@ -123,12 +123,12 @@ export default class AccountsScene extends Component {
       0: {
         error: 0,
         response: '{"accountList":[ \
-                  {"accountID":"2144","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":15565.32,"accountType":1}, \
-                  {"accountID":"3146","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":3039.00,"accountType":2}, \
-                  {"accountID":"2047","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":-4074.52,"accountType":3}, \
-                  {"accountID":"1445","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":243.22,"accountType":2}, \
-                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":1357.98,"accountType":2}, \
-                  {"accountID":"9447","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":-403.12,"accountType":3}], \
+                  {"accountID":"93323","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":93323.00,"accountType":1}, \
+                  {"accountID":"20643","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":20643.00,"accountType":2}, \
+                  {"accountID":"1452111","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":1452111,"accountType":3}, \
+                  {"accountID":"35233","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":35233,"accountType":2}, \
+                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":0,"accountType":2}, \
+                  {"accountID":"117987","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":117987,"accountType":3}], \
               "error":"", \
               "status":"success" \
             }',
