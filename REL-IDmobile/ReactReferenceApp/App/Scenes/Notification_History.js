@@ -305,7 +305,7 @@ class Notifications_History extends Component {
    */
   addDate(history) {
     history.forEach(function (h) {
-      h.created_date = h.create_ts.split("T")[0];
+      h.created_date = h.expiry_timestamp.split("T")[0];
     });
     return history;
   }

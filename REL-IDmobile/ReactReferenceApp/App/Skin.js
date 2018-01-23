@@ -782,7 +782,7 @@ const navbar = module.exports.navbar = {
     titleText:{
       color:'white',
       textAlignVertical: 'center',
-      backgroundColor: '#146cc0',
+      backgroundColor: Config.BUTTON_BG_COLOR,
       alignSelf:'center',
       textAlign:'center',
       fontSize: 14,

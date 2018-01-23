@@ -13,7 +13,7 @@ import IconBadge from 'react-native-icon-badge';
 import Badge from 'react-native-smart-badge'
 import Events from 'react-native-simple-events';
 import Main from '../Container/Main'
-
+import Config from 'react-native-config'
 
 /*
  Required for this js
@@ -83,7 +83,7 @@ class PageTitle extends Component {
           statusBarLight={'light-content'}
           titleStyle={Skin.navbar.title.titleStyle}
           title={Skin.icon.logo}
-          titleTint={'#146cc0'}
+          titleTint={Config.BUTTON_BG_COLOR}
           right={''}
           left={{
             icon: Skin.icon.hamburger,
@@ -91,7 +91,7 @@ class PageTitle extends Component {
               fontSize: 35,
               paddingLeft: 17,
               width: 40,
-              color: '#146cc0',
+              color: Config.BUTTON_BG_COLOR,
             },
             handler: this.props.handler
           }} />

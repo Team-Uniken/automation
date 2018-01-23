@@ -63,7 +63,7 @@ function compare(a, b) {
   //   return 0;
 
 //  return moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
-   return moment.utc(b.created_ts.replace('UTC','')).local().toDate() - moment.utc(a.created_ts.replace('UTC','')).local().toDate()
+    return moment.utc(b.expiry_timestamp.replace('SGT','')).local().toDate() - moment.utc(a.expiry_timestamp.replace('SGT','')).local().toDate()
 }
 
 /*
@@ -213,7 +213,7 @@ var SampleRow = React.createClass({
 
 
     var expiry_timestamp = this.props.notification.expiry_timestamp;
-    var created_timestamp = this.props.notification.created_ts;
+    var created_timestamp = this.props.notification.expiry_timestamp;
    // var timestamp = expiry_timestamp.split("EDT");
   var timestamp = expiry_timestamp.split("UTC");
 
@@ -930,7 +930,7 @@ export default class NotificationMgmtScene extends Component {
        var notification = notifiactionArray[0];
 
        var date1 = new Date(millis2minsBefore);
-     var testDateUtc = moment.utc(notification.created_ts.replace('UTC',''));
+       var testDateUtc = moment.utc(notification.expiry_timestamp.replace('SGT',''));
 //       var testDateUtc = moment.utc(notification.created_ts.replace('EDT','')).add(4, 'hours');
        var localDate = moment(testDateUtc).local();
        var s = localDate.format("YYYY-MM-DDTHH:mm:ssZ");
@@ -1285,31 +1285,6 @@ export default class NotificationMgmtScene extends Component {
       <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
         {this.renderNotificationView(this.state.dataSource) }
         {Main.notificationCount == 0 && this._renderMessage() }
-        {Main.notificationCount == 0 &&
-          <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
-            onPress={() => {
-              //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-              //      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
-
-
-              //      this.props.navigation.dispatch(
-              //        {"type":"ReplaceCurrentScreen/RESET","index":0,"actions":[{"type":"Navigation/NAVIGATE","routeName":"Notification_History","params":{"url":"","title":"Notification History"}}]});
-              //
-
-              global.isNotificationScreenonTop = false;      
-             
-              this.props.navigation.dispatch({
-                key: 'Notification_History',
-                type: 'ReplaceCurrentScreen',
-                routeName: 'Notification_History',
-              });
-              Events.trigger('getNoticiationHistory');
-            } }>
-            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
-              Notification History
-            </Text>
-          </TouchableHighlight>
-        }
       </View>
       {this.checkPassModal()}
       {this.alertModal()}

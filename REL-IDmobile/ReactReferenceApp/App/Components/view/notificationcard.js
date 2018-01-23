@@ -58,7 +58,7 @@ export default class NotificationCard extends Component {
       
       var bulletList = [];
       
-      for(let i = 0; i < bodyarray.length; i++){
+      for(let i = 0; i < 3; i++){
         var bodyStr = bodyarray[i];
         bodyStr = Util.replaceString('<br/>','\n',bodyStr);
         bulletList.push(
@@ -140,7 +140,7 @@ export default class NotificationCard extends Component {
                                     </Text>
                                     <Text style={style.time}>
               
-              {Util.getFormatedDate(this.props.notification.created_ts)}
+              {Util.getFormatedDate(this.props.notification.expiry_timestamp)}
                                     </Text>
                                 </View>
 
@@ -214,7 +214,7 @@ export default class NotificationCard extends Component {
                                         {this.props.notification.message.subject}
                                     </Text>
                                     <Text style={style.time}>
-                                        {Util.getFormatedDate(this.props.notification.created_ts)}
+                                        {Util.getFormatedDate(this.props.notification.expiry_timestamp)}
                                     </Text>
                                 </View>
 
