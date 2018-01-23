@@ -91,9 +91,9 @@ public class HomeActivity extends BaseActivity implements RDNAClientCallback
                         Util.openActivity(HomeActivity.this,MainActivity.class,false);
                     }
                 },false);*/
-                Util.openActivity(HomeActivity.this,MainActivity.class,false);
+                Util.openActivity(HomeActivity.this,LoginActivity.class,false);
             }else{
-                Helper.showAlert(this, "Error", "Failed to logoff.\nError Code" + statusLogOff.errCode, new DialogInterface.OnClickListener() {
+                Helper.showAlert(this, "Error", "Failed to logoff.\nError Code : " + statusLogOff.errCode, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Helper.setLoggedInUser("");
