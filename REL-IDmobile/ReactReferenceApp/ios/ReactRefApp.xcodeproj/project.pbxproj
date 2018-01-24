@@ -110,6 +110,10 @@
 		5528FFC81F21F73C00560B76 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		5528FFC91F21F73C00560B76 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		5528FFD21F21F88500560B76 /* ImagesCBCVerify.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5528FFD11F21F88500560B76 /* ImagesCBCVerify.xcassets */; };
+		552BAFA4201859FD00C77A5D /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
+		552BAFCE20185A9C00C77A5D /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B04AA1EE6AC4B004B7659 /* libAirMaps.a */; };
+		552BAFCF20185B4C00C77A5D /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8427F1EE015B2006364A1 /* libjschelpers.a */; };
+		552BAFD020185B7200C77A5D /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B842771EE015B2006364A1 /* libyoga.a */; };
 		552BB7991E1BA0B90009F274 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		552BB79A1E1BA0B90009F274 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		552BB79B1E1BA0B90009F274 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -1121,6 +1125,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552BAFD020185B7200C77A5D /* libyoga.a in Frameworks */,
+				552BAFCF20185B4C00C77A5D /* libjschelpers.a in Frameworks */,
+				552BAFCE20185A9C00C77A5D /* libAirMaps.a in Frameworks */,
+				552BAFA4201859FD00C77A5D /* libRNSpinkit.a in Frameworks */,
 				5599BAD01F4ADB7A0025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				6586AD9C20175B8E00FE03EA /* libapi-sdk.a in Frameworks */,
 				55074FAE1EE822EA00BF6DC8 /* libReactNativeConfig.a in Frameworks */,

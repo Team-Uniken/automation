@@ -160,7 +160,7 @@ export default class Web extends Component {
   //Return platform specific webview.
   getWebView() {
     var tempUrl
-    if (Config.ENV === 'cbcverify') {
+    if (Config.ENV === 'cbcverify' || Config.ENV === 'ubs') {
       tempUrl = this.props.url;
     }else{
       tempUrl = this.props.navigation.state.params.url;
@@ -297,7 +297,7 @@ export default class Web extends Component {
     >
       {isPageTitle && this.renderPageTitle(this.props.navigation.state.params.title)}
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
-        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'} />}
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={Skin.colors.BUTTON_BG_COLOR} />}
         {this.getWebView()}
         { this.props.showBottomBar && this.renderBottomBar()}
       </View>
@@ -313,7 +313,7 @@ export default class Web extends Component {
     return (
       <View style={{ backgroundColor: Skin.colors.BACK_GRAY, flex: 1 }}>
 
-        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={'#125684'} />}
+        {this.state.loading && <Progress.Bar borderRadius={0} indeterminate={true} width={Skin.SCREEN_WIDTH} height={1.5} color={Skin.colors.BUTTON_BG_COLOR} />}
         {this.getWebView()}
         {this.props.showBottomBar && this.renderBottomBar()}
 
