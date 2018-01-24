@@ -92,12 +92,12 @@ class PayBillsScene extends Component {
             error: 0,
             response:
               '{"accountList":[ \
-                  {"accountID":"93323","accountName":"CANDEMOACT10_01","nickname":"Capital Credit Card","accountBalance":-165.32,"accountType":1}, \
-                  {"accountID":"20643","accountName":"CANDEMOACT10_03","nickname":"Signature Platinum Card","accountBalance":-39.00,"accountType":1}, \
-                  {"accountID":"1452111","accountName":"CANDEMOACT10_04","nickname":"Macy\'s Card","accountBalance":-474.52,"accountType":1}, \
-                  {"accountID":"35233","accountName":"CANDEMOACT10_02","nickname":"UHEAA Loan","accountBalance":-43.22,"accountType":1}, \
-                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Capital Credit Card","accountBalance":3039.00,"accountType":2}, \
-                  {"accountID":"117987","accountName":"CANDEMOACT10_04","nickname":"UHEAA Loan","accountBalance":174.52,"accountType":2}], \
+                  {"accountID":"$16,851","accountName":"CANDEMOACT10_01","nickname":"Platinum Card","accountBalance":-165.32,"accountType":1}, \
+                  {"accountID":"$1,803","accountName":"CANDEMOACT10_03","nickname":"HSBC Interest Payment","accountBalance":-39.00,"accountType":1}, \
+                  {"accountID":" $1,203","accountName":"CANDEMOACT10_04","nickname":"Amazon Cloud Services","accountBalance":-474.52,"accountType":1}, \
+                  {"accountID":"$9,357","accountName":"CANDEMOACT10_02","nickname":"Gold Card","accountBalance":-43.22,"accountType":1}, \
+                  {"accountID":"$15,931","accountName":"CANDEMOACT10_03","nickname":"Platinum Card","accountBalance":3039.00,"accountType":2}, \
+                  {"accountID":"$9,681","accountName":"CANDEMOACT10_04","nickname":"Gold Card","accountBalance":174.52,"accountType":2}], \
               "error":"", \
               "status":"success" \
             }',
