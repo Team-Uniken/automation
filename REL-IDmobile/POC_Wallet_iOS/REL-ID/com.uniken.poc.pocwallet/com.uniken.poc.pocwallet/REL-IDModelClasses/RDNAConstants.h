@@ -20,7 +20,7 @@ extern NSString *const kRdnaProxyHost;
 
 
 /** constants of response object keys ***/
-extern NSString *const kUserNameKey;
+extern NSString *const kUserNamesKey;
 extern NSString *const kPasswordKey;
 extern NSString *const kDeviceBindingKey;
 extern NSString *const kDeviceNameKey;

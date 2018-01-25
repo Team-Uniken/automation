@@ -10,7 +10,7 @@
 
 @implementation RequestUtility
 //NSString *const kBaseUrl = @"http://poc5-uniken.com:8080/DummyWalletAPI2/";
-NSString *const kBaseUrl = @"http://10.0.5.23:8080/DummyWalletAPI2/";
+NSString *const kBaseUrl = @"http://34.236.76.157:8080/DummyWalletAPI2/";
 NSString *const kAddAmount = @"balance";
 NSString *const kRegister = @"register";
 NSString *const kEnroll = @"enroll";

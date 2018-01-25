@@ -89,11 +89,12 @@
  */
 - (int)initializeRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)callback {
   
-  int errorID = 0;
+  
+  __block int errorID = 0;
   
   clientCallbacks = self;
   rdnaClientCallback = callback;
-  RDNA *rdna;
+  __block RDNA *rdna;
   if ([CLLocationManager locationServicesEnabled] == NO) {
     NSLog(@"locationServicesEnabled false");
     [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0 andCompletionHandler:^(BOOL result) {
@@ -114,9 +115,10 @@
       rdnaSSLlCertificate.p12Certificate = certString3;
       rdnaSSLlCertificate.password = certPassword;
       
-      
-      errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
-      rdnaObject = rdna;
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
+        rdnaObject = rdna;
+      });
     }
   }
   

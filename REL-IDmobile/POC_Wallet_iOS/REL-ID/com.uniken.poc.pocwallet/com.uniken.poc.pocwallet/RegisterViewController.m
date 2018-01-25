@@ -145,7 +145,7 @@
 
 #pragma -mark NumberPad keyboard button delegates
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField{
-  [textField resignFirstResponder] ;
+  [super performSelector:@selector(textFieldShouldReturn:) withObject:textField];
 }
 
 -(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField{
