@@ -85,15 +85,9 @@ public class HomeActivity extends BaseActivity implements RDNAClientCallback
         if(status instanceof RDNA.RDNAStatusLogOff){
             RDNA.RDNAStatusLogOff statusLogOff = (RDNA.RDNAStatusLogOff) status;
             if(statusLogOff.errCode == 0){
-                /*Helper.showAlert(this, "Error", "Failed to logoff.\nError Code" + statusLogOff.errCode, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Util.openActivity(HomeActivity.this,MainActivity.class,false);
-                    }
-                },false);*/
                 Util.openActivity(HomeActivity.this,LoginActivity.class,false);
             }else{
-                Helper.showAlert(this, "Error", "Failed to logoff, application will now terminate.\nError Code : " + statusLogOff.errCode, new DialogInterface.OnClickListener() {
+                Helper.showAlert(this, "Error", "Internal system error, please exit and log in again \nError Code : " + statusLogOff.errCode, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Helper.setLoggedInUser("");
@@ -104,7 +98,7 @@ public class HomeActivity extends BaseActivity implements RDNAClientCallback
         }else if(status instanceof ErrorInfo){
             ErrorInfo errorInfo = (ErrorInfo) status;
             if(errorInfo.getErrorCode()!=0 && errorInfo.getMethodID().equals(RDNA.RDNAMethodID.RDNA_METH_LOGOFF.name())){
-                Helper.showAlert(this, "Error", "Failed to logoff, application will now terminate.\nError Code : " + errorInfo.getErrorCode(), new DialogInterface.OnClickListener() {
+                Helper.showAlert(this, "Error", "Internal system error, please exit and log in again \nError Code : " + errorInfo.getErrorCode(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Helper.setLoggedInUser("");

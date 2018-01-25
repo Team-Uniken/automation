@@ -161,11 +161,11 @@ public class ChallengeHandler implements RDNAClientCallback{
                 },false);
 
             } else{
-                Helper.showAlert(activity,"Error","Internal system error occurred, please exit and try again.\nError Code: " + response.errCode);
+                Helper.showAlert(activity,"Error","Internal system error, please exit and log in again\nError Code: " + response.errCode);
             }
         }else if(status instanceof ErrorInfo){
             ErrorInfo info = (ErrorInfo) status;
-            Helper.showAlert(activity,"Error","Internal system error occurred, please exit and try again.\nError Code: "+ info.getErrorCode());
+            Helper.showAlert(activity,"Error","Internal system error, please exit and log in again \nError Code: "+ info.getErrorCode());
         }
     }
 

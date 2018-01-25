@@ -30,6 +30,7 @@ public class Helper
   private static SharedPreferences userPrefs = null;
   private static boolean isRememberUser;
   private static String loggedInUserName="";
+  static AlertDialog  alertDialog;
 
   public static SharedPreferences getAppPrefs(Context context)
   {
@@ -128,19 +129,25 @@ public class Helper
 
   public static AlertDialog showAlert(final Activity context, final String title, final String message, String positiveBtn, final DialogInterface.OnClickListener clickListener, boolean isCancallable)
   {
-    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context,R.style.AlertDialogTheme);
-    alertDialogBuilder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialogInterface, int i) {
-        dialogInterface.dismiss();
-        if (clickListener != null) {
-          clickListener.onClick(dialogInterface,i);
+    if( alertDialog == null) {
+     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
+      alertDialogBuilder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+          dialogInterface.dismiss();
+          if (clickListener != null) {
+            clickListener.onClick(dialogInterface, i);
+            alertDialog = null;
+          }
         }
-      }
-    });
-    alertDialogBuilder.setCancelable(isCancallable);
-    alertDialogBuilder.setTitle(title).setMessage(message);
-    return alertDialogBuilder.show();
+      });
+      alertDialogBuilder.setCancelable(isCancallable);
+      alertDialogBuilder.setTitle(title);
+      alertDialog =  alertDialogBuilder.create();
+    }
+    alertDialog.setMessage(message);
+    alertDialog.show();
+    return alertDialog;
   }
 
   public static AlertDialog showAlert(final Activity context, final String title, final String message, String positiveBtn, final DialogInterface.OnClickListener clickListener,String negativeBtn, boolean isCancallable)
