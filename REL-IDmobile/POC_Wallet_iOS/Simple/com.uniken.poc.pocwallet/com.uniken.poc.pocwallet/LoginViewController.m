@@ -14,7 +14,6 @@
   NSString *user_id;
   NSString *user_name;
   NSString *balance;
-  NSString *wallet_id;
 }
 
 @end
@@ -33,33 +32,37 @@
   
 }
 
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField
-{
-  NSLog(@"%@", textField.text);
-  [textField resignFirstResponder] ;
-}
-
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField
-{
-  NSLog(@"Canceled: %@", [textField description]);
-  [textField resignFirstResponder] ;
+-(void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  self.loginIdTxtFld.text = @"";
+  self.MPinTxtFld.text = @"";
 }
 
 -(void)viewDidAppear:(BOOL)animated{
   [super viewDidAppear:animated];
-  // NumberPadButton *numberPadDoneButton = [[NumberPadButton alloc]initWithFrame:CGRectMake(0, 0, 1, 1)];
-  //self.MPinTxtFld.inputAccessoryView = numberPadDoneButton;
-}
-- (IBAction)loginBtnClick:(id)sender {
-  
-  if([self doValidate])
-    [self doLogin];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
+
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField{
+  [textField resignFirstResponder] ;
+}
+
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField {
+  NSLog(@"Canceled: %@", [textField description]);
+  [textField resignFirstResponder] ;
+}
+
+
+- (IBAction)loginBtnClick:(id)sender {
+  
+  if([self doValidate])
+    [self doLogin];
+}
+
 
 -(BOOL)doValidate{
   
@@ -85,7 +88,6 @@
     if (status && [responseDictionary objectForKey:@"error"] == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         [self hideProcessingScreen];
-        NSLog(@"response:%@",responseDictionary);
         [self parsedoAddAmountResponse:responseDictionary];
       });
     }else{
@@ -99,18 +101,10 @@
 
 
 -(void)parsedoAddAmountResponse:(NSDictionary*)ResponseDictionary{
-  
-  user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_id"]];
-  user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"user_name"]];
+  user_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"id"]];
+  user_name = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"login_id"]];
   balance = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"balance"]];
-  wallet_id = [NSString stringWithFormat:@"%@",[ResponseDictionary valueForKey:@"wallet_id"]];
-  if (user_id.length>0) {
-    [self performSegueWithIdentifier:@"loginToAddAmount" sender:nil];
-    
-  }else{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:[ResponseDictionary valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
-  }
+  [self performSegueWithIdentifier:@"loginToAddAmount" sender:nil];
 }
 
 
@@ -124,7 +118,6 @@
     vc.user_id = user_id;
     vc.user_name = user_name;
     vc.balance = balance;
-    vc.wallet_id = wallet_id;
     
   }
 }

@@ -14,7 +14,6 @@
   NSString *user_id;
   NSString *user_name;
   NSString *balance;
-  NSString *wallet_id;
 }
 
 @end
@@ -94,12 +93,10 @@
   [params setValue:self.mPinTxtFld.text forKey:@"password"];
   [params setValue:self.cardNuberTxtFld.text forKey:@"card_no"];
   [params setValue:self.cardPinTxtFld.text forKey:@"card_pin"];
-
   [utility doPostRequestfor:url withParameters:params onComplete:^(bool status, NSDictionary *responseDictionary){
     if (status && [responseDictionary objectForKey:@"error"] == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         [self hideProcessingScreen];
-        NSLog(@"response:%@",responseDictionary);
         [self parsedoRegisterResponse:responseDictionary];
       });
     }else{
@@ -114,10 +111,9 @@
 
 -(void)parsedoRegisterResponse:(NSDictionary*)ResponseDictionary{
   
-  user_id = [ResponseDictionary valueForKey:@"user_id"];
-  user_name = [ResponseDictionary valueForKey:@"user_name"];
+  user_id = [ResponseDictionary valueForKey:@"id"];
+  user_name = [ResponseDictionary valueForKey:@"login_id"];
   balance = [ResponseDictionary valueForKey:@"balance"];
-  wallet_id = [ResponseDictionary valueForKey:@"wallet_id"];
   [self performSegueWithIdentifier:@"registerToAddAmount" sender:nil];
 }
 
@@ -132,21 +128,16 @@
     vc.user_id = user_id;
     vc.user_name = user_name;
     vc.balance = balance;
-    vc.wallet_id = wallet_id;
     
   }
 }
 
 
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField
-{
-  NSLog(@"%@", textField.text);
-  [textField resignFirstResponder] ;
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickDone:(UITextField *)textField{
+  [super performSelector:@selector(textFieldShouldReturn:) withObject:textField];
 }
 
--(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField
-{
-  NSLog(@"Canceled: %@", [textField description]);
+-(void)doneCancelNumberPadToolbarDelegate:(DoneCancelNumberPadToolbar *)controller didClickCancel:(UITextField *)textField{
   [textField resignFirstResponder] ;
 }
 
