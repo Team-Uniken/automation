@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Controller implements Callback<Wallet>
 {
     //static final String BASE_URL="http://34.207.14.201:8080/DummyWalletAPI/";
-    static final String BASE_URL="https://poc5-uniken.com:8443/DummyWalletAPI/";
+    static final String BASE_URL="http://34.236.76.157:8080/DummyWalletAPI/";
 
     private String method;
     private User user;

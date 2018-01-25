@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="MPIN"
-            android:inputType="textPassword" />
+            android:inputType="numberPassword" />
 
     </android.support.design.widget.TextInputLayout>
 

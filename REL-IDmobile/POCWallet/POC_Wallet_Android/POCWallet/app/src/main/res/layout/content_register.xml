@@ -29,6 +29,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Login ID"
+                    android:text=""
                     android:inputType="textPersonName" />
 
         </android.support.design.widget.TextInputLayout>
@@ -46,7 +47,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Card Number"
-                    android:inputType="textPersonName" />
+                    android:text=""
+                    android:inputType="number" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -63,7 +65,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Card PIN"
-                    android:inputType="textPersonName" />
+                    android:text=""
+                    android:inputType="numberPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -80,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="MPIN"
+                    android:text=""
                     android:inputType="numberPassword" />
 
         </android.support.design.widget.TextInputLayout>
@@ -97,7 +101,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="confirm MPIN"
+                    android:hint="Confirm MPIN"
+                    android:text=""
                     android:inputType="numberPassword" />
 
         </android.support.design.widget.TextInputLayout>

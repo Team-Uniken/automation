@@ -35,6 +35,11 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Util.openActivity(this,LoginActivity.class,false);
+    }
+
     public void addAmount(View v)
     {
         txtAmount = (EditText) findViewById(R.id.txtAmount);
