@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/logo_width"
+        android:layout_height="@dimen/logo_height"
+        app:srcCompat="@drawable/img_cbc"
+        android:layout_gravity="center"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/linear_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/dimen_10dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="registerClicked"
+            android:text="Register"
+            android:textAlignment="center"
+            android:layout_marginLeft="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/dimen_20dp"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/shape_button_background"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginClicked"
+            android:text="Login"
+            android:layout_marginTop="@dimen/dimen_10dp"
+            android:layout_marginLeft="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/dimen_20dp"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/shape_button_background"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:layout_marginBottom="@dimen/dimen_10dp"
+        android:ems="10"
+        android:textSize="@dimen/font_10dp"
+        android:inputType="textMultiLine|textPersonName"
+        android:text="This is a demo app used for POC purpose.\n This app does not perform a real transaction"
+        android:textAlignment="center" />
+
+</LinearLayout>
