@@ -812,7 +812,10 @@ public class RDNAClient
   {
     if (rdnaObj != null) {
       rdnaServices = null;
-      rdnaObj.terminate();
+      int error = rdnaObj.terminate();
+      if (error != 0) {
+        onRDNAResponse(new ErrorInfo(error, RDNA.RDNAMethodID.RDNA_METH_TERMINATE.name()));
+      }
     }
   }
 
