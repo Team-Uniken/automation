@@ -59,6 +59,8 @@
 		5599EA3B1FE3ABF300A543FB /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoneCancelNumberPadToolbar.m; sourceTree = "<group>"; };
 		5599EA581FE3CB4100A543FB /* DoneCancelNumberPadToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoneCancelNumberPadToolbar.h; sourceTree = "<group>"; };
+		65146853201F3CFE0075F91B /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		65146855201F3CFE0075F91B /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		654F25231FE282BA00069E02 /* com.uniken.poc.pocwallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.uniken.poc.pocwallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F25271FE282BA00069E02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		654F25291FE282BA00069E02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -123,9 +125,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65146851201F3CFE0075F91B /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				65146852201F3CFE0075F91B /* include */,
+				65146854201F3CFE0075F91B /* libs */,
+			);
+			name = "api-sdk";
+			path = "../../../../../svn/api-sdk.out/iOS/release/api-sdk";
+			sourceTree = "<group>";
+		};
+		65146852201F3CFE0075F91B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				65146853201F3CFE0075F91B /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		65146854201F3CFE0075F91B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				65146855201F3CFE0075F91B /* libapi-sdk.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
 		654F251A1FE282BA00069E02 = {
 			isa = PBXGroup;
 			children = (
+				65146851201F3CFE0075F91B /* api-sdk */,
 				654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */,
 				654F25421FE282BA00069E02 /* com.uniken.poc.pocwalletTests */,
 				654F254D1FE282BB00069E02 /* com.uniken.poc.pocwalletUITests */,

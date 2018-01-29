@@ -23,9 +23,6 @@
 		5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA741FE3E9CF00A543FB /* CoreTelephony.framework */; };
 		5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA761FE3E9DC00A543FB /* AdSupport.framework */; };
 		55F1FC581FE7E42300EC7409 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1FC571FE7E42300EC7409 /* UIView+Toast.m */; };
-		65349B0D201F39B4003BFE54 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65349B0C201F39B4003BFE54 /* libapi-sdk.a */; };
-		65349B0E201F39B4003BFE54 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65349B0C201F39B4003BFE54 /* libapi-sdk.a */; };
-		65349B0F201F39B4003BFE54 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65349B0C201F39B4003BFE54 /* libapi-sdk.a */; };
 		654F25281FE282BA00069E02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25271FE282BA00069E02 /* main.m */; };
 		654F252B1FE282BA00069E02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F252A1FE282BA00069E02 /* AppDelegate.m */; };
 		654F25311FE282BA00069E02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F252F1FE282BA00069E02 /* Main.storyboard */; };
@@ -48,6 +45,7 @@
 		654F25811FE2929000069E02 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25801FE2929000069E02 /* Reachability.m */; };
 		654F25841FE294E700069E02 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25831FE294E700069E02 /* RegisterViewController.m */; };
 		654F25871FE2988D00069E02 /* AddAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25861FE2988D00069E02 /* AddAmountViewController.m */; };
+		65715B02201F41C400B87425 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65715B00201F41BE00B87425 /* libapi-sdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,8 +83,6 @@
 		55F1FC571FE7E42300EC7409 /* UIView+Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		55F95C771FE8DC6400C92126 /* TwoFactorState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoFactorState.m; sourceTree = "<group>"; };
 		55F95C781FE8DC6400C92126 /* TwoFactorState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoFactorState.h; sourceTree = "<group>"; };
-		65349B0A201F39B4003BFE54 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		65349B0C201F39B4003BFE54 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		654F25231FE282BA00069E02 /* com.uniken.poc.pocwallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = com.uniken.poc.pocwallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F25271FE282BA00069E02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		654F25291FE282BA00069E02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -128,6 +124,8 @@
 		654F25831FE294E700069E02 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		654F25851FE2988D00069E02 /* AddAmountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAmountViewController.h; sourceTree = "<group>"; };
 		654F25861FE2988D00069E02 /* AddAmountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAmountViewController.m; sourceTree = "<group>"; };
+		65715AFE201F41BE00B87425 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		65715B00201F41BE00B87425 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,9 +134,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */,
+				65715B02201F41C400B87425 /* libapi-sdk.a in Frameworks */,
 				5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */,
 				5599EA731FE3E9C800A543FB /* CoreLocation.framework in Frameworks */,
-				65349B0D201F39B4003BFE54 /* libapi-sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +144,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65349B0E201F39B4003BFE54 /* libapi-sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +151,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65349B0F201F39B4003BFE54 /* libapi-sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,36 +182,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		65349B08201F39B4003BFE54 /* api-sdk */ = {
-			isa = PBXGroup;
-			children = (
-				65349B09201F39B4003BFE54 /* include */,
-				65349B0B201F39B4003BFE54 /* libs */,
-			);
-			name = "api-sdk";
-			path = "../../../../../svn/api-sdk.out/iOS/release/api-sdk";
-			sourceTree = "<group>";
-		};
-		65349B09201F39B4003BFE54 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				65349B0A201F39B4003BFE54 /* RDNA.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		65349B0B201F39B4003BFE54 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				65349B0C201F39B4003BFE54 /* libapi-sdk.a */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
 		654F251A1FE282BA00069E02 = {
 			isa = PBXGroup;
 			children = (
-				65349B08201F39B4003BFE54 /* api-sdk */,
+				65715AFC201F41BE00B87425 /* api-sdk */,
 				654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */,
 				654F25421FE282BA00069E02 /* com.uniken.poc.pocwalletTests */,
 				654F254D1FE282BB00069E02 /* com.uniken.poc.pocwalletUITests */,
@@ -322,6 +292,31 @@
 				5599EA3B1FE3ABF300A543FB /* Utility.m */,
 			);
 			name = Utility;
+			sourceTree = "<group>";
+		};
+		65715AFC201F41BE00B87425 /* api-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				65715AFD201F41BE00B87425 /* include */,
+				65715AFF201F41BE00B87425 /* libs */,
+			);
+			path = "api-sdk";
+			sourceTree = "<group>";
+		};
+		65715AFD201F41BE00B87425 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				65715AFE201F41BE00B87425 /* RDNA.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		65715AFF201F41BE00B87425 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				65715B00201F41BE00B87425 /* libapi-sdk.a */,
+			);
+			path = libs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
