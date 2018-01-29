@@ -18,6 +18,7 @@
 
 @interface SuperViewController ()<UITextFieldDelegate>{
   UITextField *aTextField;
+  int counter;
 }
 
 @end
@@ -28,6 +29,7 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view.
   [self setupViews];
+  counter = 0;
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent
                                               animated:NO];
   UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.width, 20)];
@@ -57,6 +59,10 @@
                                            selector:@selector(actionProcessingScreen:)
                                                name:kNotificationProcessingScreen
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(showNetworkAlert:)
+                                               name:kNotificationNetworkError object:nil];
+  
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -68,6 +74,12 @@
                                                 object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kNotificationAllChallengeSuccess
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:kNotificationProcessingScreen
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:kNotificationNetworkError
                                                 object:nil];
 }
 
@@ -117,6 +129,7 @@
 }
 
 -(void)addProccessingScreenWithText:(NSString*)text {
+  counter ++;
   self.processingScreen.hidden = NO;
   self.processingScreen.activityIndicator.hidden = NO;
   [self.processingScreen.activityIndicator startAnimating];
@@ -132,6 +145,13 @@
 }
 
 -(void)hideProcessingScreen {
+ 
+  if (counter>1) {
+     counter --;
+    return;
+  }else{
+     counter --;
+  }
   [self.processingScreen removeFromSuperview];
   [self.processingScreen.activityIndicator stopAnimating];
   self.processingScreen.hidden = YES;
@@ -175,6 +195,15 @@
     
   }
 }
+
+-(void)showNetworkAlert:(NSNotification *)notification{
+  if(self.navigationController) {
+    [self.navigationController.view makeToast:kMsgNetworkError
+                                     duration:3.0
+                                     position:CSToastPositionCenter];
+  }
+}
+
 
 #pragma mark - textField delegate methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField {

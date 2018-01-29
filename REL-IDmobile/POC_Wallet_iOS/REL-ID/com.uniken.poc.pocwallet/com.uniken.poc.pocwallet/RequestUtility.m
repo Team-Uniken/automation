@@ -31,7 +31,7 @@ NSString *const kDummyText = @"This is a demo app used for POC purpose.\n This a
 
 -(void)doPostRequestfor:(NSString*)url withParameters:(NSDictionary*)params onComplete:(void (^)(bool status, NSDictionary  *response))completionBlock{
 
-    if ([self isNetworkAvailable]) {
+    if ([RequestUtility isNetworkAvailable]) {
       NSString *urlString = [NSString stringWithFormat:@"%@%@",kBaseUrl,url];
       NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
       configuration.protocolClasses = @[[RelIDRequestInterceptor class]];
@@ -84,7 +84,7 @@ NSString *const kDummyText = @"This is a demo app used for POC purpose.\n This a
 
 }
 
-- (BOOL)isNetworkAvailable
++(BOOL)isNetworkAvailable
 {
   Reachability *reachability = [Reachability reachabilityForInternetConnection];
   

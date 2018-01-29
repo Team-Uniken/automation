@@ -149,12 +149,14 @@
   
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *savedContextData = [defaults valueForKey:@"sContext"];
-  int errResumeRuntime = 0;
+  __block int errResumeRuntime = 0;
   if (savedContextData.length>0) {
-    RDNA *dna;
+    __block RDNA *dna;
     RDNAProxySettings *ppxy = nil;
-    errResumeRuntime = [RDNA resumeRuntime:&dna SavedState:savedContextData Callbacks:clientCallbacks ProxySettings:ppxy RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
-    rdnaObject = dna;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      errResumeRuntime = [RDNA resumeRuntime:&dna SavedState:savedContextData Callbacks:clientCallbacks ProxySettings:ppxy RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      rdnaObject = dna;
+    });
   }
   return errResumeRuntime;
 }

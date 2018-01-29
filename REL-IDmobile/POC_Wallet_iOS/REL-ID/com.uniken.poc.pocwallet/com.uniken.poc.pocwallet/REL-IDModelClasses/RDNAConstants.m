@@ -35,12 +35,13 @@ NSString *const kDeviceBinding = @"devbind";
 NSString *const kDeviceName = @"devname";
 NSString *const kDashboard = @"dashboard";
 
-NSString *const kNotificationSessionTimeout = @"SessionTimeout";
-
-
 NSString *const kMsgInternalError = @"Internal system error, please exit and log in again";
+NSString *const kMsgNetworkError = @"Please check your internet connection";
+
+NSString *const kNotificationSessionTimeout = @"SessionTimeout";
 NSString *const kNotificationAllChallengeSuccess = @"success";
 NSString *const kNotificationProcessingScreen = @"processing_screen";
+NSString *const kNotificationNetworkError = @"show_network_error";
 
 
 @end
