@@ -38,7 +38,7 @@ var sud =0;
 let self;
 const headers = {
   1: 'Savings',
-  2: 'Personal Checking',
+  2: 'Investments',
   3: 'Credit Cards',
 };
 const icons = { 1: '\ue2f7',2: '\ue277',3: '\ue285', };
@@ -123,12 +123,12 @@ export default class AccountsScene extends Component {
       0: {
         error: 0,
         response: '{"accountList":[ \
-                  {"accountID":"93323","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":93323.00,"accountType":1}, \
-                  {"accountID":"20643","accountName":"CANDEMOACT10_03","nickname":"Joint Funds","accountBalance":20643.00,"accountType":2}, \
-                  {"accountID":"1452111","accountName":"CANDEMOACT10_04","nickname":"Platinum Credit","accountBalance":1452111,"accountType":3}, \
-                  {"accountID":"35233","accountName":"CANDEMOACT10_02","nickname":"","accountBalance":35233,"accountType":2}, \
-                  {"accountID":"1046","accountName":"CANDEMOACT10_03","nickname":"Direct Deposit Acct","accountBalance":0,"accountType":2}, \
-                  {"accountID":"117987","accountName":"CANDEMOACT10_04","nickname":"New Credit","accountBalance":117987,"accountType":3}], \
+                  {"accountID":"$35,233","accountName":"CANDEMOACT10_01","nickname":"Personal Savings","accountBalance":"$93,323.00","accountType":1}, \
+                  {"accountID":"$93,323","accountName":"CANDEMOACT10_03","nickname":"Equities","accountBalance":20643.00,"accountType":2}, \
+                  {"accountID":"$14,199","accountName":"CANDEMOACT10_04","nickname":"Platinum Card","accountBalance":1452111,"accountType":3}, \
+                  {"accountID":"$1,452,111","accountName":"Funds","nickname":"","accountBalance":"$93,323","accountType":2}, \
+                  {"accountID":"$20,643","accountName":"CANDEMOACT10_03","nickname":"Bonds","accountBalance":0,"accountType":2}, \
+                  {"accountID":"$9,912","accountName":"CANDEMOACT10_04","nickname":"Gold Card","accountBalance":117987,"accountType":3}], \
               "error":"", \
               "status":"success" \
             }',
