@@ -253,7 +253,8 @@
  * It returns the RDNAStatusInit class object.
  */
 - (int)onResumeRuntime:(RDNAStatusResumeRuntime *)status {
-  
+  [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
+                                                      object:[NSNumber numberWithInt:0]];
   if (status.errCode == 0) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:nil forKey:@"sContext"];
