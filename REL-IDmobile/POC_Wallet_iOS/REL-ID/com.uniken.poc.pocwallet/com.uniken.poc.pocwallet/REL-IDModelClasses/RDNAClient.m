@@ -495,12 +495,10 @@
 
   dispatch_async(dispatch_get_main_queue(), ^(){
     [SuperViewController showErrorWithMessage:status withErrorCode:0 andCompletionHandler:^(BOOL result) {
-      
-      if(rdnaObject == nil){
-        exit(0);
-      }else{
-        [self terminateRDNAWithCallbackDelegate:self];
+     if(rdnaObject != nil){
+         [self terminateRDNAWithCallbackDelegate:self];
       }
+      exit(0);
     }];
   });
   
