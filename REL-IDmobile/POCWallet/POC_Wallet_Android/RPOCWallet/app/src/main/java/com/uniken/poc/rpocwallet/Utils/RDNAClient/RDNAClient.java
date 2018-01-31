@@ -524,6 +524,11 @@ public class RDNAClient
         return 0;
       }
 
+      /**
+       * Callback method to receive threat message
+       * @param s
+       * @return
+       */
       @Override
       public int onSecurityThreat(final String s) {
         Log.d("onSecurityThreat : ",s);

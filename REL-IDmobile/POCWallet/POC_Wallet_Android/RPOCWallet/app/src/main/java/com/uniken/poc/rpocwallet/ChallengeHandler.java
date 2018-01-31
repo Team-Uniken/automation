@@ -128,7 +128,9 @@ public class ChallengeHandler implements RDNAClientCallback{
                         } else {
                             handleChallenges(response.challenges);
                         }
-                    } else if (response.status.statusCode ==
+                    }
+                    //Status code handled for registration flow
+                    else if (response.status.statusCode ==
                             RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED ||
                             response.status.statusCode == RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_USER_SUSPENDED ||
                             response.status.statusCode == RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_NO_USER_ID) {
@@ -152,7 +154,9 @@ public class ChallengeHandler implements RDNAClientCallback{
                             }
                         }, false);
                     }
-                } else if (RDNA.getErrorInfo(response.errCode) == RDNA.RDNAErrorID.RDNA_ERR_INVALID_USER_MR_STATE) {
+                }
+                //Error code handled for registration flow
+                else if (RDNA.getErrorInfo(response.errCode) == RDNA.RDNAErrorID.RDNA_ERR_INVALID_USER_MR_STATE) {
                     RDNAClient.getInstance().resetChallenge();
                     Helper.showAlert(activity, "Error", "User state is not valid, please register again.", new DialogInterface.OnClickListener() {
                         @Override

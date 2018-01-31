@@ -43,7 +43,6 @@ public class Controller implements Callback<Wallet>
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
-
     /**
      *
      * @param user - Object of user for which api is to be fired
