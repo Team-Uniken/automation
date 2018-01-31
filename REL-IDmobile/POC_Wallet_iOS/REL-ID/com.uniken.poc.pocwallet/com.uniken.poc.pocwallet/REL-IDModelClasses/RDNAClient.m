@@ -492,14 +492,26 @@
  * @param status                -
  */
 -(int)onSecurityThreat:(NSString*)status{
-
   dispatch_async(dispatch_get_main_queue(), ^(){
-    [SuperViewController showErrorWithMessage:status withErrorCode:0 andCompletionHandler:^(BOOL result) {
-     if(rdnaObject != nil){
-         [self terminateRDNAWithCallbackDelegate:self];
-      }
-      exit(0);
-    }];
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Error"
+                                          message:status
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                 if(rdnaObject != nil){
+                                   [self terminateRDNAWithCallbackDelegate:self];
+                                 }
+                                 exit(0);
+                               }];
+    
+    [alertController addAction:okAction];
+    AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
+    [appDel.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    
   });
   
   return 0;
