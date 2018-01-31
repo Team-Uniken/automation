@@ -7,8 +7,8 @@ android {
         applicationId "com.uniken.poc.rpocwallet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 4
-        versionName "2.2"
+        versionCode 6
+        versionName "2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         multiDexEnabled true
@@ -34,13 +34,11 @@ dependencies {
     compile 'com.android.support:design:27.0.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile(name: 'app-sdk-release_v1.5.0', ext: 'aar')
+    compile(name: 'app-sdk-release-v1.5.0', ext: 'aar')
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile ('com.better.workspace.lib:agent:4.3.86'){
         exclude group: "com.google.android.gms"
     }
-
-
 
     androidTestCompile ('com.android.support.test.espresso:espresso-core:3.0.1'){
             exclude group: 'com.android.support', module: 'support-annotations' }

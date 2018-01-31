@@ -531,7 +531,8 @@ public class RDNAClient
         callOnMainThread(new Runnable() {
           @Override
           public void run() {
-            String msg = "\u2022 "+s.replaceAll("\n","\n\u2022 ");
+            //String msg = "\u2022 "+s.replaceAll("\n","\n\u2022 ");
+            String msg = s;
             Helper.showAlert(getCurrentActivity(), "Error", "Threats detected on your system : \n" + msg, "Quit", new DialogInterface.OnClickListener() {
               @Override
               public void onClick(DialogInterface dialogInterface, int i) {
@@ -582,7 +583,7 @@ public class RDNAClient
               }
             });
           }
-          RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(finProfile.getRelId(), callbacks, finProfile.getHost(), finProfile.getPort(), Constants.CONST_CYPHER_SPEC, Constants.CONST_CYPHER_SALT, finProxySettings, null, null, RDNA.RDNALoggingLevel.RDNA_LOG_VERBOSE, context);
+          RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(finProfile.getRelId(), callbacks, finProfile.getHost(), finProfile.getPort(), Constants.CONST_CYPHER_SPEC, Constants.CONST_CYPHER_SALT, finProxySettings, null, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
           Log.e(TAG, "---- Init " + rdnaStatus.errorCode + " Error Info " + rdnaStatus.errorCode);
           Log.e(TAG, "Get SDK version = " + RDNA.getSDKVersion());
           rdnaObj = rdnaStatus.result;

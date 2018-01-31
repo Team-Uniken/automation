@@ -108,64 +108,66 @@ public class ChallengeHandler implements RDNAClientCallback{
 
     @Override
     public void onRDNAResponse(Object status) {
-        ((BaseActivity)activity).progressBarVisibility(false);
-        if(status instanceof RDNA.RDNAStatusCheckChallengeResponse){
-            final RDNA.RDNAStatusCheckChallengeResponse response = (RDNA.RDNAStatusCheckChallengeResponse) status;
-            if (response.errCode == 0) {
-                if(response.status.statusCode ==
-                        RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_SUCCESS) {
+        if(!activity.isFinishing()) {
+            ((BaseActivity) activity).progressBarVisibility(false);
+            if (status instanceof RDNA.RDNAStatusCheckChallengeResponse) {
+                final RDNA.RDNAStatusCheckChallengeResponse response = (RDNA.RDNAStatusCheckChallengeResponse) status;
+                if (response.errCode == 0) {
+                    if (response.status.statusCode ==
+                            RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_SUCCESS) {
 
-                    if(response.challenges==null ||
-                            response.challenges.length ==0){
-                        Helper.setLoggedInUser(userName);
-                        if(method.equalsIgnoreCase("login")){
-                            Controller ctrl = new Controller(user, "login");
-                            ctrl.start();
-                        }else {
-                            Util.openActivity(activity, HomeActivity.class, false);
+                        if (response.challenges == null ||
+                                response.challenges.length == 0) {
+                            Helper.setLoggedInUser(userName);
+                            if (method.equalsIgnoreCase("login")) {
+                                Controller ctrl = new Controller(user, "login");
+                                ctrl.start();
+                            } else {
+                                Util.openActivity(activity, HomeActivity.class, false);
+                            }
+                        } else {
+                            handleChallenges(response.challenges);
                         }
-                    }else{
-                        handleChallenges(response.challenges);
+                    } else if (response.status.statusCode ==
+                            RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED ||
+                            response.status.statusCode == RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_USER_SUSPENDED ||
+                            response.status.statusCode == RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_NO_USER_ID) {
+                        Helper.showAlert(activity, "Error", response.status.message + " Please register again", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                RDNAClient.getInstance().resetChallenge();
+                                if (!(activity instanceof RegisterActivity)) {
+                                    Util.openActivity(activity, RegisterActivity.class, false);
+                                }
+                            }
+                        }, false);
+                    } else {
+                        Helper.showAlert(activity, "Error", response.status.message, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (response.challenges != null) {
+                                    if (method.equals("activation"))
+                                        handleChallenges(response.challenges);
+                                }
+                            }
+                        }, false);
                     }
-                }else if(response.status.statusCode ==
-                        RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED ||
-                        response.status.statusCode == RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_USER_SUSPENDED ||
-                        response.status.statusCode == RDNA.RDNAResponseStatusCode.RDNA_RESP_STATUS_NO_USER_ID ){
-                    Helper.showAlert(activity, "Error", response.status.message+" Please register again", new DialogInterface.OnClickListener() {
+                } else if (RDNA.getErrorInfo(response.errCode) == RDNA.RDNAErrorID.RDNA_ERR_INVALID_USER_MR_STATE) {
+                    RDNAClient.getInstance().resetChallenge();
+                    Helper.showAlert(activity, "Error", "User state is not valid, please register again.", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            RDNAClient.getInstance().resetChallenge();
-                            if( !(activity instanceof RegisterActivity) ) {
-                                Util.openActivity(activity, RegisterActivity.class, false);
-                            }
+                            Util.openActivity(activity, RegisterActivity.class, false);
                         }
-                    },false);
-                }else{
-                    Helper.showAlert(activity, "Error", response.status.message, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            if(response.challenges!=null){
-                                if(method.equals("activation"))
-                                    handleChallenges(response.challenges);
-                            }
-                        }
-                    },false);
+                    }, false);
+
+                } else {
+                    Helper.showAlert(activity, "Error", "Internal system error, please exit and log in again\nError Code: " + response.errCode);
                 }
-            } else if(RDNA.getErrorInfo(response.errCode)== RDNA.RDNAErrorID.RDNA_ERR_INVALID_USER_MR_STATE){
-                RDNAClient.getInstance().resetChallenge();
-                Helper.showAlert(activity, "Error", "User state is not valid, please register again.", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Util.openActivity(activity,RegisterActivity.class,false);
-                    }
-                },false);
-
-            } else{
-                Helper.showAlert(activity,"Error","Internal system error, please exit and log in again\nError Code: " + response.errCode);
+            } else if (status instanceof ErrorInfo) {
+                ErrorInfo info = (ErrorInfo) status;
+                Helper.showAlert(activity, "Error", "Internal system error, please exit and log in again \nError Code: " + info.getErrorCode());
             }
-        }else if(status instanceof ErrorInfo){
-            ErrorInfo info = (ErrorInfo) status;
-            Helper.showAlert(activity,"Error","Internal system error, please exit and log in again \nError Code: "+ info.getErrorCode());
         }
     }
 
