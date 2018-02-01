@@ -30,6 +30,8 @@
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
   
   [self.view addGestureRecognizer:tap];
+  
+  self.appDelegate= (AppDelegate*) [UIApplication sharedApplication].delegate;
   // Do any additional setup after loading the view.
 }
 
@@ -112,10 +114,19 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-  
   [self.view scrollToY:0];
-  [textField resignFirstResponder];
-  return YES;
+  
+  NSInteger nextTag = textField.tag + 1;
+  // Try to find next responder
+  UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+  if (nextResponder) {
+    // Found next responder, so set it.
+    [nextResponder becomeFirstResponder];
+  } else {
+    // Not found, so remove keyboard.
+    [textField resignFirstResponder];
+  }
+  return NO; 
 }
 
 

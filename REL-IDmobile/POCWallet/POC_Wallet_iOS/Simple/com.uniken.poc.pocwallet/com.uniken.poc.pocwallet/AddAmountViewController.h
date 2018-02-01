@@ -15,9 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *walletBalanceLbl;
 @property (weak, nonatomic) IBOutlet UILabel *txtLabel;
 
-@property (weak, nonatomic) NSString *user_id;
-@property (weak, nonatomic) NSString *user_name;
-@property (weak, nonatomic) NSString *balance;
-@property (weak, nonatomic) NSString *wallet_id;
+@property (strong, nonatomic) NSString *user_id;
+@property (strong, nonatomic) NSString *user_name;
+@property (strong, nonatomic) NSString *balance;
 
 @end
