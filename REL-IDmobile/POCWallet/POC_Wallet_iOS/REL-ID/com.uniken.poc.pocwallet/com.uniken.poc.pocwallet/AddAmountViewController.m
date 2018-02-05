@@ -133,7 +133,6 @@
     
     for (UIViewController *vc in arrVC) {
       if([vc isKindOfClass:[LoginViewController class]]){
-        
         loginVC = (LoginViewController*)vc;
       }else if([vc isKindOfClass:[MainViewController class]]){
         mainVC = (MainViewController*)vc;

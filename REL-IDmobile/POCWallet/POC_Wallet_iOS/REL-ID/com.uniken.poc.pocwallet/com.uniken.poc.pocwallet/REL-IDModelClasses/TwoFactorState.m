@@ -60,8 +60,13 @@
     }
   }
   
+  if([RequestUtility isNetworkAvailable]){
   AppDelegate *appDel = (AppDelegate*) [UIApplication sharedApplication].delegate;
   [appDel.rdnaclient RDNAClientCheckChallenges:RdnaChallenges forUserID:userName];
+  }else{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationNetworkError
+                                                        object:nil];
+  }
   return 0;
 }
 

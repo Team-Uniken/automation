@@ -20,7 +20,7 @@ extern NSString *const kRdnaProxyHost;
 
 
 /** constants of response object keys ***/
-extern NSString *const kUserNameKey;
+extern NSString *const kUserNamesKey;
 extern NSString *const kPasswordKey;
 extern NSString *const kDeviceBindingKey;
 extern NSString *const kDeviceNameKey;
@@ -37,11 +37,14 @@ extern NSString *const kSecondarySecretQuestionAndAnswer;
 extern NSString *const kDeviceName;
 
 
-extern NSString *const kNotificationSessionTimeout;
 
 extern NSString *const kMsgInternalError;
+extern NSString *const kMsgNetworkError;
 
+
+extern NSString *const kNotificationSessionTimeout;
 extern NSString *const kNotificationAllChallengeSuccess;
 extern NSString *const kNotificationProcessingScreen;
+extern NSString *const kNotificationNetworkError;
 
 @end
