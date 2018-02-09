@@ -83,6 +83,11 @@
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
 
+-dontwarn okhttp3.**
+-dontwarn javax.annotation.**
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+-keep class android.app.job.IJobCallback$Stub$Proxy { *; }
+
 # stetho
 
 -dontwarn com.facebook.stetho.**
@@ -98,6 +103,14 @@
 #android-touch-id.
 -dontwarn com.github.ajalt.reprint.**
 -keepattributes EnclosingMethod
+
+-keep class com.uniken.rdna.** { *; }
+-keep class com.amazonaws.** { *; }
+-keepnames class com.amazonaws.** { *; }
+-dontwarn com.amazonaws.**
+-dontwarn com.google.android.gms.**
+
+
 
 
 
