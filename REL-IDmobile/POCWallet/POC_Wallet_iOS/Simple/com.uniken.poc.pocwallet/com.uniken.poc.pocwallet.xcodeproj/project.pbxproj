@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		553151CC2019EF8E00BC02C7 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 553151C82019EF8A00BC02C7 /* MainViewController.m */; };
+		553151CD2019EF8E00BC02C7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 553151C92019EF8B00BC02C7 /* LoginViewController.m */; };
 		5599EA3C1FE3ABF300A543FB /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA3B1FE3ABF300A543FB /* Utility.m */; };
 		5599EA591FE3CB4100A543FB /* DoneCancelNumberPadToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */; };
 		654F25281FE282BA00069E02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25271FE282BA00069E02 /* main.m */; };
@@ -17,8 +19,6 @@
 		654F25391FE282BA00069E02 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654F25371FE282BA00069E02 /* LaunchScreen.storyboard */; };
 		654F25441FE282BA00069E02 /* com_uniken_poc_pocwalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25431FE282BA00069E02 /* com_uniken_poc_pocwalletTests.m */; };
 		654F254F1FE282BB00069E02 /* com_uniken_poc_pocwalletUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F254E1FE282BB00069E02 /* com_uniken_poc_pocwalletUITests.m */; };
-		654F255E1FE283CD00069E02 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F255D1FE283CD00069E02 /* MainViewController.m */; };
-		654F25611FE2857E00069E02 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25601FE2857E00069E02 /* LoginViewController.m */; };
 		654F25651FE2880100069E02 /* CustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25641FE2880100069E02 /* CustomView.m */; };
 		654F256B1FE2891100069E02 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F256A1FE2891100069E02 /* Constants.m */; };
 		654F256E1FE28B8A00069E02 /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F256D1FE28B8A00069E02 /* SuperViewController.m */; };
@@ -51,6 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		553151C82019EF8A00BC02C7 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		553151C92019EF8B00BC02C7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		553151CA2019EF8C00BC02C7 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		553151CB2019EF8D00BC02C7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		5599EA3A1FE3ABF300A543FB /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		5599EA3B1FE3ABF300A543FB /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		5599EA571FE3CB4000A543FB /* DoneCancelNumberPadToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoneCancelNumberPadToolbar.m; sourceTree = "<group>"; };
@@ -70,10 +74,6 @@
 		654F254A1FE282BB00069E02 /* com.uniken.poc.pocwalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = com.uniken.poc.pocwalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F254E1FE282BB00069E02 /* com_uniken_poc_pocwalletUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = com_uniken_poc_pocwalletUITests.m; sourceTree = "<group>"; };
 		654F25501FE282BB00069E02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		654F255C1FE283CD00069E02 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
-		654F255D1FE283CD00069E02 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
-		654F255F1FE2857E00069E02 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ../LoginViewController.h; sourceTree = "<group>"; };
-		654F25601FE2857E00069E02 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ../LoginViewController.m; sourceTree = "<group>"; };
 		654F25631FE2880100069E02 /* CustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomView.h; sourceTree = "<group>"; };
 		654F25641FE2880100069E02 /* CustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomView.m; sourceTree = "<group>"; };
 		654F25691FE2891100069E02 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -148,12 +148,12 @@
 			children = (
 				654F25681FE2890400069E02 /* Utility */,
 				654F25621FE287E700069E02 /* View */,
-				654F255F1FE2857E00069E02 /* LoginViewController.h */,
-				654F25601FE2857E00069E02 /* LoginViewController.m */,
 				654F25821FE294E700069E02 /* RegisterViewController.h */,
 				654F25831FE294E700069E02 /* RegisterViewController.m */,
-				654F255C1FE283CD00069E02 /* MainViewController.h */,
-				654F255D1FE283CD00069E02 /* MainViewController.m */,
+				553151CB2019EF8D00BC02C7 /* LoginViewController.h */,
+				553151C92019EF8B00BC02C7 /* LoginViewController.m */,
+				553151CA2019EF8C00BC02C7 /* MainViewController.h */,
+				553151C82019EF8A00BC02C7 /* MainViewController.m */,
 				654F25851FE2988D00069E02 /* AddAmountViewController.h */,
 				654F25861FE2988D00069E02 /* AddAmountViewController.m */,
 				654F256C1FE28B8A00069E02 /* SuperViewController.h */,
@@ -369,17 +369,17 @@
 				654F25811FE2929000069E02 /* Reachability.m in Sources */,
 				654F25341FE282BA00069E02 /* com_uniken_poc_pocwallet.xcdatamodeld in Sources */,
 				5599EA591FE3CB4100A543FB /* DoneCancelNumberPadToolbar.m in Sources */,
-				654F25611FE2857E00069E02 /* LoginViewController.m in Sources */,
+				553151CC2019EF8E00BC02C7 /* MainViewController.m in Sources */,
 				654F256B1FE2891100069E02 /* Constants.m in Sources */,
 				654F25871FE2988D00069E02 /* AddAmountViewController.m in Sources */,
 				654F252B1FE282BA00069E02 /* AppDelegate.m in Sources */,
+				553151CD2019EF8E00BC02C7 /* LoginViewController.m in Sources */,
 				654F25751FE28DFE00069E02 /* NavigationHeader.m in Sources */,
 				654F256E1FE28B8A00069E02 /* SuperViewController.m in Sources */,
 				5599EA3C1FE3ABF300A543FB /* Utility.m in Sources */,
 				654F25651FE2880100069E02 /* CustomView.m in Sources */,
 				654F25711FE28C1900069E02 /* UIView+FormScroll.m in Sources */,
 				654F257E1FE2923E00069E02 /* RequestUtility.m in Sources */,
-				654F255E1FE283CD00069E02 /* MainViewController.m in Sources */,
 				654F25841FE294E700069E02 /* RegisterViewController.m in Sources */,
 				654F257A1FE28E1400069E02 /* ProcessingScreen.m in Sources */,
 				654F25281FE282BA00069E02 /* main.m in Sources */,
@@ -531,7 +531,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = F78S5YW242;
 				INFOPLIST_FILE = com.uniken.poc.pocwallet/Info.plist;
@@ -539,8 +539,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.poc.pocwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE = "fcf8f725-bdf3-49da-8889-1e4923820a32";
+				PROVISIONING_PROFILE_SPECIFIER = POCWallet_Development;
 			};
 			name = Debug;
 		};
@@ -556,8 +556,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.poc.pocwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE = "bdfb06af-00d1-4610-83c6-b2de0a237a4e";
+				PROVISIONING_PROFILE_SPECIFIER = POCWallet_Distribution;
 			};
 			name = Release;
 		};

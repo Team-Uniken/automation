@@ -17,4 +17,5 @@ extern NSString *const kEnroll;
 
 + (RequestUtility *)sharedRequestUtility;
 -(void)doPostRequestfor:(NSString*)url withParameters:(NSDictionary*)params onComplete:(void (^)(bool status, NSDictionary  *response))completionBlock;
++(BOOL)isNetworkAvailable;
 @end

@@ -124,8 +124,6 @@
     vc.user_id = user_id;
     vc.user_name = user_name;
     vc.balance = balance;
-    vc.wallet_id = wallet_id;
-    
   }
 }
 

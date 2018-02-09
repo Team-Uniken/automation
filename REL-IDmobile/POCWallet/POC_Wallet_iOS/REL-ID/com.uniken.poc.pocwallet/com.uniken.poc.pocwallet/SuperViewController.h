@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "TwoFactorState.h"
 #import "Utility.h"
+#import "RequestUtility.h"
 
 @interface SuperViewController : UIViewController
 @property (nonatomic, strong) NavigationHeader *navigationheader;

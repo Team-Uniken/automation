@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "RequestUtility.h"
+#import "RDNAConstants.h"
 @interface MainViewController ()
 
 @end
@@ -20,14 +21,19 @@
   self.navigationheader.titleLabel.text = @"POC Wallet";
   self.navigationheader.navigationLeftButton.hidden = YES;
   // Do any additional setup after loading the view.
-  
-  AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-  int error = [delegate.rdnaclient initializeRDNAWithCallbackDelegate:self] ;
-  
-  if(error > 0){
-    [self showErrorWithMessage:[NSString stringWithFormat:@"REL-ID init failed : %d",error]];
+  if([RequestUtility isNetworkAvailable]){
+    AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    int error = [delegate.rdnaclient initializeRDNAWithCallbackDelegate:self] ;
+    
+    if(error > 0){
+      [self showErrorWithMessage:[NSString stringWithFormat:@"REL-ID init failed : %d",error]];
+    }else{
+      [self addProccessingScreenWithText:@"REL-ID initializing..."];
+    }
   }else{
-    [self addProccessingScreenWithText:@"REL-ID initializing..."];
+    [SuperViewController showErrorWithMessage:[NSString stringWithFormat:@"%@, exit and log in again",kMsgNetworkError] withErrorCode:0 andCompletionHandler:^(BOOL result) {
+      exit(0);
+    }];
   }
 }
 

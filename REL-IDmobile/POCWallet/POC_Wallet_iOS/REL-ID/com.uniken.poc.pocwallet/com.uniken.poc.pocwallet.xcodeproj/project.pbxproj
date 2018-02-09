@@ -22,7 +22,7 @@
 		5599EA731FE3E9C800A543FB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA721FE3E9C800A543FB /* CoreLocation.framework */; };
 		5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA741FE3E9CF00A543FB /* CoreTelephony.framework */; };
 		5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599EA761FE3E9DC00A543FB /* AdSupport.framework */; };
-		55A60CDA2010B83100675FB8 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A60CCD2010B52000675FB8 /* libapi-sdk.a */; };
+		55CFC5702021CC1E0068EB74 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CFC56F2021CC1E0068EB74 /* libapi-sdk.a */; };
 		55F1FC581FE7E42300EC7409 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F1FC571FE7E42300EC7409 /* UIView+Toast.m */; };
 		654F25281FE282BA00069E02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F25271FE282BA00069E02 /* main.m */; };
 		654F252B1FE282BA00069E02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F252A1FE282BA00069E02 /* AppDelegate.m */; };
@@ -49,13 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		55B88FDF2010CADF0050C7E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55B88FD92010CADF0050C7E5 /* api-sdk.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6573EF001BA40E250085584E;
-			remoteInfo = "api-sdk";
-		};
 		654F25401FE282BA00069E02 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 654F251B1FE282BA00069E02 /* Project object */;
@@ -86,9 +79,9 @@
 		5599EA721FE3E9C800A543FB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5599EA741FE3E9CF00A543FB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5599EA761FE3E9DC00A543FB /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		55A60CCB2010B52000675FB8 /* RDNA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
-		55A60CCD2010B52000675FB8 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
-		55B88FD92010CADF0050C7E5 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../../../Android-SVN/openssl/api-sdk/build/ios/api-sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
+		55CFC54820219BD50068EB74 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libapi-sdk.a"; path = "com.uniken.poc.pocwallet/api-sdk/libs/libapi-sdk.a"; sourceTree = "<group>"; };
+		55CFC56D2021CC1E0068EB74 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
+		55CFC56F2021CC1E0068EB74 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		55F1FC561FE7E42300EC7409 /* UIView+Toast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		55F1FC571FE7E42300EC7409 /* UIView+Toast.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		55F95C771FE8DC6400C92126 /* TwoFactorState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoFactorState.m; sourceTree = "<group>"; };
@@ -141,10 +134,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55A60CDA2010B83100675FB8 /* libapi-sdk.a in Frameworks */,
 				5599EA771FE3E9DC00A543FB /* AdSupport.framework in Frameworks */,
 				5599EA751FE3E9D000A543FB /* CoreTelephony.framework in Frameworks */,
 				5599EA731FE3E9C800A543FB /* CoreLocation.framework in Frameworks */,
+				55CFC5702021CC1E0068EB74 /* libapi-sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +176,7 @@
 		5599EA671FE3DCAC00A543FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55CFC54820219BD50068EB74 /* libapi-sdk.a */,
 				5599EA761FE3E9DC00A543FB /* AdSupport.framework */,
 				5599EA741FE3E9CF00A543FB /* CoreTelephony.framework */,
 				5599EA721FE3E9C800A543FB /* CoreLocation.framework */,
@@ -190,44 +184,34 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		55A60CC92010B52000675FB8 /* api-sdk */ = {
+		55CFC56B2021CC1E0068EB74 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
-				55A60CCA2010B52000675FB8 /* include */,
-				55A60CCC2010B52000675FB8 /* libs */,
+				55CFC56C2021CC1E0068EB74 /* include */,
+				55CFC56E2021CC1E0068EB74 /* libs */,
 			);
-			name = "api-sdk";
-			path = "../../../../../../Android-SVN/openssl/api-sdk.out/iOS/release/api-sdk";
+			path = "api-sdk";
 			sourceTree = "<group>";
 		};
-		55A60CCA2010B52000675FB8 /* include */ = {
+		55CFC56C2021CC1E0068EB74 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				55A60CCB2010B52000675FB8 /* RDNA.h */,
+				55CFC56D2021CC1E0068EB74 /* RDNA.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		55A60CCC2010B52000675FB8 /* libs */ = {
+		55CFC56E2021CC1E0068EB74 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				55A60CCD2010B52000675FB8 /* libapi-sdk.a */,
+				55CFC56F2021CC1E0068EB74 /* libapi-sdk.a */,
 			);
 			path = libs;
-			sourceTree = "<group>";
-		};
-		55B88FDA2010CADF0050C7E5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				55B88FE02010CADF0050C7E5 /* libapi-sdk.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		654F251A1FE282BA00069E02 = {
 			isa = PBXGroup;
 			children = (
-				55B88FD92010CADF0050C7E5 /* api-sdk.xcodeproj */,
 				654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */,
 				654F25421FE282BA00069E02 /* com.uniken.poc.pocwalletTests */,
 				654F254D1FE282BB00069E02 /* com.uniken.poc.pocwalletUITests */,
@@ -249,7 +233,7 @@
 		654F25251FE282BA00069E02 /* com.uniken.poc.pocwallet */ = {
 			isa = PBXGroup;
 			children = (
-				55A60CC92010B52000675FB8 /* api-sdk */,
+				55CFC56B2021CC1E0068EB74 /* api-sdk */,
 				5599EA5A1FE3DBCA00A543FB /* REL-IDModelClasses */,
 				654F25681FE2890400069E02 /* Utility */,
 				654F25621FE287E700069E02 /* View */,
@@ -430,12 +414,6 @@
 			mainGroup = 654F251A1FE282BA00069E02;
 			productRefGroup = 654F25241FE282BA00069E02 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 55B88FDA2010CADF0050C7E5 /* Products */;
-					ProjectRef = 55B88FD92010CADF0050C7E5 /* api-sdk.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				654F25221FE282BA00069E02 /* com.uniken.poc.pocwallet */,
@@ -444,16 +422,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		55B88FE02010CADF0050C7E5 /* libapi-sdk.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libapi-sdk.a";
-			remoteRef = 55B88FDF2010CADF0050C7E5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		654F25211FE282BA00069E02 /* Resources */ = {
@@ -680,13 +648,14 @@
 				);
 				OTHER_LDFLAGS = (
 					"-lresolv",
-					"-Objc",
+					"-ObjC",
 					"-lc++",
+					"-lstdc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.poc.rpocwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ff734511-7695-4041-bd97-36e4d4800c90";
-				PROVISIONING_PROFILE_SPECIFIER = "developer stock profile";
+				PROVISIONING_PROFILE = "d04e8509-6e5e-418a-a111-3f3a92b8b5b6";
+				PROVISIONING_PROFILE_SPECIFIER = RPOCWallet_Development;
 			};
 			name = Debug;
 		};
@@ -709,13 +678,14 @@
 				);
 				OTHER_LDFLAGS = (
 					"-lresolv",
-					"-Objc",
+					"-ObjC",
 					"-lc++",
+					"-lstdc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.stock;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.poc.rpocwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c8290c98-7c60-4e42-b72e-398c537dc3e6";
-				PROVISIONING_PROFILE_SPECIFIER = "Stock SDK Distribution";
+				PROVISIONING_PROFILE = "ddf4dfda-8898-4dda-bf32-e1aec184a8b6";
+				PROVISIONING_PROFILE_SPECIFIER = RPOCWallet_Distribution;
 			};
 			name = Release;
 		};

@@ -17,7 +17,7 @@
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 
-@interface RDNAClient()<CLLocationManagerDelegate,RDNAHTTPCallbacks>{
+@interface RDNAClient()<CLLocationManagerDelegate,RDNAHTTPCallbacks,RDNAClientCallbacks>{
   
   dispatch_semaphore_t semaphore;
   id<RDNACallbacks> clientCallbacks;  //RDNACallbacks object.
@@ -89,11 +89,12 @@
  */
 - (int)initializeRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)callback {
   
-  int errorID = 0;
+  
+  __block int errorID = 0;
   
   clientCallbacks = self;
   rdnaClientCallback = callback;
-  RDNA *rdna;
+  __block RDNA *rdna;
   if ([CLLocationManager locationServicesEnabled] == NO) {
     NSLog(@"locationServicesEnabled false");
     [SuperViewController showErrorWithMessage:@"You currently have all location services for this device disabled" withErrorCode:0 andCompletionHandler:^(BOOL result) {
@@ -114,9 +115,10 @@
       rdnaSSLlCertificate.p12Certificate = certString3;
       rdnaSSLlCertificate.password = certPassword;
       
-      
-      errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
-      rdnaObject = rdna;
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        errorID = [RDNA initialize:&rdna AgentInfo:kRdnaAgentID Callbacks:clientCallbacks GatewayHost:kRdnaHost GatewayPort:kRdnaPort CipherSpec:kRdnaCipherSpecs CipherSalt:kRdnaCipherSalt ProxySettings:ppxy RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+        rdnaObject = rdna;
+      });
     }
   }
   
@@ -147,12 +149,14 @@
   
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *savedContextData = [defaults valueForKey:@"sContext"];
-  int errResumeRuntime = 0;
+  __block int errResumeRuntime = 0;
   if (savedContextData.length>0) {
-    RDNA *dna;
+    __block RDNA *dna;
     RDNAProxySettings *ppxy = nil;
-    errResumeRuntime = [RDNA resumeRuntime:&dna SavedState:savedContextData Callbacks:clientCallbacks ProxySettings:ppxy RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
-    rdnaObject = dna;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      errResumeRuntime = [RDNA resumeRuntime:&dna SavedState:savedContextData Callbacks:clientCallbacks ProxySettings:ppxy RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      rdnaObject = dna;
+    });
   }
   return errResumeRuntime;
 }
@@ -162,7 +166,7 @@
  */
 - (int)terminateRDNAWithCallbackDelegate:(id<RDNAClientCallbacks>)_terminateCallback {
   
-  NSLog(@"coming inside terminateRDNA");
+  //NSLog(@"coming inside terminateRDNA");
   rdnaClientCallback = _terminateCallback;
   int errTerminate = [rdnaObject terminate];
   return errTerminate;
@@ -173,7 +177,7 @@
  * If logOff is successful user gets the appSession Config in the callBack.
  */
 - (int)RDNAClientLogOffForUserID:(NSString *)userID withCallbackDelegate:(id<RDNAClientCallbacks>)_logOffCallback;{
-  NSLog(@"coming inside terminateRDNA");
+ // NSLog(@"coming inside terminateRDNA");
   rdnaClientCallback = _logOffCallback;
   int errLogOff = [rdnaObject logOff:userID];
   return errLogOff;
@@ -249,7 +253,8 @@
  * It returns the RDNAStatusInit class object.
  */
 - (int)onResumeRuntime:(RDNAStatusResumeRuntime *)status {
-  
+  [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
+                                                      object:[NSNumber numberWithInt:0]];
   if (status.errCode == 0) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:nil forKey:@"sContext"];
@@ -278,7 +283,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:nil forKey:@"sContext"];
   }else{
-    NSLog(@"Failed to terminate RDNA");
+    NSLog(@"Failed to terminate RDNA %d",status.errCode);
   }
   dispatch_async(dispatch_get_main_queue(), ^{
     if (rdnaClientCallback) {
@@ -487,11 +492,26 @@
  * @param status                -
  */
 -(int)onSecurityThreat:(NSString*)status{
-
   dispatch_async(dispatch_get_main_queue(), ^(){
-    [SuperViewController showErrorWithMessage:status withErrorCode:0 andCompletionHandler:^(BOOL result) {
-      exit(0);
-    }];
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Error"
+                                          message:status
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                 if(rdnaObject != nil){
+                                   [self terminateRDNAWithCallbackDelegate:self];
+                                 }
+                                 exit(0);
+                               }];
+    
+    [alertController addAction:okAction];
+    AppDelegate *appDel= (AppDelegate*) [UIApplication sharedApplication].delegate;
+    [appDel.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    
   });
   
   return 0;
@@ -574,7 +594,6 @@
 - (void)RDNAClientCheckChallenges:(NSArray *)challengeArray forUserID:(NSString *)userID {
   
   int err = [rdnaObject checkChallengeResponse:challengeArray forUserID:userID];
-  NSLog(@"err: %d",err);
   if(err == RDNA_ERR_NONE){
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationProcessingScreen
                                                         object:[NSNumber numberWithInt:1]];
@@ -617,5 +636,12 @@
 -(int)onHttpResponse:(RDNAHTTPStatus*) status{
   [rdnaClientCallback openHttpResponse:status];
   return 1;
+}
+
+#pragma -mark rdnaClientCallback protocal
+
+- (void)terminate:(int)errorCode{
+  NSLog(@"terminat callback called");
+  exit(0);
 }
 @end

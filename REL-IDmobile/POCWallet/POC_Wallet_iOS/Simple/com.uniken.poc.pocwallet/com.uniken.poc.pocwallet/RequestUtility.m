@@ -8,7 +8,7 @@
 #import "AppDelegate.h"
 
 @implementation RequestUtility
-NSString *const kBaseUrl = @"http://poc5-uniken.com:8080/DummyWalletAPI/";
+NSString *const kBaseUrl = @"http://poc6-uniken.com:8080/DummyWalletAPI/";
 NSString *const kAddAmount = @"balance";
 NSString *const kRegister = @"register";
 NSString *const kUpdate = @"update";

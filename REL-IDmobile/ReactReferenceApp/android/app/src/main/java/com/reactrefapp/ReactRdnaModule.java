@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.telecom.Call;
 import android.util.Base64;
 import android.util.Log;
@@ -65,11 +66,36 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     private String TAG = "ReactRdnaModule";
     private HashMap<Integer,Callback> callbackHashMap = new HashMap<>();
     private final int ERROR_HEALTH_CHECK_FAILED = 1000;
+    AlertDialog alertDialog;
 
     public ReactRdnaModule(ReactApplicationContext reactContext) {
         super(reactContext);
         context = getReactApplicationContext();
         createUiHandler();
+    }
+
+    void showOrUpdateThreatAlert(String msg,final DialogInterface.OnClickListener clickListener){
+        if(context.getCurrentActivity()!=null) {
+            if (alertDialog == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context.getCurrentActivity());
+                builder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        clickListener.onClick(dialog, which);
+                        alertDialog = null;
+                    }
+                });
+
+                builder.setCancelable(false)
+                        .setTitle("Error");
+
+                alertDialog = builder.create();
+            }
+
+            alertDialog.setMessage(msg);
+            alertDialog.show();
+        }
     }
 
     private void callOnMainThread(Runnable runnable) {
@@ -131,7 +157,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public Object getDeviceContext() {
+            public Context getDeviceContext() {
                 return context;
             }
 
@@ -484,9 +510,36 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 Log.e("RDNA-CORE",s);
                 return 0;
             }
+
+            @Override
+            public int onSecurityThreat(final String s) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        WritableMap params = Arguments.createMap();
+                        params.putString("response", s);
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                .emit("onSecurityThreat", params);
+
+                        String msg = s;
+                        showOrUpdateThreatAlert("Threats detected on your system : \n" + msg, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(rdnaObj!=null)
+                                    rdnaObj.terminate();
+                                if(getCurrentActivity()!=null)
+                                  ActivityCompat.finishAffinity(getCurrentActivity());
+                            }
+                        });
+                    }
+                };
+                callOnMainThread(runnable);
+                return 0;
+            }
         };
 
-        RDNA.RDNAStatus<RDNA> rdnaStatus = null;
+
 
         RDNA.RDNASSLCertificate rdnaSSLCertificate = null;
         try{
@@ -497,16 +550,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }catch (Exception e){}
 
         final RDNA.RDNASSLCertificate rdnaSSLCert = rdnaSSLCertificate;
-        rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
-        rdnaObj = rdnaStatus.result;
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", rdnaStatus.errorCode);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
+                rdnaObj = rdnaStatus.result;
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+                WritableMap errorMap = Arguments.createMap();
+                errorMap.putInt("error", rdnaStatus.errorCode);
 
-        callback.invoke(writableArray);
+                WritableArray writableArray = Arguments.createArray();
+                writableArray.pushMap(errorMap);
+
+                callback.invoke(writableArray);
+            }
+        }).start();
+
 //
 //        new Thread(new Runnable()
 //        {
@@ -759,27 +819,33 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void resumeRuntime(String state, String proxySettings, Callback callback){
-        WritableMap errorMap = Arguments.createMap();
+    public void resumeRuntime(final String state,final String proxySettings,final Callback callback){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        if(rdnaObj != null) {
-            try {
-                JSONObject jsonObject = new JSONObject(state);
-                RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
-                rdnaObj = rdnaStatus.result;
-                errorMap.putInt("error", rdnaStatus.errorCode);
-            } catch (JSONException e) {
-                //e.printStackTrace();
+                WritableMap errorMap = Arguments.createMap();
+
+                if(rdnaObj != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(state);
+                        RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
+                        rdnaObj = rdnaStatus.result;
+                        errorMap.putInt("error", rdnaStatus.errorCode);
+                    } catch (JSONException e) {
+                        //e.printStackTrace();
+                    }
+
+                } else {
+                    errorMap.putInt("error", 1);
+                }
+
+                WritableArray writableArray = Arguments.createArray();
+                writableArray.pushMap(errorMap);
+
+                callback.invoke(writableArray);
             }
-
-        } else {
-            errorMap.putInt("error", 1);
-        }
-
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
-
-        callback.invoke(writableArray);
+        }).start();
     }
 
     @ReactMethod

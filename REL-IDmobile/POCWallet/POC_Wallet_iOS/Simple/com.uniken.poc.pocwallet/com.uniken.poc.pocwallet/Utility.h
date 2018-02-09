@@ -10,5 +10,5 @@
 
 @interface Utility : NSObject
 
--(NSString*)removeSpaceLeadingAndTrailingFromString:(NSString*)str;
++(NSString*)removeSpaceLeadingAndTrailingFromString:(NSString*)str;
 @end
