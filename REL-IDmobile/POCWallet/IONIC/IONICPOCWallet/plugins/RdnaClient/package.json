@@ -1,0 +1,19 @@
+{
+  "name": "com.uniken.rdnaplugin",
+  "version": "0.0.1",
+  "description": "The RdnaClient Plugin Implementation",
+  "cordova": {
+    "id": "com.uniken.rdnaplugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Uniken",
+  "license": "ISC"
+}

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Dashboard
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+    <form >
+      <ion-list>
+  
+        <ion-item>
+          <ion-label fixed>{{ 'Add Money'  }}</ion-label>
+          <ion-input type="text" [(ngModel)]="account.amount" name="amount"></ion-input>
+        </ion-item>
+  
+        <!--
+        Want to use a Username instead of an Email? Here you go:
+  
+        <ion-item>
+          <ion-label floating>{{ 'USERNAME' | translate }}</ion-label>
+          <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
+        </ion-item>
+        -->
+  
+       
+  
+        <div padding>
+          <button ion-button color="primary" block (click)="doAddMoney()">{{ 'Add Amount' }}</button>
+        </div>
+  
+      </ion-list>
+    </form>
+  
+</ion-content>

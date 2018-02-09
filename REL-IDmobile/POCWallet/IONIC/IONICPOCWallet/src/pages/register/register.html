@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Register
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (submit)="doSignup()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed>{{ 'Login ID' }}</ion-label>
+        <ion-input type="text" [(ngModel)]="account.login_id" name="login_id"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>{{ 'Card Number'}}</ion-label>
+        <ion-input type="text" [(ngModel)]="account.card_no" name="card_no"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>{{ 'Card PIN' }}</ion-label>
+        <ion-input type="password" [(ngModel)]="account.card_pin" name="card_pin"></ion-input>
+      </ion-item>
+
+     
+      <ion-item>
+        <ion-label fixed>{{ 'PIN' }}</ion-label>
+        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>{{ 'Confirm PIN' }}</ion-label>
+        <ion-input type="password" [(ngModel)]="account.password_cofirm" name="password_cofirm"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="primary" block>{{ 'SUBMIT'  }}</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>
