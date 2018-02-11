@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController,NavParams } from 'ionic-angular';
+import { IonicPage, NavController, ToastController,NavParams,Platform } from 'ionic-angular';
 import { Toast } from '../toast/toast';
 import { User } from '../../providers/providers';
 
@@ -12,8 +12,8 @@ import { User } from '../../providers/providers';
 export class DashboardPage {
 
   account:{ login_id: string, amount:string,  text1:string,text2:string,} = {
-    login_id: '9860818913',
-    amount: '10',
+    login_id: '',
+    amount: '',
     text1: '',
     text2:'',
     
@@ -27,7 +27,7 @@ export class DashboardPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
-    public translateService: TranslateService,public navParams: NavParams,public toast: Toast) {
+    public translateService: TranslateService,public navParams: NavParams,public toast: Toast,platform:Platform) {
 
       this.account.login_id = navParams.get('login_id'); 
       this.amount = navParams.get('amount');
@@ -38,7 +38,8 @@ export class DashboardPage {
      
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;
-    })
+    }) 
+  
   }
 
   

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController,Events } from 'ionic-angular';
+import { IonicPage, NavController, ToastController,Events, Platform } from 'ionic-angular';
 
 import { User } from '../../providers/providers';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -39,13 +39,14 @@ export class RegisterPage {
     public user: User,
     public toast: Toast,
     public translateService: TranslateService,
-    public events:Events) {
+    public events:Events,platform:Platform) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;
     })
   }
 
+  
   doSignup() {
 
     if(!this.validate())
