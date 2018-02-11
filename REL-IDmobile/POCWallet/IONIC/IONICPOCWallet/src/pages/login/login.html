@@ -11,8 +11,8 @@
     <ion-list>
 
       <ion-item>
-        <ion-label fixed>{{ 'USER NAME'  }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.login_id" name="email"></ion-input>
+        <!-- <ion-label fixed>{{ 'USER NAME'  }}</ion-label> -->
+        <ion-input type="email" [(ngModel)]="account.login_id" name="email" placeholder="Login PIN"></ion-input>
       </ion-item>
 
       <!--
@@ -25,8 +25,8 @@
       -->
 
       <ion-item>
-        <ion-label fixed>{{ 'PASSWORD' }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        <!-- <ion-label fixed>{{ 'PASSWORD' }}</ion-label> -->
+        <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="RPIN"></ion-input>
       </ion-item>
 
       <div padding>

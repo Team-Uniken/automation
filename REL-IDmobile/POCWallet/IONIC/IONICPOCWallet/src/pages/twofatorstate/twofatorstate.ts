@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import * as Constants from './constants';
 import { DashboardPage } from '../dashboard/dashboard';
+import { LoginPage } from '../login/login';
 import { Toast } from '../toast/toast';
-
 
 declare var com: any;
 @Component({
@@ -20,6 +20,7 @@ export class TwoFactorState {
     actCode: any;
     passcode: any;
     method: any;
+    public callback:any;
     static initialChallengesJson: any;
     static listener:any;
 
@@ -32,7 +33,7 @@ export class TwoFactorState {
             document.removeEventListener('onCheckChallengeResponseStatus',TwoFactorState.listener)
 
         TwoFactorState.listener =  (e: any) => {
-            //  this.toast.hideLoader();
+              this.toast.hideLoader();
               let res = JSON.parse(e.response);
               if (res.errCode == 0) {
                   var statusCode = res.pArgs.response.StatusCode;
@@ -46,12 +47,12 @@ export class TwoFactorState {
                               this.handleChallenges(this.challengeJson);
                       } else
                           if(this.method === "login"){
-                              alert("event publish login:success");
-                             this.events.publish("login:success",null);
+                              //alert("event publish login:success");
+                             //this.events.publish("login:success",null);
+                             this.callback.callLoginApi();
                           }
                           else{
-                              
-                             this.navCtrl.push(DashboardPage);
+                            this.callback.doDashboard();
                           }
                   } else {
                       alert(statusMsg);
@@ -65,7 +66,7 @@ export class TwoFactorState {
     }
 
     checkChallenge(challenges: any, userID: string) {
-       // this.toast.showLoader();
+        this.toast.showLoader();
         com.uniken.rdnaplugin.RdnaClient.checkChallenges(this.onSuccess, this.onFailure, [JSON.stringify(challenges), userID]);
     }
 
@@ -122,7 +123,7 @@ export class TwoFactorState {
 
     onFailure(data) {
         console.log("RdnaClient.js: initFailure");
-       // this.toast.hideLoader();
+        this.toast.hideLoader();
     }
 
     doLogin(userName: any, passcode: any) {

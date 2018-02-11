@@ -16,8 +16,7 @@ export class HomePage {
 
     document.addEventListener('onInitializeCompleted', function (e: any) {
       //console.log(e);
-   //   this.toast.hideLoader();
-
+      
       alert('onInitializeCompleted');
       let res = JSON.parse(e.response);
       //console.log("error code--->" + responseJson.errCode);
@@ -39,8 +38,11 @@ export class HomePage {
 
       //alert(JSON.stringify(e));
     });
-    this.initRelID();
-  
+   
+    setTimeout(() => {
+      this.initRelID();
+     }, 2000);
+   
   }
 
 
@@ -65,6 +67,7 @@ export class HomePage {
 
   initFailure(data) {
     //this.toast.hideLoader();
+    this.toast.hideLoader();
     console.log("RdnaClient.js: initFailure");
   }
 
