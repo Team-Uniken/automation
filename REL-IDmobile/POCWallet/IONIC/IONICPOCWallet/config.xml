@@ -11,6 +11,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="*" />
+    <preference name="CordovaWebViewEngine" value="CDVUIWebViewEngine" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="16" />
     <preference name="BackupWebStorage" value="none" />
@@ -79,11 +81,11 @@
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="com.uniken.rdnaplugin" spec="/home/nitin/Development/ionic/sampleapp/plugins/RdnaClient" />
     <allow-navigation href="http://10.0.0.222:8100" />
     <allow-navigation href="http://10.0.0.222:8101" />
+    <plugin name="com.uniken.rdnaplugin" spec="./RdnaClient" />
+    <allow-navigation href="http://192.168.1.208:8100" />
     <engine name="ios" spec="~4.5.4" />
     <engine name="android" spec="~7.0.0" />
 </widget>

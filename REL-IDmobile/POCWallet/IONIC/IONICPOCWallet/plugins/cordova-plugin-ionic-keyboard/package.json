@@ -10,7 +10,7 @@
         "spec": ">=2.0.5 <3.0.0",
         "type": "range"
       },
-      "/Users/swapnil/Desktop/ionic/sampleapp"
+      "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet"
     ]
   ],
   "_from": "cordova-plugin-ionic-keyboard@>=2.0.5 <3.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "c7c35ffd8f6a1ef77e27a1eee70ccaa2e94f99e1",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-ionic-keyboard@^2.0.5",
-  "_where": "/Users/swapnil/Desktop/ionic/sampleapp",
+  "_where": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet",
   "author": {
     "name": "Apache Software Foundation"
   },

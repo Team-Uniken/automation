@@ -1,7 +1,44 @@
 {
-  "name": "com.uniken.rdnaplugin",
-  "version": "0.0.1",
-  "description": "The RdnaClient Plugin Implementation",
+  "_args": [
+    [
+      {
+        "raw": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+        "spec": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+        "type": "directory"
+      },
+      "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet"
+    ]
+  ],
+  "_from": "RdnaClient",
+  "_id": "com.uniken.rdnaplugin@0.0.1",
+  "_inCache": true,
+  "_location": "/com.uniken.rdnaplugin",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+    "spec": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+    "type": "directory"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "file:RdnaClient",
+  "_shasum": "b1771cfd50f3a00a4193243ebac4a44069f24e6c",
+  "_shrinkwrap": null,
+  "_spec": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/RdnaClient",
+  "_where": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet",
+  "author": {
+    "name": "Uniken"
+  },
   "cordova": {
     "id": "com.uniken.rdnaplugin",
     "platforms": [
@@ -9,11 +46,17 @@
       "ios"
     ]
   },
+  "dependencies": {},
+  "description": "The RdnaClient Plugin Implementation",
+  "devDependencies": {},
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
   ],
-  "author": "Uniken",
-  "license": "ISC"
+  "license": "ISC",
+  "name": "com.uniken.rdnaplugin",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "version": "0.0.1"
 }

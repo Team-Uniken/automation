@@ -23,14 +23,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-ionic-webview": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-ionic-webview@^1.1.16"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-ionic-keyboard": {
     "source": {
       "type": "registry",
@@ -42,7 +34,7 @@
   "com.uniken.rdnaplugin": {
     "source": {
       "type": "local",
-      "path": "/home/nitin/Development/ionic/sampleapp/node_modules/com.uniken.rdnaplugin"
+      "path": "/Users/swapnil/Desktop/react_update/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/node_modules/com.uniken.rdnaplugin"
     },
     "is_top_level": true,
     "variables": {}
