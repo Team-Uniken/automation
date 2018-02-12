@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController,NavParams,Platform } from 'ionic-angular';
 import { Toast } from '../toast/toast';
 import { User } from '../../providers/providers';
+import { NotificationPage } from '../notification/notification';
 
 @Component({
   selector: 'page-dashboard',
@@ -27,7 +28,7 @@ export class DashboardPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
-    public translateService: TranslateService,public navParams: NavParams,public toast: Toast,platform:Platform) {
+    public translateService: TranslateService,public navParams: NavParams,public toast: Toast,platform:Platform,) {
 
       this.account.login_id = navParams.get('login_id'); 
       this.amount = navParams.get('amount');
@@ -76,6 +77,10 @@ export class DashboardPage {
       });
       toast.present();
     });
+  }
+
+  showNotification(){
+    this.navCtrl.push(NotificationPage);
   }
 
 }

@@ -21,10 +21,10 @@ import { TwoFactorState } from '../twofatorstate/twofatorstate';
 export class LoginPage {
 
   account: { login_id: string, password: string } = {
-    // login_id: 'swap7',
-    // password: '1111'
-    login_id: '',
-    password: ''
+     login_id: 'swap7',
+    password: '1111'
+    //login_id: '',
+    //password: ''
   };
 
   // Our translated text strings

@@ -14,7 +14,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public toast : Toast) {
 
-    document.addEventListener('onInitializeCompleted', function (e: any) {
+    document.addEventListener('onInitializeCompleted',  (e: any)=> {
       //console.log(e);
       
       alert('onInitializeCompleted');
@@ -26,9 +26,10 @@ export class HomePage {
 
         //  var statusCode = res.pArgs.response.StatusCode;
         //   if (statusCode == 100) {
+          let challengeJson;
         if (res.pArgs.response.ResponseData) {
-          this.challengeJson = res.pArgs.response.ResponseData;
-          TwoFactorState.initialChallengesJson = this.challengeJson;
+          challengeJson = res.pArgs.response.ResponseData;
+          TwoFactorState.initialChallengesJson = challengeJson;
         }
 
         

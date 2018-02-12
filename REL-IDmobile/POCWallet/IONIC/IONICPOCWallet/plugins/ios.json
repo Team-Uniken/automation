@@ -21,6 +21,9 @@
     },
     "com.uniken.rdnaplugin": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "phonegap-plugin-push": {
+      "PACKAGE_NAME": "com.uniken.cbc.verify"
     }
   },
   "dependent_plugins": {}
