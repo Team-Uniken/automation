@@ -19,7 +19,7 @@
             <span>{{notification.created_ts}}</span>
           </div>
           <ul>
-            <div *ngFor="let bullet of getBulletList(notification.body)">
+            <div *ngFor="let bullet of getBulletList(notification.message.body)">
               <li>{{bullet}}</li>
             </div>
           </ul>
