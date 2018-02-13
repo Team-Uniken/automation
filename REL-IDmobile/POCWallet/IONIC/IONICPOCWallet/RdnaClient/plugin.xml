@@ -21,6 +21,8 @@
 <source-file src="src/android/RdnaClient.java" target-dir="src/com/uniken/rdnaplugin" />
 <source-file src="src/android/NetworkTask.java" target-dir="src/com/uniken/rdnaplugin" />
 <source-file src="src/android/RDNARequestUtility.java" target-dir="src/com/uniken/rdnaplugin" />
+<framework src="src/android/rdnaclient.gradle" custom="true" type="gradleReference" target="app/rdnaclient.gradle"/>
+<resource-file src="libs/app-sdk-release-branch_v1.4.0.aar" target="libs/app-sdk-release-branch_v1.4.0.aar" />
 </platform>
 
 <platform name="ios">
