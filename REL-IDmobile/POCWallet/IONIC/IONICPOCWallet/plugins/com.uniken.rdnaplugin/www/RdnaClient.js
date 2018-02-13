@@ -535,6 +535,22 @@
                
                cordova.exec(successCallback, errorCallback, "RdnaClient", "setCredentials", options);
                };
+
+ 			   RdnaClient.prototype.getRequestAPI  = function(successCallback, errorCallback, options) {
+              if (errorCallback == null) { errorCallback = function() {}}
+
+              if (typeof errorCallback != "function")  {
+              console.log("RdnaClient.getRequestAPI   failure: failure parameter not a function");
+              return
+              }
+
+              if (typeof successCallback != "function") {
+              console.log("RdnaClient.getRequestAPI    failure: success callback parameter must be a function");
+              return
+              }
+
+              cordova.exec(successCallback, errorCallback, "RdnaClient", "getRequestAPI", options);
+              };
                
                
                var rdnaClient = new RdnaClient();

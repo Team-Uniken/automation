@@ -26,11 +26,13 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 
+
 public class RdnaClient extends CordovaPlugin {
   
   public static final String TAG = "Rdna Plugin";
   private RDNA.RDNACallbacks callbacks;                 // Callback object to get the runtime status of RDNA.
   private RDNA rdnaObj;
+  private int proxyPort;
   CordovaInterface context;
   CordovaWebView webView;
   CallbackContext callbackContext;
@@ -59,15 +61,14 @@ public class RdnaClient extends CordovaPlugin {
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
     Log.v(TAG, "Init RdnaPlugin");
-    this.context = context;
+    this.context = cordova;
     this.webView = webView;
   }
   
   public boolean execute(final String action, final JSONArray args, CallbackContext callbackContext) throws JSONException {
     
     this.callbackContext = callbackContext;
-    
-    
+
     if (action.equals("initialize")) {
       initialize(args);
     } else if (action.equals("terminate")) {
@@ -140,6 +141,8 @@ public class RdnaClient extends CordovaPlugin {
       getSDKVersion(args);
     }else if (action.equals("getErrorInfo")) {
       getErrorInfo(args);
+    }else if (action.equals("getRequestAPI")) {
+      getRequestAPI(args);
     }
     return true;
   }
@@ -239,6 +242,7 @@ public class RdnaClient extends CordovaPlugin {
     callbacks = new RDNA.RDNACallbacks() {
       @Override
       public int onInitializeCompleted(String s) {
+        setProxyPort(s);
         callJavaScript("onInitializeCompleted", s);
         return 0;
       }
@@ -474,6 +478,17 @@ public class RdnaClient extends CordovaPlugin {
     }
   }
   
+  public void getRequestAPI(JSONArray args) {
+    try {
+      //decideCallback("Test");
+      RDNARequestUtility rdnaUtil = new RDNARequestUtility(context, callbackContext);
+      rdnaUtil.setHttpProxyHost("10.0.0.65", 8888 );
+      rdnaUtil.doHTTPGetRequest(args.getString(2));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
   public void resetChallenge(JSONArray args) {
     try {
       decideCallback(rdnaObj.resetChallenge());
@@ -618,7 +633,6 @@ public class RdnaClient extends CordovaPlugin {
   
   String decideResultTypeAndReturnStringResult(Object result) {
     if (result instanceof String) {
-      
       if (result != null) {
         return (String) result;
       } else {
@@ -657,7 +671,20 @@ public class RdnaClient extends CordovaPlugin {
     }
     return base64decodedData;
   }
-  
-  
+
+  private void setProxyPort(String result){
+    try{
+      JSONObject jsonObj = new JSONObject(result);
+      JSONObject jsonArgs = jsonObj.getJSONObject("pArgs");
+      JSONObject jsonProxy = jsonArgs.getJSONObject("pxyDetails");
+      proxyPort = jsonProxy.optInt("port", 0);
+    }catch (JSONException je){
+      je.printStackTrace();
+    }
+  }
+
 }
+
+
+
 
