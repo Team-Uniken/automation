@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectorRef,NgZone } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
@@ -12,6 +12,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
 
+
 declare var com;
 @Component({
   selector: 'notification-login',
@@ -23,6 +24,9 @@ export class NotificationPage {
   notificationList: any;
   static getNotificationListener: any;
   static updateListener: any;
+  refresh:boolean = false;
+
+
   account: { login_id: string, password: string } = {
     login_id: 'swap7',
     password: '1111'
@@ -32,11 +36,12 @@ export class NotificationPage {
 
   // Our translated text strings
   private loginErrorString: string;
+  private ref:ChangeDetectorRef;
 
   constructor(public events: Events, public navCtrl: NavController,
     public user: User,
     public toast: Toast,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,private _ngZone: NgZone) {
 
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.loginErrorString = value;
@@ -44,50 +49,7 @@ export class NotificationPage {
 
     this.callGetMyNotification();
 
-   /* this.notificationList = [{
-      notification_uuid: "f05b1ddd-b154-4fe6-bc61-36d670f74390",
-      created_ts: "2018-02-12T10:32:00UTC",
-      expiry_timestamp: "2018-02-12T10:35:00UTC",
-      message: {
-        subject: "Login Attempt",
-        body: "You are attempting to log into the CBC website\nRemember that our website will NEVER ask for your password\nPlease confirm or reject"
-      },
-      action: [
-        {
-          label: "Accept",
-          action: "Accept",
-          authlevel: "0"
-        },
-        {
-          label: "Reject",
-          action: "Reject",
-          authlevel: "0"
-        }
-      ]
-    },{
-      notification_uuid: "f05b1ddd-b154-4fe6-bc61-36d670f74390",
-      created_ts: "2018-02-12T10:32:00UTC",
-      expiry_timestamp: "2018-02-12T10:35:00UTC",
-      message: {
-        subject: "Login Attempt",
-        body: "You are attempting to log into the CBC website\nRemember that our website will NEVER ask for your password\nPlease confirm or reject"
-      },
-      action: [
-        {
-          label: "Accept",
-          action: "Accept",
-          authlevel: "0"
-        },
-        {
-          label: "Reject",
-          action: "Reject",
-          authlevel: "0"
-        }
-      ]
-    }]*/
-    //this.events.subscribe('login:success', this.callLoginApi);
 
-   
     if (NotificationPage.getNotificationListener) {
       document.removeEventListener('onGetNotifications', NotificationPage.getNotificationListener)
     }
@@ -95,9 +57,10 @@ export class NotificationPage {
       document.removeEventListener('onUpdateNotification', NotificationPage.updateListener)
     }
     NotificationPage.getNotificationListener = (e: any) => {
-      console.log("***********************"+e.response.replace("\n","\\n"));
-
-      const res = JSON.parse(e.response.replace("\n","\\n"));
+      console.log("***********************"+this.replaceString("\n","\\n",e.response));
+      this._ngZone.run(() => {
+        
+      const res = JSON.parse(this.replaceString("\n","\\n",e.response));
       //console.log(res);
       if (res.errCode === 0) {
         const statusCode = res.pArgs.response.StatusCode;
@@ -108,10 +71,12 @@ export class NotificationPage {
           }
         }
       }
-
+    });
     };
 
     NotificationPage.updateListener = (e: any) => {
+      //this.toast.hideLoader();
+      this._ngZone.run(() => {
       const res = JSON.parse(e.response);
     if (res.errCode === 0) {
       const statusCode = res.pArgs.response.StatusCode;
@@ -121,6 +86,10 @@ export class NotificationPage {
           var notification = this.notificationList[i];
           if (notification.notification_uuid === res.pArgs.response.ResponseData.notification_uuid) {
             this.notificationList.splice(i, 1);
+            //this.account.login_id = notification.notification_uuid;
+             this.refresh = !this.refresh;
+            this.ref.detectChanges();
+            console.log(this.notificationList);
             break;
           }
         }
@@ -131,6 +100,7 @@ export class NotificationPage {
     }else{
       alert("Notification update error : "+res.errCode);
     }
+  });
     };
     document.addEventListener('onGetNotifications', NotificationPage.getNotificationListener);
     document.addEventListener('onUpdateNotification', NotificationPage.updateListener);
@@ -202,7 +172,8 @@ export class NotificationPage {
   }
 
   notificationClick(notification:any,action:string){
-      alert(action);
+      //alert(action);
+      //this.toast.showLoader();
       this.callUpdateNotification(notification.notification_uuid,action);
   }
 
