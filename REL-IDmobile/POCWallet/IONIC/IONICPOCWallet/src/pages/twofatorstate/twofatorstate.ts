@@ -23,6 +23,7 @@ export class TwoFactorState {
     public callback:any;
     static initialChallengesJson: any;
     static listener:any;
+    static isLoginToDashboard:boolean;
 
     static setInitialChallenge(challegeJson) {
         TwoFactorState.initialChallengesJson = challegeJson;
