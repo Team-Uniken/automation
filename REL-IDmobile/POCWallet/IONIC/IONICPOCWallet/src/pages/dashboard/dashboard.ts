@@ -4,6 +4,7 @@ import { IonicPage, NavController, ToastController,NavParams,Platform } from 'io
 import { Toast } from '../toast/toast';
 import { User } from '../../providers/providers';
 import { NotificationPage } from '../notification/notification';
+import { TwoFactorState } from '../twofatorstate/twofatorstate';
 
 @Component({
   selector: 'page-dashboard',
@@ -36,7 +37,7 @@ export class DashboardPage {
       this.account.text2 = 'Your wallet balance is '+this.amount;
       //alert(this.account.login_id+" "+this.amount );
       //this.account.amount = this.amount;
-     
+     TwoFactorState.isLoginToDashboard = true;
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;
     }) 

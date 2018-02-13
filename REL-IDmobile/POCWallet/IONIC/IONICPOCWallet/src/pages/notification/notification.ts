@@ -44,49 +44,50 @@ export class NotificationPage {
 
     this.callGetMyNotification();
 
-    // this.notificationList = [{
-    //   notification_uuid: "f05b1ddd-b154-4fe6-bc61-36d670f74390",
-    //   created_ts: "2018-02-12T10:32:00UTC",
-    //   expiry_timestamp: "2018-02-12T10:35:00UTC",
-    //   message: {
-    //     subject: "Login Attempt",
-    //     body: "You are attempting to log into the CBC website\nRemember that our website will NEVER ask for your password\nPlease confirm or reject"
-    //   },
-    //   action: [
-    //     {
-    //       label: "Accept",
-    //       action: "Accept",
-    //       authlevel: "0"
-    //     },
-    //     {
-    //       label: "Reject",
-    //       action: "Reject",
-    //       authlevel: "0"
-    //     }
-    //   ]
-    // },{
-    //   notification_uuid: "f05b1ddd-b154-4fe6-bc61-36d670f74390",
-    //   created_ts: "2018-02-12T10:32:00UTC",
-    //   expiry_timestamp: "2018-02-12T10:35:00UTC",
-    //   message: {
-    //     subject: "Login Attempt",
-    //     body: "You are attempting to log into the CBC website\nRemember that our website will NEVER ask for your password\nPlease confirm or reject"
-    //   },
-    //   action: [
-    //     {
-    //       label: "Accept",
-    //       action: "Accept",
-    //       authlevel: "0"
-    //     },
-    //     {
-    //       label: "Reject",
-    //       action: "Reject",
-    //       authlevel: "0"
-    //     }
-    //   ]
-    // }]
+   /* this.notificationList = [{
+      notification_uuid: "f05b1ddd-b154-4fe6-bc61-36d670f74390",
+      created_ts: "2018-02-12T10:32:00UTC",
+      expiry_timestamp: "2018-02-12T10:35:00UTC",
+      message: {
+        subject: "Login Attempt",
+        body: "You are attempting to log into the CBC website\nRemember that our website will NEVER ask for your password\nPlease confirm or reject"
+      },
+      action: [
+        {
+          label: "Accept",
+          action: "Accept",
+          authlevel: "0"
+        },
+        {
+          label: "Reject",
+          action: "Reject",
+          authlevel: "0"
+        }
+      ]
+    },{
+      notification_uuid: "f05b1ddd-b154-4fe6-bc61-36d670f74390",
+      created_ts: "2018-02-12T10:32:00UTC",
+      expiry_timestamp: "2018-02-12T10:35:00UTC",
+      message: {
+        subject: "Login Attempt",
+        body: "You are attempting to log into the CBC website\nRemember that our website will NEVER ask for your password\nPlease confirm or reject"
+      },
+      action: [
+        {
+          label: "Accept",
+          action: "Accept",
+          authlevel: "0"
+        },
+        {
+          label: "Reject",
+          action: "Reject",
+          authlevel: "0"
+        }
+      ]
+    }]*/
     //this.events.subscribe('login:success', this.callLoginApi);
 
+   
     if (NotificationPage.getNotificationListener) {
       document.removeEventListener('onGetNotifications', NotificationPage.getNotificationListener)
     }
@@ -94,16 +95,14 @@ export class NotificationPage {
       document.removeEventListener('onUpdateNotification', NotificationPage.updateListener)
     }
     NotificationPage.getNotificationListener = (e: any) => {
+      console.log("***********************"+e.response.replace("\n","\\n"));
 
-      alert(e.response);
-      const res = JSON.parse(e.response);
-      console.log(res);
+      const res = JSON.parse(e.response.replace("\n","\\n"));
+      //console.log(res);
       if (res.errCode === 0) {
         const statusCode = res.pArgs.response.StatusCode;
-        console.log("statusCode===>"+e.response);
         if (statusCode === 100) {
           if (res.pArgs.response.ResponseData) {
-            alert(e.response);
             var count = res.pArgs.response.ResponseData.notifications.length;
             this.notificationList = res.pArgs.response.ResponseData.notifications;
           }
@@ -138,7 +137,9 @@ export class NotificationPage {
   }
 
 
-
+  addslashes( str:string ) {
+    return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+}
   callGetMyNotification() {
     var recordCount: string = "0";
     var startIndex: string = "1";
@@ -168,8 +169,7 @@ export class NotificationPage {
       bodyStr = this.replaceString('<br/>','\n',bodyStr);
       bulletList.push(bodyStr);
     }
-
-    return ["abc","hhh"];
+    return bulletList;
   }
 
   getButtonList(actions){

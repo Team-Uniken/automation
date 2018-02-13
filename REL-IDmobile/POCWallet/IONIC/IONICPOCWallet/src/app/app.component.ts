@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
-import { AlertController, Nav, Platform } from 'ionic-angular';
+import { AlertController, Nav, Platform ,ViewController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 import { HomePage } from '../pages/home/home';
 import { NotificationPage } from '../pages/notification/notification';
+import { TwoFactorState } from '../pages/twofatorstate/twofatorstate';
 declare var com:any
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+ nav: Nav;
   rootPage:any = HomePage;
+  //rootPage:any = NotificationPage;
 
   constructor(public platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public push: Push,public alertCtrl: AlertController) {
     platform.ready().then(() => {
@@ -25,11 +28,12 @@ export class MyApp {
 
   updateSuccess(data) {
     // this.toast.hideLoader();
-    console.log("RdnaClient.js: updateSuccess");
+    console.log("notifications devvice Success");
   }
 
   updateFailure(data) {
-    console.log("RdnaClient.js: updateSuccess");
+    //alert('device token ->  notifications failed');
+    console.log("notifications device failed");
   }
   
   initPushNotification() {
@@ -53,16 +57,17 @@ export class MyApp {
 
     pushObject.on('registration').subscribe((data: any) => {
       console.log('device token -> ' + data.registrationId);
-      //alert('device token -> ' + data.registrationId);
-      if(data.registrationId)
-      com.uniken.rdnaplugin.setDeviceToken(this.updateSuccess,this.updateFailure,data.registrationId);
+      var tokenid:string;
+      tokenid = data.registrationId;
+      if(tokenid)
+      com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.updateSuccess,this.updateFailure,[tokenid]);
       //TODO - send device token to server
     });
 
     pushObject.on('notification').subscribe((data: any) => {
       console.log('message -> ' + data.message);
       //if user using app and push notification comes
-      if (data.additionalData.foreground) {
+      /*if (data.additionalData.foreground) {
         // if application open, show popup
         let confirmAlert = this.alertCtrl.create({
           title: 'New Notification',
@@ -84,7 +89,33 @@ export class MyApp {
         //TODO: Your logic on click of push notification directly
         //this.nav.push(DetailsPage, { message: data.message });
         console.log('Push notification clicked');
+      }*/
+      if(TwoFactorState.isLoginToDashboard == true){
+
+        var vc:ViewController ;
+         vc = this.nav.getByIndex((this.nav.length()) -1);
+            alert("dashboard");
+         //if(typeof vc === 'NotificationPage')
+
+      }else{
+     
+        let confirmAlert = this.alertCtrl.create({
+          title: 'New Notification',
+          message: data.message,
+          buttons: [{
+            text: 'Ignore',
+            role: 'cancel'
+          }, {
+            text: 'View',
+            handler: () => {
+              //TODO: Your logic here
+              //this.nav.push(DetailsPage, { message: data.message });
+            }
+          }]
+        });
       }
+    
+
     });
 
     pushObject.on('error').subscribe(error => alert('Error with Push plugin' + error));
