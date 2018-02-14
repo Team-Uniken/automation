@@ -380,7 +380,7 @@ public class RdnaClient extends CordovaPlugin {
       }
     };
     try {
-      RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(args.getString(0), callbacks, args.getString(1), args.getInt(2), args.getString(3), args.getString(4), null, null,null, RDNA.RDNALoggingLevel.RDNA_LOG_VERBOSE,"edewf");
+      RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(args.getString(0), callbacks, args.getString(1), args.getInt(2), args.getString(3), args.getString(4), null, null,null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS,"edewf");
       rdnaObj = rdnaStatus.result;
       decideCallback(rdnaStatus);
     } catch (Exception e) {
