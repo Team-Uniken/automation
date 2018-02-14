@@ -436,24 +436,24 @@ RdnaClient.prototype.serviceAccessStop = function (successCallback, errorCallbac
 };
 
 /**
- * @param {*} successCallback - Sync callback that indicates checkChallenges call was successfull.
- * @param {*} errorCallback - Sync callback that indicates checkChallenges failure. Returns the error code for the error occured.
+ * @param {*} successCallback - Sync callback that indicates checkChallengeResponse call was successfull.
+ * @param {*} errorCallback - Sync callback that indicates checkChallengeResponse failure. Returns the error code for the error occured.
  * @param {*} options - [STRINGIFIED_CHALLENGE_OBJECT, USER_ID]
  */
-RdnaClient.prototype.checkChallenges = function (successCallback, errorCallback, options) {
+RdnaClient.prototype.checkChallengeResponse = function (successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function () { } }
 
     if (typeof errorCallback != "function") {
-        console.log("RdnaClient.checkChallenges failure: failure parameter not a function");
+        console.log("RdnaClient.checkChallengeResponse failure: failure parameter not a function");
         return
     }
 
     if (typeof successCallback != "function") {
-        console.log("RdnaClient.checkChallenges failure: success callback parameter must be a function");
+        console.log("RdnaClient.checkChallengeResponse failure: success callback parameter must be a function");
         return
     }
 
-    cordova.exec(successCallback, errorCallback, "RdnaClient", "checkChallenges", options);
+    cordova.exec(successCallback, errorCallback, "RdnaClient", "checkChallengeResponse", options);
 };
 
 /**

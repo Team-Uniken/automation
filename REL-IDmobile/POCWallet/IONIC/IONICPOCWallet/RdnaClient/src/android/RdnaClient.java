@@ -5,25 +5,16 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.PluginResult;
-
 import android.app.Activity;
 import android.util.Log;
-import android.provider.Settings;
-import android.widget.Toast;
-
 import java.util.concurrent.Semaphore;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.uniken.rdna.RDNA;
-
 import android.os.Handler;
-
 import android.util.Base64;
 import android.util.Log;
-
 import java.lang.reflect.Method;
 
 public class RdnaClient extends CordovaPlugin {
@@ -35,7 +26,6 @@ public class RdnaClient extends CordovaPlugin {
   CordovaWebView webView;
   CallbackContext callbackContext;
   public String deviceToken;
-  public String applicationFingerprint;
   public String applicationName;
   public String applicationVersion;
   Semaphore lock = new Semaphore(0, true);
@@ -62,11 +52,10 @@ public class RdnaClient extends CordovaPlugin {
     this.context = context;
     this.webView = webView;
   }
-  
+
   public boolean execute(final String action, final JSONArray args, CallbackContext callbackContext) throws JSONException {
     
     this.callbackContext = callbackContext;
-    
     
     if (action.equals("initialize")) {
       initialize(args);
@@ -78,8 +67,8 @@ public class RdnaClient extends CordovaPlugin {
       resumeRuntime(args);
     } else if (action.equals("logoff")) {
       logOff(args);
-    } else if (action.equals("checkChallenges")) {
-      checkChallenges(args);
+    } else if (action.equals("checkChallengeResponse")) {
+      checkChallengeResponse(args);
     } else if (action.equals("updateChallenges")) {
       updateChallenges(args);
     } else if (action.equals("getAllChallenges")) {
@@ -145,169 +134,128 @@ public class RdnaClient extends CordovaPlugin {
     }
     return true;
   }
-  
-  
-  public void setCredentials(JSONArray args) throws JSONException {
-    rdnaiwaCreds = new RDNA.RDNAIWACreds();
-    rdnaiwaCreds.userName = args.getString(0);
-    rdnaiwaCreds.password = args.getString(1);
-    rdnaiwaCreds.authStatus = args.getBoolean(2) == true ? RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_SUCCESS : RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_CANCELLED;
-    lock.release();
-  }
-  
-  
-  void updateDeviceDetails(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.updateDeviceDetails(args.getString(0), args.getString(0)));
-  }
-  
-  void getRegisteredDeviceDetails(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.getRegisteredDeviceDetails(args.getString(0)));
-  }
-  
-  void getPostLoginChallenges(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.getPostLoginChallenges(args.getString(0), args.getString(1)));
-  }
-  
-  
-  void setApplicationName(JSONArray args) throws JSONException {
-    applicationName = args.getString(0);
-    createDefaultConstantSettingCallBack(applicationName);
-  }
-  
-  void setApplicationVersion(JSONArray args) throws JSONException {
-    applicationVersion = args.getString(0);
-    createDefaultConstantSettingCallBack(applicationVersion);
-  }
-  
-  
-  void setApplicationFingerprint(JSONArray args) throws JSONException {
-    applicationFingerprint = args.getString(0);
-    createDefaultConstantSettingCallBack(applicationFingerprint);
-  }
-  
-  void setDeviceToken(JSONArray args) throws JSONException {
-    deviceToken = args.getString(0);
-    createDefaultConstantSettingCallBack(deviceToken);
-  }
-  
-  
-  void createDefaultConstantSettingCallBack(String result) {
-    
-    try {
-      if (result != null || result.length() > 0) {
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
-        pluginResult.setKeepCallback(true);
-        
-      } else {
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, "Invalid Argument");
-        pluginResult.setKeepCallback(true);
-      }
-    } catch (Exception e) {
-      PluginResult pluginResult = new PluginResult(PluginResult.Status.ILLEGAL_ACCESS_EXCEPTION, e.toString());
-      pluginResult.setKeepCallback(true);
-      callbackContext.sendPluginResult(pluginResult);
-    }
-    
-  }
-  
-  
-  void updateNotifications(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.updateNotification(args.getString(0), args.getString(1)));
-  }
-  
-  void getNotifications(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.getNotifications(args.getInt(0), args.getInt(1), args.getString(2), args.getString(3), args.getString(4)));
-  }
-  
-  void getAllChallenges(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.getAllChallenges(args.getString(0)));
-  }
-  
-  void checkChallenges(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.checkChallengeResponse(args.getString(0), args.getString(1)));
-  }
-  
-  void updateChallenges(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.updateChallenges(args.getString(0), args.getString(1)));
-  }
-  
-  void logOff(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.logOff(args.getString(0)));
-  }
-  
-  
+
   void initialize(JSONArray args) {
-    
+
     callbacks = new RDNA.RDNACallbacks() {
       @Override
       public int onInitializeCompleted(String s) {
         callJavaScript("onInitializeCompleted", s);
         return 0;
       }
-      
-      @Override
-      public Object getDeviceContext() {
-        
-        return cordova.getActivity();
-      }
-      
-      
-      @Override
-      public int onTerminate(String s) {
-        callJavaScript("onTerminate", s);
-        return 0;
-      }
-      
-      @Override
-      public int onPauseRuntime(String s) {
-        callJavaScript("onPauseRuntime", s);
-        return 0;
-      }
-      
-      @Override
-      public int onResumeRuntime(String s) {
-        callJavaScript("onResumeRuntime", s);
-        return 0;
-      }
-      
-      @Override
-      public int onConfigReceived(String s) {
-        callJavaScript("onConfigReceived", s);
-        return 0;
-      }
-      
-      @Override
-      public int onCheckChallengeResponseStatus(String s) {
-        callJavaScript("onCheckChallengeResponseStatus", s);
-        return 0;
-      }
-      
-      @Override
-      public int onGetAllChallengeStatus(String s) {
-        callJavaScript("onGetAllChallengeStatus", s);
-        return 0;
-        
-      }
-      
-      @Override
-      public int onUpdateChallengeStatus(String s) {
-        callJavaScript("onUpdateChallengeStatus", s);
-        return 0;
-      }
-      
-      @Override
-      public int onForgotPasswordStatus(String s) {
-        callJavaScript("onForgotPasswordStatus", s);
-        return 0;
-        
-      }
-      
+
       @Override
       public int onLogOff(String s) {
         callJavaScript("onLogOff", s);
         return 0;
       }
-      
+
+      @Override
+      public int onTerminate(String s) {
+        callJavaScript("onTerminate", s);
+        return 0;
+      }
+
+      @Override
+      public int onSessionTimeout(String s) {
+        callJavaScript("onSessionTimeout", s);
+        return 0;
+      }
+
+      @Override
+      public int onPauseRuntime(String s) {
+        callJavaScript("onPauseRuntime", s);
+        return 0;
+      }
+
+      @Override
+      public int onResumeRuntime(String s) {
+        callJavaScript("onResumeRuntime", s);
+        return 0;
+      }
+
+      @Override
+      public String getDeviceToken() {
+        return deviceToken;
+      }
+
+      @Override
+      public int onCheckChallengeResponseStatus(String s) {
+        callJavaScript("onCheckChallengeResponseStatus", s);
+        return 0;
+      }
+
+      @Override
+      public int onGetAllChallengeStatus(String s) {
+        callJavaScript("onGetAllChallengeStatus", s);
+        return 0;
+
+      }
+
+      @Override
+      public int onUpdateChallengeStatus(String s) {
+        callJavaScript("onUpdateChallengeStatus", s);
+        return 0;
+      }
+
+      @Override
+      public int onGetNotifications(String s) {
+        callJavaScript("onGetNotifications", s);
+        return 0;
+      }
+
+      @Override
+      public int onUpdateNotification(String s) {
+        callJavaScript("onUpdateNotification", s);
+        return 0;
+      }
+
+      @Override
+      public int onGetNotificationsHistory(String s) {
+        callJavaScript("onGetNotificationsHistory", s);
+        return 0;
+      }
+
+      @Override
+      public int onGetRegistredDeviceDetails(String s) {
+        callJavaScript("onGetRegistredDeviceDetails", s);
+        return 0;
+      }
+
+      @Override
+      public int onUpdateDeviceDetails(String s) {
+        callJavaScript("onUpdateDeviceDetails", s);
+        return 0;
+      }
+
+      @Override
+      public String getApplicationName() {
+        return applicationName;
+      }
+
+      @Override
+      public String getApplicationVersion() {
+        return applicationVersion;
+      }
+
+      @Override
+      public int onForgotPasswordStatus(String s) {
+        callJavaScript("onForgotPasswordStatus", s);
+        return 0;
+      }
+
+      @Override
+      public int onGetPostLoginChallenges(String s) {
+        callJavaScript("onGetPostLoginChallenges", s);
+        return 0;
+      }
+
+      @Override
+      public int onConfigReceived(String s) {
+        callJavaScript("onConfigReceived", s);
+        return 0;
+      }
+
       @Override
       public RDNA.RDNAIWACreds getCredentials(String s) {
         callJavaScript("getCredentials", s);
@@ -317,72 +265,20 @@ public class RdnaClient extends CordovaPlugin {
           e.printStackTrace();
         }
         return rdnaiwaCreds;
-        
       }
-      
-      @Override
-      public String getApplicationName() {
-        return applicationName;
-      }
-      
-      @Override
-      public String getApplicationVersion() {
-        return applicationVersion;
-      }
-      
-      @Override
-      public int onGetPostLoginChallenges(String s) {
-        callJavaScript("onGetPostLoginChallenges", s);
-        return 0;
-      }
-      
-      @Override
-      public int onGetRegistredDeviceDetails(String s) {
-        callJavaScript("onGetRegistredDeviceDetails", s);
-        return 0;
-      }
-      
-      @Override
-      public int onUpdateDeviceDetails(String s) {
-        callJavaScript("onUpdateDeviceDetails", s);
-        return 0;
-      }
-      
-      @Override
-      public String getDeviceToken() {  
-        return deviceToken;
-      }
-      
-      @Override
-      public int onGetNotifications(String s) {
-        callJavaScript("onGetNotifications", s);
-        return 0;
-      }
-      
-      @Override
-      public int onUpdateNotification(String s) {
-        callJavaScript("onUpdateNotification", s);
-        return 0;
-      }
-      
-      @Override
-      public int onGetNotificationsHistory(String s) {
-        callJavaScript("onGetNotificationsHistory", s);
-        return 0;
-      }
-      
-      @Override
-      public int onSessionTimeout(String s) {
-        callJavaScript("onSessionTimeout", s);
-        return 0;
-      }
-      
+
       @Override
       public int onSdkLogPrintRequest(RDNA.RDNALoggingLevel rdnaLoggingLevel, String s) {
-	callJavaScript("onSdkLogPrintRequest", s);
+        callJavaScript("onSdkLogPrintRequest", s);
         return 0;
       }
+
+      @Override
+      public Object getDeviceContext() {
+        return cordova.getActivity();
+      }
     };
+
     try {
       RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(args.getString(0), callbacks, args.getString(1), args.getInt(2), args.getString(3), args.getString(4), null, null,null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS,"edewf");
       rdnaObj = rdnaStatus.result;
@@ -391,19 +287,21 @@ public class RdnaClient extends CordovaPlugin {
       PluginResult pluginResult = new PluginResult(PluginResult.Status.ILLEGAL_ACCESS_EXCEPTION, e.toString());
       pluginResult.setKeepCallback(true);
     }
-    
   }
-  
+
+  void logOff(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.logOff(args.getString(0)));
+  }
+
   void terminate() {
     decideCallback(rdnaObj.terminate());
   }
-  
+
   public void pauseRuntime() {
-    
+
     decideCallback(rdnaObj.pauseRuntime());
   }
-  
-  
+
   public void resumeRuntime(JSONArray args) {
     try {
       RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(args.getString(0), callbacks, null, cordova.getActivity());
@@ -412,66 +310,60 @@ public class RdnaClient extends CordovaPlugin {
     } catch (JSONException e) {
       e.printStackTrace();
     }
-    
   }
-  
-  public void getDefaultCipherSalt() {
-    decideCallback(rdnaObj.getDefaultCipherSalt());
+
+  void checkChallengeResponse(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.checkChallengeResponse(args.getString(0), args.getString(1)));
   }
-  public void getDefaultCipherSpec() {
-    decideCallback(rdnaObj.getDefaultCipherSpec());
+
+  void getAllChallenges(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.getAllChallenges(args.getString(0)));
   }
-  
-  
-  public void encryptDataPacket(JSONArray args) {
+
+  void updateChallenges(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.updateChallenges(args.getString(0), args.getString(1)));
+  }
+
+  public void resetChallenge(JSONArray args) {
     try {
-      
-      RDNA.RDNAStatus<byte[]> a=rdnaObj.encryptDataPacket(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3).getBytes());
-      decideCallback(Base64.encodeToString(a.result, Base64.DEFAULT));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  public void encryptHttpRequest(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.encryptHttpRequest(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  
-  public void decryptHttpResponse(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.decryptHttpResponse(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  
-  public void getConfig(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.getConfig(args.getString(0)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  
-  public void forgotPassword(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.forgotPassword(args.getString(0)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  public void getSDKVersion(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.getSDKVersion());
+      decideCallback(rdnaObj.resetChallenge());
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-   void getSessionID(){
+  void getNotifications(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.getNotifications(args.getInt(0), args.getInt(1), args.getString(2), args.getString(3), args.getString(4)));
+  }
+
+  void updateNotifications(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.updateNotification(args.getString(0), args.getString(1)));
+  }
+
+  void getRegisteredDeviceDetails(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.getRegisteredDeviceDetails(args.getString(0)));
+  }
+
+  void updateDeviceDetails(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.updateDeviceDetails(args.getString(0), args.getString(0)));
+  }
+
+  void setApplicationName(JSONArray args) throws JSONException {
+    applicationName = args.getString(0);
+    createDefaultConstantSettingCallBack(applicationName);
+  }
+
+  void setApplicationVersion(JSONArray args) throws JSONException {
+    applicationVersion = args.getString(0);
+    createDefaultConstantSettingCallBack(applicationVersion);
+  }
+
+  void setDeviceToken(JSONArray args) throws JSONException {
+    deviceToken = args.getString(0);
+    createDefaultConstantSettingCallBack(deviceToken);
+  }
+
+  void getSessionID(){
     try {
       decideCallback(rdnaObj.getSessionID());
     }catch (Exception e){}
@@ -484,61 +376,23 @@ public class RdnaClient extends CordovaPlugin {
       e.printStackTrace();
     }
   }
-  
-  public void resetChallenge(JSONArray args) {
+
+  public void getDefaultCipherSpec() {
+    decideCallback(rdnaObj.getDefaultCipherSpec());
+  }
+
+  public void getDefaultCipherSalt() {
+    decideCallback(rdnaObj.getDefaultCipherSalt());
+  }
+
+  public void getSDKVersion(JSONArray args) {
     try {
-      decideCallback(rdnaObj.resetChallenge());
+      decideCallback(rdnaObj.getSDKVersion());
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
-  
-  public void getServiceByServiceName(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.getServiceByServiceName(args.getString(0)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  public void getServiceByTargetCoordinate(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.getServiceByTargetCoordinate(args.getString(0),args.getInt(1)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  public void serviceAccessStart(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.serviceAccessStart(args.getString(0)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  public void serviceAccessStartAll(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.serviceAccessStartAll());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-  public void serviceAccessStopAll(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.serviceAccessStopAll());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-  
-  
-  public void serviceAccessStop(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.serviceAccessStop(args.getString(0)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-  
-  
+
   public void getAllServices(JSONArray args) {
     try {
       decideCallback(rdnaObj.getAllServices());
@@ -546,7 +400,65 @@ public class RdnaClient extends CordovaPlugin {
       e.printStackTrace();
     }
   }
-  
+
+  public void getServiceByServiceName(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.getServiceByServiceName(args.getString(0)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void getServiceByTargetCoordinate(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.getServiceByTargetCoordinate(args.getString(0),args.getInt(1)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void serviceAccessStart(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.serviceAccessStart(args.getString(0)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void serviceAccessStop(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.serviceAccessStop(args.getString(0)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void serviceAccessStartAll(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.serviceAccessStartAll());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void serviceAccessStopAll(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.serviceAccessStopAll());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void encryptDataPacket(JSONArray args) {
+    try {
+
+      RDNA.RDNAStatus<byte[]> a=rdnaObj.encryptDataPacket(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3).getBytes());
+      decideCallback(Base64.encodeToString(a.result, Base64.DEFAULT));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void decryptDataPacket(JSONArray args) {
     try {
       decideCallback(rdnaObj.decryptDataPacket(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), Base64.decode(args.getString(3), Base64.DEFAULT)));
@@ -554,8 +466,51 @@ public class RdnaClient extends CordovaPlugin {
       e.printStackTrace();
     }
   }
-  
-  
+
+  public void encryptHttpRequest(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.encryptHttpRequest(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void decryptHttpResponse(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.decryptHttpResponse(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void forgotPassword(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.forgotPassword(args.getString(0)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  void getPostLoginChallenges(JSONArray args) throws JSONException {
+    decideCallback(rdnaObj.getPostLoginChallenges(args.getString(0), args.getString(1)));
+  }
+
+  public void getConfig(JSONArray args) {
+    try {
+      decideCallback(rdnaObj.getConfig(args.getString(0)));
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void setCredentials(JSONArray args) throws JSONException {
+    rdnaiwaCreds = new RDNA.RDNAIWACreds();
+    rdnaiwaCreds.userName = args.getString(0);
+    rdnaiwaCreds.password = args.getString(1);
+    rdnaiwaCreds.authStatus = args.getBoolean(2) == true ? RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_SUCCESS : RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_CANCELLED;
+    lock.release();
+  }
+
   private synchronized void callJavaScript(String methodName, String s) {
     Log.d("RDNANative", "javascript:cordova.fireDocumentEvent('");
     final StringBuilder stringBuilder = new StringBuilder();
@@ -584,7 +539,6 @@ public class RdnaClient extends CordovaPlugin {
       
       ((Activity) (webView.getContext())).runOnUiThread(jsLoader);
     }
-    
   }
   
   void decideCallback(Object result) {
@@ -650,15 +604,31 @@ public class RdnaClient extends CordovaPlugin {
     return "unknown";
   }
   
-  
   String createCallBackRespose(int errCode, String response) throws JSONException {
     JSONObject jsonResObj = new JSONObject();
     jsonResObj.put("error", errCode);
     jsonResObj.put("response", response);
     return jsonResObj.toString();
   }
-  
-  
+
+  void createDefaultConstantSettingCallBack(String result) {
+
+    try {
+      if (result != null || result.length() > 0) {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
+        pluginResult.setKeepCallback(true);
+
+      } else {
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, "Invalid Argument");
+        pluginResult.setKeepCallback(true);
+      }
+    } catch (Exception e) {
+      PluginResult pluginResult = new PluginResult(PluginResult.Status.ILLEGAL_ACCESS_EXCEPTION, e.toString());
+      pluginResult.setKeepCallback(true);
+      callbackContext.sendPluginResult(pluginResult);
+    }
+  }
+
   byte[] decodeBase64(String encodedBase64) {
     byte[] base64decodedData = null;
     try {
@@ -668,7 +638,5 @@ public class RdnaClient extends CordovaPlugin {
     }
     return base64decodedData;
   }
-  
-  
 }
 
