@@ -29,6 +29,13 @@
 <config-file parent="/*" target="config.xml">
 <feature name="RdnaClient"><param name="ios-package" value="RdnaClient" /></feature>
 </config-file><source-file src="src/ios/RdnaClient.m" />
-<header-file src="src/ios/RdnaClient.h" /> 
+<header-file src="src/ios/RdnaClient.h" />
+<source-file src="api-sdk/libs/libapi-sdk.a" framework="true" />
+<header-file src="api-sdk/include/RDNA.h" />
+<framework src="AdSupport.framework" />
+<framework src="CoreTelephony.framework" />
+<framework src="CoreLocation.framework" />
+<framework src="libstdc++.dylib" />
+<framework src="libc++.dylib" />
 </platform>
 </plugin>
