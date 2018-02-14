@@ -140,6 +140,8 @@ public class RdnaClient extends CordovaPlugin {
       getSDKVersion(args);
     }else if (action.equals("getErrorInfo")) {
       getErrorInfo(args);
+    }else if (action.equals("getSessionID")) {
+      getSessionID();
     }
     return true;
   }
@@ -347,8 +349,7 @@ public class RdnaClient extends CordovaPlugin {
       }
       
       @Override
-      public String getDeviceToken() {
-        
+      public String getDeviceToken() {  
         return deviceToken;
       }
       
@@ -366,16 +367,19 @@ public class RdnaClient extends CordovaPlugin {
       
       @Override
       public int onGetNotificationsHistory(String s) {
+        callJavaScript("onGetNotificationsHistory", s);
         return 0;
       }
       
       @Override
       public int onSessionTimeout(String s) {
+        callJavaScript("onSessionTimeout", s);
         return 0;
       }
       
       @Override
       public int onSdkLogPrintRequest(RDNA.RDNALoggingLevel rdnaLoggingLevel, String s) {
+	callJavaScript("onSdkLogPrintRequest", s);
         return 0;
       }
     };
@@ -466,6 +470,13 @@ public class RdnaClient extends CordovaPlugin {
       e.printStackTrace();
     }
   }
+
+   void getSessionID(){
+    try {
+      decideCallback(rdnaObj.getSessionID());
+    }catch (Exception e){}
+  }
+
   public void getErrorInfo(JSONArray args) {
     try {
       decideCallback(rdnaObj.getErrorInfo(args.getInt(0)).name());
