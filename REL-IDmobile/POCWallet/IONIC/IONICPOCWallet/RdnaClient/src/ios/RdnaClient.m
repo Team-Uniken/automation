@@ -1,14 +1,14 @@
 //
 //  RdnaClient.m
 //  CordovaRefApp
+//  Copyright © 2017 Uniken. All rights reserved.
 //
-//  Created by Swapnil on 11/15/16.
-//
-//
+
 
 #import "RdnaClient.h"
 #import "RDNA.h"
 #import <CoreLocation/CoreLocation.h>
+
 
 @interface RdnaClient()<CLLocationManagerDelegate>{
   
@@ -31,7 +31,7 @@
 #pragma mark Wrapper callback methods
 
 -(int)onSdkLogPrintRequest:(RDNALoggingLevel)level andlogData:(NSString*)logData{
-  NSLog(logData);
+   [self callJavaScript:@"onSdkLogPrintRequest" result:logData];
   return 0;
 }
 - (NSString *)getApplicationFingerprint {
@@ -87,8 +87,6 @@
   //user can show location alert if location not available.
   return 0;
 }
-
-
 
 
 - (int)onConfigRecieved:(NSString *)status{
@@ -179,6 +177,14 @@
   return deviceToken;
 }
 
+-(int)onSessionTimeout:(NSString*)status{
+  [self callJavaScript:@"onSessionTimeout" result:status];
+  return 0;
+}
+
+-(int)onSecurityThreat:(NSString*)status{
+ [self callJavaScript:@"onSecurityThreat" result:status];
+}
 
 -(void)callJavaScript:(NSString*)methodName result:(NSString*) s{
   
@@ -190,7 +196,6 @@
   
   
 }
-
 
 
 -(void)initParams{
@@ -376,7 +381,7 @@
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     //Background Thread
     @try{
-      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
       rdnaObject = rdna;
       dispatch_async(dispatch_get_main_queue(), ^(void){
         //Run UI Updates
@@ -647,39 +652,6 @@
     [self illegalAccessCallback:exception];
   }
 }
-
-//-(void)updateDeviceDetails:(CDVInvokedUrlCommand*)command{
-//
-//  @try {
-//    [self decideCallback:[rdnaObject updateDeviceDetails:[command.arguments objectAtIndex:0] withDevices:[command.arguments objectAtIndex:1]] response:nil];
-//  } @catch (NSException *exception) {
-//    [self illegalAccessCallback:exception];
-//  }
-//
-//}
-//
-//-(void)getRegisteredDeviceDetails:(CDVInvokedUrlCommand*)command{
-//
-//  @try {
-//    [self decideCallback:[rdnaObject getRegisteredDeviceDetails:[command.arguments objectAtIndex:0]] response:nil];
-//  } @catch (NSException *exception) {
-//    [self illegalAccessCallback:exception];
-//  }
-//
-//}
-//
-//
-//-(void)getPostLoginChallenges:(CDVInvokedUrlCommand*)command{
-//
-//  @try {
-//    [self decideCallback:[rdnaObject getPostLoginChallenges:[command.arguments objectAtIndex:0] withUseCaseName:[command.arguments objectAtIndex:1]] response:nil];
-//  } @catch (NSException *exception) {
-//    [self illegalAccessCallback:exception];
-//  }
-//
-//}
-
-
 
 #pragma -mark plugin to JS callback implementation
 
