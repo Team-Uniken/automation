@@ -43,6 +43,7 @@
 -(void)decryptDataPacket:(CDVInvokedUrlCommand*)command;
 -(void)decryptHttpResponse:(CDVInvokedUrlCommand*)command;
 
+-(void)getSessionID:(CDVInvokedUrlCommand*)command;
 -(void)getSDKVersion:(CDVInvokedUrlCommand*)command;
 -(void)getErrorInfo:(CDVInvokedUrlCommand*)command;
 

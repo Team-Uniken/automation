@@ -428,7 +428,7 @@
   callbackID = command.callbackId;
   @try {
     
-    int errorCode = [RDNA  resumeRuntime:&rdna SavedState:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks ProxySettings:nil RDNALoggingLevel:RDNA_LOG_VERBOSE AppContext:self];
+    int errorCode = [RDNA  resumeRuntime:&rdna SavedState:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks ProxySettings:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
     
     [self decideCallback:errorCode response:nil];
     
@@ -507,6 +507,7 @@
   
 }
 
+
 -(void)getConfig:(CDVInvokedUrlCommand*)command{
   
   callbackID = command.callbackId;
@@ -530,6 +531,19 @@
   
 }
 
+
+-(void)getSessionID:(CDVInvokedUrlCommand*)command{
+  
+  callbackID = command.callbackId;
+  @try {
+    NSString *sessionString;
+     int errorCode =[rdnaObject getSessionID:&sessionString];
+    [self decideCallback:errorCode response:sessionString];
+  } @catch (NSException *exception) {
+    [self illegalAccessCallback:exception];
+  }
+  
+}
 
 
 -(void)getSDKVersion:(CDVInvokedUrlCommand*)command{
