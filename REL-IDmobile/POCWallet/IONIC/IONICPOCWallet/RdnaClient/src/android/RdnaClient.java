@@ -83,8 +83,6 @@ public class RdnaClient extends CordovaPlugin {
       getDefaultCipherSpec();
     }else if (action.equals("setDeviceToken")) {
       setDeviceToken(args);
-    } else if (action.equals("setApplicationFingerprint")) {
-      setApplicationFingerprint(args);
     } else if (action.equals("setApplicationName")) {
       setApplicationName(args);
     } else if (action.equals("setApplicationVersion")) {
