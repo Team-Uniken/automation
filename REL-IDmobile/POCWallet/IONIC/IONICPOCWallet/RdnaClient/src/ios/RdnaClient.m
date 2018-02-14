@@ -284,10 +284,10 @@
 }
 
 - (void)setDeviceToken:(CDVInvokedUrlCommand*)command{
-  
+    callbackID = command.callbackId;
   @try {
-    applicationFingerprint = [command.arguments objectAtIndex:0];
-    [self createDefaultConstantSettingCallBack:applicationFingerprint];
+    deviceToken = [command.arguments objectAtIndex:0];
+    [self createDefaultConstantSettingCallBack:deviceToken];
   } @catch (NSException *exception) {
     [self illegalAccessCallback:exception];
   }
