@@ -68,7 +68,7 @@ export class TwoFactorState {
 
     checkChallenge(challenges: any, userID: string) {
         this.toast.showLoader();
-        com.uniken.rdnaplugin.RdnaClient.checkChallenges(this.onSuccess, this.onFailure, [JSON.stringify(challenges), userID]);
+        com.uniken.rdnaplugin.RdnaClient.checkChallengeResponse(this.onSuccess, this.onFailure, [JSON.stringify(challenges), userID]);
     }
 
     handleChallenges(rdnaChallengeJson) {
