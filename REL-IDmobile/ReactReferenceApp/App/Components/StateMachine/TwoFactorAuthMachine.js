@@ -285,8 +285,26 @@ class TwoFactorAuthMachine extends Component {
             }
           }
         }
-      }else if(statusCode === 26 || statusCode === 28 || statusCode === 1){
-        this.navigateToRegistration();
+      } else if (statusCode === 26 || statusCode === 28 || statusCode === 1) {
+        /*
+           26  -->> RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED User - device not register 
+           28  -->> RDNA_RESP_STATUS_USER_SUSPENDED - User suspended  
+           1   -->> RDNA_RESP_STATUS_NO_USER_ID -  user Id not present   
+        */
+        setTimeout(() => {
+          Alert.alert(
+            'Error',
+            res.pArgs.response.StatusMsg, [{
+              text: 'OK',
+              onPress: () => {
+                this.navigateToRegistration();
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
+        }, 100);
+
       } else {
         if (Main.isOtherLogin === true) {
           Main.isOtherLogin = false;
@@ -352,15 +370,31 @@ class TwoFactorAuthMachine extends Component {
           );
         }, 100);
       }
-    } else if(res.errCode == 58){
-        this.navigateToRegistration();
+    } else if (res.errCode == 58) {
+      /*
+        58 -->>  RDNA_ERR_INVALID_USER_MR_STATE -Invalid user state in local storage 
+      */
+      setTimeout(() => {
+        Alert.alert(
+          'Error',
+          'User state is not valid ,please register again.', [{
+            text: 'OK',
+            onPress: () => {
+              this.navigateToRegistration();
+            },
+            style: 'cancel',
+          }],
+          { cancelable: false }
+        );
+      }, 100);
+
+
     } else {
       if (Main.isOtherLogin === true) {
         Main.isOtherLogin = false;
       }
       console.log(e);
       //Show alert as errorCode is not 0 and call resetChallenge
-
       setTimeout(() => {
         Alert.alert(
           'Error',
