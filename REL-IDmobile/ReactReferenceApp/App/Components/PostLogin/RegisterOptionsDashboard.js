@@ -305,9 +305,9 @@ This method is called when the component will start to load
             arrTba.push(chlngJson.chlng[i]);
         }
 
-        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
+       // if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
 
-          if (arrTba.length > 0) {
+         // if (arrTba.length > 0) {
             AsyncStorage.getItem(Main.dnaUserName).then((value) => {
               if (value) {
                 try {
@@ -324,22 +324,21 @@ This method is called when the component will start to load
 
                   // this.forceUpdate();
                 } catch (e) { }
-                                                        }else{
-                                                        
-                                                        this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : false } };
-                                                        this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : false } } });
-                                                        }
+              }else{                                          
+                this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : false } };
+                this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : false } } });
+              }
             }).done();
-          } else {
-//            this.props.navigator.pop();
-//            this.props.navigation.goBack();
-            this.doNavigateDashBoard();
-          }
-        } else {
-//          this.props.navigator.pop();
-//          this.props.navigation.goBack();
-          this.doNavigateDashBoard();
-        }
+//           } else {
+// //            this.props.navigator.pop();
+// //            this.props.navigation.goBack();
+//             this.doNavigateDashBoard();
+//           }
+//         } else {
+// //          this.props.navigator.pop();
+// //          this.props.navigation.goBack();
+//           this.doNavigateDashBoard();
+//         }
       } else {
         setTimeout(() => {
          alert(res.pArgs.response.StatusMsg);
@@ -497,6 +496,7 @@ This method is called when the component will start to load
     ];
 
     if (this.state.url) {
+      if(this.state.url.chlngJson){
       for (var i = 0; i < this.state.url.chlngJson.chlng.length; i++) {
         var chlng = this.state.url.chlngJson.chlng[i];
 
@@ -519,8 +519,8 @@ This method is called when the component will start to load
           }
         }
       }
-
-      if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
+    }
+      if (this.state.url && this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
           if (this.state.pattern) {
             data.push(Skin.text['0']['2'].credTypes['pattern']);

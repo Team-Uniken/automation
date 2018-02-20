@@ -113,6 +113,7 @@ class Load extends Component {
       animatedTextValue: new Animated.Value(0),
     };
 
+    this.closeStateMachine = this.closeStateMachine.bind(this);
     Main.isApiRunning = false;
     this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
@@ -122,12 +123,12 @@ class Load extends Component {
   //use to clear twoFactorAuthMachine navigator
   closeStateMachine() {
     console.log('---------- closeStateMachine ');
-    var allScreens = obj1.props.navigator.getCurrentRoutes(-1);
+    var allScreens = this.props.navigator.getCurrentRoutes(-1);
     for (var i = allScreens.length - 1; i >= 0; i--) {
       var screen = allScreens[i];
       if (screen.id === 'Load') {
-        var mySelectedRoute = obj1.props.navigator.getCurrentRoutes()[i];
-        obj1.props.navigator.replace(mySelectedRoute);
+        var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+        this.props.navigator.replace(mySelectedRoute);
         //return;
       }
     }

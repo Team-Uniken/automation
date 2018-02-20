@@ -65,6 +65,7 @@ class Register extends Component {
       keyboardVisible: false,
     };
 
+    this.sessionId = null;
     this.close = this.close.bind(this);
   }
   /*
@@ -79,6 +80,12 @@ class Register extends Component {
     });
     this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+
+    ReactRdna.getSessionID((response)=>{
+      if(response[0].error ==0){
+        this.sessionId = response[0].response;
+      }
+    });
   }
 
 
@@ -210,6 +217,7 @@ class Register extends Component {
       // EMAIL_ID_STR, mandatory = false          // sholud be there
       // MOB_NUM_ID_STR, mandatory = false        // sholud be there
       // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
+
       var userMap = {
         "firstName": this.state.firstName.trim(),
         "lastName": this.state.lastName.trim(),
@@ -219,6 +227,7 @@ class Register extends Component {
         "mobNum": this.state.phoneNumber.trim(),
         "isRELIDZeroEnabled": "true",
         "username": "sruser",
+        "sessionId":this.sessionId,
         "password": "1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
       };
 

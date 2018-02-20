@@ -126,6 +126,7 @@ class TwoFactorAuthMachine extends Component {
     this.showNextChallenge = this.showNextChallenge.bind(this);
     this.resetChallenge = this.resetChallenge.bind(this);
     this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
+    this.navigateToRegistration = this.navigateToRegistration.bind(this);
   }
 
   /** 
@@ -284,6 +285,8 @@ class TwoFactorAuthMachine extends Component {
             }
           }
         }
+      }else if(statusCode === 26 || statusCode === 28 || statusCode === 1){
+        this.navigateToRegistration();
       } else {
         if (Main.isOtherLogin === true) {
           Main.isOtherLogin = false;
@@ -349,6 +352,8 @@ class TwoFactorAuthMachine extends Component {
           );
         }, 100);
       }
+    } else if(res.errCode == 58){
+        this.navigateToRegistration();
     } else {
       if (Main.isOtherLogin === true) {
         Main.isOtherLogin = false;
@@ -483,15 +488,11 @@ class TwoFactorAuthMachine extends Component {
           ]
         })
         this.props.navigation.dispatch(resetAction)
-
-
-
       } else {
         console.log('immediate response is' + response[0].error);
         //        alert(response[0].error);
       }
     });
-
   }
 
 
@@ -715,7 +716,7 @@ class TwoFactorAuthMachine extends Component {
 
             }).done();
           } else {
-            Events.trigger('closeStateMachine');
+           // Events.trigger('closeStateMachine');
             InteractionManager.runAfterInteractions(() => {
               Main.gotNotification = false;
               //              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
@@ -735,7 +736,7 @@ class TwoFactorAuthMachine extends Component {
             });
           }
         } else {
-          Events.trigger('closeStateMachine');
+          //Events.trigger('closeStateMachine');
           InteractionManager.runAfterInteractions(() => {
             Main.gotNotification = false;
             //            this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
@@ -1096,6 +1097,49 @@ class TwoFactorAuthMachine extends Component {
    * This method is called by forgotPassword event to initiate forgotPassword flow.
    */
   initiateForgotPasswordFlow() {
+    this.navigateToRegistration();
+  }
+
+  navigateToRegistration(){
+    console.log('doNavigation:');
+    ReactRdna.resetChallenge((response) => {
+      if (response[0].error === 0) {
+        /**
+         * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
+         */
+        challengeJson = saveChallengeJson;
+        currentIndex = 0;
+        challengeJsonArr = saveChallengeJson.chlng;
+        console.log('immediate response is' + response[0].error);
+        var chlngJson1;
+        chlngJson1 = saveChallengeJson;
+        const nextChlngName = chlngJson1.chlng[0].chlng_name;
+        const chlngJson = saveChallengeJson;
+        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({
+              routeName: 'StateMachine', params: {
+                url: {
+                  reset: true,
+                  chlngJson,
+                  screenId: "SelfRegister",
+                  currentIndex: 0,
+                }, title: ""
+              }
+            })
+          ]
+        })
+        this.props.navigation.dispatch(resetAction)
+      } else {
+        console.log('immediate response is' + response[0].error);
+      }
+    });
+  }
+
+/*
+  initiateForgotPasswordFlow() {
 
     if (Main.isConnected) {
       mode = "forgotPassword";
@@ -1130,6 +1174,7 @@ class TwoFactorAuthMachine extends Component {
       alert("Please check your internet connection");
     }
   }
+  */
 
   /**
    * This method is called by TwoFactorAuthMachine to submit the challenges with responses.

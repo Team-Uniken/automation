@@ -60,7 +60,6 @@ let onTerminateSubscription;
 let onGetConfigSubscription;
 
 var styles = Skin.controlStyle;
-var Obj;
 var securePortalUrl;
 
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -87,6 +86,7 @@ class ControlPanel extends Component {
     this.onGetConfig = this.onGetConfig.bind(this);
     this.testConfig = this.testConfig.bind(this);
     this.showNoticiationScreen = this.showNoticiationScreen.bind(this);
+    this.cancelOperation = this.cancelOperation.bind(this);
     //this.getMyNotifications();
     Events.on('getConfiguration', 'getConfiguration', this.getConfig);
   }
@@ -138,10 +138,7 @@ class ControlPanel extends Component {
     this.getAllChallenges();
     constant.USER_SESSION = "YES";
     AsyncStorage.setItem("isPwdSet", "empty");
-    Obj = this;
     Events.on('cancelOperation', 'cancelOperation', this.cancelOperation);
-
-   
   }
 
   componentWillUnmount() {
@@ -324,13 +321,13 @@ class ControlPanel extends Component {
 
 
   cancelOperation(args) {
-    Obj.props.toggleDrawer();
-    var allScreens = Obj.props.navigator.getCurrentRoutes(0);
+    this.props.toggleDrawer();
+    var allScreens = this.props.navigator.getCurrentRoutes(0);
     for (var i = 0; i < allScreens.length; i++) {
       var screen = allScreens[i];
       if (screen.id == 'Main') {
-        var mySelectedRoute = Obj.props.navigator.getCurrentRoutes()[i];
-        Obj.props.navigator.popToRoute(mySelectedRoute);
+        var mySelectedRoute = this.props.navigator.getCurrentRoutes()[i];
+        this.props.navigator.popToRoute(mySelectedRoute);
         break;
       }
     }
