@@ -27,8 +27,10 @@
           <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
         </ion-item>
         -->
-  
-       
+        
+        <div padding>
+          <button ion-button color="primary" block (click)="setMPIN()">{{ 'Register MPIN' }}</button>
+        </div>
   
         <div padding>
           <button ion-button color="primary" block (click)="doAddMoney()">{{ 'Add Amount' }}</button>

@@ -12,7 +12,7 @@
 
       <ion-item>
         <!-- <ion-label fixed>{{ 'USER NAME'  }}</ion-label> -->
-        <ion-input type="email" [(ngModel)]="account.login_id" name="email" placeholder="Login PIN"></ion-input>
+        <ion-input type="email" [(ngModel)]="account.login_id" name="email" placeholder="Login ID"></ion-input>
       </ion-item>
 
       <!--
@@ -30,7 +30,9 @@
       </ion-item>
 
       <div padding>
-        <button ion-button color="primary" block (click)="doLogin()">{{ 'LOGIN_BUTTON' }}</button>
+        <button ion-button color="primary" block (click)="doLogin()">{{ 'LOGIN' }}</button>
+        <div justify-content-center padding style="width: 100%">OR</div>
+        <button ion-button color="primary" block (click)="doLoginWithTbaCred()">{{ 'LOGIN WITH MPIN' }}</button>
       </div>
 
     </ion-list>

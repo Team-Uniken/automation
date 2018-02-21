@@ -24,10 +24,19 @@ export class TwoFactorState {
     static initialChallengesJson: any;
     static listener:any;
     static isLoginToDashboard:boolean;
+    static loggedInUser:string;
+    loginWithTbaCreds:boolean = false;
 
     static setInitialChallenge(challegeJson) {
         TwoFactorState.initialChallengesJson = challegeJson;
     }
+
+    replaceString(find, replace, str) {
+        while (str.indexOf(find) > -1) {
+          str = str.replace(find, replace);
+        }
+        return str;
+      }
 
     constructor(public navCtrl: NavController,public toast:Toast,public events:Events) {
         if(TwoFactorState.listener)
@@ -35,7 +44,12 @@ export class TwoFactorState {
 
         TwoFactorState.listener =  (e: any) => {
               this.toast.hideLoader();
-              let res = JSON.parse(e.response);
+              
+              
+              var res = e.response;
+              res = res.replace('[ [ "','[ [');
+              res = res.replace('" ] ]','] ]');
+              res = JSON.parse(res);
               if (res.errCode == 0) {
                   var statusCode = res.pArgs.response.StatusCode;
                   var statusMsg = res.pArgs.response.StatusMsg;
@@ -48,11 +62,14 @@ export class TwoFactorState {
                               this.handleChallenges(this.challengeJson);
                       } else
                           if(this.method === "login"){
+                            TwoFactorState.loggedInUser = this.userName;
+
                               //alert("event publish login:success");
                              //this.events.publish("login:success",null);
                              this.callback.callLoginApi();
                           }
                           else{
+                            TwoFactorState.loggedInUser = this.userName;
                             this.callback.doDashboard();
                           }
                   } else {
@@ -103,8 +120,11 @@ export class TwoFactorState {
                         challenge.chlng_resp[0].response = Constants.SAMPLE_ANSWER;
                     }
                 }
-                else if (challengeName === (Constants.CHLNG_PASS)) {
+                else if (challengeName === (Constants.CHLNG_PASS) && this.loginWithTbaCreds === false) {
                     challenge.chlng_resp[0].response = this.passcode; TwoFactorState
+                }else if(challengeName === (Constants.CHLNG_TBACRED) && this.loginWithTbaCreds === true){
+                    challenge.chlng_resp[0].challenge = 'MPIN';
+                    challenge.chlng_resp[0].response = this.passcode;
                 }
                 else if (challengeName === (Constants.CHLNG_DEV_BIND)) {
                     challenge.chlng_resp[0].response = true;
@@ -128,13 +148,23 @@ export class TwoFactorState {
     }
 
     doLogin(userName: any, passcode: any) {
+        TwoFactorState.loggedInUser = "";
         this.userName = userName;
         this.passcode = passcode;
         this.method = "login";
         this.handleChallenges(TwoFactorState.initialChallengesJson);
     }
 
+    doLoginWithTbaCreds(userName,credential){
+        this.loginWithTbaCreds = true;
+        this.userName = userName;
+        this.passcode = credential;
+        this.method = "login"
+        this.handleChallenges(TwoFactorState.initialChallengesJson);
+    }
+
     startActivation(actCode: string, userName: string, passcode: string) {
+        TwoFactorState.loggedInUser = "";
         this.actCode = actCode;
         this.userName = userName;
         this.passcode = passcode;

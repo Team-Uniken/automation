@@ -21,7 +21,7 @@ import { TwoFactorState } from '../twofatorstate/twofatorstate';
 export class LoginPage {
 
   account: { login_id: string, password: string } = {
-     login_id: 'swap7',
+     login_id: '9765',
     password: '1111'
     //login_id: '',
     //password: ''
@@ -42,6 +42,7 @@ export class LoginPage {
   }
 
   callLoginApi() {
+   // alert(login_id);
     this.toast.showLoader();
     this.user.login(this.account).subscribe((resp: any) => {
       this.toast.hideLoader();
@@ -58,7 +59,6 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-
     if(!this.validate())
     return;
     
@@ -69,6 +69,35 @@ export class LoginPage {
     state.doLogin(this.account.login_id.trim(), this.account.password.trim());
   }
 
+  doLoginWithTbaCred(){
+    this.toast.showPrompt([
+      {
+        name: 'loginid',
+        placeholder: 'Login ID'
+      },
+      {
+        name: 'mpin',
+        placeholder: 'MPIN'
+      }],
+      [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Login',
+          handler: (data) => {
+            let stateMachine:TwoFactorState;
+            stateMachine = new TwoFactorState(this.navCtrl,this.toast,this.events);
+            stateMachine.callback = this;
+            stateMachine.doLoginWithTbaCreds(data.loginid, data.mpin);
+          }
+        }
+      ]);
+  }
 
   validate(){
     if(this.account.login_id.trim().length===0){

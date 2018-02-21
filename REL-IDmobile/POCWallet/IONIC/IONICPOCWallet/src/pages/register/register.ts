@@ -23,11 +23,11 @@ export class RegisterPage {
     // password: '1111',
     // password_cofirm:'1111'
 
-    login_id: '',
-    card_no: '',
-    card_pin:"",
-    password: '',
-    password_cofirm:''
+    login_id: '9763',
+    card_no: '123456',
+    card_pin:"1111",
+    password: '1111',
+    password_cofirm:'1111'
   };
 
   response:any;

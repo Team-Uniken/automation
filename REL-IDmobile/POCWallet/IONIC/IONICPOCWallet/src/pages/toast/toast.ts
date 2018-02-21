@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { IonicPage, ToastController } from 'ionic-angular';
@@ -13,7 +13,7 @@ let loading;
 
 
 export class Toast {
-  constructor(public toastCtrl: ToastController, public loadingController: LoadingController) {
+  constructor(public toastCtrl: ToastController, public loadingController: LoadingController,public alertCtrl:AlertController) {
     loading = this.loadingController.create({ content: "Please wait..." });
   }
 
@@ -32,5 +32,14 @@ export class Toast {
 
   hideLoader() {
     loading.dismissAll();
+  }
+
+  showPrompt(inputsArr:any,buttonsArr:any) {
+    let alert = this.alertCtrl.create({
+      title: 'Login',
+      inputs: inputsArr,
+      buttons: buttonsArr,
+    });
+    alert.present();
   }
 }
