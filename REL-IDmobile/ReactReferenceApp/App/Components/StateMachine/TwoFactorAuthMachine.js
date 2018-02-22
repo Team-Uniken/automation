@@ -211,7 +211,6 @@ class TwoFactorAuthMachine extends Component {
 
     console.log(res);
 
-
     if (res.errCode == 0) {
       var statusCode = res.pArgs.response.StatusCode;
       console.log('TwoFactorAuthMachine - statusCode ' + statusCode);
@@ -348,7 +347,7 @@ class TwoFactorAuthMachine extends Component {
                         NavigationActions.navigate({
                           routeName: 'StateMachine', params: {
                             url: {
-                              chlngJson:challengeJson,
+                              chlngJson: challengeJson,
                               screenId: nextChlngName,
                               currentIndex: 0
                             }, title: nextChlngName
@@ -370,45 +369,47 @@ class TwoFactorAuthMachine extends Component {
           );
         }, 100);
       }
-    } else if (res.errCode == 58) {
-      /*
-        58 -->>  RDNA_ERR_INVALID_USER_MR_STATE -Invalid user state in local storage 
-      */
-      setTimeout(() => {
-        Alert.alert(
-          'Error',
-          'User state is not valid ,please register again.', [{
-            text: 'OK',
-            onPress: () => {
-              this.navigateToRegistration();
-            },
-            style: 'cancel',
-          }],
-          { cancelable: false }
-        );
-      }, 100);
-
-
     } else {
-      if (Main.isOtherLogin === true) {
-        Main.isOtherLogin = false;
-      }
-      console.log(e);
-      //Show alert as errorCode is not 0 and call resetChallenge
-      setTimeout(() => {
-        Alert.alert(
-          'Error',
-          'Internal system error occurred.', [{
-            text: 'OK',
-            onPress: () => {
-              Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
-              obj.resetChallenge();
-            },
-            style: 'cancel',
-          }],
-          { cancelable: false }
-        );
-      }, 100);
+      Util.getErrorInfo(res.errCode,(error)=>{
+        if (error == 58) {
+          /*
+            58 -->>  RDNA_ERR_INVALID_USER_MR_STATE -Invalid user state in local storage 
+          */
+          setTimeout(() => {
+            Alert.alert(
+              'Error',
+              'User state is not valid ,please register again.', [{
+                text: 'OK',
+                onPress: () => {
+                  this.navigateToRegistration();
+                },
+                style: 'cancel',
+              }],
+              { cancelable: false }
+            );
+          }, 100);
+        } else {
+          if (Main.isOtherLogin === true) {
+            Main.isOtherLogin = false;
+          }
+          console.log(e);
+          //Show alert as errorCode is not 0 and call resetChallenge
+          setTimeout(() => {
+            Alert.alert(
+              'Error',
+              'Internal system error occurred.', [{
+                text: 'OK',
+                onPress: () => {
+                  Events.on('showNextChallenge', 'showNextChallenge', obj.showNextChallenge);
+                  obj.resetChallenge();
+                },
+                style: 'cancel',
+              }],
+              { cancelable: false }
+            );
+          }, 100);
+        }
+      });
     }
   }
 

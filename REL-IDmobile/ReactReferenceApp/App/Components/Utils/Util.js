@@ -255,11 +255,10 @@ class Util extends Component {
     return str;
   }
 
-  static getErrorMessage(errorCode, callback) {
+  static getErrorInfo(errorCode, callback) {
     ReactRdna.getErrorInfo(errorCode, (response) => {
       if (response) callback(response[0].error);
       else callback(null);
-
     });
   }
 
