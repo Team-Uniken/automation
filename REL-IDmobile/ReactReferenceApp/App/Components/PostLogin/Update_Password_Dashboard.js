@@ -1,7 +1,7 @@
 /**
  *  Update Password screen. 
  */
-
+ 
 'use strict';
 
 /*
@@ -23,7 +23,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
  Use in this js
  */
 import Skin from '../../Skin';
-import Main from '../Container/Main';
+import Main from '../Container/Main'; 
 import MainActivation from '../Container/MainActivation';
 import Util from "../Utils/Util";
 import PageTitle from '../view/pagetitle';
@@ -50,6 +50,7 @@ export default class UpdatePasswordSet extends Component {
       cPassword: '',
       userID: '',
       erpasswd: false,
+      erpattern: false,
     };
 
     this.close = this.close.bind(this);
@@ -75,7 +76,10 @@ export default class UpdatePasswordSet extends Component {
           value = JSON.parse(value);
           if (value.ERPasswd && value.ERPasswd !== 'empty') {
             this.state.erpasswd = true;
-          }
+          } 
+          if (value.ERPattern && value.ERPattern !== 'empty') {
+            this.state.erpattern = true;
+          } 
         }
         catch (e) { }
       }
@@ -120,24 +124,15 @@ export default class UpdatePasswordSet extends Component {
   }
 
   onPostUpdate() {
-
    // AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ RPasswd: this.state.password }), null).then((error) => {
       Util.saveUserDataSecure("RPasswd",this.state.password).then((result)=>{
-        if (Platform.OS == 'ios' && this.state.erpasswd) {
+        if ( this.state.erpasswd ) {
           AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ERPasswd: "empty",defaultLogin:"none"}), null);
           this.encrypytPasswdiOS();
-          this.close();
-        } else if (Platform.OS == 'android' && this.state.erpasswd) {
-          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty",defaultLogin:"none" }), null);
-          // this.props.navigator.push(
-          //   {
-          //     id: 'pattern',
-          //     data: '',
-          //     onSetPattern: this.onSetPattern,
-          //    // onClose: this.onPatternClose,
-          //     disableClose:true,
-          //     mode: "set"
-          //   });
+          if(Platform.OS != 'android' && !this.state.erpattern)
+              this.close();
+        } if (Platform.OS == 'android' && this.state.erpattern) {
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPattern: "empty",defaultLogin:"none" }), null);
             this.props.navigator.navigate('pattern',{url: {
               id: 'pattern',
               data: '',
@@ -146,7 +141,7 @@ export default class UpdatePasswordSet extends Component {
               disableClose:true,
               mode: "set"
               }})
-        }
+        } 
         else {
           this.close();
         }
@@ -182,7 +177,6 @@ export default class UpdatePasswordSet extends Component {
           alert('Password and Confirm Password do not match');
           this.setState({ password: "", cPassword: "" });
           this.refs.password.focus();
-
         }
       } else {
         alert('Please enter confirm password ');
@@ -212,9 +206,6 @@ export default class UpdatePasswordSet extends Component {
   }
 
   encrypytPasswdiOS() {
-
-    if (Platform.OS === 'ios') {
-
       AsyncStorage.getItem(Main.dnaUserName).then((value) => {
         if (value) {
           try {
@@ -229,14 +220,12 @@ export default class UpdatePasswordSet extends Component {
             //     console.log('immediate response is' + response[0].response);
             //   }
             // });
-
             Util.saveUserDataSecure("ERPasswd",value.RPasswd).then((result)=>{
               obj.setState({ touchid: true });
             }).done();
           } catch (e) { }
         }
-      }).done();
-    }
+      }).done();    
   }
 
   /*

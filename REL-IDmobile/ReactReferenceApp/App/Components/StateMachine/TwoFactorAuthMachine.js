@@ -705,9 +705,9 @@ class TwoFactorAuthMachine extends Component {
           if (chlngJson.chlng[i].chlng_name === 'tbacred')
             arrTba.push(chlngJson.chlng[i]);
         }
-        if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
+        //if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
 
-          if (arrTba.length > 0) {
+        //  if (arrTba.length >= 0) {
             AsyncStorage.getItem(Main.dnaUserName).then((value) => {
               if (value) {
                 try {
@@ -750,45 +750,48 @@ class TwoFactorAuthMachine extends Component {
               }
 
             }).done();
-          } else {
-           // Events.trigger('closeStateMachine');
-            InteractionManager.runAfterInteractions(() => {
-              Main.gotNotification = false;
-              //              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
-              if (onGetAllChallengeStatusSubscription) {
-                onGetAllChallengeStatusSubscription.remove();
-                onGetAllChallengeStatusSubscription = null;
-              }
-              //             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+         // } 
+          
+          // else {
+          //  // Events.trigger('closeStateMachine');
+          //   InteractionManager.runAfterInteractions(() => {
+          //     Main.gotNotification = false;
+          //     //              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+          //     if (onGetAllChallengeStatusSubscription) {
+          //       onGetAllChallengeStatusSubscription.remove();
+          //       onGetAllChallengeStatusSubscription = null;
+          //     }
+          //     //             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
 
-              const navigateToDashboard = NavigationActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
-                ]
-              })
-              this.props.navigation.dispatch(navigateToDashboard)
-            });
-          }
-        } else {
-          //Events.trigger('closeStateMachine');
-          InteractionManager.runAfterInteractions(() => {
-            Main.gotNotification = false;
-            //            this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
-            if (onGetAllChallengeStatusSubscription) {
-              onGetAllChallengeStatusSubscription.remove();
-              onGetAllChallengeStatusSubscription = null;
-            }
-            //            this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
-            const navigateToDashboard = NavigationActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
-              ]
-            })
-            this.props.navigation.dispatch(navigateToDashboard)
-          });
-        }
+          //     const navigateToDashboard = NavigationActions.reset({
+          //       index: 0,
+          //       actions: [
+          //         NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
+          //       ]
+          //     })
+          //     this.props.navigation.dispatch(navigateToDashboard)
+          //   });
+          // }
+        //} 
+        // else {
+        //   //Events.trigger('closeStateMachine');
+        //   InteractionManager.runAfterInteractions(() => {
+        //     Main.gotNotification = false;
+        //     //            this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+        //     if (onGetAllChallengeStatusSubscription) {
+        //       onGetAllChallengeStatusSubscription.remove();
+        //       onGetAllChallengeStatusSubscription = null;
+        //     }
+        //     //            this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+        //     const navigateToDashboard = NavigationActions.reset({
+        //       index: 0,
+        //       actions: [
+        //         NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
+        //       ]
+        //     })
+        //     this.props.navigation.dispatch(navigateToDashboard)
+        //   });
+        // }
       } else {
         //Removing user preference if user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||

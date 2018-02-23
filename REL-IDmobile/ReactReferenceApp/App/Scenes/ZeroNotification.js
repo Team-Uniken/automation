@@ -110,7 +110,7 @@ var SampleRow = React.createClass({
                 if( isAdditionalAuthSupported.erpass )
                   this.showModelForTouchId();
                 else if( isAdditionalAuthSupported.erPattern )
-                  this.showComponentForPattern();
+                  this.showComponentForPattern();              
               } else {
                 this.showModelForTouchId();
               }
@@ -1029,6 +1029,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showalert(notification, btnLabel) {
+    alert("inside show alert");
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
@@ -1043,8 +1044,8 @@ export default class NotificationMgmtScene extends Component {
               if (Platform.OS === 'android') {
                 if( isAdditionalAuthSupported.erpass )
                   this.showModelForTouchId();
-                else if( isAdditionalAuthSupported.erPattern )
-                  this.showComponentForPattern();
+                else 
+                  this.showComponentForPattern();              
               } else {
                 this.showModelForTouchId();
               }
@@ -1356,7 +1357,7 @@ const styles = StyleSheet.create({
   },
   modalButtonText: {
     textAlign: 'center',
-    color: '#268CFE',
+    color: '#268CFE', 
     fontSize: 16,
   },
   border: {

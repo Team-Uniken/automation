@@ -115,7 +115,7 @@ class SelectLogin extends Component {
                 $this.loginWith(userPrefs.defaultLogin);
             } else {
               $this.loginWith(userPrefs.defaultLogin);
-            }
+            } 
           }
         }
         catch (e) { } 
@@ -184,7 +184,7 @@ class SelectLogin extends Component {
           this.state.dataSource.push({ cred_type: 'pattern', is_registered: true });
       }
     } 
-      if (this.state.isRegistered) {
+      if (this.state.isRegistered && this.state.isTouchIDPresent) {
         if (this.state.dataSource) {
           this.state.dataSource.push({ cred_type: 'touchid', is_registered: true });
         }
@@ -201,9 +201,9 @@ class SelectLogin extends Component {
       .then((success) => {
         this.state.isTouchIDPresent = true;
         this.fillAdditionalLoginOptions();
-        this.setState( {isTouchIDPresent : true } );        
+        this.setState( {isTouchIDPresent : true } );    
       })
-      .catch((error) => {
+      .catch((error) => {      
         console.log('Handle rejected promise (' + error + ') here.');
       });
   }
@@ -228,7 +228,6 @@ class SelectLogin extends Component {
   isTouchPresent() {
     var $this = this;
     return new Promise(function (resolve, reject) {
-
       TouchID.isSupported()
         .then((supported) => {
           // Success code

@@ -102,8 +102,6 @@ class Register extends Component {
         catch (e) { }
       }
     });
-
-
     AsyncStorage.getItem('skipwelcome').then((value) => {
       if (value == null || value == undefined) {
         this.setState({ welcomescreen: '\u2714' });
@@ -230,7 +228,6 @@ class Register extends Component {
 
   getLoginOptions() {
     let index = 0;
-
     let data = [
       {
         key: 'title',
@@ -623,8 +620,7 @@ class Register extends Component {
         this.setState({ showAndroidAuth : false });
       return true;
     }.bind(this));
-
-  }
+} 
 
   androidAuth() {   
     this.setState({showAndroidAuth : true });    
@@ -793,7 +789,7 @@ class Register extends Component {
           </View>
           <KeyboardSpacer topSpacing={-55}/>
         </View >
-        {this.state.isAndroidTouchPresent && this.state.showAndroidAuth && <AndroidAuth/>}
+        {this.props.url.touchCred.isSupported && this.state.showAndroidAuth && <AndroidAuth/>}        
       </MainActivation>
     );
   }
