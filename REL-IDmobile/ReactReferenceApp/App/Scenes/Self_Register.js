@@ -208,7 +208,7 @@ class Register extends Component {
       currentProfile = JSON.parse(currentProfile);
       //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
 
-      var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/addNewUser.htm";
+      var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/v1/addNewUser.htm";
       console.log("---Register ---baseUrl =" + baseUrl)
 
       // USER_ID_STR, mandatory = true          // will be email Id
@@ -229,14 +229,19 @@ class Register extends Component {
         "username": "sruser",
         "sessionId":this.sessionId,
         "password": "1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
+        "apiversion":"v1",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length":"0"
+
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
       Events.trigger('showLoader', true);
 
       var postData = Util.convertToPostData(userMap);
-      var contentType = JSON.stringify({ "Content-Type": "application/x-www-form-urlencoded" });
-      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, baseUrl, contentType, postData, (response) => {
+      //var contentType = JSON.stringify({ "Content-Type": "application/x-www-form-urlencoded" });
+     var contentType = JSON.stringify(userMap);
+      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, baseUrl, contentType, "", (response) => {
         // RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         Events.trigger('hideLoader', true);

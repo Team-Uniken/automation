@@ -82,8 +82,27 @@ class SelectLogin extends Component {
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
 
     this.checkForRegisteredCredsAndShow();
-    if (Platform.OS === 'ios') 
-      this.isTouchPresent().done();
+    if (Platform.OS === 'ios') {
+      this.isTouchPresent().then((success) => {
+        if(success === 'success'){
+        this.state.isTouchIDPresent = true;
+        this.fillAdditionalLoginOptions();
+        this.setState( {isTouchIDPresent : true } );
+        }else{
+          this.state.isTouchIDPresent = false;
+          this.state.isRegistered = false;
+          this.fillAdditionalLoginOptions();
+          this.setState({ refresh: !$this.state.refresh });
+        } 
+      }) .catch(error => {
+        console.log(error);
+        this.state.isTouchIDPresent = false;
+        this.state.isRegistered = false;
+        this.fillAdditionalLoginOptions();
+        this.setState({ refresh: !$this.state.refresh });
+        //alert('Sensor is not available');
+      });
+    }
     else
       this.isAndroidTouchAvailable();
 
@@ -226,22 +245,15 @@ class SelectLogin extends Component {
    * false if not supported
    */
   isTouchPresent() {
-    var $this = this;
     return new Promise(function (resolve, reject) {
       TouchID.isSupported()
         .then((supported) => {
           // Success code
-          console.log('TouchID is supported.');
-          $this.isTouchIDPresent = true;
           resolve("success");
         })
         .catch((error) => {
           // Failure code
           console.log(error);
-          $this.isTouchIDPresent = false;
-          $this.state.isRegistered = false;
-          $this.fillAdditionalLoginOptions();
-          $this.setState({ refresh: !$this.state.refresh });
           resolve("fails");
         });
 
