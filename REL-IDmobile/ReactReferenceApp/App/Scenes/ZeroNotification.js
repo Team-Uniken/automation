@@ -1029,7 +1029,6 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showalert(notification, btnLabel) {
-    alert("inside show alert");
     for (var i = 0; i < notification.action.length; i++) {
       var data = notification.action[i];
       if (data.label == btnLabel) {
