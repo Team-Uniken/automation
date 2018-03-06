@@ -633,19 +633,25 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void checkChallenges(String challengeRequestArray, String userID, Callback callback){
-        uName=userID;
-        // Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
-        // Logger.d(TAG , "----- userID " + userID);
-        int error = rdnaObj.checkChallengeResponse(challengeRequestArray, userID);
+    public void checkChallenges(final String challengeRequestArray,final String userID,final Callback callback){
+        new Thread(new Runnable() {
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+            @Override
+            public void run() {
+                uName=userID;
+                // Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
+                // Logger.d(TAG , "----- userID " + userID);
+                int error = rdnaObj.checkChallengeResponse(challengeRequestArray, userID);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+                WritableMap errorMap = Arguments.createMap();
+                errorMap.putInt("error", error);
 
-        callback.invoke(writableArray);
+                WritableArray writableArray = Arguments.createArray();
+                writableArray.pushMap(errorMap);
+
+                callback.invoke(writableArray);
+            }
+        }).start();
     }
 
     @ReactMethod
@@ -664,19 +670,24 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getAllChallenges(String userID, Callback callback){
+    public void getAllChallenges(final String userID,final Callback callback){
         // Logger.d(TAG , "----- userID " + userID);
-        int error =-1;
-        if(rdnaObj!=null)
-          error = rdnaObj.getAllChallenges(userID);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int error =-1;
+                if(rdnaObj!=null)
+                    error = rdnaObj.getAllChallenges(userID);
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+                WritableMap errorMap = Arguments.createMap();
+                errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+                WritableArray writableArray = Arguments.createArray();
+                writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+                callback.invoke(writableArray);
+            }
+        }).start();
     }
 
     @ReactMethod
@@ -732,18 +743,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void updateNotification(String notificationID, String response, Callback callback){
+    public void updateNotification(final String notificationID, final String response,final Callback callback){
         //  Logger.d(TAG , "----- updateNotification ");
         // Logger.d(TAG , "----- notificationID " + notificationID);
         //  Logger.d(TAG , "----- startReresponsecord " + response);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int error = rdnaObj.updateNotification(notificationID, response);
+                // Logger.d(TAG , "----- error " + error);
+                WritableMap errorMap = Arguments.createMap();
+                errorMap.putInt("error", error);
+                WritableArray writableArray = Arguments.createArray();
+                writableArray.pushMap(errorMap);
+                callback.invoke(writableArray);
+            }
+        }).start();
 
-        int error = rdnaObj.updateNotification(notificationID, response);
-        // Logger.d(TAG , "----- error " + error);
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
     }
 
     @ReactMethod
