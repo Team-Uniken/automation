@@ -152,7 +152,7 @@ This method is called when the component will start to load
     }.bind(this));
     InteractionManager.runAfterInteractions(() => {
       if (Main.isConnected) {
-//        Events.trigger('showLoader', true);
+        Events.trigger('showLoader', true);
         ReactRdna.getAllChallenges(Main.dnaUserName, (response) => {
           if (response) {
             console.log('getAllChallenges immediate response is' + response[0].error);
@@ -1034,6 +1034,8 @@ This method is called when the component will start to load
       );
     }
 
+    var loaderViewHeight = Skin.SCREEN_HEIGHT - (Platform.OS === 'android' ? 87 : 107);
+
     return (
       <Main
         ref={'main'}
@@ -1061,7 +1063,7 @@ This method is called when the component will start to load
         >
          { isPageTitle && this.renderPageTitle('Profile & Settings')}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
-          <MainActivation>
+          <MainActivation loaderViewHeight={loaderViewHeight}>
             {this.renderIf(this.state.showOptions,
               <View style={[Skin.layout0.wrap.container]}>
                 <ScrollView style={Skin.layout1.content.scrollwrap}>

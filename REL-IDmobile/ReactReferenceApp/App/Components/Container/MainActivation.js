@@ -148,10 +148,10 @@ class MainActivation extends Component {
     });
   }
 
-  loaderView() {
+  loaderView(viewHeight) {
     if (this.state.visible === true) {
       return (
-        <View style={{ position: 'absolute', zIndex: 5, height: Skin.SCREEN_HEIGHT, justifyContent: 'center', alignItems: 'center', width: Skin.SCREEN_WIDTH, backgroundColor: 'transparent' }}>
+        <View style={{ position: 'absolute', zIndex: 5, height: viewHeight!=null && viewHeight!=undefined?viewHeight:Skin.SCREEN_HEIGHT, justifyContent: 'center', alignItems: 'center', width: Skin.SCREEN_WIDTH, backgroundColor: 'transparent' }}>
           <Spinner style={{ zIndex: 5 }} isVisible={true} size={50} type="FadingCircleAlt" color={Skin.main.TITLE_COLOR}/>
         </View>
       );
@@ -357,7 +357,7 @@ class MainActivation extends Component {
 
 
         <View style={Skin.activationStyle.container} onPress={this.dismiss} >
-          {this.loaderView() }
+          {this.loaderView(this.props.loaderViewHeight) }
 
           <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH }, this.props.style ? this.props.style : {}]}>
             {this.props.children}
