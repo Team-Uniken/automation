@@ -829,7 +829,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 if(rdnaObj != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(state);
-                        RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
+                        RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, context);
                         rdnaObj = rdnaStatus.result;
                         errorMap.putInt("error", rdnaStatus.errorCode);
                     } catch (JSONException e) {
