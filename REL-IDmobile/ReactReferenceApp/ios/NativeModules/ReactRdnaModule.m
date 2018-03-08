@@ -69,7 +69,7 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
   NSString *path = [[NSBundle mainBundle] pathForResource:@"clientcert" ofType:@"p12"];
   NSData *certData = [NSData dataWithContentsOfFile:path];
   NSString *certString3 = [certData base64EncodedStringWithOptions:2];
-  NSString *certPassword = @"uniken123$";
+  NSString *certPassword = @"";
   RDNASSLCertificate *rdnaSSLlCertificate = nil;
   
   __block int errorID = 0;

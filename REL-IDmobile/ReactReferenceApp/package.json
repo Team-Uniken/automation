@@ -3,11 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "android-dev": "ENVFILE=env.dev react-native run-android",
-    "android-nwd": "ENVFILE=env.nwd react-native run-android",
-    "android-sandp": "ENVFILE=env.sandp react-native run-android",
-    "release-cbcverify": "export ENVFILE=.evn.cbcverify && react-native bundle --assets-dest ./android/app/src/main/res/ --entry-file ./index.android.js --bundle-output ./android/app/src/main/assets/index.android.bundle --platform android --dev false && cd android && ./gradlew assembleCbcverify"
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
     "buffer": "^5.0.6",
