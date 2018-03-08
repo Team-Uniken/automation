@@ -686,6 +686,31 @@ export default class NotificationMgmtScene extends Component {
 
         if (response[0].error !== 0) {
           console.log('----- ----- response is not 0');
+
+          this.setState({ showLoader: false });
+          Util.getErrorInfo(response[0].error, (error) => {
+
+            if (error == 59) {
+              /*
+                59 -->>   RDNA_ERR_NOTF_SIGN_INTERNAL_FAILURE - Failure occurred when signing notification
+              */
+              setTimeout(() => {
+                Alert.alert(
+                  '',
+                  'Error signing notification. Please wait application is uploading new certificate...', [{
+                    text: 'OK',
+                    onPress: () => {
+                      //this.navigateToRegistration();
+                    },
+                    style: 'cancel',
+                  }],
+                  { cancelable: false }
+                );
+              }, 100);
+
+            }
+          });
+
           if (NotificationObtianedResponse !== null && NotificationObtianedResponse !== undefined) {
 
             console.log('----- ----- response is not 0');
