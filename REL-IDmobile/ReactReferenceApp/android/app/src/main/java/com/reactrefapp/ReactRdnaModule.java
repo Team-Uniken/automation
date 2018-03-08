@@ -511,32 +511,32 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 return 0;
             }
 
-            @Override
-            public int onSecurityThreat(final String s) {
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        WritableMap params = Arguments.createMap();
-                        params.putString("response", s);
-                        context
-                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("onSecurityThreat", params);
-
-                        String msg = s;
-                        showOrUpdateThreatAlert("Threats detected on your system : \n" + msg, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if(rdnaObj!=null)
-                                    rdnaObj.terminate();
-                                if(getCurrentActivity()!=null)
-                                  ActivityCompat.finishAffinity(getCurrentActivity());
-                            }
-                        });
-                    }
-                };
-                callOnMainThread(runnable);
-                return 0;
-            }
+//            @Override
+//            public int onSecurityThreat(final String s) {
+//                Runnable runnable = new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        WritableMap params = Arguments.createMap();
+//                        params.putString("response", s);
+//                        context
+//                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                                .emit("onSecurityThreat", params);
+//
+//                        String msg = s;
+//                        showOrUpdateThreatAlert("Threats detected on your system : \n" + msg, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                if(rdnaObj!=null)
+//                                    rdnaObj.terminate();
+//                                if(getCurrentActivity()!=null)
+//                                  ActivityCompat.finishAffinity(getCurrentActivity());
+//                            }
+//                        });
+//                    }
+//                };
+//                callOnMainThread(runnable);
+//                return 0;
+//            }
         };
 
 
