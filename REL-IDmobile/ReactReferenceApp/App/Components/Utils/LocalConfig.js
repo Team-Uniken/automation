@@ -6,86 +6,13 @@ var sslCertificateFile = null;
 function requireClientBasedConfig() {
     var config = null;
 
-    if (Config.ENV == 'sandp') {
-        config = (function () {
-            return {
-                connectionProfile: require("../../../Connection_profiles/snp.json"),
-                sslCertificate: {
-                    data: getSSLFileContent(),
-                    password: 'uniken123$',
-                },
-                img: {
-                    welcome: require('../../img/sandp.png')
-                },
-                dashboard: {
-                    screenName: 'homepage',
-                    screen: require('../Dashboard/SandP/homepage').default,
-                }
-            }
-        })();
-    }
-    if (Config.ENV == 'nwd') {
-        config = (function () {
-            return {
-                connectionProfile: require("../../../Connection_profiles/nwd.json"),
-                sslCertificate: {
-                    data: getSSLFileContent(),
-                    password: 'uniken123$',
-                },
-                img: {
-                    welcome: require('../../img/nwd.png')
-                },
-                bottomMenu: require("../view/bottomMenu"),
-                dashboard: {
-                    screenName: 'Deals',
-                    screen: require('../Dashboard/NWD/Deals').default,
-                }
-            }
-        })();
-    }
-    if (Config.ENV == 'stock') {
-        config = (function () {
-            return {
-                connectionProfile: require("../../../Connection_profiles/stock.json"),
-                sslCertificate: {
-                    data: getSSLFileContent(),
-                    password: 'uniken123$',
-                },
-                img: {
-                    welcome: require('../../img/stock.png')
-                },
-                dashboard: {
-                    screenName: 'Deals',
-                    screen: require("../Dashboard/Stock/Deals").default,
-                }
-            }
-        })();
-    }
-    if (Config.ENV == 'ubs') {
-        config = (function () {
-            return {
-                connectionProfile: require("../../../Connection_profiles/ubs.json"),
-                sslCertificate: {
-                    data: getSSLFileContent(),
-                    password: 'uniken123$',
-                },
-                img: {
-                    welcome: require('../../img/ubs.png')
-                },
-                dashboard: {
-                    screenName: 'homepage',
-                    screen: require('../Dashboard/Ubs/homepage').default,
-                }
-            }
-        })();
-    }
     if (Config.ENV == 'cbc') {
         config = (function () {
             return {
                 connectionProfile: require("../../../Connection_profiles/cbc.json"),
                 sslCertificate: {
                     data: getSSLFileContent(),
-                    password: 'uniken123$',
+                    password: '',
                 },
                 img: {
                     welcome: require('../../img/cbc.png')
@@ -98,44 +25,6 @@ function requireClientBasedConfig() {
             }
         })();
     }
-
-    if (Config.ENV == 'relidmobile') {
-        config = (function () {
-            return {
-                connectionProfile: require("../../../Connection_profiles/relidmobile.json"),
-                sslCertificate: {
-                    data: getSSLFileContent(),
-                    password: 'uniken123$',
-                },
-                img: {
-                    welcome: require('../../img/rmobile.png')
-                },
-                dashboard: {
-                    screenName: 'Deals',
-                    screen: require('../Dashboard/REL-IDMobile/Deals').default,
-                }
-            }
-        })();
-    }
-    if (Config.ENV == 'cbcverify') {
-        config = (function () {
-            return {
-                connectionProfile: require("../../../Connection_profiles/cbcverify.json"),
-                sslCertificate: {
-                    data: getSSLFileContent(),
-                    password: 'uniken123$',
-                },
-                img: {
-                    welcome: require('../../img/cbc.png')
-                },
-                dashboard: {
-                    screenName: 'HomePage',
-                    screen: require("../Dashboard/CBCVerify/HomePage").default,
-                },
-            }
-        })();
-    }
-
     return config;
 }
 
