@@ -87,8 +87,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 510
-        versionName "5.1.0"
+        versionCode 512
+        versionName "5.1.2"
 
         packagingOptions {
             exclude '/lib/mips64/**'
@@ -223,7 +223,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release_mri_v1.5.1', ext: 'aar')
+    compile(name: 'app-sdk-release_v1.6.0', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
     compile project(':react-native-push-notification')
