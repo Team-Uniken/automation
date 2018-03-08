@@ -96,6 +96,10 @@ android {
             exclude '/lib/x86_64/**'
         }
 
+        ndk {
+            abiFilters 'x86','armeabi', 'armeabi-v7a', 'mips'
+        }
+
         multiDexEnabled true
         resValue "string", "build_config_package", "com.reactrefapp"
         proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -114,43 +118,7 @@ android {
 
 
     signingConfigs {
-        releaseNwd {
-            storeFile file("reactandroid.jks")
-            storePassword "uniken123\$"
-            keyAlias "uniken"
-            keyPassword "uniken123\$"
-      }
-        releaseSandP {
-            storeFile file("reactandroid.jks")
-            storePassword "uniken123\$"
-            keyAlias "uniken"
-            keyPassword "uniken123\$"
-        }
-        releaseStock {
-            storeFile file("reactandroid.jks")
-            storePassword "uniken123\$"
-            keyAlias "uniken"
-            keyPassword "uniken123\$"
-        }
-        releaseUbs {
-            storeFile file("reactandroid.jks")
-            storePassword "uniken123\$"
-            keyAlias "uniken"
-            keyPassword "uniken123\$"
-        }
         releaseCbc {
-            storeFile file("reactandroid.jks")
-            storePassword "uniken123\$"
-            keyAlias "uniken"
-            keyPassword "uniken123\$"
-        }
-        releaseCbcverify {
-            storeFile file("reactandroid.jks")
-            storePassword "uniken123\$"
-            keyAlias "uniken"
-            keyPassword "uniken123\$"
-        }
-        releaseRelidmobile {
             storeFile file("reactandroid.jks")
             storePassword "uniken123\$"
             keyAlias "uniken"
@@ -161,33 +129,9 @@ android {
     flavorDimensions "default"
 
     productFlavors{
-        sandp{
-            applicationId 'com.uniken.sandp'
-            signingConfig signingConfigs.releaseSandP
-        }
-        nwd{
-            applicationId 'com.uniken.nwd'
-            signingConfig signingConfigs.releaseNwd
-        }
-        stock{
-            applicationId 'com.uniken.stock'
-            signingConfig signingConfigs.releaseStock
-        }
-        ubs{
-            applicationId 'com.uniken.ubs'
-            signingConfig signingConfigs.releaseUbs
-        }
         cbc{
             applicationId 'com.uniken.cbc'
             signingConfig signingConfigs.releaseCbc
-        }
-        cbcverify{
-            applicationId 'com.uniken.cbc.verify'
-            signingConfig signingConfigs.releaseCbcverify
-        }
-        relidmobile{
-            applicationId 'com.uniken.relidmobile'
-            signingConfig signingConfigs.releaseRelidmobile
         }
     }
 
@@ -219,7 +163,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-debug_v1.5.0_better', ext: 'aar')
+    compile(name: 'app-sdk-release_v1.4.2', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
     compile project(':react-native-push-notification')
