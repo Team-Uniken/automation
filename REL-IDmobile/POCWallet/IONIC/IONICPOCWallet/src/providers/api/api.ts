@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class Api {
-  url: string = 'http://10.0.5.24:8080/DummyWalletAPI2';
+  url: string = 'http://poc1-uniken.com:8080/DummyWalletAPI2';
 
   constructor(public http: HttpClient) {
   }

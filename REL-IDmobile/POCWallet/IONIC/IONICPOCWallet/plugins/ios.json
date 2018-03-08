@@ -19,11 +19,11 @@
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "com.uniken.rdnaplugin": {
+    "phonegap-plugin-push": {
       "PACKAGE_NAME": "io.ionic.starter"
     },
-    "phonegap-plugin-push": {
-      "PACKAGE_NAME": "com.uniken.cbc.verify"
+    "com.uniken.rdnaplugin": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}

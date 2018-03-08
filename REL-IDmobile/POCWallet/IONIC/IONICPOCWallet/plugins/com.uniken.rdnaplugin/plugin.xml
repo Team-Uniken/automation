@@ -21,12 +21,21 @@
 <source-file src="src/android/RdnaClient.java" target-dir="src/com/uniken/rdnaplugin" />
 <source-file src="src/android/NetworkTask.java" target-dir="src/com/uniken/rdnaplugin" />
 <source-file src="src/android/RDNARequestUtility.java" target-dir="src/com/uniken/rdnaplugin" />
+<framework src="src/android/rdnaclient.gradle" custom="true" type="gradleReference" target="app/rdnaclient.gradle"/>
+<resource-file src="libs/app-sdk-release-branch_v1.4.0.aar" target="libs/app-sdk-release-branch_v1.4.0.aar" />
 </platform>
 
 <platform name="ios">
 <config-file parent="/*" target="config.xml">
 <feature name="RdnaClient"><param name="ios-package" value="RdnaClient" /></feature>
 </config-file><source-file src="src/ios/RdnaClient.m" />
-<header-file src="src/ios/RdnaClient.h" /> 
+<header-file src="src/ios/RdnaClient.h" />
+<source-file src="api-sdk/libs/libapi-sdk.a" framework="true" />
+<header-file src="api-sdk/include/RDNA.h" />
+<framework src="AdSupport.framework" />
+<framework src="CoreTelephony.framework" />
+<framework src="CoreLocation.framework" />
+<framework src="libstdc++.dylib" />
+<framework src="libc++.dylib" />
 </platform>
 </plugin>
