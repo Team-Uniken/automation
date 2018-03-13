@@ -172,7 +172,7 @@ var styles = StyleSheet.create({
     marginBottom: 4,
     fontWeight: 'bold'
   },
-  sign_status: {
+  signing_status: {
     color: Skin.colors.PRIMARY_TEXT,
     fontSize: 16,
     marginLeft: 8,
@@ -284,7 +284,7 @@ class Notifications_History extends Component {
   */
   componentDidMount() {
     Obj = this;
-    //this.onGetNotificationHistory({response:"{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"You are attempting to log into the CBC website\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"sign_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}"});
+    //this.onGetNotificationHistory({response:"{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"You are attempting to log into the CBC website\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}"});
     if (Main.isConnected) {
       this.getNotificationHistory(10, 0, '', '', '', '', '', '', '');
     } else {
@@ -611,10 +611,10 @@ class Notifications_History extends Component {
       );
     }
 
-    if (notification.sign_status) {
+    if (notification.signing_status) {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
-          <Text style={styles.sign_status}>Digital signing status: <Text style={{ color: Obj.highlightcolor(notification.action_performeds) }}>{notification.sign_status}</Text>
+          <Text style={styles.signing_status}>Digital signing status: <Text style={{ color: Obj.highlightcolor("NA") }}>{notification.signing_status}</Text>
           </Text>
         </View>
       );
