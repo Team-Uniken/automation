@@ -179,11 +179,12 @@ var styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: 'bold'
   },
-  lngRow: { 
-    flexDirection: 'row', 
-    justifyContent: 'center', 
+  lngRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginBottom: 4
   },
   go: {
     color: '#000',
@@ -256,8 +257,8 @@ class Notifications_History extends Component {
       selectedAction: '',
       alertMsg: "",
       showAlert: false,
-      finalData :null,
-      refresh:false,
+      finalData: null,
+      refresh: false,
     };
     this.selectedAlertOp = true;
     this.showAlertModal = this.showAlertModal.bind(this);
@@ -294,9 +295,10 @@ class Notifications_History extends Component {
   */
   componentDidMount() {
     Obj = this;
-    this.onGetNotificationHistory({response:"{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"{ \\\"lng\\\": { \\\"Marathi\\\": { \\\"body\\\": \\\"\u092E\u0930\u093E\u0920\u0940 \u092C\u094B\u0932\u0923\u093E\u0931\u094D\u092F\u093E\u0902\u091A\u0940 \u090F\u0915\u0942\u0923 \u0932\u094B\u0915\u0938\u0902\u0916\u094D\u092F\u093E \u096F,\u0966\u0966,\u0966\u0966,\u0966\u0966\u0966 \u0906\u0939\u0947.\\\\nRemember that our website will NEVER ask for your password\\\\nPlease confirm or reject\\\", \\\"subject\\\": \\\"Login Attempt\\\", \\\"Accept\\\": \\\"Accept\\\", \\\"Reject\\\": \\\"Reject\\\" }, \\\"Deutsch\\\": { \\\"body\\\": \\\"Sie versuchen, sich auf der CBC-Website anzumelden. Vergewissern Sie sich, dass unsere Website NIEMALS nach Ihrem Passwort fragt \\\\nBitte best\u00E4tigen oder ablehnen\\\", \\\"subject\\\": \\\"Login Versuch\\\", \\\"Accept\\\": \\\"Akzeptieren\\\", \\\"Reject\\\": \\\"Betrug\\\" }, \\\"Fran\u00E7ais\\\": { \\\"body\\\": \\\"Vous tentez de vous connecter au site Web de CBC \\\\nN'oubliez pas que notre site Web ne vous demandera JAMAIS votre mot de passe \\\\nVeuillez confirmer ou rejeter\\\", \\\"subject\\\": \\\"Tentative de connexion\\\", \\\"Accept\\\": \\\"Acceptez\\\", \\\"Reject\\\": \\\"Rejeter\\\" } } }\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}"});
+    //this.onGetNotificationHistory({ response: "{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"You are attempting to log into the CBC website\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}" });
+    //this.onGetNotificationHistory({response:"{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"{ \\\"lng\\\": { \\\"Marathi\\\": { \\\"body\\\": \\\"\u092E\u0930\u093E\u0920\u0940 \u092C\u094B\u0932\u0923\u093E\u0931\u094D\u092F\u093E\u0902\u091A\u0940 \u090F\u0915\u0942\u0923 \u0932\u094B\u0915\u0938\u0902\u0916\u094D\u092F\u093E \u096F,\u0966\u0966,\u0966\u0966,\u0966\u0966\u0966 \u0906\u0939\u0947.\\\\nRemember that our website will NEVER ask for your password\\\\nPlease confirm or reject\\\", \\\"subject\\\": \\\"Login Attempt\\\", \\\"Accept\\\": \\\"Accept\\\", \\\"Reject\\\": \\\"Reject\\\" }, \\\"Deutsch\\\": { \\\"body\\\": \\\"Sie versuchen, sich auf der CBC-Website anzumelden. Vergewissern Sie sich, dass unsere Website NIEMALS nach Ihrem Passwort fragt \\\\nBitte best\u00E4tigen oder ablehnen\\\", \\\"subject\\\": \\\"Login Versuch\\\", \\\"Accept\\\": \\\"Akzeptieren\\\", \\\"Reject\\\": \\\"Betrug\\\" }, \\\"Fran\u00E7ais\\\": { \\\"body\\\": \\\"Vous tentez de vous connecter au site Web de CBC \\\\nN'oubliez pas que notre site Web ne vous demandera JAMAIS votre mot de passe \\\\nVeuillez confirmer ou rejeter\\\", \\\"subject\\\": \\\"Tentative de connexion\\\", \\\"Accept\\\": \\\"Acceptez\\\", \\\"Reject\\\": \\\"Rejeter\\\" } } }\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}"});
     if (Main.isConnected) {
-      //this.getNotificationHistory(10, 0, '', '', '', '', '', '', '');
+      this.getNotificationHistory(10, 0, '', '', '', '', '', '', '');
     } else {
       // Alert.alert(
       //   '',
@@ -315,15 +317,14 @@ class Notifications_History extends Component {
     var dateAdd = this.addDate(sorthistory);
     this.state.finalData = this.convertHistoryArrayToMap(dateAdd);
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.state.finalData)
+      dataSource: this.state.dataSource.cloneWithRowsAndSections(this.state.finalData)
     });
   }
 
-  refreshHistoryData(){
-    //this.state.dataSource = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+  refreshHistoryData() {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.state.finalData),
-      refresh :!this.state.refresh
+      dataSource: this.state.dataSource.cloneWithRowsAndSections(JSON.parse(JSON.stringify(this.state.finalData))),
+      refresh: !this.state.refresh
     });
   }
 
@@ -500,7 +501,6 @@ class Notifications_History extends Component {
      This method is used to render the componenet with all its element.
    */
   render() {
-    var _ds = JSON.parse(JSON.stringify(this.state.dataSource));;
     return (
       <MainActivation
         disabled={true}>
@@ -529,9 +529,10 @@ class Notifications_History extends Component {
         >
           {isPageTitle && this.renderPageTitle('Notification History')}
           <View style={[styles.container, { backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }]}>
+
             <ListView
-              dataSource={ this.state.dataSource }
-              renderRow={ this.notification_history }
+              dataSource={this.state.dataSource}
+              renderRow={this.notification_history}
               renderSectionHeader={this.renderSectionHeader}
               stickySectionHeadersEnabled={false}
             />
@@ -584,26 +585,25 @@ class Notifications_History extends Component {
 
 
 
-  changeLanguage(notification,lng){
-    var mainMesg = JSON.parse(notification.message.body);
+  changeLanguage(notification, lng, mainMesg) {
+    // var mainMesg = JSON.parse(notification.message.body);
 
     notification.selectedLanguage = lng;
 
+    notification.message.subject = mainMesg.lng[lng].subject;
 
-    // var keys=  Object.keys(this.state.finalData)
+    var keys = Object.keys(this.state.finalData)
+    for (const key in keys) {
+      var arrNotification = this.state.finalData[keys[key]];
+      for (const objNotification in arrNotification) {
+        if (notification.notification_uuid === arrNotification[objNotification].notification_uuid) {
+          arrNotification[objNotification] = notification;
+          this.state.finalData[keys[key]] = arrNotification;
+          break;
 
-  
-    // for (const key in keys) {
-    //     var arrNotification = this.state.finalData[keys[key]];
-    //     for (const objNotification in arrNotification) {
-    //       if (notification.notification_uuid === arrNotification[objNotification].notification_uuid) {
-    //         arrNotification[objNotification] = notification;
-    //         this.state.finalData[keys[key]] = arrNotification;
-    //         break;
-            
-    //       }
-    //     }
-    // }
+        }
+      }
+    }
 
     Obj.refreshHistoryData();
     // var languageKey = Object.keys(mainMesg.lng);
@@ -611,35 +611,53 @@ class Notifications_History extends Component {
     //     if ( lng === languageKey[i] ) {
     //         //this.state.selectedlanguage = lng;
     //         notification.message.subject = mainMesg.lng[lng].subject;
-        
+
     //         this.state.parseMessage = mainMesg.lng[lng].body;
     //         this.setState({ parseMessage: mainMesg.lng[lng].body });
     //         break;
     //     }
     // }
-        
-    }
+
+  }
 
   /*
      This method return custom notification row.
    */
   notification_history(notification) {
 
-    alert("notification_history");
+    var mainMesg;
+    try {
+      mainMesg = JSON.parse(notification.message.body);
+    } catch (e) {
+    }
+    var languageKey;
+    var bodyarray;
+    var lngButtons = [];
 
-      var mainMesg = JSON.parse(notification.message.body);
-      var languageKey = Object.keys(mainMesg.lng);
+    if (mainMesg) {
+      languageKey = Object.keys(mainMesg.lng);
+      if (!notification.hasOwnProperty('selectedLanguage'))
+        notification.selectedLanguage = languageKey[0];
+      bodyarray = mainMesg.lng[notification.selectedLanguage].body.split("\n");   
+      for (let i = 0; i < languageKey.length && languageKey.length > 1; i++) {
+        lngButtons.push(
+          <TouchableHighlight style={[notification.selectedLanguage === languageKey[i] ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+            onPress={() => { Obj.changeLanguage(notification, languageKey[i], mainMesg) }}>
+            <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10 }}>
+              {languageKey[i]}
+            </Text>
+          </TouchableHighlight>
+        )
+      }
+    } else {
+      bodyarray = notification.message.body.split("\n");
+    }
 
-      if(!notification.hasOwnProperty('selectedLanguage'))
-       notification.selectedLanguage = languageKey[0];
-
-    var bodyarray = mainMesg.lng[notification.selectedLanguage].body.split("\n");
     var bulletList = [];
 
     for (let i = 0; i < bodyarray.length; i++) {
       var bodyStr = bodyarray[i];
-      var bodyStr ;
-      bodyStr = Util.replaceString('<br/>','\n',bodyStr);
+      bodyStr = Util.replaceString('<br/>', '\n', bodyStr);
       bulletList.push(
         <View key={i}>
           <View style={Skin.notification.historyrow}>
@@ -652,18 +670,7 @@ class Notifications_History extends Component {
       )
     }
 
-    var lngButtons = [];
-    for (let i = 0; i < languageKey.length && languageKey.length > 1; i++ ){
-          lngButtons.push(
-              <TouchableHighlight style={[ notification.selectedLanguage === languageKey[i] ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                      onPress={() => {  Obj.changeLanguage(notification,languageKey[i]) } }>
-                      <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                      {languageKey[i]}
-                      </Text>
-              </TouchableHighlight>
-          )
-    }
-    
+
     var indents = [];
     if (notification.status == 'ACTIVE') {
       indents.push(
@@ -714,9 +721,12 @@ class Notifications_History extends Component {
           {bulletList}
         </View>
         {indents}
-        <View style={styles.lngRow}> 
-          {lngButtons}                 
-      </View>
+        {lngButtons.length > 0 &&
+          <View style={styles.lngRow}>
+            {lngButtons}
+          </View>
+        }
+
       </View>
     )
   }
