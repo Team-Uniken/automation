@@ -690,8 +690,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }).start();
     }
 
-    String value = "{ \"lng\": { \"en\": { \"body\": \"You are attempting to log into the CBC website\\nRemember that our website will NEVER ask for your password\\nPlease confirm or reject\", \"subject\": \"Login Attempt\" }, \"gr\": { \"body\": \"Sie versuchen, sich auf der CBC-Website anzumelden. \\nVergewissern Sie sich, dass unsere Website NIEMALS nach Ihrem Passwort fragt \\nBitte bestätigen oder ablehnen\", \"subject\": \"Login Versuch\" }, \"fr\": { \"body\": \"Vous tentez de vous connecter au site Web de CBC \\nN'oubliez pas que notre site Web ne vous demandera JAMAIS votre mot de passe \\nVeuillez confirmer ou rejeter\", \"subject\": \"Tentative de connexion\" } } }";
-
     @ReactMethod
     public void terminate(Callback callback){
         // Logger.d(TAG , "----- terminate call ");
