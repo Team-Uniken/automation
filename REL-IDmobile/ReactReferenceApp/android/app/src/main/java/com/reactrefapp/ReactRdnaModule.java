@@ -777,14 +777,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setDevToken(String devToken){
-        String deviceToken=null;
-        try {
-            JSONObject jobj=new JSONObject(devToken);
-            deviceToken= jobj.getString("token");
-        } catch (JSONException e) {
-            //e.printStackTrace();
-        }
-        Constants.DEV_TOKEN=deviceToken;
+        Constants.DEV_TOKEN=devToken;
     }
 
     @ReactMethod

@@ -5,9 +5,10 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.v7.appcompat.*;
 
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+//import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import co.eleken.react_native_touch_id_android.FingerprintPackage;
 
 import com.github.ajalt.reprint.core.Reprint;
@@ -92,13 +93,14 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new FIRMessagingPackage(),
                     new FingerprintPackage(),
                     new RNSpinkitPackage(),
                     new RNFSPackage(),
                     new MapsPackage(),
                     new ReactNativeConfigPackage(),
                     new RDNAReactPackage(),
-                    new ReactNativePushNotificationPackage(),
+                    ///new ReactNativePushNotificationPackage(),
                     new FBSDKPackage(getCallbackManager()),
                     new RCTCameraPackage());
         }
