@@ -719,7 +719,7 @@ class Load extends Component {
       Main.gatewayHost = currentGatewayHost;
       Main.gatewayPort = currentGatewayPort;
 
-      sslCertificate.data.then((sslDetails) => {
+      sslCertificate.data.then((sslDetails) => { 
         sslDetails = currentProfile.sslEnable ? JSON.stringify({ 'data': sslDetails, 'password': sslCertificate.password }) : null;
         ReactRdna.initialize(currentAgentInfo, currentGatewayHost, currentGatewayPort, ReactRdna.RdnaCipherSpecs, ReactRdna.RdnaCipherSalt, jsonProxySettings, sslDetails, (response) => {
           if (response) {

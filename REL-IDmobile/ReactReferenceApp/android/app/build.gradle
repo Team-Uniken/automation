@@ -1,6 +1,5 @@
 apply plugin: "com.android.application"
 
-
 project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
@@ -115,8 +114,6 @@ android {
 //        }
 //    }
 
-
-
     signingConfigs {
         releaseNwd {
             storeFile file("reactandroid.jks")
@@ -223,7 +220,11 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
+<<<<<<< Updated upstream
     compile(name: 'app-sdk-release_v1.6.0', ext: 'aar')
+=======
+    compile(name: 'app-sdk-debug', ext: 'aar')
+>>>>>>> Stashed changes
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
     compile project(':react-native-push-notification')
@@ -231,9 +232,9 @@ dependencies {
         force = true;
     }
     // <- Add this line
-        compile('com.android.support:appcompat-v7:27.0.2') {
-            force = true;
-        }
+    compile('com.android.support:appcompat-v7:27.0.2') {
+        force = true;
+    }
     compile 'com.facebook.react:react-native:+'
     //compile 'com.google.android.gms:play-services-gcm:9.2.1'
     compile 'com.google.code.gson:gson:2.8.0'

@@ -7,7 +7,7 @@ module.exports = {
   DEVICE_QUEUED_DELETE : "Queued for deleting...",
   DEVICE_ACTIVE : "Active",
   DEVICE_UPDATE : "Update",
-  USER_SESSION : "NO",
+  USER_SESSION : "NO", 
   USER_T0:"NO",
 };
 

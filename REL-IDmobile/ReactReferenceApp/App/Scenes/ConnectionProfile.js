@@ -79,7 +79,7 @@ class ConnectionProfileScene extends Component {
       CONNECTION_PROFILES_DATA = JSON.parse(profiles);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(CONNECTION_PROFILES_DATA)
-      });
+      }); 
     }).done();
 
   

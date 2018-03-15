@@ -10,7 +10,7 @@ import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 
 /*
- Required for this js
+ Required for this js 
  */
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';

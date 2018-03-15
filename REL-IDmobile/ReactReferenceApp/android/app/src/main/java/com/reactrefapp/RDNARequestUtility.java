@@ -44,7 +44,6 @@ public class RDNARequestUtility extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void doHTTPGetRequest(String url, Callback callback){
-
         if(isNetworkAvailable(reactContext)){
             new NetworkTask(proxyHNIP, proxyPort, callback).execute(url);
         } else {
@@ -73,7 +72,6 @@ public class RDNARequestUtility extends ReactContextBaseJavaModule {
 
             callback.invoke(writableArray);
         }
-
     }
 
 //    @ReactMethod
