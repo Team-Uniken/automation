@@ -15,7 +15,7 @@ import Config from 'react-native-config';
  */
 import DatePicker from 'react-native-datepicker'
 import ModalPicker from 'react-native-modal-picker'
-import {Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
+import { Image, StyleSheet, Text, View, Keyboard, ListView, AppRegistry, TextInput, TouchableHighlight, Alert, Dimensions, AsyncStorage, TouchableOpacity, } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
@@ -29,7 +29,7 @@ import Main from '../Components/Container/Main';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 import MainActivation from '../Components/Container/MainActivation';
 import PageTitle from '../Components/view/pagetitle';
-import { NavigationActions} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 /*
  Custome View
@@ -114,12 +114,12 @@ var HISTORY = {
 var styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-     paddingTop: 16,
-     height:Skin.SCREEN_HEIGHT-107
+    paddingTop: 16,
+    height: Skin.SCREEN_HEIGHT - 107
   },
   list: {
     marginTop: 16,
-  
+
   },
   date: {
     height: 48,
@@ -178,6 +178,13 @@ var styles = StyleSheet.create({
     marginLeft: 8,
     marginBottom: 8,
     fontWeight: 'bold'
+  },
+  lngRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 4
   },
   go: {
     color: '#000',
@@ -243,12 +250,15 @@ class Notifications_History extends Component {
       startdate: '',
       enddate: '',
       dataSource: new ListView.DataSource({
+
         rowHasChanged: (r1, r2) => r1 !== r2,
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       }),
       selectedAction: '',
       alertMsg: "",
-      showAlert: false
+      showAlert: false,
+      finalData: null,
+      refresh: false,
     };
     this.selectedAlertOp = true;
     this.showAlertModal = this.showAlertModal.bind(this);
@@ -256,11 +266,12 @@ class Notifications_History extends Component {
     this.onAlertModalOk = this.onAlertModalOk.bind(this);
     this.dismissAlertModal = this.dismissAlertModal.bind(this);
     this.getNoticiationHistory = this.getNoticiationHistory.bind(this);
+    this.changeLanguage = this.changeLanguage.bind(this);
     Events.on('getNoticiationHistory', 'getNoticiationHistory', this.getNoticiationHistory);
   }
 
 
-  getNoticiationHistory(){
+  getNoticiationHistory() {
     this.componentDidMount();
   }
 
@@ -284,7 +295,8 @@ class Notifications_History extends Component {
   */
   componentDidMount() {
     Obj = this;
-    //this.onGetNotificationHistory({response:"{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"You are attempting to log into the CBC website\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}"});
+    //this.onGetNotificationHistory({ response: "{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"You are attempting to log into the CBC website\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}" });
+    //this.onGetNotificationHistory({response:"{\"errCode\":0,\"eMethId\":16,\"pArgs\":{\"service_details\":{},\"response\":{\"ResponseData\":{\"total_count\":1,\"history\":[{\"notification_uuid\":\"613be69f-9d97-42a3-834d-b6d33b037d0d\",\"status\":\"UPDATED\",\"delivery_status\":\"PARTIALLY_NOTIFIED\",\"action_performed\":\"Accept\",\"message\":{\"subject\":\"Login Attempt\",\"body\":\"{ \\\"lng\\\": { \\\"Marathi\\\": { \\\"body\\\": \\\"\u092E\u0930\u093E\u0920\u0940 \u092C\u094B\u0932\u0923\u093E\u0931\u094D\u092F\u093E\u0902\u091A\u0940 \u090F\u0915\u0942\u0923 \u0932\u094B\u0915\u0938\u0902\u0916\u094D\u092F\u093E \u096F,\u0966\u0966,\u0966\u0966,\u0966\u0966\u0966 \u0906\u0939\u0947.\\\\nRemember that our website will NEVER ask for your password\\\\nPlease confirm or reject\\\", \\\"subject\\\": \\\"Login Attempt\\\", \\\"Accept\\\": \\\"Accept\\\", \\\"Reject\\\": \\\"Reject\\\" }, \\\"Deutsch\\\": { \\\"body\\\": \\\"Sie versuchen, sich auf der CBC-Website anzumelden. Vergewissern Sie sich, dass unsere Website NIEMALS nach Ihrem Passwort fragt \\\\nBitte best\u00E4tigen oder ablehnen\\\", \\\"subject\\\": \\\"Login Versuch\\\", \\\"Accept\\\": \\\"Akzeptieren\\\", \\\"Reject\\\": \\\"Betrug\\\" }, \\\"Fran\u00E7ais\\\": { \\\"body\\\": \\\"Vous tentez de vous connecter au site Web de CBC \\\\nN'oubliez pas que notre site Web ne vous demandera JAMAIS votre mot de passe \\\\nVeuillez confirmer ou rejeter\\\", \\\"subject\\\": \\\"Tentative de connexion\\\", \\\"Accept\\\": \\\"Acceptez\\\", \\\"Reject\\\": \\\"Rejeter\\\" } } }\"},\"action_device_uuid\":\"iOS_021218231435\",\"create_ts\":\"2018-02-12T23:25:27EST\",\"update_ts\":\"2018-02-12T23:26:02EST\",\"expiry_timestamp\":\"2018-02-12T23:28:27EST\",\"enterprise_id\":\"CBC\",\"signing_status\":\"NA/TAMPERED/VERIFIED\"}]},\"ResponseDataLen\":5018,\"StatusMsg\":\"Success\",\"StatusCode\":100,\"CredOpMode\":0},\"pxyDetails\":{\"isStarted\":0,\"isLocalhostOnly\":0,\"isAutoStarted\":0,\"isPrivacyEnabled\":0,\"portType\":0,\"port\":0}}}"});
     if (Main.isConnected) {
       this.getNotificationHistory(10, 0, '', '', '', '', '', '', '');
     } else {
@@ -303,8 +315,16 @@ class Notifications_History extends Component {
     // var history = data.data.notification_history_details.history
     var sorthistory = data.sort(compare);
     var dateAdd = this.addDate(sorthistory);
+    this.state.finalData = this.convertHistoryArrayToMap(dateAdd);
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRowsAndSections(this.convertHistoryArrayToMap(dateAdd))
+      dataSource: this.state.dataSource.cloneWithRowsAndSections(this.state.finalData)
+    });
+  }
+
+  refreshHistoryData() {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRowsAndSections(JSON.parse(JSON.stringify(this.state.finalData))),
+      refresh: !this.state.refresh
     });
   }
 
@@ -364,7 +384,7 @@ class Notifications_History extends Component {
       }
     } else {
       setTimeout(() => {
-       alert("onGetNotificationHistory errCode" + res.errCode);
+        alert("onGetNotificationHistory errCode" + res.errCode);
       }, 100);
     }
   }
@@ -420,11 +440,11 @@ class Notifications_History extends Component {
     return str.replace(/\s+/g, '');
   }
 
-  goBack(){
+  goBack() {
     this.props.navigation.goBack();
-    
+
   }
-  
+
 
 
   go() {
@@ -473,9 +493,9 @@ class Notifications_History extends Component {
   /*
     render pagetitle
   */
-  renderPageTitle(pageTitle){
-        return(<PageTitle title={pageTitle}
-        handler={this.goBack.bind(this)} isBadge={true}/>);
+  renderPageTitle(pageTitle) {
+    return (<PageTitle title={pageTitle}
+      handler={this.goBack.bind(this)} isBadge={true} />);
   }
   /*
      This method is used to render the componenet with all its element.
@@ -489,7 +509,7 @@ class Notifications_History extends Component {
             open: false,
             disabled: true,
           }}
-          defaultNav = {isPageTitle?false:true}
+          defaultNav={isPageTitle ? false : true}
           navBar={{
             title: 'Notification History',
             visible: true,
@@ -506,16 +526,16 @@ class Notifications_History extends Component {
             visible: false,
           }}
           navigator={this.props.navigator}
-          >
-          { isPageTitle && this.renderPageTitle('Notification History')}
+        >
+          {isPageTitle && this.renderPageTitle('Notification History')}
           <View style={[styles.container, { backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }]}>
 
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this.notification_history}
               renderSectionHeader={this.renderSectionHeader}
-              stickySectionHeadersEnabled = {false}
-              />
+              stickySectionHeadersEnabled={false}
+            />
           </View>
 
           <Modal
@@ -523,7 +543,7 @@ class Notifications_History extends Component {
             overlayOpacity={0.75}
             offset={100}
             open={this.state.showAlert}
-            modalDidOpen={() => console.log('modal did open') }
+            modalDidOpen={() => console.log('modal did open')}
             modalDidClose={() => {
               if (this.selectedAlertOp) {
                 this.selectedAlertOp = false;
@@ -532,7 +552,7 @@ class Notifications_History extends Component {
                 this.selectedAlertOp = false;
                 this.onAlertModalDismissed();
               }
-            } }>
+            }}>
             <View style={styles.modalTitleWrap}>
               <Text style={styles.modalTitle}>
                 Alert
@@ -549,7 +569,7 @@ class Notifications_History extends Component {
                 this.setState({
                   showAlert: false
                 });
-              } }
+              }}
               underlayColor={Skin.colors.REPPLE_COLOR}
               style={styles.modalButton}>
               <Text style={styles.modalButtonText}>
@@ -564,28 +584,93 @@ class Notifications_History extends Component {
 
 
 
+
+  changeLanguage(notification, lng, mainMesg) {
+    // var mainMesg = JSON.parse(notification.message.body);
+
+    notification.selectedLanguage = lng;
+
+    notification.message.subject = mainMesg.lng[lng].subject;
+
+    var keys = Object.keys(this.state.finalData)
+    for (const key in keys) {
+      var arrNotification = this.state.finalData[keys[key]];
+      for (const objNotification in arrNotification) {
+        if (notification.notification_uuid === arrNotification[objNotification].notification_uuid) {
+          arrNotification[objNotification] = notification;
+          this.state.finalData[keys[key]] = arrNotification;
+          break;
+
+        }
+      }
+    }
+
+    Obj.refreshHistoryData();
+    // var languageKey = Object.keys(mainMesg.lng);
+    // for ( let i = 0; i < languageKey.length; i++ ){
+    //     if ( lng === languageKey[i] ) {
+    //         //this.state.selectedlanguage = lng;
+    //         notification.message.subject = mainMesg.lng[lng].subject;
+
+    //         this.state.parseMessage = mainMesg.lng[lng].body;
+    //         this.setState({ parseMessage: mainMesg.lng[lng].body });
+    //         break;
+    //     }
+    // }
+
+  }
+
   /*
      This method return custom notification row.
    */
   notification_history(notification) {
-    var bodyarray = notification.message.body.split("\n");
-    var bulletList = [];
-    
-    for(let i = 0; i < bodyarray.length; i++){
-      var bodyStr = bodyarray[i];
-      bodyStr = Util.replaceString('<br/>','\n',bodyStr);
-      bulletList.push(
-        <View key = {i}>
-          <View style={Skin.notification.historyrow}>
-          <Text style={Skin.notification.dot}>{"\u2022"}</Text>
-          <Text style={Skin.notification.body}>
-            {bodyStr}
-          </Text>
-        </View>
-        </View>
-        )
+
+    var mainMesg;
+    try {
+      mainMesg = JSON.parse(notification.message.body);
+    } catch (e) {
     }
-    
+    var languageKey;
+    var bodyarray;
+    var lngButtons = [];
+
+    if (mainMesg) {
+      languageKey = Object.keys(mainMesg.lng);
+      if (!notification.hasOwnProperty('selectedLanguage'))
+        notification.selectedLanguage = languageKey[0];
+      bodyarray = mainMesg.lng[notification.selectedLanguage].body.split("\n");   
+      for (let i = 0; i < languageKey.length && languageKey.length > 1; i++) {
+        lngButtons.push(
+          <TouchableHighlight style={[notification.selectedLanguage === languageKey[i] ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+            onPress={() => { Obj.changeLanguage(notification, languageKey[i], mainMesg) }}>
+            <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10 }}>
+              {languageKey[i]}
+            </Text>
+          </TouchableHighlight>
+        )
+      }
+    } else {
+      bodyarray = notification.message.body.split("\n");
+    }
+
+    var bulletList = [];
+
+    for (let i = 0; i < bodyarray.length; i++) {
+      var bodyStr = bodyarray[i];
+      bodyStr = Util.replaceString('<br/>', '\n', bodyStr);
+      bulletList.push(
+        <View key={i}>
+          <View style={Skin.notification.historyrow}>
+            <Text style={Skin.notification.dot}>{"\u2022"}</Text>
+            <Text style={Skin.notification.body}>
+              {bodyStr}
+            </Text>
+          </View>
+        </View>
+      )
+    }
+
+
     var indents = [];
     if (notification.status == 'ACTIVE') {
       indents.push(
@@ -633,9 +718,15 @@ class Notifications_History extends Component {
 
 
         <View style={{ backgroundColor: 'transparent', flex: 2, flexDirection: 'column', marginBottom: 8 }}>
-         {bulletList}
+          {bulletList}
         </View>
         {indents}
+        {lngButtons.length > 0 &&
+          <View style={styles.lngRow}>
+            {lngButtons}
+          </View>
+        }
+
       </View>
     )
   }
