@@ -47,14 +47,47 @@ export default class NotificationCard extends Component {
           subject : "", 
           languageKey : "",
           selectedlanguage : this.props.selectedlanguage }   
+          this.updateNotificationData();
+    }
+    componentDidMount() {
+        // this.updateNotificationData();
+    }
+
+    componentDidUpdate() {
+        //this.updateNotificationData();
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.state.mainMsg = nextProps.notification.message.body;
+        if( Util.isJSON(this.state.mainMsg) ){       
+            var mainMesg = JSON.parse(this.state.mainMsg);   
+            this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
+            var lng = this.state.languageKey[0];
+            this.state.selectedlanguage = lng;
+            this.state.subject = mainMesg.lng[lng].subject;
+            this.state.acceptLabel = mainMesg.lng[lng].Accept;
+            this.state.rejectLabel = mainMesg.lng[lng].Reject;
+            if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
+            this.state.parseMessage = mainMesg.lng[lng].body;
+        }else  {
+            this.state.languageKey = [];
+            this.singleLanguageMessage();
+        }
+    }
+
+    updateNotificationData(){
         if( Util.isJSON(this.state.mainMsg) ){       
             this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
             if( !Util.isEmpty(this.props.selectedlanguage) ) this.changeLanguage(this.props.selectedlanguage);
             else this.changeLanguage(this.state.languageKey[0]);
         }else{
-            this.singleLanguageMessage();
+            this.singleLanguageMessage(); 
         }
     }
+
+    // onNotificationLanguageChanged(){
+    //     if( !this.props.showHideButton ) this.takeAction(null, null, NotificationAction.HIDE);
+    // }
 
     takeAction(notification, btnLabel, action) {
         var bundle = {
@@ -148,7 +181,10 @@ export default class NotificationCard extends Component {
       for (let i = 0; i < this.state.languageKey.length && this.state.languageKey.length > 1; i++ ){
             lngButtons.push(
                 <TouchableHighlight style={[ this.state.selectedlanguage === this.state.languageKey[i] ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[i]) } }>
+                                        onPress={() => {  
+                                            this.changeLanguage(this.state.languageKey[i]); 
+                                            //this.onNotificationLanguageChanged(); 
+                                        } }>
                         <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
                         {this.state.languageKey[i]}
                         </Text>
