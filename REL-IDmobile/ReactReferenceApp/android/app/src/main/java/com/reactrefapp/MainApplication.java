@@ -9,6 +9,9 @@ import android.support.v7.appcompat.*;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
 import com.evollu.react.fcm.FIRMessagingPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
+
 import co.eleken.react_native_touch_id_android.FingerprintPackage;
 
 import com.github.ajalt.reprint.core.Reprint;

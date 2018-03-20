@@ -218,8 +218,6 @@ dependencies {
         exclude group: "com.google.android.gms"
         exclude group: "com.google.firebase"
     }
-
-
     compile project(':react-native-touch-id-android')
     compile project(':react-native-spinkit')
     compile project(':react-native-fs')
@@ -231,7 +229,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release_v1.6.0', ext: 'aar')
+    compile(name: 'app-sdk-release', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')

@@ -1,6 +1,7 @@
 rootProject.name = 'ReactRefApp'
 include ':react-native-fcm'
 project(':react-native-fcm').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fcm/android')
+
 include ':react-native-touch-id-android'
 project(':react-native-touch-id-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-touch-id-android/android')
 include ':react-native-spinkit'
