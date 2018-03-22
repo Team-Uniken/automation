@@ -382,7 +382,7 @@ class Load extends Component {
       });
       FCM.on(FCMEvent.Notification, notification => {
         savedNotification = notification;
-          if (notification.opened_from_tray == true) {
+          if (notification.opened_from_tray == 1) {
             Main.notificationId = notification.hiddenMessage;
           }
 
