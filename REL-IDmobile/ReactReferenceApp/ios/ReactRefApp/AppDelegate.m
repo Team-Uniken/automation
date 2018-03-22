@@ -16,7 +16,6 @@
 #import "RCTPushNotificationManager.h"
 
 @implementation AppDelegate
-@synthesize apnsDeviceToken;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
@@ -78,7 +77,6 @@
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-  apnsDeviceToken = deviceToken;
   NSLog(@"\n\n%@\n\n",deviceToken);
   [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }

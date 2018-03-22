@@ -34,6 +34,7 @@ RDNAIWACreds *rdnaIWACredsObj;
   int i;
   //  ActiveShield *_shield;
   AppDelegate *delegate;
+  NSString *apnsDeviceToken;
 }
 @end
 
@@ -200,6 +201,11 @@ RCT_EXPORT_METHOD (initialize:(NSString *)agentInfo
     //      });
     
   }
+}
+
+
+RCT_EXPORT_METHOD (setDevToken:(NSString *)token){
+  apnsDeviceToken = token;
 }
 
 RCT_EXPORT_METHOD (getServiceByServiceName:(NSString *)serviceName
@@ -1088,14 +1094,7 @@ RCT_EXPORT_METHOD (exitApp){
 }
 
 - (NSString*)getDeviceToken{
-  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  NSMutableString *tokenString = [[NSMutableString alloc] init];
-  int length = (int)[appDelegate.apnsDeviceToken length];
-  char const *bytes = [appDelegate.apnsDeviceToken bytes];
-  for (int j = 0; j < length; j++) {
-    [tokenString appendString:[NSString stringWithFormat:@"%02.2hhx", bytes[j]]];
-  }
-  return tokenString;
+  return apnsDeviceToken;
 }
 
 -(int)onSessionTimeout:(NSString*)status{
