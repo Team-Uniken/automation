@@ -192,7 +192,7 @@ class Load extends Component {
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
     console.log('test logs');
     if (Platform.OS === 'ios') {
-      PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+      PushNotificationIOS.addEventListener('register',this.registerToken.bind(this));
       PushNotificationIOS.addEventListener('notification', this._onNotification);
       PushNotificationIOS.requestPermissions();
       PushNotificationIOS.getInitialNotification()
@@ -238,6 +238,9 @@ class Load extends Component {
     }
   }
 
+  registerToken (deviceToken) {
+    ReactRdna.setDevToken(deviceToken);
+  }
   showNotificationAlert(notification) {
     savedNotification = null;
     var msg = "";
