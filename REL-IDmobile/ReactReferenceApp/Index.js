@@ -398,7 +398,7 @@ LoadScreen: {
 screen: LoadScreen,
 navigationOptions: ({navigation}) => ({
 header: false
-  }),
+  }), 
   },
   
 ConnectionProfileScreen: {

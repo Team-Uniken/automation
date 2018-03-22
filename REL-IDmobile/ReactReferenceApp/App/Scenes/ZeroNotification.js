@@ -417,6 +417,7 @@ export default class NotificationMgmtScene extends Component {
       selectedAction: '',
       showLoader: false,
       refreshing: false,
+      selectedlanguage: ""
     };
     this.selectedAlertOp = true;
   }
@@ -932,7 +933,7 @@ export default class NotificationMgmtScene extends Component {
 
   goBack(){
     this.props.navigation.goBack();
-    Events.trigger('getNoticiationHistory');
+    Events.trigger('getNoticiationHistory'); 
     global.isNotificationScreenonTop = false;
 
   }
@@ -988,11 +989,11 @@ export default class NotificationMgmtScene extends Component {
   }
 
   renderNotificationCard(notificationData) {
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} />
+    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedlanguage={this.view.selectedlanguage}/>
   }
 
   onNotificationAction(bundle) {
-    const { notification, btnLabel, action } = bundle;
+    const { notification, btnLabel, action, selectedlanguage } = bundle;
     switch (action) {
       case "accept":
         this.showalert(notification, btnLabel);
@@ -1004,6 +1005,7 @@ export default class NotificationMgmtScene extends Component {
         this.showalertforReject(notification, btnLabel);
         break;
       case "click":
+        this.state.selectedlanguage = selectedlanguage;
         this.swapDataSource(notification);
         break;
       case "hide":
@@ -1011,7 +1013,7 @@ export default class NotificationMgmtScene extends Component {
         break;
     }
   }
-
+  
   swapDataSource(data) {
     var dataSource = this.state.dataSource;
     var ds = new ListView.DataSource({
@@ -1137,6 +1139,7 @@ export default class NotificationMgmtScene extends Component {
           {this.renderNotificationCard.bind(
             {
               view: {
+                selectedlanguage: this.state.selectedlanguage,
                 expand: true,
                 showButtons: true,
                 showHideButton: Main.notificationCount > 1
@@ -1153,6 +1156,7 @@ export default class NotificationMgmtScene extends Component {
         renderRow={this.renderNotificationCard.bind(
           {
             view: {
+              selectedlanguage: this.state.selectedlanguage,
               expand: false,
               showButtons: false
             }

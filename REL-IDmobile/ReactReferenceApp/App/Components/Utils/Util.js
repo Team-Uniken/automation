@@ -261,7 +261,7 @@ class Util extends Component {
       else callback(null);
     });
   }
-
+ 
   static isAndroidTouchSensorAvailable() {
     return new Promise(function (resolve, reject) {
       Finger.isSensorAvailable()
@@ -289,6 +289,19 @@ class Util extends Component {
           alert(error);
       });
     })
+  }
+
+  static isJSON(str){
+      try {
+        JSON.parse(str);
+      } catch (e) {
+          return false;
+      }
+    return true;
+  }
+
+  static isEmpty(str) {
+    return (!str || 0 === str.length);
   }
 
 }

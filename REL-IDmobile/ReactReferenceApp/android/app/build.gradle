@@ -1,6 +1,5 @@
 apply plugin: "com.android.application"
 
-
 project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
@@ -87,8 +86,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 512
-        versionName "5.1.2"
+        versionCode 513
+        versionName "5.1.3"
 
         packagingOptions {
             exclude '/lib/mips64/**'
@@ -114,8 +113,6 @@ android {
 //            include "armeabi-v7a", "x86"
 //        }
 //    }
-
-
 
     signingConfigs {
         releaseNwd {
@@ -229,7 +226,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release', ext: 'aar')
+    compile(name: 'app-sdk-release-v1.6.1', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')
@@ -237,9 +234,9 @@ dependencies {
 //        force = true;
 //    }
     // <- Add this line
-        compile('com.android.support:appcompat-v7:27.0.2') {
-            force = true;
-        }
+    compile('com.android.support:appcompat-v7:27.0.2') {
+        force = true;
+    }
     compile 'com.facebook.react:react-native:+'
     //compile 'com.google.android.gms:play-services-gcm:9.2.1'
     compile 'com.google.code.gson:gson:2.8.0'

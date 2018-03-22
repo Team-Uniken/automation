@@ -7,7 +7,7 @@
 
 import Config from 'react-native-config'
 
-const React = require('react');
+const React = require('react'); 
 import ReactNative,{Platform} from 'react-native';
 // const Skin = require('./MainStyleSheet');
 // const styles = Skin.styles;
@@ -150,9 +150,6 @@ const TITLE_COLOR = TITLE_TEXT_COLOR
 const TITLE_BG_COLOR = '#ffffff'
 const BLACK_TEXT_COLOR = '#000'
 const ERROR_TEXT_COLOR = '#CC0000'
-
-
-
 
 const LIGHT_TEXT_COLOR = '#929292'
 const BOTTOM_MENU_BG = '#b72e2d'
