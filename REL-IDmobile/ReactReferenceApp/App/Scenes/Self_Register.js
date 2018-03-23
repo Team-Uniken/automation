@@ -67,6 +67,7 @@ class Register extends Component {
 
     this.sessionId = null;
     this.close = this.close.bind(this);
+    this.validatePhoneNumber = this.validatePhoneNumber.bind(this);
   }
   /*
     This is life cycle method of the react native component.
@@ -130,7 +131,7 @@ class Register extends Component {
   }
   //onTextchange method for PhoneNumber TextInput
   onPhoneNumberChange(event) {
-    if (obj.validatePhoneNumber(event.nativeEvent.text) && event.nativeEvent.text.length <= 10)
+    if (this.validatePhoneNumber(event.nativeEvent.text) )
       this.setState({ phoneNumber: event.nativeEvent.text });
     else {
       if (event.nativeEvent.text.length == 0)
@@ -166,10 +167,8 @@ class Register extends Component {
 
   //check entered phoneNumber is valid or not
   validatePhoneNumber(phone) {
-    var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-    var reg = /^\d+$/;
-    // return regex.test(phone)
-    return reg.test(phone)
+    var regex = /^\+?([0-9]{0,15})$/;
+    return regex.test(phone);
   }
 
   // check all fields are filled with valid data to call registerUser.
