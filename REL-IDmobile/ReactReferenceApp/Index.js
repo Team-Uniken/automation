@@ -33,7 +33,8 @@ console.disableYellowBox = true;    //disable yellow warning box
 
 import Welcome_Screen from './App/Scenes/Welcome_Screen';                    // Screen (gives option to register / login)
 import Select_Login from './App/Scenes/Select_Login';            // Select login mode (password / pattern etc)
-import Self_Register from './App/Scenes/Self_Register';                  // screen for self-registration
+import Self_Register from './App/Scenes/Self_Register';     
+import ApiTest from './App/Scenes/api_test';               // screen for self-registration
 import ActivateNewDeviceScene from './App/Scenes/ActivateNewDevice';     // generate access code for new device
 import DeviceMgmtScene from './App/Scenes/DeviceMgmt';                  // Device Management for edit or delete device
 import ConnectionProfileScene from './App/Scenes/ConnectionProfile';    // import new connection profile or select existing profile for initialization
@@ -421,6 +422,13 @@ navigationOptions: ({navigation}) => ({
 header: false
   }),
   },
+
+  ApiTestScreen: {
+    screen: ApiTest,
+    navigationOptions: ({navigation}) => ({
+    header: false
+      }),
+      },
   
 SelfRegisterScreen: {
 screen: SelfRegisterScreen,

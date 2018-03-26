@@ -85,7 +85,7 @@ var welcome = ClientBasedConfig.img.welcome;
 var sslCertificate = ClientBasedConfig.sslCertificate;
 
 //disable console.log
-console.log = function () { }
+//console.log = function () { }
 
 BackHandler.addEventListener('hardwareBackPress', function () {
   return true;
@@ -848,7 +848,7 @@ class Load extends Component {
                   index: 0,
                   actions: [
                     NavigationActions.navigate({
-                      routeName: 'StateMachine', params: {
+                      routeName: 'ApiTestScreen', params: {
                         url: {
                           "chlngJson": chlngJson,
                           "screenId": nextChlngName,
@@ -878,7 +878,7 @@ class Load extends Component {
                   index: 0,
                   actions: [
                     NavigationActions.navigate({
-                      routeName: 'WelcomeScreen', params: {
+                      routeName: 'ApiTestScreen', params: {
                         url: {
                           "chlngJson": chlngJson,
                           "screenId": nextChlngName,
@@ -893,7 +893,7 @@ class Load extends Component {
             }).done();
           } else {
             //            this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-            this.props.navigation.navigate('StateMachine', {
+            this.props.navigation.navigate('ApiTestScreen', {
               url: {
                 "chlngJson": chlngJson,
                 "screenId": nextChlngName,
@@ -914,7 +914,7 @@ class Load extends Component {
                 index: 0,
                 actions: [
                   NavigationActions.navigate({
-                    routeName: 'StateMachine', params: {
+                    routeName: 'ApiTestScreen', params: {
                       url: {
                         "chlngJson": chlngJson,
                         "screenId": nextChlngName,
@@ -944,7 +944,7 @@ class Load extends Component {
                 index: 0,
                 actions: [
                   NavigationActions.navigate({
-                    routeName: 'WelcomeScreen', params: {
+                    routeName: 'ApiTestScreen', params: {
                       url: {
                         "chlngJson": chlngJson,
                         "screenId": nextChlngName,
@@ -974,7 +974,7 @@ class Load extends Component {
             index: 0,
             actions: [
               NavigationActions.navigate({
-                routeName: 'StateMachine', params: {
+                routeName: 'ApiTestScreen', params: {
                   url: {
                     "chlngJson": chlngJson,
                     "screenId": nextChlngName,
@@ -1005,7 +1005,7 @@ class Load extends Component {
             index: 0,
             actions: [
               NavigationActions.navigate({
-                routeName: 'WelcomeScreen', params: {
+                routeName: 'ApiTestScreen', params: {
                   url: {
                     "chlngJson": chlngJson,
                     "screenId": nextChlngName,
