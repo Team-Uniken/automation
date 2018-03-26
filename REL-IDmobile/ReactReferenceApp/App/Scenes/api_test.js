@@ -70,10 +70,21 @@ class ApiTest extends Component {
     //this.validatePhoneNumber = this.validatePhoneNumber.bind(this);
     this.showMessage = this.showMessage.bind(this);
 
-    this.serviceName='test';
-    this.ip = "10.0.0.21";
-    this.port = 8080;
-    this.serviceStringJson= '{}';
+    this.serviceName='serv3_portF';
+    this.ip = "99.99.99.99";
+    this.port = 9999;
+    this.serviceStringJson= "{\"serviceName\": \"serv3_portF\",\"targetHNIP\": \"99.99.99.99\",\"app_uuid\": \"415a4174-c0c3-4ee4-8931-04c5f325db0c\",\"accessServerName\": \"cluster1\",\"targetPort\": 9999,\"portInfo\": {\"isAutoStartedPort\": 0,\"isLocalhostOnly\": 1,\"isStarted\": 0,\"isPrivacyEnabled\": 1,\"portType\": 1,\"port\": 3652}}";
+    this.cipherSalt= "";
+    this.cipherSpect = "";
+    this.plainText = "uniken";
+    this.encryptDataPacketOutput = "";
+    this.decryptDataPacketOutput = ""; 
+    this.plainHttpRequest = "GET /docs/index.html HTTP/1.1\r\nHost: www.nowhere123.com\r\n\r\n";
+    this.encryptHttpRequestOutput = "";
+    this.decryptHttpResponseOutput = ""; 
+
+
+  
   }
   /*
     This is life cycle method of the react native component.
@@ -116,6 +127,8 @@ class ApiTest extends Component {
   
   //show alert dailog with msg and title pass to it
   showMessage(title, msg, press) {
+
+    console.log(msg);
     setTimeout(() => {
 
       Alert.alert(
@@ -222,7 +235,7 @@ class ApiTest extends Component {
  }
 
  serviceAccessStart(){
-  ReactRdna.getAllServices(this.serviceStringJson,(response)=>{
+  ReactRdna.serviceAccessStart(this.serviceStringJson,(response)=>{
     this.showMessage('serviceAccessStart',JSON.stringify(response),false);
   });
  }
@@ -234,15 +247,56 @@ class ApiTest extends Component {
  }
 
  serviceAccessStartAll(){
-  ReactRdna.serviceAccessStartAll((reponse)=>{
-    this.showMessage('serviceAccessStartAll',JSON.stringify(respnse),false);
+  ReactRdna.serviceAccessStartAll((response)=>{
+    this.showMessage('serviceAccessStartAll',JSON.stringify(response),false);
   });
  }
 
  serviceAccessStopAll(){
-  ReactRdna.serviceAccessStopAll((reponse)=>{
-    this.showMessage('serviceAccessStopAll',JSON.stringify(respnse),false);
+  ReactRdna.serviceAccessStopAll((response)=>{
+    this.showMessage('serviceAccessStopAll',JSON.stringify(response),false);
   });
+ }
+ getDefaultCipherSpec(){
+  ReactRdna.getDefaultCipherSpec((response)=>{
+    this.cipherSpect = response[0].response;
+    this.showMessage('getDefaultCipherSpec',JSON.stringify(response),false);
+  });
+ }
+
+ getDefaultCipherSalt(){
+  ReactRdna.getDefaultCipherSalt((response)=>{
+    this.cipherSalt = response[0].response;
+    this.showMessage('getDefaultCipherSalt',JSON.stringify(response),false);
+  });
+ }
+
+ encryptDataPacket(){
+  ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE,this.cipherSpect,this.cipherSalt,this.plainText,(response)=>{
+    this.encryptDataPacketOutput = response[0].response;
+    this.showMessage('encryptDataPacket',JSON.stringify(response),false);
+  });
+ }
+
+ decryptDataPacket(){
+  ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE,this.cipherSpect,this.cipherSalt,this.encryptDataPacketOutput,(response)=>{
+    this.decryptDataPacketOutput = response[0].response;
+    this.showMessage('encryptDataPacket',JSON.stringify(response),false);
+  });
+}
+
+  encryptHttpRequest(){
+    ReactRdna.encryptHttpRequest(ReactRdna.PRIVACY_SCOPE_DEVICE,this.cipherSpect,this.cipherSalt,this.plainHttpRequest,(response)=>{
+      this.encryptHttpRequestOutput = response[0].response;
+      this.showMessage('encryptHttpRequest',JSON.stringify(response),false);
+    });
+   }
+  
+   decryptHttpResponse(){
+    ReactRdna.decryptHttpResponse(ReactRdna.PRIVACY_SCOPE_DEVICE,this.cipherSpect,this.cipherSalt,this.encryptHttpRequestOutput,(response)=>{
+      this.decryptHttpResponseOutput = response[0].response;
+      this.showMessage('decryptHttpResponse',JSON.stringify(response),false);
+    });
  }
 
   render() {
@@ -286,6 +340,25 @@ class ApiTest extends Component {
                    <Button
                   label='serviceAccessStopAll'
                   onPress={this.serviceAccessStopAll.bind(this) } />
+                   <Button
+                  label='getDefaultCipherSpec'
+                  onPress={this.getDefaultCipherSpec.bind(this) } />
+                   <Button
+                  label='getDefaultCipherSalt'
+                  onPress={this.getDefaultCipherSalt.bind(this) } />
+
+                  <Button
+                  label='encryptDataPacket'
+                  onPress={this.encryptDataPacket.bind(this) } />
+                  <Button
+                  label='decryptDataPacket'
+                  onPress={this.decryptDataPacket.bind(this) } />
+                   <Button
+                  label='encryptHttpRequest'
+                  onPress={this.encryptHttpRequest.bind(this) } />
+                   <Button
+                  label='decryptHttpResponse'
+                  onPress={this.decryptHttpResponse.bind(this) } />
                   </View>
                 </View>
               </View>
