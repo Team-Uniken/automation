@@ -128,12 +128,13 @@ class ApiTest extends Component {
   //show alert dailog with msg and title pass to it
   showMessage(title, msg, press) {
 
-    console.log(msg);
+    var obj = JSON.parse(msg);
+    console.log(title + "---->" + obj[0].response);
     setTimeout(() => {
 
       Alert.alert(
         title,
-        msg,
+        decodeURI(msg),
         [{
           text: 'OK',
           onPress: () => {
@@ -299,6 +300,25 @@ class ApiTest extends Component {
     });
  }
 
+ getSessionID(){
+  ReactRdna.getSessionID((response)=>{
+    this.showMessage('getSessionID',JSON.stringify(response),false);
+  });
+ }
+
+ getAgentID(){
+  ReactRdna.getAgentID((response)=>{
+    this.showMessage('getAgentID',JSON.stringify(response),false);
+  });
+ }
+
+ getDeviceID(){
+  ReactRdna.getDeviceID((response)=>{
+    this.showMessage('getDeviceID',JSON.stringify(response),false);
+  });
+ }
+
+
   render() {
     return (
       <View style={[Skin.layout0.wrap.container, { flex: 1 }]}>
@@ -359,6 +379,16 @@ class ApiTest extends Component {
                    <Button
                   label='decryptHttpResponse'
                   onPress={this.decryptHttpResponse.bind(this) } />
+
+                   <Button
+                  label='getSessionID'
+                  onPress={this.getSessionID.bind(this) } />
+                   <Button
+                  label='getAgentID'
+                  onPress={this.getAgentID.bind(this) } />
+                   <Button
+                  label='getDeviceID'
+                  onPress={this.getDeviceID.bind(this) } />
                   </View>
                 </View>
               </View>
