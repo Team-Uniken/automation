@@ -8,6 +8,23 @@
 
 <ion-content padding>
 
-  <button ion-button block (click)="login()">{{ 'Login' }}</button>
-  <button ion-button block (click)="register()" class="login">{{ 'Register'}}</button>
+  <!-- <button ion-button block (click)="login()">{{ 'Login' }}</button>
+  <button ion-button block (click)="register()" class="login">{{ 'Register'}}</button> -->
+  
+  <button ion-button block (click)="getServiceByServiceName()" class="login">{{ 'getServiceByServiceName'}}</button>
+  <button ion-button block (click)="getServiceByTargetCoordinate()" class="login">{{ 'getServiceByTargetCoordinate'}}</button>
+  <button ion-button block (click)="getAllServices()" class="login">{{ 'getAllServices'}}</button>
+  <button ion-button block (click)="serviceAccessStart()" class="login">{{ 'serviceAccessStart'}}</button>
+  <button ion-button block (click)="serviceAccessStop()" class="login">{{ 'serviceAccessStop'}}</button>
+  <button ion-button block (click)="serviceAccessStartAll()" class="login">{{ 'serviceAccessStartAll'}}</button>
+  <button ion-button block (click)="serviceAccessStopAll()" class="login">{{ 'serviceAccessStopAll'}}</button>
+  <button ion-button block (click)="getDefaultCipherSpec()" class="login">{{ 'getDefaultCipherSpec'}}</button>
+  <button ion-button block (click)="getDefaultCipherSalt()" class="login">{{ 'getDefaultCipherSalt'}}</button>
+  <button ion-button block (click)="encryptDataPacket()" class="login">{{ 'encryptDataPacket'}}</button>
+  <button ion-button block (click)="decryptDataPacket()" class="login">{{ 'decryptDataPacket'}}</button>
+  <button ion-button block (click)="encryptHttpRequest()" class="login">{{ 'encryptHttpRequest'}}</button>
+  <button ion-button block (click)="decryptHttpResponse()" class="login">{{ 'decryptHttpResponse'}}</button>
+  <button ion-button block (click)="getSessionID()" class="login">{{ 'getSessionID'}}</button>
+  <!-- <button ion-button block (click)="getAgentID()" class="login">{{ 'getAgentID'}}</button>
+  <button ion-button block (click)="getDeviceID()" class="login">{{ 'getDeviceID'}}</button> -->
 </ion-content>
