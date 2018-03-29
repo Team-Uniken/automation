@@ -142,7 +142,7 @@ public class WebViewBridgeManager extends ReactWebViewManager {
     public void setWebViewClient(final WebView webView,ReadableMap params){
         webView.getSettings().setJavaScriptEnabled(false);
         addEventEmitters((ThemedReactContext) webView.getContext(),webView);
-        webView.setWebViewClient(new WebViewClient()
+        webView.setWebViewClient(new ReactWebViewClient()
         {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
