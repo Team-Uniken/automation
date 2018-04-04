@@ -123,9 +123,14 @@ class ConnectionProfileScene extends Component {
                   for (let i = 0; i < oldProfiles.length; i++) {
                     for (let j = 0; j < profileArray.length; j++) {
                       if (oldProfiles[i].Name === profileArray[j].Name) {
+                        if(oldProfiles[i].imported === "true"){
+                         alert("'"+oldProfiles[i].Name+"' "+"inbuild profile allready present");
+                         return;
+                        }else{
                         oldProfiles[i] = profileArray[j];
                         profileArray.splice(j, 1);
                         break;
+                        }
                       }
                     }
                   }
