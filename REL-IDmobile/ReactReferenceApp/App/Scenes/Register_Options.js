@@ -132,6 +132,9 @@ class Register extends Component {
         obj.setState({ rememberusername: '' });
       } else {
         obj.setState({ rememberusername: '\u2714' });
+          AsyncStorage.getItem('userId').then((value) => {
+            AsyncStorage.setItem("rememberuser", value); 
+          });     
       }
     });
   }
@@ -276,7 +279,7 @@ class Register extends Component {
   }
 
   changeDefaultLogin(option) {
-    this.setState({ defaultLogin: option.key })
+    this.setState({ defaultLogin: option.key });
   }
 
   saveDefaultLoginPrefs() {
