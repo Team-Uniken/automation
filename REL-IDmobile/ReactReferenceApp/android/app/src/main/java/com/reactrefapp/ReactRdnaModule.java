@@ -114,10 +114,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         constants.put("agentInfo", Constants.AGENT_INFO);
         constants.put("GatewayHost", Constants.HOST);
         constants.put("GatewayPort", Constants.PORT);
-        constants.put("PRIVACY_SCOPE_DEVICE",RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE.name());
-        constants.put("PRIVACY_SCOPE_AGENT", RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT.name());
-        constants.put("PRIVACY_SCOPE_USER", RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER.name());
-        constants.put("PRIVACY_SCOPE_SESSION", RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION.name());
+        constants.put("PRIVACY_SCOPE_DEVICE",RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE.intValue);
+        constants.put("PRIVACY_SCOPE_AGENT", RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT.intValue);
+        constants.put("PRIVACY_SCOPE_USER", RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER.intValue);
+        constants.put("PRIVACY_SCOPE_SESSION", RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION.intValue);
         constants.put(RDNA.RDNAHTTPMethods.RDNA_HTTP_POST.name(), RDNA.RDNAHTTPMethods.RDNA_HTTP_POST.name());
         constants.put(RDNA.RDNAHTTPMethods.RDNA_HTTP_GET.name(),RDNA.RDNAHTTPMethods.RDNA_HTTP_GET.name());
         constants.put("RdnaCipherSpecs", Constants.CYPHER_SPEC);
@@ -141,32 +141,11 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void initialize(final String agentInfo,final String authGatewayHNIP,final int authGatewayPort,final String cipherSpecs,final String cipherSalt, String proxySettings,String sslCertificate,final Callback callback) {
 
-        final long startTime = System.currentTimeMillis();
-
         callbacks = new RDNA.RDNACallbacks(){
 
             @Override
             public int onInitializeCompleted(String rdnaStatusInit) {
                 i=0;
-                final long finishTime = System.currentTimeMillis();
-                try {
-                    JSONObject obj = new JSONObject(rdnaStatusInit);
-                    if( obj.getString("errCode").equals("0")) {
-                        Logger.log(Logger.LogLevel.LOG_D, TAG,"better finish time is - : "+(finishTime-startTime) );
-                        onSecurityThreat("Without Better finish time is - : \n" + (finishTime-startTime));
-                        /*showOrUpdateThreatAlert("Without Better finish time is - : \n" + (finishTime-startTime) , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                              *//*  if(rdnaObj!=null)
-                                    rdnaObj.terminate();
-                                if(getCurrentActivity()!=null)
-                                    ActivityCompat.finishAffinity(getCurrentActivity());*//*
-                            }
-                        });*/
-                    }
-                }catch (JSONException je){
-                    je.printStackTrace();
-                }
                 //  Logger.d(TAG, "------- "+rdnaStatusInit);
                 WritableMap params = Arguments.createMap();
                 params.putString("response", rdnaStatusInit);
@@ -208,7 +187,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                         WritableMap params = Arguments.createMap();
                         params.putString("response", rdnaStatusPause);
 
-                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("onPauseCompleted", params);
                     }
                 };
@@ -321,7 +301,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                                 .emit("onForgotPasswordStatus", params);
                     }
                 };
+
                 callOnMainThread(runnable);
+
                 return 0;
             }
 
@@ -536,17 +518,18 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                     public void run() {
                         WritableMap params = Arguments.createMap();
                         params.putString("response", s);
-                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        context
+                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                 .emit("onSecurityThreat", params);
 
                         String msg = s;
-                        showOrUpdateThreatAlert("on Security threatThreats detected on your system : \n" + msg, new DialogInterface.OnClickListener() {
+                        showOrUpdateThreatAlert("Threats detected on your system : \n" + msg, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                               /* if(rdnaObj!=null)
+                                if(rdnaObj!=null)
                                     rdnaObj.terminate();
                                 if(getCurrentActivity()!=null)
-                                  ActivityCompat.finishAffinity(getCurrentActivity());*/
+                                    ActivityCompat.finishAffinity(getCurrentActivity());
                             }
                         });
                     }
@@ -555,6 +538,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 return 0;
             }
         };
+
+
 
         RDNA.RDNASSLCertificate rdnaSSLCertificate = null;
         try{
@@ -569,7 +554,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_LOG_VERBOSE, context);
+                RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(agentInfo, callbacks, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, null, rdnaSSLCert, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
                 rdnaObj = rdnaStatus.result;
 
                 WritableMap errorMap = Arguments.createMap();
@@ -646,21 +631,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         callback.invoke(writableArray);
     }
-
-    @ReactMethod
-    public void getServiceByServiceName(String serviceName, Callback callback)
-    {
-        String status = rdnaObj.getServiceByServiceName(serviceName);
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
-            statusMap.putInt("error", 0);
-            statusMap.putString("response",status);
-        } else {
-            statusMap.putInt("error", 1);
-        }
-        callback.invoke(statusMap);
-    }
-
 
     @ReactMethod
     public void checkChallenges(final String challengeRequestArray,final String userID,final Callback callback){
@@ -905,16 +875,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getSDKVersion(Callback callback){
-        WritableArray writableArray = Arguments.createArray();
-        WritableMap errorMap = Arguments.createMap();
-        String sdkVersion = RDNA.getSDKVersion();
-        errorMap.putString("error", sdkVersion);
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
-    }
-
-    @ReactMethod
     public void getConfig(String userId, Callback callback){
         WritableMap errorMap = Arguments.createMap();
 
@@ -951,58 +911,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void serviceAccessStart(String serviceJSON, Callback callback){
-        String status = rdnaObj.serviceAccessStart(serviceJSON);
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
-            statusMap.putInt("error", 0);
-            statusMap.putString("response",status);
-        } else {
-            statusMap.putInt("error", 1);
-        }
-        callback.invoke(statusMap);
-    }
-
-    @ReactMethod
-    public void serviceAccessStop(String serviceJSON, Callback callback){
-        String status = rdnaObj.serviceAccessStop(serviceJSON);
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
-            statusMap.putInt("error", 0);
-            statusMap.putString("response",status);
-        } else {
-            statusMap.putInt("error", 1);
-        }
-        callback.invoke(statusMap);
-    }
-
-    @ReactMethod
-    public void getAllServices(Callback callback){
-        String status = rdnaObj.getAllServices();
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
-            statusMap.putInt("error", 0);
-            statusMap.putString("response",status);
-        } else {
-            statusMap.putInt("error", 1);
-        }
-        callback.invoke(statusMap);
-    }
-
-    @ReactMethod
-    public void getServiceByTargetCoordinate(String ip, int ipPort, Callback callback){
-        String status = rdnaObj.getServiceByTargetCoordinate(ip, ipPort);
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
-            statusMap.putInt("error", 0);
-            statusMap.putString("response",status);
-        } else {
-            statusMap.putInt("error", 1);
-        }
-        callback.invoke(statusMap);
-    }
-
-    @ReactMethod
     public void getDefaultCipherSalt(Callback callback)
     {
         RDNA.RDNAStatus<byte[]> status=rdnaObj.getDefaultCipherSalt();
@@ -1020,46 +928,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void getDefaultCipherSpec(Callback callback)
-    {
-        RDNA.RDNAStatus<String> status=rdnaObj.getDefaultCipherSpec();
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
-            int error = status.errorCode;
-            statusMap.putInt("error", error);
-            if(status.errorCode == 0 && status.result!=null) {
-                statusMap.putString("response",status.result);
-            }
-        } else {
-            statusMap.putInt("error", 1);
-        }
-        callback.invoke(statusMap);
-    }
-
-    @ReactMethod
-    public void serviceAccessStartAll(Callback callback)
-    {
-        int error =rdnaObj.serviceAccessStartAll();
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
-    }
-
-    @ReactMethod
-    public void serviceAccessStopAll(Callback callback)
-    {
-        int error =rdnaObj.serviceAccessStartAll();
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
-    }
-
-    @ReactMethod
-    public void encryptDataPacket(String scope, String cipherSpecs, String salt, String data, Callback callback)
+    public void encryptDataPacket(int scope, String cipherSpecs, String salt, String data, Callback callback)
     {
         RDNA.RDNAPrivacyScope privacyScope = null;
 //        if(scope == null)
@@ -1069,24 +938,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 //        }
 //        else if(scope.equals("RDNA_PRIVACY_SCOPE_AGENT")){
 //            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_AGENT;
-//        }
-//        else if(scope.equals("RDNA_PRIVACY_SCOPE_USER")){
+//        }//        else if(scope.equals("RDNA_PRIVACY_SCOPE_USER")){
 //            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_USER;
 //        }
 //        else if(scope.equals("RDNA_PRIVACY_SCOPE_SESSION")){
 //            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
 //        }
 
-        if(cipherSpecs == null)
+        /*if(cipherSpecs == null)
             cipherSpecs = Constants.CYPHER_SPEC;
 
         if(scope == null)
             privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
         else
-            privacyScope = RDNA.RDNAPrivacyScope.valueOf(scope);
+            privacyScope = RDNA.RDNAPrivacyScope.valueOf(scope);*/
 
 
-        RDNA.RDNAStatus<byte[]> status=rdnaObj.encryptDataPacket(privacyScope, cipherSpecs, salt!=null?salt.getBytes():null, data!=null?data.getBytes():null);
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.encryptDataPacket(scope, cipherSpecs, salt!=null?salt.getBytes():null, data!=null?data.getBytes():null);
         WritableMap statusMap = Arguments.createMap();
         if(rdnaObj != null) {
             int error = status.errorCode;
@@ -1105,7 +973,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void decryptDataPacket(String scope, String cipherSpecs, String salt, String data, Callback callback){
+    public void decryptDataPacket(int scope, String cipherSpecs, String salt, String data, Callback callback){
         RDNA.RDNAPrivacyScope privacyScope = null;
 
 //        if(scope == null)
@@ -1128,15 +996,15 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             base64decodedData = Base64.decode(data,Base64.DEFAULT);
         }
 
-        if(cipherSpecs == null)
+        /*if(cipherSpecs == null)
             cipherSpecs = Constants.CYPHER_SPEC;
 
         if(scope == null)
             privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
         else
-            privacyScope = RDNA.RDNAPrivacyScope.valueOf(scope);
+            privacyScope = RDNA.RDNAPrivacyScope.valueOf(scope);*/
 
-        RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(privacyScope, cipherSpecs, salt!=null?salt.getBytes():null, base64decodedData);
+        RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(scope, cipherSpecs, salt!=null?salt.getBytes():null, base64decodedData);
         WritableMap statusMap = Arguments.createMap();
         if(rdnaObj != null) {
             int error = status.errorCode;
@@ -1190,24 +1058,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         WritableMap errorMap = Arguments.createMap();
         if(rdnaObj!=null){
             RDNA.RDNAStatus<String> status =   rdnaObj.getDeviceID();
-            errorMap.putInt("error", status.errorCode);
-            if(status.errorCode == 0)
-                errorMap.putString("response",status.result);
-        }
-        else{
-            errorMap.putInt("error",1);
-        }
-
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
-    }
-
-    @ReactMethod
-    public void getAgentID(Callback callback){
-        WritableArray writableArray = Arguments.createArray();
-        WritableMap errorMap = Arguments.createMap();
-        if(rdnaObj!=null){
-            RDNA.RDNAStatus<String> status =   rdnaObj.getAgentID();
             errorMap.putInt("error", status.errorCode);
             if(status.errorCode == 0)
                 errorMap.putString("response",status.result);
