@@ -10,6 +10,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+import Config from 'react-native-config';
 
 /* 
  Required for this js
@@ -211,6 +212,10 @@ class SelectLogin extends Component {
     
 
     if (this.state.dataSource.length > 0) {
+
+      if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent){
+
+      }else
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
   }

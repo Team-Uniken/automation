@@ -9,6 +9,7 @@
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
 import { NavigationActions} from 'react-navigation'; 
+import Config from 'react-native-config';
 /*
  Required for this js
  */
@@ -137,6 +138,22 @@ class Register extends Component {
           });     
       }
     });
+
+
+
+if( Config.ENABLE_AUTO_PASSWORD === 'true'){
+    AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+      if (value) {
+        try {
+          value = JSON.parse(value);
+        
+          Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {
+            obj.setState({ touchid: true });
+          }).done();
+        } catch (e) { }
+      }
+    }).done();
+  }
   }
   //on press of close button it navigate to dashboard without saveing the recent change.
   close() {
@@ -526,17 +543,7 @@ class Register extends Component {
         if (value) {
           try {
             value = JSON.parse(value);
-            //Todo : cleanup
-            // ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE, ReactRdna.RdnaCipherSpecs, "com.uniken.PushNotificationTest", value.RPasswd, (response) => {
-            //   if (response) {
-            //     console.log('immediate response of encrypt data packet is is' + response[0].error);
-            //     AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: response[0].response }), null);
-            //     obj.setState({ touchid: true });
-            //   } else {
-            //     console.log('immediate response is' + response[0].response);
-            //   }
-            // });
-
+          
             Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {
               obj.setState({ touchid: true });
             }).done();
