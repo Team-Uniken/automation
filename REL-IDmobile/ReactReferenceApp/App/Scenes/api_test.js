@@ -23,7 +23,7 @@ import {Keyboard, StatusBar, StyleSheet, Text, View, BackHandler, TouchableHighl
  Use in this js
  */
 import Skin from '../Skin';
-import WebViewAndroid from '../android_native_modules/nativewebview';
+import WebViewAndroid from '../android_native_modules/nativewebview'; 
 import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
 import Util from '../Components/Utils/Util'
@@ -273,14 +273,14 @@ class ApiTest extends Component {
  }
 
  encryptDataPacket(){
-  ReactRdna.encryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE,this.cipherSpect,this.cipherSalt,this.plainText,(response)=>{
+  ReactRdna.encryptDataPacket(( ReactRdna.PRIVACY_SCOPE_DEVICE | ReactRdna.PRIVACY_SCOPE_AGENT ) ,this.cipherSpect,this.cipherSalt,this.plainText,(response)=>{
     this.encryptDataPacketOutput = response[0].response;
     this.showMessage('encryptDataPacket',JSON.stringify(response),false);
   });
  }
 
  decryptDataPacket(){
-  ReactRdna.decryptDataPacket(ReactRdna.PRIVACY_SCOPE_DEVICE,this.cipherSpect,this.cipherSalt,this.encryptDataPacketOutput,(response)=>{
+  ReactRdna.decryptDataPacket(( ReactRdna.PRIVACY_SCOPE_DEVICE | ReactRdna.PRIVACY_SCOPE_AGENT ),this.cipherSpect,this.cipherSalt,this.encryptDataPacketOutput,(response)=>{
     this.decryptDataPacketOutput = response[0].response;
     this.showMessage('encryptDataPacket',JSON.stringify(response),false);
   });
