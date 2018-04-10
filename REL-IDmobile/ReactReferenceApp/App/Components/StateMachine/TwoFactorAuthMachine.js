@@ -681,14 +681,17 @@ class TwoFactorAuthMachine extends Component {
   }
 
   authenticate(result,index,isFirstChallenge) {
-    return TouchID.authenticate()
+    TouchID.authenticate()
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         this.encrypytPasswdiOS(result,index,isFirstChallenge);
       })
       .catch(error => {
         console.log(error)
-        AlertIOS.alert(error.message);
+        //AlertIOS.alert(error.message);
+        if(error.name === 'LAErrorUserCancel')
+        this.goToNextChallenge(result,index,isFirstChallenge);
+        else
         this.authenticate(result,index,isFirstChallenge);
       });
   }

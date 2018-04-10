@@ -172,7 +172,7 @@ if( Config.ENABLE_AUTO_PASSWORD === 'true'){
       this._clickHandler();
     } else {
       if (this.state.defaultLogin === 'touchid') {
-        this.state.defaultLogin = "none"
+        this.state.defaultLogin = "none";
         this.setState({ modalInitValue: null }, () => {
           this.setState({ modalInitValue: "Select Default Login" });
         });
@@ -257,9 +257,13 @@ if( Config.ENABLE_AUTO_PASSWORD === 'true'){
       {
         key: 'none',
         label: 'None'
-      },
-      Skin.text['0']['2'].credTypes['password']
+      }
     ];
+
+    if(this.state.touchid == true && Config.ENABLE_AUTO_PASSWORD === 'true' ){
+
+    }else
+    data.push(Skin.text['0']['2'].credTypes['password']);
 
     for (var i = 0; i < this.props.url.chlngJson.chlng.length; i++) {
       var chlng = this.props.url.chlngJson.chlng[i];
@@ -292,7 +296,7 @@ if( Config.ENABLE_AUTO_PASSWORD === 'true'){
       data.push(Skin.text['0']['2'].credTypes['touchid']);
     } else if (this.props.url.touchCred.isPattern == true)
       data.push(Skin.text['0']['2'].credTypes['pattern']);
-    return data
+    return data;
   }
 
   changeDefaultLogin(option) {

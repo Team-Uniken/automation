@@ -491,9 +491,14 @@ This method is called when the component will start to load
       {
         key: 'none',
         label: 'None'
-      },
-      Skin.text['0']['2'].credTypes['password']
+      }
+     
     ];
+
+    if(this.state.touchid == true && Config.ENABLE_AUTO_PASSWORD === 'true' ){
+
+    }else
+    data.push(Skin.text['0']['2'].credTypes['password']);
 
     if (this.state.url) {
       if(this.state.url.chlngJson){
