@@ -696,33 +696,40 @@ class TwoFactorAuthMachine extends Component {
   passcodeAuth() {
   }
 
-  encrypytPasswdiOS(result,index,isFirstChallenge) {
-  
-       
-          try {
+  encrypytPasswdiOS(result, index, isFirstChallenge) {
+
+
+    try {
+
+      Util.encryptText(Main.dnaUserName).then((data) => {
+        if (isFirstChallenge) {
+          result.chlng[0].chlng_resp[0].response = data;
+        } else
+          result.chlng_resp[0].response = data;
+        Util.saveUserDataSecure("RPasswd",data).then((data) => {
+
+
+          AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+            if (value) {
+              value = JSON.parse(value);
+
+              
             
-            Util.saveUserDataSecure("RPasswd", Main.dnaUserName).then((data) => {
+              this.showNextChallenge(result);
+            }
+          }).done();
 
+        }).done();
 
-  AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-      if (value) {
-        value = JSON.parse(value);
-        
-        var name ;
-        if(isFirstChallenge){  
-          result.chlng[0].chlng_resp[0].response = value.RPasswd;
-        }else
-            result.chlng_resp[0].response = value.RPasswd;
-            this.showNextChallenge(result);
       }
-    }).done();
-             
-            }).done();   
-          } catch (e) {
-            this.goToNextChallenge(result,index,isFirstChallenge);
-           }
-        
-  
+      );
+
+
+    } catch (e) {
+      this.goToNextChallenge(result, index, isFirstChallenge);
+    }
+
+
     
   }
 
@@ -764,6 +771,7 @@ class TwoFactorAuthMachine extends Component {
                 try {
                   value = JSON.parse(value);
                   if (value.ERPasswd && value.ERPasswd !== "empty") {
+                    
 
                     const resetActionshowRegisterOption = NavigationActions.reset({
                       index: 0,
