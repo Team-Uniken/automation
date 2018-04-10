@@ -385,7 +385,7 @@ RCT_EXPORT_METHOD (getDefaultCipherSalt:(RCTResponseSenderBlock)callback){
   
 }
 
-RCT_EXPORT_METHOD (encryptDataPacket:(RDNAPrivacyScope)privacyScope
+RCT_EXPORT_METHOD (encryptDataPacket:(int)privacyScope
                    CipherSpec:(NSString *)cipherSpec
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)plainText
@@ -402,7 +402,7 @@ RCT_EXPORT_METHOD (encryptDataPacket:(RDNAPrivacyScope)privacyScope
   
 }
 
-RCT_EXPORT_METHOD (decryptDataPacket:(RDNAPrivacyScope)privacyScope
+RCT_EXPORT_METHOD (decryptDataPacket:(int)privacyScope
                    CipherSpec:(NSString *)cipherSpec
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)cipherText
@@ -425,7 +425,7 @@ RCT_EXPORT_METHOD (decryptDataPacket:(RDNAPrivacyScope)privacyScope
   
 }
 
-RCT_EXPORT_METHOD (encryptHttpRequest:(RDNAPrivacyScope)privacyScope
+RCT_EXPORT_METHOD (encryptHttpRequest:(int)privacyScope
                    CipherSpec:(NSString *)cipherSpec
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)request
@@ -442,7 +442,7 @@ RCT_EXPORT_METHOD (encryptHttpRequest:(RDNAPrivacyScope)privacyScope
   
 }
 
-RCT_EXPORT_METHOD (decryptHttpResponse:(RDNAPrivacyScope)privacyScope
+RCT_EXPORT_METHOD (decryptHttpResponse:(int)privacyScope
                    CipherSpec:(NSString *)cipherSpec
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)transformedResponse
