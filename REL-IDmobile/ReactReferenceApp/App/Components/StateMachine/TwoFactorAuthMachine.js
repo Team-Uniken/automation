@@ -143,7 +143,7 @@ class TwoFactorAuthMachine extends Component {
     if (Platform.OS === 'ios') {
       this.isTouchPresent();
     }
-    else 
+    else
       this.isAndroidTouchAvailable();
 
 
@@ -245,22 +245,40 @@ class TwoFactorAuthMachine extends Component {
           }
 
           if (Constants.USER_T0 === 'YES') {
-            AsyncStorage.getItem('userId').then((value) => {
-              Events.trigger('showLoader', true);
-              if (onGetAllChallengeStatusSubscription) {
-                onGetAllChallengeStatusSubscription.remove();
-                onGetAllChallengeStatusSubscription = null;
-              }
-              onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus', this.onGetAllChallengeStatus.bind(this));
-              ReactRdna.getAllChallenges(value, (response) => {
-                if (response) {
-                  console.log('getAllChallenges immediate response is' + response[0].error);
-                } else {
-                  console.log('s immediate response is' + response[0].error);
-                  Events.trigger('hideLoader', true);
-                }
+
+            if (Config.ENABLE_AUTO_PASSWORD === 'true') {
+          
+              AsyncStorage.setItem("skipwelcome", "true");
+              AsyncStorage.getItem('userId').then((value) => {
+                AsyncStorage.setItem("rememberuser", value);
+              });
+
+              const navigateToDashboard = NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
+                ]
               })
-            }).done();
+              this.props.navigation.dispatch(navigateToDashboard)
+
+            } else {
+              AsyncStorage.getItem('userId').then((value) => {
+                Events.trigger('showLoader', true);
+                if (onGetAllChallengeStatusSubscription) {
+                  onGetAllChallengeStatusSubscription.remove();
+                  onGetAllChallengeStatusSubscription = null;
+                }
+                onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus', this.onGetAllChallengeStatus.bind(this));
+                ReactRdna.getAllChallenges(value, (response) => {
+                  if (response) {
+                    console.log('getAllChallenges immediate response is' + response[0].error);
+                  } else {
+                    console.log('s immediate response is' + response[0].error);
+                    Events.trigger('hideLoader', true);
+                  }
+                })
+              }).done();
+            }
           } else {
             if (this.mode === "forgotPassword") {
               Events.trigger('onPostForgotPassword', null);
@@ -374,7 +392,7 @@ class TwoFactorAuthMachine extends Component {
         }, 100);
       }
     } else {
-      Util.getErrorInfo(res.errCode,(error)=>{
+      Util.getErrorInfo(res.errCode, (error) => {
         if (error == 58) {
           /*
             58 -->>  RDNA_ERR_INVALID_USER_MR_STATE -Invalid user state in local storage 
@@ -464,7 +482,7 @@ class TwoFactorAuthMachine extends Component {
   isAndroidTouchAvailable() {
     Util.isAndroidTouchSensorAvailable()
       .then((success) => {
-        this.isTouchIDPresent = true;    
+        this.isTouchIDPresent = true;
       })
       .catch((error) => {
         $this.isTouchIDPresent = false;
@@ -588,36 +606,36 @@ class TwoFactorAuthMachine extends Component {
           currentIndex++;
         }
 
-        
+
         if (result.challenge) {
 
 
           var name = result.challenge.chlng_name
 
 
-            if(name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=result.challenge.challengeOperation){
+          if (name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != result.challenge.challengeOperation) {
 
-              if(this.isTouchIDPresent == true){
+            if (this.isTouchIDPresent == true) {
 
-                  this.authenticate(result,currentIndex,false);
+              this.authenticate(result, currentIndex, false);
 
-              }else{
-                this.goToNextChallenge(result,currentIndex,false);
-              }
-
-
-
-            }else{
-              this.goToNextChallenge(result,currentIndex,false);
+            } else {
+              this.goToNextChallenge(result, currentIndex, false);
             }
-      }
+
+
+
+          } else {
+            this.goToNextChallenge(result, currentIndex, false);
+          }
+        }
         else {
           this.callCheckChallenge();
         }
       } else {
 
         //reset
-        
+
       }
     } else {
       // Call checkChallenge
@@ -627,7 +645,7 @@ class TwoFactorAuthMachine extends Component {
 
 
 
-  goToNextChallenge(result,index,isFirstChallenge){
+  goToNextChallenge(result, index, isFirstChallenge) {
 
     // AsyncStorage.getItem(Main.dnaUserName).then((value) => {
     //   if (value) {
@@ -636,63 +654,63 @@ class TwoFactorAuthMachine extends Component {
     //     }).done();
     //   }
     // }).done();
-    var name ;
-    if(isFirstChallenge){
+    var name;
+    if (isFirstChallenge) {
       name = result.chlng[0].chlng_name;
-    }else
-    name = result.chlng_name;
+    } else
+      name = result.chlng_name;
 
-    if(isFirstChallenge){
-    const resetActionshowNextChallenge = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({
-          routeName: 'StateMachine', params: {
-            url: {
-              chlngJson: result,
-              chlngsCount: challengeJsonArr.length,
-              currentIndex: index,
-              screenId: name
-            },
-            title: name
-          }
-        })
-      ]
-    })
-    this.props.navigation.dispatch(resetActionshowNextChallenge);
-  }else{
-       const resetActionshowFirstChallenge = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({
-              routeName: 'StateMachine', params: {
-                url: {
-                  chlngJson:result,
-                  screenId: name,
-                  currentIndex: index,
-                }, title: name
-              }
-            })
-          ]
-        })
-        this.props.navigation.dispatch(resetActionshowFirstChallenge);
+    if (isFirstChallenge) {
+      const resetActionshowNextChallenge = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: 'StateMachine', params: {
+              url: {
+                chlngJson: result,
+                chlngsCount: challengeJsonArr.length,
+                currentIndex: index,
+                screenId: name
+              },
+              title: name
+            }
+          })
+        ]
+      })
+      this.props.navigation.dispatch(resetActionshowNextChallenge);
+    } else {
+      const resetActionshowFirstChallenge = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: 'StateMachine', params: {
+              url: {
+                chlngJson: result,
+                screenId: name,
+                currentIndex: index,
+              }, title: name
+            }
+          })
+        ]
+      })
+      this.props.navigation.dispatch(resetActionshowFirstChallenge);
 
+    }
   }
-  }
 
-  authenticate(result,index,isFirstChallenge) {
+  authenticate(result, index, isFirstChallenge) {
     TouchID.authenticate()
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
-        this.encrypytPasswdiOS(result,index,isFirstChallenge);
+        this.encrypytPasswdiOS(result, index, isFirstChallenge);
       })
       .catch(error => {
         console.log(error)
         //AlertIOS.alert(error.message);
-        if(error.name === 'LAErrorUserCancel')
-        this.goToNextChallenge(result,index,isFirstChallenge);
+        if (error.name === 'LAErrorUserCancel')
+          this.goToNextChallenge(result, index, isFirstChallenge);
         else
-        this.authenticate(result,index,isFirstChallenge);
+          this.authenticate(result, index, isFirstChallenge);
       });
   }
 
@@ -701,39 +719,35 @@ class TwoFactorAuthMachine extends Component {
 
   encrypytPasswdiOS(result, index, isFirstChallenge) {
 
-
     try {
-
       Util.encryptText(Main.dnaUserName).then((data) => {
         if (isFirstChallenge) {
           result.chlng[0].chlng_resp[0].response = data;
         } else
           result.chlng_resp[0].response = data;
-        Util.saveUserDataSecure("RPasswd",data).then((data) => {
-
-
+        Util.saveUserDataSecure("RPasswd", data).then((data) => {
           AsyncStorage.getItem(Main.dnaUserName).then((value) => {
             if (value) {
+              AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+                if (value) {
+                  try {
+                    value = JSON.parse(value);
+                    Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
+                    }).done();
+                  } catch (e) { }
+                }
+              }).done();
               value = JSON.parse(value);
-
-              
-            
               this.showNextChallenge(result);
             }
           }).done();
 
         }).done();
-
       }
       );
-
-
     } catch (e) {
       this.goToNextChallenge(result, index, isFirstChallenge);
     }
-
-
-    
   }
 
 
@@ -769,71 +783,71 @@ class TwoFactorAuthMachine extends Component {
         //if (typeof arrTba != 'undefined' && arrTba instanceof Array) {
 
         //  if (arrTba.length >= 0) {
-            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-              if (value) {
-                try {
-                  value = JSON.parse(value);
-                  if (value.ERPasswd && value.ERPasswd !== "empty") {
-                    
+        AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+          if (value) {
+            try {
+              value = JSON.parse(value);
+              if (value.ERPasswd && value.ERPasswd !== "empty") {
 
-                    const resetActionshowRegisterOption = NavigationActions.reset({
-                      index: 0,
-                      actions: [
-                        NavigationActions.navigate({
-                          routeName: 'StateMachine', params: {
-                            url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
-                            title: 'RegisterOption'
-                          }
-                        }) 
-                      ]
+
+                const resetActionshowRegisterOption = NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({
+                      routeName: 'StateMachine', params: {
+                        url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern": value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
+                        title: 'RegisterOption'
+                      }
                     })
-                    this.props.navigation.dispatch(resetActionshowRegisterOption)
-                    //              this.props.navigation.navigate('RegisterOption',{url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } }})
+                  ]
+                })
+                this.props.navigation.dispatch(resetActionshowRegisterOption)
+                //              this.props.navigation.navigate('RegisterOption',{url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } }})
 
-                    //                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
+                //                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent } } });
 
-                  } else {
-                    const resetActionshowRegisterOption = NavigationActions.reset({
-                      index: 0,
-                      actions: [
-                        NavigationActions.navigate({
-                          routeName: 'StateMachine', params: {
-                            url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
-                            title: 'RegisterOption'
-                          }
-                        })
-                      ]
+              } else {
+                const resetActionshowRegisterOption = NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({
+                      routeName: 'StateMachine', params: {
+                        url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern": value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
+                        title: 'RegisterOption'
+                      }
                     })
-                    this.props.navigation.dispatch(resetActionshowRegisterOption)
-                    //              this.props.navigation.navigate('RegisterOption',{url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } }})
-                    //                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
-                  }
-                } catch (e) { }
+                  ]
+                })
+                this.props.navigation.dispatch(resetActionshowRegisterOption)
+                //              this.props.navigation.navigate('RegisterOption',{url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } }})
+                //                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });
               }
+            } catch (e) { }
+          }
 
-            }).done();
-         // } 
-          
-          // else {
-          //  // Events.trigger('closeStateMachine');
-          //   InteractionManager.runAfterInteractions(() => {
-          //     Main.gotNotification = false;
-          //     //              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
-          //     if (onGetAllChallengeStatusSubscription) {
-          //       onGetAllChallengeStatusSubscription.remove();
-          //       onGetAllChallengeStatusSubscription = null;
-          //     }
-          //     //             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+        }).done();
+        // } 
 
-          //     const navigateToDashboard = NavigationActions.reset({
-          //       index: 0,
-          //       actions: [
-          //         NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
-          //       ]
-          //     })
-          //     this.props.navigation.dispatch(navigateToDashboard)
-          //   });
-          // }
+        // else {
+        //  // Events.trigger('closeStateMachine');
+        //   InteractionManager.runAfterInteractions(() => {
+        //     Main.gotNotification = false;
+        //     //              this.props.navigator.resetTo({ id: 'Main', title: 'DashBoard', url: '' });
+        //     if (onGetAllChallengeStatusSubscription) {
+        //       onGetAllChallengeStatusSubscription.remove();
+        //       onGetAllChallengeStatusSubscription = null;
+        //     }
+        //     //             this.props.navigation.navigate('DashBoard',{url: '',title:'DashBoard',navigator:this.props.navigator})
+
+        //     const navigateToDashboard = NavigationActions.reset({
+        //       index: 0,
+        //       actions: [
+        //         NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
+        //       ]
+        //     })
+        //     this.props.navigation.dispatch(navigateToDashboard)
+        //   });
+        // }
         //} 
         // else {
         //   //Events.trigger('closeStateMachine');
@@ -1001,7 +1015,7 @@ class TwoFactorAuthMachine extends Component {
   }
 
 
-  checkForPasswordChallenge(chlngJson) { 
+  checkForPasswordChallenge(chlngJson) {
     if (chlngJson != null && chlngJson.chlng != null) {
 
       for (var i = 0; i < chlngJson.chlng.length; i++) {
@@ -1045,38 +1059,38 @@ class TwoFactorAuthMachine extends Component {
       } else {
 
 
-        if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){
+        if (firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != chlngJson.chlng[startIndex].challengeOperation) {
 
-          if(this.isTouchIDPresent == true){
+          if (this.isTouchIDPresent == true) {
 
-              this.authenticate(chlngJson,startIndex,true);
+            this.authenticate(chlngJson, startIndex, true);
 
-          }else{
-            this.goToNextChallenge(chlngJson,startIndex,true);
+          } else {
+            this.goToNextChallenge(chlngJson, startIndex, true);
           }
 
 
 
-        }else{
-          this.goToNextChallenge(chlngJson,startIndex,true);
+        } else {
+          this.goToNextChallenge(chlngJson, startIndex, true);
         }
 
 
-        // const resetActionshowFirstChallenge = NavigationActions.reset({
-        //   index: 0,
-        //   actions: [
-        //     NavigationActions.navigate({
-        //       routeName: 'StateMachine', params: {
-        //         url: {
-        //           chlngJson,
-        //           screenId: firstChlngName,
-        //           currentIndex: startIndex,
-        //         }, title: firstChlngName
-        //       }
-        //     })
-        //   ]
-        // })
-        // this.props.navigation.dispatch(resetActionshowFirstChallenge)
+        /* const resetActionshowFirstChallenge = NavigationActions.reset({
+           index: 0,
+           actions: [
+             NavigationActions.navigate({
+               routeName: 'StateMachine', params: {
+                 url: {
+                   chlngJson,
+                   screenId: firstChlngName,
+                   currentIndex: startIndex,
+                 }, title: firstChlngName
+               }
+             })
+           ]
+         })
+         this.props.navigation.dispatch(resetActionshowFirstChallenge)*/
 
       }
     }
@@ -1117,21 +1131,21 @@ class TwoFactorAuthMachine extends Component {
     if (obj.hasNextChallenge()) {
       // Show Next challenge screen
       const currentChlng = obj.getCurrentChallenge();
-      //      obj.stateNavigator.push({
-      //        id: currentChlng.chlng_name,
-      //        url: {
-      //          chlngJson: currentChlng,
-      //          chlngsCount: challengeJsonArr.length,
-      //          currentIndex: currentIndex + 1,
-      //        },
-      //        title: obj.props.title,
-      //      });
-      //      var name = currentChlng.chlng_name;
-      //      this.props.navigation.navigate(name,{url: {
-      //      chlngJson: currentChlng,
-      //      chlngsCount: challengeJsonArr.length,
-      //      currentIndex: currentIndex + 1,
-      //        }})
+      /*      obj.stateNavigator.push({
+              id: currentChlng.chlng_name,
+              url: {
+                chlngJson: currentChlng,
+                chlngsCount: challengeJsonArr.length,
+                currentIndex: currentIndex + 1,
+              },
+              title: obj.props.title,
+            });
+            var name = currentChlng.chlng_name;
+            this.props.navigation.navigate(name,{url: {
+            chlngJson: currentChlng,
+            chlngsCount: challengeJsonArr.length,
+            currentIndex: currentIndex + 1,
+              }})*/
       var name = currentChlng.chlng_name;
       const resetActionshowNextChallenge = NavigationActions.reset({
         index: 0,
@@ -1218,7 +1232,7 @@ class TwoFactorAuthMachine extends Component {
     this.navigateToRegistration();
   }
 
-  navigateToRegistration(){
+  navigateToRegistration() {
     console.log('doNavigation:');
     ReactRdna.resetChallenge((response) => {
       if (response[0].error === 0) {
@@ -1256,43 +1270,6 @@ class TwoFactorAuthMachine extends Component {
     });
   }
 
-/*
-  initiateForgotPasswordFlow() {
-
-    if (Main.isConnected) {
-      mode = "forgotPassword";
-      this.mode = mode;
-      Events.rm('forgotPassowrd', 'forgotPassword');
-      //      onForgotPasswordSubscription = DeviceEventEmitter.addListener(
-      //        'onForgotPasswordStatus',
-      //        this.onForgotPasswordStatus
-      //      );
-
-      if (onForgotPasswordStatusSubscription) {
-        onForgotPasswordStatusSubscription.remove();
-        onForgotPasswordStatusSubscription = null;
-      }
-
-      onForgotPasswordStatusSubscription = onForgotPasswordStatusModuleEvt.addListener('onForgotPasswordStatus',
-        this.onForgotPasswordStatus.bind(this));
-      Events.on('onPostForgotPassword', 'onPostForgotPassword', this.onPostForgotPassword);
-      Events.on('finishForgotPasswordFlow', 'finishForgotPasswordFlow', this.finishForgotPasswordFlow);
-      console.log("initiateForgotPasswordFlow ----- show loader");
-      Events.trigger('showLoader', true);
-      ReactRdna.forgotPassword(Main.dnaUserName, (response) => {
-        if (response[0].error === 0) {
-          console.log('immediate response is' + response[0].error);
-        } else {
-          console.log('immediate response is' + response[0].error);
-          //          alert(response[0].error);
-        }
-      });
-
-    } else {
-      alert("Please check your internet connection");
-    }
-  }
-  */
 
   /**
    * This method is called by TwoFactorAuthMachine to submit the challenges with responses.
