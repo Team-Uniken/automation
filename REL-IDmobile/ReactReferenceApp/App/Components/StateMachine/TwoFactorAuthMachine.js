@@ -251,22 +251,41 @@ class TwoFactorAuthMachine extends Component {
           }
 
           if (Constants.USER_T0 === 'YES') {
-            AsyncStorage.getItem('userId').then((value) => {
-              Events.trigger('showLoader', true);
-              if (onGetAllChallengeStatusSubscription) {
-                onGetAllChallengeStatusSubscription.remove();
-                onGetAllChallengeStatusSubscription = null;
-              }
-              onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus', this.onGetAllChallengeStatus.bind(this));
-              ReactRdna.getAllChallenges(value, (response) => {
-                if (response) {
-                  console.log('getAllChallenges immediate response is' + response[0].error);
-                } else {
-                  console.log('s immediate response is' + response[0].error);
-                  Events.trigger('hideLoader', true);
-                }
+
+            if (Config.ENABLE_AUTO_PASSWORD === 'true') {
+
+              AsyncStorage.setItem("skipwelcome", "true");
+              AsyncStorage.getItem('userId').then((value) => {
+                AsyncStorage.setItem("rememberuser", value);
+              });
+
+              const navigateToDashboard = NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: 'DashBoard', params: { url: '', title: 'DashBoard', navigator: this.props.navigator } })
+                ]
               })
-            }).done();
+              this.props.navigation.dispatch(navigateToDashboard)
+
+            } else {
+
+              AsyncStorage.getItem('userId').then((value) => {
+                Events.trigger('showLoader', true);
+                if (onGetAllChallengeStatusSubscription) {
+                  onGetAllChallengeStatusSubscription.remove();
+                  onGetAllChallengeStatusSubscription = null;
+                }
+                onGetAllChallengeStatusSubscription = onGetAllChallengeStatusModuleEvt.addListener('onGetAllChallengeStatus', this.onGetAllChallengeStatus.bind(this));
+                ReactRdna.getAllChallenges(value, (response) => {
+                  if (response) {
+                    console.log('getAllChallenges immediate response is' + response[0].error);
+                  } else {
+                    console.log('s immediate response is' + response[0].error);
+                    Events.trigger('hideLoader', true);
+                  }
+                })
+              }).done();
+            }
           } else {
             if (this.mode === "forgotPassword") {
               Events.trigger('onPostForgotPassword', null);
@@ -731,22 +750,26 @@ class TwoFactorAuthMachine extends Component {
           result.chlng_resp[0].response = data;
         Util.saveUserDataSecure("RPasswd",data).then((data) => {
 
-
           AsyncStorage.getItem(Main.dnaUserName).then((value) => {
             if (value) {
               value = JSON.parse(value);
+              AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+                if (value) {
+                  try {
+                    value = JSON.parse(value);
+                    Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
+                    }).done();
+                  } catch (e) { }
+                }
+              }).done();
 
-              
-            
               this.showNextChallenge(result);
             }
           }).done();
 
         }).done();
-
       }
       );
-
 
     } catch (e) {
       this.goToNextChallenge(result, index, isFirstChallenge);
