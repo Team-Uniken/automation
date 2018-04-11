@@ -26,6 +26,7 @@ import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Skin from '../../Skin';
 import Main from './Main';
 import Util from "../Utils/Util";
+import AndroidAuth from "../view/AndroidTouch"
 var constant = require('../Utils/Constants');
 const Spinner = require('react-native-spinkit');
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
@@ -57,7 +58,8 @@ class MainActivation extends Component {
       isSettingButtonHide: 1.0,
       notificationAlertMsg: "",
       showNotificationAlert: false,
-      refresh:false
+      refresh:false,
+      showAndroidTouch:false,
     };
 
     this.cancelCreds = this.cancelCreds.bind(this);
@@ -67,6 +69,9 @@ class MainActivation extends Component {
     this.hideLoaderView = this.hideLoaderView.bind(this);
     this.showLoaderView = this.showLoaderView.bind(this);
     this.loaderView = this.loaderView.bind(this);
+    this.showAndroidAuth = this.showAndroidAuth.bind(this);
+    this.hideAndroidAuth = this.hideAndroidAuth.bind(this);
+    this.androidAuth = this.androidAuth.bind(this);
     this.onNotificationAlertModalDismissed = this.onNotificationAlertModalDismissed.bind(this);
     this.onNotificationAlertModalOk = this.onNotificationAlertModalOk.bind(this);
     this.notificationAlertModal = this.notificationAlertModal.bind(this);
@@ -117,6 +122,8 @@ class MainActivation extends Component {
     Events.on('hideLoader', 'hideLoader', this.hideLoader);
     Events.on('showLoader', 'showLoader', this.showLoader);
     Events.on('showNotificationAlert', 'showNotificationAlert', this.showNotificationAlertModal)
+    Events.on('showAndroidAuth','showAndroidAuth',this.showAndroidAuth);
+    Events.on('hideAndroidAuth','hideAndroidAuth',this.hideAndroidAuth);
   }
 
   componentWillUnmount() {
@@ -138,6 +145,30 @@ class MainActivation extends Component {
     //Do nothing for right now
   }
 
+  showAndroidAuth(args){
+    this.androidAuth(args);
+  }
+
+  hideAndroidAuth(){
+    this.setState({ showAndroidTouch : false });
+  }
+
+  androidAuth(args) {   
+    this.setState({ showAndroidTouch : true });    
+    Util.androidTouchAuth()
+      .then((success) => {
+        this.setState({showAndroidTouch : false });   
+        Events.trigger('showAndroidAuthCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+      })
+      .catch((error) => {
+        //this.state.isAndroidTouchPresent = false;
+        if( String(error) === 'LOCKED_OUT' ){
+          this.setState( {showAndroidTouch : false });    
+          Events.trigger('showAndroidAuthNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+        }
+        console.log('Handle rejected android auth promise (' + error + ') here.');
+      });
+  }
 
   showNotificationAlertModal(args) {
     var msg = args && args.msg ? args.msg : "";
@@ -439,11 +470,12 @@ class MainActivation extends Component {
               </TouchableHighlight>
             </View>
           </Modal>
+        {this.state.showAndroidTouch && <AndroidAuth/>}
         </View>
       </TouchableWithoutFeedback>
     );
   }
-}
+} 
 
 const styles = StyleSheet.create({
 
