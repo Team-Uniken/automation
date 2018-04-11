@@ -133,8 +133,9 @@ class TwoFactorAuthMachine extends Component {
     this.authenticateAndroid = this.authenticateAndroid.bind(this);
     this.goToNextChallenge = this.goToNextChallenge.bind(this);
     this.encrypytPasswdiOS = this.encrypytPasswdiOS.bind(this);
-    this.showAndroidAuthCompleted = this.showAndroidAuthCompleted.bind(this);
-    this.showAndroidAuthNotCompleted = this.showAndroidAuthNotCompleted.bind(this);
+    this.saveAutoPassword = this.saveAutoPassword.bind(this);
+    this.showAutoPasswordCompleted = this.showAutoPasswordCompleted.bind(this);
+    this.showAutoPasswordNotCompleted = this.showAutoPasswordNotCompleted.bind(this);
   }
 
   /** 
@@ -170,8 +171,8 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
-    Events.on('showAndroidAuthCompleted','showAndroidAuthCompleted',this.showAndroidAuthCompleted);
-    Events.on('showAndroidAuthNotCompleted','showAndroidAuthNotCompleted',this.showAndroidAuthNotCompleted);
+    Events.on('showAutoPasswordCompleted','showAutoPasswordCompleted',this.showAutoPasswordCompleted);
+    Events.on('showAutoPasswordNotCompleted','showAutoPasswordNotCompleted',this.showAutoPasswordNotCompleted);
 
 
     //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
@@ -251,7 +252,6 @@ class TwoFactorAuthMachine extends Component {
           }
 
           if (Constants.USER_T0 === 'YES') {
-
             if (Config.ENABLE_AUTO_PASSWORD === 'true') {
 
               AsyncStorage.setItem("skipwelcome", "true");
@@ -627,13 +627,11 @@ class TwoFactorAuthMachine extends Component {
                   this.authenticate(result,currentIndex,false);
                 }else
                   this.authenticateAndroid(result,currentIndex,false);
-
-              }else{
+              }else if (Config.ENABLE_AUTO_PASSWORD === 'true' && this.isTouchIDPresent == false && Platform.OS === 'android')
+                this.showPatternScreen(result,currentIndex,false);
+              else{
                 this.goToNextChallenge(result,currentIndex,false);
               }
-
-
-
             }else{
               this.goToNextChallenge(result,currentIndex,false);
             }
@@ -723,16 +721,21 @@ class TwoFactorAuthMachine extends Component {
       });
   }
 
-  showAndroidAuthCompleted(args){
+  authenticateAndroid(result, index, isFirstChallenge) {
+    Events.trigger('showAndroidAuth', { resultValue: result, indexValue: index, firstChallengeStatus: isFirstChallenge });
+  }
+
+  showAutoPasswordCompleted(args){
     this.encrypytPasswdiOS(args.resultValue, args.indexValue, args.firstChallengeStatus);
   }
 
-  showAndroidAuthNotCompleted(args){
-    this.authenticate(args.resultValue, args.indexValue, args.firstChallengeStatus);
+  showAutoPasswordNotCompleted(args){
+    this.goToNextChallenge(args.resultValue, args.indexValue, args.firstChallengeStatus);
   }
 
-  authenticateAndroid(result, index, isFirstChallenge) {
-      Events.trigger('showAndroidAuth', { resultValue: result, indexValue: index, firstChallengeStatus: isFirstChallenge });
+  showPatternScreen(result, index, isFirstChallenge){
+    this.saveAutoPassword();
+    Events.trigger('doPatternSet', { onSetPattern:this.onSetPattern,resultValue: result, indexValue: index, firstChallengeStatus: isFirstChallenge, nav: this.props.navigation });
   }
 
   passcodeAuth() {
@@ -777,6 +780,21 @@ class TwoFactorAuthMachine extends Component {
 
 
     
+  }
+
+
+  saveAutoPassword(){
+    try {
+      Util.encryptText(Main.dnaUserName).then((data) => {       
+        Util.saveUserDataSecure("RPasswd",data).then((data) => {
+          AsyncStorage.getItem(Main.dnaUserName).then((value) => {           
+          }).done();
+        }).done();
+      }
+      );
+    } catch (e) {
+      this.goToNextChallenge(result, index, isFirstChallenge);
+    }
   }
 
 
@@ -1092,13 +1110,13 @@ class TwoFactorAuthMachine extends Component {
         if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){
 
           if(this.isTouchIDPresent == true){
-
             if (Platform.OS === 'ios') {
               this.authenticate(chlngJson,startIndex,true);
             }else
               this.authenticateAndroid(chlngJson,startIndex,true);
-
-          }else{
+          }else if (Config.ENABLE_AUTO_PASSWORD === 'true' && this.isTouchIDPresent == false && Platform.OS === 'android')
+            this.showPatternScreen(chlngJson,startIndex,true);
+          else{
             this.goToNextChallenge(chlngJson,startIndex,true);
           }
 

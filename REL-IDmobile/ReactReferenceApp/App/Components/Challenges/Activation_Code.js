@@ -57,6 +57,8 @@ class Activation_Code extends Component {
       initCamHeightIsSet: false,
     alertMsg: "",
     showAlert: false,
+    showAndroidTouch: false,
+    args: '',
     }
     this.selectedAlertOp = true;
     //this.barCodeFlag = true;
@@ -68,6 +70,7 @@ class Activation_Code extends Component {
     this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
     this.onAlertModalOk = this.onAlertModalOk.bind(this);
     this.dismissAlertModal = this.dismissAlertModal.bind(this);
+    this.showAndroidAuth = this.showAndroidAuth.bind(this);
     // this.barCodeScanFlag = true;
   }
 
@@ -127,11 +130,25 @@ class Activation_Code extends Component {
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       this.checkCameraPermission();
     }
+
+    Events.on('showAndroidAuth','showAndroidAuthACT_CODE',this.showAndroidAuth);
     
     BackHandler.addEventListener('hardwareBackPress', function () {
-      this.close();
+      if(this.state.showAndroidTouch){
+        this.state.showAndroidTouch = false;
+        Events.trigger('hideAndroidAuth');
+        Events.trigger('showAutoPasswordNotCompleted', { resultValue: this.state.args.resultValue, indexValue: this.state.args.indexValue, firstChallengeStatus : this.state.args.firstChallengeStatus} ); 
+        this.state.args = '';
+      }else{
+        this.close();
+      }
       return true;
     }.bind(this));
+  }
+
+  showAndroidAuth(argsData){
+    this.state.args = argsData;
+    this.state.showAndroidTouch = true;
   }
 
   /*

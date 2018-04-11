@@ -945,10 +945,10 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 //            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
 //        }
 
-        /*if(cipherSpecs == null)
+        if(cipherSpecs == null)
             cipherSpecs = Constants.CYPHER_SPEC;
 
-        if(scope == null)
+        /*if(scope == null)
             privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE;
         else
             privacyScope = RDNA.RDNAPrivacyScope.valueOf(scope);*/

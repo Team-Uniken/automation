@@ -17,7 +17,7 @@ import ReactNative from 'react-native';
  */
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
-import { StatusBar, View, Image, Text, Platform, ScrollView, TouchableHighlight, InteractionManager, TouchableWithoutFeedback, StyleSheet, TextInput, AsyncStorage, DeviceEventEmitter, NetInfo, } from 'react-native'
+import { StatusBar, View, Image, Text, Platform, ScrollView, TouchableHighlight, InteractionManager, BackHandler, TouchableWithoutFeedback, StyleSheet, TextInput, AsyncStorage, DeviceEventEmitter, NetInfo, } from 'react-native'
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 
 /*
@@ -41,7 +41,6 @@ const onGetCredentialsModuleEvt = new NativeEventEmitter(NativeModules.ReactRdna
 let obj;
 let onGetCredentialSubscriptions;
 let onGetpasswordSubscriptions;
-
 class MainActivation extends Component {
   constructor(props) {
     super(props);
@@ -72,6 +71,8 @@ class MainActivation extends Component {
     this.showAndroidAuth = this.showAndroidAuth.bind(this);
     this.hideAndroidAuth = this.hideAndroidAuth.bind(this);
     this.androidAuth = this.androidAuth.bind(this);
+    this.doPatternSet = this.doPatternSet.bind(this);
+    
     this.onNotificationAlertModalDismissed = this.onNotificationAlertModalDismissed.bind(this);
     this.onNotificationAlertModalOk = this.onNotificationAlertModalOk.bind(this);
     this.notificationAlertModal = this.notificationAlertModal.bind(this);
@@ -124,6 +125,8 @@ class MainActivation extends Component {
     Events.on('showNotificationAlert', 'showNotificationAlert', this.showNotificationAlertModal)
     Events.on('showAndroidAuth','showAndroidAuth',this.showAndroidAuth);
     Events.on('hideAndroidAuth','hideAndroidAuth',this.hideAndroidAuth);
+    Events.on('doPatternSet','doPatternSet',this.doPatternSet);
+    
   }
 
   componentWillUnmount() {
@@ -158,20 +161,44 @@ class MainActivation extends Component {
     Util.androidTouchAuth()
       .then((success) => {
         this.setState({showAndroidTouch : false });   
-        Events.trigger('showAndroidAuthCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+        Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
       })
       .catch((error) => {
         //this.state.isAndroidTouchPresent = false;
         if( String(error) === 'LOCKED_OUT' ){
           this.setState( {showAndroidTouch : false });    
-          Events.trigger('showAndroidAuthNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+          Events.trigger('showAutoPasswordNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
         }
         console.log('Handle rejected android auth promise (' + error + ') here.');
-      });
+      }); 
+  }
+
+  doPatternSet(args) {
+    var data = {
+      "resultValue": args.resultValue,
+      "indexValue": args.indexValue,
+      "firstChallengeStatus": args.firstChallengeStatus
+    };
+    args.nav.navigate('pattern',{url: {
+      id: 'pattern',
+      onSetPattern: this.onSetPattern,
+      mode: 'set',
+      data: data,
+      onClose: this.onClose
+      }})
+  }
+
+  onClose(args){
+    Events.trigger('showAutoPasswordNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+  }
+
+  onSetPattern(navigation,args) {
+    navigation.goBack();
+    Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
   }
 
   showNotificationAlertModal(args) {
-    var msg = args && args.msg ? args.msg : "";
+    var msg = args && args.msg ? args.msg : "";   
     
     this.setState({
       showNotificationAlert: true,

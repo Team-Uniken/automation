@@ -212,9 +212,10 @@ class SelectLogin extends Component {
     
 
     if (this.state.dataSource.length > 0) {
-
       if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent){
         this._clickHandler();
+      }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isAndroidPattern){
+        this.doPatternLogin();
       }else
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }

@@ -98,7 +98,7 @@ class PatternLock extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     if(this.disableClose)
       BackHandler.addEventListener('hardwareBackPress', this.doNothing)
     else
@@ -195,9 +195,7 @@ class PatternLock extends Component {
       "password": password,
       "pattern": pattern,
     };
-
     var dataStr = JSON.stringify(data);
-
     if (this.mode == "set") {
       try {
         Util.saveUserDataSecureWithSalt(Constants.JSONKey.ENCRIPTED_PATTERN_PASSWORD, dataStr, pattern).then((result) => {
@@ -344,7 +342,7 @@ class PatternLock extends Component {
     } else {
       if (this.state.screen === "set") {
         if (this.props.navigation.state.params.url.onClose)
-          this.props.navigation.state.params.url.onClose();
+          this.props.navigation.state.params.url.onClose(this.props.navigation.state.params.url.data);
         else
           this.props.navigation.goBack();
       } else if (this.state.screen === "confirm") {
