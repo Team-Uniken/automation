@@ -59,6 +59,7 @@ import PasswordVerification from '../Challenges/Password_Verification';
 import PatternLock from '../../Scenes/Screen_PatternLock';
 import ScreenHider from '../Utils/ScreenHider';
 import SelectLogin from '../../Scenes/Select_Login';
+import AndroidTouch from '../view/AndroidTouch'
 import Util from '../Utils/Util';
 
 
@@ -129,8 +130,11 @@ class TwoFactorAuthMachine extends Component {
     this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
     this.navigateToRegistration = this.navigateToRegistration.bind(this);
     this.authenticate = this.authenticate.bind(this);
+    this.authenticateAndroid = this.authenticateAndroid.bind(this);
     this.goToNextChallenge = this.goToNextChallenge.bind(this);
     this.encrypytPasswdiOS = this.encrypytPasswdiOS.bind(this);
+    this.showAndroidAuthCompleted = this.showAndroidAuthCompleted.bind(this);
+    this.showAndroidAuthNotCompleted = this.showAndroidAuthNotCompleted.bind(this);
   }
 
   /** 
@@ -166,6 +170,8 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
+    Events.on('showAndroidAuthCompleted','showAndroidAuthCompleted',this.showAndroidAuthCompleted);
+    Events.on('showAndroidAuthNotCompleted','showAndroidAuthNotCompleted',this.showAndroidAuthNotCompleted);
 
 
     //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
@@ -598,8 +604,10 @@ class TwoFactorAuthMachine extends Component {
             if(name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=result.challenge.challengeOperation){
 
               if(this.isTouchIDPresent == true){
-
+                if (Platform.OS === 'ios') {
                   this.authenticate(result,currentIndex,false);
+                }else
+                  this.authenticateAndroid(result,currentIndex,false);
 
               }else{
                 this.goToNextChallenge(result,currentIndex,false);
@@ -694,6 +702,18 @@ class TwoFactorAuthMachine extends Component {
         else
         this.authenticate(result,index,isFirstChallenge);
       });
+  }
+
+  showAndroidAuthCompleted(args){
+    this.encrypytPasswdiOS(args.resultValue, args.indexValue, args.firstChallengeStatus);
+  }
+
+  showAndroidAuthNotCompleted(args){
+    this.authenticate(args.resultValue, args.indexValue, args.firstChallengeStatus);
+  }
+
+  authenticateAndroid(result, index, isFirstChallenge) {
+      Events.trigger('showAndroidAuth', { resultValue: result, indexValue: index, firstChallengeStatus: isFirstChallenge });
   }
 
   passcodeAuth() {
@@ -885,7 +905,9 @@ class TwoFactorAuthMachine extends Component {
         challengeOperation = route.url.chlngJson.challengeOperation;
     }
 
-    if (id === 'checkuser') {
+    if( id == 'AndroidTouch' ){
+        return(<AndroidTouch/>);
+    }else if (id === 'checkuser') {
       if (Main.gotNotification === true) {
         return (<ScreenHider navigator={nav} url={route.url} title={route.title} />);
       } else {
@@ -944,7 +966,7 @@ class TwoFactorAuthMachine extends Component {
 
   render() {
     var sId = this.props.navigation.state.params.url.screenId;
-    currentIndex = this.props.navigation.state.params.url.currentIndex;
+    currentIndex = this.props.navigation.state.params.url.currentIndex;    
     if (sId == 'RegisterOption') {
       var params = {
         id: sId,
@@ -989,7 +1011,6 @@ class TwoFactorAuthMachine extends Component {
 
         }, title: this.props.navigation.state.params.url.screenId
       };
-
       return (this.getComponentByName(params, this.props.navigation))
     }
   }
@@ -1049,7 +1070,10 @@ class TwoFactorAuthMachine extends Component {
 
           if(this.isTouchIDPresent == true){
 
+            if (Platform.OS === 'ios') {
               this.authenticate(chlngJson,startIndex,true);
+            }else
+              this.authenticateAndroid(chlngJson,startIndex,true);
 
           }else{
             this.goToNextChallenge(chlngJson,startIndex,true);
