@@ -16,6 +16,7 @@ import Events from 'react-native-simple-events';
 import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import Config from 'react-native-config';
 
 import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native';
 
@@ -34,7 +35,7 @@ import Button from '../view/button';
 import Input from '../view/input';
 import Title from '../view/title';
 
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 /*
  INSTANCES
  */
@@ -57,6 +58,8 @@ class UserLogin extends Component {
       failureMessage: '',
       isLoaderVisible: false,
     };
+
+    this.login = this.login.bind(this);
   }
 
 
@@ -118,6 +121,49 @@ class UserLogin extends Component {
    This method is used to get the user entered value and submit the same as a challenge response.
    */
   checkUsername() {
+
+    var un = this.state.inputUsername;
+    if (Config.ENABLE_AUTO_PASSWORD === 'true') {
+
+      AsyncStorage.getItem(un.trim()).then((value) => {
+        if (value) {
+          try {
+            value = JSON.parse(value);
+            this.state.rpass = value.RPasswd;
+            if (value.ERPasswd && value.ERPasswd !== "empty") {
+              if (Platform.OS === 'ios') {
+              TouchID.isSupported()
+                .then((supported) => {
+                  // Success code
+                  console.log('TouchID is supported.');
+                  this.login();
+                })
+                .catch((error) => {
+                  // Failure code
+                  console.log(error);
+                  alert("Please enable Touch ID from Setting");
+
+                });
+              }else{
+                //android touch id and pattern changes need to done
+                this.login();
+              }
+            } else {
+              this.login();
+            }
+            // this.forceUpdate();
+          } catch (e) { }
+        } else {
+
+        }
+      }).done();
+
+    } else {
+      this.login();
+    }
+  }
+
+  login(){
     this.state.progress = 0;
     var un = this.state.inputUsername;
     un = un.trim();

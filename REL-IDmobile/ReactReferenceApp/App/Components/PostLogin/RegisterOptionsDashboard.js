@@ -530,13 +530,19 @@ This method is called when the component will start to load
           if (this.state.pattern) {
             data.push(Skin.text['0']['2'].credTypes['pattern']);
           }
+          if( Config.ENABLE_AUTO_PASSWORD === 'true' ){
+          }else{
           if (this.state.touchid) {
             data.push(Skin.text['0']['2'].credTypes['touchid']);
           }
+        }
         } else {
+          if( Config.ENABLE_AUTO_PASSWORD === 'true' ){
+          }else{
           if (this.state.touchid) {
             data.push(Skin.text['0']['2'].credTypes['touchid']);
           }
+        }
         }
       }
     }
@@ -1004,6 +1010,8 @@ This method is called when the component will start to load
           );
         
         } 
+        if(Config.ENABLE_AUTO_PASSWORD === 'true'){
+        }else{
           if (this.isTouchIDPresent) {
             indents.push(
               <Checkbox
@@ -1015,6 +1023,7 @@ This method is called when the component will start to load
               </Checkbox>
             );
           }
+        }
         
       }
 
