@@ -61,6 +61,7 @@ let onGetConfigSubscription;
 
 var styles = Skin.controlStyle;
 var securePortalUrl;
+var isAutoPassword;
 
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -126,6 +127,23 @@ class ControlPanel extends Component {
       onGetNotificationsSubscription.remove();
       onGetNotificationsSubscription = null;
     }
+
+   
+    isAutoPassword = false;
+    AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+      if (userPrefs) {
+        try {      
+          if (userPrefs=== 'true'){
+            isAutoPassword = false;
+          }else{
+            isAutoPassword = true;
+          }
+        }
+        catch (e) { }
+      }else{
+        isAutoPassword = true;
+      }
+    });
 
     onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
       this.onGetNotifications.bind(this));
@@ -868,11 +886,17 @@ class ControlPanel extends Component {
               />
             ]
           }
-          <MenuItem
+
+          {
+            isAutoPassword &&
+            [
+              <MenuItem
             visibility={Config.CHANGEPASSWORD}
             lable="Change Password"
             onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); }}
           />
+            ]
+          }
 
           <MenuItem
             visibility={Config.HELP_SUPPORT}

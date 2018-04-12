@@ -107,6 +107,7 @@ This method is called when the component will start to load
             let responseJson = this.props.url.chlngJson;
             responseJson.chlng_resp[0].response = pw;
             dismissKeyboard();
+            AsyncStorage.setItem("isAutoPassword", 'false');
             Events.trigger('showNextChallenge', { response: responseJson });
           } else {
             Alert.alert(

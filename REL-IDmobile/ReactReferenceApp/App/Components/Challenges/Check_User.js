@@ -42,6 +42,7 @@ import { NavigationActions } from 'react-navigation';
 let responseJson;
 let obj;
 let savedUserName;
+var isAutoPassword;
 
 
 class UserLogin extends Component {
@@ -72,6 +73,21 @@ class UserLogin extends Component {
     constant.USER_SESSION = "NO";
     constant.USER_T0 = "NO";
 //    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
+
+AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+  if (userPrefs) {
+    try {  
+      if (userPrefs=== 'true'){
+        isAutoPassword = true;
+      }else{
+        isAutoPassword = false;
+      }
+    }
+    catch (e) { }
+  }else{
+    isAutoPassword = false;
+  }
+});
 
     AsyncStorage.getItem('rememberuser').then((value) => {
       if (value == undefined || value == null || value === 'empty') {
@@ -130,7 +146,7 @@ class UserLogin extends Component {
           try {
             value = JSON.parse(value);
             this.state.rpass = value.RPasswd;
-            if (value.ERPasswd && value.ERPasswd !== "empty") {
+            if (value.ERPasswd && value.ERPasswd !== "empty" && isAutoPassword ) {
               if (Platform.OS === 'ios') {
               TouchID.isSupported()
                 .then((supported) => {
