@@ -256,11 +256,11 @@ class Register extends Component {
             return;
           }
           if (res.isError == false) {
-            obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instruction.", true);
+            obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instructions.", true);
           } else {
 
             setTimeout(() => {
-              alert(res.errorMessage);
+              alert(res.error_msg);
             }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
