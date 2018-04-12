@@ -195,7 +195,7 @@ This method is called when the component will start to load
                             Set up Login
                         </Title>
                     </View>
-                    <View style={[Skin.layout1.content.bottom.container1,{justifyContent: 'center',alignItems: 'center'}]}>
+                    <View style={[Skin.layout1.content.bottom.container,{justifyContent: 'center',alignItems: 'center'}]}>
                       
                     <View style={[{width: 100,height: 100,justifyContent: 'center',alignItems: 'center',marginBottom:70}]}>
                          <LoginTypeButton
