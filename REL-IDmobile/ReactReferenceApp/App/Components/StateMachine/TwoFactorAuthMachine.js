@@ -589,6 +589,7 @@ class TwoFactorAuthMachine extends Component {
    * This method is called to show next challenge in challenge array on UI.
    * This method can also be called by triggering showNextChallenge event
    */
+
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
@@ -611,57 +612,97 @@ class TwoFactorAuthMachine extends Component {
           currentIndex++;
         }
 
-        
         if (result.challenge) {
 
-
-          var name = result.challenge.chlng_name
-
-
-            if(name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=result.challenge.challengeOperation){
-
-              if(this.isTouchIDPresent == true){
-
-                const resetActionshowFirstChallenge = NavigationActions.reset({
-                  index: 0,
-                  actions: [
-                    NavigationActions.navigate({
-                      routeName: 'AutoPassword', params: {
-                        url: {
-                          chlngJson:result,
-                          screenId: 'AutoPassword',
-                          currentIndex: currentIndex,
-                        }, title: 'AutoPassword'
-                      }
-                    })
-                  ]
+          if(name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=result.challenge.challengeOperation && this.isTouchIDPresent == true){
+            var name = result.challenge.chlng_name
+            const showNextChallengefor = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({
+                  routeName: 'StateMachine', params: {
+                    url: {
+                      chlngJson: result.challenge,
+                      chlngsCount: challengeJsonArr.length,
+                      currentIndex: currentIndex,
+                      screenId: 'AutoPassword'
+                    }, title: 'AutoPassword'
+                  }
                 })
-                this.props.navigation.dispatch(resetActionshowFirstChallenge);
-                
-              }else{
-                this.goToNextChallenge(result,currentIndex,false);
-              }
-
-
-
-            }else{
-              this.goToNextChallenge(result,currentIndex,false);
-            }
-      }
+              ]
+            })
+            this.props.navigation.dispatch(showNextChallengefor)
+          }else{
+          var name = result.challenge.chlng_name
+          const showNextChallengefor = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    chlngJson: result.challenge,
+                    chlngsCount: challengeJsonArr.length,
+                    currentIndex: currentIndex,
+                    screenId: name
+                  }, title: name
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(showNextChallengefor)
+        }
+        }
         else {
           this.callCheckChallenge();
         }
       } else {
 
+       
         //reset
-        
+        var name = result.challenge.chlng_name
+        if(name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=result.challenge.challengeOperation && this.isTouchIDPresent == true){
+          const resetActionshowNextChallenge = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    chlngJson: result.challenge,
+                    chlngsCount: challengeJsonArr.length,
+                    currentIndex: currentIndex,
+                    screenId: 'AutoPassword'
+                  },
+                  title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(resetActionshowNextChallenge)
+        }else{
+        const resetActionshowNextChallenge = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({
+              routeName: 'StateMachine', params: {
+                url: {
+                  chlngJson: result.challenge,
+                  chlngsCount: challengeJsonArr.length,
+                  currentIndex: currentIndex,
+                  screenId: name
+                },
+                title: name
+              }
+            })
+          ]
+        })
+        this.props.navigation.dispatch(resetActionshowNextChallenge)
+      }
       }
     } else {
       // Call checkChallenge
       this.callCheckChallenge();
     }
   }
-
 
 
   goToNextChallenge(result,index,isFirstChallenge){
