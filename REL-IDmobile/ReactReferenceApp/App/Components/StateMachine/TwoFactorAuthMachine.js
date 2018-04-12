@@ -132,6 +132,7 @@ class TwoFactorAuthMachine extends Component {
     this.navigateToRegistration = this.navigateToRegistration.bind(this);
     this.goToNextChallenge = this.goToNextChallenge.bind(this);
     this.saveAutoPassword = this.saveAutoPassword.bind(this);
+
   }
 
   /** 
@@ -915,6 +916,7 @@ class TwoFactorAuthMachine extends Component {
         if (this.mode === "forgotPassword") {
           return (<Forgot_Password navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
         }
+
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {

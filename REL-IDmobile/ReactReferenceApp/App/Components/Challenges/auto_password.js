@@ -44,7 +44,7 @@ import Title from '../view/title';
 
 
 
-export default class PasswordSet extends Component {
+export default class AutoPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -211,4 +211,4 @@ This method is called when the component will start to load
     }
 }
 
-module.exports = PasswordSet;
+module.exports = AutoPassword;
