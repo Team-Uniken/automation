@@ -132,8 +132,7 @@ class ControlPanel extends Component {
     isAutoPassword = false;
     AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
       if (userPrefs) {
-        try {
-         
+        try {      
           if (userPrefs=== 'true'){
             isAutoPassword = false;
           }else{
@@ -141,6 +140,8 @@ class ControlPanel extends Component {
           }
         }
         catch (e) { }
+      }else{
+        isAutoPassword = true;
       }
     });
 

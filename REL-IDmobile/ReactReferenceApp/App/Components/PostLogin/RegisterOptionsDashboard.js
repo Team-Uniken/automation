@@ -143,6 +143,8 @@ This method is called when the component will start to load
           }
         }
         catch (e) { }
+      }else{
+        isAutoPassword = false;
       }
     });
 
