@@ -263,7 +263,7 @@ text = {
       },
       '2': {
         subtitle: 'Welcome to ' + CLIENT_TITLE_TEXT,
-        prompt: 'Select a login',
+        prompt: 'Login via',
         credTypes: {
           'facebook': {
             key: 'facebook',

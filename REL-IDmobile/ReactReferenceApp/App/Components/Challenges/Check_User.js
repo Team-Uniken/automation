@@ -154,7 +154,7 @@ class UserLogin extends Component {
             // this.forceUpdate();
           } catch (e) { }
         } else {
-
+            this.login();
         }
       }).done();
 
