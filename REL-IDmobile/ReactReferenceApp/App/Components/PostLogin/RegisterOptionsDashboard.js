@@ -1026,7 +1026,7 @@ This method is called when the component will start to load
           if (this.isTouchIDPresent) {
             indents.push(
               <Checkbox
-                onSelect={isAutoPassword?null:this.selecttouchid.bind(this) }
+                onSelect={isAutoPassword && this.state.touchid == true?null:this.selecttouchid.bind(this) }
                 selected={this.state.touchid}
                 labelSide={"right"}
                 >
