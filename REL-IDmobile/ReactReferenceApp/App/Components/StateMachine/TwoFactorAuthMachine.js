@@ -48,6 +48,7 @@ import SelfRegister from '../../Scenes/Self_Register';
 import Activation from '../Challenges/Activation_Code';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
+import AutoPassword from '../Challenges/auto_password';
 import Forgot_Password from '../Challenges/Forgot_Password';
 import Otp from '../Challenges/Activation_Code';
 import QuestionSet from '../Challenges/SetQuestion';
@@ -129,10 +130,7 @@ class TwoFactorAuthMachine extends Component {
     this.resetChallenge = this.resetChallenge.bind(this);
     this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
     this.navigateToRegistration = this.navigateToRegistration.bind(this);
-    this.authenticate = this.authenticate.bind(this);
-    this.authenticateAndroid = this.authenticateAndroid.bind(this);
     this.goToNextChallenge = this.goToNextChallenge.bind(this);
-    this.encrypytPasswdiOS = this.encrypytPasswdiOS.bind(this);
     this.showAndroidAuthCompleted = this.showAndroidAuthCompleted.bind(this);
     this.showAndroidAuthNotCompleted = this.showAndroidAuthNotCompleted.bind(this);
   }
@@ -623,11 +621,23 @@ class TwoFactorAuthMachine extends Component {
             if(name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=result.challenge.challengeOperation){
 
               if(this.isTouchIDPresent == true){
-                if (Platform.OS === 'ios') {
-                  this.authenticate(result,currentIndex,false);
-                }else
-                  this.authenticateAndroid(result,currentIndex,false);
 
+                const resetActionshowFirstChallenge = NavigationActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({
+                      routeName: 'AutoPassword', params: {
+                        url: {
+                          chlngJson:result,
+                          screenId: 'AutoPassword',
+                          currentIndex: currentIndex,
+                        }, title: 'AutoPassword'
+                      }
+                    })
+                  ]
+                })
+                this.props.navigation.dispatch(resetActionshowFirstChallenge);
+                
               }else{
                 this.goToNextChallenge(result,currentIndex,false);
               }
@@ -707,22 +717,8 @@ class TwoFactorAuthMachine extends Component {
   }
   }
 
-  authenticate(result,index,isFirstChallenge) {
-    TouchID.authenticate()
-      .then(success => {
-        //AlertIOS.alert('Authenticated Successfully');
-        this.encrypytPasswdiOS(result,index,isFirstChallenge);
-      })
-      .catch(error => {
-        console.log(error)
-        //AlertIOS.alert(error.message);
-        if(error.name === 'LAErrorUserCancel')
-        this.goToNextChallenge(result,index,isFirstChallenge);
-        else
-        this.authenticate(result,index,isFirstChallenge);
-      });
-  }
 
+  
   showAndroidAuthCompleted(args){
     this.encrypytPasswdiOS(args.resultValue, args.indexValue, args.firstChallengeStatus);
   }
@@ -738,46 +734,7 @@ class TwoFactorAuthMachine extends Component {
   passcodeAuth() {
   }
 
-  encrypytPasswdiOS(result, index, isFirstChallenge) {
-
-
-    try {
-
-      Util.encryptText(Main.dnaUserName).then((data) => {
-        if (isFirstChallenge) {
-          result.chlng[0].chlng_resp[0].response = data;
-        } else
-          result.chlng_resp[0].response = data;
-        Util.saveUserDataSecure("RPasswd",data).then((data) => {
-
-          AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-            if (value) {
-              value = JSON.parse(value);
-              AsyncStorage.getItem(Main.dnaUserName).then((value) => {
-                if (value) {
-                  try {
-                    value = JSON.parse(value);
-                    Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
-                    }).done();
-                  } catch (e) { }
-                }
-              }).done();
-
-              this.showNextChallenge(result);
-            }
-          }).done();
-
-        }).done();
-      }
-      );
-
-    } catch (e) {
-      this.goToNextChallenge(result, index, isFirstChallenge);
-    }
-
-
-    
-  }
+  
 
 
   /**
@@ -983,6 +940,8 @@ class TwoFactorAuthMachine extends Component {
       return (<RegisterOption navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pattern') {
       return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose} />);
+    }else if(id == 'AutoPassword'){
+      return (<AutoPassword navigator={nav} url={route.url} title={route.title} />);
     }
     return (<Text></Text>);
   }
@@ -1025,6 +984,16 @@ class TwoFactorAuthMachine extends Component {
 
       return (this.getComponentByName(params, this.props.navigation))
 
+    }else if(sId == 'AutoPassword'){
+      var params = {
+        id: sId,
+        url: {
+          chlngJson: this.getCurrentChallenge(),
+          chlngsCount: challengeJsonArr.length,
+          currentIndex:currentIndex
+        }, title: this.props.navigation.state.params.url.screenId
+      };
+      return (this.getComponentByName(params, this.props.navigation))
     } else {
       var params = {
         id: sId,
@@ -1092,11 +1061,23 @@ class TwoFactorAuthMachine extends Component {
         if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){
 
           if(this.isTouchIDPresent == true){
-
-            if (Platform.OS === 'ios') {
-              this.authenticate(chlngJson,startIndex,true);
-            }else
-              this.authenticateAndroid(chlngJson,startIndex,true);
+              //this.authenticate(chlngJson,startIndex,true);
+              const resetActionshowFirstChallenge = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({
+              routeName: 'StateMachine', params: {
+                url: {
+                  chlngJson,
+                  screenId: 'AutoPassword',
+                  currentIndex: startIndex,
+                }, title: 'AutoPassword'
+              }
+            })
+          ]
+        })
+        this.props.navigation.dispatch(resetActionshowFirstChallenge)
+        
 
           }else{
             this.goToNextChallenge(chlngJson,startIndex,true);
