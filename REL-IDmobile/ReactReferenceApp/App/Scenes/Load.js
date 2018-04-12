@@ -384,6 +384,7 @@ class Load extends Component {
         ReactRdna.setDevToken(token);
       });
       FCM.on(FCMEvent.Notification, notification => {
+        if(notification && notification.message){
         savedNotification = notification;
           if (notification.opened_from_tray == 1) {
             Main.notificationId = notification.hiddenMessage;
@@ -439,6 +440,7 @@ class Load extends Component {
         //     }
         //   }, 1000)
         // }
+        }
     });
 
 
