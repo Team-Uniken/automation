@@ -44,6 +44,7 @@ import Toast from 'react-native-simple-toast';
  */
 var obj;
 const LOGIN_TYPE_PER_ROW = 3;
+var isAutoPassword;
 
 //Facebook login code
 const {
@@ -81,6 +82,21 @@ class SelectLogin extends Component {
     this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
     this.androidAuth = this.androidAuth.bind(this);
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
+    AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+      if (userPrefs) {
+        try {  
+          if (userPrefs=== 'true'){
+            isAutoPassword = true;
+          }else{
+            isAutoPassword = false;
+          }
+        }
+        catch (e) { }
+      }else{
+        isAutoPassword = false;
+        Events.trigger("forgotPassowrd");
+      }
+    });
 
     this.checkForRegisteredCredsAndShow();
     if (Platform.OS === 'ios') {
@@ -213,7 +229,7 @@ class SelectLogin extends Component {
 
     if (this.state.dataSource.length > 0) {
 
-      if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent){
+      if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent && isAutoPassword){
         this._clickHandler();
       }else
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
@@ -372,7 +388,7 @@ class SelectLogin extends Component {
   }
 
   authenticate() {
-    return TouchID.authenticate()
+    return TouchID.authenticate("Authenticate with Touch ID")
       .then(success => {
         obj.onTouchIDVerificationDone();
       })

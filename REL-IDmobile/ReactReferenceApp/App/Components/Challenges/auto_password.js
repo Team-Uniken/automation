@@ -44,7 +44,7 @@ import Title from '../view/title';
 
 
 
-export default class PasswordSet extends Component {
+export default class AutoPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,6 +63,8 @@ This method is called when the component will start to load
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
+
+    this.authenticate();
   }
   /*
     This is life cycle method of the react native component.
@@ -80,7 +82,7 @@ This method is called when the component will start to load
 
 
   authenticate() {
-    TouchID.authenticate('Set up TouchID to Log In')
+    TouchID.authenticate('Set up Touch ID to Log In')
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         this.encrypytPasswdiOS();
@@ -134,6 +136,7 @@ This method is called when the component will start to load
                 if (value) {
                   try {
                     value = JSON.parse(value);
+                    AsyncStorage.setItem("isAutoPassword", 'true');
                     Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
                     }).done();
                   } catch (e) {
@@ -192,7 +195,7 @@ This method is called when the component will start to load
                             Set up Login
                         </Title>
                     </View>
-                    <View style={[Skin.layout1.content.bottom.container1,{justifyContent: 'center',alignItems: 'center'}]}>
+                    <View style={[Skin.layout1.content.bottom.container,{justifyContent: 'center',alignItems: 'center'}]}>
                       
                     <View style={[{width: 100,height: 100,justifyContent: 'center',alignItems: 'center',marginBottom:70}]}>
                          <LoginTypeButton
@@ -208,4 +211,4 @@ This method is called when the component will start to load
     }
 }
 
-module.exports = PasswordSet;
+module.exports = AutoPassword;
