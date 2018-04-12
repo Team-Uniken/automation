@@ -63,6 +63,8 @@ This method is called when the component will start to load
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
+
+    this.authenticate();
   }
   /*
     This is life cycle method of the react native component.
@@ -134,6 +136,7 @@ This method is called when the component will start to load
                 if (value) {
                   try {
                     value = JSON.parse(value);
+                    AsyncStorage.setItem("isAutoPassword", 'true');
                     Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
                     }).done();
                   } catch (e) {

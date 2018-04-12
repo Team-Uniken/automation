@@ -71,6 +71,7 @@ const {
 var obj;
 let onGetAllChallengeStatusSubscription;
 let onUpdateChallengeStatusSubscription;
+var isAutoPassword;
 
 class RegisterOptionScene extends Component {
 
@@ -129,6 +130,21 @@ This method is called when the component will start to load
       this.isTouchPresent();
     else 
       this.isAndroidTouchAvailable();
+
+      isAutoPassword = false;
+    AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+      if (userPrefs) {
+        try {
+         
+          if (userPrefs=== 'true'){
+            isAutoPassword = true;
+          }else{
+            isAutoPassword = false;
+          }
+        }
+        catch (e) { }
+      }
+    });
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
@@ -495,7 +511,7 @@ This method is called when the component will start to load
      
     ];
 
-    if(this.state.touchid == true && Config.ENABLE_AUTO_PASSWORD === 'true' ){
+    if(this.state.touchid == true && isAutoPassword == true ){
 
     }else
     data.push(Skin.text['0']['2'].credTypes['password']);
@@ -530,23 +546,17 @@ This method is called when the component will start to load
           if (this.state.pattern) {
             data.push(Skin.text['0']['2'].credTypes['pattern']);
           }
-          if( Config.ENABLE_AUTO_PASSWORD === 'true' ){
-          }else{
           if (this.state.touchid) {
             data.push(Skin.text['0']['2'].credTypes['touchid']);
-          }
-        }
+          }      
         } else {
-          if( Config.ENABLE_AUTO_PASSWORD === 'true' ){
-          }else{
           if (this.state.touchid) {
             data.push(Skin.text['0']['2'].credTypes['touchid']);
           }
-        }
         }
       }
     }
-    return data
+    return data;
   }
 
   //call when we change defaultLogin option
@@ -1010,12 +1020,11 @@ This method is called when the component will start to load
           );
         
         } 
-        if(Config.ENABLE_AUTO_PASSWORD === 'true'){
-        }else{
+   
           if (this.isTouchIDPresent) {
             indents.push(
               <Checkbox
-                onSelect={this.selecttouchid.bind(this) }
+                onSelect={isAutoPassword?null:this.selecttouchid.bind(this) }
                 selected={this.state.touchid}
                 labelSide={"right"}
                 >
@@ -1023,7 +1032,7 @@ This method is called when the component will start to load
               </Checkbox>
             );
           }
-        }
+        
         
       }
 
