@@ -55,6 +55,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     int i;
     String uName = "";
+    double startTime, finishTime;
 
     Handler uiHandler;
     Semaphore lock = new Semaphore(0,true);
@@ -232,6 +233,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onCheckChallengeResponseStatus(final String rdnaStatusCheckChallengeResponse) {
+                finishTime = System.currentTimeMillis();
+                onSdkLogPrintRequest(RDNA.RDNALoggingLevel.RDNA_LOG_VERBOSE, "TIMER to checkChallenge - "+(finishTime - startTime));
                 //Logger.d(TAG, "-------- onCheckChallengeResponseStatus " + rdnaStatusCheckChallengeResponse);
                 Runnable runnable = new Runnable() {
                     @Override
@@ -507,7 +510,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onSdkLogPrintRequest(RDNA.RDNALoggingLevel rdnaLoggingLevel,final String s) {
-                Log.e("RDNA-CORE",s);
+                if(s.contains("TIMER to"))
+                    Log.e("RDNA-CORE",s);
                 return 0;
             }
 
@@ -634,6 +638,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void checkChallenges(final String challengeRequestArray,final String userID,final Callback callback){
+        if(!challengeRequestArray.contains("actcode"))
+            startTime = System.currentTimeMillis();
         new Thread(new Runnable() {
 
             @Override

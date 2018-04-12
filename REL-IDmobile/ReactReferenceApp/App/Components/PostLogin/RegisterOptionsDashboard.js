@@ -27,7 +27,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Skin from '../../Skin';
 import MainActivation from '../Container/MainActivation';
 import Main from '../Container/Main';
-import Util from "../Utils/Util";
+import Util from "../Utils/Util"; 
 import PageTitle from '../view/pagetitle';
 import AndroidAuth from "../view/AndroidTouch"
 
@@ -77,7 +77,7 @@ class RegisterOptionScene extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       devbind: true,
       welcome: false,
       device: false,
@@ -545,8 +545,11 @@ This method is called when the component will start to load
     }
       if (this.state.url && this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
-          if (this.state.pattern) {
-            data.push(Skin.text['0']['2'].credTypes['pattern']);
+          if( Config.ENABLE_AUTO_PASSWORD === 'true' && this.isTouchIDPresent == false ){
+          }else {
+              if(this.state.pattern) {
+              data.push(Skin.text['0']['2'].credTypes['pattern']);
+            } 
           }
           if (this.state.touchid) {
             data.push(Skin.text['0']['2'].credTypes['touchid']);
@@ -1011,16 +1014,18 @@ This method is called when the component will start to load
 
       if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
-          indents.push(
-            <Checkbox
-              onSelect={this.selectpattern.bind(this) }
-              selected={this.state.pattern}
-              labelSide={"right"}
-              >
-              Enable Pattern Login
-            </Checkbox>
-          );
-        
+          if( Config.ENABLE_AUTO_PASSWORD === 'true' && this.isTouchIDPresent == false ){
+          }else{
+            indents.push(
+              <Checkbox
+                onSelect={this.selectpattern.bind(this) }
+                selected={this.state.pattern}
+                labelSide={"right"}
+                >
+                Enable Pattern Login
+              </Checkbox>
+            );
+          }
         } 
    
           if (this.isTouchIDPresent) {
@@ -1043,6 +1048,7 @@ This method is called when the component will start to load
           onSelect={this.selectskipwelcome.bind(this) }
           selected={this.state.welcome}
           labelSide={"right"}
+          disabled={true}
           >
           Skip welcome screen
         </Checkbox>
@@ -1053,6 +1059,7 @@ This method is called when the component will start to load
           onSelect={this.selectrememberusername.bind(this) }
           selected={this.state.rememberusername}
           labelSide={"right"}
+          disabled={true}
           >
           Remember Username
         </Checkbox>

@@ -23,8 +23,10 @@ class CheckboxField extends Component {
            </Text>
            : null}
           <Checkbox
-            selected={this.props.selected}
-            onSelect={this.props.onSelect}
+            disabled={true}
+            disabledColor='#dddd00'
+            selected={this.props.selected} 
+            onSelect={null}
             defaultColor={this.props.defaultColor}
             selectedColor={this.props.selectedColor}
             checkboxStyle={this.props.checkboxStyle}>

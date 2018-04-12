@@ -132,8 +132,6 @@ class TwoFactorAuthMachine extends Component {
     this.navigateToRegistration = this.navigateToRegistration.bind(this);
     this.goToNextChallenge = this.goToNextChallenge.bind(this);
     this.saveAutoPassword = this.saveAutoPassword.bind(this);
-    this.showAutoPasswordCompleted = this.showAutoPasswordCompleted.bind(this);
-    this.showAutoPasswordNotCompleted = this.showAutoPasswordNotCompleted.bind(this);
   }
 
   /** 
@@ -196,6 +194,7 @@ class TwoFactorAuthMachine extends Component {
   componentWillUnmount() {
     console.log('----- TwoFactorAuthMachine unmounted');
   }
+
 
   /*
     This is method is callback method, it is called to give resposne of checkChallenge call of RDNA.
@@ -539,7 +538,7 @@ class TwoFactorAuthMachine extends Component {
           actions: [
             NavigationActions.navigate({
               routeName: 'StateMachine', params: {
-                url: {
+                url: {                  
                   reset: true,
                   chlngJson,
                   screenId: nextChlngName,
@@ -916,7 +915,6 @@ class TwoFactorAuthMachine extends Component {
         if (this.mode === "forgotPassword") {
           return (<Forgot_Password navigator={nav} parentnav={this.props.navigator} mode={this.mode} url={route.url} title={route.title} />);
         }
-
         return (<PasswordSet navigator={nav} url={route.url} title={route.title} />);
       }
     } else if (id === 'otp') {

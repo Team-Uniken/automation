@@ -149,7 +149,7 @@ class MainActivation extends Component {
   }
 
   showAndroidAuth(args){
-    this.androidAuth(args);
+    this.androidAuth(args); 
   }
 
   hideAndroidAuth(){
@@ -164,10 +164,11 @@ class MainActivation extends Component {
         Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
       })
       .catch((error) => {
-        //this.state.isAndroidTouchPresent = false;
         if( String(error) === 'LOCKED_OUT' ){
           this.setState( {showAndroidTouch : false });    
           Events.trigger('showAutoPasswordNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+        }else{
+          this.androidAuth(args);
         }
         console.log('Handle rejected android auth promise (' + error + ') here.');
       }); 
@@ -194,7 +195,7 @@ class MainActivation extends Component {
 
   onSetPattern(navigation,args) {
     navigation.goBack();
-    Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+    //Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
   }
 
   showNotificationAlertModal(args) {

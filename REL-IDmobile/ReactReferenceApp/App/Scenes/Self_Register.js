@@ -143,7 +143,7 @@ class Register extends Component {
   //use to clear twoFactorAuthMachine navigator
   close() {
     dismissKeyboard();
-//    Events.trigger('closeStateMachine');
+//    Events.trigger('closeStateMachine'); 
 //    const backAction = NavigationActions.back({
 //    key: null
 //      })

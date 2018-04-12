@@ -17,6 +17,7 @@ import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Config from 'react-native-config';
+import Finger from 'react-native-touch-id-android'
 
 import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native';
 
@@ -137,7 +138,6 @@ AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
    This method is used to get the user entered value and submit the same as a challenge response.
    */
   checkUsername() {
-
     var un = this.state.inputUsername;
     if (Config.ENABLE_AUTO_PASSWORD === 'true') {
 
@@ -158,11 +158,18 @@ AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
                   // Failure code
                   console.log(error);
                   alert("Please enable Touch ID from Setting");
-
                 });
               }else{
+                Finger.isSensorAvailable()
+                .then((isAvailable) => {
+                  this.login();
+                }) 
+                .catch(error => {
+                  alert("Please enable Touch ID from Setting");
+                  //alert('Sensor is not available');
+                });
                 //android touch id and pattern changes need to done
-                this.login();
+                          
               }
             } else {
               this.login();
@@ -177,6 +184,10 @@ AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
     } else {
       this.login();
     }
+  }
+
+  checkAndroidUserName(){
+    
   }
 
   login(){
