@@ -21,7 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackHandler, Alert } from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackHandler, Alert, Platform } from 'react-native'
 
 
 /*
@@ -41,19 +41,27 @@ import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
 
-
-
-
 export default class AutoPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userID: '',
+      isPatternEnabled: false,
     };
     this.authenticate = this.authenticate.bind(this);
+    this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
+    this.showAutoPasswordCompleted = this.showAutoPasswordCompleted.bind(this);
+    this.showAutoPasswordNotCompleted = this.showAutoPasswordNotCompleted.bind(this);
+    this.showPattern = this.showPattern.bind(this);
+    this.saveAutoPassword = this.saveAutoPassword.bind(this);
     //this.authenticateAndroid = this.authenticateAndroid.bind(this);
     this.encrypytPasswdiOS = this.encrypytPasswdiOS.bind(this);
     this.gotoSetPasswordScreen = this.gotoSetPasswordScreen.bind(this);
+    this.onPatternSetCompleted = this.onPatternSetCompleted.bind(this);   
+
+    Events.on('showAutoPasswordCompleted','showAutoPasswordCompleted',this.showAutoPasswordCompleted);
+    Events.on('showAutoPasswordNotCompleted','showAutoPasswordNotCompleted',this.showAutoPasswordNotCompleted);
+    Events.on('onPatternSetCompleted','onPatternSetCompleted',this.onPatternSetCompleted);
   }
   /*
 This is life cycle method of the react native component.
@@ -64,7 +72,7 @@ This method is called when the component will start to load
       this.setState({ Username: value });
     }).done();
 
-    this.authenticate();
+   
   }
   /*
     This is life cycle method of the react native component.
@@ -75,12 +83,13 @@ This method is called when the component will start to load
       this.close();
       return true;
     }.bind(this));
-   
+
+    if (Platform.OS === "ios")
+      this.authenticate();
+    else 
+      this.isAndroidTouchAvailable();
 
   }
-
-
-
   authenticate() {
     TouchID.authenticate('Set up Touch ID to Log In')
       .then(success => {
@@ -97,9 +106,45 @@ This method is called when the component will start to load
       });
   }
 
-  gotoSetPasswordScreen(){
+  isAndroidTouchAvailable() {
+    Util.isAndroidTouchSensorAvailable()
+      .then((success) => {
+        Events.trigger('showAndroidAuth');  
+      })
+      .catch((error) => {
+        this.setState( { isPatternEnabled : true } );
+        this.showPattern();
+      });  
+  }
 
-    
+  showAutoPasswordCompleted(){
+    this.encrypytPasswdiOS(); 
+  }
+
+  showAutoPasswordNotCompleted(){
+    this.gotoSetPasswordScreen();
+  }
+
+  showPattern(){
+    this.saveAutoPassword();
+    Events.trigger('doPatternSet',{ nav: this.props.navigator });
+  }
+
+  saveAutoPassword(){
+    try {
+      Util.encryptText(Main.dnaUserName).then((data) => {       
+        Util.saveUserDataSecure("RPasswd",data).then((data) => {
+          AsyncStorage.getItem(Main.dnaUserName).then((value) => {           
+          }).done();
+        }).done();
+      }
+      );
+    } catch (e) {
+      this.goToNextChallenge(result, index, isFirstChallenge);
+    }
+  }
+
+  gotoSetPasswordScreen(){    
     const resetActionshowFirstChallenge = NavigationActions.reset({
         index: 0,
         actions: [
@@ -115,17 +160,44 @@ This method is called when the component will start to load
         ]
       })
       this.props.navigator.dispatch(resetActionshowFirstChallenge);
+  }
 
+  onPatternSetCompleted(){
+    Events.trigger('showLoader', true);
+    Util.encryptText(Main.dnaUserName).then((data) => {
+      let responseJson = this.props.url.chlngJson;
+      responseJson.chlng_resp[0].response = data;       
+     
+        AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+          if (value) {
+            value = JSON.parse(value);
+            AsyncStorage.getItem(Main.dnaUserName).then((value) => {
+              if (value) {
+                try {
+                  value = JSON.parse(value);
+                  AsyncStorage.setItem("isAutoPassword", 'true');
+                } catch (e) {
+                  Events.trigger('hideLoader', true);
+                  this.gotoSetPasswordScreen();
+                 }
+              }
+            }).done();
+            //responseJson = this.props.url.chlngJson;
+            Events.trigger('hideLoader', true);
+            Events.trigger('showNextChallenge', { response: responseJson });
+          }
+        }).done();
+
+    }
+    );
   }
 
   encrypytPasswdiOS() {
-
     try {
        // Events.trigger('showLoader', true);
       Util.encryptText(Main.dnaUserName).then((data) => {
         let responseJson = this.props.url.chlngJson;
-        responseJson.chlng_resp[0].response = data;
-        
+        responseJson.chlng_resp[0].response = data;       
        
         Util.saveUserDataSecure("RPasswd",data).then((data) => {
 
@@ -198,11 +270,22 @@ This method is called when the component will start to load
                     <View style={[Skin.layout1.content.bottom.container,{justifyContent: 'center',alignItems: 'center'}]}>
                       
                     <View style={[{width: 100,height: 100,justifyContent: 'center',alignItems: 'center',marginBottom:70}]}>
-                         <LoginTypeButton
+                         {!this.state.isPatternEnabled && <LoginTypeButton
                             label={Skin.icon['touchid']}
-                             onPress={() => { this.authenticate(); }}
-                            text={'Set up Login'} />
-                            </View>
+                             onPress={() => { 
+                              if (Platform.OS === "ios")
+                               this.authenticate();
+                              else
+                              this.isAndroidTouchAvailable();
+                             }}
+                            text={'Set up Login'} />}
+                            {this.state.isPatternEnabled && <LoginTypeButton
+                            label={Skin.icon['pattern']}
+                             onPress={() => { 
+                             this.showPattern();
+                             }}
+                            text={'Set up Login'} />}
+                      </View>
                      </View>
                 </View>
             </MainActivation>

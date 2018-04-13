@@ -9,7 +9,7 @@ module.exports = {
   DEVICE_UPDATE : "Update",
   USER_SESSION : "NO", 
   USER_T0:"NO",
-};
+}; 
 
 const JSONKey = module.exports.JSONKey ={
   ENCRIPTED_PATTERN_PASSWORD : 'ERPattern'

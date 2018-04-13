@@ -335,7 +335,6 @@ This method is called when the component will start to load
                     this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } };
                     this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } } });
                   } else {
-
                     this.state.url = { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } };
                     this.setState({ url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern" : value.ERPattern && value.ERPattern !== "empty" ? true : false } } });
                   }
@@ -500,6 +499,7 @@ This method is called when the component will start to load
   //show all login option and defaultLogin option
   getLoginOptions() {
     let index = 0;
+  //var selectedOption = this.state.pattern?Skin.text['0']['2'].credTypes['pattern']:this.state.touchid?Skin.text['0']['2'].credTypes['touchid']:'None';
     let data = [
       {
         key: 'title',
@@ -507,16 +507,19 @@ This method is called when the component will start to load
         label: 'Default Login Options'
       },
       {
-        key: 'none',
+        key: 'none', 
         label: 'None'
       }
      
     ];
 
     if(this.state.touchid == true && isAutoPassword == true ){
-
-    }else
-    data.push(Skin.text['0']['2'].credTypes['password']);
+        //negative cases
+    }else {
+      if(Platform.OS == 'android' && this.state.pattern && isAutoPassword == true){ 
+      }
+      else data.push(Skin.text['0']['2'].credTypes['password']);
+    }    
 
     if (this.state.url) {
       if(this.state.url.chlngJson){
@@ -545,12 +548,11 @@ This method is called when the component will start to load
     }
       if (this.state.url && this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
         if (Platform.OS === 'android') {
-          if( Config.ENABLE_AUTO_PASSWORD === 'true' && this.isTouchIDPresent == false ){
-          }else {
-              if(this.state.pattern) {
+          
+            if(this.state.pattern) {
               data.push(Skin.text['0']['2'].credTypes['pattern']);
             } 
-          }
+          
           if (this.state.touchid) {
             data.push(Skin.text['0']['2'].credTypes['touchid']);
           }      
@@ -1010,24 +1012,21 @@ This method is called when the component will start to load
         this.state.pattern = this.state.url.touchCred.isPattern;
         this.state.touchid = this.state.url.touchCred.isTouch;
         this.state.initTouchAndPatternState = false;
+        //this.setState({pattern : this.state.pattern});
       }
 
       if (this.state.rpass !== "empty" && (this.state.rpass != null || this.state.rpass != undefined)) {
-        if (Platform.OS === 'android') {
-          if( Config.ENABLE_AUTO_PASSWORD === 'true' && this.isTouchIDPresent == false ){
-          }else{
+        if (Platform.OS === 'android') {          
             indents.push(
               <Checkbox
-                onSelect={this.selectpattern.bind(this) }
+              onSelect={isAutoPassword && this.state.pattern == true?null:this.selectpattern.bind(this) }
                 selected={this.state.pattern}
                 labelSide={"right"}
                 >
                 Enable Pattern Login
               </Checkbox>
-            );
-          }
-        } 
-   
+            );          
+        }    
           if (this.isTouchIDPresent) {
             indents.push(
               <Checkbox
@@ -1039,8 +1038,6 @@ This method is called when the component will start to load
               </Checkbox>
             );
           }
-        
-        
       }
 
       indents.push(

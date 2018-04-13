@@ -632,6 +632,24 @@ class TwoFactorAuthMachine extends Component {
               ]
             })
             this.props.navigation.dispatch(showNextChallengefor)
+          }else if((Platform.OS === "android" && name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' )){
+            const resetActionshowFirstChallenge = NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({
+                  routeName: 'StateMachine', params: {
+                    url: {
+                      nav: this.props.navigation,
+                      chlngJson:result.challenge,
+                      chlngsCount: challengeJsonArr.length,
+                      screenId: 'AutoPassword',
+                      currentIndex: currentIndex,
+                    }, title: 'AutoPassword'
+                  }
+                })
+              ]
+            })
+            this.props.navigation.dispatch(resetActionshowFirstChallenge);    
           }else{
           var name = result.challenge.chlng_name
           const showNextChallengefor = NavigationActions.reset({
@@ -678,6 +696,24 @@ class TwoFactorAuthMachine extends Component {
             ]
           })
           this.props.navigation.dispatch(resetActionshowNextChallenge)
+        }else if((Platform.OS === "android" && name === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' )){
+          const resetActionshowFirstChallenge = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    nav: this.props.navigation,
+                    chlngJson: result.challenge,
+                    chlngsCount: challengeJsonArr.length,
+                    screenId: 'AutoPassword',
+                    currentIndex: currentIndex,
+                  }, title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(resetActionshowFirstChallenge);    
         }else{
         const resetActionshowNextChallenge = NavigationActions.reset({
           index: 0,
@@ -1116,7 +1152,7 @@ class TwoFactorAuthMachine extends Component {
           actions: [
             NavigationActions.navigate({
               routeName: 'StateMachine', params: {
-                url: {
+                url: {                  
                   chlngJson,
                   screenId: 'AutoPassword',
                   currentIndex: startIndex,
@@ -1126,9 +1162,23 @@ class TwoFactorAuthMachine extends Component {
           ]
         })
         this.props.navigation.dispatch(resetActionshowFirstChallenge)
-        
-
-          }else{
+        }else if(Platform.OS === "android" && firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' ){
+          const resetActionshowFirstChallenge = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    chlngJson,
+                    screenId: 'AutoPassword',
+                    currentIndex: startIndex,
+                  }, title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(resetActionshowFirstChallenge) 
+        }else{
             this.goToNextChallenge(chlngJson,startIndex,true);
           }
 

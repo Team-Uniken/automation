@@ -233,7 +233,9 @@ class SelectLogin extends Component {
         this._clickHandler();
       }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isAndroidPattern){
         this.doPatternLogin();
-      }else
+      }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && !this.state.isAndroidPattern &&  !this.state.isTouchIDPresent)
+      this.state.dataSource.push({ cred_type: 'password', is_registered: true });
+      else if ( Config.ENABLE_AUTO_PASSWORD === 'true' && !isAutoPassword )
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
   }
@@ -309,6 +311,8 @@ class SelectLogin extends Component {
             this.state.isAndroidPattern = true;
             this.fillAdditionalLoginOptions();
             this.setState({ refresh: !this.state.refresh });
+            if( Config.ENABLE_AUTO_PASSWORD === 'true' &&  value.ERPasswd != null || value.ERPasswd !== 'empty')
+            this.doPatternLogin();
           }
         } catch (e) { }
       }
@@ -334,13 +338,11 @@ class SelectLogin extends Component {
             $this.facebookResponseCallback(null, result)
           }
         }
-
         var config = {
           httpMethod: 'GET',
           version: 'v2.5',
           accessToken: data.accessToken.toString()
         }
-
         var request = new GraphRequest(
           '/me',
           config,
@@ -354,7 +356,6 @@ class SelectLogin extends Component {
       }
     });
   }
-
   //Facebook login code
   facebookResponseCallback(error, result) {
     if (error) {

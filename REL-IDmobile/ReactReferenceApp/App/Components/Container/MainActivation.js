@@ -115,18 +115,13 @@ class MainActivation extends Component {
 */
   componentDidMount() {
     obj = this;
-
-    //Events.rm('hideLoader','hideLoader');
-    // Events.rm('showLoader','showLoader');
-
     console.log("loader visible : " + this.state.visible + " MainActivation : ");
     Events.on('hideLoader', 'hideLoader', this.hideLoader);
     Events.on('showLoader', 'showLoader', this.showLoader);
     Events.on('showNotificationAlert', 'showNotificationAlert', this.showNotificationAlertModal)
     Events.on('showAndroidAuth','showAndroidAuth',this.showAndroidAuth);
     Events.on('hideAndroidAuth','hideAndroidAuth',this.hideAndroidAuth);
-    Events.on('doPatternSet','doPatternSet',this.doPatternSet);
-    
+    Events.on('doPatternSet','doPatternSet',this.doPatternSet);   
   }
 
   componentWillUnmount() {
@@ -161,47 +156,43 @@ class MainActivation extends Component {
     Util.androidTouchAuth()
       .then((success) => {
         this.setState({showAndroidTouch : false });   
-        Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+        Events.trigger('showAutoPasswordCompleted'); 
       })
       .catch((error) => {
         if( String(error) === 'LOCKED_OUT' ){
           this.setState( {showAndroidTouch : false });    
-          Events.trigger('showAutoPasswordNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+          Events.trigger('showAutoPasswordNotCompleted'); 
         }else{
-          this.androidAuth(args);
+          setTimeout(()=>{
+            this.androidAuth();
+            },200);
         }
         console.log('Handle rejected android auth promise (' + error + ') here.');
       }); 
   }
 
   doPatternSet(args) {
-    var data = {
-      "resultValue": args.resultValue,
-      "indexValue": args.indexValue,
-      "firstChallengeStatus": args.firstChallengeStatus
-    };
     args.nav.navigate('pattern',{url: {
       id: 'pattern',
       onSetPattern: this.onSetPattern,
       mode: 'set',
-      data: data,
       onClose: this.onClose
       }})
   }
 
-  onClose(args){
-    Events.trigger('showAutoPasswordNotCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
+  onClose(){
+    Events.trigger('showAutoPasswordNotCompleted' ); 
   }
 
   onSetPattern(navigation,args) {
     navigation.goBack();
+    Events.trigger('onPatternSetCompleted'); 
     //Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
   }
 
   showNotificationAlertModal(args) {
-    var msg = args && args.msg ? args.msg : "";   
-    
-    this.setState({
+        var msg = args && args.msg ? args.msg : "";   
+        this.setState({
       showNotificationAlert: true,
       notificationAlertMsg: msg
     });
