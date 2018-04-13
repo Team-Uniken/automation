@@ -548,7 +548,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   authenticateTouchID() {
-    return TouchID.authenticate()
+    return TouchID.authenticate("Authenticate with Touch ID")
       .then(success => {
         this.state.showTouchOrPattern =false;
         this.onTouchIDAuthenticationDone();

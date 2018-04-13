@@ -390,7 +390,7 @@ class SelectLogin extends Component {
   }
 
   authenticate() {
-    return TouchID.authenticate()
+    return TouchID.authenticate("Authenticate with Touch ID")
       .then(success => {
         obj.onTouchIDVerificationDone();
       })

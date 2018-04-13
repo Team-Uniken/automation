@@ -804,7 +804,7 @@ This method is called when the component will start to load
   }
 
   authenticate() {
-    return TouchID.authenticate('Set up TouchID to Log In')
+    return TouchID.authenticate('Set up Touch ID to Log In')
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         obj.encrypytPasswdiOS();

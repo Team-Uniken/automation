@@ -82,7 +82,7 @@ This method is called when the component will start to load
 
 
   authenticate() {
-    TouchID.authenticate('Set up TouchID to Log In')
+    TouchID.authenticate('Set up Touch ID to Log In')
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         this.encrypytPasswdiOS();
