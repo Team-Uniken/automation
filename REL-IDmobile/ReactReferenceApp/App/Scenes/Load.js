@@ -18,11 +18,10 @@ import Config from 'react-native-config';
 import TouchID from 'react-native-touch-id';
 import TouchId from 'react-native-smart-touch-id'
 import Toast from 'react-native-simple-toast';
-var PushNotification = require('react-native-push-notification');
 import { Text, DeviceEventEmitter, View, NetInfo, Animated, InteractionManager, TouchableHighlight, AppState, Image, Easing, AsyncStorage, Alert, Platform, BackHandler, StatusBar, PushNotificationIOS, AppStateIOS, AlertIOS, StyleSheet, } from 'react-native'
 import { NativeModules, NativeEventEmitter } from 'react-native'
 import { NavigationActions } from 'react-navigation';
-
+import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType, NotificationActionType, NotificationActionOption, NotificationCategoryOption } from "react-native-fcm";
 /*
  Use in this js
  */
@@ -245,21 +244,21 @@ class Load extends Component {
     else
       msg = notification.message;
 
-   // if (!global.isnotificationAlertShown) {
-      global.isnotificationAlertShown = true;
-      setTimeout(() => {
-        // Alert.alert(
-        //   '',
-        //   msg, [{
-        //     text: 'Dismiss',
-        //     onPress: () => {
-        //     global.isnotificationAlertShown = false;
-        //     },
-        //   }]
-        // );
-        Events.trigger("showNotificationAlert",{msg})
-      }, 100);
-   // }
+    // if (!global.isnotificationAlertShown) {
+    global.isnotificationAlertShown = true;
+    setTimeout(() => {
+      // Alert.alert(
+      //   '',
+      //   msg, [{
+      //     text: 'Dismiss',
+      //     onPress: () => {
+      //     global.isnotificationAlertShown = false;
+      //     },
+      //   }]
+      // );
+      Events.trigger("showNotificationAlert", { msg })
+    }, 100);
+    // }
   }
   //Call getNotifications api.
   getMyNotifications() {
@@ -298,16 +297,13 @@ class Load extends Component {
     Obj = this;
     //push messgage adnorid configure starts
     if (Platform.OS === 'android') {
-      PushNotification.configure({
-        // (optional) Called when Token is generated (iOS and Android)
-        onRegister: function (token) {
-          console.log('TOKEN:', token);
-          ReactRdna.setDevToken(JSON.stringify(token));
-        },
-        // (required) Called when a remote or local notification is opened or received
-        onNotification: function (notification) {
+      FCM.getFCMToken().then((token) => {
+        ReactRdna.setDevToken(token);
+      });
+      FCM.on(FCMEvent.Notification, notification => {
+        if (notification && notification.message) {
           savedNotification = notification;
-          if (notification.userInteraction == true) {
+          if (notification.opened_from_tray == 1) {
             Main.notificationId = notification.hiddenMessage;
           }
 
@@ -342,40 +338,27 @@ class Load extends Component {
 
           // Obj.getMyNotifications();
 
-          /**
-                * Notification.create({ 
-                subject:'RelidZeroTesting',
-                message: 'test messg' }).then(function(notification) {
-              console.log(notification);
-              console.log(notification.message);
-            });
-                */
-        },
-
-        // ANDROID ONLY: (optional) GCM Sender ID.
-        senderID: Config.GCM_SENDER_ID,
-
-        /**
-         *  // IOS ONLY (optional): default: all - Permissions to register.
-         permissions: {
-             alert: true,
-             badge: true,
-             sound: true
-         },  
-         */
-
-        // Should the initial notification be popped automatically
-        // default: true
-        popInitialNotification: true,
-
-        /**
-         * (optional) default: true
-         * - Specified if permissions (ios) and token (android and ios) will requested or not,
-         * - if not, you must call PushNotificationsHandler.requestPermissions() later
-         */
-        requestPermissions: true,
+          //AsyncStorage.setItem('lastNotification', JSON.stringify(notif));
+          // if(notif.opened_from_tray){
+          //   setTimeout(()=>{
+          //     if(notif._actionIdentifier === 'reply'){
+          //       if(AppState.currentState !== 'background'){
+          //         console.log('User replied '+ JSON.stringify(notif._userText))
+          //         alert('User replied '+ JSON.stringify(notif._userText));
+          //       } else {
+          //         AsyncStorage.setItem('lastMessage', JSON.stringify(notif._userText));
+          //       }
+          //     }
+          //     if(notif._actionIdentifier === 'view'){
+          //       alert("User clicked View in App");
+          //     }
+          //     if(notif._actionIdentifier === 'dismiss'){
+          //       alert("User clicked Dismiss");
+          //     }
+          //   }, 1000)
+          // }
+        }
       });
-
     }
     //android push message configure Ends
 

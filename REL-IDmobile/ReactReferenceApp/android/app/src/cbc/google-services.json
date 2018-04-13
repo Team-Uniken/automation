@@ -1,20 +1,27 @@
 {
   "project_info": {
-    "project_number": "1044909650225",
-    "project_id": "stock-155212"
+    "project_number": "1037060478598",
+    "firebase_url": "https://cbc-app-f1770.firebaseio.com",
+    "project_id": "cbc-app-f1770",
+    "storage_bucket": "cbc-app-f1770.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1044909650225:android:29b9b66da46fe3be",
+        "mobilesdk_app_id": "1:1037060478598:android:6c53c3baea626749",
         "android_client_info": {
-          "package_name": "com.uniken.stock"
+          "package_name": "com.uniken.cbc"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1037060478598-5ftd009buips1985lpjanv7em2piq3b3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBD9evf7t_NY07L0yXPLr7HBwydEetU6Fc"
+          "current_key": "AIzaSyBUatPM-nR_3L6BQ_XtDE_9G5X4Y8UrxTc"
         }
       ],
       "services": {
@@ -26,7 +33,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

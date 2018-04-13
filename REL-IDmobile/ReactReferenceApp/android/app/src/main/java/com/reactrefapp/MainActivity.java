@@ -11,7 +11,6 @@ import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.view.WindowManager;
 
-import com.dieam.reactnativepushnotification.modules.RNPushNotificationHelper;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {
@@ -22,16 +21,13 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         currentActivity = this;
-        new RNPushNotificationHelper((Application)getApplicationContext()).clearNotifications();
     }
 
     @Override
     public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if(intent.hasExtra("notification")){
-            new RNPushNotificationHelper((Application)getApplicationContext()).clearNotifications();
-        }
-    }
+                super.onNewIntent(intent);
+                setIntent(intent);
+            }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
