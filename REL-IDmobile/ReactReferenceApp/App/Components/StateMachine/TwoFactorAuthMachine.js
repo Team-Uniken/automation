@@ -574,27 +574,15 @@ class TwoFactorAuthMachine extends Component {
           if (name != null)
             AsyncStorage.setItem("devname", name);
             return { show: false, challenge: currChallenge };
-        }else if(urrChallenge.chlng_name === 'actcode'){
-          AsyncStorage.getItem('userid');
-          AsyncStorage.getItem('userid').then((userid) => {
-            if (userid) {
-              AsyncStorage.getItem('actcode:'+userid).then((encryptActCode) => {
-                if (encryptActCode) {
-                  Util.decryptText(encryptActCode).then((decryptedActCode) => {
-                    if(decryptedActCode){
-                    currChallenge.chlng_resp[0].response = decryptedActCode;
-                    return { show: false, challenge: currChallenge };
-                    }else{
-                      this.navigateToRegistration();
-                    }
-                  }).done();
-                }else{
-                  this.navigateToRegistration();
-                }
-              });
-            }else{
-              this.navigateToRegistration();
-            }
+        }else if(currChallenge.chlng_name === 'actcode'){
+
+          Util.getUserDataSecure('actcode').then((actCode) =>{
+            if(actCode){
+              currChallenge.chlng_resp[0].response = actCode;
+              return { show: false, challenge: currChallenge };
+              }else{
+                this.navigateToRegistration();
+              }
           });
 
         }else
@@ -1167,28 +1155,17 @@ class TwoFactorAuthMachine extends Component {
         || firstChlngName === 'devname') {
         this.showFirstChallenge(chlngJson, startIndex + 1);
       } else if (firstChlngName === 'actcode') {
-        AsyncStorage.getItem('userid');
-        AsyncStorage.getItem('userid').then((userid) => {
-          if (userid) {
-            AsyncStorage.getItem('actcode:' + userid).then((encryptActCode) => {
-              if (encryptActCode) {
-                Util.decryptText(encryptActCode).then((decryptedActCode) => {
-                  if(decryptedActCode){
-                  chlngJson.chlng[startIndex].chlng_resp[0].response = decryptedActCode;
-                  Events.trigger('showNextChallenge', { response: chlngJson });
-                  }else{
-                    this.navigateToRegistration();
-                  }
-                }).done();
-              }else{
-                this.navigateToRegistration();
-              }
-            });
-          }else{
-            this.navigateToRegistration();
-          }
-        });
 
+
+        Util.getUserDataSecure('actcode').then((actCode) =>{
+          if(actCode){
+            chlngJson.chlng[startIndex].chlng_resp[0].response = actCode;
+            Events.trigger('showNextChallenge', { response: chlngJson });
+            }else{
+              this.navigateToRegistration();
+            }
+        });
+        
       } 
       else {
         if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){
