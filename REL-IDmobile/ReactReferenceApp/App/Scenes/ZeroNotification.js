@@ -530,7 +530,7 @@ export default class NotificationMgmtScene extends Component {
       .catch(error => {
         Alert.alert(
           '',
-          'Failed to get additional authentication. TouchID is not enabled or supported.',
+          'Failed to get additional authentication. Touch ID is not enabled or supported.',
           [
             {
               text: 'OK',
@@ -1102,7 +1102,7 @@ export default class NotificationMgmtScene extends Component {
     if (isAdditionalAuthSupported.erpass === true) {
       this.authenticateWithTouchIDIfSupported();
     } else {
-      this.showAlertAuthNotSuppoted('Failed to get additional authentication. TouchID is not enabled or supported.');
+      this.showAlertAuthNotSuppoted('Failed to get additional authentication. Touch ID is not enabled or supported.');
     }
   }
 

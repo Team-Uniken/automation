@@ -425,7 +425,7 @@ class SelectLogin extends Component {
               Main.dnaPasswd = RPasswd;
               obj.onDoPasswordCheckChallenge(RPasswd);
             } else {
-              Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+              Toast.showWithGravity("Touch ID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
               this.goToPasswordWhenAdditonalAuthFails();
             }
           } else {
@@ -433,7 +433,7 @@ class SelectLogin extends Component {
           }
         }).done();
       } else {
-        Toast.showWithGravity("TouchID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+        Toast.showWithGravity("Touch ID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
         this.goToPasswordWhenAdditonalAuthFails();
       }
     }).done();
