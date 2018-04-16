@@ -256,7 +256,7 @@ class Register extends Component {
        var postData = Util.convertToPostData(userMap);
       //var contentType = JSON.stringify({ "Content-Type": "application/x-www-form-urlencoded" });
       var contentType = JSON.stringify(userMap);                 
-      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, "http://18.232.236.255:8080/enterprise-api-server/enrollUser", contentType, "", (response) => {
+      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, URL, contentType, "", (response) => {
         // RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         Events.trigger('hideLoader', true);
@@ -271,12 +271,12 @@ class Register extends Component {
             });
             return;
           }
-          if (res.error == 0) {
+          if (res.error === '0') {
               this.saveACTCODE(res.actCode);
             //obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instructions.", true);
           } else {
             setTimeout(() => {
-              alert(res.error_msg);
+              alert(res.error);
             }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
