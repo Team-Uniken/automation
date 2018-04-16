@@ -578,6 +578,7 @@ class TwoFactorAuthMachine extends Component {
 
           Util.getUserDataSecure('actcode').then((actCode) =>{
             if(actCode){
+              Constants.USER_T0 = "YES";
               currChallenge.chlng_resp[0].response = actCode;
               return { show: false, challenge: currChallenge };
               }else{
@@ -1160,6 +1161,7 @@ class TwoFactorAuthMachine extends Component {
         Util.getUserDataSecure('actcode').then((actCode) =>{
           if(actCode){
             chlngJson.chlng[startIndex].chlng_resp[0].response = actCode;
+            Constants.USER_T0 = "YES";
             Events.trigger('showNextChallenge', { response: chlngJson });
             }else{
               this.navigateToRegistration();
