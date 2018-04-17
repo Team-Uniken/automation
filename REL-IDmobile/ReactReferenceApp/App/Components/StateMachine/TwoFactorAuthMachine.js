@@ -317,12 +317,30 @@ class TwoFactorAuthMachine extends Component {
            28  -->> RDNA_RESP_STATUS_USER_SUSPENDED - User suspended  
            1   -->> RDNA_RESP_STATUS_NO_USER_ID -  user Id not present   
         */
+
+        //Removing user preference when user is blocked or suspended 
+       if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("exhausted")) {
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
         setTimeout(() => {
           Alert.alert(
             'Error',
             res.pArgs.response.StatusMsg, [{
               text: 'OK',
               onPress: () => {
+              
+                AsyncStorage.getItem('rememberuser').then((value) => {
+                  if (value == undefined || value == null || value === 'empty') {
+
+                  } else {
+                    if (value === Main.dnaUserName) {
+                      AsyncStorage.setItem("rememberuser", "empty");
+                    }
+                  }
+                });
                 this.navigateToRegistration();
               },
               style: 'cancel',
