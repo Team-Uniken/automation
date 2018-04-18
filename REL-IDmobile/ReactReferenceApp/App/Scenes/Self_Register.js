@@ -179,7 +179,7 @@ class Register extends Component {
 
   //check entered phoneNumber is valid or not
   validatePhoneNumber(phone) {
-    var regex = /^\+?([0-9]{0,14})$/;
+    var regex = /^(\+?)([0-9]{0,15})$/;
     return regex.test(phone);
   }
 
