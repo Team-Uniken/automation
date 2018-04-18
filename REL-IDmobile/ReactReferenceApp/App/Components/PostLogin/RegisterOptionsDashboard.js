@@ -72,6 +72,7 @@ var obj;
 let onGetAllChallengeStatusSubscription;
 let onUpdateChallengeStatusSubscription;
 var isAutoPassword;
+var isAutoPasswordPattern = false;
 
 class RegisterOptionScene extends Component {
 
@@ -136,7 +137,7 @@ This method is called when the component will start to load
       if (userPrefs) {
         try {
          
-          if (userPrefs=== 'true'){
+          if (userPrefs === 'true'){
             isAutoPassword = true;
           }else{
             isAutoPassword = false;
@@ -145,6 +146,22 @@ This method is called when the component will start to load
         catch (e) { }
       }else{
         isAutoPassword = false;
+      }
+    });
+
+    AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
+      if (userPrefs) {
+        try {
+         
+          if (userPrefs === 'true'){
+            isAutoPasswordPattern = true;
+          }else{
+            isAutoPasswordPattern = false;
+          }
+        }
+        catch (e) { }
+      }else{
+        isAutoPasswordPattern = false;
       }
     });
 
@@ -921,7 +938,7 @@ This method is called when the component will start to load
       if (this.state.facebook == false) {
         this.doFacebookLogin();
         //this.checkValidityOfAccessToken();
-      } else {
+      } else { 
         this.state.facebook = false;
         if (this.state.defaultLogin === 'facebook') {
           this.state.defaultLogin = "none"
@@ -1019,7 +1036,7 @@ This method is called when the component will start to load
         if (Platform.OS === 'android') {          
             indents.push(
               <Checkbox
-              onSelect={isAutoPassword && this.state.pattern == true?null:this.selectpattern.bind(this) }
+              onSelect={isAutoPasswordPattern && this.state.pattern == true?null:this.selectpattern.bind(this) }
                 selected={this.state.pattern}
                 labelSide={"right"}
                 >

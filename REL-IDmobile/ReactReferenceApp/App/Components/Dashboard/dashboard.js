@@ -15,7 +15,7 @@ import Events from 'react-native-simple-events';
  Required for this js
  */
 import Config from 'react-native-config';
-import {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, TouchableHighlight, TouchableOpacity, StyleSheet, BackHandler} from 'react-native';
 
 class Dashboard extends Component {
   constructor(props){
@@ -33,9 +33,12 @@ class Dashboard extends Component {
 
   componentDidMount(){
     global.isLoggedIn = true;
+    BackHandler.addEventListener('hardwareBackPress', function () {
+        return true;
+    }.bind(this));
   }
 
-    /**
+  /**
    * Toggles the drawer open and closed. Is passed down the chain to navbar.
    * @return {null}
    */
