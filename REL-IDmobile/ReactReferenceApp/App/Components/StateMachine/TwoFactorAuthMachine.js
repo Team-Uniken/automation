@@ -388,15 +388,16 @@ class TwoFactorAuthMachine extends Component {
                     //                  });
 
                     if (nextChlngName === 'actcode') {
-                      Util.getUserDataSecure('actcode').then((actCode) => {
-                        if (actCode) {
-                          challengeJson.chlng[0].chlng_resp[0].response = actCode;
-                          Constants.USER_T0 = "YES";
-                          Events.trigger('showNextChallenge', { response: challengeJson });
-                        } else {
-                          this.navigateToRegistration();
-                        }
-                      });
+                      this.navigateToRegistration();
+                      // Util.getUserDataSecure('actcode').then((actCode) => {
+                      //   if (actCode) {
+                      //     challengeJson.chlng[0].chlng_resp[0].response = actCode;
+                      //     Constants.USER_T0 = "YES";
+                      //     Events.trigger('showNextChallenge', { response: challengeJson });
+                      //   } else {
+                      //     this.navigateToRegistration();
+                      //   }
+                      // });
 
                     } else if (nextChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != challengeJson.chlng[0].challengeOperation && this.isTouchIDPresent == true) {
                       //var name = result.challenge.chlng_name
