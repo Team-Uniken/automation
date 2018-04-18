@@ -459,7 +459,7 @@ class Register extends Component {
                         this.refs.cardNumber.focus();
                       } } />
                     <Input
-                      placeholder={'XXXX-XXXX-XX12-3456'}
+                      placeholder={'Card Number (Last 6 Digits)'}
                       ref={'cardNumber'}
                       keyboardType={'phone-pad'}
                       returnKeyType={'next'}

@@ -552,6 +552,57 @@ class TwoFactorAuthMachine extends Component {
         //            },
         //          });
 
+
+        if (nextChlngName === 'actcode') {
+
+
+          Util.getUserDataSecure('actcode').then((actCode) =>{
+            if(actCode){
+              chlngJson1.chlng[0].chlng_resp[0].response = actCode;
+              Constants.USER_T0 = "YES";
+              Events.trigger('showNextChallenge', { response: chlngJson1 });
+              }else{
+                this.navigateToRegistration();
+              }
+          });
+          
+        } else if(nextChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=hlngJson1.chlng[0].challengeOperation && this.isTouchIDPresent == true){
+          //var name = result.challenge.chlng_name
+          const showNextChallengefor = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    chlngJson,
+                    chlngsCount: challengeJsonArr.length,
+                    currentIndex: currentIndex,
+                    screenId: 'AutoPassword'
+                  }, title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(showNextChallengefor)
+        }else if((nextChlngName === 'pass' && Platform.OS === "android" && Config.ENABLE_AUTO_PASSWORD === 'true' )){
+          const resetActionshowFirstChallenge = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    nav: this.props.navigation,
+                    chlngJson,
+                    chlngsCount: challengeJsonArr.length,
+                    screenId: 'AutoPassword',
+                    currentIndex: currentIndex,
+                  }, title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(resetActionshowFirstChallenge);    
+        }else{
         const resetAction = NavigationActions.reset({
           index: 0,
           actions: [
@@ -568,6 +619,7 @@ class TwoFactorAuthMachine extends Component {
           ]
         })
         this.props.navigation.dispatch(resetAction)
+      }
       } else {
         console.log('immediate response is' + response[0].error);
         //        alert(response[0].error);
