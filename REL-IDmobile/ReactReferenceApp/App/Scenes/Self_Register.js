@@ -389,7 +389,7 @@ class Register extends Component {
           scrollEnabled={true}
           javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
           />
-      );
+      ); 
     }
   }
 
@@ -459,7 +459,7 @@ class Register extends Component {
                         this.refs.cardNumber.focus();
                       } } />
                     <Input
-                      placeholder={'XXXX-XXXX-XX12-3456'}
+                      placeholder={'Card Number (Last 6 Digits)'}
                       ref={'cardNumber'}
                       keyboardType={'phone-pad'}
                       returnKeyType={'next'}
@@ -530,16 +530,15 @@ class Register extends Component {
                 </View>
               </View>
             </ScrollView>
-      <KeyboardSpacer/>
-      <View style={Skin.layout1.bottom.wrap}>
+            <KeyboardSpacer/>
+            <View style={Skin.layout1.bottom.wrap}>
               <View style={Skin.layout1.bottom.container}>
                 <Button
                   label={Skin.text['1']['1'].submit_button}
                   onPress={this.validateAndProcced.bind(this) } />
               </View>
             </View>
-      
-          </View>
+            </View>    
         </MainActivation>
         <Modal
           style={Skin.layout1.termandcondition}
