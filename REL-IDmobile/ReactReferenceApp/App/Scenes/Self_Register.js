@@ -179,8 +179,16 @@ class Register extends Component {
 
   //check entered phoneNumber is valid or not
   validatePhoneNumber(phone) {
-    var regex = /^(\+?)([0-9]{0,15})$/;
-    return regex.test(phone);
+    var regex = /^([0-9+]{0,15})$/;
+    if (regex.test(phone)) {
+      if (phone.lastIndexOf('+') <= 1)
+        return true;
+      else
+        return false;
+    } else {
+      return false;
+    }
+    //return regex.test(phone);
   }
 
   //check entered card number is valid or not
