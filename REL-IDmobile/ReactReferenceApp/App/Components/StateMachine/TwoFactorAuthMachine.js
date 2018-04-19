@@ -168,8 +168,8 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
-    Events.on('showAutoPasswordCompleted','showAutoPasswordCompleted',this.showAutoPasswordCompleted);
-    Events.on('showAutoPasswordNotCompleted','showAutoPasswordNotCompleted',this.showAutoPasswordNotCompleted);
+    //Events.on('showAutoPasswordCompleted','showAutoPasswordCompleted',this.showAutoPasswordCompleted);
+    //Events.on('showAutoPasswordNotCompleted','showAutoPasswordNotCompleted',this.showAutoPasswordNotCompleted);
 
 
     //    onGetAllChallengeEvent = DeviceEventEmitter.addListener(
@@ -927,21 +927,18 @@ class TwoFactorAuthMachine extends Component {
 
   }
   }
-  showAndroidAuthCompleted(args){
-    this.encrypytPasswdiOS(args.resultValue, args.indexValue, args.firstChallengeStatus);
-  }
+  // showAndroidAuthCompleted(args){
+  //   this.encrypytPasswdiOS(args.resultValue, args.indexValue, args.firstChallengeStatus);
+  // }
 
-  showAutoPasswordNotCompleted(args){
-    this.goToNextChallenge(args.resultValue, args.indexValue, args.firstChallengeStatus);
-  }
+  // showAutoPasswordNotCompleted(args){
+  //   this.goToNextChallenge(args.resultValue, args.indexValue, args.firstChallengeStatus);
+  // }
 
-  showPatternScreen(result, index, isFirstChallenge){
-    this.saveAutoPassword();
-    Events.trigger('doPatternSet', { onSetPattern:this.onSetPattern,resultValue: result, indexValue: index, firstChallengeStatus: isFirstChallenge, nav: this.props.navigation });
-  }
-
-  passcodeAuth() {
-  }
+  // showPatternScreen(result, index, isFirstChallenge){
+  //   this.saveAutoPassword();
+  //   Events.trigger('doPatternSet', { onSetPattern:this.onSetPattern,resultValue: result, indexValue: index, firstChallengeStatus: isFirstChallenge, nav: this.props.navigation });
+  // }
 
   saveAutoPassword(){
     try {
