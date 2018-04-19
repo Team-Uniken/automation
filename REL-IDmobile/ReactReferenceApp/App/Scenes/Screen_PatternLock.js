@@ -90,10 +90,10 @@ class PatternLock extends Component {
     }
     else if (this.mode === "set") {
       if (this.state.screen === "set") {
-        this.operationMsg = "Provide unlock pattern";
+        this.operationMsg = "Set pattern";//this.operationMsg = "Provide unlock pattern";
       }
       else {
-        this.operationMsg = "Confirm unlock pattern";
+        this.operationMsg = "Confirm pattern";// this.operationMsg = "Confirm unlock pattern";
       }
     }
   }
@@ -152,7 +152,7 @@ class PatternLock extends Component {
             else {
               this.currentPattern = pattern;
               this.refs["patternView"].clearPattern();
-              this.operationMsg = "Confirm unlock pattern";
+              this.operationMsg = "Confirm pattern";
               this.state.screen = "confirm";
               this.setState({
                 screen: "confirm",
@@ -355,10 +355,10 @@ class PatternLock extends Component {
   componentWillUpdate() {
     if (this.mode === "set") {
       if (this.state.screen === "set") {
-        this.operationMsg = "Provide unlock pattern";
+        this.operationMsg = "Set pattern";
       }
       else {
-        this.operationMsg = "Confirm unlock pattern";
+        this.operationMsg = "Confirm pattern";
       }
     }
   }
