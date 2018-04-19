@@ -22,6 +22,7 @@ import { NavigationActions} from 'react-navigation';
  */
 import Skin from '../Skin';
 import MainActivation from '../Components/Container/MainActivation';
+import Main from '../Components/Container/Main';
 
 
 
@@ -74,6 +75,7 @@ class Welcome_Screen extends Component {
   
 //call on click of register to show SelfRegister screen.
   register() {
+    Main.dnaUserName = "";
     console.log('doNavigation:');
     const resetAction = NavigationActions.reset({
     index: 0,
@@ -84,8 +86,8 @@ class Welcome_Screen extends Component {
         "currentIndex":0
         },title:''}})
       ]
-      })
-    this.props.navigation.dispatch(resetAction)
+      });
+    this.props.navigation.dispatch(resetAction);
     
     
   }

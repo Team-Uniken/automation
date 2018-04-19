@@ -77,8 +77,9 @@ class Register extends Component {
   componentWillMount() {
     obj = this;
     this.state.value = 0;
+    this.state.email = Main.dnaUserName;
     InteractionManager.runAfterInteractions(() => {
-      this.refs.email.focus()
+      this.refs.email.focus();
     });
     this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
@@ -92,17 +93,17 @@ class Register extends Component {
 
 
   keyboardWillShow(e) {
-    this.setState({ keyboardVisible: true })
+    this.setState({ keyboardVisible: true });
     //Alert.alert('yes')
   }
 
   keyboardWillHide(e) {
-    this.setState({ keyboardVisible: false })
+    this.setState({ keyboardVisible: false });
   }
 
   componentWillUnmount() {
-    this.keyboardWillShowListener.remove()
-    this.keyboardWillHideListener.remove()
+    this.keyboardWillShowListener.remove();
+    this.keyboardWillHideListener.remove();
   }
 
   //use to change checkbox UI from checked to uncheck or uncheck to check.
@@ -372,7 +373,7 @@ class Register extends Component {
       return (
         <WebView
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'http://api.relid.uniken.com/' }}
+          source={{ uri: 'https://demos.uniken.com/dist-docs/terms-and-conditions.html' }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -387,7 +388,7 @@ class Register extends Component {
         <WebViewAndroid
           style={{ height: 200 }}
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'http://api.relid.uniken.com/' }}
+          source={{ uri: 'https://demos.uniken.com/dist-docs/terms-and-conditions.html' }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -462,6 +463,7 @@ class Register extends Component {
                       autoCorrect={false}
                       autoCapitalize={'none'}
                       autoComplete={false}
+                      value={this.state.email}
                       onChange={this.onEmailChange.bind(this) }
                       onSubmitEditing={() => {
                         this.refs.cardNumber.focus();
