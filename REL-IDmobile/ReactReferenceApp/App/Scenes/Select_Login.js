@@ -45,6 +45,8 @@ import Toast from 'react-native-simple-toast';
 var obj;
 const LOGIN_TYPE_PER_ROW = 3;
 var isAutoPassword;
+var isAutoPasswordPattern = false;
+//var userRef = null;
 
 //Facebook login code
 const {
@@ -98,6 +100,22 @@ class SelectLogin extends Component {
       }
     });
 
+    AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
+      if (userPrefs) {
+        try {
+         
+          if (userPrefs === 'true'){
+            isAutoPasswordPattern = true;
+          }else{
+            isAutoPasswordPattern = false;
+          }
+        }
+        catch (e) { }
+      }else{
+        isAutoPasswordPattern = false;
+      }
+    });
+
     this.checkForRegisteredCredsAndShow();
     if (Platform.OS === 'ios') {
       this.isTouchPresent().then((success) => {
@@ -141,6 +159,7 @@ class SelectLogin extends Component {
       if (userPrefs) {
         try {
           userPrefs = JSON.parse(userPrefs);
+          //this.userPrefs = userPrefs;
           if (userPrefs.defaultLogin &&
             userPrefs.defaultLogin !== 'facebook') {
             if (userPrefs.defaultLogin === 'pattern'
@@ -157,6 +176,31 @@ class SelectLogin extends Component {
         catch (e) { } 
       }
     });
+
+    AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
+      if (userPrefs) {
+        try {
+          userPrefs = JSON.parse(userPrefs);
+          //this.userPrefs = userPrefs;
+          if (!userPrefs.defaultLogin ) {
+            if (this.state.dataSource.length > 0 ) {
+              if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent 
+                          && isAutoPassword ){
+                this._clickHandler();
+              }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && !this.state.isRegistered && this.state.isAndroidPattern 
+                        && isAutoPasswordPattern ){
+                this.doPatternLogin();
+              }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && !this.state.isAndroidPattern 
+                        &&  !this.state.isTouchIDPresent && !isAutoPassword)
+                this.state.dataSource.push({ cred_type: 'password', is_registered: true });
+              else if (Config.ENABLE_AUTO_PASSWORD === 'true' && !isAutoPassword )
+                this.state.dataSource.push({ cred_type: 'password', is_registered: true });
+            }
+          }
+        }
+        catch (e) { } 
+      }
+    });   
 
     BackHandler.addEventListener('hardwareBackPress', function () {
       if( this.state.showAndroidAuth )
@@ -220,24 +264,12 @@ class SelectLogin extends Component {
           this.state.dataSource.push({ cred_type: 'pattern', is_registered: true });
       }
     } 
-      if (this.state.isRegistered && this.state.isTouchIDPresent) {
-        if (this.state.dataSource) {
+    if (this.state.isRegistered && this.state.isTouchIDPresent) {
+        if (this.state.dataSource) { 
           this.state.dataSource.push({ cred_type: 'touchid', is_registered: true });
         }
-      }
-    
-
-    if (this.state.dataSource.length > 0) {
-
-      if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent && isAutoPassword){
-        this._clickHandler();
-      }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isAndroidPattern){
-        this.doPatternLogin();
-      }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && !this.state.isAndroidPattern &&  !this.state.isTouchIDPresent)
-      this.state.dataSource.push({ cred_type: 'password', is_registered: true });
-      else if ( Config.ENABLE_AUTO_PASSWORD === 'true' && !isAutoPassword )
-      this.state.dataSource.push({ cred_type: 'password', is_registered: true });
-    }
+    }    
+ 
   }
 
   isAndroidTouchAvailable() {
@@ -287,7 +319,7 @@ class SelectLogin extends Component {
   }
 
   //check for registercred in database if ERPasswd is in database than isRegistered flag is set to true.
-  async checkForRegisteredCredsAndShow(option) {
+  async checkForRegisteredCredsAndShow(option) { 
     var ret = false;
     await AsyncStorage.getItem(Main.dnaUserName).then((value) => {
       if (value) {
@@ -311,8 +343,8 @@ class SelectLogin extends Component {
             this.state.isAndroidPattern = true;
             this.fillAdditionalLoginOptions();
             this.setState({ refresh: !this.state.refresh });
-            if( Config.ENABLE_AUTO_PASSWORD === 'true' &&  value.ERPasswd != null || value.ERPasswd !== 'empty')
-            this.doPatternLogin();
+            // if( Config.ENABLE_AUTO_PASSWORD === 'true' &&  value.ERPasswd != null || value.ERPasswd !== 'empty')
+            // this.doPatternLogin();
           }
         } catch (e) { }
       }
@@ -356,6 +388,7 @@ class SelectLogin extends Component {
       }
     });
   }
+
   //Facebook login code
   facebookResponseCallback(error, result) {
     if (error) {
@@ -372,8 +405,10 @@ class SelectLogin extends Component {
       return (result)
     }
   }
+
   //patten login callback.
   onPatternUnlock(nav, args) {
+    nav.goBack();
     Main.dnaPasswd = args.password;
     this.onDoPasswordCheckChallenge(args.password);
   }

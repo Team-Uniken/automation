@@ -124,7 +124,7 @@ class ConnectionProfileScene extends Component {
                     for (let j = 0; j < profileArray.length; j++) {
                       if (oldProfiles[i].Name === profileArray[j].Name) {
                         if(oldProfiles[i].imported === "true"){
-                         alert("'"+oldProfiles[i].Name+"' "+"inbuild profile allready present");
+                         alert("'"+oldProfiles[i].Name+"' "+"profile already present");
                          return;
                         }else{
                         oldProfiles[i] = profileArray[j];

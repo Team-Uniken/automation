@@ -317,12 +317,30 @@ class TwoFactorAuthMachine extends Component {
            28  -->> RDNA_RESP_STATUS_USER_SUSPENDED - User suspended  
            1   -->> RDNA_RESP_STATUS_NO_USER_ID -  user Id not present   
         */
+
+        //Removing user preference when user is blocked or suspended 
+       if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
+          res.pArgs.response.StatusMsg.toLowerCase().includes("exhausted")) {
+          AsyncStorage.setItem("skipwelcome", "false");
+          AsyncStorage.setItem("rememberuser", "empty");
+        }
         setTimeout(() => {
           Alert.alert(
             'Error',
             res.pArgs.response.StatusMsg, [{
               text: 'OK',
               onPress: () => {
+              
+                AsyncStorage.getItem('rememberuser').then((value) => {
+                  if (value == undefined || value == null || value === 'empty') {
+
+                  } else {
+                    if (value === Main.dnaUserName) {
+                      AsyncStorage.setItem("rememberuser", "empty");
+                    }
+                  }
+                });
                 this.navigateToRegistration();
               },
               style: 'cancel',
@@ -368,21 +386,72 @@ class TwoFactorAuthMachine extends Component {
                     //                      screenId: nextChlngName,
                     //                    },
                     //                  });
-                    const resetAction = NavigationActions.reset({
-                      index: 0,
-                      actions: [
-                        NavigationActions.navigate({
-                          routeName: 'StateMachine', params: {
-                            url: {
-                              chlngJson: challengeJson,
-                              screenId: nextChlngName,
-                              currentIndex: 0
-                            }, title: nextChlngName
-                          }
-                        })
-                      ]
-                    })
-                    this.props.navigation.dispatch(resetAction)
+
+                    if (nextChlngName === 'actcode') {
+                      this.navigateToRegistration();
+                      // Util.getUserDataSecure('actcode').then((actCode) => {
+                      //   if (actCode) {
+                      //     challengeJson.chlng[0].chlng_resp[0].response = actCode;
+                      //     Constants.USER_T0 = "YES";
+                      //     Events.trigger('showNextChallenge', { response: challengeJson });
+                      //   } else {
+                      //     this.navigateToRegistration();
+                      //   }
+                      // });
+
+                    } else if (nextChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != challengeJson.chlng[0].challengeOperation && this.isTouchIDPresent == true) {
+                      //var name = result.challenge.chlng_name
+                      const showNextChallengefor = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                          NavigationActions.navigate({
+                            routeName: 'StateMachine', params: {
+                              url: {
+                                chlngJson: challengeJson,
+                                chlngsCount: challengeJsonArr.length,
+                                currentIndex: 0,
+                                screenId: 'AutoPassword'
+                              }, title: 'AutoPassword'
+                            }
+                          })
+                        ]
+                      })
+                      this.props.navigation.dispatch(showNextChallengefor)
+                    } else if ((nextChlngName === 'pass' && Platform.OS === "android" && Config.ENABLE_AUTO_PASSWORD === 'true')) {
+                      const resetActionshowFirstChallenge = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                          NavigationActions.navigate({
+                            routeName: 'StateMachine', params: {
+                              url: {
+                                nav: this.props.navigation,
+                                chlngJson: challengeJson,
+                                chlngsCount: challengeJson.length,
+                                screenId: 'AutoPassword',
+                                currentIndex: 0,
+                              }, title: 'AutoPassword'
+                            }
+                          })
+                        ]
+                      })
+                      this.props.navigation.dispatch(resetActionshowFirstChallenge);
+                    } else {
+                      const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                          NavigationActions.navigate({
+                            routeName: 'StateMachine', params: {
+                              url: {
+                                chlngJson: challengeJson,
+                                screenId: nextChlngName,
+                                currentIndex: 0
+                              }, title: nextChlngName
+                            }
+                          })
+                        ]
+                      })
+                      this.props.navigation.dispatch(resetAction)
+                    }
                   }
                 }
                 else {
@@ -534,6 +603,57 @@ class TwoFactorAuthMachine extends Component {
         //            },
         //          });
 
+
+        if (nextChlngName === 'actcode') {
+
+
+          Util.getUserDataSecure('actcode').then((actCode) =>{
+            if(actCode){
+              chlngJson1.chlng[0].chlng_resp[0].response = actCode;
+              Constants.USER_T0 = "YES";
+              Events.trigger('showNextChallenge', { response: chlngJson1 });
+              }else{
+                this.navigateToRegistration();
+              }
+          });
+          
+        } else if(nextChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=hlngJson1.chlng[0].challengeOperation && this.isTouchIDPresent == true){
+          //var name = result.challenge.chlng_name
+          const showNextChallengefor = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    chlngJson,
+                    chlngsCount: challengeJsonArr.length,
+                    currentIndex: currentIndex,
+                    screenId: 'AutoPassword'
+                  }, title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(showNextChallengefor)
+        }else if((nextChlngName === 'pass' && Platform.OS === "android" && Config.ENABLE_AUTO_PASSWORD === 'true' )){
+          const resetActionshowFirstChallenge = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    nav: this.props.navigation,
+                    chlngJson,
+                    chlngsCount: challengeJsonArr.length,
+                    screenId: 'AutoPassword',
+                    currentIndex: currentIndex,
+                  }, title: 'AutoPassword'
+                }
+              })
+            ]
+          })
+          this.props.navigation.dispatch(resetActionshowFirstChallenge);    
+        }else{
         const resetAction = NavigationActions.reset({
           index: 0,
           actions: [
@@ -550,6 +670,7 @@ class TwoFactorAuthMachine extends Component {
           ]
         })
         this.props.navigation.dispatch(resetAction)
+      }
       } else {
         console.log('immediate response is' + response[0].error);
         //        alert(response[0].error);
@@ -574,27 +695,16 @@ class TwoFactorAuthMachine extends Component {
           if (name != null)
             AsyncStorage.setItem("devname", name);
             return { show: false, challenge: currChallenge };
-        }else if(urrChallenge.chlng_name === 'actcode'){
-          AsyncStorage.getItem('userid');
-          AsyncStorage.getItem('userid').then((userid) => {
-            if (userid) {
-              AsyncStorage.getItem('actcode:'+userid).then((encryptActCode) => {
-                if (encryptActCode) {
-                  Util.decryptText(encryptActCode).then((decryptedActCode) => {
-                    if(decryptedActCode){
-                    currChallenge.chlng_resp[0].response = decryptedActCode;
-                    return { show: false, challenge: currChallenge };
-                    }else{
-                      this.navigateToRegistration();
-                    }
-                  }).done();
-                }else{
-                  this.navigateToRegistration();
-                }
-              });
-            }else{
-              this.navigateToRegistration();
-            }
+        }else if(currChallenge.chlng_name === 'actcode'){
+
+          Util.getUserDataSecure('actcode').then((actCode) =>{
+            if(actCode){
+              Constants.USER_T0 = "YES";
+              currChallenge.chlng_resp[0].response = actCode;
+              return { show: false, challenge: currChallenge };
+              }else{
+                this.navigateToRegistration();
+              }
           });
 
         }else
@@ -1167,28 +1277,18 @@ class TwoFactorAuthMachine extends Component {
         || firstChlngName === 'devname') {
         this.showFirstChallenge(chlngJson, startIndex + 1);
       } else if (firstChlngName === 'actcode') {
-        AsyncStorage.getItem('userid');
-        AsyncStorage.getItem('userid').then((userid) => {
-          if (userid) {
-            AsyncStorage.getItem('actcode:' + userid).then((encryptActCode) => {
-              if (encryptActCode) {
-                Util.decryptText(encryptActCode).then((decryptedActCode) => {
-                  if(decryptedActCode){
-                  chlngJson.chlng[startIndex].chlng_resp[0].response = decryptedActCode;
-                  Events.trigger('showNextChallenge', { response: chlngJson });
-                  }else{
-                    this.navigateToRegistration();
-                  }
-                }).done();
-              }else{
-                this.navigateToRegistration();
-              }
-            });
-          }else{
-            this.navigateToRegistration();
-          }
-        });
 
+
+        Util.getUserDataSecure('actcode').then((actCode) =>{
+          if(actCode){
+            chlngJson.chlng[startIndex].chlng_resp[0].response = actCode;
+            Constants.USER_T0 = "YES";
+            Events.trigger('showNextChallenge', { response: chlngJson });
+            }else{
+              this.navigateToRegistration();
+            }
+        });
+        
       } 
       else {
         if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){

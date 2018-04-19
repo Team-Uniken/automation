@@ -176,6 +176,7 @@ This method is called when the component will start to load
                 try {
                   value = JSON.parse(value);
                   AsyncStorage.setItem("isAutoPassword", 'true');
+                  AsyncStorage.setItem("isAutoPasswordPattern", 'true');
                 } catch (e) {
                   Events.trigger('hideLoader', true);
                   this.gotoSetPasswordScreen();
@@ -209,6 +210,7 @@ This method is called when the component will start to load
                   try {
                     value = JSON.parse(value);
                     AsyncStorage.setItem("isAutoPassword", 'true');
+                    AsyncStorage.setItem("isAutoPasswordPattern", 'false');
                     Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
                     }).done();
                   } catch (e) {
@@ -268,7 +270,12 @@ This method is called when the component will start to load
                         </Title>
                     </View>
                     <View style={[Skin.layout1.content.bottom.container,{justifyContent: 'center',alignItems: 'center'}]}>
-                      
+                    <Text style={[Skin.layout0.top.icon]}>
+                        {Skin.icon.logo}
+                          </Text>
+                          <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+                          <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
+                                               
                     <View style={[{width: 100,height: 100,justifyContent: 'center',alignItems: 'center',marginBottom:70}]}>
                          {!this.state.isPatternEnabled && <LoginTypeButton
                             label={Skin.icon['touchid']}
