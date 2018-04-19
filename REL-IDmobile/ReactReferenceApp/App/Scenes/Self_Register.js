@@ -240,7 +240,7 @@ class Register extends Component {
       //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
 
       //var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/v1/addNewUser.htm";
-      var URL = "http://18.232.236.255:8080/enterprise-api-server/enrollUser";
+      var URL = "http://" + currentProfile.Host + ":8080/enterprise-api-server/enrollUser";
       //console.log("---Register ---baseUrl =" + baseUrl)
 
       // USER_ID_STR, mandatory = true          // will be email Id
