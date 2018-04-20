@@ -71,8 +71,8 @@ This method is called when the component will start to load
     AsyncStorage.getItem('RUserId').then((value) => {
       this.setState({ Username: value });
     }).done();
-
-   
+    if (Platform.OS === "android" && !this.props.url.isTouchAvailable)
+      this.setState( { isPatternEnabled : true } );    
   }
   /*
     This is life cycle method of the react native component.
@@ -88,7 +88,6 @@ This method is called when the component will start to load
       this.authenticate();
     else 
       this.isAndroidTouchAvailable();
-
   }
   authenticate() {
     TouchID.authenticate('Set up Touch ID to Log In')

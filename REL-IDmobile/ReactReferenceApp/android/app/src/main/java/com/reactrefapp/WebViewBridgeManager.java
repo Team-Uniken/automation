@@ -182,6 +182,7 @@ public class WebViewBridgeManager extends ReactWebViewManager {
                 //showSslErrorAlertDialog(handler,error);
                 Log.e("onReceivedSslError", "Valid Not before date " + error.getCertificate().getValidNotBeforeDate());
                 Log.e("onReceivedSslError", error.toString());
+                handler.proceed();
             }
 
             @Override

@@ -269,6 +269,11 @@ class SelectLogin extends Component {
           this.state.dataSource.push({ cred_type: 'touchid', is_registered: true });
         }
     }    
+
+    if (this.state.dataSource.length > 0) {
+      this.state.dataSource.push({ cred_type: 'password', is_registered: true });
+    }
+
  
   }
 

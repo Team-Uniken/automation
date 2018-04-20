@@ -227,10 +227,9 @@ class TwoFactorAuthMachine extends Component {
         if (res.pArgs.response.ResponseData) {
           //  obj.stateNavigator.immediatelyResetRouteStack(obj.stateNavigator.getCurrentRoutes().splice(-1, 0));
 
-
           currentIndex = 0;
           challengeJson = res.pArgs.response.ResponseData;
-          if (saveChallengeJson == null) {
+          if (saveChallengeJson == null &&  challengeJson.chlng[0].chlng_name == 'checkuser') {
             saveChallengeJson = res.pArgs.response.ResponseData;
           }
           if (challengeJson.length == 0) {
@@ -410,6 +409,7 @@ class TwoFactorAuthMachine extends Component {
                                 chlngJson: challengeJson,
                                 chlngsCount: challengeJsonArr.length,
                                 currentIndex: 0,
+                                isTouchAvailable : this.isTouchIDPresent,
                                 screenId: 'AutoPassword'
                               }, title: 'AutoPassword'
                             }
@@ -427,6 +427,7 @@ class TwoFactorAuthMachine extends Component {
                                 nav: this.props.navigation,
                                 chlngJson: challengeJson,
                                 chlngsCount: challengeJson.length,
+                                isTouchAvailable : this.isTouchIDPresent,
                                 screenId: 'AutoPassword',
                                 currentIndex: 0,
                               }, title: 'AutoPassword'
@@ -559,7 +560,7 @@ class TwoFactorAuthMachine extends Component {
         this.isTouchIDPresent = true;    
       })
       .catch((error) => {
-        $this.isTouchIDPresent = false;
+        this.isTouchIDPresent = false;
         console.log('Handle rejected promise (' + error + ') here.');
       });
   }
@@ -605,8 +606,6 @@ class TwoFactorAuthMachine extends Component {
 
 
         if (nextChlngName === 'actcode') {
-
-
           Util.getUserDataSecure('actcode').then((actCode) =>{
             if(actCode){
               chlngJson1.chlng[0].chlng_resp[0].response = actCode;
@@ -628,6 +627,7 @@ class TwoFactorAuthMachine extends Component {
                     chlngJson,
                     chlngsCount: challengeJsonArr.length,
                     currentIndex: currentIndex,
+                    isTouchAvailable : this.isTouchIDPresent,
                     screenId: 'AutoPassword'
                   }, title: 'AutoPassword'
                 }
@@ -645,6 +645,7 @@ class TwoFactorAuthMachine extends Component {
                     nav: this.props.navigation,
                     chlngJson,
                     chlngsCount: challengeJsonArr.length,
+                    isTouchAvailable : this.isTouchIDPresent,
                     screenId: 'AutoPassword',
                     currentIndex: currentIndex,
                   }, title: 'AutoPassword'
@@ -723,7 +724,6 @@ class TwoFactorAuthMachine extends Component {
    * This method is called to show next challenge in challenge array on UI.
    * This method can also be called by triggering showNextChallenge event
    */
-
   showNextChallenge(args) {
     console.log('----- showNextChallenge jsonResponse ' + JSON.stringify(args));
     // alert(JSON.stringify(args));
@@ -759,6 +759,7 @@ class TwoFactorAuthMachine extends Component {
                       chlngJson: result.challenge,
                       chlngsCount: challengeJsonArr.length,
                       currentIndex: currentIndex,
+                      isTouchAvailable : this.isTouchIDPresent,
                       screenId: 'AutoPassword'
                     }, title: 'AutoPassword'
                   }
@@ -776,6 +777,7 @@ class TwoFactorAuthMachine extends Component {
                       nav: this.props.navigation,
                       chlngJson:result.challenge,
                       chlngsCount: challengeJsonArr.length,
+                      isTouchAvailable : this.isTouchIDPresent,
                       screenId: 'AutoPassword',
                       currentIndex: currentIndex,
                     }, title: 'AutoPassword'
@@ -822,6 +824,7 @@ class TwoFactorAuthMachine extends Component {
                     chlngJson: result.challenge,
                     chlngsCount: challengeJsonArr.length,
                     currentIndex: currentIndex,
+                    isTouchAvailable : this.isTouchIDPresent,
                     screenId: 'AutoPassword'
                   },
                   title: 'AutoPassword'
@@ -841,6 +844,7 @@ class TwoFactorAuthMachine extends Component {
                     chlngJson: result.challenge,
                     chlngsCount: challengeJsonArr.length,
                     screenId: 'AutoPassword',
+                    isTouchAvailable : this.isTouchIDPresent,
                     currentIndex: currentIndex,
                   }, title: 'AutoPassword'
                 }
@@ -1177,7 +1181,6 @@ class TwoFactorAuthMachine extends Component {
           touchCred: this.props.navigation.state.params.url.touchCred,
         }, title: this.props.navigation.state.params.url.screenId
       };
-
       return (this.getComponentByName(params, this.props.navigation))
     } else if ((sId == 'checkuser') || (sId == 'SelfRegister')) {
       //          currentIndex = 0;
@@ -1300,6 +1303,7 @@ class TwoFactorAuthMachine extends Component {
                 url: {                  
                   chlngJson,
                   screenId: 'AutoPassword',
+                  isTouchAvailable : this.isTouchIDPresent,
                   currentIndex: startIndex,
                 }, title: 'AutoPassword'
               }
@@ -1316,6 +1320,7 @@ class TwoFactorAuthMachine extends Component {
                   url: {
                     chlngJson,
                     screenId: 'AutoPassword',
+                    isTouchAvailable : this.isTouchIDPresent,
                     currentIndex: startIndex,
                   }, title: 'AutoPassword'
                 }
@@ -1572,7 +1577,12 @@ class TwoFactorAuthMachine extends Component {
    */
   callCheckChallenge() {
 
-    if (Main.isConnected) {
+    if (saveChallengeJson == null &&  challengeJson.chlng[0].chlng_name == 'checkuser') {
+      saveChallengeJson = challengeJson;
+    }
+
+    if (Main.isConnected) {     
+
       if (onCheckChallengeResponseSubscription) {
         onCheckChallengeResponseSubscription.remove();
         onCheckChallengeResponseSubscription = null;
