@@ -417,7 +417,7 @@ class TwoFactorAuthMachine extends Component {
                         ]
                       })
                       this.props.navigation.dispatch(showNextChallengefor)
-                    } else if ((nextChlngName === 'pass' && Platform.OS === "android" && Config.ENABLE_AUTO_PASSWORD === 'true')) {
+                    } else if ((nextChlngName === 'pass' && Platform.OS === "android" && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != challengeJson.chlng[0].challengeOperation && this.isTouchIDPresent == false)) {
                       const resetActionshowFirstChallenge = NavigationActions.reset({
                         index: 0,
                         actions: [
