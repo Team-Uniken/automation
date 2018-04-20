@@ -108,6 +108,7 @@ This method is called when the component will start to load
   isAndroidTouchAvailable() {
     Util.isAndroidTouchSensorAvailable()
       .then((success) => {
+        this.setState( { isPatternEnabled : false } );
         Events.trigger('showAndroidAuth');  
       })
       .catch((error) => {

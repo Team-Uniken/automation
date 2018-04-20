@@ -44,7 +44,7 @@ import Toast from 'react-native-simple-toast';
  */
 var obj;
 const LOGIN_TYPE_PER_ROW = 3;
-var isAutoPassword;
+var isAutoPassword = false;
 var isAutoPasswordPattern = false;
 //var userRef = null;
 
@@ -190,11 +190,12 @@ class SelectLogin extends Component {
               }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && !this.state.isRegistered && this.state.isAndroidPattern 
                         && isAutoPasswordPattern ){
                 this.doPatternLogin();
-              }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && !this.state.isAndroidPattern 
-                        &&  !this.state.isTouchIDPresent && !isAutoPassword)
-                this.state.dataSource.push({ cred_type: 'password', is_registered: true });
-              else if (Config.ENABLE_AUTO_PASSWORD === 'true' && !isAutoPassword )
-                this.state.dataSource.push({ cred_type: 'password', is_registered: true });
+              }
+              // else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && !this.state.isAndroidPattern 
+              //           &&  !this.state.isTouchIDPresent && !isAutoPassword)
+              //   this.state.dataSource.push({ cred_type: 'password', is_registered: true });
+              // else if (Config.ENABLE_AUTO_PASSWORD === 'true' && !isAutoPassword )
+              //   this.state.dataSource.push({ cred_type: 'password', is_registered: true });
             }
           }
         }
@@ -270,11 +271,9 @@ class SelectLogin extends Component {
         }
     }    
 
-    if (this.state.dataSource.length > 0) {
+    if (this.state.dataSource.length > 0 && !(isAutoPassword || isAutoPasswordPattern)) {
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
-
- 
   }
 
   isAndroidTouchAvailable() {
