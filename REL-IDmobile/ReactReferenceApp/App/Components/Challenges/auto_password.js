@@ -89,6 +89,7 @@ This method is called when the component will start to load
     else 
       this.isAndroidTouchAvailable();
   }
+
   authenticate() {
     TouchID.authenticate('Set up Touch ID to Log In')
       .then(success => {
@@ -98,10 +99,28 @@ This method is called when the component will start to load
       .catch(error => {
         console.log(error)
         //AlertIOS.alert(error.message);
-        if(error.name === 'LAErrorUserCancel')
-        this.gotoSetPasswordScreen();
-        else
-        this.authenticate();
+        if (error.name === 'LAErrorUserCancel' || error.name === "LAErrorUserFallback")
+          this.gotoSetPasswordScreen();
+        else if (error.name === 'RCTTouchIDUnknownError') {
+          Alert.alert(
+            'Error',
+            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+              text: 'OK',
+              onPress: () => {
+                // exit(0);
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
+
+        } else if (error.name === 'LAErrorAuthenticationFailed') {
+          thi.authenticate();
+          alert(error.message);
+        } else {
+          alert(error.message);
+        }
+
       });
   }
 

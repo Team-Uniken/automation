@@ -18,7 +18,7 @@ import Config from 'react-native-config';
 import Events from 'react-native-simple-events';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
-import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar } from 'react-native'
+import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar, Alert, } from 'react-native'
 const FBSDK = require('react-native-fbsdk');
 
 /*
@@ -443,20 +443,47 @@ class SelectLogin extends Component {
     TouchID.isSupported()
       .then(this.authenticate)
       .catch(error => {
-        passcodeAuth();
+        //passcodeAuth();
+        alert(('Touch ID is not enabled or supported'));
       });
     }else
       this.androidAuth();
   }
 
   authenticate() {
-    return TouchID.authenticate("Authenticate with Touch ID")
+    TouchID.authenticate("Authenticate with Touch ID")
       .then(success => {
         obj.onTouchIDVerificationDone();
       })
       .catch(error => {
         console.log(error)
-        AlertIOS.alert(error.message);
+
+        if (error.name === 'RCTTouchIDUnknownError') {
+          Alert.alert(
+            'Error',
+            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+              text: 'OK',
+              onPress: () => {
+                // exit(0);
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
+
+        } else if (error.name === "LAErrorUserFallback") {
+          if (isAutoPassword === false) {
+            this.setState({
+              showPasswordVerify: true,
+            });
+          } else {
+            this.authenticate();
+          }
+        }
+        else {
+          alert(error.message);
+        }
+
       });
   }
 

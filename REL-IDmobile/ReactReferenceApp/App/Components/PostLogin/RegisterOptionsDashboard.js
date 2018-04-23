@@ -841,7 +841,7 @@ This method is called when the component will start to load
   }
 
   authenticate() {
-    return TouchID.authenticate('Set up Touch ID to Log In')
+    TouchID.authenticate('Set up Touch ID to Log In')
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         obj.encrypytPasswdiOS();
@@ -849,10 +849,30 @@ This method is called when the component will start to load
       .catch(error => {
         console.log(error)
         AlertIOS.alert(error.message);
+        if (error.name === 'RCTTouchIDUnknownError') {
+          Alert.alert(
+            'Error',
+            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+              text: 'OK',
+              onPress: () => {
+                // exit(0);
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
+
+        } else if (error.name === "LAErrorUserFallback") {
+          this.authenticate();
+        }
+        else {
+          alert(error.message);
+        }
       });
   }
 
   passcodeAuth() {
+    alert(('Touch ID is not enabled or supported'));
   }
 
   encrypytPasswdiOS() {
