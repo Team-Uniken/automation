@@ -83,6 +83,7 @@ class SelectLogin extends Component {
     this.isTouchPresent = this.isTouchPresent.bind(this);
     this.isAndroidTouchAvailable = this.isAndroidTouchAvailable.bind(this);
     this.androidAuth = this.androidAuth.bind(this);
+    this.checkIfUserDefaultLoginAvailable = this.checkIfUserDefaultLoginAvailable.bind(this);
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
     AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
       if (userPrefs) {
@@ -123,6 +124,7 @@ class SelectLogin extends Component {
         this.state.isTouchIDPresent = true;
         this.fillAdditionalLoginOptions();
         this.setState( {isTouchIDPresent : true } );
+        this.checkIfUserDefaultLoginAvailable();
         }else{
           this.state.isTouchIDPresent = false;
           this.state.isRegistered = false;
@@ -177,37 +179,35 @@ class SelectLogin extends Component {
       }
     });
 
+    BackHandler.addEventListener('hardwareBackPress', function () {
+      if( this.state.showAndroidAuth )
+        this.setState({showAndroidAuth : false });   
+      return true;
+    }.bind(this));
+  }
+
+  checkIfUserDefaultLoginAvailable(){
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
       if (userPrefs) {
         try {
           userPrefs = JSON.parse(userPrefs);
           //this.userPrefs = userPrefs;
-          if (!userPrefs.defaultLogin ) {
+          if ( !userPrefs.defaultLogin ) {
             if (this.state.dataSource.length > 0 ) {
               if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && this.state.isTouchIDPresent 
-                          && isAutoPassword ){
+                          && isAutoPassword )
+                          {
                 this._clickHandler();
-              }else if(Config.ENABLE_AUTO_PASSWORD === 'true' && !this.state.isRegistered && this.state.isAndroidPattern 
+              } else if(Config.ENABLE_AUTO_PASSWORD === 'true' && !this.state.isRegistered && this.state.isAndroidPattern 
                         && isAutoPasswordPattern ){
                 this.doPatternLogin();
               }
-              // else if(Config.ENABLE_AUTO_PASSWORD === 'true' && this.state.isRegistered && !this.state.isAndroidPattern 
-              //           &&  !this.state.isTouchIDPresent && !isAutoPassword)
-              //   this.state.dataSource.push({ cred_type: 'password', is_registered: true });
-              // else if (Config.ENABLE_AUTO_PASSWORD === 'true' && !isAutoPassword )
-              //   this.state.dataSource.push({ cred_type: 'password', is_registered: true });
             }
           }
         }
         catch (e) { } 
       }
     });   
-
-    BackHandler.addEventListener('hardwareBackPress', function () {
-      if( this.state.showAndroidAuth )
-        this.setState({showAndroidAuth : false });   
-      return true;
-    }.bind(this));
   }
 
   //Facebook login code
@@ -281,10 +281,12 @@ class SelectLogin extends Component {
       .then((success) => {
         this.state.isTouchIDPresent = true;
         this.fillAdditionalLoginOptions();
-        this.setState( {isTouchIDPresent : true } );    
+        this.setState( {isTouchIDPresent : true } );   
+        this.checkIfUserDefaultLoginAvailable(); 
       })
       .catch((error) => {      
         console.log('Handle rejected promise (' + error + ') here.');
+        this.checkIfUserDefaultLoginAvailable();
       });
   }
 
