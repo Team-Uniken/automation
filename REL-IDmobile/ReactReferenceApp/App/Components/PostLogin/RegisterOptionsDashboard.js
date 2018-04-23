@@ -133,37 +133,55 @@ This method is called when the component will start to load
       this.isAndroidTouchAvailable();
 
       isAutoPassword = false;
-    AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-      if (userPrefs) {
-        try {
-         
-          if (userPrefs === 'true'){
-            isAutoPassword = true;
-          }else{
-            isAutoPassword = false;
-          }
-        }
-        catch (e) { }
-      }else{
-        isAutoPassword = false;
-      }
-    });
+      isAutoPasswordPattern = false;
+      // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+      //   if (userPrefs) {
+      //     try {
+          
+      //       if (userPrefs === 'true'){
+      //         isAutoPassword = true;
+      //       }else{
+      //         isAutoPassword = false;
+      //       }
+      //     }
+      //     catch (e) { }
+      //   }else{
+      //     isAutoPassword = false;
+      //   }
+      // });
 
-    AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
-      if (userPrefs) {
-        try {
-         
-          if (userPrefs === 'true'){
-            isAutoPasswordPattern = true;
-          }else{
-            isAutoPasswordPattern = false;
-          }
-        }
-        catch (e) { }
-      }else{
+      // AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
+      //   if (userPrefs) {
+      //     try {
+          
+      //       if (userPrefs === 'true'){
+      //         isAutoPasswordPattern = true;
+      //       }else{
+      //         isAutoPasswordPattern = false;
+      //       }
+      //     }
+      //     catch (e) { }
+      //   }else{
+      //     isAutoPasswordPattern = false;
+      //   }
+      // });
+      Util.getUserData("isAutoPassword").then((value) => {
+        if( value === "true" )
+          isAutoPassword = true;
+        else
+          isAutoPassword = false;
+      }).catch((reject)=>{
+            isAutoPassword = false;
+      }).done();
+
+    Util.getUserData("isAutoPasswordPattern").then((value) => {
+      if( value === "true" )
+        isAutoPasswordPattern = true;
+      else
         isAutoPasswordPattern = false;
-      }
-    });
+      }).catch((reject)=>{
+            isAutoPasswordPattern = false;
+      }).done();
 
     if (onGetAllChallengeStatusSubscription) {
       onGetAllChallengeStatusSubscription.remove();
@@ -533,7 +551,7 @@ This method is called when the component will start to load
     if(this.state.touchid == true && isAutoPassword == true ){
         //negative cases
     }else {
-      if(Platform.OS == 'android' && this.state.pattern && isAutoPassword == true){ 
+      if(Platform.OS == 'android' && this.state.pattern && ( isAutoPassword || isAutoPasswordPattern ) == true){ 
       }
       else data.push(Skin.text['0']['2'].credTypes['password']);
     }    

@@ -175,8 +175,10 @@ This method is called when the component will start to load
               if (value) {
                 try {
                   value = JSON.parse(value);
-                  AsyncStorage.setItem("isAutoPassword", 'true');
-                  AsyncStorage.setItem("isAutoPasswordPattern", 'true');
+                  Util.saveUserData("isAutoPassword", 'false');
+                  Util.saveUserData("isAutoPasswordPattern", 'true');
+                  // AsyncStorage.setItem("isAutoPassword", 'false');
+                  // AsyncStorage.setItem("isAutoPasswordPattern", 'true');
                 } catch (e) {
                   Events.trigger('hideLoader', true);
                   this.gotoSetPasswordScreen();
@@ -209,8 +211,10 @@ This method is called when the component will start to load
                 if (value) {
                   try {
                     value = JSON.parse(value);
-                    AsyncStorage.setItem("isAutoPassword", 'true');
-                    AsyncStorage.setItem("isAutoPasswordPattern", 'false');
+                    Util.saveUserData("isAutoPassword", 'true');
+                    Util.saveUserData("isAutoPasswordPattern", 'false');
+                    // AsyncStorage.setItem("isAutoPassword", 'true');
+                    // AsyncStorage.setItem("isAutoPasswordPattern", 'false');
                     Util.saveUserDataSecure("ERPasswd", value.RPasswd).then((result) => {  
                     }).done();
                   } catch (e) {

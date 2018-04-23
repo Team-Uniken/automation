@@ -30,6 +30,7 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
 import Skin from '../../Skin';
 import Main from '../Container/Main';
 import Web from '../../Scenes/Web';
+import Util from '../Utils/Util'
 var constant = require('../Utils/Constants');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
@@ -62,6 +63,7 @@ let onGetConfigSubscription;
 var styles = Skin.controlStyle;
 var securePortalUrl;
 var isAutoPassword;
+var isAutoPasswordPattern;
 
 const onGetAllChallengeStatusModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
 const onLogOffModuleEvt = new NativeEventEmitter(NativeModules.ReactRdnaModule);
@@ -127,29 +129,63 @@ class ControlPanel extends Component {
       onGetNotificationsSubscription.remove();
       onGetNotificationsSubscription = null;
     }
-
    
     isAutoPassword = false;
-    AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-      if (userPrefs) {
-        try {      
-          if (userPrefs=== 'true'){
-            isAutoPassword = false;
-          }else{
-            isAutoPassword = true;
-          }
-        }
-        catch (e) { }
-      }else{
+    isAutoPasswordPattern = false;
+    // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+    //   if (userPrefs) {
+    //     try {      
+    //       if (userPrefs=== 'true'){
+    //         isAutoPassword = false;
+    //       }else{
+    //         isAutoPassword = true;
+    //       }
+    //     }
+    //     catch (e) { }
+    //   }else{ 
+    //     isAutoPassword = true;
+    //   }
+    // });
+      Util.getUserData("isAutoPassword").then((value) => {
+      if( value === "true" )
         isAutoPassword = true;
-      }
-    });
+      else
+        isAutoPassword = false;
+      }).catch((reject)=>{
+            isAutoPassword = false;
+      }).done();
+
+      Util.getUserData("isAutoPasswordPattern").then((value) => {
+        if( value === "true" )
+          isAutoPasswordPattern = true;
+        else
+          isAutoPasswordPattern = false;
+      }).catch((reject)=>{
+          isAutoPasswordPattern = false;
+      }).done();
+
+    // AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
+    //   if (userPrefs) {
+    //     try {      
+    //       if (userPrefs=== 'true'){
+    //         isAutoPasswordPattern = false;
+    //       }else{
+    //         isAutoPasswordPattern = true;
+    //       }
+    //     }
+    //     catch (e) { }
+    //   }else{ 
+    //     isAutoPasswordPattern = true;
+    //   }
+    // });
+
 
     onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
       this.onGetNotifications.bind(this));
       
     Events.on('showNoticiationScreen', 'showNoticiationScreen', this.showNoticiationScreen);
   }
+
   componentDidMount() {
     Events.on('logOff', 'logOff', this.logOff);
     //This getAllChallenges call was only for updating menu options
@@ -888,7 +924,7 @@ class ControlPanel extends Component {
           }
 
           {
-            isAutoPassword &&
+           !( isAutoPassword || isAutoPasswordPattern ) &&
             [
               <MenuItem
             visibility={Config.CHANGEPASSWORD}

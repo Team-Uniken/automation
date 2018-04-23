@@ -104,6 +104,35 @@ class Util extends Component {
     });
   }
 
+
+  static saveUserData(key, data){
+    return new Promise(function (resolve, reject){
+        if( typeof key === "string" && data != null ){
+          AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ [key]: data }), null)
+              .then(resolve)
+              .catch(reject).done();
+        }else {
+          reject({ error : "Invalid Key" });
+        }
+    });
+  }
+
+  static getUserData(key){
+    return new Promise(function (resolve, reject) {
+      if(key && typeof key === "string"){ 
+          AsyncStorage.getItem(Main.dnaUserName).then( (value) =>{
+              if(value){
+                value = JSON.parse(value);
+                resolve(value[key]);
+              }else
+              reject({ error : "Invalid Key" });
+          }).catch(reject).done();
+      }else{
+        reject({ error : "Invalid Key" });
+      }
+    })
+  }
+
   static saveUserDataSecure(key, data) {
     return new Promise(function (resolve, reject) {
       if (typeof key === "string") {

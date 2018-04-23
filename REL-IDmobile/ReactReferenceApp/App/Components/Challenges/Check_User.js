@@ -27,6 +27,7 @@ import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackH
 import Skin from '../../Skin';
 import Main from '../Container/Main';
 import Load from '../../Scenes/Load';
+import Util from '../Utils/Util'
 import MainActivation from '../Container/MainActivation';
 const constant = require('../Utils/Constants');
 /*
@@ -44,6 +45,7 @@ let responseJson;
 let obj;
 let savedUserName;
 var isAutoPassword;
+var isAutoPasswordPattern;
 
 
 class UserLogin extends Component {
@@ -75,20 +77,48 @@ class UserLogin extends Component {
     constant.USER_T0 = "NO";
 //    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 
-AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-  if (userPrefs) {
-    try {  
-      if (userPrefs=== 'true'){
-        isAutoPassword = true;
-      }else{
-        isAutoPassword = false;
-      }
-    }
-    catch (e) { }
-  }else{
-    isAutoPassword = false;
-  }
-});
+    // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+    //   if (userPrefs) {
+    //     try {  
+    //       if (userPrefs=== 'true'){
+    //         isAutoPassword = true;
+    //       }else{
+    //         isAutoPassword = false;
+    //       }
+    //     }
+    //     catch (e) { }
+    //   }else{
+    //     isAutoPassword = false;
+    //   }
+    // });
+
+    Util.getUserDataSecure('actcode').then((actCode) =>{
+      if(actCode){
+        Constants.USER_T0 = "YES";
+        currChallenge.chlng_resp[0].response = actCode;
+        return { show: false, challenge: currChallenge };
+        }else{
+          this.navigateToRegistration();
+        }
+    });
+
+    Util.getUserData("isAutoPassword").then((value) => {
+        if( value === "true" )
+          isAutoPassword = true;
+        else
+          isAutoPassword = false;
+    }).catch((reject)=>{
+          isAutoPassword = false;
+    }).done();
+
+    Util.getUserData("isAutoPasswordPattern").then((value) => {
+      if( value === "true" )
+        isAutoPasswordPattern = true;
+      else
+        isAutoPasswordPattern = false;
+    }).catch((reject)=>{
+          isAutoPasswordPattern = false;
+    }).done();
 
     AsyncStorage.getItem('rememberuser').then((value) => {
       if (value == undefined || value == null || value === 'empty') {
@@ -160,16 +190,15 @@ AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
                   alert("Please enable Touch ID from Setting");
                 });
               }else{
-                Finger.isSensorAvailable()
-                .then((isAvailable) => {
-                  this.login();
-                }) 
-                .catch(error => {
-                  alert("Please enable Touch ID from Setting");
-                  //alert('Sensor is not available');
-                });
-                //android touch id and pattern changes need to done
-                          
+                  Finger.isSensorAvailable()
+                  .then((isAvailable) => {
+                    this.login();
+                  }) 
+                  .catch(error => {
+                    alert("Please enable Touch ID from Setting");
+                    //alert('Sensor is not available');
+                  });                
+                //android touch id and pattern changes need to done                          
               }
             } else {
               this.login();

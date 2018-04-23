@@ -106,7 +106,7 @@ class Load extends Component {
       // d_text_opac: new Animated.Value(0),
       // relid_opac_val: new Animated.Value(0),
       steps: new Animated.Value(0),
-      value: 0,
+      value: 0, 
       spinnerIsVisible: true,
       spinnerSize: 50,
       spinnnerType: 'ThreeBounce',
@@ -191,6 +191,14 @@ class Load extends Component {
     obj1 = this;
     Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
     console.log('test logs');
+    AsyncStorage.getItem("userId").then((value) => {
+      if (value) {
+        if (value == "empty") {
+        } else {
+          Main.dnaUserName = value;
+        }
+      }
+    }).done();
     if (Platform.OS === 'ios') {
       PushNotificationIOS.addEventListener('register',this.registerToken.bind(this));
       PushNotificationIOS.addEventListener('notification', this._onNotification);

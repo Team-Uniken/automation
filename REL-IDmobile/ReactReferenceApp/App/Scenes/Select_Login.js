@@ -85,37 +85,55 @@ class SelectLogin extends Component {
     this.androidAuth = this.androidAuth.bind(this);
     this.checkIfUserDefaultLoginAvailable = this.checkIfUserDefaultLoginAvailable.bind(this);
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
-    AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-      if (userPrefs) {
-        try {  
-          if (userPrefs=== 'true'){
-            isAutoPassword = true;
-          }else{
-            isAutoPassword = false;
-          }
-        }
-        catch (e) { }
-      }else{
-        isAutoPassword = false;
-        Events.trigger("forgotPassowrd");
-      }
-    });
+    // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
+    //   if (userPrefs) {
+    //     try {  
+    //       if (userPrefs=== 'true'){
+    //         isAutoPassword = true;
+    //       }else{
+    //         isAutoPassword = false;
+    //       }
+    //     }
+    //     catch (e) { }
+    //   }else{
+    //     isAutoPassword = false;
+    //     Events.trigger("forgotPassowrd");
+    //   }
+    // });
 
-    AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
-      if (userPrefs) {
-        try {
+    // AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
+    //   if (userPrefs) {
+    //     try {
          
-          if (userPrefs === 'true'){
-            isAutoPasswordPattern = true;
-          }else{
-            isAutoPasswordPattern = false;
-          }
-        }
-        catch (e) { }
-      }else{
-        isAutoPasswordPattern = false;
-      }
-    });
+    //       if (userPrefs === 'true'){
+    //         isAutoPasswordPattern = true;
+    //       }else{
+    //         isAutoPasswordPattern = false;
+    //       }
+    //     }
+    //     catch (e) { }
+    //   }else{
+    //     isAutoPasswordPattern = false;
+    //   }
+    // });
+
+    Util.getUserData("isAutoPassword").then((value) => {
+      if( value === "true" )
+        isAutoPassword = true;
+      else
+        isAutoPassword = false;
+    }).catch((reject)=>{
+          isAutoPassword = false;
+    }).done();
+
+  Util.getUserData("isAutoPasswordPattern").then((value) => {
+    if( value === "true" )
+      isAutoPasswordPattern = true;
+    else
+      isAutoPasswordPattern = false;
+    }).catch((reject)=>{
+          isAutoPasswordPattern = false;
+    }).done();
 
     this.checkForRegisteredCredsAndShow();
     if (Platform.OS === 'ios') {
