@@ -1291,7 +1291,14 @@ class TwoFactorAuthMachine extends Component {
         
       } 
       else {
-        if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){
+
+        if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE == chlngJson.chlng[startIndex].challengeOperation){
+          Util.getUserData("isAutoPassword").then((value) => {
+            this.goToNextChallenge(chlngJson,startIndex,true);
+          }).catch((reject)=>{
+               this.initiateForgotPasswordFlow();
+          }).done();
+        } else if(firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE!=chlngJson.chlng[startIndex].challengeOperation){
 
           if(this.isTouchIDPresent == true){
               //this.authenticate(chlngJson,startIndex,true);
