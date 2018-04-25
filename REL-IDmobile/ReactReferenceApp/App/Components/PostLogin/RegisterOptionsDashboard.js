@@ -134,37 +134,7 @@ This method is called when the component will start to load
 
       isAutoPassword = false;
       isAutoPasswordPattern = false;
-      // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-      //   if (userPrefs) {
-      //     try {
-          
-      //       if (userPrefs === 'true'){
-      //         isAutoPassword = true;
-      //       }else{
-      //         isAutoPassword = false;
-      //       }
-      //     }
-      //     catch (e) { }
-      //   }else{
-      //     isAutoPassword = false;
-      //   }
-      // });
-
-      // AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
-      //   if (userPrefs) {
-      //     try {
-          
-      //       if (userPrefs === 'true'){
-      //         isAutoPasswordPattern = true;
-      //       }else{
-      //         isAutoPasswordPattern = false;
-      //       }
-      //     }
-      //     catch (e) { }
-      //   }else{
-      //     isAutoPasswordPattern = false;
-      //   }
-      // });
+     
       Util.getUserData("isAutoPassword").then((value) => {
         if( value === "true" )
           isAutoPassword = true;

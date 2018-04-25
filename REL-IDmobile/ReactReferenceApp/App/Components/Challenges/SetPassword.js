@@ -106,6 +106,7 @@ This method is called when the component will start to load
             Util.saveUserDataSecure("RPasswd", pw).done();
             let responseJson = this.props.url.chlngJson;
             responseJson.chlng_resp[0].response = pw;
+            AsyncStorage.mergeItem(Main.dnaUserName, JSON.stringify({ ERPasswd: "empty" }), null);
             dismissKeyboard();
             //AsyncStorage.setItem("isAutoPassword", 'false'); 
             Util.saveUserData("isAutoPassword", 'false');

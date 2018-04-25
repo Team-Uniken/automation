@@ -132,20 +132,7 @@ class ControlPanel extends Component {
    
     isAutoPassword = false;
     isAutoPasswordPattern = false;
-    // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-    //   if (userPrefs) {
-    //     try {      
-    //       if (userPrefs=== 'true'){
-    //         isAutoPassword = false;
-    //       }else{
-    //         isAutoPassword = true;
-    //       }
-    //     }
-    //     catch (e) { }
-    //   }else{ 
-    //     isAutoPassword = true;
-    //   }
-    // });
+   
       Util.getUserData("isAutoPassword").then((value) => {
       if( value === "true" )
         isAutoPassword = true;
@@ -163,22 +150,6 @@ class ControlPanel extends Component {
       }).catch((reject)=>{
           isAutoPasswordPattern = false;
       }).done();
-
-    // AsyncStorage.getItem('isAutoPasswordPattern').then((userPrefs) => {
-    //   if (userPrefs) {
-    //     try {      
-    //       if (userPrefs=== 'true'){
-    //         isAutoPasswordPattern = false;
-    //       }else{
-    //         isAutoPasswordPattern = true;
-    //       }
-    //     }
-    //     catch (e) { }
-    //   }else{ 
-    //     isAutoPasswordPattern = true;
-    //   }
-    // });
-
 
     onGetNotificationsSubscription = onGetNotificationsModuleEvt.addListener('onGetNotifications',
       this.onGetNotifications.bind(this));
