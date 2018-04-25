@@ -48,7 +48,7 @@ var responseJson;
 
 
 
-class Register extends Component {
+class RegisterOld extends Component {
 
   constructor(props) {
     super(props);
@@ -512,5 +512,5 @@ class Register extends Component {
   }
 }
 
-module.exports = Register_Old;
+module.exports = RegisterOld;
 

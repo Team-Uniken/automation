@@ -45,12 +45,12 @@ import Main from '../Container/Main';
 
 // SECURITY SCENES
 import SelfRegister from '../../Scenes/Self_Register';
+import SelfRegisterACTCODE from '../../Scenes/Self_Register_old';
 import Activation from '../Challenges/Activation_Code';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
 import AutoPassword from '../Challenges/auto_password';
 import Forgot_Password from '../Challenges/Forgot_Password';
-import Otp from '../Challenges/Activation_Code';
 import QuestionSet from '../Challenges/SetQuestion';
 import QuestionVerification from '../Challenges/Question_Verification';
 import UserLogin from '../Challenges/Check_User';
@@ -385,7 +385,7 @@ class TwoFactorAuthMachine extends Component {
                     //                    },
                     //                  });
 
-                    if (nextChlngName === 'actcode') {
+                    if (nextChlngName === 'actcode' && Config.ENABLE_SILENT_ACTIVATION === 'true') {
                       this.navigateToRegistration();
                       // Util.getUserDataSecure('actcode').then((actCode) => {
                       //   if (actCode) {
@@ -576,7 +576,7 @@ class TwoFactorAuthMachine extends Component {
         //          });
 
 
-        if (nextChlngName === 'actcode') {
+        if (nextChlngName === 'actcode' && Config.ENABLE_SILENT_ACTIVATION === 'true') {
           Util.getUserDataSecure('actcode').then((actCode) => {
             if (actCode) {
               chlngJson1.chlng[0].chlng_resp[0].response = actCode;
@@ -637,7 +637,7 @@ class TwoFactorAuthMachine extends Component {
           if (name != null)
             AsyncStorage.setItem("devname", name);
           return { show: false, challenge: currChallenge };
-        } else if (currChallenge.chlng_name === 'actcode') {
+        } else if (currChallenge.chlng_name === 'actcode' && Config.ENABLE_SILENT_ACTIVATION === 'true') {
 
           Util.getUserDataSecure('actcode').then((actCode) => {
             if (actCode) {
@@ -819,12 +819,7 @@ class TwoFactorAuthMachine extends Component {
     }
   }
 
-
-
-
-
   goToNextChallenge(url) {
-
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -837,8 +832,6 @@ class TwoFactorAuthMachine extends Component {
       ]
     })
     this.props.navigation.dispatch(resetAction);
-
-
   }
 
   /* goToNextChallenge(result,index,isFirstChallenge){
@@ -1071,7 +1064,10 @@ class TwoFactorAuthMachine extends Component {
     }
     else if (id === 'SelfRegister') {
       stepdone = false;
-      return (<SelfRegister navigator={nav} url={route.url} title={route.title} />);
+      if(Config.ENABLE_SILENT_ACTIVATION === 'true')
+        return (<SelfRegister navigator={nav} url={route.url} title={route.title} />);
+      else 
+        return (<SelfRegisterACTCODE navigator={nav} url={route.url} title={route.title} />);
     }
     else if (id === 'actcode') {
       stepdone = false;
@@ -1225,13 +1221,11 @@ class TwoFactorAuthMachine extends Component {
       const firstChlngName = chlngJson.chlng[startIndex].chlng_name;
       console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
       //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 1));
-
+ 
       if (firstChlngName === 'tbacred' || firstChlngName === 'devbind'
         || firstChlngName === 'devname') {
         this.showFirstChallenge(chlngJson, startIndex + 1);
-      } else if (firstChlngName === 'actcode') {
-
-
+      } else if (firstChlngName === 'actcode' && Config.ENABLE_SILENT_ACTIVATION === 'true') {
         Util.getUserDataSecure('actcode').then((actCode) => {
           if (actCode) {
             chlngJson.chlng[startIndex].chlng_resp[0].response = actCode;
