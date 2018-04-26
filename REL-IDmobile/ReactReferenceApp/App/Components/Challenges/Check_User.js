@@ -44,8 +44,6 @@ import { NavigationActions } from 'react-navigation';
 let responseJson;
 let obj;
 let savedUserName;
-var isAutoPassword;
-var isAutoPasswordPattern;
 
 
 class UserLogin extends Component {
@@ -77,48 +75,6 @@ class UserLogin extends Component {
     constant.USER_T0 = "NO";
 //    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
 
-    // AsyncStorage.getItem('isAutoPassword').then((userPrefs) => {
-    //   if (userPrefs) {
-    //     try {  
-    //       if (userPrefs=== 'true'){
-    //         isAutoPassword = true;
-    //       }else{
-    //         isAutoPassword = false;
-    //       }
-    //     }
-    //     catch (e) { }
-    //   }else{
-    //     isAutoPassword = false;
-    //   }
-    // });
-
-    Util.getUserDataSecure('actcode').then((actCode) =>{
-      if(actCode){
-        Constants.USER_T0 = "YES";
-        currChallenge.chlng_resp[0].response = actCode;
-        return { show: false, challenge: currChallenge };
-        }else{
-          this.navigateToRegistration();
-        }
-    });
-
-    Util.getUserData("isAutoPassword").then((value) => {
-        if( value === "true" )
-          isAutoPassword = true;
-        else
-          isAutoPassword = false;
-    }).catch((reject)=>{
-          isAutoPassword = false;
-    }).done();
-
-    Util.getUserData("isAutoPasswordPattern").then((value) => {
-      if( value === "true" )
-        isAutoPasswordPattern = true;
-      else
-        isAutoPasswordPattern = false;
-    }).catch((reject)=>{
-          isAutoPasswordPattern = false;
-    }).done();
 
     AsyncStorage.getItem('rememberuser').then((value) => {
       if (value == undefined || value == null || value === 'empty') {
@@ -176,7 +132,7 @@ class UserLogin extends Component {
           try {
             value = JSON.parse(value);
             this.state.rpass = value.RPasswd;
-            if (value.ERPasswd && value.ERPasswd !== "empty" && isAutoPassword ) {
+            if (value.ERPasswd && value.ERPasswd !== "empty" && value.isAutoPassword ==='true' ) {
               if (Platform.OS === 'ios') {
               TouchID.isSupported()
                 .then((supported) => {
