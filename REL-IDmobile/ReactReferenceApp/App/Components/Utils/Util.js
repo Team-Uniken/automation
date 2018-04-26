@@ -119,7 +119,7 @@ class Util extends Component {
 
   static getUserData(key){
     return new Promise(function (resolve, reject) {
-      if(key && typeof key === "string"){ 
+      if( key && typeof key === "string" && Main.dnaUserName != "" && Main.dnaUserName != undefined ) { 
           AsyncStorage.getItem(Main.dnaUserName).then( (value) =>{
               if(value){
                 value = JSON.parse(value);
