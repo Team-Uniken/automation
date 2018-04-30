@@ -68,6 +68,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     private HashMap<Integer,Callback> callbackHashMap = new HashMap<>();
     private final int ERROR_HEALTH_CHECK_FAILED = 1000;
     AlertDialog alertDialog;
+    boolean isResumeSuccess =true;
 
     public ReactRdnaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -182,6 +183,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onPauseRuntime(final String rdnaStatusPause) {
+                isResumeSuccess = false;
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -199,6 +201,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onResumeRuntime(final String status) {
+                isResumeSuccess =true;
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -234,7 +237,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             @Override
             public int onCheckChallengeResponseStatus(final String rdnaStatusCheckChallengeResponse) {
                 finishTime = System.currentTimeMillis();
-                onSdkLogPrintRequest(RDNA.RDNALoggingLevel.RDNA_LOG_VERBOSE, "TIMER to checkChallenge - "+(finishTime - startTime));
+              //  onSdkLogPrintRequest(RDNA.RDNALoggingLevel.RDNA_LOG_VERBOSE, "TIMER to checkChallenge - "+(finishTime - startTime));
                 //Logger.d(TAG, "-------- onCheckChallengeResponseStatus " + rdnaStatusCheckChallengeResponse);
                 Runnable runnable = new Runnable() {
                     @Override
@@ -510,8 +513,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onSdkLogPrintRequest(RDNA.RDNALoggingLevel rdnaLoggingLevel,final String s) {
-                if(s.contains("TIMER to"))
-                    Log.e("RDNA-CORE",s);
+                Log.e("RDNA-CORE",rdnaLoggingLevel.name()+ " : "+s);
                 return 0;
             }
 
@@ -818,10 +820,19 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     public void pauseRuntime(Callback callback){
 
         WritableMap errorMap = Arguments.createMap();
-        if(rdnaObj != null) {
+        if(rdnaObj != null && isResumeSuccess) {
+            
             String state = rdnaObj.pauseRuntime();
-            errorMap.putInt("error", 0);
-            errorMap.putString("response", state);
+            try {
+                JSONObject jsonObject = new JSONObject(state);
+                errorMap.putInt("error", jsonObject.optInt("error"));
+                errorMap.putString("response", jsonObject.optString("response"));
+            } catch (JSONException e) {
+               // e.printStackTrace();
+                errorMap.putInt("error", 1);
+                errorMap.putString("response", "");
+            }
+
         } else {
             errorMap.putInt("error", 1);
             errorMap.putString("response", "");
@@ -843,12 +854,14 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
                 if(rdnaObj != null) {
                     try {
-                        JSONObject jsonObject = new JSONObject(state);
-                        RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(jsonObject.getString("response"), callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
+                       // JSONObject jsonObject = new JSONObject(state);
+                        RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(state, callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
                         rdnaObj = rdnaStatus.result;
                         errorMap.putInt("error", rdnaStatus.errorCode);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         //e.printStackTrace();
+                        errorMap.putInt("error", 1);
+
                     }
 
                 } else {
