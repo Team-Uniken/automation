@@ -68,7 +68,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     private HashMap<Integer,Callback> callbackHashMap = new HashMap<>();
     private final int ERROR_HEALTH_CHECK_FAILED = 1000;
     AlertDialog alertDialog;
-    boolean isResumeSuccess =true;
 
     public ReactRdnaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -183,7 +182,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onPauseRuntime(final String rdnaStatusPause) {
-                isResumeSuccess = false;
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -201,7 +199,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onResumeRuntime(final String status) {
-                isResumeSuccess =true;
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -822,7 +819,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     public void pauseRuntime(Callback callback){
 
         WritableMap errorMap = Arguments.createMap();
-        if(rdnaObj != null && isResumeSuccess) {
+        if(rdnaObj != null ) {
 
             String state = rdnaObj.pauseRuntime();
             try {
@@ -851,7 +848,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void resumeRuntime(final String state,final String proxySettings,final Callback callback){
-        if(!isResumeSuccess) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -880,7 +876,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                     callback.invoke(writableArray);
                 }
             }).start();
-        }
     }
 
     @ReactMethod
