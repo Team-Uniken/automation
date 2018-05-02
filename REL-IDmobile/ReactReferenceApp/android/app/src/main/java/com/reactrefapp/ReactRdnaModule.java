@@ -628,14 +628,16 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void resetChallenge( Callback callback){
-        int error = rdnaObj.resetChallenge();
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+        if(rdnaObj!=null) {
+            int error = rdnaObj.resetChallenge();
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+            callback.invoke(writableArray);
+        }
     }
 
     @ReactMethod
@@ -821,12 +823,15 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         WritableMap errorMap = Arguments.createMap();
         if(rdnaObj != null && isResumeSuccess) {
-            
+
             String state = rdnaObj.pauseRuntime();
             try {
                 JSONObject jsonObject = new JSONObject(state);
-                errorMap.putInt("error", jsonObject.optInt("error"));
+                int error = jsonObject.optInt("error");
+                errorMap.putInt("error",error);
                 errorMap.putString("response", jsonObject.optString("response"));
+                if(error==0)
+                    rdnaObj= null;
             } catch (JSONException e) {
                // e.printStackTrace();
                 errorMap.putInt("error", 1);
@@ -846,16 +851,17 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void resumeRuntime(final String state,final String proxySettings,final Callback callback){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        if(!isResumeSuccess) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
 
-                WritableMap errorMap = Arguments.createMap();
+                    WritableMap errorMap = Arguments.createMap();
 
-                if(rdnaObj != null) {
+//                if(rdnaObj != null) {
                     try {
-                       // JSONObject jsonObject = new JSONObject(state);
-                        RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(state, callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
+                        // JSONObject jsonObject = new JSONObject(state);
+                        RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.resumeRuntime(state, callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
                         rdnaObj = rdnaStatus.result;
                         errorMap.putInt("error", rdnaStatus.errorCode);
                     } catch (Exception e) {
@@ -864,16 +870,17 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
                     }
 
-                } else {
-                    errorMap.putInt("error", 1);
+//                } else {
+//                    errorMap.putInt("error", 1);
+//                }
+
+                    WritableArray writableArray = Arguments.createArray();
+                    writableArray.pushMap(errorMap);
+
+                    callback.invoke(writableArray);
                 }
-
-                WritableArray writableArray = Arguments.createArray();
-                writableArray.pushMap(errorMap);
-
-                callback.invoke(writableArray);
-            }
-        }).start();
+            }).start();
+        }
     }
 
     @ReactMethod
@@ -1009,11 +1016,13 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 //        else if(scope.equals("RDNA_PRIVACY_SCOPE_SESSION")){
 //            privacyScope = RDNA.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_SESSION;
 //        }
+        WritableMap statusMap = Arguments.createMap();
 
-        byte[] base64decodedData = null;
-        if(data!=null && data.length() > 0){
-            base64decodedData = Base64.decode(data,Base64.DEFAULT);
-        }
+        if(rdnaObj != null) {
+          byte[] base64decodedData = null;
+          if(data!=null && data.length() > 0){
+               base64decodedData = Base64.decode(data,Base64.DEFAULT);
+          }
 
         /*if(cipherSpecs == null)
             cipherSpecs = Constants.CYPHER_SPEC;
@@ -1024,8 +1033,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             privacyScope = RDNA.RDNAPrivacyScope.valueOf(scope);*/
 
         RDNA.RDNAStatus<byte[]> status=rdnaObj.decryptDataPacket(scope, cipherSpecs, salt!=null?salt.getBytes():null, base64decodedData);
-        WritableMap statusMap = Arguments.createMap();
-        if(rdnaObj != null) {
+
             int error = status.errorCode;
             statusMap.putInt("error", error);
             if(status.errorCode == 0 && status.result!=null) {
