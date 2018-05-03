@@ -13,12 +13,12 @@ import ReactNative from 'react-native';
 import Config from 'react-native-config';
 
 /* 
- Required for this js
+ Required for this js 
  */
 import Events from 'react-native-simple-events';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
-import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar, Alert, } from 'react-native'
+import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar, Alert, AppState } from 'react-native'
 const FBSDK = require('react-native-fbsdk');
 
 /*
@@ -85,6 +85,7 @@ class SelectLogin extends Component {
     this.androidAuth = this.androidAuth.bind(this);
     this.checkIfUserDefaultLoginAvailable = this.checkIfUserDefaultLoginAvailable.bind(this);
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
   
 
     Util.getUserData("isAutoPassword").then((value) => {
@@ -167,11 +168,38 @@ class SelectLogin extends Component {
       }
     });
 
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener('change', this._handleAppStateChange);
+
     BackHandler.addEventListener('hardwareBackPress', function () {
       if( this.state.showAndroidAuth )
-        this.setState({showAndroidAuth : false });   
+        this.setState({ showAndroidAuth : false });   
       return true;
     }.bind(this));
+  }
+
+      /*
+    This is life cycle method of the react native component.
+    This method is called when app state get change like pause, resume
+  */
+  _handleAppStateChange(currentAppState) {
+    console.log('_handleAppStateChange = ' + currentAppState);
+    console.log(currentAppState);
+
+    if (currentAppState == 'background') {
+      console.log('App State Change background:');
+      if (Config.ENABLE_PAUSE === "true") {
+        
+      }
+    } else if (currentAppState == 'active') {
+      console.log('App State Change active:');
+      if (Config.ENABLE_PAUSE === "true") {
+        if( this.state.showAndroidAuth )
+          this.androidAuth();
+      }
+    } else if (currentAppState === 'inactive') {
+      console.log('App State Change Inactive');
+    }
   }
 
   checkIfUserDefaultLoginAvailable(){
@@ -264,7 +292,7 @@ class SelectLogin extends Component {
     }
   }
 
-  isAndroidTouchAvailable() {
+  isAndroidTouchAvailable() { 
     Util.isAndroidTouchSensorAvailable()
       .then((success) => {
         this.state.isTouchIDPresent = true;
@@ -283,7 +311,7 @@ class SelectLogin extends Component {
     Util.androidTouchAuth()
       .then((success) => {
         obj.onTouchIDVerificationDone();
-        this.setState({showAndroidAuth : false });    
+          this.setState({showAndroidAuth : false });    
       })
       .catch((error) => {
         this.setState({showAndroidAuth : false });    
@@ -625,7 +653,7 @@ class SelectLogin extends Component {
               />
             </View>
           </View>
-        {this.state.isTouchIDPresent && this.state.showAndroidAuth && <AndroidAuth/>}
+        {this.state.isTouchIDPresent && this.state.showAndroidAuth && <AndroidAuth msg = "Authenticate with Touch ID"/>}
         </MainActivation>
       );
     }
