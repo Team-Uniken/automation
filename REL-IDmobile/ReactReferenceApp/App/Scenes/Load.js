@@ -114,7 +114,6 @@ class Load extends Component {
     };
 
     this.closeStateMachine = this.closeStateMachine.bind(this);
-    Main.isApiRunning = false;
     this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
   openRoute(route) {
@@ -731,10 +730,10 @@ class Load extends Component {
     if (currentAppState == 'background') {
       console.log('App State Change background:');
       if (Config.ENABLE_PAUSE === "true") {
-        if (Main.isApiRunning == false) {
           ReactRdna.pauseRuntime((response) => {
             if (response) {
               if (response[0].error == 0) {
+                Events.trigger("showLoader", true);
                 // Main.isPaused = true;
                 //AsyncStorage.setItem("savedContext", response[0].response);
                 global.savedContext = response[0].response;
@@ -744,7 +743,6 @@ class Load extends Component {
               console.log('No response.');
             }
           });
-        }
       }
     } else if (currentAppState == 'active') {
       console.log('App State Change active:');
@@ -754,6 +752,8 @@ class Load extends Component {
         if (global.savedContext != null && global.savedContext != undefined) {
           ReactRdna.resumeRuntime(global.savedContext, null, (response) => {
             if (response) {
+              if (response[0].error == 0) {
+              }
               //Main.isPaused = false
               console.log('Immediate response is ' + response[0].error);
             } else {

@@ -86,8 +86,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 519
-        versionName "5.1.9"
+        versionCode 5110
+        versionName "5.1.10"
 
         packagingOptions {
             exclude '/lib/mips64/**'

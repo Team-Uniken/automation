@@ -17,11 +17,12 @@ import ReactNative from 'react-native';
  */
 import Modal from 'react-native-simple-modal';
 import Events from 'react-native-simple-events';
-import { StatusBar, View, Image, Text, Platform, ScrollView, TouchableHighlight, InteractionManager, BackHandler, TouchableWithoutFeedback, StyleSheet, TextInput, AsyncStorage, DeviceEventEmitter, NetInfo, } from 'react-native'
+import Config from 'react-native-config';
+import { StatusBar, View, Image, Text, Platform, ScrollView, TouchableHighlight, InteractionManager, BackHandler, TouchableWithoutFeedback, StyleSheet, TextInput, AsyncStorage, DeviceEventEmitter, NetInfo, AppState} from 'react-native'
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 
 /*
- Use in this js
+ Use in this js 
  */
 import Skin from '../../Skin';
 import Main from './Main';
@@ -72,6 +73,7 @@ class MainActivation extends Component {
     this.hideAndroidAuth = this.hideAndroidAuth.bind(this);
     this.androidAuth = this.androidAuth.bind(this);
     this.doPatternSet = this.doPatternSet.bind(this);
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
     
     this.onNotificationAlertModalDismissed = this.onNotificationAlertModalDismissed.bind(this);
     this.onNotificationAlertModalOk = this.onNotificationAlertModalOk.bind(this);
@@ -122,6 +124,9 @@ class MainActivation extends Component {
     Events.on('showAndroidAuth','showAndroidAuth',this.showAndroidAuth);
     Events.on('hideAndroidAuth','hideAndroidAuth',this.hideAndroidAuth);
     Events.on('doPatternSet','doPatternSet',this.doPatternSet);   
+
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   componentWillUnmount() {
@@ -157,6 +162,7 @@ class MainActivation extends Component {
       .then((success) => {
         this.setState({showAndroidTouch : false });   
         Events.trigger('showAutoPasswordCompleted'); 
+        
       })
       .catch((error) => {
         if( String(error) === 'LOCKED_OUT' ){
@@ -189,6 +195,30 @@ class MainActivation extends Component {
     Events.trigger('onPatternSetCompleted'); 
     //Events.trigger('showAutoPasswordCompleted', { resultValue: args.resultValue, indexValue: args.indexValue, firstChallengeStatus : args.firstChallengeStatus} ); 
   }
+
+          /*
+    This is life cycle method of the react native component.
+    This method is called when app state get change like pause, resume
+  */
+ _handleAppStateChange(currentAppState) {
+  console.log('_handleAppStateChange = ' + currentAppState);
+  console.log(currentAppState);
+
+  if (currentAppState == 'background') {
+    console.log('App State Change background:');
+    if (Config.ENABLE_PAUSE === "true") {
+      
+    }
+  } else if (currentAppState == 'active') {
+    console.log('App State Change active:');
+    if (Config.ENABLE_PAUSE === "true") {
+      if( this.state.showAndroidTouch )
+        this.androidAuth();
+    }
+  } else if (currentAppState === 'inactive') {
+    console.log('App State Change Inactive');
+  }
+}
 
   showNotificationAlertModal(args) {
         var msg = args && args.msg ? args.msg : "";   

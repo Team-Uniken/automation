@@ -22,7 +22,7 @@ export default class AndroidTouch extends Component {
                     source={require('../../img/imgFingerPrint.png')} />
                 <View style={Skin.layout0.wrap.connectionTypeContainer}>
                     <Text style={Skin.layout0.wrap.connectionType}>
-                            Set up TouchID to Log In
+                            {this.props.msg != undefined ? this.props.msg : "Set up TouchID to Log In" }
                     </Text>
                 </View>
             </View>

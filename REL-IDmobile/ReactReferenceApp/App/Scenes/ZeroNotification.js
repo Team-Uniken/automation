@@ -1266,7 +1266,7 @@ export default class NotificationMgmtScene extends Component {
       <MainActivation>
     <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
-      <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+      <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR, marginBottom : Platform.OS == 'android' ? 30 : 0 }}>
 
         <ListView
           refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />
@@ -1276,8 +1276,6 @@ export default class NotificationMgmtScene extends Component {
           dataSource={this.state.dataSource}
           removeClippedSubviews={false}
           renderRow={this.renderRow} />
-
-
       </View>
       {listViewProportion != 1 &&
         this._renderMessage()}
