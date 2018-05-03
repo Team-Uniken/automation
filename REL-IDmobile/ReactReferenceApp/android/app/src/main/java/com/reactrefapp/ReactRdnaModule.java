@@ -67,7 +67,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     private String TAG = "ReactRdnaModule";
     private HashMap<Integer,Callback> callbackHashMap = new HashMap<>();
     private final int ERROR_HEALTH_CHECK_FAILED = 1000;
-    AlertDialog alertDialog;
+    AlertDialog alertDialog = null;
+    boolean isResumeSuccess = true, isPauseSuccess = true;
+    private static final String PAUSE_RESUME_ERROR_MESSAGE = "Please wait, While we resume our SDK";
 
     public ReactRdnaModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -87,7 +89,6 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                         alertDialog = null;
                     }
                 });
-
                 builder.setCancelable(false)
                         .setTitle("Error");
 
@@ -97,6 +98,17 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             alertDialog.setMessage(msg);
             alertDialog.show();
         }
+
+    }
+
+    private void showErrorMessage(String msg){
+            if (alertDialog == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context.getCurrentActivity());
+                builder.setCancelable(true);
+                alertDialog = builder.create();
+            }
+            alertDialog.setMessage(msg);
+            alertDialog.show();
     }
 
     private void callOnMainThread(Runnable runnable) {
@@ -182,35 +194,41 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public int onPauseRuntime(final String rdnaStatusPause) {
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        WritableMap params = Arguments.createMap();
-                        params.putString("response", rdnaStatusPause);
-
-                        context
-                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("onPauseCompleted", params);
-                    }
-                };
-                callOnMainThread(runnable);
-                return 0;
+                    if( !isPauseSuccess && isResumeSuccess ) {
+                        isPauseSuccess = true;
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                WritableMap params = Arguments.createMap();
+                                params.putString("response", rdnaStatusPause);
+                                context
+                                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                        .emit("onPauseCompleted", params);
+                            }
+                        };
+                        callOnMainThread(runnable);
+                        return 0;
+                    }else return 1;
             }
 
             @Override
             public int onResumeRuntime(final String status) {
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        WritableMap params = Arguments.createMap();
-                        params.putString("response", status);
-                        context
-                                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("onResumeCompleted", params);
-                    }
-                };
-                callOnMainThread(runnable);
-                return 0;
+                if( !isResumeSuccess && isPauseSuccess ) {
+                    isResumeSuccess = true;
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            WritableMap params = Arguments.createMap();
+                            params.putString("response", status);
+                            context
+                                    .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                    .emit("onResumeCompleted", params);
+                        }
+                    };
+                    callOnMainThread(runnable);
+                    return 0;
+                }else return 1;
+
             }
 
             @Override
@@ -634,81 +652,99 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             writableArray.pushMap(errorMap);
 
             callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
     }
 
     @ReactMethod
     public void checkChallenges(final String challengeRequestArray,final String userID,final Callback callback){
-        if(!challengeRequestArray.contains("actcode"))
-            startTime = System.currentTimeMillis();
-        new Thread(new Runnable() {
+        if(rdnaObj!=null) {
+            if (!challengeRequestArray.contains("actcode"))
+                startTime = System.currentTimeMillis();
+            new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-                uName=userID;
-                // Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
-                // Logger.d(TAG , "----- userID " + userID);
-                int error = rdnaObj.checkChallengeResponse(challengeRequestArray, userID);
+                @Override
+                public void run() {
+                    uName = userID;
+                    // Logger.d(TAG , "----- checkChallenges " + challengeRequestArray);
+                    // Logger.d(TAG , "----- userID " + userID);
+                    int error = rdnaObj.checkChallengeResponse(challengeRequestArray, userID);
 
-                WritableMap errorMap = Arguments.createMap();
-                errorMap.putInt("error", error);
+                    WritableMap errorMap = Arguments.createMap();
+                    errorMap.putInt("error", error);
 
-                WritableArray writableArray = Arguments.createArray();
-                writableArray.pushMap(errorMap);
+                    WritableArray writableArray = Arguments.createArray();
+                    writableArray.pushMap(errorMap);
 
-                callback.invoke(writableArray);
-            }
-        }).start();
+                    callback.invoke(writableArray);
+                }
+            }).start();
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
     public void updateChallenges(String challenges, String userID, Callback callback){
         // Logger.d(TAG , "----- updateChallenges " + challenges);
         // Logger.d(TAG , "----- userID " + userID);
-        int error = rdnaObj.updateChallenges(challenges, userID);
+        if(rdnaObj!=null) {
+            int error = rdnaObj.updateChallenges(challenges, userID);
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
     public void getAllChallenges(final String userID,final Callback callback){
         // Logger.d(TAG , "----- userID " + userID);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int error =-1;
-                if(rdnaObj!=null)
-                    error = rdnaObj.getAllChallenges(userID);
+        if(rdnaObj!=null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int error = -1;
+                    if (rdnaObj != null)
+                        error = rdnaObj.getAllChallenges(userID);
 
-                WritableMap errorMap = Arguments.createMap();
-                errorMap.putInt("error", error);
+                    WritableMap errorMap = Arguments.createMap();
+                    errorMap.putInt("error", error);
 
-                WritableArray writableArray = Arguments.createArray();
-                writableArray.pushMap(errorMap);
+                    WritableArray writableArray = Arguments.createArray();
+                    writableArray.pushMap(errorMap);
 
-                callback.invoke(writableArray);
-            }
-        }).start();
+                    callback.invoke(writableArray);
+                }
+            }).start();
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
     public void terminate(Callback callback){
         // Logger.d(TAG , "----- terminate call ");
-        int error = rdnaObj.terminate();
+        if(rdnaObj!=null) {
+            int error = rdnaObj.terminate();
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
@@ -720,33 +756,39 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         // Logger.d(TAG , "----- startDate " + startDate);
         //  Logger.d(TAG , "----- endDate " + endDate);
 
-
-        int intRecordCount=Integer.parseInt(recordCount);
-        int intStartRecord=Integer.parseInt(startRecord);
-        int error = -1;
         if(rdnaObj!=null) {
-            error = rdnaObj.getNotifications(intRecordCount, intStartRecord, enterpriseID, startDate, endDate);
+            int intRecordCount = Integer.parseInt(recordCount);
+            int intStartRecord = Integer.parseInt(startRecord);
+            int error = -1;
+            if (rdnaObj != null) {
+                error = rdnaObj.getNotifications(intRecordCount, intStartRecord, enterpriseID, startDate, endDate);
+            }
+            // Logger.d(TAG , "----- error " + error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
-        // Logger.d(TAG , "----- error " + error);
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
     }
 
     @ReactMethod
     public void getNotificationHistory(int recordCount,String enterpriseID,int startIndex,String startDate,String endDate,
                                        String notificationStatus,String actionPerformed,String keywordSearch,String deviceID,Callback callback){
+        if(rdnaObj!=null) {
+            int error = rdnaObj.getNotificationHistory(recordCount, enterpriseID, startIndex, startDate, endDate, notificationStatus, actionPerformed, keywordSearch, deviceID);
 
-        int error = rdnaObj.getNotificationHistory(recordCount,enterpriseID, startIndex,startDate, endDate, notificationStatus, actionPerformed, keywordSearch, deviceID);
-
-        // Logger.d(TAG , "----- error " + error);
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
-        callback.invoke(writableArray);
+            // Logger.d(TAG , "----- error " + error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
@@ -754,32 +796,40 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         //  Logger.d(TAG , "----- updateNotification ");
         // Logger.d(TAG , "----- notificationID " + notificationID);
         //  Logger.d(TAG , "----- startReresponsecord " + response);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int error = rdnaObj.updateNotification(notificationID, response);
-                // Logger.d(TAG , "----- error " + error);
-                WritableMap errorMap = Arguments.createMap();
-                errorMap.putInt("error", error);
-                WritableArray writableArray = Arguments.createArray();
-                writableArray.pushMap(errorMap);
-                callback.invoke(writableArray);
-            }
-        }).start();
+        if(rdnaObj!=null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int error = rdnaObj.updateNotification(notificationID, response);
+                    // Logger.d(TAG , "----- error " + error);
+                    WritableMap errorMap = Arguments.createMap();
+                    errorMap.putInt("error", error);
+                    WritableArray writableArray = Arguments.createArray();
+                    writableArray.pushMap(errorMap);
+                    callback.invoke(writableArray);
+                }
+            }).start();
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
 
     }
 
     @ReactMethod
     public void getPostLoginChallenges(String userID, String useCaseName, Callback callback){
-        int error = rdnaObj.getPostLoginChallenges(userID, useCaseName);
+        if(rdnaObj!=null) {
+            int error = rdnaObj.getPostLoginChallenges(userID, useCaseName);
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
@@ -789,38 +839,45 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getRegisteredDeviceDetails(String userID, Callback callback){
-        int error = rdnaObj.getRegisteredDeviceDetails(userID);
+        if(rdnaObj!=null) {
+            int error = rdnaObj.getRegisteredDeviceDetails(userID);
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
     public void updateDeviceDetails(String userID, String devices, Callback callback){
-        int error = 0;
-        if(rdnaObj != null)
-            error = rdnaObj.updateDeviceDetails(userID, devices);
+        if(rdnaObj!=null) {
+            int error = 0;
+            if (rdnaObj != null)
+                error = rdnaObj.updateDeviceDetails(userID, devices);
 
-        WritableMap errorMap = Arguments.createMap();
-        errorMap.putInt("error", error);
+            WritableMap errorMap = Arguments.createMap();
+            errorMap.putInt("error", error);
 
-        WritableArray writableArray = Arguments.createArray();
-        writableArray.pushMap(errorMap);
+            WritableArray writableArray = Arguments.createArray();
+            writableArray.pushMap(errorMap);
 
-        callback.invoke(writableArray);
+            callback.invoke(writableArray);
+        }else {
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
     }
 
     @ReactMethod
     public void pauseRuntime(Callback callback){
-
         WritableMap errorMap = Arguments.createMap();
-        if(rdnaObj != null ) {
-
+        if(rdnaObj != null && isPauseSuccess && isResumeSuccess) {
+            isPauseSuccess = false;
             String state = rdnaObj.pauseRuntime();
             try {
                 JSONObject jsonObject = new JSONObject(state);
@@ -842,33 +899,27 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         WritableArray writableArray = Arguments.createArray();
         writableArray.pushMap(errorMap);
-
         callback.invoke(writableArray);
     }
 
     @ReactMethod
     public void resumeRuntime(final String state,final String proxySettings,final Callback callback){
+        if( isResumeSuccess && isPauseSuccess ) {
+            isResumeSuccess = false;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
 
                     WritableMap errorMap = Arguments.createMap();
-
-//                if(rdnaObj != null) {
-                    try {
-                        // JSONObject jsonObject = new JSONObject(state);
-                        RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.resumeRuntime(state, callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
-                        rdnaObj = rdnaStatus.result;
-                        errorMap.putInt("error", rdnaStatus.errorCode);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        errorMap.putInt("error", 1);
-
-                    }
-
-//                } else {
-//                    errorMap.putInt("error", 1);
-//                }
+                        try {
+                            // JSONObject jsonObject = new JSONObject(state);
+                            RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.resumeRuntime(state, callbacks, proxySettings, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, context);
+                            rdnaObj = rdnaStatus.result;
+                            errorMap.putInt("error", rdnaStatus.errorCode);
+                        } catch (Exception e) {
+                            //e.printStackTrace();
+                            errorMap.putInt("error", 1);
+                        }
 
                     WritableArray writableArray = Arguments.createArray();
                     writableArray.pushMap(errorMap);
@@ -876,6 +927,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                     callback.invoke(writableArray);
                 }
             }).start();
+
+        }
     }
 
     @ReactMethod
@@ -887,6 +940,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             errorMap.putInt("error", error);
         } else {
             errorMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         WritableArray writableArray = Arguments.createArray();
@@ -904,6 +958,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             errorMap.putInt("error", error);
         } else {
             errorMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         WritableArray writableArray = Arguments.createArray();
@@ -923,6 +978,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             errorMap.putInt("error", error);
         } else {
             errorMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         WritableArray writableArray = Arguments.createArray();
@@ -944,6 +1000,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
         } else {
             statusMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
         callback.invoke(statusMap);
     }
@@ -986,6 +1043,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
         } else {
             statusMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         WritableArray result = Arguments.createArray();
@@ -1036,6 +1094,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             }
         } else {
             statusMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         WritableArray result = Arguments.createArray();
@@ -1067,6 +1126,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }
         else{
             errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         writableArray.pushMap(errorMap);
@@ -1085,6 +1145,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }
         else{
             errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         writableArray.pushMap(errorMap);
@@ -1226,6 +1287,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             errorMap.putInt("error",1);
             parentArray.pushMap(errorMap);
             callback.invoke(parentArray);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
     }
 
@@ -1293,6 +1355,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         }
         else{
             errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
 
         writableArray.pushMap(errorMap);
