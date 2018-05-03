@@ -411,7 +411,7 @@ class SelectLogin extends Component {
     console.log(TouchID);
     if (Platform.OS === 'ios') {
     TouchID.isSupported()
-      .then(this.authenticate)
+      .then(this.authenticate('Authenticate with Touch ID'))
       .catch(error => {
         //passcodeAuth();
         alert(('Touch ID is not enabled or supported'));
@@ -420,8 +420,8 @@ class SelectLogin extends Component {
       this.androidAuth();
   }
 
-  authenticate() {
-    TouchID.authenticate("Authenticate with Touch ID")
+  authenticate(reason) {
+    TouchID.authenticate(reason)
       .then(success => {
         obj.onTouchIDVerificationDone();
       })
@@ -429,33 +429,19 @@ class SelectLogin extends Component {
         console.log(error)
 
         if (error.name === 'RCTTouchIDUnknownError') {
-          Alert.alert(
-            'Error',
-            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
-              text: 'OK',
-              onPress: () => {
-                // exit(0);
-              },
-              style: 'cancel',
-            }],
-            { cancelable: false }
-          );
-
+          this.authenticate("Authentication failed, Please try again");
         } else if (error.name === "LAErrorUserFallback") {
           if (isAutoPassword == false) {
             this.setState({
               showPasswordVerify: true,
             });
-          } else {
-            this.authenticate();
           }
-        }else if (error.name === "LAErrorUserCancel") {
+        }else if (error.name === "LAErrorUserCancel" || error.name === 'RCTTouchIDNotSupported') {
 
         }
         else {
           alert(error.message);
         }
-
       });
   }
 
