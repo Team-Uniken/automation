@@ -21,10 +21,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackHandler, Alert, Platform } from 'react-native'
+import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, InteractionManager, AsyncStorage, StatusBar, ScrollView, BackHandler, Alert, Platform  } from 'react-native'
 
 
-/*
+/* 
  Use in this js
  */
 import Skin from '../../Skin';
@@ -54,10 +54,9 @@ export default class AutoPassword extends Component {
     this.showAutoPasswordNotCompleted = this.showAutoPasswordNotCompleted.bind(this);
     this.showPattern = this.showPattern.bind(this);
     this.saveAutoPassword = this.saveAutoPassword.bind(this);
-    //this.authenticateAndroid = this.authenticateAndroid.bind(this);
     this.encrypytPasswdiOS = this.encrypytPasswdiOS.bind(this);
     this.gotoSetPasswordScreen = this.gotoSetPasswordScreen.bind(this);
-    this.onPatternSetCompleted = this.onPatternSetCompleted.bind(this);   
+    this.onPatternSetCompleted = this.onPatternSetCompleted.bind(this);
 
     Events.on('showAutoPasswordCompleted','showAutoPasswordCompleted',this.showAutoPasswordCompleted);
     Events.on('showAutoPasswordNotCompleted','showAutoPasswordNotCompleted',this.showAutoPasswordNotCompleted);
