@@ -23,7 +23,7 @@ RDNAPrivacyStream *privacyStreamObject;
 RCTBridge *_Nullable localbridgeDispatcher;
 dispatch_semaphore_t semaphore;
 RDNAIWACreds *rdnaIWACredsObj;
-
+#define resumeAlertString @"Please wait, While we resume our SDK."
 @interface ReactRdnaModule()<RDNAPrivacyStreamCallBacks,CLLocationManagerDelegate>{
   
   id <RDNAPrivacyStreamCallBacks> privacyStreamCallBack;
@@ -35,6 +35,8 @@ RDNAIWACreds *rdnaIWACredsObj;
   //  ActiveShield *_shield;
   AppDelegate *delegate;
   NSString *apnsDeviceToken;
+  BOOL isPauseSuccess,isResumeSuccess;
+  
 }
 @end
 
@@ -53,6 +55,8 @@ RCT_EXPORT_MODULE();
   // RDNAErrorID errorID= [RDNA getErrorInfo:272629808];
   rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
   dictHttpCallbacks = [[NSMutableDictionary alloc]init];
+  isPauseSuccess = true;
+  isResumeSuccess = true;
 }
 
 #pragma mark ReactExportMethods
@@ -211,34 +215,35 @@ RCT_EXPORT_METHOD (setDevToken:(NSString *)token){
 RCT_EXPORT_METHOD (getServiceByServiceName:(NSString *)serviceName
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
-  int errorID = 0;
-  NSMutableString *service;
-  errorID = [rdnaObject getServiceByServiceName:serviceName ServiceInfo:&service];
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    callback(@[responseArray]);
-  });
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
+    int errorID = 0;
+    NSMutableString *service;
+    errorID = [rdnaObject getServiceByServiceName:serviceName ServiceInfo:&service];
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      callback(@[responseArray]);
+    });
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getServiceByTargetCoordinate:(NSString *)targetHNIP
                    TargetPort:(int)targetPORT
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
-  int errorID = 0;
-  NSMutableString *service;
-  errorID = [rdnaObject getServiceByTargetCoordinate:targetHNIP TargetPort:targetPORT ServicesInfo:&service];
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    callback(@[responseArray]);
-  });
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
+    int errorID = 0;
+    NSMutableString *service;
+    errorID = [rdnaObject getServiceByTargetCoordinate:targetHNIP TargetPort:targetPORT ServicesInfo:&service];
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":service};
+    NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      callback(@[responseArray]);
+    });
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getAllServices:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *service;
   errorID = [rdnaObject getAllServices:&service];
@@ -247,12 +252,12 @@ RCT_EXPORT_METHOD (getAllServices:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (serviceAccessStart:(NSString *)service
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject serviceAccessStart:service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -260,12 +265,12 @@ RCT_EXPORT_METHOD (serviceAccessStart:(NSString *)service
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (serviceAccessStop:(NSString *)service
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject serviceAccessStop:service];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -273,11 +278,11 @@ RCT_EXPORT_METHOD (serviceAccessStop:(NSString *)service
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (serviceAccessStartAll:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject serviceAccessStartAll];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -285,11 +290,11 @@ RCT_EXPORT_METHOD (serviceAccessStartAll:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (serviceAccessStopAll:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject serviceAccessStopAll];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -297,43 +302,54 @@ RCT_EXPORT_METHOD (serviceAccessStopAll:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (pauseRuntime:(RCTResponseSenderBlock)callback){
-  
+  NSLog(@"********************************Pause *********************************************");
   int errorID = 0;
   NSString *state = nil;
-  errorID = [rdnaObject pauseRuntime:&state];
-//  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
-   NSDictionary *dictionary;
-  if((state==nil)&&(state.length==0)){
-    state = @"";
-    dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
-  }else{
-    dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
+    if (isResumeSuccess && isPauseSuccess) {
+      errorID = [rdnaObject pauseRuntime:&state];
+      //  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+      if (errorID==0) {
+        rdnaObject = nil;
+      }
+      isPauseSuccess = false;
+      NSDictionary *dictionary;
+      if((state==nil)&&(state.length==0)){
+        state = @"";
+        dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+      }else{
+        dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":state};
+      }
+      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        callback(@[responseArray]);
+      });
+    }
   }
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    callback(@[responseArray]);
-  });
+ 
 }
 
 RCT_EXPORT_METHOD (resumeRuntime:(NSString *)state
                    ProxySettings:(NSString *)proxySettings
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  NSLog(@"********************************Resume *********************************************");
   int errorID = 0;
-  RDNA *rdna;
-  rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
-  errorID = [RDNA resumeRuntime:&rdna SavedState:state Callbacks:self ProxySettings:proxySettings RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
-  rdnaObject = rdna;
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
-  NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    callback(@[responseArray]);
-  });
-  
+    if (isResumeSuccess && isPauseSuccess) {
+       RDNA *rdna;
+      rdnaClientCallbacks = [[ReactRdnaModule alloc]init];
+      errorID = [RDNA resumeRuntime:&rdna SavedState:state Callbacks:self ProxySettings:proxySettings RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      isResumeSuccess = false;
+      rdnaObject = rdna;
+      NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
+      NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        callback(@[responseArray]);
+      });
+    }
 }
 
 RCT_EXPORT_METHOD (getSDKVersion:(RCTResponseSenderBlock)callback){
@@ -360,7 +376,7 @@ RCT_EXPORT_METHOD (getErrorInfo:(int)errorCode
 }
 
 RCT_EXPORT_METHOD (getDefaultCipherSpec:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *cipherSpecs;
   errorID = [rdnaObject getDefaultCipherSpec:&cipherSpecs];
@@ -369,11 +385,11 @@ RCT_EXPORT_METHOD (getDefaultCipherSpec:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getDefaultCipherSalt:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *cipherSalt;
   errorID = [rdnaObject getDefaultCipherSalt:&cipherSalt];
@@ -382,7 +398,7 @@ RCT_EXPORT_METHOD (getDefaultCipherSalt:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (encryptDataPacket:(int)privacyScope
@@ -390,7 +406,7 @@ RCT_EXPORT_METHOD (encryptDataPacket:(int)privacyScope
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)plainText
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSString *cipherText;
   errorID = [rdnaObject encryptDataPacket:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:plainText Into:&cipherText];
@@ -399,7 +415,7 @@ RCT_EXPORT_METHOD (encryptDataPacket:(int)privacyScope
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (decryptDataPacket:(int)privacyScope
@@ -407,7 +423,7 @@ RCT_EXPORT_METHOD (decryptDataPacket:(int)privacyScope
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)cipherText
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSString *plainText;
   errorID = [rdnaObject decryptDataPacket:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:cipherText Into:&plainText];
@@ -422,7 +438,7 @@ RCT_EXPORT_METHOD (decryptDataPacket:(int)privacyScope
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (encryptHttpRequest:(int)privacyScope
@@ -430,7 +446,7 @@ RCT_EXPORT_METHOD (encryptHttpRequest:(int)privacyScope
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)request
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *transformedRequest;
   errorID = [rdnaObject encryptHttpRequest:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:request Into:&transformedRequest];
@@ -439,7 +455,7 @@ RCT_EXPORT_METHOD (encryptHttpRequest:(int)privacyScope
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (decryptHttpResponse:(int)privacyScope
@@ -447,7 +463,7 @@ RCT_EXPORT_METHOD (decryptHttpResponse:(int)privacyScope
                    CipherSalt:(NSString *)cipherSalt
                    From:(NSString *)transformedResponse
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *response;
   errorID = [rdnaObject decryptHttpResponse:privacyScope CipherSpec:cipherSpec CipherSalt:cipherSalt From:transformedResponse Into:&response];
@@ -456,11 +472,11 @@ RCT_EXPORT_METHOD (decryptHttpResponse:(int)privacyScope
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (terminate:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject terminate];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -468,7 +484,7 @@ RCT_EXPORT_METHOD (terminate:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 +(void)terminateRDNA{
@@ -477,7 +493,7 @@ RCT_EXPORT_METHOD (terminate:(RCTResponseSenderBlock)callback){
 }
 
 RCT_EXPORT_METHOD (getSessionID:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *sessionId;
   errorID = [rdnaObject getSessionID:&sessionId];
@@ -486,11 +502,11 @@ RCT_EXPORT_METHOD (getSessionID:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getAgentID:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *agentId;
   errorID = [rdnaObject getAgentID:&agentId];
@@ -499,11 +515,11 @@ RCT_EXPORT_METHOD (getAgentID:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getDeviceID:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSMutableString *deviceId;
   errorID = [rdnaObject getDeviceID:&deviceId];
@@ -512,11 +528,12 @@ RCT_EXPORT_METHOD (getDeviceID:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getConfig:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject getConfig:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -524,12 +541,12 @@ RCT_EXPORT_METHOD (getConfig:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (testConfig:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject getConfig:userID];
   [rdnaObject terminate];
@@ -538,12 +555,12 @@ RCT_EXPORT_METHOD (testConfig:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getAllChallenges:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject getAllChallenges:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -551,11 +568,11 @@ RCT_EXPORT_METHOD (getAllChallenges:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (resetChallenge:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject resetChallenge];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -563,13 +580,13 @@ RCT_EXPORT_METHOD (resetChallenge:(RCTResponseSenderBlock)callback){
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (checkChallenges:(NSString *)challengeRequestString
                    forUserID:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:userID forKey:@"userName"];
@@ -579,12 +596,13 @@ RCT_EXPORT_METHOD (checkChallenges:(NSString *)challengeRequestString
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (updateChallenges:(NSString *)challengeRequestString
                    forUserID:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject updateChallenges:challengeRequestString forUserID:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -592,12 +610,12 @@ RCT_EXPORT_METHOD (updateChallenges:(NSString *)challengeRequestString
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (logOff:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject logOff:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -605,12 +623,12 @@ RCT_EXPORT_METHOD (logOff:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (forgotPassword:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject forgotPassword:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -618,7 +636,7 @@ RCT_EXPORT_METHOD (forgotPassword:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (setDNSServers:(NSArray *)DNSServers
@@ -640,7 +658,7 @@ RCT_EXPORT_METHOD (createPrivacyStreamFor:(RDNAStreamType)streamType
                    CipherSalt:(NSString *)cipherSalt
                    BlockReadyThreshold:(int)blockReadyThreshold
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   privacyStreamCallBack = [[ReactRdnaModule alloc]init];
   RDNAPrivacyStream *privacyStream;
@@ -651,12 +669,13 @@ RCT_EXPORT_METHOD (createPrivacyStreamFor:(RDNAStreamType)streamType
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getPostLoginChallenges:(NSString *)userID
                    withUseCaseName:(NSString *)useCaseName
                    reactCallBack:(RCTResponseSenderBlock)callback){
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject getPostLoginChallenges:userID withUseCaseName:useCaseName];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -664,10 +683,12 @@ RCT_EXPORT_METHOD (getPostLoginChallenges:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getRegisteredDeviceDetails:(NSString *)userID
                    reactCallBack:(RCTResponseSenderBlock)callback){
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject getRegisteredDeviceDetails:userID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -675,12 +696,13 @@ RCT_EXPORT_METHOD (getRegisteredDeviceDetails:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (updateDeviceDetails:(NSString *)userID
                    withDevices:(NSString *)devices
                    reactCallBack:(RCTResponseSenderBlock)callback){
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject updateDeviceDetails:userID withDevices:devices];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -688,7 +710,7 @@ RCT_EXPORT_METHOD (updateDeviceDetails:(NSString *)userID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (getNotifications:(NSString *)recordCount
@@ -697,7 +719,7 @@ RCT_EXPORT_METHOD (getNotifications:(NSString *)recordCount
                    withStartDate:(NSString *)startDate
                    withEndDate:(NSString *)endDate
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject getNotifications:[recordCount intValue] withStartIndex:[startIndex intValue] withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -705,7 +727,7 @@ RCT_EXPORT_METHOD (getNotifications:(NSString *)recordCount
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 
@@ -719,21 +741,21 @@ RCT_EXPORT_METHOD (getNotificationHistory:(int)recordCount
                    withKeyordSearch:(NSString *)keywordSearch
                    withDeviceID:(NSString *)deviceID
                    reactCallBack:(RCTResponseSenderBlock)callback){
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
-  
   errorID = [rdnaObject getNotificationHistory:recordCount withStartIndex:startIndex withEnterpriseID:enterpriseID withStartDate:startDate withEndDate:endDate withNotificationStatus:notificationStatus withActionPerformed:actionPerformed withKeywordSearch:keywordSearch withDeviceID:deviceID];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD (updateNotification:(NSString *)notificationID
                    withResponse:(NSString *)response
                    reactCallBack:(RCTResponseSenderBlock)callback){
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   errorID = [rdnaObject updateNotification:notificationID withResponse:response];
   NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID]};
@@ -741,7 +763,7 @@ RCT_EXPORT_METHOD (updateNotification:(NSString *)notificationID
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
   });
-  
+  }else{[self showResumeAlert];}
 }
 
 RCT_EXPORT_METHOD(setCredentials:(NSString *)userName password:(NSString*)password action:(BOOL)action reactCallBack:(RCTResponseSenderBlock)callback){
@@ -768,7 +790,7 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
                    reactCallBack:(RCTResponseSenderBlock)callback){
   
   //rdnaHttpJSCallbacks = callback;
-  
+  if (rdnaObject!=nil||rdnaObject!=NULL) {
   int errorID = 0;
   RDNAHTTPRequest *request = [[RDNAHTTPRequest alloc]init];
   
@@ -800,7 +822,7 @@ RCT_EXPORT_METHOD (openHttpConnection:(RDNAHttpMethods)method
   }else{
     [dictHttpCallbacks setObject:callback forKey:[NSString stringWithFormat:@"%d",requestID]];
   }
-  
+  }else{[self showResumeAlert];}
 }
 
 
@@ -843,6 +865,12 @@ RCT_EXPORT_METHOD (exitApp){
   return dictStatusJson;
 }
 
+-(void)showResumeAlert{
+  
+  UIAlertView *resumeAlert = [[UIAlertView alloc]initWithTitle:@"" message:resumeAlertString delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+  [resumeAlert show];
+}
+
 
 #pragma mark Wrapper callback methods
 
@@ -874,7 +902,8 @@ RCT_EXPORT_METHOD (exitApp){
 }
 
 - (int)onPauseRuntime:(NSString *)status {
-  
+  isPauseSuccess = true;
+  NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$ Pause Complete $$$$$$$$$$$$$$$$$$$$$$$$$$");
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onPauseCompleted"
   //                                                            body:@{@"response":status}];
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -884,7 +913,8 @@ RCT_EXPORT_METHOD (exitApp){
 }
 
 - (int)onResumeRuntime:(NSString *)status {
-  
+  isResumeSuccess = true;
+  NSLog(@"$$$$$$$$$$$$$$$$$$$$$$$$$$ Resume Complete $$$$$$$$$$$$$$$$$$$$$$$$$$");
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:nil forKey:@"sContext"];
   //  [localbridgeDispatcher.eventDispatcher sendDeviceEventWithName:@"onResumeCompleted"

@@ -84,13 +84,13 @@ This method is called when the component will start to load
     }.bind(this));
 
     if (Platform.OS === "ios")
-      this.authenticate();
+      this.authenticate('Set up Touch ID to Log In');
     else 
       this.isAndroidTouchAvailable();
   }
 
-  authenticate() {
-    TouchID.authenticate('Set up Touch ID to Log In')
+  authenticate(msg) {
+    TouchID.authenticate(msg)
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         this.encrypytPasswdiOS();
@@ -101,22 +101,13 @@ This method is called when the component will start to load
         if (error.name === 'LAErrorUserCancel' || error.name === "LAErrorUserFallback")
           this.gotoSetPasswordScreen();
         else if (error.name === 'RCTTouchIDUnknownError') {
-          Alert.alert(
-            'Error',
-            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
-              text: 'OK',
-              onPress: () => {
-                // exit(0);
-              },
-              style: 'cancel',
-            }],
-            { cancelable: false }
-          );
-
+          this.authenticate("Authentication failed, Please try again");
         } else if (error.name === 'LAErrorAuthenticationFailed') {
-          thi.authenticate();
+          thi.authenticate('Set up Touch ID to Log In');
           alert(error.message);
-        } else {
+        } else if(error.name === 'RCTTouchIDNotSupported'){
+          alert(('Touch ID is not enabled or supported'));
+        }else {
           alert(error.message);
         }
 
