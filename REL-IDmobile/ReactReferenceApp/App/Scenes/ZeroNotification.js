@@ -22,6 +22,7 @@ import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import AndroidAuth from "../Components/view/AndroidTouch"
 import NotificationCard from '../Components/view/notificationcard';
+import MainActivation from '../Components/Container/MainActivation';
 import { NavigationActions} from 'react-navigation';
 const Spinner = require('react-native-spinkit');
 
@@ -752,7 +753,7 @@ export default class NotificationMgmtScene extends Component {
 
       if (noti.length > 0) {
         if (this.state.showAlert === true) {
-          this.dismissAlertModal();
+          this.dismissAlertModal(); 
         }
       } else {
         // this.showAlertModal("You have no pending notifications");
@@ -1261,7 +1262,9 @@ export default class NotificationMgmtScene extends Component {
 
   renderWithoutMain() {
     const listViewProportion = this.state.dataSource.getRowCount() == 0 ? 0.5 : 1
-    return (<View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
+    return (
+      <MainActivation>
+    <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
       <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
 
@@ -1281,12 +1284,15 @@ export default class NotificationMgmtScene extends Component {
       {this.checkPassModal()}
       {this.alertModal()}
       {this.state.showAndroidAuth && <AndroidAuth/>}
-    </View>);
+    </View>
+    </MainActivation>);
   }
 
   renderWithMain() {
 
-    return (<Main
+    return (
+      <MainActivation>
+    <Main
       drawerState={{
         open: false,
         disabled: true,
@@ -1315,7 +1321,7 @@ export default class NotificationMgmtScene extends Component {
         {this.renderNotificationView(this.state.dataSource) }
         {Main.notificationCount == 0 && this._renderMessage() }
         {Main.notificationCount == 0 &&
-          <TouchableHighlight style={{ height: 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
+          <TouchableHighlight style={{ height: Platform.OS == 'android' ? 70 : 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
               //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
               //      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
@@ -1334,7 +1340,7 @@ export default class NotificationMgmtScene extends Component {
               });
               Events.trigger('getNoticiationHistory');
             } }>
-            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', marginBottom : Platform.OS == 'android' ? 30 : 0}}>
               Notification History
             </Text>
           </TouchableHighlight>
@@ -1343,12 +1349,13 @@ export default class NotificationMgmtScene extends Component {
       {this.checkPassModal()}
       {this.alertModal()}
       {this.state.showAndroidAuth && <AndroidAuth/>}
-    </Main>);
+    </Main>
+    </MainActivation>);
   }
 
   /*
    This method is used to render the componenet with all its element.
-   */
+   */ 
   render() {
     return (
       this.props.disableMain ? this.renderWithoutMain() : this.renderWithMain()
