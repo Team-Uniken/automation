@@ -30,6 +30,7 @@ import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.uniken.rdna.RDNA;
+import com.facebook.react.uimanager.UIManagerModule;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -878,15 +879,14 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         WritableMap errorMap = Arguments.createMap();
         if(rdnaObj != null && isPauseSuccess && isResumeSuccess) {
             isPauseSuccess = false;
-            String state = rdnaObj.pauseRuntime();
+            RDNA.RDNAStatus<String> status = rdnaObj.pauseRuntime();
             try {
-                JSONObject jsonObject = new JSONObject(state);
-                int error = jsonObject.optInt("error");
+                int error = status.errorCode;
                 errorMap.putInt("error",error);
-                errorMap.putString("response", jsonObject.optString("response"));
+                errorMap.putString("response", status.result);
                 if(error==0)
                     rdnaObj= null;
-            } catch (JSONException e) {
+            } catch (Exception e) {
                // e.printStackTrace();
                 errorMap.putInt("error", 1);
                 errorMap.putString("response", "");
@@ -1361,6 +1361,99 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         writableArray.pushMap(errorMap);
         callback.invoke(writableArray);
     }
+
+    @ReactMethod
+    public void getAllServices(Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            RDNA.RDNAStatus<String> status = rdnaObj.getAllServices();
+            errorMap.putInt("error", status.errorCode);
+            if(status.errorCode == 0)
+                errorMap.putString("response",status.result);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void getServiceByTargetCoordinate(String HNIP, int port, Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            RDNA.RDNAStatus<String> status = rdnaObj.getServiceByTargetCoordinate(HNIP,port);
+            errorMap.putInt("error", status.errorCode);
+            if(status.errorCode == 0)
+                errorMap.putString("response",status.result);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void getServiceByServiceName(String serviceName,Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            RDNA.RDNAStatus<String> status =   rdnaObj.getServiceByServiceName(serviceName);
+            errorMap.putInt("error", status.errorCode);
+            if(status.errorCode == 0)
+                errorMap.putString("response",status.result);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void serviceAccessStop(String service,Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            int error  =   rdnaObj.serviceAccessStop(service);
+            errorMap.putInt("error", error);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+
+    @ReactMethod
+    public void serviceAccessStart(String service,Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            int error  =   rdnaObj.serviceAccessStart(service);
+            errorMap.putInt("error", error);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
 
     @ReactMethod
     public void getErrorInfo(int errorCode,Callback callback){
