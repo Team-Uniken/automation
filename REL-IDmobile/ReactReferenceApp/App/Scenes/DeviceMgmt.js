@@ -16,9 +16,9 @@ import Events from 'react-native-simple-events';
 import Modal from 'react-native-simple-modal';
 import {View, StyleSheet, Text, ListView, TextInput, AsyncStorage, DeviceEventEmitter, TouchableHighlight, TouchableOpacity, Alert, } from 'react-native'
 import { SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
+import MainActivation from '../Components/Container/MainActivation';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Config from 'react-native-config';
-
 
 
 /*
@@ -540,6 +540,7 @@ export default class DeviceMgmtScene extends Component {
    */
   render() {
     return (
+      <MainActivation>
       <Main
         drawerState={{
           open: false,
@@ -625,6 +626,7 @@ export default class DeviceMgmtScene extends Component {
           </View>
         </Modal>
       </Main>
+      </MainActivation>
     );
   }
 }

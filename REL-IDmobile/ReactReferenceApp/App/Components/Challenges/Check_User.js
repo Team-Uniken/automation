@@ -188,6 +188,7 @@ class UserLogin extends Component {
       responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = un;
       Events.trigger('showNextChallenge', { response: responseJson });
+      dismissKeyboard();
       this.setState({ inputUsername: '' });
 
     } else {

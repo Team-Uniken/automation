@@ -350,7 +350,10 @@ class Notifications_History extends Component {
         Events.trigger('showLoader', true);
         //   alert('getNotificationHistory response is' + response[0].error);
       } else {
-        alert('immediate response is' + response[0].error);
+        //alert('immediate response is' + response[0].error);
+        Util.getErrorInfo(response[0].error, (error) => {
+          alert('' + error);
+        });
       }
     });
   }
