@@ -652,7 +652,7 @@
   
   NSLog( @"javascript:cordova.fireDocumentEvent('");
   
-  NSString *resultString = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent(\"%@\",{response:\'%@\'})",methodName,s];
+  NSString *resultString = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent(\"%@\",{response:'%@'})",methodName,s];
   
   [self.commandDelegate evalJs:resultString];
   
@@ -817,7 +817,7 @@
   
   
   [dictResponseJson setValue:status.response.headers forKey:@"headers"];
-  [dictResponseJson setValue:[[NSString alloc] initWithData:status.response.body encoding:NSUTF8StringEncoding]forKey:@"body"];
+  [dictResponseJson setValue:status.response.body.length > 0?[status.response.body base64EncodedStringWithOptions:NSUTF8StringEncoding]:@"" forKey:@"body"];
   
   [dictStatusJson setValue:dictResponseJson forKey:@"httpResponse"];
   

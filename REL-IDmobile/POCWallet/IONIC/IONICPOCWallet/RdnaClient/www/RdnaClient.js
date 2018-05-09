@@ -4,9 +4,16 @@ RdnaClient.prototype.RDNAPrivacyScope = {
 
     RDNA_PRIVACY_SCOPE_SESSION: 1,
     RDNA_PRIVACY_SCOPE_DEVICE: 2,
-    RDNA_PRIVACY_SCOPE_USER: 3,
-    RDNA_PRIVACY_SCOPE_AGENT: 4
+    RDNA_PRIVACY_SCOPE_USER: 4,
+    RDNA_PRIVACY_SCOPE_AGENT: 8
 };
+
+RdnaClient.prototype.RDNAHttpMethods = {
+    RDNA_HTTP_POST: 0,
+    RDNA_HTTP_GET: 2,
+};
+
+
 
 function RdnaClient() {
     console.log("RdnaClient.js: is created");
