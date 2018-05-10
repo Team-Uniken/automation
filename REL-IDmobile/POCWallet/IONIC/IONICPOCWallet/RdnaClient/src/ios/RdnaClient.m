@@ -145,6 +145,18 @@
     [self illegalAccessCallback:exception];
   }
 }
+
+-(void)getNotificationHistory:(CDVInvokedUrlCommand*)command{
+  
+  callbackID = command.callbackId;
+  @try{
+    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:1] intValue] withEnterpriseID:[command.arguments objectAtIndex:2] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
+    
+    [self decideCallback:errorCode response:nil];
+  }@catch (NSException *exception){
+    [self illegalAccessCallback:exception];
+  }
+}
   
 -(void)updateNotifications:(CDVInvokedUrlCommand*)command{
   
@@ -217,6 +229,30 @@
     NSString *sessionString;
     int errorCode =[rdnaObject getSessionID:&sessionString];
     [self decideCallback:errorCode response:sessionString];
+  } @catch (NSException *exception) {
+    [self illegalAccessCallback:exception];
+  }
+}
+
+-(void)getAgentID:(CDVInvokedUrlCommand*)command{
+  
+  callbackID = command.callbackId;
+  @try {
+    NSString *agentIDString;
+    int errorCode =[rdnaObject getAgentID:&agentIDString];
+    [self decideCallback:errorCode response:agentIDString];
+  } @catch (NSException *exception) {
+    [self illegalAccessCallback:exception];
+  }
+}
+
+-(void)getDeviceID:(CDVInvokedUrlCommand*)command{
+  
+  callbackID = command.callbackId;
+  @try {
+    NSString *deviceIDString;
+    int errorCode =[rdnaObject getDeviceID:&deviceIDString];
+    [self decideCallback:errorCode response:deviceIDString];
   } @catch (NSException *exception) {
     [self illegalAccessCallback:exception];
   }
@@ -432,6 +468,45 @@
     [self illegalAccessCallback:exception];
   }
 }
+
+-(void)openHttpConnection:(CDVInvokedUrlCommand*)command{
+  
+  //rdnaHttpJSCallbacks = callback;
+  @try{
+  int errorID = 0;
+  RDNAHTTPRequest *request = [[RDNAHTTPRequest alloc]init];
+
+  if([command.arguments objectAtIndex:2]){
+    NSError *err;
+    NSData *data = [[command.arguments objectAtIndex:2] dataUsingEncoding:NSUTF8StringEncoding];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+    
+    if(!err)
+    request.headers = json;
+  }
+  
+  request.method = [[command.arguments objectAtIndex:0] intValue];
+  request.url = [command.arguments objectAtIndex:1];
+  
+  if ([NSString stringWithFormat:@"%@",[command.arguments objectAtIndex:3]].length > 0) {
+    request.body = [[command.arguments objectAtIndex:3] dataUsingEncoding:NSUTF8StringEncoding];
+  }
+  
+  int requestID;
+  errorID = [rdnaObject openHttpConnection:request Callbacks:(id<RDNAHTTPCallbacks>)self httpRequestID:&requestID];
+  
+  
+  if(errorID != RDNA_ERR_NONE){
+    [self decideCallback:errorID response:nil];
+  }else{
+    [self decideCallback:errorID response:[NSString stringWithFormat:@"{requestID:%d}",requestID]];
+  }
+  }@catch (NSException *exception){
+    [self illegalAccessCallback:exception];
+  }
+  
+}
+
   
  
   
@@ -577,11 +652,18 @@
   
   NSLog( @"javascript:cordova.fireDocumentEvent('");
   
-  NSString *resultString = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent(\"%@\",{response:\'%@\'})",methodName,s];
+  NSString *resultString = [NSString stringWithFormat:@"javascript:cordova.fireDocumentEvent(\"%@\",{response:'%@'})",methodName,s];
   
   [self.commandDelegate evalJs:resultString];
   
   
+}
+
+#pragma mark http response callback methods
+
+-(int)onHttpResponse:(RDNAHTTPStatus*) status{
+  [self callJavaScript:@"onHttpResponse" result:[self createJsonHttpResponse:status]];
+  return 0;
 }
  
   
@@ -705,7 +787,45 @@
       NSLog(@"lat = %@\n long = %@\n and altitude = %@",latitude,longitude,altitude);
     }
   }
+
+#pragma -mark Utils methods
+-(NSString*)createJsonHttpResponse:(RDNAHTTPStatus*) status{
   
+  NSMutableDictionary *dictStatusJson = [[NSMutableDictionary alloc] init];
+  
+  //[dictStatusJson setValue:[NSNumber numberWithInt:status.errorCode] forKey:@"errorCode"];
+  [dictStatusJson setValue:[NSNumber numberWithInt:status.requestID] forKey:@"requestID"];
+  
+  NSMutableDictionary *dictRequestJson = [[NSMutableDictionary alloc] init];
+  
+  [dictRequestJson setValue:[NSNumber numberWithInt:status.request.method] forKey:@"method"];
+  [dictRequestJson setValue:status.request.url forKey:@"url"];
+  
+  
+  [dictRequestJson setValue:status.request.headers forKey:@"headers"];
+  [dictRequestJson setValue:[[NSString alloc] initWithData:status.request.body encoding:NSUTF8StringEncoding]forKey:@"body"];
+  
+  [dictStatusJson setValue:dictRequestJson forKey:@"httpRequest"];
+  
+  
+  
+  NSMutableDictionary *dictResponseJson = [[NSMutableDictionary alloc] init];
+  
+  [dictResponseJson setValue:status.response.version forKey:@"version"];
+  [dictResponseJson setValue:[NSNumber numberWithInt:status.response.statusCode] forKey:@"statusCode"];
+  [dictResponseJson setValue:status.response.statusMessage forKey:@"statusMessage"];
+  
+  
+  [dictResponseJson setValue:status.response.headers forKey:@"headers"];
+  [dictResponseJson setValue:status.response.body.length > 0?[status.response.body base64EncodedStringWithOptions:NSUTF8StringEncoding]:@"" forKey:@"body"];
+  
+  [dictStatusJson setValue:dictResponseJson forKey:@"httpResponse"];
+  
+  NSError *error;
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictStatusJson
+                                                     options:0 error:&error];
+  return [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
   
   @end
 

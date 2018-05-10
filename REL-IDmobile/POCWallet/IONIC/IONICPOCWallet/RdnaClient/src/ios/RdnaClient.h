@@ -17,6 +17,7 @@
 -(void)updateChallenges:(CDVInvokedUrlCommand*)command;
 -(void)resetChallenge:(CDVInvokedUrlCommand*)command;
 -(void)getNotifications:(CDVInvokedUrlCommand*)command;
+-(void)getNotificationHistory:(CDVInvokedUrlCommand*)command;
 -(void)updateNotifications:(CDVInvokedUrlCommand*)command;
 -(void)getRegisteredDeviceDetails:(CDVInvokedUrlCommand*)command;
 -(void)updateDeviceDetails:(CDVInvokedUrlCommand*)command;
@@ -24,6 +25,8 @@
 -(void)setApplicationVersion:(CDVInvokedUrlCommand*)command;
 - (void)setDeviceToken:(CDVInvokedUrlCommand*)command;
 -(void)getSessionID:(CDVInvokedUrlCommand*)command;
+-(void)getAgentID:(CDVInvokedUrlCommand*)command;
+-(void)getDeviceID:(CDVInvokedUrlCommand*)command;
 -(void)getErrorInfo:(CDVInvokedUrlCommand*)command;
 -(void)getDefaultCipherSpec:(CDVInvokedUrlCommand*)command;
 -(void)getDefaultCipherSalt:(CDVInvokedUrlCommand*)command;
@@ -43,4 +46,5 @@
 -(void)getPostLoginChallenges:(CDVInvokedUrlCommand*)command;
 -(void)getConfig:(CDVInvokedUrlCommand*)command;
 -(void)setCredentials:(CDVInvokedUrlCommand*)command;
+-(void)openHttpConnection:(CDVInvokedUrlCommand*)command;
 @end

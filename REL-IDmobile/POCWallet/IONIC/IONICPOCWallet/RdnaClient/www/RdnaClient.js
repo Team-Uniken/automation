@@ -4,9 +4,16 @@ RdnaClient.prototype.RDNAPrivacyScope = {
 
     RDNA_PRIVACY_SCOPE_SESSION: 1,
     RDNA_PRIVACY_SCOPE_DEVICE: 2,
-    RDNA_PRIVACY_SCOPE_USER: 3,
-    RDNA_PRIVACY_SCOPE_AGENT: 4
+    RDNA_PRIVACY_SCOPE_USER: 4,
+    RDNA_PRIVACY_SCOPE_AGENT: 8
 };
+
+RdnaClient.prototype.RDNAHttpMethods = {
+    RDNA_HTTP_POST: 0,
+    RDNA_HTTP_GET: 2,
+};
+
+
 
 function RdnaClient() {
     console.log("RdnaClient.js: is created");
@@ -706,6 +713,68 @@ RdnaClient.prototype.getSessionID = function (successCallback, errorCallback) {
 
     cordova.exec(successCallback, errorCallback, "RdnaClient", "getSessionID");
 };
+
+/**
+ * @param {*} successCallback - Sync callback that indicates getAgentID call was successfull. Returns getAgentID of current app session.
+ * @param {*} errorCallback - Sync callback that indicates getAgentID failure. Returns the error code for the error occured.
+ */
+RdnaClient.prototype.getAgentID = function (successCallback, errorCallback) {
+    if (errorCallback == null) { errorCallback = function () { } }
+
+    if (typeof errorCallback != "function") {
+        console.log("RdnaClient.getAgentID   failure: failure parameter not a function");
+        return
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("RdnaClient.getAgentID    failure: success callback parameter must be a function");
+        return
+    }
+
+    cordova.exec(successCallback, errorCallback, "RdnaClient", "getAgentID");
+};
+
+/**
+ * @param {*} successCallback - Sync callback that indicates getDeviceID call was successfull. Returns getDeviceID of current app session.
+ * @param {*} errorCallback - Sync callback that indicates getDeviceID failure. Returns the error code for the error occured.
+ */
+RdnaClient.prototype.getAgentID = function (successCallback, errorCallback) {
+    if (errorCallback == null) { errorCallback = function () { } }
+
+    if (typeof errorCallback != "function") {
+        console.log("RdnaClient.getDeviceID   failure: failure parameter not a function");
+        return
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("RdnaClient.getDeviceID    failure: success callback parameter must be a function");
+        return
+    }
+
+    cordova.exec(successCallback, errorCallback, "RdnaClient", "getDeviceID");
+};
+
+/**
+ * @param {*} successCallback - Sync callback that indicates openHttpConnection call was successfull and return the http request id .
+ * @param {*} errorCallback - Sync callback that indicates openHttpConnection failure. Returns the error code for the error occured.
+ * @param {*} options - [METHOD_ID, URL, HEADER, BODY]
+ */
+RdnaClient.prototype.openHttpConnection = function (successCallback, errorCallback, options) {
+    if (errorCallback == null) { errorCallback = function () { } }
+
+    if (typeof errorCallback != "function") {
+        console.log("RdnaClient.openHttpConnection   failure: failure parameter not a function");
+        return
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("RdnaClient.openHttpConnection    failure: success callback parameter must be a function");
+        return
+    }
+
+    cordova.exec(successCallback, errorCallback, "RdnaClient", "openHttpConnection", options);
+};
+
 
 var rdnaClient = new RdnaClient();
 module.exports = rdnaClient;
