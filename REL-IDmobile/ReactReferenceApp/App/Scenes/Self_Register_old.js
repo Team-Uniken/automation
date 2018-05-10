@@ -115,11 +115,21 @@ class RegisterOld extends Component {
 
   //onTextchange method for FirstName TextInput
   onFirstNameChange(event) {
-    this.setState({ firstName: event.nativeEvent.text });
+    if (this.validateName(event.nativeEvent.text) )
+      this.setState({ firstName: event.nativeEvent.text });
+    else {
+      if (event.nativeEvent.text.length == 0)
+         this.setState({ firstName: event.nativeEvent.text });
+    }
   }
   //onTextchange method for LastName TextInput
   onLastNameChange(event) {
-    this.setState({ lastName: event.nativeEvent.text });
+    if (this.validateName(event.nativeEvent.text))
+      this.setState({ lastName: event.nativeEvent.text });
+    else {
+      if (event.nativeEvent.text.length == 0)
+        this.setState({ lastName: event.nativeEvent.text });
+    }
   }
   //onTextchange method for Email TextInput
   onEmailChange(event) {
@@ -136,7 +146,7 @@ class RegisterOld extends Component {
     else {
       if (event.nativeEvent.text.length == 0)
         this.setState({ phoneNumber: event.nativeEvent.text });
-      this.setState.phoneNumber = this.setState.phoneNumber;
+      //this.setState.phoneNumber = this.setState.phoneNumber;
     }
   }
 
@@ -165,6 +175,16 @@ class RegisterOld extends Component {
     return re.test(email);
   }
 
+  validateName(name){
+   // var rex = /^(?=(?:[^A-Za-z]*[A-Za-z]){2})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\\\/<>#“.,]*[\d~`?!^*¨ˆ:/";_+&-/)@=$%{}\[\]|\\\/<>#“.,])\S+(?: \S+){0,2}$/;
+   if(name!=null && name.trim().length >= 1){
+    var rex = /^[a-zA-Z]+$/; 
+    return rex.test(name);
+   }
+  
+   return false;
+  }
+
   //check entered phoneNumber is valid or not
   validatePhoneNumber(phone) {
     var regex = /^\+?([0-9]{0,14})$/;
@@ -177,7 +197,11 @@ class RegisterOld extends Component {
       && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
       this.showMessage("", "All fields are mandatory", false);
       return;
-    } else if (!this.validateEmail(this.state.email)) {
+    } else if(!this.validateName(this.state.firstName)){
+      this.showMessage("", "Enter valid First Name", false);
+    }else if(!this.validateName(this.state.lastName)){
+      this.showMessage("", "Enter valid Last Name", false);
+    }else if (!this.validateEmail(this.state.email)) {
       this.showMessage("", "Enter valid Email ID", false);
       return;
     } else if (!(this.state.email === this.state.confirmEmail)) {
@@ -395,6 +419,7 @@ class RegisterOld extends Component {
                       autoComplete={false}
                       autoCapitalize={'none'}
                       onChange={this.onFirstNameChange.bind(this) }
+                      value={this.state.firstName}
                       onSubmitEditing={() => {
                         this.refs.lastname.focus();
                       } } />
@@ -409,6 +434,7 @@ class RegisterOld extends Component {
                       autoComplete={false}
                       autoCapitalize={'none'}
                       onChange={this.onLastNameChange.bind(this) }
+                      value={this.state.lastName}
                       onSubmitEditing={() => {
                         this.refs.email.focus();
                       } } />
