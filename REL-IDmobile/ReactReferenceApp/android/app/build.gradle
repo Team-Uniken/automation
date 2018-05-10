@@ -102,7 +102,7 @@ android {
         multiDexEnabled true
         resValue "string", "build_config_package", "com.reactrefapp"
         proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
+        //resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
     }
 
 //    splits {
@@ -165,30 +165,37 @@ android {
         sandp{
             applicationId 'com.uniken.sandp'
             signingConfig signingConfigs.releaseSandP
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         nwd{
             applicationId 'com.uniken.nwd'
             signingConfig signingConfigs.releaseNwd
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         stock{
             applicationId 'com.uniken.stock'
             signingConfig signingConfigs.releaseStock
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         ubs{
             applicationId 'com.uniken.ubs'
             signingConfig signingConfigs.releaseUbs
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         cbc{
             applicationId 'com.uniken.cbc'
             signingConfig signingConfigs.releaseCbc
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         cbcverify{
             applicationId 'com.uniken.cbc.verify'
             signingConfig signingConfigs.releaseCbcverify
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         relidmobile{
             applicationId 'com.uniken.relidmobile'
             signingConfig signingConfigs.releaseRelidmobile
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
     }
 
