@@ -1454,6 +1454,40 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         callback.invoke(writableArray);
     }
 
+    @ReactMethod
+    public void serviceAccessStartAll(Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            int error  =   rdnaObj.serviceAccessStartAll();
+            errorMap.putInt("error", error);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void serviceAccessStopAll(Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            int error  =   rdnaObj.serviceAccessStopAll();
+            errorMap.putInt("error", error);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
 
     @ReactMethod
     public void getErrorInfo(int errorCode,Callback callback){
