@@ -37,7 +37,7 @@
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     //Background Thread
     @try{
-      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:[[command.arguments objectAtIndex:6] intValue] AppContext:self];
       rdnaObject = rdna;
       dispatch_async(dispatch_get_main_queue(), ^(void){
         //Run UI Updates
@@ -794,6 +794,7 @@
   NSMutableDictionary *dictStatusJson = [[NSMutableDictionary alloc] init];
   
   //[dictStatusJson setValue:[NSNumber numberWithInt:status.errorCode] forKey:@"errorCode"];
+  [dictStatusJson setValue: [NSNumber numberWithInt:status.errorCode] forKey:@"errorCode"];
   [dictStatusJson setValue:[NSNumber numberWithInt:status.requestID] forKey:@"requestID"];
   
   NSMutableDictionary *dictRequestJson = [[NSMutableDictionary alloc] init];
