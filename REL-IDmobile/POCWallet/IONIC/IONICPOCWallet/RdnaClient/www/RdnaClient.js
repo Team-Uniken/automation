@@ -729,6 +729,27 @@ RdnaClient.prototype.getNotifications = function (successCallback, errorCallback
 };
 
 /**
+ * @param {*} successCallback - Sync callback that indicates getNotificationHistory call was successfull.
+ * @param {*} errorCallback - Sync callback that indicates getNotificationHistory failure. Returns the error code for the error occured.
+ * @param {*} options - [RECORD_COUNT, START_RECORD, ENTERPRISE_ID, START_DATE, END_DATE, NOTIFICATION_STATUS, NOTIFICATION_ACTION_PERFORMED, KEYWORD_SEARCH, DEVICE_ID]
+ */
+RdnaClient.prototype.getNotificationHistory = function (successCallback, errorCallback, options) {
+    if (errorCallback == null) { errorCallback = function () { } }
+
+    if (typeof errorCallback != "function") {
+        console.log("RdnaClient.getNotificationHistory    failure: failure parameter not a function");
+        return;
+    }
+
+    if (typeof successCallback != "function") {
+        console.log("RdnaClient.getNotificationHistory    failure: success callback parameter must be a function");
+        return;
+    }
+
+    cordova.exec(successCallback, errorCallback, "RdnaClient", "getNotificationHistory", options);
+};
+
+/**
  * @param {*} successCallback - Sync callback that indicates setDeviceToken call was successfull.
  * @param {*} errorCallback - Sync callback that indicates setDeviceToken failure. Returns the error if any.
  * @param {*} options - [GCM_OR_APNS_TOKEN]
@@ -919,7 +940,7 @@ RdnaClient.prototype.getAgentID = function (successCallback, errorCallback) {
  * @param {*} successCallback - Sync callback that indicates getDeviceID call was successfull. Returns getDeviceID of current app session.
  * @param {*} errorCallback - Sync callback that indicates getDeviceID failure. Returns the error code for the error occured.
  */
-RdnaClient.prototype.getAgentID = function (successCallback, errorCallback) {
+RdnaClient.prototype.getDeviceID = function (successCallback, errorCallback) {
     if (errorCallback == null) { errorCallback = function () { } }
 
     if (typeof errorCallback != "function") {
