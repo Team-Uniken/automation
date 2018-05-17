@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Notification History
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<!-- [(ngModel)]="refresh" -->
+<body ng-controller="NotificationPage">
+  <ion-content >
+      <!-- <ion-item>
+          <ion-input type="text" [(ngModel)]="account.login_id" name="login_id" placeholder="Login ID"></ion-input>
+        </ion-item> -->
+    <div style="display:hidden">{{refresh}}</div>
+    <ion-list >
+      <!-- add a section header -->
+      <ion-item class="item-divider">List of Objects</ion-item>
+      <!-- iterate thru each item in the list, use $index as item identifier -->
+      <ion-item *ngFor="let notification of notificationList">
+        <div>
+          <div>
+            <span>{{notification.message.subject}}</span>
+            <span>{{notification.created_ts}}</span>
+          </div>
+          <ul>
+            <div *ngFor="let bullet of getBulletList(notification.message.body)">
+              <li>{{bullet}}</li>
+            </div>
+          </ul>
+          <!-- <div class="button-bar">
+            <button *ngFor="let button of getButtonList(notification.action)" ion-button color={{button.color}} (click)="notificationClick(notification,button.action)">{{button.label}}</button>
+
+          </div> -->
+        </div>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</body>
