@@ -56,7 +56,9 @@ export class HomePage {
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
-            platform.exitApp();
+            //confirmAlert.
+            if(this.platform.is('android'))
+            this.platform.exitApp();
           }
         }]
       });
