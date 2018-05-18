@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,AlertController,Platform } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { RegisterPage } from '../register/register';
+import { TestPage } from '../test/test';
 import { Toast } from '../toast/toast';
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
 
@@ -12,11 +13,10 @@ declare var com: any;
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public toast : Toast) {
-
+  constructor(public navCtrl: NavController, public toast : Toast,public alertCtrl: AlertController,public platform:Platform) {
+    
     document.addEventListener('onInitializeCompleted',  (e: any)=> {
       //console.log(e);
-      
       alert('onInitializeCompleted');
       let res = JSON.parse(e.response);
       //console.log("error code--->" + responseJson.errCode);
@@ -43,9 +43,27 @@ export class HomePage {
     setTimeout(() => {
       this.initRelID();
      }, 2000);
-   
-  }
 
+     document.addEventListener('onSecurityThreat',  (e: any)=> {
+      //alert(JSON.parse(JSON.stringify(e)).response);
+      //platform.exitApp();
+      //ionic.Platform.exitApp();
+      let confirmAlert = this.alertCtrl.create({
+        title: 'Threat detected',
+        message: JSON.parse(JSON.stringify(e)).response,
+        buttons: [{
+          text: 'OK',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+            platform.exitApp();
+          }
+        }]
+      });
+      confirmAlert.present();
+    });
+     
+  }
 
   login() {
     this.navCtrl.push(LoginPage);
@@ -54,10 +72,13 @@ export class HomePage {
     this.navCtrl.push(RegisterPage);
   }
 
-
+  test() {
+    this.navCtrl.push(TestPage);
+  }
+  
   initRelID() {
    // this.toast.showLoader();
-   com.uniken.rdnaplugin.RdnaClient.initialize(this.initSuccess, this.initFailure, ["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", "10.0.6.17", "443", "AES/256/CFB/PKCS7Padding", "Rel-ID-Secure-IV", ""]);
+   com.uniken.rdnaplugin.RdnaClient.initialize(this.initSuccess, this.initFailure, ["SfCYweYCR5KVf30IzbTW6jEIXK2ubn5X1AuzR+/SWF81rgwUsnmFvBbr1y+CsFjsrmemNEeYY8f5i53TkpHvXzYnUYeJ+fG8k8idTkQfpJfoXHe+3ikRUjFO8Br6xXnOruJ1e4Wq+RzgZ9oLCG0TCrHL/4s16K4KcB6dkQR/XrPF0NXpFf3kv/W+xOvD/E3bIb8YHbmQV44JwiLruFZvoCFscN9X3FzVVsVltgUJ0a4v2FC4hZnxSm3ov4rHzPkJs0QiaB2Utz7H+HdwMXICs6U4ZcB655frF8oVBomJHiIezY6HsRCVPXqSqOg2jdnsX30Smzq0fPDpzXAVNqSH1E4C8fN6vjHzbOMyYuX0/w4FLjoXGX7YeYaxuePREH73oibWv0hWUj5nlKqN1fdhXanXx25Rv3H1zRRby+WcJkUTIDKvTK1TRx9OfmrT/JJy1U72lD/zJ2gH0YNIcSSszTWwQMeOAK5ixlFVEoiLMTLoziVk7/M83vXwlD7reGAoJmvY+sgXnDYXRWK6GfMOMP5RRUseV32TsaA1fMZ80GOhE9bjNTGFMVS145z8eZf3E6xGXD1QdYBJVoxRwoygdu2EADLVOIU3u6hwackOk/xCSqT0M6NUtV9NczEFaydTd9exAHpxCdFvaAVTlfQFVD7uqBu5QhpLvxEsjuL0NAhlAgrcNLe7cmf30ZCUgaTBMO8gCGy1TL/ekIg6beXGcDrYRyxJw2+bt7yvNCrvNNdDuRlTqg3pN4/QivC9JppbWqeimOEuEcWRw+YiAc4NT8u/Otn5AddB82nBv/tsXdHSCBoVZqcGswIrpa1z6bvbK1vHfsOv5yQG+Qi5cqmH7Qac5fkQ28LG+ggEURWSVt92FTUy/Z8R2J3zPsmQTHo4wDTTkJtQYU+tcmh4LSfgCuT3qyitVMyAVUFFvO2SwSdrK8FzuHY902JC0jecJSSSIMfrtcEAjdS2MpIyZEnj67YnQYJowfCnEwR2CaBamzYzdyuK/8S8/bLP01K2uU/WujyAjoniUDS1D4jdZi/OLQO1WC4vRkii9QBuD9tskFnQl6a6R1kDI7S9RMHu9ZaH0QUy+htfiN9gollIxMeT0qU9D6RyCKUXVwUx20LmkKYEZ7ESrjdcJ1HkwwzLc7LMscxcK7CPVsYcfK9cakf+YKYrdnLm+gLqjFCyQJ1/6ekhAKzcV2s3bGMuOn6F6LsBWifeJpSViBzwrMUS75g7gB2HlP5HLb/siEtURYEvILOXTn1iRgFuudaIm8B72Z6RzIOl5CykWX91UAXtYZv1wZWWwpgHr21Rd6DyBv8rcIOwyIie/caDgiI9RMyngSD6YSP+ywqV4fpLxEsx4xcs3vQV/R6NAwyYWkX74axC6ZegIb9oJdGcVXmIW6qePc/hP+FNAKpMChDxIVQvmV/13t9XmaB9IgBim8O53mOwCY25LCkt8U4QBrnGu4nlzXkvzq+rkhcc9j2daWlw1rPgy8CgkUKY4Qm62N9bKGu5KtfmwSohkwpMLh0qlinjrJwCdmccc3IW8wbjn2X/hLuXw1OAiLLfJgdWbINghIXEUL2C8LtU5fXlkzXNa/VVqYnMxldKsDeJp6iUwPreq/RUGKQJWXtXakBZ7X+qPedlKbApY320PJ55Ck1Qk4hRVd8SVSTF7JUR3cZXBrALNCSjE5BRaVgbnlgrpH6898/hfL3mEh12gf1Pv7xaemBtHz+AiIvNNPXIYu0XDO86EmCWt1Gs6Qpk6YzaNV8z77JJilrtIglAtD1wAkGCpR7fM3bx66YXEASMLCDeSBLxPv3shjdN2JqWMByRpQ7gEOuZyrdIkOf6ZTlYSQcLMVlKkeaXUpTGcxgHc1fGjPlZ7LaOlVLWsBqma0oOOUl91ne1XqYnFizZg0vQkkVDRjxl+92cgbw4fm5Q8lZTNm23OYlkAr+X64qax02clBt/z4mteAfbJgVN4yf2EGO3550ESFSzFlQa/Q6rZPAs7u6M0WWTt7eYoAZuGegxzKhcCurCklYs6EJTK8NneHVwmvxR57R0bq9Mt9WgnCM4WwNI72KbBbkQ47CqDpEWreIrIqNfBItTtxN0U7O0OvzuGd5QftrP2k4dwD2uVSsE4IuQEz5LZ20DORnK0TiVKMAVPkPdJNTqCeIAOQf4j03SsJbKsMSG6qKWFipLo+4T42Cqy+u1yMXbiiXaGA6AIetAyLqwDkWcLRwH6iXCsNKnNW4isaUdpCw6eLNheCLm4Yht0eEzREwPVDS8/6Dqe+O/AMU7uMhM4kNMjxzJ18R+V5bDxya6ZXYkex6eD0rI4XSF+P1n8H1Fozblcu4INTsFpHsIQksG6mO05loZoyNvt0wT6yMQbmJgZqczdohQn4UiDRzyBB2WPY1X8ZUeg0kMqt/euDJ4YcgfPIKaO0/+272WVYcOBxGFDdic64lhcbYwHQyVZLZQl8d4DLvcCh7O1B7hr+ML3F284eAwR541mPaOx66UOeJmu6FRhCBcri1ibck23LreXjpQuY9S2vjJI+XKsAc39U9Cid+WnOkf8j/OaFKKSI0b7USW77DEB1krk4f89Of8f4cfdAXkz+36nEZia5/RLU33b2bfT+/ijPJ0Y6ZAY1InM37dJecRMtbouyBH/3n5EvzLtSJISbt9pqb9E/QP21fQKNF4lOtBSrK5X7VPggdAvu6AamJC3moahEgplzrGyDAyA+NMZtj7tiXdEnJkCuy1AapxhH4+3aiRQCp7Nxcm5SHDzJFn4Abv", "10.0.5.21", "4443", "AES/256/CFB/PKCS7Padding", "Rel-ID-Secure-IV", ""]);
   }
 
 

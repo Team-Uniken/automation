@@ -22,7 +22,6 @@ export class RegisterPage {
     // card_pin:"1111",
     // password: '1111',
     // password_cofirm:'1111'
-
     login_id: '',
     card_no: '',
     card_pin:"",

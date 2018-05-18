@@ -27,10 +27,11 @@ export class TestPage {
 
   constructor(public navCtrl: NavController, public toast: Toast) {
 
-    this.serviceName = 'serv3_portF';
-    this.ip = "99.99.99.99";
-    this.port = 9999;
-    this.serviceStringJson = "{\"serviceName\": \"serv3_portF\",\"targetHNIP\": \"99.99.99.99\",\"app_uuid\": \"415a4174-c0c3-4ee4-8931-04c5f325db0c\",\"accessServerName\": \"cluster1\",\"targetPort\": 9999,\"portInfo\": {\"isAutoStartedPort\": 0,\"isLocalhostOnly\": 1,\"isStarted\": 0,\"isPrivacyEnabled\": 1,\"portType\": 1,\"port\": 9999}}";
+    this.serviceName = 'port_forward';
+    this.ip = "127.0.0.1";
+    this.port = 9080;
+   // this.serviceStringJson = "{\"serviceName\": \"serv3_portF\",\"targetHNIP\": \"99.99.99.99\",\"app_uuid\": \"415a4174-c0c3-4ee4-8931-04c5f325db0c\",\"accessServerName\": \"cluster1\",\"targetPort\": 9999,\"portInfo\": {\"isAutoStartedPort\": 0,\"isLocalhostOnly\": 1,\"isStarted\": 0,\"isPrivacyEnabled\": 1,\"portType\": 1,\"port\": 9999}}";
+    this.serviceStringJson = "{\"serviceName\": \"port_forward\", \"targetHNIP\": \"127.0.0.1\", \"app_uuid\": \"729f64e2-5a67-11e8-a9f4-e6cfa37cafc2\", \"accessServerName\": \"uniken\", \"targetPort\": 9080, \"portInfo\": { \"isAutoStartedPort\": 1, \"isLocalhostOnly\": 1, \"isStarted\": 1, \"isPrivacyEnabled\": 0, \"portType\": 1, \"port\": 8443 }}";
     this.cipherSalt = "";
     this.cipherSpect = "";
     this.plainText = "uniken";

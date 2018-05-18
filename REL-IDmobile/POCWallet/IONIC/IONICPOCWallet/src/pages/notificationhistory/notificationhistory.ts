@@ -84,7 +84,7 @@ export class NotificationHistoryPage {
 }
   callGetMyNotificationHistory() {
     //[RECORD_COUNT, START_RECORD, ENTERPRISE_ID, START_DATE, END_DATE, NOTIFICATION_STATUS, NOTIFICATION_ACTION_PERFORMED, KEYWORD_SEARCH, DEVICE_ID]
-    var recordCount: string = "1";
+    var recordCount: string = "10";
     var startIndex: string = "1";
     var enterpriseID: string = "";
     var startDate: string = "";

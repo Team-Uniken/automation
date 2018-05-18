@@ -15,6 +15,8 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { NotificationPage } from '../pages/notification/notification';
+import { NotificationHistoryPage } from '../pages/notificationhistory/notificationhistory';
+import { TestPage } from '../pages/test/test';
 
 import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
@@ -38,7 +40,9 @@ export function createTranslateLoader(http: HttpClient) {
     DashboardPage,
     Toast,
     TwoFactorState,
-    NotificationPage
+    NotificationPage,
+    NotificationHistoryPage,
+    TestPage
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,8 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterPage,
     DashboardPage,
     NotificationPage,
+    NotificationHistoryPage,
+    TestPage
   ],
   providers: [
     Push,
