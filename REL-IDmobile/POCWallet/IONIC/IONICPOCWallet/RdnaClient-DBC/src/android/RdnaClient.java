@@ -547,19 +547,25 @@ public class RdnaClient extends CordovaPlugin {
 
   public void openHttpConnection(JSONArray args) throws JSONException {
     RDNA.RDNAHTTPRequest request = new RDNA.RDNAHTTPRequest();
-    if(args.getString(0) != null)
-      request.method = RDNA.RDNAHTTPMethods.RDNA_HTTP_POST;
+    if(args.getString(0) != null){
+      if( args.getInt(0) == 0 ) request.method = RDNA.RDNAHTTPMethods.RDNA_HTTP_POST;
+      else request.method = RDNA.RDNAHTTPMethods.RDNA_HTTP_GET;
+    }
     if(args.getString(3) != null)
       request.body = args.getString(3).getBytes();
     if(args.getString(1) != null)
       request.url = args.getString(1);
-    if(args.getString(2) != null){
-      JSONObject jsonHeaders = new JSONObject(args.getString(2));
-      request.headers = new HashMap<>();
-      Iterator<String> iterator = jsonHeaders.keys();
-      while (iterator.hasNext()) {
-        String key = iterator.next();
-        request.headers.put(key, jsonHeaders.getString(key));
+    if(args.getString(2) != null && args.getString(2).length() > 0){
+      try {
+        JSONObject jsonHeaders = new JSONObject(args.getString(2));
+        request.headers = new HashMap<>();
+        Iterator<String> iterator = jsonHeaders.keys();
+        while (iterator.hasNext()) {
+          String key = iterator.next();
+          request.headers.put(key, jsonHeaders.getString(key));
+        }
+      }catch (JSONException je){
+        je.printStackTrace();
       }
     }
 
@@ -603,7 +609,7 @@ public class RdnaClient extends CordovaPlugin {
           request.put("body",requestData);
           responseStatus.put("httpRequest",request);
           responseStatus.put("httpResponse",response);
-          parentMap.put("error",rdnaHttpStatus.errorCode);
+          parentMap.put("errorCode",rdnaHttpStatus.errorCode);
           parentMap.put("response",responseStatus);
           parentMap.put("requestID",rdnaHttpStatus.requestID);
           callJavaScript("onHttpResponse", parentMap.toString());
@@ -702,7 +708,8 @@ public class RdnaClient extends CordovaPlugin {
       return "null";
     } else if (result == null) {
       return "null";
-    }
+    } else if ( result instanceof Integer )
+      return String.format("%d", result);
     return "unknown";
   }
 
