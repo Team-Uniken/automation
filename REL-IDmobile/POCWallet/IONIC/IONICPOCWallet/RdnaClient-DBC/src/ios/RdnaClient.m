@@ -150,7 +150,7 @@
   
   callbackID = command.callbackId;
   @try{
-    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:1] intValue] withEnterpriseID:[command.arguments objectAtIndex:2] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
+    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:2] intValue] withEnterpriseID:[command.arguments objectAtIndex:1] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
     
     [self decideCallback:errorCode response:nil];
   }@catch (NSException *exception){
