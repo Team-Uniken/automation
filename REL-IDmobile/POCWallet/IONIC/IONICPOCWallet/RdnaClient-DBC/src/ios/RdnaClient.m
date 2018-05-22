@@ -499,7 +499,7 @@
   if(errorID != RDNA_ERR_NONE){
     [self decideCallback:errorID response:nil];
   }else{
-    [self decideCallback:errorID response:[NSString stringWithFormat:@"{requestID:%d}",requestID]];
+    [self decideCallback:errorID response:[NSString stringWithFormat:@"%d",requestID]];
   }
   }@catch (NSException *exception){
     [self illegalAccessCallback:exception];
