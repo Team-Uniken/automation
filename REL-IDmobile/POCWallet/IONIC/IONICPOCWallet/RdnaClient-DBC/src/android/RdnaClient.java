@@ -606,7 +606,7 @@ public class RdnaClient extends CordovaPlugin {
           parentMap.put("error",rdnaHttpStatus.errorCode);
           parentMap.put("response",responseStatus);
           parentMap.put("requestID",rdnaHttpStatus.requestID);
-          callJavaScript("onHttpConnection", parentMap.toString());
+          callJavaScript("onHttpResponse", parentMap.toString());
         }catch (JSONException je){
           je.printStackTrace();
         }
