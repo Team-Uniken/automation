@@ -3,15 +3,42 @@ repositories{
   flatDir {
       dirs 'src/main/libs'
    }
+
+   maven{
+       url 'https://www.jitpack.io'
+   }
+
+   mavenCentral()
+   maven {
+       url 'https://api.bitbucket.org/1.0/repositories/sirackh/workspacelib/raw/snapshots'
+       credentials{
+         username "betterramos"
+         password "Master_Ramos_123"
+       }
+   }
+   maven {
+       url "https://api.bitbucket.org/1.0/repositories/sirackh/workspacelib/raw/releases"
+       credentials{
+          username "betterramos"
+          password "Master_Ramos_123"
+       }
+   }
 }
 
 dependencies {
    compile(name:'app-sdk-release-v1.4.1', ext:'aar')
+   compile ('com.better.workspace.lib:agent:4.3.86'){
+       exclude group: "com.google.android.gms"
+   }
 }
 
 android {
   packagingOptions {
     exclude 'META-INF/NOTICE'
     exclude 'META-INF/LICENSE'
+  }
+
+  defaultConfig{
+  	resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
   }
 }
