@@ -150,7 +150,7 @@
   
   callbackID = command.callbackId;
   @try{
-    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:1] intValue] withEnterpriseID:[command.arguments objectAtIndex:2] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
+    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:2] intValue] withEnterpriseID:[command.arguments objectAtIndex:1] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
     
     [self decideCallback:errorCode response:nil];
   }@catch (NSException *exception){
@@ -499,7 +499,7 @@
   if(errorID != RDNA_ERR_NONE){
     [self decideCallback:errorID response:nil];
   }else{
-    [self decideCallback:errorID response:[NSString stringWithFormat:@"{requestID:%d}",requestID]];
+    [self decideCallback:errorID response:[NSString stringWithFormat:@"%d",requestID]];
   }
   }@catch (NSException *exception){
     [self illegalAccessCallback:exception];
@@ -633,10 +633,13 @@
   return 0;
 }
   
-  -(int)onSecurityThreat:(NSString*)status{
-    [self callJavaScript:@"onSecurityThreat" result:status];
-    return 0;
-  }
+ -(int)onSecurityThreat:(NSString*)status{
+  NSString *str = [status stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+  str = [self JSONString:str];
+  [self callJavaScript:@"onSecurityThreat" result:str];
+  return 0;
+}
+ 
   
 - (int)ShowLocationDailogue {
   //user can show location alert if location not available.
@@ -826,6 +829,19 @@
   NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictStatusJson
                                                      options:0 error:&error];
   return [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+-(NSString *)JSONString:(NSString *)aString {
+  NSMutableString *s = [NSMutableString stringWithString:aString];
+  [s replaceOccurrencesOfString:@"\"" withString:@"\\\"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"/" withString:@"\\/" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\n" withString:@"\\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\b" withString:@"\\b" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\f" withString:@"\\f" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\r" withString:@"\\r" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\t" withString:@"\\t" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+   [s replaceOccurrencesOfString:@"'" withString:@"\\'" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  return [NSString stringWithString:s];
 }
   
   @end

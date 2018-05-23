@@ -731,7 +731,7 @@ RdnaClient.prototype.getNotifications = function (successCallback, errorCallback
 /**
  * @param {*} successCallback - Sync callback that indicates getNotificationHistory call was successfull.
  * @param {*} errorCallback - Sync callback that indicates getNotificationHistory failure. Returns the error code for the error occured.
- * @param {*} options - [RECORD_COUNT, START_RECORD, ENTERPRISE_ID, START_DATE, END_DATE, NOTIFICATION_STATUS, NOTIFICATION_ACTION_PERFORMED, KEYWORD_SEARCH, DEVICE_ID]
+ * @param {*} options - [RECORD_COUNT, ENTERPRISE_ID, START_RECORD, START_DATE, END_DATE, NOTIFICATION_STATUS, NOTIFICATION_ACTION_PERFORMED, KEYWORD_SEARCH, DEVICE_ID]
  */
 RdnaClient.prototype.getNotificationHistory = function (successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function () { } }
