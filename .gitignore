@@ -14,6 +14,7 @@ TODOs.md
 /REL-IDmobile/ReactReferenceApp/ios/api-sdk
 /REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/node_modules
 /REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/platforms
+/REL-IDmobile/POCWallet/IONIC/IONICPOCWallet/plugins
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
