@@ -93,7 +93,7 @@ export class NotificationHistoryPage {
     var actionPerformed: string = "";
     var keywordSearch: string = "";
     var deviceID: string = "";
-    com.uniken.rdnaplugin.RdnaClient.getNotificationHistory(this.initSuccess, this.initFailure, [recordCount, startIndex, enterpriseID, startDate, endDate,notificationStatus,actionPerformed,keywordSearch,deviceID]);
+    com.uniken.rdnaplugin.RdnaClient.getNotificationHistory(this.initSuccess, this.initFailure, [recordCount, enterpriseID,startIndex, startDate, endDate,notificationStatus,actionPerformed,keywordSearch,deviceID]);
   }
 
    replaceString(find, replace, str) {

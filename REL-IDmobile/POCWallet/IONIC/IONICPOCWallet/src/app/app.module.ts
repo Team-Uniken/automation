@@ -13,6 +13,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { RegisterPageMRI } from '../pages/register_mri/register_mri';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { NotificationPage } from '../pages/notification/notification';
 import { NotificationHistoryPage } from '../pages/notificationhistory/notificationhistory';
@@ -42,7 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
     TwoFactorState,
     NotificationPage,
     NotificationHistoryPage,
-    TestPage
+    TestPage,
+    RegisterPageMRI
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,8 @@ export function createTranslateLoader(http: HttpClient) {
     DashboardPage,
     NotificationPage,
     NotificationHistoryPage,
-    TestPage
+    TestPage,
+    RegisterPageMRI
   ],
   providers: [
     Push,

@@ -13,5 +13,6 @@
  export const CHLNG_SECONDARY_SEC_QA = "secondarySecqa";
  export const SAMPLE_QUESTION = "sampleQuestion";
  export const SAMPLE_ANSWER = "sampleAnswer";
- export const CHLNG_VERIFICATION_MODE= 0
+ export const CHLNG_VERIFICATION_MODE = 0;
+ export const  IS_MRI : number = 1;
 
