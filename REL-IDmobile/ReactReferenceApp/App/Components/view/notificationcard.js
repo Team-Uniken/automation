@@ -245,7 +245,7 @@ export default class NotificationCard extends Component {
 
         if (this.props.notification.action.length == 3) {
             return (
-                <View style={{ flex: 1 }}>
+                <View style={ [{flex: 1 },Platform.OS=='android' && this.props.expand?{marginBottom:20}:{marginBottom:0}]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
@@ -341,7 +341,7 @@ export default class NotificationCard extends Component {
             );
         } else {
             return (
-                <View style={{ flex: 1 }}>
+                <View style={ [{flex: 1 },Platform.OS=='android' && this.props.expand?{marginBottom:20}:{marginBottom:0}]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
