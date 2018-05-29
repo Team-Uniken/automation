@@ -30,9 +30,10 @@ export class TwoFactorState {
     }
 
     constructor(public navCtrl: NavController,public toast:Toast,public events:Events) {
+       
         if(TwoFactorState.listener)
             document.removeEventListener('onCheckChallengeResponseStatus',TwoFactorState.listener)
-
+          
         TwoFactorState.listener =  (e: any) => {
               this.toast.hideLoader();
               let res = JSON.parse(e.response);
@@ -104,7 +105,7 @@ export class TwoFactorState {
                     }
                 }
                 else if (challengeName === (Constants.CHLNG_PASS)) {
-                    challenge.chlng_resp[0].response = this.passcode; TwoFactorState
+                    challenge.chlng_resp[0].response = this.passcode; 
                 }
                 else if (challengeName === (Constants.CHLNG_DEV_BIND)) {
                     challenge.chlng_resp[0].response = true;

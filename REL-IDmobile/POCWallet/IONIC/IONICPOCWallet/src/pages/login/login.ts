@@ -11,6 +11,7 @@ import { elementDef } from '@angular/core/src/view/element';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
+import * as Constants from '../twofatorstate/constants';
 
 
 @Component({
@@ -39,9 +40,17 @@ export class LoginPage {
       this.loginErrorString = value;
     })
     //this.events.subscribe('login:success', this.callLoginApi);
+    this.callLoginApi = this.callLoginApi.bind(this);
   }
 
   callLoginApi() {
+
+
+    if(Constants.IS_MRI == 1){
+    this.navCtrl.push(DashboardPage,{login_id:this.account.login_id , amount:0});
+    return;
+  }
+    
     this.toast.showLoader();
     this.user.login(this.account).subscribe((resp: any) => {
       this.toast.hideLoader();
