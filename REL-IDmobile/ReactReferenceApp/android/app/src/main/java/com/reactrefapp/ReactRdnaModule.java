@@ -1452,6 +1452,90 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getDefaultCipherSpec(Callback callback)
+    {
+        RDNA.RDNAStatus<String> status=rdnaObj.getDefaultCipherSpec();
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap statusMap = Arguments.createMap();
+
+        if(rdnaObj != null) {
+            int error = status.errorCode;
+            statusMap.putInt("error", error);
+            if(status.errorCode == 0 && status.result!=null) {
+                statusMap.putString("response",status.result);
+            }
+
+        } else {
+            statusMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(statusMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
+    public void encryptHttpRequest(int scope, String cipherSpecs, String salt, String request, Callback callback)
+    {
+        RDNA.RDNAStatus<String> status=rdnaObj.encryptHttpRequest(scope, cipherSpecs, salt!=null?salt.getBytes():null, request);
+        WritableMap statusMap = Arguments.createMap();
+        if(rdnaObj != null) {
+            int error = status.errorCode;
+            statusMap.putInt("error", error);
+            if(status.errorCode == 0 && status.result!=null) {
+                statusMap.putString("response", status.result);
+            }
+        } else {
+            statusMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        WritableArray result = Arguments.createArray();
+        result.pushMap(statusMap);
+        callback.invoke(result);
+    }
+
+    @ReactMethod
+    public void decryptHttpResponse(int scope, String cipherSpecs, String salt, String response, Callback callback)
+    {
+        RDNA.RDNAStatus<String> status=rdnaObj.decryptHttpResponse(scope, cipherSpecs, salt!=null?salt.getBytes():null, response);
+        WritableMap statusMap = Arguments.createMap();
+        if(rdnaObj != null) {
+            int error = status.errorCode;
+            statusMap.putInt("error", error);
+            if(status.errorCode == 0 && status.result!=null) {
+                statusMap.putString("response", status.result);
+            }
+        } else {
+            statusMap.putInt("error", 1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        WritableArray result = Arguments.createArray();
+        result.pushMap(statusMap);
+        callback.invoke(result);
+    }
+
+    @ReactMethod
+    public void getAgentID(Callback callback){
+        WritableArray writableArray = Arguments.createArray();
+        WritableMap errorMap = Arguments.createMap();
+        if(rdnaObj!=null){
+            RDNA.RDNAStatus<String> status =   rdnaObj.getAgentID();
+            errorMap.putInt("error", status.errorCode);
+            if(status.errorCode == 0)
+                errorMap.putString("response",status.result);
+        }
+        else{
+            errorMap.putInt("error",1);
+            showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
+        }
+
+        writableArray.pushMap(errorMap);
+        callback.invoke(writableArray);
+    }
+
+    @ReactMethod
     public void demo(){
     }
 }
