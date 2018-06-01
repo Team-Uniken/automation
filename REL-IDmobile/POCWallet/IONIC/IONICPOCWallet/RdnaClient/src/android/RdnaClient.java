@@ -6,16 +6,23 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.PluginResult;
 import android.app.Activity;
+import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
+
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.Semaphore;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.uniken.rdna.RDNA;
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
 import java.lang.reflect.Method;
+
+import static java.text.DateFormat.DEFAULT;
 
 public class RdnaClient extends CordovaPlugin {
   
@@ -55,8 +62,7 @@ public class RdnaClient extends CordovaPlugin {
 
   public boolean execute(final String action, final JSONArray args, CallbackContext callbackContext) throws JSONException {
     
-    this.callbackContext = callbackContext;
-    
+    this.callbackContext = callbackContext;    
     if (action.equals("initialize")) {
       initialize(args);
     } else if (action.equals("terminate")) {
@@ -129,6 +135,14 @@ public class RdnaClient extends CordovaPlugin {
       getErrorInfo(args);
     }else if (action.equals("getSessionID")) {
       getSessionID();
+    }else if (action.equals("getAgentID")) {
+      getAgentID();
+    }else if(action.equals("getDeviceID")){
+      getDeviceID();
+    }else if(action.equals("getNotificationHistory")){
+      getNotificationHistory(args);
+    }else if (action.equals("openHttpConnection")) {
+      openHttpConnection(args);
     }
     return true;
   }
@@ -272,13 +286,19 @@ public class RdnaClient extends CordovaPlugin {
       }
 
       @Override
-      public Object getDeviceContext() {
+      public int onSecurityThreat(String s) {
+        callJavaScript("onSecurityThreat", s);
+        return 0;
+      }
+
+      @Override
+      public Context getDeviceContext() {
         return cordova.getActivity();
       }
     };
 
     try {
-      RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(args.getString(0), callbacks, args.getString(1), args.getInt(2), args.getString(3), args.getString(4), null, null,null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS,"edewf");
+      RDNA.RDNAStatus<RDNA> rdnaStatus = RDNA.Initialize(args.getString(0), callbacks, args.getString(1), args.getInt(2), args.getString(3), args.getString(4), null, null,null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, "edewf");
       rdnaObj = rdnaStatus.result;
       decideCallback(rdnaStatus);
     } catch (Exception e) {
@@ -302,7 +322,8 @@ public class RdnaClient extends CordovaPlugin {
 
   public void resumeRuntime(JSONArray args) {
     try {
-      RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(args.getString(0), callbacks, null, cordova.getActivity());
+      RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(args.getString(0), callbacks, null, RDNA.RDNALoggingLevel.RDNA_NO_LOGS, cordova.getActivity());
+      //RDNA.RDNAStatus<RDNA> rdnaStatus = rdnaObj.resumeRuntime(args.getString(0), callbacks, null, cordova.getActivity());
       rdnaObj = rdnaStatus.result;
       decideCallback(rdnaStatus);
     } catch (JSONException e) {
@@ -343,7 +364,7 @@ public class RdnaClient extends CordovaPlugin {
   }
 
   void updateDeviceDetails(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.updateDeviceDetails(args.getString(0), args.getString(0)));
+    decideCallback(rdnaObj.updateDeviceDetails(args.getString(0), args.getString(1)));
   }
 
   void setApplicationName(JSONArray args) throws JSONException {
@@ -364,6 +385,18 @@ public class RdnaClient extends CordovaPlugin {
   void getSessionID(){
     try {
       decideCallback(rdnaObj.getSessionID());
+    }catch (Exception e){}
+  }
+
+  private void getAgentID() {
+    try {
+      decideCallback(rdnaObj.getAgentID());
+    }catch (Exception e){}
+  }
+
+  private void getDeviceID() {
+    try {
+      decideCallback(rdnaObj.getDeviceID());
     }catch (Exception e){}
   }
 
@@ -447,10 +480,13 @@ public class RdnaClient extends CordovaPlugin {
     }
   }
 
+  public void getNotificationHistory(JSONArray args) throws JSONException{
+    decideCallback(rdnaObj.getNotificationHistory(args.getInt(0), args.getString(1), args.getInt(2), args.getString(3), args.getString(4), args.getString(5), args.getString(6), args.getString(7), args.getString(8)));
+  }
+
   public void encryptDataPacket(JSONArray args) {
     try {
-
-      RDNA.RDNAStatus<byte[]> a=rdnaObj.encryptDataPacket(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3).getBytes());
+      RDNA.RDNAStatus<byte[]> a=rdnaObj.encryptDataPacket(args.getInt(0), args.getString(1), args.getString(2).getBytes(), args.getString(3).getBytes());
       decideCallback(Base64.encodeToString(a.result, Base64.DEFAULT));
     } catch (JSONException e) {
       e.printStackTrace();
@@ -459,7 +495,7 @@ public class RdnaClient extends CordovaPlugin {
 
   public void decryptDataPacket(JSONArray args) {
     try {
-      decideCallback(rdnaObj.decryptDataPacket(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), Base64.decode(args.getString(3), Base64.DEFAULT)));
+      decideCallback(rdnaObj.decryptDataPacket(args.getInt(0), args.getString(1), args.getString(2).getBytes(), Base64.decode(args.getString(3), Base64.DEFAULT)));
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -467,15 +503,16 @@ public class RdnaClient extends CordovaPlugin {
 
   public void encryptHttpRequest(JSONArray args) {
     try {
-      decideCallback(rdnaObj.encryptHttpRequest(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3)));
+      decideCallback(rdnaObj.encryptHttpRequest(args.getInt(0), args.getString(1), args.getString(2).getBytes(), args.getString(3)));
     } catch (JSONException e) {
       e.printStackTrace();
     }
   }
 
+
   public void decryptHttpResponse(JSONArray args) {
     try {
-      decideCallback(rdnaObj.decryptHttpResponse(RDNA.RDNAPrivacyScope.values()[args.getInt(0)-1], args.getString(1), args.getString(2).getBytes(), args.getString(3)));
+      decideCallback(rdnaObj.decryptHttpResponse(args.getInt(0), args.getString(1), args.getString(2).getBytes(), args.getString(3)));
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -507,6 +544,84 @@ public class RdnaClient extends CordovaPlugin {
     rdnaiwaCreds.password = args.getString(1);
     rdnaiwaCreds.authStatus = args.getBoolean(2) == true ? RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_SUCCESS : RDNA.RDNAIWAAuthStatus.RDNA_IWA_AUTH_CANCELLED;
     lock.release();
+  }
+  
+  
+  public void openHttpConnection(JSONArray args) throws JSONException {
+    RDNA.RDNAHTTPRequest request = new RDNA.RDNAHTTPRequest();
+    if(args.getString(0) != null){
+      if( args.getInt(0) == 0 ) request.method = RDNA.RDNAHTTPMethods.RDNA_HTTP_POST;
+      else request.method = RDNA.RDNAHTTPMethods.RDNA_HTTP_GET;
+    }
+    if(args.getString(3) != null)
+      request.body = args.getString(3).getBytes();
+    if(args.getString(1) != null)
+      request.url = args.getString(1);
+    if(args.getString(2) != null && args.getString(2).length() > 0){
+      try {
+        JSONObject jsonHeaders = new JSONObject(args.getString(2));
+        request.headers = new HashMap<>();
+        Iterator<String> iterator = jsonHeaders.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            request.headers.put(key, jsonHeaders.getString(key));
+        }
+      }catch (JSONException je){
+        je.printStackTrace();
+      }
+    }
+
+    RDNA.RDNAStatus status = rdnaObj.openHttpConnection(request, new RDNA.RDNAHTTPCallbacks() {
+        @Override
+        public int onHttpResponse(final RDNA.RDNAHTTPStatus rdnaHttpStatus) {
+            try {
+              JSONArray parentArray = new JSONArray();
+              JSONObject parentMap = new JSONObject();
+              JSONObject responseStatus = new JSONObject();
+              JSONObject response = new JSONObject();
+              JSONObject request = new JSONObject();
+              JSONObject headers = new JSONObject();
+              JSONObject requestHeaders = new JSONObject();
+
+              response.put("version", rdnaHttpStatus.response.version);
+              response.put("statusCode",rdnaHttpStatus.response.statusCode);
+              response.put("statusMessage",rdnaHttpStatus.response.statusMessage);
+              if(rdnaHttpStatus.response.headers!=null) {
+                for (String key : rdnaHttpStatus.response.headers.keySet()){
+                  headers.put(key,rdnaHttpStatus.response.headers.get(key));
+                }
+              }
+              response.put("headers",headers);
+              String responseData = "";
+              if(rdnaHttpStatus.response.body!=null)
+                responseData = Base64.encodeToString(rdnaHttpStatus.response.body, Base64.NO_WRAP);
+              response.put("body",responseData);
+
+              request.put("method",rdnaHttpStatus.request.method.name());
+              request.put("url",rdnaHttpStatus.request.url);
+              if(rdnaHttpStatus.request.headers!=null) {
+                for (String key : rdnaHttpStatus.request.headers.keySet()){
+                  requestHeaders.put(key,rdnaHttpStatus.request.headers.get(key));
+                }
+              }
+              request.put("headers",requestHeaders);
+              String requestData = "";
+              if(rdnaHttpStatus.request.body!=null)
+                requestData = new String(rdnaHttpStatus.request.body,Charset.forName("UTF-8"));
+              request.put("body",requestData);
+              responseStatus.put("httpRequest",request);
+              responseStatus.put("httpResponse",response);
+              parentMap.put("errorCode",rdnaHttpStatus.errorCode);
+              parentMap.put("response",responseStatus);
+              parentMap.put("requestID",rdnaHttpStatus.requestID);
+              callJavaScript("onHttpResponse", parentMap.toString());
+            }catch (JSONException je){
+              je.printStackTrace();
+            }
+            return 0;
+          }
+      });
+    decideCallback(status);
   }
 
   private synchronized void callJavaScript(String methodName, String s) {
@@ -547,14 +662,12 @@ public class RdnaClient extends CordovaPlugin {
         if (rdnaStatus.errorCode == 0) {
           PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, createCallBackRespose(rdnaStatus.errorCode, decideResultTypeAndReturnStringResult(rdnaStatus.result)));
           pluginResult.setKeepCallback(true);
-          callbackContext.sendPluginResult(pluginResult);
-          
+          callbackContext.sendPluginResult(pluginResult);          
         } else {
           PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, createCallBackRespose(rdnaStatus.errorCode, decideResultTypeAndReturnStringResult(rdnaStatus.result)));
           pluginResult.setKeepCallback(true);
           callbackContext.sendPluginResult(pluginResult);
-        }
-        
+        }        
         
       } else if (result instanceof Integer) {
         Integer errorCode = (Integer) result;
@@ -598,7 +711,8 @@ public class RdnaClient extends CordovaPlugin {
       return "null";
     } else if (result == null) {
       return "null";
-    }
+    } else if ( result instanceof Integer )
+      return String.format("%d", result);
     return "unknown";
   }
   
