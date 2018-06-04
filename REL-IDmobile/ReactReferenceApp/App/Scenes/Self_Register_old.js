@@ -284,7 +284,7 @@ class RegisterOld extends Component {
           } else {
 
             setTimeout(() => {
-              alert(res.error_msg);
+              alert(res.errorMessage);
             }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
