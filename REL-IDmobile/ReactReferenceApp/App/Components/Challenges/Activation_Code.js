@@ -124,7 +124,7 @@ class Activation_Code extends Component {
     This method is called when the component is Mounted/Loaded.
   */
   componentDidMount() {
-    AsyncStorage.removeItem(Main.dnaUserName, null);
+    //AsyncStorage.removeItem(Main.dnaUserName, null);
     constant.USER_T0 = "YES";
 
     if (Platform.OS === 'android' && Platform.Version >= 23) {
