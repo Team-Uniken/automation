@@ -257,7 +257,7 @@ class EnterpriseRegister extends Component {
         "sessionId":this.sessionId,
         "Content-Type": "application/x-www-form-urlencoded",
         "Content-Length":"0",
-        "resetUser":true
+        "resetUser":"true"
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
@@ -469,7 +469,7 @@ class EnterpriseRegister extends Component {
                         this.refs.cardNumber.focus();
                       } } />
                     <Input
-                      placeholder={'Card Number (Last 6 Digits)'}
+                      placeholder={'XXXX-XXXX-XX _ _ - _ _ _ _'}
                       ref={'cardNumber'}
                       keyboardType={'phone-pad'}
                       returnKeyType={'next'}

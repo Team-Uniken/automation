@@ -198,7 +198,7 @@ class SelfRegister extends Component {
   validateAndProcced() {
 
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
-      && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
+      && this.state.phoneNumber.trim().length > 0)) {
       this.showMessage("", "All fields are mandatory", false);
       return;
     } else if(!this.validateName(this.state.firstName)){
@@ -208,10 +208,12 @@ class SelfRegister extends Component {
     }else if (!this.validateEmail(this.state.email)) {
       this.showMessage("", "Enter valid Email ID", false);
       return;
-    } else if (!(this.state.email === this.state.confirmEmail)) {
-      this.showMessage("", "Entered emails do not match", false);
-      return;
-    } else if (this.state.phoneNumber.length < 10 ) {
+    } 
+    // else if (!(this.state.email === this.state.confirmEmail)) {
+    //   this.showMessage("", "Entered emails do not match", false);
+    //   return;
+    // } 
+    else if (this.state.phoneNumber.length < 10 ) {
       this.showMessage("", "Enter a valid 10-digit phone number", false);
       return;
     } else if (this.state.value < 90) {
@@ -284,7 +286,7 @@ class SelfRegister extends Component {
             return;
           }
           if (res.isError == false) {
-            this.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instructions.", true);
+            this.showMessage("Activation Code Sent to \n"+this.state.email,"Please check the email for more instructions.", true);
           } else {
 
             setTimeout(() => {
@@ -318,7 +320,7 @@ class SelfRegister extends Component {
           text: 'OK',
           onPress: () => {
             if (press) {
-              var un = this.state.confirmEmail;
+              var un = this.state.email;
               Main.dnaUserName = un;
                 Util.saveUserData("isEnterpriseUser", "false").then((data) => {
                   Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
@@ -341,7 +343,7 @@ class SelfRegister extends Component {
    */
   checkUsername() {
     this.state.progress = 0;
-    var un = this.state.confirmEmail;
+    var un = this.state.email;
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
@@ -462,9 +464,9 @@ class SelfRegister extends Component {
                       autoComplete={false}
                       onChange={this.onEmailChange.bind(this) }
                       onSubmitEditing={() => {
-                        this.refs.confirmEmail.focus();
+                        this.refs.phoneNumber.focus();
                       } } />
-                    <Input
+                    {/*<Input
                       placeholder={'Confirm Email'}
                       ref={'confirmEmail'}
                       keyboardType={'email-address'}
@@ -477,7 +479,7 @@ class SelfRegister extends Component {
                       onChange={this.onConfirmEmailChange.bind(this) }
                       onSubmitEditing={() => {
                         this.refs.phoneNumber.focus();
-                      } } />
+                    } } />*/}
                     <Input
                       placeholder={'Phone Number'}
                       ref={'phoneNumber'}

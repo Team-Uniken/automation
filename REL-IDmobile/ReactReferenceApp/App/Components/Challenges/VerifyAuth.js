@@ -99,8 +99,8 @@ class VerifyAuth extends Component {
 
     submit() {
 
-        if(this.state.verify_auth == false && this.state.enterprise_register ==false){
-                alert("Please select registration option");
+        if (this.state.verify_auth == false && this.state.enterprise_register == false) {
+            alert("Please select registration option");
             return;
         }
 
@@ -120,7 +120,7 @@ class VerifyAuth extends Component {
 
     render() {
         var indents = [];
-     
+
         indents.push(
             <Checkbox
                 onSelect={this.selectEnterpriseRegister.bind(this)}
@@ -140,7 +140,7 @@ class VerifyAuth extends Component {
         );
 
         return (
-            <MainActivation>
+            /*{<MainActivation>
                 <View style={Skin.layout0.wrap.container}>
                     <StatusBar
                         style={Skin.layout1.statusbar}
@@ -151,17 +151,19 @@ class VerifyAuth extends Component {
                         <Title onClose={() => { this.close(); }}
                         >Registration</Title>
                     </View>
+
                     <ScrollView style={Skin.layout1.content.scrollwrap}>
-                        <View style={Skin.layout1.content.wrap}>
+                        <View style={[Skin.layout1.content.wrap, { justifyContent: "center", alignItems: 'center' }]}>
                             <View style={Skin.layout1.content.container}>
-                            <Margin
-                                    space={10} />
+                                <Margin
+                                    space={45} />
                                 {indents}
                                 <Margin
                                     space={4} />
                             </View>
                         </View>
                     </ScrollView>
+
                     <View
                         style={Skin.layout1.bottom.wrap}>
                         <View style={Skin.layout1.bottom.container}>
@@ -174,6 +176,57 @@ class VerifyAuth extends Component {
                     <KeyboardSpacer topSpacing={-55} />
                 </View >
 
+            </MainActivation>}*/
+            <MainActivation>
+                <View style={[Skin.layout0.wrap.container, { flex: 1,justifyContent: 'center',alignItems:'center' }]}  >
+                    <StatusBar
+                        style={Skin.layout1.statusbar}
+                        backgroundColor={Skin.main.STATUS_BAR_BG}
+                        barStyle={'default'} />
+ <View style={Skin.layout1.title.wrap}>
+                            <Title onClose={() => {
+                                this.close();
+                            }}>Registration
+                           </Title>
+                        </View>
+                    <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center' ,alignItems:'center'}]}>
+                       
+                        
+                        <View style={[{height:500, justifyContent: 'center' ,alignItems:'center'}]}>
+
+                            <Text style={[Skin.layout0.top.icon]}>
+                                {Skin.icon.logo}
+                            </Text>
+                            <Text style={Skin.layout0.top.subtitle}>Please select option for</Text>
+                            <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}> Secondary Device Activation</Text>
+                            <ScrollView style={Skin.layout1.content.scrollwrap}>
+                                <View style={[Skin.layout1.content.wrap, { justifyContent: "center", alignItems: 'center' }]}>
+                                    <View style={Skin.layout1.content.container}>
+                                        <Margin
+                                            space={20} />
+                                        {indents}
+                                        <Margin
+                                            space={4} />
+                                    </View>
+                                </View>
+                                <View
+                                    style={Skin.layout1.bottom.wrap}>
+                                    <View style={Skin.layout1.bottom.container}>
+                                    <Margin
+                                            space={10} />
+                                        <Button
+                                            label={Skin.text['1']['1'].submit_button}
+                                            onPress={this.submit.bind(this)}
+                                        />
+                                    </View>
+                                </View>
+                            </ScrollView>
+
+
+                        </View>
+                        
+                    </View>
+                </View>
             </MainActivation>
         );
     }

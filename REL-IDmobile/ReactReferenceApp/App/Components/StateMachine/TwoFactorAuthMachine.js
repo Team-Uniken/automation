@@ -351,6 +351,8 @@ class TwoFactorAuthMachine extends Component {
                   }else {
                     this.navigateToEnterpriseRegistration();
                   }
+                }) .catch((error) => {
+                  this.navigateToEnterpriseRegistration();
                 });       
               },
               style: 'cancel',
