@@ -18,6 +18,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
 import ModalPicker from 'react-native-modal-picker'
 import { NativeModules, NativeEventEmitter } from 'react-native';
+import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button'
 
 
 /*
@@ -57,9 +58,11 @@ class VerifyAuth extends Component {
         this.state = {
             verify_auth: false,
             enterprise_register: false,
+            selectedOption : 0
 
         };
         this.close = this.close.bind(this);
+        this.onSelect = this.onSelect.bind(this);
         this.submit = this.submit.bind(this);
     }
     /*
@@ -98,25 +101,24 @@ class VerifyAuth extends Component {
     }
 
     submit() {
+        //alert(`Selected index: ${this.state.selectedOption}`);
 
-        if (this.state.verify_auth == false && this.state.enterprise_register == false) {
-            alert("Please select registration option");
-            return;
-        }
-
-
+        //return;
         var responseJson = this.props.url.chlngJson;
-        if (this.state.verify_auth == true) {
+        if (this.state.selectedOption == 0) {
             responseJson.chlng_resp[0].response = 'true';
             Events.trigger('showNextChallenge', { response: responseJson });
             return;
         }
 
-        if (this.enterprise_register == true) {
+        if (this.state.selectedOption == 1) {
             Events.trigger("forgotPassowrd");
         }
     }
-
+    onSelect(index, value){
+       // alert(`Selected index: ${index} , value: ${value}`);
+       this.state.selectedOption = index;
+      }
 
     render() {
         var indents = [];
@@ -178,21 +180,21 @@ class VerifyAuth extends Component {
 
             </MainActivation>}*/
             <MainActivation>
-                <View style={[Skin.layout0.wrap.container, { flex: 1,justifyContent: 'center',alignItems:'center' }]}  >
+                <View style={[Skin.layout0.wrap.container, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}  >
                     <StatusBar
                         style={Skin.layout1.statusbar}
                         backgroundColor={Skin.main.STATUS_BAR_BG}
                         barStyle={'default'} />
- <View style={Skin.layout1.title.wrap}>
-                            <Title onClose={() => {
-                                this.close();
-                            }}>Registration
+                    <View style={Skin.layout1.title.wrap}>
+                        <Title onClose={() => {
+                            this.close();
+                        }}>Registration
                            </Title>
-                        </View>
-                    <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center' ,alignItems:'center'}]}>
-                       
-                        
-                        <View style={[{height:500, justifyContent: 'center' ,alignItems:'center'}]}>
+                    </View>
+                    <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center', alignItems: 'center' }]}>
+
+
+                        <View style={[{ height: 500, justifyContent: 'center', alignItems: 'center' }]}>
 
                             <Text style={[Skin.layout0.top.icon]}>
                                 {Skin.icon.logo}
@@ -204,7 +206,18 @@ class VerifyAuth extends Component {
                                     <View style={Skin.layout1.content.container}>
                                         <Margin
                                             space={20} />
-                                        {indents}
+                                        <RadioGroup
+                                            onSelect={(index, value) => this.onSelect(index, value)}
+                                            selectedIndex ={this.state.selectedOption}
+                                        >
+                                            <RadioButton value={'item1'} >
+                                                <Text>REL-ID Verify Authentication</Text>
+                                            </RadioButton>
+
+                                            <RadioButton value={'item2'}>
+                                                <Text>Enterprise Registration</Text>
+                                            </RadioButton>
+                                        </RadioGroup>
                                         <Margin
                                             space={4} />
                                     </View>
@@ -212,7 +225,7 @@ class VerifyAuth extends Component {
                                 <View
                                     style={Skin.layout1.bottom.wrap}>
                                     <View style={Skin.layout1.bottom.container}>
-                                    <Margin
+                                        <Margin
                                             space={10} />
                                         <Button
                                             label={Skin.text['1']['1'].submit_button}
@@ -224,7 +237,7 @@ class VerifyAuth extends Component {
 
 
                         </View>
-                        
+
                     </View>
                 </View>
             </MainActivation>
