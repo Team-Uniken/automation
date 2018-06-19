@@ -167,7 +167,7 @@ export default class NotificationCard extends Component {
         bodyStr = Util.replaceString('<br/>','\n',bodyStr);
         bulletList.push(
           <View key = {i}>
-          <View style={[style.row,{width: SCREEN_WIDTH - 62}]}>
+          <View style={[style.row,{width: SCREEN_WIDTH - 62,paddingRight:10}]}>
           <Text style={style.dot}>{"\u2022"}</Text>
           <Text style={style.body}>
           {bodyStr}
