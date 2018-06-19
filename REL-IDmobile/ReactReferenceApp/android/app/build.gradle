@@ -201,8 +201,12 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "Boolean", "enableLogs", "false"
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        debug {
+            buildConfigField "Boolean", "enableLogs", "true"
         }
     }
 //    applicationVariants.all { variant ->

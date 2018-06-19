@@ -48,7 +48,7 @@ public class ProxySetting {
 
     boolean isRequestTunneled = true;
 
-    //Log.d(TAG, "Setting proxy with android >= 4.4.x and <= 5.x API.");
+    Logger.log(Logger.LogLevel.LOG_D,TAG, "Setting proxy with android >= 4.4.x and <= 5.x API.");
 
     try {
 
@@ -69,39 +69,47 @@ public class ProxySetting {
             Method onReceiveMethod = clazz.getDeclaredMethod("onReceive", Context.class, Intent.class);
             Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
             onReceiveMethod.invoke(rec, applicationContext, intent);
+          }else{
+            for (Field field :rec.getClass().getDeclaredFields()){
+              if(field.getType().getName().contains("ProxyChangeListener")){
+                Method onReceiveMethod = clazz.getDeclaredMethod("onReceive", Context.class, Intent.class);
+                Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
+                onReceiveMethod.invoke(rec, applicationContext, intent);
+              }
+            }
           }
         }
       }
 
-     // Log.d(TAG, "Setting proxy with android >= 4.4.x and <= 5.x API successful!");
+      Logger.log(Logger.LogLevel.LOG_D,TAG, "Setting proxy with android >= 4.4.x and <= 5.x API successful!");
     }
 
     catch (ClassNotFoundException e) {
-     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (NoSuchFieldException e) {
-     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (IllegalAccessException e) {
-      //Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (IllegalArgumentException e) {
-     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (NoSuchMethodException e) {
-      //Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (InvocationTargetException e) {
-     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + e);
       isRequestTunneled = false;
     }
     catch (Exception ex) {
-     // Log.e(TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + ex);
+      Logger.log(Logger.LogLevel.LOG_D,TAG,"Setting proxy with android >= 4.4.x and <= 5.x API failed with error: " + ex);
       isRequestTunneled = false;
     }
 

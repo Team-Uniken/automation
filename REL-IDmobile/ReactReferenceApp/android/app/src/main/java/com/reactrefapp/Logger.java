@@ -45,11 +45,13 @@ class Logger {
   }
 
   public static void log(LogLevel logLevel, String TAG, String str) {
-    if(str.length() > ENTRY_MAX_LEN) {
+    if(BuildConfig.enableLogs) {
+      if (str.length() > ENTRY_MAX_LEN) {
         print(logLevel, TAG, str.substring(0, ENTRY_MAX_LEN));
         log(logLevel, TAG, str.substring(ENTRY_MAX_LEN));
-    } else
-      print(logLevel, TAG, str);
+      } else
+        print(logLevel, TAG, str);
+    }
 }
   
   private static void print(LogLevel logLevel, String TAG, String str){
