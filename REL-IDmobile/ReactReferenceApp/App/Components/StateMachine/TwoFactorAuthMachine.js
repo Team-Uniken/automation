@@ -419,6 +419,12 @@ class TwoFactorAuthMachine extends Component {
                             currentIndex: 0
                           });
                         }
+                      }).catch((error)=>{
+                        this.goToNextChallenge({
+                          chlngJson: challengeJson,
+                          screenId: nextChlngName,
+                          currentIndex: 0
+                        });
                       });
 
                     } else if (nextChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != challengeJson.chlng[0].challengeOperation && this.isTouchIDPresent == true) {
@@ -623,6 +629,15 @@ class TwoFactorAuthMachine extends Component {
             currentIndex: currentIndex,
           });
         }
+        }).catch((error)=>{
+          this.goToNextChallenge({
+            nav: this.props.navigation,
+            chlngJson,
+            chlngsCount: challengeJsonArr.length,
+            isTouchAvailable: this.isTouchIDPresent,
+            screenId: 'AutoPassword',
+            currentIndex: currentIndex,
+          });
         });
 
         } else if (nextChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != hlngJson1.chlng[0].challengeOperation && this.isTouchIDPresent == true) {
@@ -691,6 +706,8 @@ class TwoFactorAuthMachine extends Component {
             } else {
               return { show: true, challenge: currChallenge };
             }
+          }).catch((error)=>{
+            return { show: true, challenge: currChallenge };
           });
 
         } else
@@ -1287,6 +1304,13 @@ class TwoFactorAuthMachine extends Component {
               screenId: firstChlngName
             });
           }
+        }).catch((error)=>{
+          this.goToNextChallenge({
+            chlngJson,
+            chlngsCount: challengeJsonArr.length,
+            currentIndex: startIndex,
+            screenId: firstChlngName
+          });
         });
 
       }
