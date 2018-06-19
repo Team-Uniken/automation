@@ -54,24 +54,28 @@ export default class NotificationCard extends Component {
     }
 
     componentDidUpdate() {
+        //if(this.state.selectedlanguage != this.props.selectedlanguage)
+          //this.state.selectedlanguage =  "Deutsch"; 
         //this.updateNotificationData();
     }
 
     componentWillReceiveProps(nextProps){
-        this.state.mainMsg = nextProps.notification.message.body;
-        if( Util.isJSON(this.state.mainMsg) ){       
-            var mainMesg = JSON.parse(this.state.mainMsg);   
-            this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-            var lng = this.state.languageKey[0];
-            this.state.selectedlanguage = lng;
-            this.state.subject = mainMesg.lng[lng].subject;
-            this.state.acceptLabel = mainMesg.lng[lng].Accept;
-            this.state.rejectLabel = mainMesg.lng[lng].Reject;
-            if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
-            this.state.parseMessage = mainMesg.lng[lng].body;
-        }else  {
-            this.state.languageKey = [];
-            this.singleLanguageMessage();
+        if(this.state.selectedlanguage == "") {
+            this.state.mainMsg = nextProps.notification.message.body;
+            if( Util.isJSON(this.state.mainMsg) ){       
+                var mainMesg = JSON.parse(this.state.mainMsg);   
+                this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
+                var lng = this.state.languageKey[0];            
+                this.state.selectedlanguage = lng;
+                this.state.subject = mainMesg.lng[lng].subject;
+                this.state.acceptLabel = mainMesg.lng[lng].Accept;
+                this.state.rejectLabel = mainMesg.lng[lng].Reject;
+                if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
+                this.state.parseMessage = mainMesg.lng[lng].body;
+            }else  {
+                this.state.languageKey = [];
+                this.singleLanguageMessage();
+            }
         }
     }
 
