@@ -48,7 +48,7 @@ var responseJson;
 
 
 
-class RegisterOld extends Component {
+class EnterpriseRegister extends Component {
 
   constructor(props) {
     super(props);
@@ -60,6 +60,7 @@ class RegisterOld extends Component {
       email: '',
       confirmEmail: '',
       phoneNumber: '',
+      cardNumber: '',
       value: this.props.value,
       resetSlider: false,
       keyboardVisible: false,
@@ -76,8 +77,9 @@ class RegisterOld extends Component {
   componentWillMount() {
     obj = this;
     this.state.value = 0;
+    this.state.email = Main.dnaUserName;
     InteractionManager.runAfterInteractions(() => {
-      this.refs.firstname.focus()
+      this.refs.email.focus();
     });
     this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
@@ -91,17 +93,17 @@ class RegisterOld extends Component {
 
 
   keyboardWillShow(e) {
-    this.setState({ keyboardVisible: true })
+    this.setState({ keyboardVisible: true });
     //Alert.alert('yes')
   }
 
   keyboardWillHide(e) {
-    this.setState({ keyboardVisible: false })
+    this.setState({ keyboardVisible: false });
   }
 
   componentWillUnmount() {
-    this.keyboardWillShowListener.remove()
-    this.keyboardWillHideListener.remove()
+    this.keyboardWillShowListener.remove();
+    this.keyboardWillHideListener.remove();
   }
 
   //use to change checkbox UI from checked to uncheck or uncheck to check.
@@ -115,21 +117,11 @@ class RegisterOld extends Component {
 
   //onTextchange method for FirstName TextInput
   onFirstNameChange(event) {
-    if (this.validateName(event.nativeEvent.text) )
-      this.setState({ firstName: event.nativeEvent.text });
-    else {
-      if (event.nativeEvent.text.length == 0)
-         this.setState({ firstName: event.nativeEvent.text });
-    }
+    this.setState({ firstName: event.nativeEvent.text });
   }
   //onTextchange method for LastName TextInput
   onLastNameChange(event) {
-    if (this.validateName(event.nativeEvent.text))
-      this.setState({ lastName: event.nativeEvent.text });
-    else {
-      if (event.nativeEvent.text.length == 0)
-        this.setState({ lastName: event.nativeEvent.text });
-    }
+    this.setState({ lastName: event.nativeEvent.text });
   }
   //onTextchange method for Email TextInput
   onEmailChange(event) {
@@ -147,6 +139,17 @@ class RegisterOld extends Component {
       if (event.nativeEvent.text.length == 0)
         this.setState({ phoneNumber: event.nativeEvent.text });
       //this.setState.phoneNumber = this.setState.phoneNumber;
+    }
+  }
+
+  //onTextchange method for CardNumber TextInput
+  onCardNumberChange(event) {
+    if (this.validateCardNumber(event.nativeEvent.text) )
+    this.setState({ cardNumber: event.nativeEvent.text });
+    else {
+        if (event.nativeEvent.text.length == 0) 
+        this.setState({ cardNumber: event.nativeEvent.text });
+        //this.setState.cardNumber = this.setState.cardNumber;
     }
   }
 
@@ -175,39 +178,44 @@ class RegisterOld extends Component {
     return re.test(email);
   }
 
-  validateName(name){
-   // var rex = /^(?=(?:[^A-Za-z]*[A-Za-z]){2})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\\\/<>#“.,]*[\d~`?!^*¨ˆ:/";_+&-/)@=$%{}\[\]|\\\/<>#“.,])\S+(?: \S+){0,2}$/;
-   if(name!=null && name.trim().length >= 1){
-    var rex = /^[a-zA-Z]+$/; 
-    return rex.test(name);
-   }
-  
-   return false;
-  }
-
   //check entered phoneNumber is valid or not
   validatePhoneNumber(phone) {
-    var regex = /^\+?([0-9]{0,14})$/;
-    return regex.test(phone);
+    var regex = /^([0-9+]{0,15})$/;
+    if (regex.test(phone)) {
+      if (phone.lastIndexOf('+') <= 1)
+        return true;
+      else
+        return false;
+    } else {
+      return false;
+    }
+    //return regex.test(phone);
+  }
+
+  //check entered card number is valid or not
+  validateCardNumber(cardNumber){
+    var regex = /^([0-9]{0,6})$/;
+    return regex.test(cardNumber);
   }
 
   // check all fields are filled with valid data to call registerUser.
   validateAndProcced() {
-    if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
-      && this.state.confirmEmail.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
+    if (!(this.state.email.trim().length > 0
+      && this.state.cardNumber.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
       this.showMessage("", "All fields are mandatory", false);
       return;
-    } else if(!this.validateName(this.state.firstName)){
-      this.showMessage("", "Enter valid First Name", false);
-    }else if(!this.validateName(this.state.lastName)){
-      this.showMessage("", "Enter valid Last Name", false);
-    }else if (!this.validateEmail(this.state.email)) {
+    } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("", "Enter valid Email ID", false);
       return;
-    } else if (!(this.state.email === this.state.confirmEmail)) {
-      this.showMessage("", "Entered emails do not match", false);
-      return;
-    } else if (this.state.phoneNumber.length < 10 ) {
+    }else if (this.state.cardNumber.length < 6 ) {
+        this.showMessage("", "Enter a valid 6-digit card number", false);
+        return;
+    }  
+    // else if (!(this.state.email === this.state.confirmEmail)) {
+    //   this.showMessage("", "Entered emails do not match", false);
+    //   return;
+    // }
+     else if (this.state.phoneNumber.length < 10 ) {
       this.showMessage("", "Enter a valid 10-digit phone number", false);
       return;
     } else if (this.state.value < 90) {
@@ -231,8 +239,9 @@ class RegisterOld extends Component {
       currentProfile = JSON.parse(currentProfile);
       //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
 
-      var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/v1/addNewUser.htm";
-      console.log("---Register ---baseUrl =" + baseUrl)
+      //var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/v1/addNewUser.htm";
+      var URL = "http://" + currentProfile.Host + ":8080/enterprise-api-server/enrollUser";
+      //console.log("---Register ---baseUrl =" + baseUrl)
 
       // USER_ID_STR, mandatory = true          // will be email Id
       // GROUP_NAME_STR, mandatory = true       // Hardcode
@@ -242,29 +251,22 @@ class RegisterOld extends Component {
       // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
 
       var userMap = {
-        "firstName": this.state.firstName.trim(),
-        "lastName": this.state.lastName.trim(),
-        "userId": this.state.email.trim(),
-        "groupName": "group1",
         "emailId": this.state.email.trim(),
         "mobNum": this.state.phoneNumber.trim(),
-        "isRELIDZeroEnabled": "true",
-        "username": "sruser",
+        "cardNum": this.state.cardNumber.trim(),
         "sessionId":this.sessionId,
-        "password": "1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
-        "apiversion":"v1",
         "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Length":"0"
-
+        "Content-Length":"0",
+        "resetUser":"true"
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));
       Events.trigger('showLoader', true);
 
-      var postData = Util.convertToPostData(userMap);
+       var postData = Util.convertToPostData(userMap);
       //var contentType = JSON.stringify({ "Content-Type": "application/x-www-form-urlencoded" });
-     var contentType = JSON.stringify(userMap);
-      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, baseUrl, contentType, "", (response) => {
+      var contentType = JSON.stringify(userMap);                 
+      ReactRdna.openHttpConnection(ReactRdna.RDNA_HTTP_POST, URL, contentType, "", (response) => {
         // RDNARequestUtility.doHTTPPostRequest(baseUrl, userMap, (response) => {
         console.log(response);
         Events.trigger('hideLoader', true);
@@ -280,11 +282,11 @@ class RegisterOld extends Component {
             return;
           }
           if (res.isError == false) {
-            obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instructions.", true);
+              this.saveACTCODE(res.actCode);
+            //obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instructions.", true);
           } else {
-
             setTimeout(() => {
-              alert(res.errorMessage);
+              alert(res.message);
             }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
@@ -292,7 +294,7 @@ class RegisterOld extends Component {
           }
         } else {
           setTimeout(() => {
-            alert("Service not available");
+            alert("Something went wrong, please try again..!");
           }, 100);
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
@@ -306,7 +308,6 @@ class RegisterOld extends Component {
   //show alert dailog with msg and title pass to it
   showMessage(title, msg, press) {
     setTimeout(() => {
-
       Alert.alert(
         title,
         msg,
@@ -314,7 +315,7 @@ class RegisterOld extends Component {
           text: 'OK',
           onPress: () => {
             if (press) {
-              //            obj.props.navigator.pop();
+            //            obj.props.navigator.pop();
               obj.checkUsername();
 
             }
@@ -330,7 +331,7 @@ class RegisterOld extends Component {
    */
   checkUsername() {
     this.state.progress = 0;
-    var un = this.state.confirmEmail;
+    var un = this.state.email;
     if (un.length > 0) {
       savedUserName = un;
       AsyncStorage.setItem("userId", un);
@@ -350,19 +351,35 @@ class RegisterOld extends Component {
     }
   }
 
+  saveACTCODE(ACTCODE) {
+    try {
+      Main.dnaUserName = this.state.email;
+      //  Util.encryptText(ACTCODE).then((data) => {       
+      Util.saveUserDataSecure("actcode", ACTCODE).then((data) => {
+        Util.saveUserData("isEnterpriseUser", "true").then((data) => {
+          this.checkUsername();
+        }
+        );
+      }
+      );
+    } catch (e) {
+      alert("Something went wrong, please try again..!")
+    }
+  }
+
   //Return platform specific webView to term and Conditions Page.
   getWebView() {
     if (Platform.OS === 'ios') {
       return (
         <WebView
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'http://api.relid.uniken.com/' }}
+          source={{ uri: 'https://demos.uniken.com/dist-docs/terms-and-conditions.html' }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
           //          onNavigationStateChange={this.onNavigationStateChange.bind(this) }
           onLoad={() => { console.log('loaded') } }
-          scalesPageToFit={true} 
+          scalesPageToFit={true}
           scrollEnabled={true}
           />
       );
@@ -371,7 +388,7 @@ class RegisterOld extends Component {
         <WebViewAndroid
           style={{ height: 200 }}
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'http://api.relid.uniken.com/' }}
+          source={{ uri: 'https://demos.uniken.com/dist-docs/terms-and-conditions.html' }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -381,7 +398,7 @@ class RegisterOld extends Component {
           scrollEnabled={true}
           javaScriptEnabledAndroid={this.props.javaScriptEnabledAndroid}
           />
-      );
+      ); 
     }
   }
 
@@ -408,7 +425,7 @@ class RegisterOld extends Component {
               <View style={Skin.layout1.content.wrap}>
                 <View style={Skin.layout1.content.container}>
                   <View>
-                    <Input
+                    {/* <Input
                       placeholder={'First Name'}
                       ref={'firstname'}
                       keyboardType={'default'}
@@ -419,11 +436,10 @@ class RegisterOld extends Component {
                       autoComplete={false}
                       autoCapitalize={'none'}
                       onChange={this.onFirstNameChange.bind(this) }
-                      value={this.state.firstName}
                       onSubmitEditing={() => {
                         this.refs.lastname.focus();
-                      } } />
-                    <Input
+                      } } /> */}
+                    {/* <Input
                       placeholder={'Last Name'}
                       ref={'lastname'}
                       keyboardType={'default'}
@@ -434,10 +450,9 @@ class RegisterOld extends Component {
                       autoComplete={false}
                       autoCapitalize={'none'}
                       onChange={this.onLastNameChange.bind(this) }
-                      value={this.state.lastName}
                       onSubmitEditing={() => {
                         this.refs.email.focus();
-                      } } />
+                      } } /> */}
                     <Input
                       placeholder={'Email'}
                       ref={'email'}
@@ -448,11 +463,27 @@ class RegisterOld extends Component {
                       autoCorrect={false}
                       autoCapitalize={'none'}
                       autoComplete={false}
+                      value={this.state.email}
                       onChange={this.onEmailChange.bind(this) }
                       onSubmitEditing={() => {
-                        this.refs.confirmEmail.focus();
+                        this.refs.cardNumber.focus();
                       } } />
                     <Input
+                      placeholder={'XXXX-XXXX-XX _ _ - _ _ _ _'}
+                      ref={'cardNumber'}
+                      keyboardType={'phone-pad'}
+                      returnKeyType={'next'}
+                      enablesReturnKeyAutomatically={true}
+                      autoFocus={false}
+                      autoCorrect={false}
+                      autoCapitalize={'none'}
+                      autoComplete={false}
+                      value={this.state.cardNumber}
+                      onChange={this.onCardNumberChange.bind(this) }
+                      onSubmitEditing={() => {
+                        this.refs.phoneNumber.focus();
+                      } } />                      
+                    {/* <Input
                       placeholder={'Confirm Email'}
                       ref={'confirmEmail'}
                       keyboardType={'email-address'}
@@ -465,7 +496,7 @@ class RegisterOld extends Component {
                       onChange={this.onConfirmEmailChange.bind(this) }
                       onSubmitEditing={() => {
                         this.refs.phoneNumber.focus();
-                      } } />
+                      } } /> */}
                     <Input
                       placeholder={'Phone Number'}
                       ref={'phoneNumber'}
@@ -509,16 +540,15 @@ class RegisterOld extends Component {
                 </View>
               </View>
             </ScrollView>
-      <KeyboardSpacer/>
-      <View style={Skin.layout1.bottom.wrap}>
+            <KeyboardSpacer/>
+            <View style={Skin.layout1.bottom.wrap}>
               <View style={Skin.layout1.bottom.container}>
                 <Button
                   label={Skin.text['1']['1'].submit_button}
                   onPress={this.validateAndProcced.bind(this) } />
               </View>
             </View>
-      
-          </View>
+            </View>    
         </MainActivation>
         <Modal
           style={Skin.layout1.termandcondition}
@@ -538,5 +568,5 @@ class RegisterOld extends Component {
   }
 }
 
-module.exports = RegisterOld;
+module.exports = EnterpriseRegister;
 

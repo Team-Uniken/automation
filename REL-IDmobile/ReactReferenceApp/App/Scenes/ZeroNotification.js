@@ -997,12 +997,15 @@ export default class NotificationMgmtScene extends Component {
     const { notification, btnLabel, action, selectedlanguage } = bundle;
     switch (action) {
       case "accept":
+        this.state.selectedlanguage = selectedlanguage;
         this.showalert(notification, btnLabel);
         break;
       case "reject":
+        this.state.selectedlanguage = selectedlanguage;
         this.showalert(notification, btnLabel);
         break;
       case "fraud":
+        this.state.selectedlanguage = selectedlanguage;
         this.showalertforReject(notification, btnLabel);
         break;
       case "click":
@@ -1010,6 +1013,7 @@ export default class NotificationMgmtScene extends Component {
         this.swapDataSource(notification);
         break;
       case "hide":
+        this.state.selectedlanguage = selectedlanguage;
         this.restoreDataStore();
         break;
     }
@@ -1115,7 +1119,7 @@ export default class NotificationMgmtScene extends Component {
       this.showAlertAuthNotSuppoted('Failed to get additional authentication. Pattern is not enabled.');
     }
   }
-
+ 
   //Additional authentication not supported.
   showAlertAuthNotSuppoted(msg) {
     Alert.alert(
@@ -1150,6 +1154,7 @@ export default class NotificationMgmtScene extends Component {
       );
     } else {
       return <ListView
+        style ={{marginBottom : 20 }}
         ref="listView"
         automaticallyAdjustContentInsets={false}
         dataSource={dataSource}
