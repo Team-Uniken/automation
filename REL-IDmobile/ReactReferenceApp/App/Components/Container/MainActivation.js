@@ -56,8 +56,8 @@ class MainActivation extends Component {
       password: '',
       baseUrl: '',
       isSettingButtonHide: 1.0,
-      notificationAlertMsg: "",
-      showNotificationAlert: false,
+      alertMsg: "",
+      showAlert: false,
       refresh:false,
       showAndroidTouch:false,
     };
@@ -75,10 +75,10 @@ class MainActivation extends Component {
     this.doPatternSet = this.doPatternSet.bind(this);
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
     
-    this.onNotificationAlertModalDismissed = this.onNotificationAlertModalDismissed.bind(this);
-    this.onNotificationAlertModalOk = this.onNotificationAlertModalOk.bind(this);
-    this.notificationAlertModal = this.notificationAlertModal.bind(this);
-    this.showNotificationAlertModal = this.showNotificationAlertModal.bind(this);
+    this.onAlertModalDismissed = this.onAlertModalDismissed.bind(this);
+    this.onAlertModalOk = this.onAlertModalOk.bind(this);
+    this.alertModal = this.alertModal.bind(this);
+    this.showAlertModal = this.showAlertModal.bind(this);
     this.selectedDialogOp = false;
     this.selectedNotifcationAlertOp = true;
     this.scrollEnabled = true;
@@ -120,7 +120,7 @@ class MainActivation extends Component {
     console.log("loader visible : " + this.state.visible + " MainActivation : ");
     Events.on('hideLoader', 'hideLoader', this.hideLoader);
     Events.on('showLoader', 'showLoader', this.showLoader);
-    Events.on('showNotificationAlert', 'showNotificationAlert', this.showNotificationAlertModal)
+    Events.on('showAlert', 'showAlert', this.showAlertModal)
     Events.on('showAndroidAuth','showAndroidAuth',this.showAndroidAuth);
     Events.on('hideAndroidAuth','hideAndroidAuth',this.hideAndroidAuth);
     Events.on('doPatternSet','doPatternSet',this.doPatternSet);   
@@ -140,11 +140,11 @@ class MainActivation extends Component {
     }
   }
 
-  onNotificationAlertModalOk() {
+  onAlertModalOk() {
     //Do nothing for right now
   }
 
-  onNotificationAlertModalDismissed() {
+  onAlertModalDismissed() {
     //Do nothing for right now
   }
 
@@ -220,11 +220,11 @@ class MainActivation extends Component {
   }
 }
 
-  showNotificationAlertModal(args) {
+  showAlertModal(args) {
         var msg = args && args.msg ? args.msg : "";   
         this.setState({
-      showNotificationAlert: true,
-      notificationAlertMsg: msg
+      showAlert: true,
+      alertMsg: msg
     });
   }
 
@@ -380,21 +380,21 @@ class MainActivation extends Component {
     });
   }
 
-  notificationAlertModal() {
+  alertModal() {
     return (<Modal
       style={styles.modalwrapNotification}
       overlayOpacity={0.75}
       offset={100}
-      open={this.state.showNotificationAlert}
+      open={this.state.showAlert}
       modalDidOpen={() => console.log('modal did open') }
       modalDidClose={() => {
-        this.setState({showNotificationAlert:false});
+        this.setState({showAlert:false});
         if (this.selectedNotifcationAlertOp) {
           this.selectedNotifcationAlertOp = false;
-          this.onNotificationAlertModalOk();
+          this.onAlertModalOk();
         } else {
           this.selectedNotifcationAlertOp = false;
-          this.onNotificationAlertModalDismissed();
+          this.onAlertModalDismissed();
         }
       } }>
       <View style={styles.modalTitleWrapNotification}>
@@ -403,7 +403,7 @@ class MainActivation extends Component {
         </Text>
       </View>
       <Text style={{ color: 'black', fontSize: 16, textAlign: 'center' }}>
-        {this.state.notificationAlertMsg}
+        {this.state.alertMsg}
       </Text>
       <View style={styles.borderNotification}></View>
 
@@ -411,7 +411,7 @@ class MainActivation extends Component {
         onPress={() => {
           this.selectedNotifcationAlertOp = true;
           this.setState({
-            showNotificationAlert: false
+            showAlert: false
           });
         } }
         underlayColor={Skin.colors.REPPLE_COLOR}
@@ -443,7 +443,7 @@ class MainActivation extends Component {
             {this.props.children}
           </View>
 
-          {this.notificationAlertModal() }
+          {this.alertModal() }
 
           <Modal
             onPress={() => {

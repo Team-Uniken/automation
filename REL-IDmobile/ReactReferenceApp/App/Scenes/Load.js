@@ -268,7 +268,10 @@ class Load extends Component {
         //     },
         //   }]
         // );
-        Events.trigger("showNotificationAlert",{msg})
+        
+       // Events.trigger("showNotificationAlert",{msg});
+        Events.trigger("showAlert",{msg});
+
       }, 100);
    // }
   }

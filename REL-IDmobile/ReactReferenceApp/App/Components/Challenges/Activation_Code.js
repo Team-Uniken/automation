@@ -295,7 +295,7 @@ class Activation_Code extends Component {
 
         if ("key" in res && "value" in res) { }
         else {
-          alert('Invalid QR code');
+          Events.trigger("showAlert",{msg:'Invalid QR code'});
           setTimeout(function () {
             obj.state.barCodeFlag = true;
           }, 2000);
@@ -303,7 +303,7 @@ class Activation_Code extends Component {
         }
 
       } catch (e) {
-        alert('Invalid QR code');
+        Events.trigger("showAlert",{msg:'Invalid QR code'});
         setTimeout(function () {
           obj.state.barCodeFlag = true;
         }, 2000);
@@ -348,7 +348,7 @@ class Activation_Code extends Component {
       }
     } else {
       // Events.trigger('hideLoader', true);
-      alert('Invalid QR code');
+      Events.trigger("showAlert",{msg:'Invalid QR code'});
       setTimeout(function () {
         $this.state.barCodeFlag = true;
       }, 2000);

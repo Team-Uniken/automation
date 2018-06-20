@@ -259,7 +259,7 @@ class AccessCode extends Component {
         res = JSON.parse(result);
         if ("key" in res && "value" in res) { }
         else {
-          alert('Invalid QR code');
+          Events.trigger("showAlert",{msg:'Invalid QR code'});
           setTimeout(function () {
             obj.state.barCodeFlag = true;
           }, 2000);
@@ -267,7 +267,7 @@ class AccessCode extends Component {
         }
 
       } catch (e) {
-        alert('Invalid QR code');
+        Events.trigger("showAlert",{msg:'Invalid QR code'});
         setTimeout(function () {
           obj.state.barCodeFlag = true;
         }, 2000);
@@ -309,7 +309,7 @@ class AccessCode extends Component {
         }, 2000);
       }
     } else {
-      alert('Invalid QR code');
+      Events.trigger("showAlert",{msg:'Invalid QR code'});
       setTimeout(function () {
         obj.state.barCodeFlag = true;
       }, 2000);
