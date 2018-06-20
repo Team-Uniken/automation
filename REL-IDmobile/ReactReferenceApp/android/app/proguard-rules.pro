@@ -110,7 +110,10 @@
 -dontwarn com.amazonaws.**
 -dontwarn com.google.android.gms.**
 
-
+#Firebase
+-dontwarn com.google.firebase.**
+-keep public class com.google.firebase.** { *; }
+-keep public interface com.google.firebase.** { *; }
 
 
 
