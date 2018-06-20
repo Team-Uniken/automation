@@ -1154,7 +1154,7 @@ export default class NotificationMgmtScene extends Component {
       );
     } else {
       return <ListView
-        style ={{marginBottom : 40 }}
+        style ={{marginBottom : 20 }}
         ref="listView"
         automaticallyAdjustContentInsets={false}
         dataSource={dataSource}
