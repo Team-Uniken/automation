@@ -139,6 +139,11 @@ class SelectLogin extends Component {
   */
   componentWillMount() {
     obj = this;    
+    ReactRdna.getSessionID((response)=>{
+      if(response[0].error ==0){
+        this.sessionId = response[0].response;
+      }
+    });
   }
   /*
        This is life cycle method of the react native component.
@@ -310,11 +315,13 @@ class SelectLogin extends Component {
     this.setState({showAndroidAuth : true });    
     Util.androidTouchAuth()
       .then((success) => {
-        obj.onTouchIDVerificationDone();
+          obj.onTouchIDVerificationDone(true);
           this.setState({showAndroidAuth : false });    
       })
       .catch((error) => {
         this.setState({showAndroidAuth : false });    
+        if( String(error) !== 'LOCKED_OUT' )
+          obj.onTouchIDVerificationDone(false);
         console.log('Handle rejected android auth promise (' + error + ') here.');
       });
   }
@@ -451,13 +458,13 @@ class SelectLogin extends Component {
   authenticate(reason) {
     TouchID.authenticate(reason)
       .then(success => {
-        obj.onTouchIDVerificationDone();
+        obj.onTouchIDVerificationDone(true);
       })
       .catch(error => {
         console.log(error)
-
         if (error.name === 'RCTTouchIDUnknownError') {
-          this.authenticate("Authentication failed, Please try again");
+          //this.authenticate("Authentication failed, Please try again");
+          obj.onTouchIDVerificationDone(false);
         } else if (error.name === "LAErrorUserFallback") {
           if (isAutoPassword == false) {
             this.setState({
@@ -473,7 +480,7 @@ class SelectLogin extends Component {
       });
   }
 
-  onTouchIDVerificationDone() {
+  onTouchIDVerificationDone(isVerified) {
     //Todo:cleanup after test
     // AsyncStorage.getItem(Main.dnaUserName).then((value) => {
     //   try {
@@ -489,27 +496,29 @@ class SelectLogin extends Component {
     //   } catch (e) { }
     // }).done();
 
-    Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd) => {
-      if (encryptedRPasswd) {
-        Util.decryptText(encryptedRPasswd).then((RPasswd) => {
-          if (RPasswd) {
-            if (RPasswd.length > 0) {
-              Main.dnaPasswd = RPasswd;
-              obj.onDoPasswordCheckChallenge(RPasswd);
-            } else {
-              Toast.showWithGravity("Touch ID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
-              this.goToPasswordWhenAdditonalAuthFails();
-            }
+      if(isVerified == true){
+        Util.getUserDataSecure("ERPasswd").then((encryptedRPasswd) => {
+          if (encryptedRPasswd) {
+            Util.decryptText(encryptedRPasswd).then((RPasswd) => {
+              if (RPasswd) {
+                if (RPasswd.length > 0) {
+                  Main.dnaPasswd = RPasswd;
+                  obj.onDoPasswordCheckChallenge(RPasswd);
+                } else {
+                  Toast.showWithGravity("Touch ID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+                  this.goToPasswordWhenAdditonalAuthFails();
+                }
+              } else {
+              }
+            }).done();
           } else {
-
+            Toast.showWithGravity("Touch ID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
+            this.goToPasswordWhenAdditonalAuthFails();
           }
         }).done();
-      } else {
-        Toast.showWithGravity("Touch ID authentication failed. Please login with Password", Toast.SHORT, Toast.CENTER);
-        this.goToPasswordWhenAdditonalAuthFails();
-      }
-    }).done();
-  }
+    }else 
+      obj.onDoPasswordCheckChallenge(this.sessionId);
+  } 
   //submit response in  challenge response and showNextChallenge
   onDoPasswordCheckChallenge(args) {
     // if (args.length > 0) {
@@ -534,7 +543,8 @@ class SelectLogin extends Component {
         id: 'pattern',
         onUnlock: this.onPatternUnlock,
         onClose: null,
-        mode: 'verify'
+        mode: 'verify',
+        attempts_left : this.props.url.chlngJson.attempts_left
       }
     })
   }

@@ -32,7 +32,7 @@ const {
   Component
 } = React;
 
-const MAX_ATTEMPTS = 4;
+let MAX_ATTEMPTS = 4;
 const MIN_DOTS = 4;
 
 class PatternLock extends Component {
@@ -41,6 +41,7 @@ class PatternLock extends Component {
     super(props);
     this.mode = this.props.navigation.state.params.url.mode;
     this.clearTimers = null;
+    this.sessionId = null;
     this.currentPattern = "";
     this.disableClose = false;
     if (this.mode == "set") {
@@ -57,6 +58,12 @@ class PatternLock extends Component {
         countDown: 0,
       };
     }
+
+    ReactRdna.getSessionID((response)=>{
+      if(response[0].error ==0){
+        this.sessionId = response[0].response;
+      }
+    });
     
     this.doNothing = this.doNothing.bind(this);
     this.decryptUserData = this.decryptUserData.bind(this);
@@ -66,6 +73,10 @@ class PatternLock extends Component {
     this.tick = this.tick.bind(this);
     this.tickerEnd = this.tickerEnd.bind(this);
     this.close = this.close.bind(this);
+    this.getNextAttempt = this.getNextAttempt.bind(this);
+    
+    if(this.props.navigation.state.params.url.attempts_left)
+      MAX_ATTEMPTS = this.props.navigation.state.params.url.attempts_left;
     if (this.mode == "verify")
       this.msg = "Attempts left " + MAX_ATTEMPTS;
     else {
@@ -218,6 +229,19 @@ class PatternLock extends Component {
       Util.getUserDataSecureWithSalt(Constants.JSONKey.ENCRIPTED_PATTERN_PASSWORD, pattern)
         .then((userDataStr) => {
           var userData = JSON.parse(userDataStr);
+          //var userData = JSON.parse({userDataStr});
+          // Util.decryptText(userData.password).then((decryptedRPasswd) => {
+          //   this.msg = "";
+          //   var resp = {
+          //     password: decryptedRPasswd,
+          //     data: this.props.navigation.state.params.url.data
+          //   }
+
+          //   //if (this.props.navigation.state.params.url.onUnlock)
+          //   //this.props.navigation.state.params.url.onUnlock(this.props.navigation, resp);
+          //   this.getNextAttempt(resp);
+          // }).done();
+          //old implementation - handled attempts locally
           if (userData.pattern === this.currentPattern) {
             Util.decryptText(userData.password).then((decryptedRPasswd) => {
               this.msg = "";
@@ -231,17 +255,33 @@ class PatternLock extends Component {
             }).done();
           }
           else {
+            //this.refs["patternView"].clearPattern();
+            //this.wrongAttempt();
             this.refs["patternView"].clearPattern();
-            this.wrongAttempt();
+            //this.wrongAttempt();//old implementation - handled attempts locally
+            var resp = {
+              password: this.sessionId,
+              data: this.props.navigation.state.params.url.data
+            }
+            this.getNextAttempt(resp);
           }
         })
         .catch((error) => {
           this.refs["patternView"].clearPattern();
-          this.wrongAttempt();
+          //this.wrongAttempt();//old implementation - handled attempts locally
+          var resp = {
+            password: this.sessionId,
+            data: this.props.navigation.state.params.url.data
+          }
+          this.getNextAttempt(resp);
         }).done();
     }
   }
 
+  getNextAttempt(resp){
+    if (this.props.navigation.state.params.url.onUnlock)
+      this.props.navigation.state.params.url.onUnlock(this.props.navigation, resp);
+  }
   isEmpty(str) {
     return (!str || 0 === str.length);
   }
