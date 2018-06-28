@@ -177,7 +177,7 @@ var SampleRow = React.createClass({
   render() {
     var body = this.props.notification.message.body;
     var bodyarray = body.split("\n");
-    var amount = bodyarray[3];
+    var messageamount = bodyarray[3];
     var font = 22;
 
     if (typeof amount == "undefined") {
@@ -418,7 +418,7 @@ export default class NotificationMgmtScene extends Component {
       selectedAction: '',
       showLoader: false,
       refreshing: false,
-      selectedlanguage: ""
+      selectedLanguageBodyObjectIndex: 0
     };
     this.selectedAlertOp = true;
   }
@@ -990,30 +990,30 @@ export default class NotificationMgmtScene extends Component {
   }
 
   renderNotificationCard(notificationData) {
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedlanguage={this.view.selectedlanguage}/>
+    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={this.view.selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
-    const { notification, btnLabel, action, selectedlanguage } = bundle;
+    const { notification, btnLabel, action, selectedLanguageBodyObjectIndex } = bundle; 
     switch (action) {
       case "accept":
-        this.state.selectedlanguage = selectedlanguage;
+        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
         break;
       case "reject":
-        this.state.selectedlanguage = selectedlanguage;
+        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
         break;
       case "fraud":
-        this.state.selectedlanguage = selectedlanguage;
+        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
         this.showalertforReject(notification, btnLabel);
         break;
       case "click":
-        this.state.selectedlanguage = selectedlanguage;
+        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
         this.swapDataSource(notification);
         break;
       case "hide":
-        this.state.selectedlanguage = selectedlanguage;
+        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
         this.restoreDataStore();
         break;
     }
@@ -1144,7 +1144,7 @@ export default class NotificationMgmtScene extends Component {
           {this.renderNotificationCard.bind(
             {
               view: {
-                selectedlanguage: this.state.selectedlanguage,
+                selectedLanguageBodyObjectIndex: this.state.selectedLanguageBodyObjectIndex,
                 expand: true,
                 showButtons: true,
                 showHideButton: Main.notificationCount > 1
@@ -1162,7 +1162,7 @@ export default class NotificationMgmtScene extends Component {
         renderRow={this.renderNotificationCard.bind(
           {
             view: {
-              selectedlanguage: this.state.selectedlanguage,
+              selectedLanguageBodyObjectIndex: this.state.selectedLanguageBodyObjectIndex,
               expand: false,
               showButtons: false
             }
@@ -1264,7 +1264,8 @@ export default class NotificationMgmtScene extends Component {
       );
     }
   }
-
+  
+  //Not updated with multilingual features , needs review
   renderWithoutMain() {
     const listViewProportion = this.state.dataSource.getRowCount() == 0 ? 0.5 : 1
     return (
@@ -1303,7 +1304,7 @@ export default class NotificationMgmtScene extends Component {
       defaultNav={isPageTitle ? false : true}
       navBar={{
         title: 'My Notifications',
-        visible: true,
+        visible: true, 
         tint: Skin.main.NAVBAR_TINT,
         left: {
           text: 'Back',

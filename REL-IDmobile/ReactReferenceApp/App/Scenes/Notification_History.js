@@ -416,6 +416,7 @@ class Notifications_History extends Component {
     ];
     return data;
   }
+  
   convertHistoryArrayToMap(data) {
     var historyCategoryMap = {}; // Create the blank map
     data.forEach(function (notification) {
@@ -588,13 +589,13 @@ class Notifications_History extends Component {
 
 
 
-  changeLanguage(notification, lng, mainMesg) {
+  changeLanguage(notification, selectedLanguageObjectIndex, body) {
     // var mainMesg = JSON.parse(notification.message.body);
 
-    notification.selectedLanguage = lng;
+    notification.selectedLanguageObjectIndex = selectedLanguageObjectIndex;
 
-    notification.message.subject = mainMesg.lng[lng].subject;
-
+    //notification.message.subject = mainMesg.lng[lng].subject;
+    /*
     var keys = Object.keys(this.state.finalData)
     for (const key in keys) {
       var arrNotification = this.state.finalData[keys[key]];
@@ -606,7 +607,7 @@ class Notifications_History extends Component {
 
         }
       }
-    }
+    }*/
 
     Obj.refreshHistoryData();
     // var languageKey = Object.keys(mainMesg.lng);
@@ -628,33 +629,34 @@ class Notifications_History extends Component {
    */
   notification_history(notification) {
 
-    var mainMesg;
+    var body;
     try {
-      mainMesg = JSON.parse(notification.message.body);
+      body = Util.parseJSON(notification.body);
     } catch (e) {
     }
-    var languageKey;
+   // var languageKey;
     var bodyarray;
     var lngButtons = [];
 
-    if (mainMesg) {
-      languageKey = Object.keys(mainMesg.lng);
-      if (!notification.hasOwnProperty('selectedLanguage'))
-        notification.selectedLanguage = languageKey[0];
-      bodyarray = mainMesg.lng[notification.selectedLanguage].body.split("\n");   
-      for (let i = 0; i < languageKey.length && languageKey.length > 1; i++) {
+    if (body) {
+     // languageKey = Object.keys(mainMesg.lng);
+      if (!notification.hasOwnProperty('selectedLanguageObjectIndex'))
+        notification.selectedLanguageObjectIndex = 0;
+      bodyarray = body[notification.selectedLanguageObjectIndex].message.split("\n");   
+      for (let i = 0; i < body.length > 1; i++) {
         lngButtons.push(
-          <TouchableHighlight style={[notification.selectedLanguage === languageKey[i] ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-            onPress={() => { Obj.changeLanguage(notification, languageKey[i], mainMesg) }}>
+          <TouchableHighlight style={[notification.selectedLanguageObjectIndex === i ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+            onPress={() => { Obj.changeLanguage(notification,i, body) }}>
             <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10 }}>
-              {languageKey[i]}
+              {body[i].lng}
             </Text>
           </TouchableHighlight>
         )
       }
-    } else {
-      bodyarray = notification.message.body.split("\n");
-    }
+    } 
+    // else {
+    //   bodyarray = notification.message.body.split("\n");
+    // }
 
     var bulletList = [];
 
@@ -712,7 +714,7 @@ class Notifications_History extends Component {
       <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
         <View style={[Skin.notification.historyrow, { marginBottom: 4 }]}>
           <Text style={Skin.notification.subject}>
-            {notification.message.subject}
+            {notification.body[notification.selectedLanguageObjectIndex].subject}
           </Text>
           <Text style={Skin.notification.time}>
             {Util.getFormatedDate(notification.create_ts)}

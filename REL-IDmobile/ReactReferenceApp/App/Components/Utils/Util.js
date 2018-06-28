@@ -329,6 +329,17 @@ class Util extends Component {
     return true;
   }
 
+  static parseJSON(str){
+    var json = null;
+    try {
+      json  = JSON.parse(str);
+    } catch (e) {
+      json = null;
+    }
+    
+    return json;
+  }
+
   static isEmpty(str) {
     return (!str || 0 === str.length);
   }

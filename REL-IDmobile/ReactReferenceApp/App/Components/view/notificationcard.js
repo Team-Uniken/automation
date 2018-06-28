@@ -39,14 +39,16 @@ export default class NotificationCard extends Component {
     constructor(props) {
         super(props);
         this.state = 
-        { mainMsg : this.props.notification.message.body,          
+        { body : this.props.notification.body,          
           parseMessage : "",
-          acceptLabel : "",
-          rejectLabel : "", 
-          fraudLabel : "",
+         // acceptLabel : "",
+        //  rejectLabel : "", 
+        //  fraudLabel : "",
           subject : "", 
-          languageKey : "",
-          selectedlanguage : this.props.selectedlanguage }   
+        //  languageKey : "",
+        //  selectedlanguage : this.props.selectedlanguage,   //Deprecated
+          selectedLanguageBodyObjectIndex:0
+        }   
           this.updateNotificationData();
     }
     componentDidMount() {
@@ -60,7 +62,7 @@ export default class NotificationCard extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(this.state.selectedlanguage == "") {
+        /*if(this.state.selectedlanguage == "") {
             this.state.mainMsg = nextProps.notification.message.body;
             if( Util.isJSON(this.state.mainMsg) ){       
                 var mainMesg = JSON.parse(this.state.mainMsg);   
@@ -76,17 +78,51 @@ export default class NotificationCard extends Component {
                 this.state.languageKey = [];
                 this.singleLanguageMessage();
             }
-        }
+        }*/
+
+        //if(this.state.selectedlanguage == "") {
+            this.state.body = nextProps.notification.body;
+            var body = Util.parseJSON(this.state.body);
+            if(body && Array.isArray(body)){     
+                //var mainMesg = JSON.parse(this.state.mainMsg);   
+                //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
+                //var lng = this.state.languageKey[0];            
+                this.state.selectedLanguageBodyObjectIndex = 0;
+                var selectedLanguageBodyObject = body[this.state.selectedLanguageBodyObjectIndex];
+               // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
+                this.state.subject = selectedLanguageBodyObject.subject;
+               // this.state.acceptLabel = mainMesg.lng[lng].Accept;
+               // this.state.rejectLabel = mainMesg.lng[lng].Reject;
+               // if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
+                this.state.parseMessage = selectedLanguageBodyObject.message;
+            }
+            
+            // else  {
+            //     this.state.languageKey = [];
+            //     this.singleLanguageMessage();
+            // }
+        //}
     }
 
     updateNotificationData(){
-        if( Util.isJSON(this.state.mainMsg) ){       
+       /* if(Util.isJSON(this.state.mainMsg) ){       
             this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
             if( !Util.isEmpty(this.props.selectedlanguage) ) this.changeLanguage(this.props.selectedlanguage);
             else this.changeLanguage(this.state.languageKey[0]);
         }else{
             this.singleLanguageMessage(); 
+        } */
+
+        var body = Util.parseJSON(this.state.body)
+        if(body && Array.isArray(body)){       
+            //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
+            if(this.props.selectedLanguageBodyObjectIndex) this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
+            else this.changeLanguage(0);
         }
+        
+        // else{
+        //     this.singleLanguageMessage(); 
+        // }
     }
 
     // onNotificationLanguageChanged(){
@@ -98,21 +134,24 @@ export default class NotificationCard extends Component {
             "notification": notification,
             "btnLabel": btnLabel,
             "action": action,
-            "selectedlanguage" : this.state.selectedlanguage
+            "selectedLanguageBodyObjectIndex" : this.state.selectedLanguageBodyObjectIndex  //Todo :  update the key in onNotificationAction in ZeroNotification.js from selectedLanguage to selectedLanguageObjectIndex 
         }
         Events.trigger("onNotificationAction", bundle);
     }
 
-    singleLanguageMessage(){
+
+    //Deprecated
+    /*singleLanguageMessage(){
         this.state.parseMessage = this.state.mainMsg;
         this.state.subject = this.props.notification.message.subject;
         this.state.acceptLabel = this.props.notification.action[0].label;
         this.state.rejectLabel = this.props.notification.action[1].label;
         if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = this.props.notification.action[2].label;
-    }
+    }*/
 
-    changeLanguage(lng){
-        var mainMesg = JSON.parse(this.state.mainMsg);
+    changeLanguage(selectedLanguageBodyObjectIndex){
+ 
+        /*var mainMesg = JSON.parse(this.state.mainMsg);
         for ( let i = 0; i < this.state.languageKey.length; i++ ){
             if ( lng === this.state.languageKey[i] ) {
                 this.state.selectedlanguage = lng;
@@ -124,40 +163,27 @@ export default class NotificationCard extends Component {
                 this.setState({ parseMessage: mainMesg.lng[lng].body });
                 break;
             }
+        }*/
+
+        var body = Util.parseJSON(this.state.body);
+        if (body && Array.isArray(body)) {
+            //      for (let i = 0; i < body.length; i++){
+           // if (selectedLanguageBodyObjectIndex === i) {
+            var selectedLanguageBodyObject = body[selectedLanguageBodyObjectIndex];
+          //  this.state.selectedlanguage = selectedLanguageBodyObject.lng;
+            this.state.subject = selectedLanguageBodyObject.subject;
+            //this.state.acceptLabel = mainMesg.lng[lng].Accept;
+            //this.state.rejectLabel = mainMesg.lng[lng].Reject;
+            //if (this.props.notification.action.length == 3) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
+            this.state.parseMessage = selectedLanguageBodyObject.message;
+            this.setState({ parseMessage:  selectedLanguageBodyObject.message });
+           // break;
+           // }
+            // }
         }
-        // if( lng === this.state.languageKey[0] ){
-        //     this.state.selectedlanguage = "en";
-        //     this.state.subject = JSON.parse(this.state.mainMsg).lng[lng].subject;
-        //     this.state.acceptLabel = action[0].label[lng].label;
-        //     this.state.rejectLabel = action[1].label[lng].label;
-        //     if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = action[2].label[lng].label;
-        //     this.state.parseMessage = JSON.parse(this.state.mainMsg).lng.eng.body;
-        //     this.setState({ parseMessage: JSON.parse(this.state.mainMsg).lng.eng.body });
-        // } else if ( lng === this.state.languageKey[1] ){
-        //     this.state.selectedlanguage = "gr";
-        //     this.state.subject = JSON.parse(this.state.mainMsg).lng[lng].subject;
-        //     this.state.acceptLabel = action[0].label[lng].label;
-        //     this.state.rejectLabel = action[1].label[lng].label;
-        //     if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = action[2].label[lng].label;
-        //     this.state.parseMessage = JSON.parse(this.state.mainMsg).lng.gr.body;
-        //     this.setState({ parseMessage: JSON.parse(this.state.mainMsg).lng.gr.body });
-        // }else if ( lng === this.state.languageKey[2] ){       
-        //     this.state.selectedlanguage = "fr";
-        //     this.state.subject = JSON.parse(this.state.mainMsg).lng[lng].subject;
-        //     this.state.acceptLabel = action[0].label[lng].label;
-        //     this.state.rejectLabel = action[1].label[lng].label;
-        //     if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = action[2].label[lng].label;
-        //     this.state.parseMessage = JSON.parse(this.state.mainMsg).lng.fr.body;
-        //     this.setState({ parseMessage: JSON.parse(this.state.mainMsg).lng.fr.body });
-        // }
     }
 
     render() {
-        // var body = this.props.notification.message.body;
-        // var bodyarray = body.split("\n");
-        // var amount = bodyarray[3];
-        // var font = 22;
-
         var bodyValue = this.state.parseMessage;
         var bodyarray = bodyValue.split("\n");
         var amount = bodyarray[3];
@@ -182,7 +208,7 @@ export default class NotificationCard extends Component {
       }
 
       var lngButtons = [];
-      for (let i = 0; i < this.state.languageKey.length && this.state.languageKey.length > 1; i++ ){
+     /* for (let i = 0; i < this.state.languageKey.length && this.state.languageKey.length > 1; i++ ){
             lngButtons.push(
                 <TouchableHighlight style={[ this.state.selectedlanguage === this.state.languageKey[i] ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                                         onPress={() => {  
@@ -194,7 +220,23 @@ export default class NotificationCard extends Component {
                         </Text>
                 </TouchableHighlight>
             )
-      }
+      }*/
+     
+      var body = Util.parseJSON(this.state.body);
+      for (let i = 0; i < body && body.length > 1; i++ ){
+        lngButtons.push(
+            <TouchableHighlight style={[ this.state.selectedLanguageBodyObjectIndex === i ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+                                    onPress={() => {  
+                                        this.changeLanguage(i); 
+                                        //this.onNotificationLanguageChanged(); 
+                                    } }>
+                    <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
+                    {body[i].lng}
+                    </Text>
+            </TouchableHighlight>
+        )
+  }
+  
       
 
         if (typeof amount == "undefined") {
@@ -247,6 +289,7 @@ export default class NotificationCard extends Component {
         validdate.setMinutes(parseInt(time[1]));
         validdate.setSeconds(parseInt(time[2]));
 
+        //Todo : this.props.notification.action or this.props.notification.actions
         if (this.props.notification.action.length == 3) {
             return (
                 <View style={ [{flex: 1 },Platform.OS=='android' && this.props.expand?{marginBottom:20}:{marginBottom:0}]}>
@@ -289,7 +332,7 @@ export default class NotificationCard extends Component {
                                             >
                                             <View style={style.text} >
                                                 <Text style={style.buttontext}>
-                                                    {this.state.acceptLabel}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[0]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -297,7 +340,7 @@ export default class NotificationCard extends Component {
                                         <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[1].label, NotificationAction.REJECT) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {this.state.rejectLabel}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[1]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -305,7 +348,7 @@ export default class NotificationCard extends Component {
                                         <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[2].label, NotificationAction.FRAUD) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                {this.state.fraudLabel}
+                                                {body[this.state.selectedLanguageBodyObjectIndex].label[2]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -363,9 +406,7 @@ export default class NotificationCard extends Component {
                                 </View>
 
                                 <View style={[style.col, { marginTop: 4 }]}>
-
                                   { bulletList }
-              
                                 </View> 
 
                                 {this.props.expand && <View style={{ flex: 1 }}/>}
@@ -373,20 +414,18 @@ export default class NotificationCard extends Component {
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
                                     <View style={style.notificationButton}>
-
                                         <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[0].label, NotificationAction.ACCEPT) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {this.state.acceptLabel}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[0]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
 
-
                                         <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[1].label, NotificationAction.FRAUD) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {this.state.rejectLabel}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[1]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
