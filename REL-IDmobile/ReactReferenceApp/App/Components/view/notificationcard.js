@@ -116,8 +116,9 @@ export default class NotificationCard extends Component {
         var body = Util.parseJSON(this.state.body)
         if(body && Array.isArray(body)){       
             //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-            if(this.props.selectedLanguageBodyObjectIndex) this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
-            else this.changeLanguage(0);
+            this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
+            // if(this.props.selectedLanguageBodyObjectIndex)
+            // else this.changeLanguage(0);
         }
         
         // else{
@@ -176,7 +177,7 @@ export default class NotificationCard extends Component {
             //this.state.rejectLabel = mainMesg.lng[lng].Reject;
             //if (this.props.notification.action.length == 3) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
             this.state.parseMessage = selectedLanguageBodyObject.message;
-            this.setState({ parseMessage:  selectedLanguageBodyObject.message });
+            this.setState({ parseMessage:  selectedLanguageBodyObject.message, selectedLanguageBodyObjectIndex });
            // break;
            // }
             // }
@@ -223,7 +224,7 @@ export default class NotificationCard extends Component {
       }*/
      
       var body = Util.parseJSON(this.state.body);
-      for (let i = 0; i < body && body.length > 1; i++ ){
+      for (let i = 0; body && i < body.length && body.length > 1; i++ ){
         lngButtons.push(
             <TouchableHighlight style={[ this.state.selectedLanguageBodyObjectIndex === i ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                                     onPress={() => {  
@@ -332,7 +333,7 @@ export default class NotificationCard extends Component {
                                             >
                                             <View style={style.text} >
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[0]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[0].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -340,7 +341,7 @@ export default class NotificationCard extends Component {
                                         <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[1].label, NotificationAction.REJECT) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[1]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[1].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -348,7 +349,7 @@ export default class NotificationCard extends Component {
                                         <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[2].label, NotificationAction.FRAUD) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                {body[this.state.selectedLanguageBodyObjectIndex].label[2]}
+                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[2].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -417,7 +418,7 @@ export default class NotificationCard extends Component {
                                         <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[0].label, NotificationAction.ACCEPT) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[0]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[0].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -425,7 +426,7 @@ export default class NotificationCard extends Component {
                                         <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[1].label, NotificationAction.FRAUD) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[1]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[1].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
