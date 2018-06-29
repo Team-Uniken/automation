@@ -2,7 +2,6 @@
  *Provide checkbox for nexttime login like with facebook, pattern, touchid.
  defaultLogin, rememberuser etc.
  */
-
 /*
  ALWAYS NEED
  */
@@ -48,7 +47,6 @@ import Margin from '../../Components/view/margin';
 let subscriptions;
 
 
-
 var obj;
 let onUpdateChallengeStatusSubscription;
 class VerifyAuth extends Component {
@@ -56,10 +54,7 @@ class VerifyAuth extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            verify_auth: false,
-            enterprise_register: false,
             selectedOption : 0
-
         };
         this.close = this.close.bind(this);
         this.onSelect = this.onSelect.bind(this);
@@ -78,32 +73,17 @@ class VerifyAuth extends Component {
         Events.trigger('showPreviousChallenge');
     }
 
-    selectVerifyAuth() {
-        if (this.state.verify_auth == true) {
-            this.setState({ verify_auth: false });
-        } else {
-            this.setState({ verify_auth: true, enterprise_register: false });
-        }
-    }
-
-    selectEnterpriseRegister() {
-        if (this.state.enterprise_register == true) {
-            this.setState({ enterprise_register: false });
-        } else {
-            this.setState({ enterprise_register: true, verify_auth: false });
-        }
-    }
-
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', function () {
+            Events.trigger('showPreviousChallenge');
             return true;
         }.bind(this));
     }
 
     submit() {
         //alert(`Selected index: ${this.state.selectedOption}`);
-
         //return;
+
         var responseJson = this.props.url.chlngJson;
         if (this.state.selectedOption == 0) {
             responseJson.chlng_resp[0].response = 'true';
@@ -115,70 +95,14 @@ class VerifyAuth extends Component {
             Events.trigger("forgotPassowrd");
         }
     }
+
     onSelect(index, value){
        // alert(`Selected index: ${index} , value: ${value}`);
        this.state.selectedOption = index;
       }
 
     render() {
-        var indents = [];
-
-        indents.push(
-            <Checkbox
-                onSelect={this.selectEnterpriseRegister.bind(this)}
-                selected={this.state.enterprise_register}
-                labelSide={"right"}>
-                Enterprise Registration
-      </Checkbox>
-        );
-
-        indents.push(
-            <Checkbox
-                onSelect={this.selectVerifyAuth.bind(this)}
-                selected={this.state.verify_auth}
-                labelSide={"right"}>
-                REL-ID Verify Authentication
-      </Checkbox>
-        );
-
         return (
-            /*{<MainActivation>
-                <View style={Skin.layout0.wrap.container}>
-                    <StatusBar
-                        style={Skin.layout1.statusbar}
-                        backgroundColor={Skin.main.STATUS_BAR_BG}
-                        barStyle={'default'}
-                    />
-                    <View style={Skin.layout1.title.wrap}>
-                        <Title onClose={() => { this.close(); }}
-                        >Registration</Title>
-                    </View>
-
-                    <ScrollView style={Skin.layout1.content.scrollwrap}>
-                        <View style={[Skin.layout1.content.wrap, { justifyContent: "center", alignItems: 'center' }]}>
-                            <View style={Skin.layout1.content.container}>
-                                <Margin
-                                    space={45} />
-                                {indents}
-                                <Margin
-                                    space={4} />
-                            </View>
-                        </View>
-                    </ScrollView>
-
-                    <View
-                        style={Skin.layout1.bottom.wrap}>
-                        <View style={Skin.layout1.bottom.container}>
-                            <Button
-                                label={Skin.text['1']['1'].submit_button}
-                                onPress={this.submit.bind(this)}
-                            />
-                        </View>
-                    </View>
-                    <KeyboardSpacer topSpacing={-55} />
-                </View >
-
-            </MainActivation>}*/
             <MainActivation>
                 <View style={[Skin.layout0.wrap.container, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}  >
                     <StatusBar
