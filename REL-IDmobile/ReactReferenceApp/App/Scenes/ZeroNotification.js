@@ -64,7 +64,7 @@ function compare(a, b) {
   //   return 0;
 
 //  return moment.utc(b.created_ts.replace('EDT','')).add(4, 'hours').local().toDate() - moment.utc(a.created_ts.replace('EDT','')).add(4, 'hours').local().toDate()
-   return moment.utc(b.created_ts.replace('UTC','')).local().toDate() - moment.utc(a.created_ts.replace('UTC','')).local().toDate()
+   return moment.utc(b.create_ts.replace('UTC','')).local().toDate() - moment.utc(a.create_ts.replace('UTC','')).local().toDate()
 }
 
 /*
@@ -214,7 +214,7 @@ var SampleRow = React.createClass({
 
 
     var expiry_timestamp = this.props.notification.expiry_timestamp;
-    var created_timestamp = this.props.notification.created_ts;
+    var created_timestamp = this.props.notification.create_ts;
    // var timestamp = expiry_timestamp.split("EDT");
   var timestamp = expiry_timestamp.split("UTC");
 
@@ -957,7 +957,7 @@ export default class NotificationMgmtScene extends Component {
        var notification = notifiactionArray[0];
 
        var date1 = new Date(millis2minsBefore);
-     var testDateUtc = moment.utc(notification.created_ts.replace('UTC',''));
+     var testDateUtc = moment.utc(notification.create_ts.replace('UTC',''));
 //       var testDateUtc = moment.utc(notification.created_ts.replace('EDT','')).add(4, 'hours');
        var localDate = moment(testDateUtc).local();
        var s = localDate.format("YYYY-MM-DDTHH:mm:ssZ");
@@ -1052,7 +1052,7 @@ export default class NotificationMgmtScene extends Component {
           text: 'No',
           onPress: () => {
             this.state.showingOtherAlerts = false;
-            this.showalert(notification, notification.action[1].label)
+            this.showalert(notification, notification.actions[1].label)
           }
         },
         ],
@@ -1061,8 +1061,8 @@ export default class NotificationMgmtScene extends Component {
   }
 
   showalert(notification, btnLabel) {
-    for (var i = 0; i < notification.action.length; i++) {
-      var data = notification.action[i];
+    for (var i = 0; i < notification.actions.length; i++) {
+      var data = notification.actions[i];
       if (data.label == btnLabel) {
         this.setState({
           selectedNotificationId: notification.notification_uuid,

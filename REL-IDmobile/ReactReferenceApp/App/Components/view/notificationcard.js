@@ -80,14 +80,14 @@ export default class NotificationCard extends Component {
             }
         }*/
 
-        //if(this.state.selectedlanguage == "") {
+       // if(this.state.selectedlanguage == "") {
             this.state.body = nextProps.notification.body;
             var body = Util.parseJSON(this.state.body);
             if(body && Array.isArray(body)){     
                 //var mainMesg = JSON.parse(this.state.mainMsg);   
                 //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-                //var lng = this.state.languageKey[0];            
-                this.state.selectedLanguageBodyObjectIndex = 0;
+                //var lng = this.state.languageKey[0];      
+                this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
                 var selectedLanguageBodyObject = body[this.state.selectedLanguageBodyObjectIndex];
                // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
                 this.state.subject = selectedLanguageBodyObject.subject;
@@ -116,7 +116,10 @@ export default class NotificationCard extends Component {
         var body = Util.parseJSON(this.state.body)
         if(body && Array.isArray(body)){       
             //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-            this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
+            if(this.props.selectedLanguageBodyObjectIndex < body.length)
+                 this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
+            else    
+                this.changeLanguage(0);
             // if(this.props.selectedLanguageBodyObjectIndex)
             // else this.changeLanguage(0);
         }
@@ -172,12 +175,13 @@ export default class NotificationCard extends Component {
            // if (selectedLanguageBodyObjectIndex === i) {
             var selectedLanguageBodyObject = body[selectedLanguageBodyObjectIndex];
           //  this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-            this.state.subject = selectedLanguageBodyObject.subject;
+            this.state.subject = selectedLanguageBodyObject.subject; 
             //this.state.acceptLabel = mainMesg.lng[lng].Accept;
             //this.state.rejectLabel = mainMesg.lng[lng].Reject;
             //if (this.props.notification.action.length == 3) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
             this.state.parseMessage = selectedLanguageBodyObject.message;
-            this.setState({ parseMessage:  selectedLanguageBodyObject.message, selectedLanguageBodyObjectIndex });
+            this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
+            this.setState({ parseMessage:  selectedLanguageBodyObject.message });
            // break;
            // }
             // }
@@ -291,7 +295,7 @@ export default class NotificationCard extends Component {
         validdate.setSeconds(parseInt(time[2]));
 
         //Todo : this.props.notification.action or this.props.notification.actions
-        if (this.props.notification.action.length == 3) {
+        if (this.props.notification.actions.length == 3) {
             return (
                 <View style={ [{flex: 1 },Platform.OS=='android' && this.props.expand?{marginBottom:20}:{marginBottom:0}]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
@@ -307,7 +311,7 @@ export default class NotificationCard extends Component {
                                     </Text>
                                     <Text style={style.time}>
               
-              {Util.getFormatedDate(this.props.notification.created_ts)}
+              {Util.getFormatedDate(this.props.notification.create_ts)}
                                     </Text>
                                 </View>
 
@@ -329,27 +333,27 @@ export default class NotificationCard extends Component {
                                     <View style={style.notificationButton}>
 
                                         <TouchableHighlight style={style.confirmbutton}
-                                            onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[0].label, NotificationAction.ACCEPT) } }
+                                            onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, NotificationAction.ACCEPT) } }
                                             >
                                             <View style={style.text} >
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[0].label]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[1].label, NotificationAction.REJECT) } }>
+                                        <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, NotificationAction.REJECT) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[1].label]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[2].label, NotificationAction.FRAUD) } }>
+                                        <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[2].label, NotificationAction.FRAUD) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[2].label]}
+                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
@@ -402,7 +406,7 @@ export default class NotificationCard extends Component {
                                         {this.state.subject}
                                     </Text>
                                     <Text style={style.time}>
-                                        {Util.getFormatedDate(this.props.notification.created_ts)}
+                                        {Util.getFormatedDate(this.props.notification.create_ts)}
                                     </Text>
                                 </View>
 
@@ -415,18 +419,18 @@ export default class NotificationCard extends Component {
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
                                     <View style={style.notificationButton}>
-                                        <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[0].label, NotificationAction.ACCEPT) } }>
+                                        <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, NotificationAction.ACCEPT) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[0].label]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.action[1].label, NotificationAction.FRAUD) } }>
+                                        <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, NotificationAction.FRAUD) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
-                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.action[1].label]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>

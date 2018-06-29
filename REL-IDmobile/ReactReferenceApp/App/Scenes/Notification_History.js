@@ -592,7 +592,7 @@ class Notifications_History extends Component {
   changeLanguage(notification, selectedLanguageObjectIndex, body) {
     // var mainMesg = JSON.parse(notification.message.body);
 
-    notification.selectedLanguageObjectIndex = selectedLanguageObjectIndex;
+   // notification.selectedLanguageObjectIndex = selectedLanguageObjectIndex;
 
     //notification.message.subject = mainMesg.lng[lng].subject;
     /*
@@ -608,6 +608,18 @@ class Notifications_History extends Component {
         }
       }
     }*/
+
+    if (this.state.finalData) {
+      for (var date in this.state.finalData) {
+        var notifications = this.state.finalData[date];
+        for(var i = 0;i<notifications.length;i++){
+          var notificationObj = notifications[i];
+          if (notificationObj.notification_uuid === notification.notification_uuid) {
+            notificationObj.selectedLanguageObjectIndex = selectedLanguageObjectIndex;  
+          }
+        }
+      }
+    }
 
     Obj.refreshHistoryData();
     // var languageKey = Object.keys(mainMesg.lng);
@@ -643,7 +655,7 @@ class Notifications_History extends Component {
       if (!notification.hasOwnProperty('selectedLanguageObjectIndex'))
         notification.selectedLanguageObjectIndex = 0;
       bodyarray = body[notification.selectedLanguageObjectIndex].message.split("\n");   
-      for (let i = 0; i < body.length > 1; i++) {
+      for (let i = 0; i < body.length && body.length > 1; i++) {
         lngButtons.push(
           <TouchableHighlight style={[notification.selectedLanguageObjectIndex === i ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
             onPress={() => { Obj.changeLanguage(notification,i, body) }}>
@@ -714,7 +726,7 @@ class Notifications_History extends Component {
       <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
         <View style={[Skin.notification.historyrow, { marginBottom: 4 }]}>
           <Text style={Skin.notification.subject}>
-            {notification.body[notification.selectedLanguageObjectIndex].subject}
+            {body[notification.selectedLanguageObjectIndex].subject}
           </Text>
           <Text style={Skin.notification.time}>
             {Util.getFormatedDate(notification.create_ts)}
