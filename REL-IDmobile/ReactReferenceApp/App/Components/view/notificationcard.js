@@ -84,10 +84,15 @@ export default class NotificationCard extends Component {
             this.state.body = nextProps.notification.body;
             var body = Util.parseJSON(this.state.body);
             if(body && Array.isArray(body)){     
+                if(nextProps.selectedLanguageBodyObjectIndex < body.length)
+                    this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
+                else
+                    this.state.selectedLanguageBodyObjectIndex = 0;
+
+
                 //var mainMesg = JSON.parse(this.state.mainMsg);   
                 //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
                 //var lng = this.state.languageKey[0];      
-                this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
                 var selectedLanguageBodyObject = body[this.state.selectedLanguageBodyObjectIndex];
                // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
                 this.state.subject = selectedLanguageBodyObject.subject;
