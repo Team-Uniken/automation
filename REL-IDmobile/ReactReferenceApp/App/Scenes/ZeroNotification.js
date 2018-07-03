@@ -401,7 +401,6 @@ export default class NotificationMgmtScene extends Component {
     this.onNotificationAction = this.onNotificationAction.bind(this);
     this.onPatternClose = this.onPatternClose.bind(this);
 
-
     var data = this.renderListViewData(notification.sort(compare));
     this.state = {
       dataSource: ds.cloneWithRows(data),
@@ -418,7 +417,7 @@ export default class NotificationMgmtScene extends Component {
       selectedAction: '',
       showLoader: false,
       refreshing: false,
-      selectedLanguageBodyObjectIndex: 0
+      selectedLanguageMap : {}
     };
     this.selectedAlertOp = true;
   }
@@ -990,31 +989,39 @@ export default class NotificationMgmtScene extends Component {
   }
 
   renderNotificationCard(notificationData) {
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={this.view.selectedLanguageBodyObjectIndex}/>
+    if(!this.state.selectedLanguageMap[notificationData.notification.notification_uuid]){
+      this.state.selectedLanguageMap[notificationData.notification.notification_uuid] = 0;
+    }
+
+    var selectedLanguageBodyObjectIndex = this.state.selectedLanguageMap[notificationData.notification.notification_uuid];
+
+    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
     const { notification, btnLabel, action, selectedLanguageBodyObjectIndex } = bundle; 
     switch (action) {
       case "accept":
-        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
         break;
       case "reject":
-        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
         break;
       case "fraud":
-        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalertforReject(notification, btnLabel);
         break;
       case "click":
-        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.swapDataSource(notification);
         break;
       case "hide":
-        this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.restoreDataStore();
+      case "changelang":
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         break;
     }
   }
@@ -1143,8 +1150,8 @@ export default class NotificationMgmtScene extends Component {
         <View style={{ flex: 1 }}>
           {this.renderNotificationCard.bind(
             {
+              state:{selectedLanguageMap:this.state.selectedLanguageMap},
               view: {
-                selectedLanguageBodyObjectIndex: this.state.selectedLanguageBodyObjectIndex,
                 expand: true,
                 showButtons: true,
                 showHideButton: Main.notificationCount > 1
@@ -1160,9 +1167,9 @@ export default class NotificationMgmtScene extends Component {
         dataSource={dataSource}
         removeClippedSubviews={false}
         renderRow={this.renderNotificationCard.bind(
-          {
+          { 
+            state:{selectedLanguageMap:this.state.selectedLanguageMap},
             view: {
-              selectedLanguageBodyObjectIndex: this.state.selectedLanguageBodyObjectIndex,
               expand: false,
               showButtons: false
             }

@@ -31,7 +31,8 @@ const NotificationAction = {
     REJECT: "reject",
     FRAUD: "fraud",
     CLICK: "click",
-    HIDE: "hide"
+    HIDE: "hide",
+    CHANGELANG:"changelang"
 }
 
 export default class NotificationCard extends Component {
@@ -238,6 +239,7 @@ export default class NotificationCard extends Component {
             <TouchableHighlight style={[ this.state.selectedLanguageBodyObjectIndex === i ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                                     onPress={() => {  
                                         this.changeLanguage(i); 
+                                        this.takeAction(this.props.notification, null, NotificationAction.CHANGELANG);
                                         //this.onNotificationLanguageChanged(); 
                                     } }>
                     <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
