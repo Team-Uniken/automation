@@ -45,6 +45,12 @@ class PatternLock extends Component {
       //checking to assign strict boolean (not 1 or 0)
       this.enableLocalValidation = this.props.navigation.state.params.url.enableLocalValidation?true:false;
     }
+
+    if(this.props.navigation.state.params.url.attempts_left)
+      MAX_ATTEMPTS = this.props.navigation.state.params.url.attempts_left;
+    else
+      MAX_ATTEMPTS = 4;
+
     this.clearTimers = null;
     this.sessionId = null;
     this.currentPattern = "";
@@ -79,9 +85,7 @@ class PatternLock extends Component {
     this.tickerEnd = this.tickerEnd.bind(this);
     this.close = this.close.bind(this);
     this.getNextAttempt = this.getNextAttempt.bind(this);
-    
-    if(this.props.navigation.state.params.url.attempts_left)
-      MAX_ATTEMPTS = this.props.navigation.state.params.url.attempts_left;
+      
     if (this.mode == "verify")
       this.msg = "Attempts left " + MAX_ATTEMPTS;
     else {
@@ -311,7 +315,6 @@ class PatternLock extends Component {
         else {
           this.refs["patternView"].clearPattern();
           this.wrongAttempt();
-          
         }
       })
       .catch((error) => {
