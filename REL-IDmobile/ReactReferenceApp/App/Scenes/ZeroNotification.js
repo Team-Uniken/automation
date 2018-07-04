@@ -419,6 +419,9 @@ export default class NotificationMgmtScene extends Component {
       refreshing: false,
       selectedLanguageMap : {}
     };
+
+    this.isAutoPassword = false;
+    this.isAutoPasswordPattern = false;
     this.selectedAlertOp = true;
   }
 
@@ -473,9 +476,10 @@ export default class NotificationMgmtScene extends Component {
       id: 'pattern',
       onUnlock: this.onPatternUnlock,
       onClose: null,
+      enableLocalValidation:true,
       operationMsg: 'Enter pattern',
       mode: 'verify'
-      }})
+      }});
   }
   
   onPatternClose(){
@@ -890,6 +894,24 @@ export default class NotificationMgmtScene extends Component {
         isAdditionalAuthSupported.erPattern = false;
       }
     });
+
+    Util.getUserData("isAutoPassword").then((value) => {
+      if( value === "true" )
+        this.isAutoPassword = true;
+      else
+        this.isAutoPassword = false;
+    }).catch((reject)=>{
+        this.isAutoPassword = false;
+    }).done();
+
+    Util.getUserData("isAutoPasswordPattern").then((value) => {
+      if( value === "true" )
+        this.isAutoPasswordPattern = true;
+      else
+        this.isAutoPasswordPattern = false;
+      }).catch((reject)=>{
+        this.isAutoPasswordPattern = false;
+      }).done();
   }
 
   /*
@@ -1077,7 +1099,13 @@ export default class NotificationMgmtScene extends Component {
         }, () => {
           if (data.authlevel !== null && data.authlevel !== undefined) {
             if (data.authlevel == "1") {
-              this.showModelForPassword();
+              if(Config.ENABLE_AUTO_PASSWORD && this.isAutoPassword){
+                this.showModelForTouchId();
+              }else if(Config.ENABLE_AUTO_PASSWORD && this.isAutoPasswordPattern){
+                this.showComponentForPattern(); 
+              }else {
+                this.showModelForPassword();
+              }
             } else if (data.authlevel == "2") {
               if (Platform.OS === 'android') {
                 if( isAdditionalAuthSupported.erpass )

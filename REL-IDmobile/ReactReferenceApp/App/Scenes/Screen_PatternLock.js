@@ -40,6 +40,11 @@ class PatternLock extends Component {
   constructor(props) {
     super(props);
     this.mode = this.props.navigation.state.params.url.mode;
+    this.enableLocalValidation = false;
+    if(this.props.navigation.state.params.url.enableLocalValidation){
+      //checking to assign strict boolean (not 1 or 0)
+      this.enableLocalValidation = this.props.navigation.state.params.url.enableLocalValidation?true:false;
+    }
     this.clearTimers = null;
     this.sessionId = null;
     this.currentPattern = "";
@@ -225,7 +230,7 @@ class PatternLock extends Component {
   }
 
   decryptUserData(pattern) {
-    if (this.mode === "verify") {
+    if (this.mode === "verify" && this.enableLocalValidation == false) {
       Util.getUserDataSecureWithSalt(Constants.JSONKey.ENCRIPTED_PATTERN_PASSWORD, pattern)
         .then((userDataStr) => {
           var userData = JSON.parse(userDataStr);
@@ -239,7 +244,6 @@ class PatternLock extends Component {
 
           //   //if (this.props.navigation.state.params.url.onUnlock)
           //   //this.props.navigation.state.params.url.onUnlock(this.props.navigation, resp);
-          //   this.getNextAttempt(resp);
           // }).done();
           //old implementation - handled attempts locally
           if (userData.pattern === this.currentPattern) {
@@ -275,6 +279,46 @@ class PatternLock extends Component {
           }
           this.getNextAttempt(resp);
         }).done();
+    }else if(this.mode === "verify" && this.enableLocalValidation == true){
+      Util.getUserDataSecureWithSalt(Constants.JSONKey.ENCRIPTED_PATTERN_PASSWORD, pattern)
+      .then((userDataStr) => {
+        var userData = JSON.parse(userDataStr);
+        //var userData = JSON.parse({userDataStr});
+        // Util.decryptText(userData.password).then((decryptedRPasswd) => {
+        //   this.msg = "";
+        //   var resp = {
+        //     password: decryptedRPasswd,
+        //     data: this.props.navigation.state.params.url.data
+        //   }
+
+        //   //if (this.props.navigation.state.params.url.onUnlock)
+        //   //this.props.navigation.state.params.url.onUnlock(this.props.navigation, resp);
+        //   this.getNextAttempt(resp);
+        // }).done();
+        //old implementation - handled attempts locally
+        if (userData.pattern === this.currentPattern) {
+          Util.decryptText(userData.password).then((decryptedRPasswd) => {
+            this.msg = "";
+            var resp = {
+              password: decryptedRPasswd,
+              data: this.props.navigation.state.params.url.data
+            }
+
+            if (this.props.navigation.state.params.url.onUnlock)
+              this.props.navigation.state.params.url.onUnlock(this.props.navigation, resp);
+          }).done();
+        }
+        else {
+          this.refs["patternView"].clearPattern();
+          this.wrongAttempt();
+          
+        }
+      })
+      .catch((error) => {
+        this.refs["patternView"].clearPattern();
+        this.wrongAttempt();//old implementation - handled attempts locally
+  
+      }).done();
     }
   }
 
