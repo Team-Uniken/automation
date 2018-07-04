@@ -634,9 +634,9 @@
 }
   
   -(int)onSecurityThreat:(NSString*)status{
-      NSString *str = [status stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-      str = [str stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
-      [self callJavaScript:@"onSecurityThreat" result:str];
+    NSString *str = [status stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    str = [self JSONString:str];
+  [self callJavaScript:@"onSecurityThreat" result:str];
     return 0;
   }
   
@@ -828,6 +828,19 @@
   NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictStatusJson
                                                      options:0 error:&error];
   return [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+-(NSString *)JSONString:(NSString *)aString {
+  NSMutableString *s = [NSMutableString stringWithString:aString];
+  [s replaceOccurrencesOfString:@"\"" withString:@"\\\"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"/" withString:@"\\/" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\n" withString:@"\\n" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\b" withString:@"\\b" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\f" withString:@"\\f" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\r" withString:@"\\r" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  [s replaceOccurrencesOfString:@"\t" withString:@"\\t" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+   [s replaceOccurrencesOfString:@"'" withString:@"\\'" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [s length])];
+  return [NSString stringWithString:s];
 }
   
   @end
