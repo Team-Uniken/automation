@@ -83,7 +83,7 @@ export default class NotificationCard extends Component {
 
        // if(this.state.selectedlanguage == "") {
             this.state.body = nextProps.notification.body;
-            var body = Util.parseJSON(this.state.body);
+            var body = this.state.body;//Util.parseJSON(this.state.body);
             if(body && Array.isArray(body)){     
                 if(nextProps.selectedLanguageBodyObjectIndex < body.length)
                     this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
@@ -119,7 +119,7 @@ export default class NotificationCard extends Component {
             this.singleLanguageMessage(); 
         } */
 
-        var body = Util.parseJSON(this.state.body)
+        var body = this.state.body;//Util.parseJSON(this.state.body)
         if(body && Array.isArray(body)){       
             //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
             if(this.props.selectedLanguageBodyObjectIndex < body.length)
@@ -175,7 +175,7 @@ export default class NotificationCard extends Component {
             }
         }*/
 
-        var body = Util.parseJSON(this.state.body);
+        var body = this.state.body;// Util.parseJSON(this.state.body);
         if (body && Array.isArray(body)) {
             //      for (let i = 0; i < body.length; i++){
            // if (selectedLanguageBodyObjectIndex === i) {
@@ -233,7 +233,7 @@ export default class NotificationCard extends Component {
             )
       }*/
      
-      var body = Util.parseJSON(this.state.body);
+      var body = this.state.body;//Util.parseJSON(this.state.body);
       for (let i = 0; body && i < body.length && body.length > 1; i++ ){
         lngButtons.push(
             <TouchableHighlight style={[ this.state.selectedLanguageBodyObjectIndex === i ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}

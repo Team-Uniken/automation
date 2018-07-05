@@ -643,7 +643,7 @@ class Notifications_History extends Component {
 
     var body;
     try {
-      body = Util.parseJSON(notification.body);
+      body = notification.body;//Util.parseJSON(notification.body);
     } catch (e) {
     }
    // var languageKey;
