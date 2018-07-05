@@ -236,8 +236,8 @@ class SelfRegister extends Component {
     AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
       currentProfile = JSON.parse(currentProfile);
       //var baseUrl = "http://" + currentProfile.Host + ":8080" + "/GM/generateOTP.htm?userId=";
-
-      var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/v1/addNewUser.htm";
+      var baseUrl = "http://" + currentProfile.Host + ":9080" +"/rest/enrollUser.htm";
+      //var baseUrl = "http://" + currentProfile.Host + ":9080" + "/WSH/rest/v1/addNewUser.htm";
       console.log("---Register ---baseUrl =" + baseUrl);
 
       // USER_ID_STR, mandatory = true          // will be email Id
