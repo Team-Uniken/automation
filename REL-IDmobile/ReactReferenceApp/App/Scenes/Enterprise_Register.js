@@ -418,7 +418,7 @@ class EnterpriseRegister extends Component {
               <Title onClose={() => {
                 this.close();
               } }>
-                Registration
+                Enroll Device
               </Title>
             </View>
             <ScrollView style={Skin.layout1.content.scrollwrap} keyboardShouldPersistTaps={true} >
@@ -469,7 +469,7 @@ class EnterpriseRegister extends Component {
                         this.refs.cardNumber.focus();
                       } } />
                     <Input
-                      placeholder={'XXXX-XXXX-XX _ _ - _ _ _ _'}
+                      placeholder={'Card Number (Last 6 Digits)'}
                       ref={'cardNumber'}
                       keyboardType={'phone-pad'}
                       returnKeyType={'next'}
