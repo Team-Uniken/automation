@@ -1170,7 +1170,7 @@ class TwoFactorAuthMachine extends Component {
       return (<PatternLock navigator={nav} mode={route.mode} data={route.data} onClose={route.onClose} onUnlock={route.onUnlock} onSetPattern={route.onSetPattern} disableClose={route.disableClose} />);
     } else if (id == 'AutoPassword') {
       return (<AutoPassword navigator={nav} url={route.url} title={route.title} />);
-    }  else if (id == 'verify-auth') {
+    }  else if (id == 'verifyauth') {
       return (<VerifyAuth navigator={nav} url={route.url} title={route.title} />);
     }
     return (<Text></Text>);
