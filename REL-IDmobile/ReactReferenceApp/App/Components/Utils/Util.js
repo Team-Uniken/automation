@@ -290,6 +290,17 @@ class Util extends Component {
       else callback(null);
     });
   }
+
+  static createErrorMessage(errorCode){
+    switch(errorCode){
+      case 58:
+        return "User state is not valid ,please register again";
+      case 63:
+        return "Response time out";
+      default :
+        break;
+    }
+  }
  
   static isAndroidTouchSensorAvailable() {
     return new Promise(function (resolve, reject) {

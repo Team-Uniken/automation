@@ -373,7 +373,6 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("rememberuser", "empty");
         }
 
-
         setTimeout(() => {
 
           Alert.alert(
@@ -469,17 +468,20 @@ class TwoFactorAuthMachine extends Component {
       }
     } else {
       Util.getErrorInfo(res.errCode, (error) => {
-        if (error == 58) {
+        if (error == 58 || error == 63) {
           /*
             58 -->>  RDNA_ERR_INVALID_USER_MR_STATE -Invalid user state in local storage 
           */
           setTimeout(() => {
             Alert.alert(
               'Error',
-              'User state is not valid ,please register again.', [{
+              Util.createErrorMessage(error), [{
                 text: 'OK',
                 onPress: () => {
-                  this.navigateToEnterpriseRegistration();
+                  if(error == 58)
+                    this.navigateToEnterpriseRegistration();
+                  else if (error == 63)
+                    this.resetChallenge();
                 },
                 style: 'cancel',
               }],
@@ -1323,7 +1325,6 @@ class TwoFactorAuthMachine extends Component {
               currentIndex: startIndex,
               screenId: firstChlngName
             });
-
           }).catch((reject) => {
             this.initiateForgotPasswordFlow();
           }).done();
@@ -1631,7 +1632,6 @@ class TwoFactorAuthMachine extends Component {
           }
         });
       }).done();
-
     } else {
       alert("Please check your internet connection");
     }
