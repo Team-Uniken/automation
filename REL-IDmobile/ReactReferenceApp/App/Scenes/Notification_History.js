@@ -234,11 +234,11 @@ var styles = StyleSheet.create({
 });
 
 function compare(a, b) {
-  if (a.create_ts < b.create_ts)
+  if (a.update_ts < b.update_ts)
     return 1;
-  if (a.create_ts > b.create_ts)
+  if (a.update_ts > b.update_ts)
     return -1;
-  if (a.create_ts == b.create_ts)
+  if (a.update_ts == b.update_ts)
     return 0;
 }
 class Notifications_History extends Component {
@@ -387,7 +387,7 @@ class Notifications_History extends Component {
       }
     } else {
       setTimeout(() => {
-        alert("onGetNotificationHistory errCode" + res.errCode);
+        alert("onGetNotificationHistory errCode : " + res.errCode);
       }, 100);
     }
   }
