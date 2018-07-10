@@ -135,6 +135,24 @@ function requireClientBasedConfig() {
             }
         })();
     }
+    if (Config.ENV == 'startokenlite') {
+        config = (function () {
+                  return {
+                  connectionProfile: require("../../../Connection_profiles/startokenlite.json"),
+                  sslCertificate: {
+                  data: getSSLFileContent(),
+                  password: 'uniken123$',
+                  },
+                  img: {
+                  welcome: require('../../img/cbc.png')
+                  },
+                  dashboard: {
+                  screenName: 'HomePage',
+                  screen: require("../Dashboard/startokenlite/HomePage").default,
+                  },
+                  }
+                  })();
+    }
 
     return config;
 }
