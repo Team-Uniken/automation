@@ -144,7 +144,7 @@ function requireClientBasedConfig() {
                   password: 'uniken123$',
                   },
                   img: {
-                  welcome: require('../../img/cbc.png')
+                  welcome: require('../../img/startokenlite.png')
                   },
                   dashboard: {
                   screenName: 'HomePage',
