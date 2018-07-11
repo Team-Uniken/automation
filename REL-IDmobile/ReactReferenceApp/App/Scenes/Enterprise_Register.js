@@ -257,7 +257,7 @@ class EnterpriseRegister extends Component {
         "sessionId":this.sessionId,
         "Content-Type": "application/x-www-form-urlencoded",
         "Content-Length":"0",
-        "resetUser":"true"
+        "resetUser":"false"
       };
 
       console.log("---Register ---Usermap =" + JSON.stringify(userMap));

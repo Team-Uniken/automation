@@ -17,7 +17,9 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchID from 'react-native-touch-id';
 import ModalPicker from 'react-native-modal-picker'
 import { NativeModules, NativeEventEmitter } from 'react-native';
-import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button'
+import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
+
+const Constants = require('../Utils/Constants');
 
 
 /*
@@ -86,6 +88,7 @@ class VerifyAuth extends Component {
 
         var responseJson = this.props.url.chlngJson;
         if (this.state.selectedOption == 0) {
+            Constants.USER_T0 = 'YES';
             responseJson.chlng_resp[0].response = 'true';
             Events.trigger('showNextChallenge', { response: responseJson });
             return;
