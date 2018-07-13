@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -87,7 +87,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 520
-        versionName "5.2.0"
+        versionName "5.2.1"
 
         packagingOptions {
             exclude '/lib/mips64/**'
@@ -157,6 +157,12 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
+        releaseStartokenlite {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
     }
 
     flavorDimensions "default"
@@ -195,6 +201,11 @@ android {
         relidmobile{
             applicationId 'com.uniken.relidmobile'
             signingConfig signingConfigs.releaseRelidmobile
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
+        }
+        startokenlite{
+            applicationId 'com.uniken.boiverify'
+            signingConfig signingConfigs.releaseStartokenlite
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
     }
@@ -237,7 +248,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release-v1.7.2-key-size-changed', ext: 'aar')
+    compile(name: 'app-sdk-release-v-1.8.1', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')
