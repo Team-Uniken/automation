@@ -71,6 +71,7 @@ class SelectLogin extends Component {
       showAndroidAuth : false
     }
 
+    global.loggedInUsingPattern = false;
     this.loginWith = this.loginWith.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -439,6 +440,7 @@ class SelectLogin extends Component {
   onPatternUnlock(nav, args) {
     nav.goBack();
     Main.dnaPasswd = args.password;
+    global.loggedInUsingPattern = true;
     this.onDoPasswordCheckChallenge(args.password);
   }
 
@@ -563,6 +565,7 @@ class SelectLogin extends Component {
   //navigate to screen depends on option selected.
   loginWith(credType) {
     // alert(credType);
+    global.loggedInUsingPattern = false;
     var type = Skin.text['0']['2'].credTypes;
 
     switch (credType) {

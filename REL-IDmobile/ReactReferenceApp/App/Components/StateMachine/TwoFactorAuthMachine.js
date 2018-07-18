@@ -373,7 +373,13 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("rememberuser", "empty");
         }
 
+        
+
         setTimeout(() => {
+          
+          
+          if(global.loggedInUsingPattern && global.loggedInUsingPattern===true && res.pArgs.response.StatusMsg.includes("Invalid Password"))
+              res.pArgs.response.StatusMsg =res.pArgs.response.StatusMsg.replace("Password","Pattern");
 
           Alert.alert(
             'Error',
