@@ -1345,12 +1345,16 @@ class TwoFactorAuthMachine extends Component {
       else {
         if (firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE == chlngJson.chlng[startIndex].challengeOperation) {
           Util.getUserData("isAutoPassword").then((value) => {
+            if(value){
             this.goToNextChallenge({
               chlngJson,
               chlngsCount: challengeJsonArr.length,
               currentIndex: startIndex,
               screenId: firstChlngName
             });
+          }else{
+            this.initiateForgotPasswordFlow();
+          }
           }).catch((reject) => {
             this.initiateForgotPasswordFlow();
           }).done();
