@@ -71,6 +71,7 @@ class Activation_Code extends Component {
     this.onAlertModalOk = this.onAlertModalOk.bind(this);
     this.dismissAlertModal = this.dismissAlertModal.bind(this);
     this.showAndroidAuth = this.showAndroidAuth.bind(this);
+    this.registerAgain = this.registerAgain.bind(this);
     // this.barCodeScanFlag = true;
   }
 
@@ -161,6 +162,10 @@ class Activation_Code extends Component {
       this.state.showCamera = true;
       this.state.isPoped = false;
     }
+  }
+  
+  registerAgain(){
+    Events.trigger("forgotPassowrd");
   }
 
   /*
@@ -491,7 +496,9 @@ class Activation_Code extends Component {
               <Button
                 label={Skin.text['1']['1'].submit_button}
                 onPress={this.checkActivationCode.bind(this) } />
-              <Text
+              <Text style={Skin.layout1.bottom.footertext}
+                  onPress={ this.registerAgain }>Do not have activation code, please register again</Text>
+              {/* <Text
                 onPress={() => {
                   Alert.alert(
                     'Message',
@@ -507,9 +514,9 @@ class Activation_Code extends Component {
                 } }
                 style={Skin.layout1.bottom.footertext}>
                 Resend Activation Code
-              </Text>
+              </Text> */}
             </View>
-          </View>
+          </View>       
           <KeyboardSpacer topSpacing={-100} />
         </View>
             <Modal
