@@ -71,7 +71,7 @@ class SelectLogin extends Component {
       showAndroidAuth : false
     }
 
-    global.loggedInUsingPattern = false;
+    global.loggedInUsingPatternOrTouch = null;
     this.loginWith = this.loginWith.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -440,7 +440,7 @@ class SelectLogin extends Component {
   onPatternUnlock(nav, args) {
     nav.goBack();
     Main.dnaPasswd = args.password;
-    global.loggedInUsingPattern = true;
+    global.loggedInUsingPatternOrTouch = 'Pattern';
     this.onDoPasswordCheckChallenge(args.password);
   }
 
@@ -504,6 +504,7 @@ class SelectLogin extends Component {
             Util.decryptText(encryptedRPasswd).then((RPasswd) => {
               if (RPasswd) {
                 if (RPasswd.length > 0) {
+                  global.loggedInUsingPatternOrTouch = "Touch ID"
                   Main.dnaPasswd = RPasswd;
                   obj.onDoPasswordCheckChallenge(RPasswd);
                 } else {
@@ -565,7 +566,7 @@ class SelectLogin extends Component {
   //navigate to screen depends on option selected.
   loginWith(credType) {
     // alert(credType);
-    global.loggedInUsingPattern = false;
+    global.loggedInUsingPatternOrTouch = null;
     var type = Skin.text['0']['2'].credTypes;
 
     switch (credType) {

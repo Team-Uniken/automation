@@ -378,8 +378,12 @@ class TwoFactorAuthMachine extends Component {
         setTimeout(() => {
           
           
-          if(global.loggedInUsingPattern && global.loggedInUsingPattern===true && res.pArgs.response.StatusMsg.includes("Invalid Password"))
-              res.pArgs.response.StatusMsg =res.pArgs.response.StatusMsg.replace("Password","Pattern");
+          if(global.loggedInUsingPatternOrTouch && 
+            (global.loggedInUsingPatternOrTouch==='Touch ID' || global.loggedInUsingPatternOrTouch==='Pattern') && 
+            res.pArgs.response.StatusMsg.includes("Invalid Password")){
+
+              res.pArgs.response.StatusMsg = res.pArgs.response.StatusMsg.replace("Password",global.loggedInUsingPatternOrTouch);
+            }
 
           Alert.alert(
             'Error',
