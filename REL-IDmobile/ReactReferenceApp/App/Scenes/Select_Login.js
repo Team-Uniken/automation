@@ -519,8 +519,10 @@ class SelectLogin extends Component {
             this.goToPasswordWhenAdditonalAuthFails();
           }
         }).done();
-    }else 
+    }else {
+      global.loggedInUsingPatternOrTouch = "Touch ID"
       obj.onDoPasswordCheckChallenge(this.sessionId);
+    }
   } 
   //submit response in  challenge response and showNextChallenge
   onDoPasswordCheckChallenge(args) {

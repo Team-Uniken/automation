@@ -185,11 +185,21 @@ class UserLogin extends Component {
       AsyncStorage.setItem("userId", un);
       AsyncStorage.setItem("RUserId", un);
       Main.dnaUserName = un;
-      responseJson = this.props.url.chlngJson;
-      responseJson.chlng_resp[0].response = un;
-      Events.trigger('showNextChallenge', { response: responseJson });
-      dismissKeyboard();
-      this.setState({ inputUsername: '' });
+          
+      Util.saveUserDataSecure("actcode", "empty").then((data) => {
+        responseJson = this.props.url.chlngJson;
+        responseJson.chlng_resp[0].response = un;
+        Events.trigger('showNextChallenge', { response: responseJson });
+        dismissKeyboard();
+        this.setState({ inputUsername: '' });
+      }).catch((e)=>{
+        responseJson = this.props.url.chlngJson;
+        responseJson.chlng_resp[0].response = un;
+        Events.trigger('showNextChallenge', { response: responseJson });
+        dismissKeyboard();
+        this.setState({ inputUsername: '' });
+      });
+      
 
     } else {
       dismissKeyboard();

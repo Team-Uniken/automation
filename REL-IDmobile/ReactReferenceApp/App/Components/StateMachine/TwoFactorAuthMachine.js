@@ -413,12 +413,16 @@ class TwoFactorAuthMachine extends Component {
                       Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
                         if (isEnterpriseUser === 'true') {
                           Util.getUserDataSecure('actcode').then((actCode) => {
-                            if (actCode) {
+                            if (actCode && actCode !== 'empty')  {
                               challengeJson.chlng[0].chlng_resp[0].response = actCode;
                               Constants.USER_T0 = "YES";
                               Events.trigger('showNextChallenge', { response: challengeJson });
                             } else {
-                              this.navigateToEnterpriseRegistration();
+                              this.goToNextChallenge({
+                                chlngJson: challengeJson,
+                                screenId: nextChlngName,
+                                currentIndex: 0
+                              });
                             }
                           });
                         } else {
@@ -623,12 +627,19 @@ class TwoFactorAuthMachine extends Component {
           Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
             if (isEnterpriseUser === 'true') {
           Util.getUserDataSecure('actcode').then((actCode) => {
-            if (actCode) {
+            if (actCode && actCode !== 'empty')  {
               chlngJson1.chlng[0].chlng_resp[0].response = actCode;
               Constants.USER_T0 = "YES";
               Events.trigger('showNextChallenge', { response: chlngJson1 });
             } else {
-              this.navigateToEnterpriseRegistration();
+              this.goToNextChallenge({
+                nav: this.props.navigation,
+                chlngJson,
+                chlngsCount: challengeJsonArr.length,
+                isTouchAvailable: this.isTouchIDPresent,
+                screenId: 'AutoPassword',
+                currentIndex: currentIndex,
+              });
             }
           });
         }else{
@@ -707,12 +718,12 @@ class TwoFactorAuthMachine extends Component {
           Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
             if (isEnterpriseUser === 'true') {
               Util.getUserDataSecure('actcode').then((actCode) => {
-                if (actCode) {
+                if (actCode && actCode !== 'empty')  {
                   Constants.USER_T0 = "YES";
                   currChallenge.chlng_resp[0].response = actCode;
                   return { show: false, challenge: currChallenge };
                 } else {
-                  this.navigateToEnterpriseRegistration();
+                  return { show: true, challenge: currChallenge };
                 }
               });
             } else {
@@ -1300,12 +1311,17 @@ class TwoFactorAuthMachine extends Component {
         Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
           if (isEnterpriseUser === 'true') {
             Util.getUserDataSecure('actcode').then((actCode) => {
-              if (actCode) {
+              if (actCode && actCode !== 'empty') {
                 chlngJson.chlng[startIndex].chlng_resp[0].response = actCode;
                 Constants.USER_T0 = "YES";
                 Events.trigger('showNextChallenge', { response: chlngJson });
               } else {
-                this.navigateToEnterpriseRegistration();
+                this.goToNextChallenge({
+                  chlngJson,
+                  chlngsCount: challengeJsonArr.length,
+                  currentIndex: startIndex,
+                  screenId: firstChlngName
+                });
               }
             });
           } else {
