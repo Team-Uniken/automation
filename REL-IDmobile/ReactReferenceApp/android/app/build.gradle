@@ -151,6 +151,12 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
+        releaseChathamairlines {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
         releaseRelidmobile {
             storeFile file("reactandroid.jks")
             storePassword "uniken123\$"
@@ -197,6 +203,11 @@ android {
             signingConfig signingConfigs.releaseRelidmobile
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
+        chathamairlines{
+            applicationId 'com.uniken.chathamairlines'
+            signingConfig signingConfigs.releaseChathamairlines
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
+        }
     }
 
     buildTypes {
@@ -237,7 +248,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release-v-1.8.2', ext: 'aar')
+    compile(name: 'app-sdk-release_v1.8.1', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')

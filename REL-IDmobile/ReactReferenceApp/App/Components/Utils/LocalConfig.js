@@ -135,6 +135,24 @@ function requireClientBasedConfig() {
             }
         })();
     }
+    if (Config.ENV == 'chathamairlines') {
+        config = (function () {
+            return {
+                connectionProfile: require("../../../Connection_profiles/chathamairlines.json"),
+                sslCertificate: {
+                    data: getSSLFileContent(),
+                    password: 'uniken123$',
+                },
+                img: {
+                    welcome: require('../../img/cbc.png')
+                },
+                dashboard: {
+                    screenName: 'HomePage',
+                    screen: require("../Dashboard/CBCVerify/HomePage").default,
+                },
+            }
+        })();
+    }
 
     return config;
 }
