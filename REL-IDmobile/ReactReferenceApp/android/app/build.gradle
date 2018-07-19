@@ -237,7 +237,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release_v1.8.1', ext: 'aar')
+    compile(name: 'app-sdk-release-v-1.8.2', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')
@@ -253,7 +253,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.android.support:multidex:1.0.2'
 
-    compile ('com.better.workspace.lib:agent:4.3.86'){
+    compile ('com.better.workspace.lib:agent:4.4.2'){
         exclude group: "com.google.android.gms"
     }
 
