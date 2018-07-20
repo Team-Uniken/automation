@@ -144,11 +144,12 @@ function requireClientBasedConfig() {
                     password: 'uniken123$',
                 },
                 img: {
-                    welcome: require('../../img/cbc.png')
+                    welcome: require('../../img/chathamairlines.png')
                 },
+                bottomMenu: require("../view/chathamairlinesBottomMenu"),
                 dashboard: {
                     screenName: 'HomePage',
-                    screen: require("../Dashboard/CBCVerify/HomePage").default,
+                    screen: require("../Dashboard/ChathamAirlines/HomePage").default,
                 },
             }
         })();

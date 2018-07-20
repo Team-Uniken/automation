@@ -301,6 +301,20 @@ export default class NotificationCard extends Component {
         validdate.setMinutes(parseInt(time[1]));
         validdate.setSeconds(parseInt(time[2]));
 
+        /*
+
+                                <View style={[style.col, { marginTop: 4 }]}>
+
+                                    { bulletList }
+              
+                                    <View style={style.row}>
+                                        <Text style={style.bold}>
+                                            {amount}
+                                        </Text>
+                                    </View>
+                                </View>
+        */
+
         //Todo : this.props.notification.action or this.props.notification.actions
         if (this.props.notification.actions.length == 3) {
             return (
@@ -323,14 +337,7 @@ export default class NotificationCard extends Component {
                                 </View>
 
                                 <View style={[style.col, { marginTop: 4 }]}>
-
                                     { bulletList }
-              
-                                    <View style={style.row}>
-                                        <Text style={style.bold}>
-                                            {amount}
-                                        </Text>
-                                    </View>
                                 </View>
 
                                 {this.props.expand && <View style={{ flex: 1 }}/>}

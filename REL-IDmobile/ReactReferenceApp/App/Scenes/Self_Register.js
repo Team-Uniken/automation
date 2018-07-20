@@ -503,6 +503,7 @@ class SelfRegister extends Component {
                       minimumValue={0}
                       maximumValue={100}
                       value={this.state.value}
+                      thumbTintColor={Skin.colors.BUTTON_BG_COLOR}
                       minimumTrackTintColor={Skin.layout1.content.slider.minimumTrackTintColor}
                       maximumTrackTintColor={Skin.layout1.content.slider.maximumTrackTintColor}
                       onSlidingComplete={(value) => this.setState({ value: value }) }/>
