@@ -41,7 +41,7 @@ class BottomMenu extends React.Component{
 
 	buildboxes(active){
 		var buildout = [];
-		for (let i=1; i < 6; i++) {
+		for (let i=1; i < 5; i++) {
 			//console.log(i)
 			if(active == i){
 				//console.log('filled '+i)
@@ -53,8 +53,8 @@ class BottomMenu extends React.Component{
 						</View>
 						<TouchableHighlight style={Skin.botmenu.boxhover} underlayColor={Skin.colors.LIGHT_PRIMARY} onPress={()=>this.handleClick(i)}>
 							<View style={{flex:1,flexDirection:'column'}}>
-								<Text style={[Skin.botmenu.icon,{color:'#146cc0'}]}>{this.props.list[i]['icon']}</Text>
-								<Text style={[Skin.botmenu.title,{color:'#146cc0'}]}>{this.props.list[i]['title']}</Text>
+								<Text style={[Skin.botmenu.icon,{color:Skin.colors.BUTTON_BG_COLOR}]}>{this.props.list[i]['icon']}</Text>
+								<Text style={[Skin.botmenu.title,{color:Skin.colors.BUTTON_BG_COLOR,fontSize: 12}]}>{this.props.list[i]['title']}</Text>
 							</View>
 						</TouchableHighlight>
 					</View>
@@ -70,7 +70,7 @@ class BottomMenu extends React.Component{
 						<TouchableHighlight style={Skin.botmenu.box} underlayColor={Skin.colors.TEXT_COLOR} onPress={()=>this.handleClick(i)}>
 							<View style={{flex:1,flexDirection:'column'}}>
 								<Text style={[Skin.botmenu.icon,{color:Skin.colors.PRIMARY}]}>{this.props.list[i]['icon']}</Text>
-								<Text style={[Skin.botmenu.title,{color:Skin.colors.PRIMARY}]}>{this.props.list[i]['title']}</Text>
+								<Text style={[Skin.botmenu.title,{color:Skin.colors.PRIMARY,fontSize: 12}]}>{this.props.list[i]['title']}</Text>
 							</View>
 						</TouchableHighlight>
 					</View>
@@ -97,29 +97,24 @@ BottomMenu.defaultProps = {
     list: {
 		1:{
 			icon:'\ue901',
-			title:'ACCOUNTS',
-			link: 'Accounts',
+			title:'Home',
+			link: 'Home',
 		},
 		2:{
 			icon:'\ue903',
-			title:'PAY BILLS',			
-			link: 'PayBills',
+			title:'Book a Flight',			
+			link: 'Book a Flight',
 		},
 		3:{
 			icon:'\ue902',
-			title:'DEPOSITS',				
-			link: 'Deposits',
+			title:'Flight Status',				
+			link: 'Flight Status',
 		},
 		4:{
 			icon:'\ue908',
-			title:'FIND BRANCH',				
-			link: 'FindBranch',
-		},
-		5:{
-			icon:'\ue904',
-			title:'CONTACT',				
-			link: 'Contact',
-		},
+			title:'My Bookings',				
+			link: 'My Bookings',
+		}
     },
     active: 1
 };
@@ -149,7 +144,7 @@ Skin.botmenu = StyleSheet.create({
 	},
 	box:{
 		flex: 1,
-		backgroundColor: '#146cc0',
+		backgroundColor: Skin.colors.BUTTON_BG_COLOR,
 	},
 	boxhover:{
 		backgroundColor: Skin.colors.PRIMARY,
@@ -166,7 +161,6 @@ Skin.botmenu = StyleSheet.create({
 		color: Skin.colors.TEXT_COLOR,
 		flex:2,
 		textAlign:'center'
-
 	},
 	title:{
 		fontSize: 10,
