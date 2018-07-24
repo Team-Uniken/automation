@@ -23,7 +23,7 @@ import ListSectionHeader from '../../ListSectionHeader';
 import { FormattedCurrency } from 'react-native-globalize';
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
-var titleStringArray = ["ACCOUNTS","PAY BILLS","DEPOSITS","FIND BRANCH","CONTACT"];
+var titleStringArray = ["HOME","BOOK A FLIGHT","FLIGHT STATUS","MY BOOKING","CONTACT"];
 /*
   Instantiaions
 */
@@ -59,7 +59,7 @@ export default class HomePage extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     });
-    this.state = { dataSource: ds.cloneWithRowsAndSections([]), tabChanged:1,activeTab :1,titleString:"Accounts"};
+    this.state = { dataSource: ds.cloneWithRowsAndSections([]), tabChanged:1,activeTab :1,titleString:"HOME"};
     self = this;
     this.tabChanged = this.tabChanged.bind(this);
   }
@@ -290,7 +290,8 @@ export default class HomePage extends Component {
             
         
                <PageTitle title={this.state.titleString}
-                handler={this.triggerDrawer}/>
+                handler={this.triggerDrawer}
+                isBadge={true}/>
     
         <View style={{
                        flex: 1,

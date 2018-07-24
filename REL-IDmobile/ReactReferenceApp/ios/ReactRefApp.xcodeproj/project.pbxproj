@@ -191,12 +191,14 @@
 		558258322105B9B5005430B5 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
 		558258332105B9B5005430B5 /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
 		558258342105B9B5005430B5 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
-		558258352105B9B5005430B5 /* ImagesCBCVerify.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5528FFD11F21F88500560B76 /* ImagesCBCVerify.xcassets */; };
 		558258362105B9B5005430B5 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
 		558258372105B9B5005430B5 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		558258382105B9B5005430B5 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		5582586C2105BBB0005430B5 /* ImagesChathamAirlines.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5582586B2105BBB0005430B5 /* ImagesChathamAirlines.xcassets */; };
 		5582586E2105CFA7005430B5 /* chathamairlines.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5582586D2105CFA7005430B5 /* chathamairlines.plist */; };
+		558258FB210736CC005430B5 /* chathamairlines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 558258CF210736CC005430B5 /* chathamairlines.ttf */; };
+		558258FC21073924005430B5 /* chathamairlines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 558258CF210736CC005430B5 /* chathamairlines.ttf */; };
+		558258FD21073F46005430B5 /* ImagesChathamAirlines.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5582586B2105BBB0005430B5 /* ImagesChathamAirlines.xcassets */; };
 		558C998E1E7BF7A30002C56F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		558C998F1E7BF7A30002C56F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		558C99901E7BF7A30002C56F /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -890,6 +892,7 @@
 		5582583F2105B9B6005430B5 /* cbc_verify copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cbc_verify copy-Info.plist"; path = "/Users/swapnil/Desktop/react_update/REL-IDmobile/ReactReferenceApp/ios/cbc_verify copy-Info.plist"; sourceTree = "<absolute>"; };
 		5582586B2105BBB0005430B5 /* ImagesChathamAirlines.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesChathamAirlines.xcassets; sourceTree = "<group>"; };
 		5582586D2105CFA7005430B5 /* chathamairlines.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = chathamairlines.plist; sourceTree = "<group>"; };
+		558258CF210736CC005430B5 /* chathamairlines.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chathamairlines.ttf; sourceTree = "<group>"; };
 		558654DF1E12689500B01A6A /* logo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = logo.ttf; sourceTree = "<group>"; };
 		558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "REL-IDMobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStockRELIDMobile.xcassets; sourceTree = "<group>"; };
@@ -1596,6 +1599,7 @@
 				1A7F21EE1DBEC10800D90531 /* Frameworks */,
 				654B80D11DBE0C620052D415 /* Bolts.framework */,
 				6582FD681D9526890075C15D /* libstdc++.tbd */,
+				558258CF210736CC005430B5 /* chathamairlines.ttf */,
 				558654DF1E12689500B01A6A /* logo.ttf */,
 				1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */,
 				656227EB1CB50B2300AD7F6C /* gothic_0.TTF */,
@@ -2396,15 +2400,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				558258FD21073F46005430B5 /* ImagesChathamAirlines.xcassets in Resources */,
 				5582582F2105B9B5005430B5 /* cbcverify.plist in Resources */,
 				558258302105B9B5005430B5 /* LaunchScreen.xib in Resources */,
 				558258312105B9B5005430B5 /* gothic_0.TTF in Resources */,
 				558258322105B9B5005430B5 /* clientcert.p12 in Resources */,
 				558258332105B9B5005430B5 /* cbc.ttf in Resources */,
 				558258342105B9B5005430B5 /* index.ios.js in Resources */,
-				558258352105B9B5005430B5 /* ImagesCBCVerify.xcassets in Resources */,
 				558258362105B9B5005430B5 /* account.ttf in Resources */,
 				558258372105B9B5005430B5 /* icomoon.ttf in Resources */,
+				558258FC21073924005430B5 /* chathamairlines.ttf in Resources */,
 				558258382105B9B5005430B5 /* App in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2458,6 +2463,7 @@
 				654B80E21DBE11780052D415 /* ReactRefAppDeveloper-Info.plist in Resources */,
 				65127E161D795B4000FB36E1 /* Info.plist in Resources */,
 				5582586E2105CFA7005430B5 /* chathamairlines.plist in Resources */,
+				558258FB210736CC005430B5 /* chathamairlines.ttf in Resources */,
 				55C924B21EB3661B00DA8083 /* account.ttf in Resources */,
 				551EE2E01E51BB1200ADAD6C /* cbc.plist in Resources */,
 				55D17EFE1F0A322800C94FA5 /* Index.js in Resources */,
