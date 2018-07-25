@@ -34,6 +34,7 @@ import ControlPanel from '../ControlPanel';
 import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
 import PageTitle from '../../view/pagetitle.js';
+import HomeTab from './HomeTab.js';
 
 var sud =0;
 let self;
@@ -259,10 +260,7 @@ export default class HomePage extends Component {
   
   getComponent(){
     if(this.state.tabChanged===1){
-      return(<ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderSectionHeader={this.renderSectionHeader} />)
+      return(<HomeTab/>)
     }else if(this.state.tabChanged===2){
       //return(<PayBillsScene/>)
     }else if(this.state.tabChanged===3){
