@@ -1022,7 +1022,7 @@ export default class NotificationMgmtScene extends Component {
 
   onNotificationAction(bundle) {
     const { notification, btnLabel, action, selectedLanguageBodyObjectIndex } = bundle; 
-    switch (action) {
+    switch (action.toLowerCase()) {
       case "accept":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
@@ -1044,6 +1044,10 @@ export default class NotificationMgmtScene extends Component {
         this.restoreDataStore();
       case "changelang":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
+        break;
+        default:
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
+        this.showalert(notification, btnLabel);
         break;
     }
   }

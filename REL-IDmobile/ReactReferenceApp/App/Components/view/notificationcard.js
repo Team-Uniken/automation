@@ -347,26 +347,26 @@ export default class NotificationCard extends Component {
                                     <View style={style.notificationButton}>
 
                                         <TouchableHighlight style={style.confirmbutton}
-                                            onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, NotificationAction.ACCEPT) } }
+                                            onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) } }
                                             >
                                             <View style={style.text} >
-                                                <Text style={style.buttontext}>
+                                                <Text style={style.buttontext} >
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, NotificationAction.REJECT) } }>
+                                        <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) } }>
                                             <View style={style.text}>
-                                                <Text style={style.buttontext}>
+                                                <Text style={style.buttontext} >
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[2].label, NotificationAction.FRAUD) } }>
+                                        <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action) } }>
                                             <View style={style.text}>
-                                                <Text style={style.buttontext}>
+                                                <Text style={style.buttontext} >
                                                 {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
                                                 </Text>
                                             </View>
@@ -433,7 +433,7 @@ export default class NotificationCard extends Component {
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
                                     <View style={style.notificationButton}>
-                                        <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, NotificationAction.ACCEPT) } }>
+                                        <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label,this.props.notification.actions[0].action) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
@@ -441,7 +441,7 @@ export default class NotificationCard extends Component {
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, NotificationAction.FRAUD) } }>
+                                        <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
