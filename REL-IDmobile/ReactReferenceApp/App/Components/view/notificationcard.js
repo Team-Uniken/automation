@@ -17,6 +17,7 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
 import Util from "../Utils/Util";
+import Config from 'react-native-config';
 /*
  Use in this js
  */
@@ -336,7 +337,7 @@ export default class NotificationCard extends Component {
                                     </Text>
                                 </View>
 
-                                <View style={[style.col, { marginTop: 4 }]}>
+                                <View style={[style.col, { marginTop: 4,flex: 500 }]}>
                                     { bulletList }
                                 </View>
 
@@ -344,7 +345,7 @@ export default class NotificationCard extends Component {
 
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
-                                    <View style={style.notificationButton}>
+                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'true'? style.notificationButtonVertical:style.notificationButtonHorizontal}>
 
                                         <TouchableHighlight style={style.confirmbutton}
                                             onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) } }
@@ -432,7 +433,8 @@ export default class NotificationCard extends Component {
 
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
-                                    <View style={style.notificationButton}>
+
+                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'true'?style.notificationButtonVertical:style.notificationButtonHorizontal}>
                                         <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label,this.props.notification.actions[0].action) } }>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
@@ -525,7 +527,13 @@ const style = StyleSheet.create({
         height: 200,
         width: 300
     },
-    notificationButton: {
+    notificationButtonHorizontal: {
+        backgroundColor: 'transparent',
+        height: 100,
+        flex: 1,
+        flexDirection: 'column',
+    },
+    notificationButtonVertical: {
         backgroundColor: 'transparent',
         height: 50,
         flex: 1,
