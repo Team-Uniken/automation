@@ -96,22 +96,22 @@ BottomMenu.propTypes = {
 BottomMenu.defaultProps = {
     list: {
 		1:{
-			icon:'\ue901',
+			icon:'\ue900',
 			title:'Home',
 			link: 'Home',
 		},
 		2:{
-			icon:'\ue903',
+			icon:'\ue9af',
 			title:'Book a Flight',			
 			link: 'Book a Flight',
 		},
 		3:{
-			icon:'\ue902',
+			icon:'\ue905',
 			title:'Flight Status',				
 			link: 'Flight Status',
 		},
 		4:{
-			icon:'\ue908',
+			icon:'\ue904',
 			title:'My Bookings',				
 			link: 'My Bookings',
 		}
@@ -155,7 +155,7 @@ Skin.botmenu = StyleSheet.create({
 		height: 80
 	},
 	icon:{
-		fontFamily: Skin.ACC_FONT,
+		fontFamily: Skin.font.LOGO_FONT,
 		fontSize: 30,
 		paddingTop: 15,
 		color: Skin.colors.TEXT_COLOR,
