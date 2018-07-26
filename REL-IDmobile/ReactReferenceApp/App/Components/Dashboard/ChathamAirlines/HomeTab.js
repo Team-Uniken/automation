@@ -13,7 +13,7 @@ import moment from 'moment';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import { StyleSheet, Text, TextInput, AsyncStorage, TouchableHighlight, TouchableWithoutFeedback, View, Alert, Platform, Image,ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, AsyncStorage, TouchableHighlight, TouchableWithoutFeedback, View, Alert, Platform, Image, ScrollView } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
@@ -73,15 +73,15 @@ export default class NotificationCard extends Component {
 
             }}>
 
-                { <Image style={{
-                                  height:"100%",
-                                  width:"100%",
-                                   position:'absolute',
-                                   resizeMode:'stretch'
-                                  
-                                
-                                }}
-                                    source={require('../../../img/download.jpeg')} /> }
+                {<Image style={{
+                    height: "100%",
+                    width: "100%",
+                    position: 'absolute',
+                    resizeMode: 'stretch'
+
+
+                }}
+                    source={require('../../../img/download.jpeg')} />}
 
                 <View>
                     <View style={style.titleView}>
@@ -94,7 +94,7 @@ export default class NotificationCard extends Component {
                     <View style={{ flexDirection: 'row', marginRight: 10, marginLeft: 10 }}>
                         <View style={{ flex: 1, height: 50, justifyContent: 'center' }} >
 
-                          
+
 
 
                         </View>
@@ -135,53 +135,53 @@ export default class NotificationCard extends Component {
 
                     </View>
 
-  <Text style={[style.headerTitle, {
+                    <Text style={[style.headerTitle, {
 
-justifyContent: 'center',
-alignItems: 'center',
-fontWeight: 'bold',
-marginLeft:10
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        fontWeight: 'bold',
+                        marginLeft: 10
 
-}]}
->Upcoming Reservation</Text>
-<View style={{ height: 0.5, backgroundColor: 'grey',margin:10 }} />
+                    }]}
+                    >Upcoming Reservation</Text>
+                    <View style={{ height: 0.5, backgroundColor: 'grey', margin: 10 }} />
 
-                   
 
-                      <ScrollView>                  
-                    <View style={{ width: 350, padding: 10, flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <Text style={{ fontSize: 12, marginBottom: 5, backgroundColor: 'transparent' }}>{currentDate}</Text>
-                        <Text style={{ fontSize: 12, marginBottom: 10,backgroundColor: 'transparent' }}>{"Confirmation : 3453222434"}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent' }}>
-                            <View style={style.viewBox}>
-                                <View>
-                                    <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>Departure</Text>
-                                    <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>{currentDate}</Text>
-                                    <Text style={{ fontSize: 15, fontWeight: 'bold', alignSelf: 'center', marginBottom: 5 }}>EWR</Text>
+
+                    <ScrollView>
+                        <View style={{ width: 350, padding: 10, flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <Text style={{ fontSize: 12, marginBottom: 5, backgroundColor: 'transparent' }}>{currentDate}</Text>
+                            <Text style={{ fontSize: 12, marginBottom: 10, backgroundColor: 'transparent' }}>{"Confirmation : 3453222434"}</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent' }}>
+                                <View style={style.viewBox}>
+                                    <View>
+                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>Departure</Text>
+                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>{currentDate}</Text>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold', alignSelf: 'center', marginBottom: 5 }}>EWR</Text>
+                                    </View>
                                 </View>
-                            </View>
-                            <View style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}>
-                                <Text style={{ fontSize: 20, alignSelf: 'center', fontFamily: Skin.font.LOGO_FONT, color: Skin.THEME_COLOR }}>
-                                    {Skin.icon.logo}
-                                </Text>
-                            </View>
-                            <View style={style.viewBox}>
-                                <View>
-                                    <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>Arrival</Text>
-                                    <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>{nextDate}</Text>
-                                    <Text style={{ fontSize: 15, fontWeight: 'bold', alignSelf: 'center', marginBottom: 5 }}>DUB</Text>
+                                <View style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}>
+                                    <Text style={{ fontSize: 20, alignSelf: 'center', fontFamily: Skin.font.LOGO_FONT, color: Skin.THEME_COLOR }}>
+                                        {Skin.icon.logo}
+                                    </Text>
+                                </View>
+                                <View style={style.viewBox}>
+                                    <View>
+                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>Arrival</Text>
+                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>{nextDate}</Text>
+                                        <Text style={{ fontSize: 15, fontWeight: 'bold', alignSelf: 'center', marginBottom: 5 }}>DUB</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
 
- <View style={{ height: 0.5, backgroundColor: 'grey',margin:10 }} />
-
-                 
+                        <View style={{ height: 0.5, backgroundColor: 'grey', margin: 10 }} />
 
 
 
- </ScrollView>    
+
+
+                    </ScrollView>
 
 
 
