@@ -7,6 +7,7 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)com.uniken.relidmobile</string>
+		<string>$(AppIdentifierPrefix)com.uniken.boiverify</string>
 	</array>
 </dict>
 </plist>

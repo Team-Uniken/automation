@@ -84,7 +84,7 @@ class PageTitle extends Component {
           statusBarLight={'light-content'}
           titleStyle={Skin.navbar.title.titleStyle}
           title={Skin.icon.logo}
-          titleTint={Config.BUTTON_BG_COLOR}
+          titleTint={Config.LOGO_COLOR}
           right={''}
           left={{
             icon: Skin.icon.hamburger,
@@ -105,7 +105,7 @@ class PageTitle extends Component {
         {this.props.isBadge &&<View style={{ width:50,height:50, position: 'absolute', right: 10 }}>
            <TouchableOpacity underlayColor='transparent' onPress={this.onPressNotificationView}>
           <Text style={{
-            color: Skin.color.LOGO_COLOR,
+            color: Skin.color.BUTTON_BG_COLOR,
             textAlign: 'center',
             fontSize: 35,
             height:50,
