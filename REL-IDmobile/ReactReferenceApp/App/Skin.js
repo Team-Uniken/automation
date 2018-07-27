@@ -752,7 +752,7 @@ module.exports.layout1 = {
     },
     footertext: {
       color: BUTTON_BG_COLOR,
-      fontSize: 12,
+      fontSize: 15,
       textAlign: 'center',
       textDecorationLine: 'underline',
     }
