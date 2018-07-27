@@ -487,7 +487,7 @@ class Activation_Code extends Component {
                   onSubmitEditing={() => { dismissKeyboard(); this.checkActivationCode(); } }/>
               </View>
             </View>
-          </ScrollView>
+          </ScrollView>          
           <View style={Skin.layout1.bottom.wrap}>
             <View style={Skin.layout1.bottom.container}>
               <Text style={[Skin.layout0.top.attempt, { marginBottom: 4, marginTop: 0 }]}>
@@ -495,9 +495,7 @@ class Activation_Code extends Component {
               </Text>
               <Button
                 label={Skin.text['1']['1'].submit_button}
-                onPress={this.checkActivationCode.bind(this) } />
-              <Text style={Skin.layout1.bottom.footertext}
-                  onPress={ this.registerAgain }>Do not have activation code, please register again</Text>
+                onPress={this.checkActivationCode.bind(this) } />     
               {/* <Text
                 onPress={() => {
                   Alert.alert(
@@ -515,8 +513,10 @@ class Activation_Code extends Component {
                 style={Skin.layout1.bottom.footertext}>
                 Resend Activation Code
               </Text> */}
-            </View>
-          </View>       
+            </View>            
+          </View>  
+          <Text style={[Skin.layout1.bottom.footertext, {marginBottom : 40}]}
+                  onPress={ this.registerAgain }>I do not have activation code</Text>  
           <KeyboardSpacer topSpacing={-100} />
         </View>
             <Modal

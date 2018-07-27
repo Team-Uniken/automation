@@ -733,12 +733,12 @@ module.exports.layout1 = {
   },
   bottom: {
     wrap: {
-      flex: 22,
+      flex: 15,
       //height: 50,
       bottom: 0,
       left: 0,
       alignItems: 'center',
-      marginBottom:20
+      marginBottom:10
       //backgroundColor: "rgba(155,199,255,1)"
     },
     container: {
