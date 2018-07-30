@@ -972,6 +972,7 @@ export default class NotificationMgmtScene extends Component {
 
   sortNotificationWithinMinutes(minute,notifiactionArray){
     var millis = minute*60000;
+    //var millis = 600;
     var currMill = Date.now();
     var millis2minsBefore = currMill - millis;
    if( notifiactionArray.length > 0){
@@ -1017,7 +1018,7 @@ export default class NotificationMgmtScene extends Component {
 
     var selectedLanguageBodyObjectIndex = this.state.selectedLanguageMap[notificationData.notification.notification_uuid];
 
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
+    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} isAirlines={this.view.isAirlines} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
@@ -1186,6 +1187,7 @@ export default class NotificationMgmtScene extends Component {
               view: {
                 expand: true,
                 showButtons: true,
+                isAirlines:true,
                 showHideButton: Main.notificationCount > 1
               }
             })(dataSource.getRowData(0, 0))}
@@ -1203,6 +1205,7 @@ export default class NotificationMgmtScene extends Component {
             state:{selectedLanguageMap:this.state.selectedLanguageMap},
             view: {
               expand: false,
+              isAirlines:false,
               showButtons: false
             }
           })} />

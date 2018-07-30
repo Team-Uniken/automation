@@ -19,6 +19,7 @@ import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
 import Util from "../../Utils/Util";
 import Main from '../../Container/Main';
+import { Card } from 'react-native-elements';
 /*
  Use in this js
  */
@@ -64,138 +65,108 @@ export default class NotificationCard extends Component {
 
         var today = new Date();
         var currentDate = moment(Date(today)).format('DD/MM/YYYY');
-        var nextDate = moment(today, "DD-MM-YYYY").add(1, 'days').format('DD/MM/YYYY');
+        var nextDate = moment(today, "DD-MM-YYYY").add(1, 'days').format('DD-MMM-YYYY');
+        var nextDate1 = moment(today, "DD-MM-YYYY").add(2, 'days').format('DD-MMM-YYYY');
+        var array = Main.dnaUserName.split(".");
+        var name;
+        if(array.length > 1){
+           name = array[0].charAt(0).toUpperCase() + array[0].slice(1);
+        }else{
+            name = Main.dnaUserName;
+        }
+
         return (
 
-            <View style={{
-                flex: 1,
-                backgroundColor: Skin.main.BACKGROUND_COLOR,
-
-            }}>
-
-                {<Image style={{
-                    height: "100%",
-                    width: "100%",
-                    position: 'absolute',
-                    resizeMode: 'stretch'
-
-
-                }}
-                    source={require('../../../img/download.jpeg')} />}
-
-                <View>
-                    <View style={style.titleView}>
-                        <Text style={style.title}
-                            numberOfLines={5}>Welcome Back,</Text>
-                        <Text style={[style.title, { color: Skin.BUTTON_BG_COLOR }]}
-                            numberOfLines={5}>{Main.dnaUserName}</Text>
-                    </View>
-
-                    <View style={{ flexDirection: 'row', marginRight: 10, marginLeft: 10 }}>
-                        <View style={{ flex: 1, height: 50, justifyContent: 'center' }} >
-
-
-
-
-                        </View>
-                        <View style={{ height: 0, marginLeft: 30 }} >
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={[style.headerTitle, {
-                                    width: 100,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-
-                                }]}
-                                >Status level</Text>
-                                <Image style={{
-                                    height: 30,
-                                    width: 30,
-                                }}
-                                    source={require('../../../img/gold_small.png')} />
-
-                            </View>
-                            <View style={{ height: 50, justifyContent: 'center', marginTop: 0 }} >
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-
-                                    <Text style={style.headerTitle}
-                                    >Miles Balance</Text>
-                                    <Text style={{
-                                        fontSize: 12,
-                                        textAlign: 'left',
-                                        marginLeft: 10,
-                                        backgroundColor: 'transparent'
-
-
-                                    }}
-                                    >141,030</Text>
-                                </View>
-                            </View>
-
-                        </View>
-
-                    </View>
-
-                    <Text style={[style.headerTitle, {
-
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontWeight: 'bold',
-                        marginLeft: 10
-
-                    }]}
-                    >Upcoming Reservation</Text>
-                    <View style={{ height: 0.5, backgroundColor: 'grey', margin: 10 }} />
-
-
-
-                    <ScrollView>
-                        <View style={{ width: 350, padding: 10, flexDirection: 'column', alignItems: 'flex-start' }}>
-                            <Text style={{ fontSize: 12, marginBottom: 5, backgroundColor: 'transparent' }}>{currentDate}</Text>
-                            <Text style={{ fontSize: 12, marginBottom: 10, backgroundColor: 'transparent' }}>{"Confirmation : 3453222434"}</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent' }}>
-                                <View style={style.viewBox}>
-                                    <View>
-                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>Departure</Text>
-                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>{currentDate}</Text>
-                                        <Text style={{ fontSize: 15, fontWeight: 'bold', alignSelf: 'center', marginBottom: 5 }}>EWR</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}>
-                                    <Text style={{ fontSize: 20, alignSelf: 'center', fontFamily: Skin.font.LOGO_FONT, color: Skin.THEME_COLOR }}>
-                                        {Skin.icon.logo}
-                                    </Text>
-                                </View>
-                                <View style={style.viewBox}>
-                                    <View>
-                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>Arrival</Text>
-                                        <Text style={{ fontSize: 11, alignSelf: 'center', marginBottom: 3 }}>{nextDate}</Text>
-                                        <Text style={{ fontSize: 15, fontWeight: 'bold', alignSelf: 'center', marginBottom: 5 }}>DUB</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-
-                        <View style={{ height: 0.5, backgroundColor: 'grey', margin: 10 }} />
-
-
-
-
-
-                    </ScrollView>
-
-
-
-
-
+            <View style={styles.container}>
+            <Text style={styles.paragraph}>
+            Welcome Back, {name}
+            </Text>
+    
+     <Card style={styles.upgrade} title="MY PROFILE">
+           
+            <View style={styles.cards}>
+                <View key={1} style={styles.user}>
+                <Text style={styles.upd_text}>{"STATUS LEVEL"}</Text>
+    
+                <Text style={styles.name}>{"GOLD"}</Text>
+                <Image
+                    style={styles.image}
+                    resizeMode="cover"
+                    source={require("../../../img/gold.png")} 
+                  />
                 </View>
-            </View>
+      
+                <View  style={styles.user}>
+                  <Text style={styles.upd_text}>{"MILES BALANCE"}</Text>
+                  <Image
+                    style={styles.counterimage}
+                    resizeMode="cover"
+                    source={require("../../../img/counter.jpg")} 
+                  />
+              
+    
+                </View>
+                
+            
+     
+      </View>
+    
+          
+    
+          
+            </Card>
+    
+         <Card style={styles.upgrade} title="UPCOMING RESERVATIONS">
+        
+            <Text style={styles.upd_text}>Confirmation Number: 3963823 </Text> 
+            <View style={styles.cards}>
+                <View key={1} style={styles.user}>
+                   <Text style={styles.upd_text}>{" EWR"}</Text>
+    
+                    <Image
+                      style={styles.image}
+                      resizeMode="cover"
+                      source={require("../../../img/depart1.png")} 
+                    />
+                <Text style={styles.name}>{nextDate}</Text>
+                <Text style={styles.name}>{"11:10 PM"}</Text>
+                </View>
+      
+                <View  style={styles.user}>
+                  <Text style={styles.upd_text}>{" DUB"}</Text>
+    
+                  <Image
+                      style={styles.image}
+                      resizeMode="cover"
+                      source={require("../../../img/arrive1.png")} 
+                    />
+                  <Text style={styles.name}>{nextDate1}</Text>
+                  <Text style={styles.name}>{"10:50 AM"}</Text>
+                  
+                </View>
+                
+            
+    
+     
+      </View>
+    
+          
+    
+          
+            </Card>
+    
+    
+    
+    
+          </View>
+    
 
         );
     }
 }
 
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     customerow: {
         backgroundColor: Skin.color.WHITE,
         flex: 1,
@@ -369,4 +340,58 @@ const style = StyleSheet.create({
         margin: 2,
         backgroundColor: Skin.color.REJECT_BUTTON_COLOR,
     },
+    user:{
+        
+        textAlign: 'center', 
+        justifyContent:'center',
+      },
+      upd_text:{
+          fontSize: 16,
+          fontWeight:'bold',
+          color: '#34495e',
+          textAlign: 'center', 
+         
+      
+      },
+      container: {
+        flex: 1,
+        marginTop:0,
+        backgroundColor: '#ecf0f1',
+      },
+      
+      cards:{
+        flexDirection:'row',
+        color: '#34495e',
+        justifyContent:'space-between',
+       
+        
+      },
+      name:{
+        color: '#34495e',
+        textAlign:'center',
+        alignSelf:'center',
+    
+
+        
+      },
+      paragraph: {
+        fontSize: 22,
+        marginTop:10,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#34495e',
+      },
+      upgrade:{
+        flexDirection:'row',
+        color: '#34495e',
+        justifyContent:'space-between'
+    
+      },
+      image:{
+        height:50,width:50,
+        alignSelf:"center"
+      },
+     counterimage:{
+        height:50,width:140,
+      },
 });

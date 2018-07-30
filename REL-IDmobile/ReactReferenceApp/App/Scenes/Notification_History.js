@@ -672,7 +672,7 @@ class Notifications_History extends Component {
 
     var bulletList = [];
 
-    for (let i = 0; i < bodyarray.length; i++) {
+    for (let i = 0; i < 4; i++) {
       var bodyStr = bodyarray[i];
       bodyStr = Util.replaceString('<br/>', '\n', bodyStr);
       bulletList.push(
