@@ -50,6 +50,7 @@ export default class NotificationCard extends Component {
           subject : "", 
         //  languageKey : "",
         //  selectedlanguage : this.props.selectedlanguage,   //Deprecated
+          isAirlinesMsg : false,
           selectedLanguageBodyObjectIndex:0
         }   
           this.updateNotificationData();
@@ -91,8 +92,12 @@ export default class NotificationCard extends Component {
                     this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
                 else
                     this.state.selectedLanguageBodyObjectIndex = 0;
+            
 
-
+                    if(body[0].subject === 'Check In for CAL2411')
+                    this.state.isAirlinesMsg = true;
+                    else
+                    this.state.isAirlinesMsg = false;
                 //var mainMesg = JSON.parse(this.state.mainMsg);   
                 //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
                 //var lng = this.state.languageKey[0];      
@@ -128,6 +133,11 @@ export default class NotificationCard extends Component {
                  this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
             else    
                 this.changeLanguage(0);
+             
+                if(body[0].subject === 'Check In for CAL2411')
+                this.state.isAirlinesMsg = true;
+                else
+                this.state.isAirlinesMsg = false;
             // if(this.props.selectedLanguageBodyObjectIndex)
             // else this.changeLanguage(0);
         }
@@ -203,26 +213,17 @@ export default class NotificationCard extends Component {
         var font = 22;
 
         
-var departureFrom = bodyarray[0].split(":")[1].split("on")[0];
-var departureTime = bodyarray[0].split(":")[1].split("on")[1];
-var arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
-var arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
-var seatNumber = bodyarray[2].split(":")[1];
-var upgraded = bodyarray[3].split(":")[1];
-
-var title1 = bodyarray[4];
-var title2 = bodyarray[5];
-var title3 = bodyarray[6];
-var window = bodyarray[7];
-var windowData = bodyarray[8];
-var arrInfo = this.state.subject.split(" ");
-var info = arrInfo[arrInfo.length-1];
 
 
       
       var bulletList = [];
-      
-      for(let i = 0; i < 4; i++){
+      var count = 0;
+      if(this.state.isAirlinesMsg ){
+        count = 4;
+      }else{
+          count = bodyarray.length;
+      }
+      for(let i = 0; i < count; i++){
         var bodyStr = bodyarray[i];
         bodyStr = Util.replaceString('<br/>','\n',bodyStr);
         bulletList.push(
@@ -339,8 +340,24 @@ var info = arrInfo[arrInfo.length-1];
 
         //Todo : this.props.notification.action or this.props.notification.actions
 
-        if (this.props.isAirlines)
+        if (this.state.isAirlinesMsg && this.props.isAirlines)
         {
+            
+            var departureFrom = bodyarray[0].split(":")[1].split("on")[0];
+            var departureTime = bodyarray[0].split(":")[1].split("on")[1];
+            var arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
+            var arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
+            var seatNumber = bodyarray[2].split(":")[1];
+            var upgraded = bodyarray[3].split(":")[1];
+
+            var title1 = bodyarray[4];
+            var title2 = bodyarray[5];
+            var title3 = bodyarray[6];
+            var window = bodyarray[7];
+            var windowData = bodyarray[8];
+            var arrInfo = this.state.subject.split(" ");
+            var info = arrInfo[arrInfo.length - 1];
+
 
             return (
               
@@ -509,7 +526,7 @@ var info = arrInfo[arrInfo.length-1];
 
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
-                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'true'? style.notificationButtonVertical:style.notificationButtonHorizontal}>
+                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false'? style.notificationButtonVertical:style.notificationButtonHorizontal}>
 
                                         <TouchableHighlight style={style.confirmbutton}
                                             onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) } }
