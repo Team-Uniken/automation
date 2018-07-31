@@ -12,7 +12,7 @@ import ReactNative from 'react-native';
  Required for this js
  */
 import Events from 'react-native-simple-events';
-import { StyleSheet, Text, TextInput, AsyncStorage, TouchableHighlight, TouchableWithoutFeedback, View, Alert, Platform,Image ,ScrollView} from 'react-native';
+import { StyleSheet, Text, TextInput, AsyncStorage, TouchableHighlight, TouchableWithoutFeedback, View, Alert, Platform, Image, ScrollView } from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Modal from 'react-native-simple-modal';
 import TouchID from 'react-native-touch-id';
@@ -34,26 +34,27 @@ const NotificationAction = {
     FRAUD: "fraud",
     CLICK: "click",
     HIDE: "hide",
-    CHANGELANG:"changelang"
+    CHANGELANG: "changelang"
 }
 
 export default class NotificationCard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = 
-        { body : this.props.notification.body,          
-          parseMessage : "",
-         // acceptLabel : "",
-        //  rejectLabel : "", 
-        //  fraudLabel : "",
-          subject : "", 
-        //  languageKey : "",
-        //  selectedlanguage : this.props.selectedlanguage,   //Deprecated
-          isAirlinesMsg : false,
-          selectedLanguageBodyObjectIndex:0
-        }   
-          this.updateNotificationData();
+        this.state =
+            {
+                body: this.props.notification.body,
+                parseMessage: "",
+                // acceptLabel : "",
+                //  rejectLabel : "", 
+                //  fraudLabel : "",
+                subject: "",
+                //  languageKey : "",
+                //  selectedlanguage : this.props.selectedlanguage,   //Deprecated
+                isAirlinesMsg: false,
+                selectedLanguageBodyObjectIndex: 0
+            }
+        this.updateNotificationData();
     }
     componentDidMount() {
         // this.updateNotificationData();
@@ -61,11 +62,11 @@ export default class NotificationCard extends Component {
 
     componentDidUpdate() {
         //if(this.state.selectedlanguage != this.props.selectedlanguage)
-          //this.state.selectedlanguage =  "Deutsch"; 
+        //this.state.selectedlanguage =  "Deutsch"; 
         //this.updateNotificationData();
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         /*if(this.state.selectedlanguage == "") {
             this.state.mainMsg = nextProps.notification.message.body;
             if( Util.isJSON(this.state.mainMsg) ){       
@@ -84,64 +85,64 @@ export default class NotificationCard extends Component {
             }
         }*/
 
-       // if(this.state.selectedlanguage == "") {
-            this.state.body = nextProps.notification.body;
-            var body = this.state.body;//Util.parseJSON(this.state.body);
-            if(body && Array.isArray(body)){     
-                if(nextProps.selectedLanguageBodyObjectIndex < body.length)
-                    this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
-                else
-                    this.state.selectedLanguageBodyObjectIndex = 0;
-            
+        // if(this.state.selectedlanguage == "") {
+        this.state.body = nextProps.notification.body;
+        var body = this.state.body;//Util.parseJSON(this.state.body);
+        if (body && Array.isArray(body)) {
+            if (nextProps.selectedLanguageBodyObjectIndex < body.length)
+                this.state.selectedLanguageBodyObjectIndex = nextProps.selectedLanguageBodyObjectIndex;
+            else
+                this.state.selectedLanguageBodyObjectIndex = 0;
 
-                    if(body[0].subject === 'Check In for CAL2411')
-                    this.state.isAirlinesMsg = true;
-                    else
-                    this.state.isAirlinesMsg = false;
-                //var mainMesg = JSON.parse(this.state.mainMsg);   
-                //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-                //var lng = this.state.languageKey[0];      
-                var selectedLanguageBodyObject = body[this.state.selectedLanguageBodyObjectIndex];
-               // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-                this.state.subject = selectedLanguageBodyObject.subject;
-               // this.state.acceptLabel = mainMesg.lng[lng].Accept;
-               // this.state.rejectLabel = mainMesg.lng[lng].Reject;
-               // if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
-                this.state.parseMessage = selectedLanguageBodyObject.message;
-            }
-            
-            // else  {
-            //     this.state.languageKey = [];
-            //     this.singleLanguageMessage();
-            // }
+
+            if (body[0].subject === 'Check In for CAL2411')
+                this.state.isAirlinesMsg = true;
+            else
+                this.state.isAirlinesMsg = false;
+            //var mainMesg = JSON.parse(this.state.mainMsg);   
+            //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
+            //var lng = this.state.languageKey[0];      
+            var selectedLanguageBodyObject = body[this.state.selectedLanguageBodyObjectIndex];
+            // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
+            this.state.subject = selectedLanguageBodyObject.subject;
+            // this.state.acceptLabel = mainMesg.lng[lng].Accept;
+            // this.state.rejectLabel = mainMesg.lng[lng].Reject;
+            // if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
+            this.state.parseMessage = selectedLanguageBodyObject.message;
+        }
+
+        // else  {
+        //     this.state.languageKey = [];
+        //     this.singleLanguageMessage();
+        // }
         //}
     }
 
-    updateNotificationData(){
-       /* if(Util.isJSON(this.state.mainMsg) ){       
-            this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-            if( !Util.isEmpty(this.props.selectedlanguage) ) this.changeLanguage(this.props.selectedlanguage);
-            else this.changeLanguage(this.state.languageKey[0]);
-        }else{
-            this.singleLanguageMessage(); 
-        } */
+    updateNotificationData() {
+        /* if(Util.isJSON(this.state.mainMsg) ){       
+             this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
+             if( !Util.isEmpty(this.props.selectedlanguage) ) this.changeLanguage(this.props.selectedlanguage);
+             else this.changeLanguage(this.state.languageKey[0]);
+         }else{
+             this.singleLanguageMessage(); 
+         } */
 
         var body = this.state.body;//Util.parseJSON(this.state.body)
-        if(body && Array.isArray(body)){       
+        if (body && Array.isArray(body)) {
             //this.state.languageKey = Object.keys(JSON.parse(this.state.mainMsg).lng);
-            if(this.props.selectedLanguageBodyObjectIndex < body.length)
-                 this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
-            else    
+            if (this.props.selectedLanguageBodyObjectIndex < body.length)
+                this.changeLanguage(this.props.selectedLanguageBodyObjectIndex);
+            else
                 this.changeLanguage(0);
-             
-                if(body[0].subject === 'Check In for CAL2411')
+
+            if (body[0].subject === 'Check In for CAL2411')
                 this.state.isAirlinesMsg = true;
-                else
+            else
                 this.state.isAirlinesMsg = false;
             // if(this.props.selectedLanguageBodyObjectIndex)
             // else this.changeLanguage(0);
         }
-        
+
         // else{
         //     this.singleLanguageMessage(); 
         // }
@@ -156,7 +157,7 @@ export default class NotificationCard extends Component {
             "notification": notification,
             "btnLabel": btnLabel,
             "action": action,
-            "selectedLanguageBodyObjectIndex" : this.state.selectedLanguageBodyObjectIndex  //Todo :  update the key in onNotificationAction in ZeroNotification.js from selectedLanguage to selectedLanguageObjectIndex 
+            "selectedLanguageBodyObjectIndex": this.state.selectedLanguageBodyObjectIndex  //Todo :  update the key in onNotificationAction in ZeroNotification.js from selectedLanguage to selectedLanguageObjectIndex 
         }
         Events.trigger("onNotificationAction", bundle);
     }
@@ -171,8 +172,8 @@ export default class NotificationCard extends Component {
         if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = this.props.notification.action[2].label;
     }*/
 
-    changeLanguage(selectedLanguageBodyObjectIndex){
- 
+    changeLanguage(selectedLanguageBodyObjectIndex) {
+
         /*var mainMesg = JSON.parse(this.state.mainMsg);
         for ( let i = 0; i < this.state.languageKey.length; i++ ){
             if ( lng === this.state.languageKey[i] ) {
@@ -190,18 +191,18 @@ export default class NotificationCard extends Component {
         var body = this.state.body;// Util.parseJSON(this.state.body);
         if (body && Array.isArray(body)) {
             //      for (let i = 0; i < body.length; i++){
-           // if (selectedLanguageBodyObjectIndex === i) {
+            // if (selectedLanguageBodyObjectIndex === i) {
             var selectedLanguageBodyObject = body[selectedLanguageBodyObjectIndex];
-          //  this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-            this.state.subject = selectedLanguageBodyObject.subject; 
+            //  this.state.selectedlanguage = selectedLanguageBodyObject.lng;
+            this.state.subject = selectedLanguageBodyObject.subject;
             //this.state.acceptLabel = mainMesg.lng[lng].Accept;
             //this.state.rejectLabel = mainMesg.lng[lng].Reject;
             //if (this.props.notification.action.length == 3) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
             this.state.parseMessage = selectedLanguageBodyObject.message;
             this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
-            this.setState({ parseMessage:  selectedLanguageBodyObject.message });
-           // break;
-           // }
+            this.setState({ parseMessage: selectedLanguageBodyObject.message });
+            // break;
+            // }
             // }
         }
     }
@@ -212,64 +213,60 @@ export default class NotificationCard extends Component {
         var amount = bodyarray[3];
         var font = 22;
 
-        
-
-
-      
-      var bulletList = [];
-      var count = 0;
-      if(this.state.isAirlinesMsg ){
-        count = 4;
-      }else{
-          count = bodyarray.length;
-      }
-      for(let i = 0; i < count; i++){
-        var bodyStr = bodyarray[i];
-        bodyStr = Util.replaceString('<br/>','\n',bodyStr);
-        bulletList.push(
-          <View key = {i}>
-          <View style={[style.row,{width: SCREEN_WIDTH - 62,paddingRight:10}]}>
-          <Text style={style.dot}>{"\u2022"}</Text>
-          <Text style={style.body}>
-          {bodyStr}
-          </Text>
-          </View>
-          </View>
-          )
-      }
-
-      var lngButtons = [];
-     /* for (let i = 0; i < this.state.languageKey.length && this.state.languageKey.length > 1; i++ ){
-            lngButtons.push(
-                <TouchableHighlight style={[ this.state.selectedlanguage === this.state.languageKey[i] ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  
-                                            this.changeLanguage(this.state.languageKey[i]); 
-                                            //this.onNotificationLanguageChanged(); 
-                                        } }>
-                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                        {this.state.languageKey[i]}
+        var bulletList = [];
+        var count;
+        if (this.state.isAirlinesMsg) {
+            count = bodyarray.length >= 4 ? 4 : bodyarray.length;
+        } else {
+            count = bodyarray.length;
+        }
+        for (let i = 0; i < count; i++) {
+            var bodyStr = bodyarray[i];
+            bodyStr = Util.replaceString('<br/>', '\n', bodyStr);
+            bulletList.push(
+                <View key={i}>
+                    <View style={[style.row, { width: SCREEN_WIDTH - 62, paddingRight: 10 }]}>
+                        <Text style={style.dot}>{"\u2022"}</Text>
+                        <Text style={style.body}>
+                            {bodyStr}
                         </Text>
+                    </View>
+                </View>
+            )
+        }
+
+        var lngButtons = [];
+        /* for (let i = 0; i < this.state.languageKey.length && this.state.languageKey.length > 1; i++ ){
+               lngButtons.push(
+                   <TouchableHighlight style={[ this.state.selectedlanguage === this.state.languageKey[i] ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+                                           onPress={() => {  
+                                               this.changeLanguage(this.state.languageKey[i]); 
+                                               //this.onNotificationLanguageChanged(); 
+                                           } }>
+                           <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
+                           {this.state.languageKey[i]}
+                           </Text>
+                   </TouchableHighlight>
+               )
+         }*/
+
+        var body = this.state.body;//Util.parseJSON(this.state.body);
+        for (let i = 0; body && i < body.length && body.length > 1; i++) {
+            lngButtons.push(
+                <TouchableHighlight style={[this.state.selectedLanguageBodyObjectIndex === i ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+                    onPress={() => {
+                        this.changeLanguage(i);
+                        this.takeAction(this.props.notification, null, NotificationAction.CHANGELANG);
+                        //this.onNotificationLanguageChanged(); 
+                    }}>
+                    <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10 }}>
+                        {body[i].lng}
+                    </Text>
                 </TouchableHighlight>
             )
-      }*/
-     
-      var body = this.state.body;//Util.parseJSON(this.state.body);
-      for (let i = 0; body && i < body.length && body.length > 1; i++ ){
-        lngButtons.push(
-            <TouchableHighlight style={[ this.state.selectedLanguageBodyObjectIndex === i ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                    onPress={() => {  
-                                        this.changeLanguage(i); 
-                                        this.takeAction(this.props.notification, null, NotificationAction.CHANGELANG);
-                                        //this.onNotificationLanguageChanged(); 
-                                    } }>
-                    <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                    {body[i].lng}
-                    </Text>
-            </TouchableHighlight>
-        )
-  }
-  
-      
+        }
+
+
 
         if (typeof amount == "undefined") {
             amount = '';
@@ -322,7 +319,7 @@ export default class NotificationCard extends Component {
         validdate.setSeconds(parseInt(time[2]));
 
 
-        
+
 
         /*
 
@@ -340,171 +337,163 @@ export default class NotificationCard extends Component {
 
         //Todo : this.props.notification.action or this.props.notification.actions
 
-        if (this.state.isAirlinesMsg && this.props.isAirlines)
-        {
-            
-            var departureFrom = bodyarray[0].split(":")[1].split("on")[0];
-            var departureTime = bodyarray[0].split(":")[1].split("on")[1];
-            var arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
-            var arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
-            var seatNumber = bodyarray[2].split(":")[1];
-            var upgraded = bodyarray[3].split(":")[1];
+        if (this.state.isAirlinesMsg && this.props.isAirlines) {
+            var departureFrom, departureTime, arrivalTo, arrivalTime, seatNumber, upgraded, title1, title2, window, windowData, arrInfo, info;
+           
+            try {
+                departureFrom = bodyarray[0].split(":")[1].split("on")[0];
+                departureTime = bodyarray[0].split(":")[1].split("on")[1];
+                arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
+                arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
+                seatNumber = bodyarray[2].split(":")[1];
+                upgraded = bodyarray[3].split(":")[1];
 
-            var title1 = bodyarray[4];
-            var title2 = bodyarray[5];
-            var title3 = bodyarray[6];
-            var window = bodyarray[7];
-            var windowData = bodyarray[8];
-            var arrInfo = this.state.subject.split(" ");
-            var info = arrInfo[arrInfo.length - 1];
+                title1 = bodyarray[4];
+                title2 = bodyarray[5];
+                //var title3 = bodyarray[6];
+                window = bodyarray[6];
+                windowData = bodyarray[7];
+                arrInfo = this.state.subject.split(" ");
+                info = arrInfo[arrInfo.length - 1];
+            } catch (e) {
+                
+                alert(e);
+            }
 
 
             return (
-              
-                <View style={style.container}>
-                  <Text style={style.paragraph}>
-                    {this.state.subject}
-                  </Text>
-                  <Card style={style.upgrade} containerStyle={{margin:10}} title={title1} titleStyle={style.titleStyle}>
-          
-                  <View style={style.cards}>
-                      <View style={style.user}>
-                        <Image
-                          style={style.image}
-                          resizeMode="cover"
-                          source={require("../../img/upgrade.png")}
-                        />
-                        <Text style={style.upd_text}>SEAT:{seatNumber}{'\n'}</Text>
-                      </View>
-        
-                      <View style={style.user}>
-                        <Text style={[style.upd_text,{width:200}]}>{upgraded}</Text>
-                        
-                      
-                        <TouchableHighlight style={[{  marginTop: 5, backgroundColor: "#258B2E",alignItems:'center',justifyContent:'center',height:40 }]}
-                          onPress={() => {
-                            this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) 
-                          }}>
-                          <Text style={{ color: Skin.color.WHITE, marginRight: 10,alignSelf:'center',textAlign:'center', marginLeft: 10,width:200 }}>
-                            {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
-                            </Text>
-                        </TouchableHighlight>
-                      </View>
-        
-        
-                    </View>
-        
-        
-        
-                    
-                  </Card>
-        
-                  <Card style={style.upgrade} title={title2} containerStyle={{margin:10}} titleStyle={style.titleStyle}>
-          
-                  <View style={style.cards}>
-                      <View key={1} style={style.user}>
-                        <Text style={style.upd_text}>{departureFrom}</Text>
-        
-                        <Image
-                          style={style.image}
-                          resizeMode="cover"
-                          source={require("../../img/depart1.png")}
-                        />
-                        <Text style={[style.name,{marginRight:3,width:70}]}>{departureTime}</Text>
-                        
-                      </View>
-        
-                      <View style={style.user}>
-                        <Text style={style.upd_text}>{arrivalTo}</Text>
-        
-                        <Image
-                          style={style.image}
-                          resizeMode="cover"
-                          source={require("../../img/arrive1.png")}
-                        />
-                        <Text style={[style.name,{marginRight:3,width:70}]}>{arrivalTime}</Text>
-                       
-        
-                      </View>
-        
-        
-                      <View style={style.user}>
-                        <Text style={style.upd_text}>{seatNumber}</Text>
-        
-                        <Image
-                          style={style.image}
-                          resizeMode="cover"
-                          source={require("../../img/seat.png")}
-                        />
-                        <Text style={[style.name,{width:70}]}>{window}</Text>
-                        
-        
-                      </View>
-        
-        
-                      <View style={style.user}>
-                        <Text style={style.upd_text}>{info}</Text>
-                        <Text style={style.name}></Text>
-                        <Text style={[style.name,{width:100}]}>{windowData}</Text>
-                        
-        
-                      </View>
-                    </View>
-                    
-                  </Card>
-        
-                  <Card style={style.upgrade} title={title3} containerStyle={{margin:10}} titleStyle={style.titleStyle}>
-                    <View style={style.cards}>
-        
-        
-                      <TouchableHighlight style={[{ width: '46%',marginLeft: 0, backgroundColor: "#252E8B",justifyContent:'center' }]}
-                        onPress={() => {
-        
-                            this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) 
-                        }}>
-                        <Text style={{ color: Skin.color.WHITE, marginRight: 10,alignSelf:'center', marginLeft: 10,padding: 10 }}>
-                        {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
-                            </Text>
-                      </TouchableHighlight>
-        
-                      <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#252E8B",alignItems:'center',justifyContent:'center' }]}
-                        onPress={() => {
-        
-                            this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action) 
-                        }}>
-                        <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10 ,alignSelf:'center',alignItems:'center',justifyContent:'center',padding: 10}}>
-                        {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
-                            </Text>
-                      </TouchableHighlight>
-        
-                    </View>
-        
-                  </Card>
-        
-                 
-                  <View style={style.lngRow}>   
-                                       {lngButtons}
-                                   
+
+                <View style={{ flex: 1,backgroundColor: '#ecf0f1' }}>
+                <ScrollView style={[style.container_notification,{backgroundColor:'transparent'}]} contentContainer= { {flex:1,backgroundColor:'transparent'} }>
+                    <View style={style.container_notification}>
+                        <Text style={style.paragraph}>
+                            {this.state.subject}
+                        </Text>
+                        <Card style={style.upgrade} title="" containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+
+                            <View style={style.cards}>
+                                <View key={1} style={style.user}>
+                                    <Text style={style.upd_text}>{departureFrom}</Text>
+                                    <Image
+                                        style={style.image}
+                                        resizeMode="cover"
+                                        source={require("../../img/depart1.png")}
+                                    />
+                                    <Text style={[style.name, { marginRight: 3, width: 90 }]}>{departureTime}</Text>
                                 </View>
-                  {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
-                                onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) } }>
-                                <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
-                                    {Skin.icon.forward}
-                                </Text>
-                            </TouchableHighlight>}
-                
-                </View>
-                
-        
-              );
 
-        }else if (this.props.notification.actions.length == 3) {
+                                <View style={style.user}>
+                                    <Text style={style.upd_text}>{arrivalTo}</Text>
+                                    <Image
+                                        style={style.image}
+                                        resizeMode="cover"
+                                        source={require("../../img/arrive1.png")}
+                                    />
+                                    <Text style={[style.name, { marginRight: 3, width: 90 }]}>{arrivalTime}</Text>
+                                </View>
+
+
+                                <View style={style.user}>
+                                    <Text style={style.upd_text}>{seatNumber}</Text>
+                                    <Image
+                                        style={style.image}
+                                        resizeMode="cover"
+                                        source={require("../../img/seat.png")}
+                                    />
+                                    <Text style={[style.name, { width: 70 }]}>{window}</Text>
+                                </View>
+                            </View>
+
+                        </Card>
+
+                        <Card style={style.upgrade} containerStyle={{ margin: 10 }} title={title1} titleStyle={style.titleStyle}>
+
+                            <View style={style.cards}>
+                                <View style={style.user}>
+                                    <Image
+                                        style={style.image}
+                                        resizeMode="cover"
+                                        source={require("../../img/upgrade.png")}
+                                    />
+                                    <Text style={style.upd_text}>SEAT:{seatNumber}{'\n'}</Text>
+                                </View>
+
+                                <View style={style.user}>
+                                    <Text style={[style.upd_text, { width: 200 }]}>{upgraded}</Text>
+                                    <TouchableHighlight style={[{ marginTop: 5, backgroundColor: "#777777", alignItems: 'center', justifyContent: 'center', height: 40 }]}
+                                        onPress={() => {
+                                            this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action)
+                                        }}>
+                                        <Text style={{ color: Skin.color.WHITE, marginRight: 10, alignSelf: 'center', textAlign: 'center', marginLeft: 10, width: 180 }}>
+                                            {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
+                                        </Text>
+                                    </TouchableHighlight>
+                                </View>
+                            </View>
+
+                        </Card>
+
+
+
+                        <Card style={style.upgrade} title={title2} containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+                            <View style={style.cards}>
+
+
+                                <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#777777", justifyContent: 'center' }]}
+                                    onPress={() => {
+
+                                        this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action)
+                                    }}>
+                                    <Text style={{ color: Skin.color.WHITE, marginRight: 10, alignSelf: 'center', marginLeft: 10, padding: 10 }}>
+                                        {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
+                                    </Text>
+                                </TouchableHighlight>
+
+                                <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#777777", alignItems: 'center', justifyContent: 'center' }]}
+                                    onPress={() => {
+
+                                        this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action)
+                                    }}>
+                                    <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                                        {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
+                                    </Text>
+                                </TouchableHighlight>
+
+                            </View>
+
+                        </Card>
+
+
+                 
+
+                    </View>
+                    </ScrollView>
+                    
+                    
+                   
+                    <View style={style.lngRow}>
+                        {lngButtons}
+
+                    </View>
+                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
+                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
+                        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
+                            {Skin.icon.forward}
+                        </Text>
+                    </TouchableHighlight>}
+                   
+                </View>
+
+
+            );
+
+        } else if (this.props.notification.actions.length == 3) {
             return (
-                <View style={ [{flex: 1 },Platform.OS=='android' && this.props.expand?{marginBottom:20}:{marginBottom:0}]}>
+                <View style={[{ flex: 1 }, Platform.OS == 'android' && this.props.expand ? { marginBottom: 20 } : { marginBottom: 0 }]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
-                    } }>
+                    }}>
                         <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 20 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
 
                             <View style={[style.col, { flex: 1 }]}>
@@ -513,24 +502,24 @@ export default class NotificationCard extends Component {
                                         {this.state.subject}
                                     </Text>
                                     <Text style={style.time}>
-              
-              {Util.getFormatedDate(this.props.notification.create_ts)}
+
+                                        {Util.getFormatedDate(this.props.notification.create_ts)}
                                     </Text>
                                 </View>
 
-                                <View style={[style.col, { marginTop: 4,flex: 500 }]}>
-                                    { bulletList }
+                                <View style={[style.col, { marginTop: 4, flex: 500 }]}>
+                                    {bulletList}
                                 </View>
 
-                                {this.props.expand && <View style={{ flex: 1 }}/>}
+                                {this.props.expand && <View style={{ flex: 1 }} />}
 
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
-                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false'? style.notificationButtonVertical:style.notificationButtonHorizontal}>
+                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false' ? style.notificationButtonVertical : style.notificationButtonHorizontal}>
 
                                         <TouchableHighlight style={style.confirmbutton}
-                                            onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) } }
-                                            >
+                                            onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) }}
+                                        >
                                             <View style={style.text} >
                                                 <Text style={style.buttontext} >
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
@@ -538,7 +527,7 @@ export default class NotificationCard extends Component {
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) } }>
+                                        <TouchableHighlight style={style.denybutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) }}>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext} >
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
@@ -546,17 +535,17 @@ export default class NotificationCard extends Component {
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action) } }>
+                                        <TouchableHighlight style={style.fraudbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action) }}>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext} >
-                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
                                                 </Text>
                                             </View>
                                         </TouchableHighlight>
                                     </View>
                                 </View>}
-                                <View style={style.lngRow}>   
-                                       {lngButtons}
+                                <View style={style.lngRow}>
+                                    {lngButtons}
                                     {/* <TouchableHighlight style={[ this.state.selectedlanguage === "en" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                                         onPress={() => {  this.state.languageKey[0] } }>
                                         <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
@@ -580,7 +569,7 @@ export default class NotificationCard extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
-                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) } }>
+                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
                         </Text>
@@ -589,11 +578,11 @@ export default class NotificationCard extends Component {
             );
         } else {
             return (
-                <View style={ [{flex: 1 },Platform.OS=='android' && this.props.expand?{marginBottom:20}:{marginBottom:0}]}>
+                <View style={[{ flex: 1 }, Platform.OS == 'android' && this.props.expand ? { marginBottom: 20 } : { marginBottom: 0 }]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
-                    } }>
+                    }}>
                         <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 20 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
 
                             <View style={[style.col, { flex: 1 }]}>
@@ -607,16 +596,16 @@ export default class NotificationCard extends Component {
                                 </View>
 
                                 <View style={[style.col, { marginTop: 4 }]}>
-                                  { bulletList }
-                                </View> 
+                                    {bulletList}
+                                </View>
 
-                                {this.props.expand && <View style={{ flex: 1 }}/>}
+                                {this.props.expand && <View style={{ flex: 1 }} />}
 
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
 
-                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'true'?style.notificationButtonVertical:style.notificationButtonHorizontal}>
-                                        <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label,this.props.notification.actions[0].action) } }>
+                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false' ? style.notificationButtonVertical : style.notificationButtonHorizontal}>
+                                        <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) }}>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
@@ -624,7 +613,7 @@ export default class NotificationCard extends Component {
                                             </View>
                                         </TouchableHighlight>
 
-                                        <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) } }>
+                                        <TouchableHighlight style={style.rejectbutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action) }}>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
                                                     {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
@@ -632,10 +621,10 @@ export default class NotificationCard extends Component {
                                             </View>
                                         </TouchableHighlight>
                                     </View>
-                                   
+
                                 </View>}
-                                <View style={style.lngRow}> 
-                                    {lngButtons}       
+                                <View style={style.lngRow}>
+                                    {lngButtons}
                                     {/* <TouchableHighlight style={[ this.state.selectedlanguage === "en" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                                         onPress={() => {  this.changeLanguage(this.state.languageKey[0]) } }>
                                         <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
@@ -658,11 +647,11 @@ export default class NotificationCard extends Component {
                             </View>
                         </View>
 
-                        
+
 
                     </TouchableWithoutFeedback>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
-                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) } }>
+                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
                         </Text>
@@ -689,13 +678,13 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center'
     },
-    lngRow: { 
-        flexDirection: 'row', 
-        justifyContent: 'center', 
+    lngRow: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap'
     },
-    rowMultiLang : {
+    rowMultiLang: {
         flexDirection: 'row',
     },
     col: {
@@ -734,7 +723,7 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         color: Skin.BLACK_TEXT_COLOR,
         width: 188,
-        flex:3,
+        flex: 3,
         textAlign: 'left',
         opacity: 1,
         backgroundColor: 'transparent',
@@ -744,7 +733,7 @@ const style = StyleSheet.create({
         color: Skin.BLACK_TEXT_COLOR,
         textAlign: 'right',
         opacity: 0.6,
-        flex:2,
+        flex: 2,
         backgroundColor: 'transparent',
         //width: SCREEN_WIDTH - 230,
     },
@@ -829,50 +818,51 @@ const style = StyleSheet.create({
         margin: 2,
         backgroundColor: Skin.color.REJECT_BUTTON_COLOR,
     },
-    upd_text:{
-        fontSize: 12,
-        fontWeight:'bold',
+    upd_text: {
+        fontSize: 16,
+        fontWeight: 'bold',
         color: '#34495e',
-    
+
     },
-    container: {
-      flex: 1,
-      marginTop:0,
-      backgroundColor: '#ecf0f1',
+    container_notification: {
+        flex: 1,
+        marginTop: 0,
+        backgroundColor: '#ecf0f1',
     },
-    
-    cards:{
-      flexDirection:'row',
-      color: '#34495e',
-      justifyContent:'space-between'
-      
+
+    cards: {
+        flexDirection: 'row',
+        color: '#34495e',
+        justifyContent: 'space-between'
+
     },
-    name:{
-      color: '#34495e',
-    
+    name: {
+        color: '#34495e',
+        fontSize: 14,
+
     },
     paragraph: {
-      fontSize: 16,
-      marginTop:5,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      color: '#34495e',
+        fontSize: 20,
+        marginTop: 5,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#34495e',
     },
-    upgrade:{
-      flexDirection:'row',
-      color: '#34495e',
-      fontSize: 8,
-      margin:5,
-      justifyContent:'space-between'
-    
+    upgrade: {
+        flexDirection: 'row',
+        color: '#34495e',
+        fontSize: 8,
+        margin: 5,
+        justifyContent: 'space-between'
+
     },
-    titleStyle:{
-      fontSize:12
+    titleStyle: {
+        fontSize: 14
     },
-    langimage:{
-      marginLeft:30,
+    langimage: {
+        marginLeft: 30,
     },
-    image:{
-      height:50,width:50,
+    image: {
+        height: 50, width: 50,
     },
 });

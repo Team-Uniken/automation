@@ -126,7 +126,7 @@ export default class NotificationCard extends Component {
                     <Image
                       style={styles.image}
                       resizeMode="cover"
-                      source={require("../../../img/depart1.png")} 
+                      source={require("../../../img/depart_color.png")} 
                     />
                 <Text style={styles.name}>{nextDate}</Text>
                 <Text style={styles.name}>{"11:10 PM"}</Text>
@@ -138,7 +138,7 @@ export default class NotificationCard extends Component {
                   <Image
                       style={styles.image}
                       resizeMode="cover"
-                      source={require("../../../img/arrive1.png")} 
+                      source={require("../../../img/arrive_color.png")} 
                     />
                   <Text style={styles.name}>{nextDate1}</Text>
                   <Text style={styles.name}>{"10:50 AM"}</Text>
