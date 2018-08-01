@@ -59,7 +59,6 @@
 		1801F00A20F4B9F900D1317C /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		1801F03E20F4BC7900D1317C /* ImagesStarTokenLite.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1801F03D20F4BC7900D1317C /* ImagesStarTokenLite.xcassets */; };
 		1801F04D20F4BD9E00D1317C /* StarToken-Lite.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1801F01120F4B9FA00D1317C /* StarToken-Lite.plist */; };
-		1801F04F20F4BDD800D1317C /* startokenlite1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1801F04E20F4BDD800D1317C /* startokenlite1.ttf */; };
 		1801F0AB20F4C0A000D1317C /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
 		1827D0B920F62423006C8906 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1827D0B820F62422006C8906 /* libapi-sdk.a */; };
 		1827D0BA20F62423006C8906 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1827D0B820F62422006C8906 /* libapi-sdk.a */; };
@@ -71,6 +70,51 @@
 		1827D0C020F62423006C8906 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1827D0B820F62422006C8906 /* libapi-sdk.a */; };
 		1827D0C120F62423006C8906 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1827D0B820F62422006C8906 /* libapi-sdk.a */; };
 		1827D0CB20F629C8006C8906 /* startokenlite.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1827D0CA20F629C8006C8906 /* startokenlite.ttf */; };
+		1827D2C8210B3246006C8906 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
+		1827D2C9210B3246006C8906 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
+		1827D2CA210B3246006C8906 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
+		1827D2CB210B3246006C8906 /* RDNARequestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */; };
+		1827D2CC210B3246006C8906 /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
+		1827D2CE210B3246006C8906 /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		1827D2CF210B3246006C8906 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
+		1827D2D0210B3246006C8906 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1827D2D1210B3246006C8906 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8427F1EE015B2006364A1 /* libjschelpers.a */; };
+		1827D2D2210B3246006C8906 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B842771EE015B2006364A1 /* libyoga.a */; };
+		1827D2D3210B3246006C8906 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B04AA1EE6AC4B004B7659 /* libAirMaps.a */; };
+		1827D2D4210B3246006C8906 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B1E31EE02F1E007AE1B6 /* libRCTFBSDK.a */; };
+		1827D2D5210B3246006C8906 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5506A33B1EE150C000870068 /* libRCTAnimation.a */; };
+		1827D2D6210B3246006C8906 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B2831EE034EE007AE1B6 /* libReactNativeConfig.a */; };
+		1827D2D7210B3246006C8906 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
+		1827D2D8210B3246006C8906 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */; };
+		1827D2D9210B3246006C8906 /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
+		1827D2DA210B3246006C8906 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
+		1827D2DB210B3246006C8906 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
+		1827D2DC210B3246006C8906 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
+		1827D2DD210B3246006C8906 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		1827D2DE210B3246006C8906 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1827D0B820F62422006C8906 /* libapi-sdk.a */; };
+		1827D2DF210B3246006C8906 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */; };
+		1827D2E0210B3246006C8906 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		1827D2E1210B3246006C8906 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		1827D2E2210B3246006C8906 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		1827D2E3210B3246006C8906 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		1827D2E4210B3246006C8906 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		1827D2E5210B3246006C8906 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		1827D2E6210B3246006C8906 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		1827D2E7210B3246006C8906 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */; };
+		1827D2E8210B3246006C8906 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
+		1827D2E9210B3246006C8906 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		1827D2EA210B3246006C8906 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
+		1827D2EC210B3246006C8906 /* cbcverify.plist in Resources */ = {isa = PBXBuildFile; fileRef = 657B6D421F4AF17D00AA65B5 /* cbcverify.plist */; };
+		1827D2ED210B3246006C8906 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
+		1827D2EE210B3246006C8906 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
+		1827D2EF210B3246006C8906 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
+		1827D2F0210B3246006C8906 /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
+		1827D2F1210B3246006C8906 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		1827D2F3210B3246006C8906 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		1827D2F4210B3246006C8906 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
+		1827D2F5210B3246006C8906 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
+		1827D32E210EE33A006C8906 /* ImagesPnbVerify.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1827D32D210EE339006C8906 /* ImagesPnbVerify.xcassets */; };
+		1827D330210F2280006C8906 /* pnb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1827D32F210F2280006C8906 /* pnb.ttf */; };
 		1A6151AD1E4CDF5B00B3C9B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		1A6151AE1E4CDF5B00B3C9B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		1A6151AF1E4CDF5B00B3C9B2 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -471,6 +515,13 @@
 			remoteGlobalIDString = 6573EF001BA40E250085584E;
 			remoteInfo = "api-sdk";
 		};
+		1827D2C6210B3246006C8906 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
+			remoteInfo = React;
+		};
 		5506A33A1EE150C000870068 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5506A3341EE150C000870068 /* RCTAnimation.xcodeproj */;
@@ -792,6 +843,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1827D2F7210B3246006C8906 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A6151D41E4CDF5B00B3C9B2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -891,11 +952,14 @@
 		1801F01020F4B9F900D1317C /* StarToken-Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "StarToken-Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1801F01120F4B9FA00D1317C /* StarToken-Lite.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "StarToken-Lite.plist"; path = "/Users/apple/Documents/Workspace/GIT Workspace/REL-IDmobile/ReactReferenceApp/ios/StarToken-Lite.plist"; sourceTree = "<absolute>"; };
 		1801F03D20F4BC7900D1317C /* ImagesStarTokenLite.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStarTokenLite.xcassets; sourceTree = "<group>"; };
-		1801F04E20F4BDD800D1317C /* startokenlite1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = startokenlite1.ttf; sourceTree = "<group>"; };
 		1827D0AC20F622B3006C8906 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../../svn Workspace/api-sdk/build/ios/React_sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
 		1827D0B620F62422006C8906 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		1827D0B820F62422006C8906 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		1827D0CA20F629C8006C8906 /* startokenlite.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = startokenlite.ttf; path = ../../../../../../Downloads/startokenlite.ttf; sourceTree = "<group>"; };
+		1827D2FB210B3246006C8906 /* pnbverify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pnbverify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1827D2FC210B3247006C8906 /* pnbverify.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pnbverify.plist; path = "/Users/apple/Documents/Workspace/GIT Workspace/REL-IDmobile/ReactReferenceApp/ios/pnbverify.plist"; sourceTree = "<absolute>"; };
+		1827D32D210EE339006C8906 /* ImagesPnbVerify.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPnbVerify.xcassets; sourceTree = "<group>"; };
+		1827D32F210F2280006C8906 /* pnb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pnb.ttf; sourceTree = "<group>"; };
 		18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LRDRCTSimpleToast.xcodeproj; path = "../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast.xcodeproj"; sourceTree = "<group>"; };
 		1A6151D81E4CDF5B00B3C9B2 /* cbc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cbc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBC.xcassets; sourceTree = "<group>"; };
@@ -1035,6 +1099,42 @@
 				1801EFFC20F4B9F900D1317C /* FBSDKShareKit.framework in Frameworks */,
 				1801EFFD20F4B9F900D1317C /* Bolts.framework in Frameworks */,
 				1801EFFE20F4B9F900D1317C /* libRCTWebSocket.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1827D2CD210B3246006C8906 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1827D2CE210B3246006C8906 /* libLRDRCTSimpleToast.a in Frameworks */,
+				1827D2CF210B3246006C8906 /* libRNSpinkit.a in Frameworks */,
+				1827D2D0210B3246006C8906 /* libReact.a in Frameworks */,
+				1827D2D1210B3246006C8906 /* libjschelpers.a in Frameworks */,
+				1827D2D2210B3246006C8906 /* libyoga.a in Frameworks */,
+				1827D2D3210B3246006C8906 /* libAirMaps.a in Frameworks */,
+				1827D2D4210B3246006C8906 /* libRCTFBSDK.a in Frameworks */,
+				1827D2D5210B3246006C8906 /* libRCTAnimation.a in Frameworks */,
+				1827D2D6210B3246006C8906 /* libReactNativeConfig.a in Frameworks */,
+				1827D2D7210B3246006C8906 /* libstdc++.tbd in Frameworks */,
+				1827D2D8210B3246006C8906 /* FBSDKLoginKit.framework in Frameworks */,
+				1827D2D9210B3246006C8906 /* libRCTTouchId.a in Frameworks */,
+				1827D2DA210B3246006C8906 /* libTouchID.a in Frameworks */,
+				1827D2DB210B3246006C8906 /* libRNFS.a in Frameworks */,
+				1827D2DC210B3246006C8906 /* libRCTPushNotification.a in Frameworks */,
+				1827D2DD210B3246006C8906 /* libRCTActionSheet.a in Frameworks */,
+				1827D2DE210B3246006C8906 /* libapi-sdk.a in Frameworks */,
+				1827D2DF210B3246006C8906 /* FBSDKCoreKit.framework in Frameworks */,
+				1827D2E0210B3246006C8906 /* libRCTGeolocation.a in Frameworks */,
+				1827D2E1210B3246006C8906 /* libRCTImage.a in Frameworks */,
+				1827D2E2210B3246006C8906 /* libRCTLinking.a in Frameworks */,
+				1827D2E3210B3246006C8906 /* libRCTNetwork.a in Frameworks */,
+				1827D2E4210B3246006C8906 /* libRCTSettings.a in Frameworks */,
+				1827D2E5210B3246006C8906 /* libRCTText.a in Frameworks */,
+				1827D2E6210B3246006C8906 /* libRCTVibration.a in Frameworks */,
+				1827D2E7210B3246006C8906 /* FBSDKShareKit.framework in Frameworks */,
+				1827D2E8210B3246006C8906 /* Bolts.framework in Frameworks */,
+				1827D2E9210B3246006C8906 /* libRCTWebSocket.a in Frameworks */,
+				1827D2EA210B3246006C8906 /* libRCTCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1509,6 +1609,7 @@
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
+				1827D32D210EE339006C8906 /* ImagesPnbVerify.xcassets */,
 				1801F03D20F4BC7900D1317C /* ImagesStarTokenLite.xcassets */,
 				55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */,
 				65D7F7881E309A1F009ACC25 /* ImagesUBS.xcassets */,
@@ -1616,6 +1717,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				1827D32F210F2280006C8906 /* pnb.ttf */,
 				1827D0CA20F629C8006C8906 /* startokenlite.ttf */,
 				1827D0B420F62422006C8906 /* api-sdk */,
 				1827D0AC20F622B3006C8906 /* api-sdk.xcodeproj */,
@@ -1626,7 +1728,6 @@
 				656D4F061E7C0B6000965ED6 /* relidmobile.plist */,
 				551EE2DF1E51BB1200ADAD6C /* cbc.plist */,
 				551EE2DD1E51BAE400ADAD6C /* cbc.ttf */,
-				1801F04E20F4BDD800D1317C /* startokenlite1.ttf */,
 				65D7F7B11E30A3F9009ACC25 /* ubs.ttf */,
 				65D7F7621E309469009ACC25 /* ubs.plist */,
 				65079D161E1F7FE5005D9A11 /* stock.plist */,
@@ -1647,6 +1748,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				55B94DB91FA3146200AE0D58 /* Recovered References */,
 				1801F01120F4B9FA00D1317C /* StarToken-Lite.plist */,
+				1827D2FC210B3247006C8906 /* pnbverify.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1664,6 +1766,7 @@
 				558C99BA1E7BF7A30002C56F /* REL-IDMobile.app */,
 				5528FFCF1F21F73C00560B76 /* cbc_verify.app */,
 				1801F01020F4B9F900D1317C /* StarToken-Lite.app */,
+				1827D2FB210B3246006C8906 /* pnbverify.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1709,6 +1812,26 @@
 			name = "StarToken-Lite";
 			productName = "Hello World";
 			productReference = 1801F01020F4B9F900D1317C /* StarToken-Lite.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1827D2C4210B3246006C8906 /* pnbverify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1827D2F8210B3246006C8906 /* Build configuration list for PBXNativeTarget "pnbverify" */;
+			buildPhases = (
+				1827D2C7210B3246006C8906 /* Sources */,
+				1827D2CD210B3246006C8906 /* Frameworks */,
+				1827D2EB210B3246006C8906 /* Resources */,
+				1827D2F6210B3246006C8906 /* Bundle React Native code and images */,
+				1827D2F7210B3246006C8906 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1827D2C5210B3246006C8906 /* PBXTargetDependency */,
+			);
+			name = pnbverify;
+			productName = "Hello World";
+			productReference = 1827D2FB210B3246006C8906 /* pnbverify.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1A6151AB1E4CDF5B00B3C9B2 /* cbc */ = {
@@ -1875,6 +1998,9 @@
 						};
 					};
 					1801EFD920F4B9F900D1317C = {
+						DevelopmentTeam = F78S5YW242;
+					};
+					1827D2C4210B3246006C8906 = {
 						DevelopmentTeam = F78S5YW242;
 					};
 					1A6151AB1E4CDF5B00B3C9B2 = {
@@ -2058,6 +2184,7 @@
 				558C998C1E7BF7A30002C56F /* REL-IDMobile */,
 				5528FF9A1F21F73C00560B76 /* cbc_verify */,
 				1801EFD920F4B9F900D1317C /* StarToken-Lite */,
+				1827D2C4210B3246006C8906 /* pnbverify */,
 			);
 		};
 /* End PBXProject section */
@@ -2415,10 +2542,27 @@
 				1801F00620F4B9F900D1317C /* index.ios.js in Resources */,
 				1801F03E20F4BC7900D1317C /* ImagesStarTokenLite.xcassets in Resources */,
 				1801F00820F4B9F900D1317C /* account.ttf in Resources */,
-				1801F04F20F4BDD800D1317C /* startokenlite1.ttf in Resources */,
 				1827D0CB20F629C8006C8906 /* startokenlite.ttf in Resources */,
 				1801F00920F4B9F900D1317C /* icomoon.ttf in Resources */,
 				1801F00A20F4B9F900D1317C /* App in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1827D2EB210B3246006C8906 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1827D32E210EE33A006C8906 /* ImagesPnbVerify.xcassets in Resources */,
+				1827D2EC210B3246006C8906 /* cbcverify.plist in Resources */,
+				1827D2ED210B3246006C8906 /* LaunchScreen.xib in Resources */,
+				1827D2EE210B3246006C8906 /* gothic_0.TTF in Resources */,
+				1827D330210F2280006C8906 /* pnb.ttf in Resources */,
+				1827D2EF210B3246006C8906 /* clientcert.p12 in Resources */,
+				1827D2F0210B3246006C8906 /* cbc.ttf in Resources */,
+				1827D2F1210B3246006C8906 /* index.ios.js in Resources */,
+				1827D2F3210B3246006C8906 /* account.ttf in Resources */,
+				1827D2F4210B3246006C8906 /* icomoon.ttf in Resources */,
+				1827D2F5210B3246006C8906 /* App in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2573,6 +2717,20 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		1827D2F6210B3246006C8906 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
 		1A6151D31E4CDF5B00B3C9B2 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2698,6 +2856,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1827D2C7210B3246006C8906 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1827D2C8210B3246006C8906 /* main.m in Sources */,
+				1827D2C9210B3246006C8906 /* AppDelegate.m in Sources */,
+				1827D2CA210B3246006C8906 /* RelIDRequestInterceptor.m in Sources */,
+				1827D2CB210B3246006C8906 /* RDNARequestUtility.m in Sources */,
+				1827D2CC210B3246006C8906 /* ReactRdnaModule.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1A6151AC1E4CDF5B00B3C9B2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2789,6 +2959,11 @@
 			isa = PBXTargetDependency;
 			name = React;
 			targetProxy = 1801EFDB20F4B9F900D1317C /* PBXContainerItemProxy */;
+		};
+		1827D2C5210B3246006C8906 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = React;
+			targetProxy = 1827D2C6210B3246006C8906 /* PBXContainerItemProxy */;
 		};
 		5528FF9B1F21F73C00560B76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3055,6 +3230,110 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "83f4fe0a-df48-4887-bdaa-99dd0c682f82";
 				PROVISIONING_PROFILE_SPECIFIER = "StarToken-Lite Verify";
+			};
+			name = Release;
+		};
+		1827D2F9210B3246006C8906 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					React_Dist,
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/pnbverify.plist";
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional\n-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"$(PROJECT_DIR)/ActiveShieldSDKLib",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lresolv",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.pnbverifyuat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
+				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+			};
+			name = Debug;
+		};
+		1827D2FA210B3246006C8906 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = React_Dist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/pnbverify.plist";
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional\n-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"$(PROJECT_DIR)/ActiveShieldSDKLib",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lresolv",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.pnbverifyuat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
+				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
 			};
 			name = Release;
 		};
@@ -3917,6 +4196,15 @@
 			buildConfigurations = (
 				1801F00E20F4B9F900D1317C /* Debug */,
 				1801F00F20F4B9F900D1317C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1827D2F8210B3246006C8906 /* Build configuration list for PBXNativeTarget "pnbverify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1827D2F9210B3246006C8906 /* Debug */,
+				1827D2FA210B3246006C8906 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
