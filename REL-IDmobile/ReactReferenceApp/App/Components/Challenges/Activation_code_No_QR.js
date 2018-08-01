@@ -46,7 +46,7 @@ let obj;
 let savedUserName;
 
 
-class UserLogin extends Component {
+class Activation_code_No_QR extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -214,7 +214,7 @@ class UserLogin extends Component {
   }
 }
 
-module.exports = UserLogin;
+module.exports = Activation_code_No_QR;
 
 
 

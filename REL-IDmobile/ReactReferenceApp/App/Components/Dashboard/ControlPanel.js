@@ -842,7 +842,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Alerts', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-              this.props.navigator.navigate('ComingSoon',{title:'Alerts'})
+              this.props.navigator.navigate('ComingSoon',{title:Config.ALERTS_LABEL})
             }}
           />
           <MenuItem
@@ -851,7 +851,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('RegisterOptionScene',{title:'Profile & Settings'})
+            this.props.navigator.navigate('RegisterOptionScene',{title:Config.PROFILE_SETTINGS_LABEL})
             }}
           />
           <MenuItem
@@ -860,7 +860,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('DeviceMgmt',{title:'Self Device Managment'})
+            this.props.navigator.navigate('DeviceMgmt',{title:'Self Device Managment'})
             }}
           />
           <MenuItem
@@ -869,7 +869,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'})
+            this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'})
             }}
           />
           <MenuItem
@@ -878,7 +878,7 @@ class ControlPanel extends Component {
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('Notification_History',{title:'Notification History'})
+            this.props.navigator.navigate('Notification_History',{title:Config.NOTIFICATION_HISTORY_LABEL})
             }}
           />
           {
