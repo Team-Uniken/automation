@@ -1152,8 +1152,10 @@ class TwoFactorAuthMachine extends Component {
       return (<EnterpriseRegister navigator={nav} url={route.url} title={route.title} />);
     }
     else if (id === 'actcode') {
-  
-      return (<ActivationNoQR navigator={nav} url={route.url} title={route.title} />);
+      if( Config.ACTIVATION_CODE_WITHOUT_QR === 'true' )
+        return (<ActivationNoQR navigator={nav} url={route.url} title={route.title} />);
+      else 
+        return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         var tbacredChallenge = this.getTBACreds();
