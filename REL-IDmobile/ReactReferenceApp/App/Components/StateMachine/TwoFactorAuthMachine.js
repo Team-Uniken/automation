@@ -47,6 +47,7 @@ import Main from '../Container/Main';
 import EnterpriseRegister from '../../Scenes/Enterprise_Register';
 import SelfRegister from '../../Scenes/Self_Register';
 import Activation from '../Challenges/Activation_Code';
+import ActivationNoQR from '../Challenges/Activation_code_No_QR';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
 import AutoPassword from '../Challenges/auto_password';
@@ -315,7 +316,6 @@ class TwoFactorAuthMachine extends Component {
            28  -->> RDNA_RESP_STATUS_USER_SUSPENDED - User suspended  
            1   -->> RDNA_RESP_STATUS_NO_USER_ID -  user Id not present   
         */
-
         //Removing user preference when user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
@@ -1153,7 +1153,7 @@ class TwoFactorAuthMachine extends Component {
     }
     else if (id === 'actcode') {
   
-      return (<Activation navigator={nav} url={route.url} title={route.title} />);
+      return (<ActivationNoQR navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         var tbacredChallenge = this.getTBACreds();
@@ -1340,7 +1340,6 @@ class TwoFactorAuthMachine extends Component {
             screenId: firstChlngName
           });
         });
-
       }
       else {
         if (firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE == chlngJson.chlng[startIndex].challengeOperation) {
