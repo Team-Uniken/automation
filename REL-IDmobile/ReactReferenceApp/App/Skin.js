@@ -830,7 +830,7 @@ const layout3 = module.exports.layout3 = {
     backgroundColor: BACKGROUND_COLOR,
   },
   listheader: {
-    wrap: {
+    wrap: { 
       flex: 1,
       alignItems: 'center',
     },
@@ -1984,7 +1984,7 @@ const transforms = {
 
 const controlStyle = StyleSheet.create({
   container: {
-    backgroundColor: '#1c1c1c',
+    backgroundColor: Config.DRAWER_BACKGROUND_COLOUR,
     flex: 1,
   },
   shadow: {
@@ -1996,7 +1996,7 @@ const controlStyle = StyleSheet.create({
     }
   },
   menuItem: {
-    color: WHITE,
+    color: Config.DRAWER_MENU_TEXT_COLOR,
     fontFamily: CORE_FONT,
     marginTop: 15,
     marginBottom: 15,
@@ -2004,14 +2004,14 @@ const controlStyle = StyleSheet.create({
   menuBorder: {
     borderStyle: 'solid',
     borderWidth: 0.5,
-    borderColor: '#222222',
+    borderColor: Config.LOGO_COLOR,
     marginLeft: 20,
   },
   touch: {
     paddingLeft: 20
   },
   controlHeader: {
-    color: WHITE,
+    color: Config.DRAWER_MENU_TEXT_COLOR,
     fontFamily: admin.MENU_FONT,
     paddingTop: 30,
     fontSize: 30,
