@@ -270,7 +270,7 @@ class UserLogin extends Component {
                 ref='inputUsername'
                 returnKeyType={'next'}
                 keyboardType={'email-address'}
-                placeholder={'Enter Username/Email'}
+                placeholder={'Enter Customer-ID'}
                 autoFocus={true}
                 autoCorrect={false}
                 autoCapitalize={false}
@@ -292,3 +292,6 @@ class UserLogin extends Component {
 }
 
 module.exports = UserLogin;
+
+
+

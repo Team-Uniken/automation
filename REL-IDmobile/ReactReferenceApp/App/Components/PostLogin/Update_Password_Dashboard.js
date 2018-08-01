@@ -254,7 +254,7 @@ export default class UpdatePasswordSet extends Component {
         }}
         defaultNav = {isPageTitle?false:true}
         navBar={{
-          title: 'Change Password',
+          title: Config.CHANGEPASSWORD_LABEL,
           visible: true,
           tint: Skin.main.NAVBAR_TINT,
           left: {
@@ -270,7 +270,7 @@ export default class UpdatePasswordSet extends Component {
         }}
         navigator={this.props.navigator}
         >
-         { isPageTitle && this.renderPageTitle('Change Password')}
+         { isPageTitle && this.renderPageTitle(Config.CHANGEPASSWORD_LABEL)}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation>
             <View style={[Skin.layout0.wrap.container, ]}>

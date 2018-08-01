@@ -515,7 +515,7 @@ class Notifications_History extends Component {
           }}
           defaultNav={isPageTitle ? false : true}
           navBar={{
-            title: 'Notification History',
+            title: Config.NOTIFICATION_HISTORY_LABEL,
             visible: true,
             tint: Skin.colors.TEXT_COLOR,
             left: {
@@ -531,7 +531,7 @@ class Notifications_History extends Component {
           }}
           navigator={this.props.navigator}
         >
-          {isPageTitle && this.renderPageTitle('Notification History')}
+          {isPageTitle && this.renderPageTitle(Config.NOTIFICATION_HISTORY_LABEL)}
           <View style={[styles.container, { backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }]}>
 
             <ListView
