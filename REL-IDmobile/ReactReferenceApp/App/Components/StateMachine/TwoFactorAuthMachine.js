@@ -1559,30 +1559,32 @@ class TwoFactorAuthMachine extends Component {
 
   navigateToEnterpriseRegistration() {
     console.log('doNavigation:');
-    ReactRdna.resetChallenge((response) => {
-      if (response[0].error === 0) {
-        /**
-         * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
-         */
-        challengeJson = saveChallengeJson;
-        currentIndex = 0;
-        challengeJsonArr = saveChallengeJson.chlng;
-        console.log('immediate response is' + response[0].error);
-        var chlngJson1;
-        chlngJson1 = saveChallengeJson;
-        const nextChlngName = chlngJson1.chlng[0].chlng_name;
-        const chlngJson = saveChallengeJson;
-        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-        this.goToNextChallenge({
-          reset: true,
-          chlngJson,
-          screenId: "EnterpriseRegister",
-          currentIndex: 0,
-        });
-      } else {
-        console.log('immediate response is' + response[0].error);
-      }
-    });
+    if(Config.IS_ENTERPRISE_ENABLED === 'true') {
+      ReactRdna.resetChallenge((response) => {
+        if (response[0].error === 0) {
+          /**
+           * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
+           */
+          challengeJson = saveChallengeJson;
+          currentIndex = 0;
+          challengeJsonArr = saveChallengeJson.chlng;
+          console.log('immediate response is' + response[0].error);
+          var chlngJson1;
+          chlngJson1 = saveChallengeJson;
+          const nextChlngName = chlngJson1.chlng[0].chlng_name;
+          const chlngJson = saveChallengeJson;
+          console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+          this.goToNextChallenge({
+            reset: true,
+            chlngJson,
+            screenId: "EnterpriseRegister",
+            currentIndex: 0,
+          });
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+      });
+    }
   }
 
 
