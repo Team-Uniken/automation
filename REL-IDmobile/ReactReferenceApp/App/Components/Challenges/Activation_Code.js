@@ -497,7 +497,7 @@ class Activation_Code extends Component {
                 label={Skin.text['1']['1'].submit_button}
                 onPress={this.checkActivationCode.bind(this) } />
               <Text style={Skin.layout1.bottom.footertext}
-                  onPress={ this.registerAgain }>Do not have activation code, please register again</Text>
+                  onPress={ this.registerAgain }>I do not have activation code</Text>
               {/* <Text
                 onPress={() => {
                   Alert.alert(

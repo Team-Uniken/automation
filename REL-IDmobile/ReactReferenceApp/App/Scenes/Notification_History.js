@@ -657,7 +657,7 @@ class Notifications_History extends Component {
       bodyarray = body[notification.selectedLanguageObjectIndex].message.split("\n");   
       for (let i = 0; i < body.length && body.length > 1; i++) {
         lngButtons.push(
-          <TouchableHighlight style={[notification.selectedLanguageObjectIndex === i ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+          <TouchableHighlight style={[notification.selectedLanguageObjectIndex === i ? { backgroundColor: '#252E8B' } : { backgroundColor: '#315dce' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
             onPress={() => { Obj.changeLanguage(notification,i, body) }}>
             <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10 }}>
               {body[i].lng}
@@ -671,8 +671,20 @@ class Notifications_History extends Component {
     // }
 
     var bulletList = [];
+    var isAirlinesMsg = false;
+    if (body[0].subject === 'Check In for CAL2411' || body[0].subject === 'New Flight Reservation')
+      isAirlinesMsg = true;
+    else
+      isAirlinesMsg = false;
 
-    for (let i = 0; i < 4; i++) {
+      var count;    
+      if (isAirlinesMsg) {
+        count = bodyarray.length >= 4 ? 4 : bodyarray.length;
+    } else {
+        count = bodyarray.length;
+    }
+
+    for (let i = 0; i < count; i++) {
       var bodyStr = bodyarray[i];
       bodyStr = Util.replaceString('<br/>', '\n', bodyStr);
       bulletList.push(
