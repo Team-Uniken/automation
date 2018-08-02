@@ -190,7 +190,7 @@ android {
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
         cbc{
-            applicationId 'com.uniken.cbc'
+            applicationId 'com.uniken.cbcbeta'
             signingConfig signingConfigs.releaseCbc
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }

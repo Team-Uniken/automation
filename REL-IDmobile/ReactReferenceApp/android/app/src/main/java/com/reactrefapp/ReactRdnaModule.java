@@ -3,6 +3,7 @@ package com.reactrefapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.telecom.Call;
@@ -379,12 +380,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public String getApplicationName() {
-                return "DemoBanking";
+                return BuildConfig.APPLICATION_ID;
             }
 
             @Override
             public String getApplicationVersion() {
-                return "1.0.0";
+                return BuildConfig.VERSION_NAME;
             }
 
             @Override
