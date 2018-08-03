@@ -158,7 +158,7 @@ class ActivationCodeNoQR extends Component {
               <Input
                 ref='inputUsername'
                 returnKeyType={'next'}
-                keyboardType={'text'}
+                keyboardType={'default'}
                 placeholder={'Enter Activation Code'}
                 autoFocus={true}
                 autoCorrect={false}

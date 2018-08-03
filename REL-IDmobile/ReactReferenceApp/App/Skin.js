@@ -510,7 +510,7 @@ module.exports.layout0 = {
   },
   top: {
     container: {
-      flex: 46,
+      flex: 50,
       justifyContent: "flex-end",
       alignItems: "center"
     },
@@ -549,7 +549,7 @@ module.exports.layout0 = {
   },
   bottom: {
     container: {
-      flex: 54,
+      flex: 50,
       justifyContent: "flex-start",
       alignItems: "center",
     },
