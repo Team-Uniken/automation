@@ -98,7 +98,7 @@ class ControlPanel extends Component {
 
     Alert.alert(
       '',
-      'Do you want to log out',
+      'Do you want to logout?',
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
         {
@@ -982,7 +982,7 @@ class ControlPanel extends Component {
           />
           <MenuItem
             visibility={Config.LOGOUT}
-            lable="Log Out"
+            lable="Logout"
             onPress={this.showLogOffAlert}
           />
           <MenuItem
