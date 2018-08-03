@@ -170,7 +170,7 @@ class VerifyAuth extends Component {
                                     style={Skin.layout1.bottom.wrap}>
                                     <View style={Skin.layout1.bottom.container}>
                                         <Margin
-                                            space={10} />
+                                            space={20} />
                                         <Button
                                             label={Skin.text['1']['1'].submit_button}
                                             onPress={this.submit.bind(this)}
