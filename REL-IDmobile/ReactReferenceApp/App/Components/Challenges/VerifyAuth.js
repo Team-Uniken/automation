@@ -106,13 +106,13 @@ class VerifyAuth extends Component {
         if(index===0){
             if(this.props.url.chlngJson.chlng_info && 
                 this.props.url.chlngJson.chlng_info.length > 0 &&
-                this.props.url.chlngJson.chlng_info[1].value.length > 0){
+                this.props.url.chlngJson.chlng_info[0].value.length > 0){
 
                     this.setState({ selectedOptionText:this.props.url.chlngJson.chlng_info[0].value});
                 }
         }else{
             if(this.props.url.chlngJson.chlng_info && 
-                this.props.url.chlngJson.chlng_info.length > 0 &&
+                this.props.url.chlngJson.chlng_info.length > 1 &&
                 this.props.url.chlngJson.chlng_info[1].value.length > 0){
             
                     this.setState({ selectedOptionText:this.props.url.chlngJson.chlng_info[1].value});
