@@ -70,31 +70,13 @@ class ActivationCodeNoQR extends Component {
    */
   componentWillMount() {
     obj = this;
-    constant.USER_SESSION = "NO";
-    constant.USER_T0 = "NO";
-//    console.log("------ userLogin " + JSON.stringify(this.props.url.chlngJson));
-
-
-    AsyncStorage.getItem('rememberuser').then((value) => {
-      if (value == undefined || value == null || value === 'empty') {
-
-      } else {
-        if (this.props.navigator.state.params.url.reset) {
-        } else {
-          InteractionManager.runAfterInteractions(() => {
-            obj.setState({ inputUsername: value }, () => {
-              obj.checkUsername();
-            });
-          });
-        }
-      }
-    });
   }
   /*
    This is life cycle method of the react native component.
    This method is called when the component is Mounted/Loaded.
    */
   componentDidMount() {
+    constant.USER_T0 = "YES";
     obj = this;
     BackHandler.addEventListener('hardwareBackPress', function () {
       this.close();
@@ -102,22 +84,6 @@ class ActivationCodeNoQR extends Component {
     }.bind(this));
   }
 
-  _verifyTouchIdSupport() {
-    TouchID.isSupported()
-      .then(supported => {
-        // Success code
-        console.log('TouchID is supported.');
-        obj._verifyTouchId();
-      })
-      .catch(error => {
-        console.log('TouchID is not supported.');
-        console.log(error);
-      });
-  }
-  //onTextchange method for Enter_User TextInput
-  onUsernameChange(event) {
-    this.setState({ inputUsername: event.nativeEvent.text });
-  }
 
   /*
    This method is used to get the user entered value and submit the same as a challenge response.
