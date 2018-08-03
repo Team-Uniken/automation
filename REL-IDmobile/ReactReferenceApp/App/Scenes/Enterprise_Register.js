@@ -217,7 +217,7 @@ class EnterpriseRegister extends Component {
     //   return;
     // }
      else if (this.state.phoneNumber.length < 10 ) {
-      this.showMessage("", "Enter a valid 10-digit phone number", false);
+      this.showMessage("", "Enter a valid 10-digit mobile number", false);
       return;
     } else if (this.state.value < 90) {
       this.showMessage("", "Please move the slider to the right.", false);
@@ -501,7 +501,7 @@ class EnterpriseRegister extends Component {
                         this.refs.phoneNumber.focus();
                       } } /> */}
                     <Input
-                      placeholder={'Phone Number'}
+                      placeholder={'Mobile Number'}
                       ref={'phoneNumber'}
                       keyboardType={'phone-pad'}
                       enablesReturnKeyAutomatically={true}
