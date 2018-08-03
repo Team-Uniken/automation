@@ -721,7 +721,7 @@ class Register extends Component {
         selected={this.state.welcome}
         labelSide={"right"}
         >
-        Skip welcome screen
+        Skip Welcome Screen
       </Checkbox>
     );
 

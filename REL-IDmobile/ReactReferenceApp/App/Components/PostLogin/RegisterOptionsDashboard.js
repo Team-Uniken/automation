@@ -1072,7 +1072,7 @@ This method is called when the component will start to load
           labelSide={"right"}
           disabled={true}
           >
-          Skip welcome screen
+          Skip Welcome Screen
         </Checkbox>
       );
 
