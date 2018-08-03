@@ -69,6 +69,7 @@ class EnterpriseRegister extends Component {
     this.sessionId = null;
     this.close = this.close.bind(this);
     this.validatePhoneNumber = this.validatePhoneNumber.bind(this);
+    this.showMessage = this.showMessage.bind(this);
   }
   /*
     This is life cycle method of the react native component.
@@ -286,7 +287,8 @@ class EnterpriseRegister extends Component {
             //obj.showMessage("Activation Code Sent to \n"+this.state.confirmEmail,"Please check the email for more instructions.", true);
           } else {
             setTimeout(() => {
-              alert(res.message);
+              //alert(res.message);
+              this.showMessage("Error", res.message, false);
             }, 100);
             this.setState({ resetSlider: true, value: 0 }, () => {
               this.state.resetSlider = false;
@@ -294,7 +296,8 @@ class EnterpriseRegister extends Component {
           }
         } else {
           setTimeout(() => {
-            alert("Something went wrong, please try again..!");
+            this.showMessage("Error", "Something went wrong, please try again..!", false);
+            //alert("Something went wrong, please try again..!");
           }, 100);
           this.setState({ resetSlider: true, value: 0 }, () => {
             this.state.resetSlider = false;
@@ -345,7 +348,7 @@ class EnterpriseRegister extends Component {
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
-          alert('Please enter a valid username');
+          this.showMessage("", 'Please enter a valid username', false);
         }, 100);
       });
     }
@@ -363,7 +366,7 @@ class EnterpriseRegister extends Component {
       }
       );
     } catch (e) {
-      alert("Something went wrong, please try again..!")
+      this.showMessage("Error", 'Something went wrong, please try again..!', false);
     }
   }
 
