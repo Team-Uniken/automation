@@ -498,15 +498,12 @@ export default class NotificationCard extends Component {
 
                         </View>
                         </TouchableWithoutFeedback>
-                    
-
-
-
+                        
+                    </ScrollView>
                     <View style={style.lngRow}>
                         {lngButtons}
 
                     </View>
-                    </ScrollView>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
