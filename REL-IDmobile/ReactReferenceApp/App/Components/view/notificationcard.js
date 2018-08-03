@@ -498,7 +498,7 @@ export default class NotificationCard extends Component {
 
                         </View>
                         </TouchableWithoutFeedback>
-                    </ScrollView>
+                    
 
 
 
@@ -506,6 +506,7 @@ export default class NotificationCard extends Component {
                         {lngButtons}
 
                     </View>
+                    </ScrollView>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
@@ -540,7 +541,7 @@ export default class NotificationCard extends Component {
             return (
 
                 <View style={{ flex: 1, backgroundColor: '#ecf0f1' }}>
-                    <ScrollView style={[style.container_notification, { backgroundColor: 'transparent' }]} contentContainer={{ flex: 1, backgroundColor: 'transparent' }}>
+                    <ScrollView style={[style.container_notification, ]} contentContainer={{ flex: 1, backgroundColor: 'transparent' }}>
                         <View style={style.container_notification}>
                             <Text style={style.paragraph}>
                                 {this.state.subject}
@@ -861,7 +862,8 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        marginTop:20
     },
     rowMultiLang: {
         flexDirection: 'row',

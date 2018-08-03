@@ -33,6 +33,7 @@
     "react-native-dismiss-keyboard": "^1.0.0",
     "react-native-drawer": "^2.0.0",
     "react-native-dropdown": "0.0.6",
+    "react-native-elements": "^0.19.1",
     "react-native-extra-dimensions-android": "^0.17.0",
     "react-native-fbsdk": "^0.6.0",
     "react-native-fcm": "git+https://github.com/Team-Uniken/react-native-fcm.git",
@@ -62,6 +63,7 @@
     "react-native-swipe-list-view": "0.3.1",
     "react-native-touch-id": "4.0.1",
     "react-native-touch-id-android": "git+https://github.com/Team-Uniken/react-native-touch-id-android.git",
+    "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^1.0.0-beta.21",
     "react-timer-mixin": "^0.13.3",
     "url-parse": "^1.2.0"

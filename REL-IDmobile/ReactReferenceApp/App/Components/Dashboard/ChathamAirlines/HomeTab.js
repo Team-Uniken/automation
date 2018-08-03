@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
   viewBox: {
     width: 80,
     height: 80,
-    backgroundColor: "grey",
     padding: 5,
     justifyContent: "center",
     borderTopLeftRadius: 5,
@@ -206,7 +205,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "white",
     height: 200,
-    width: 300
   },
   notificationButton: {
     backgroundColor: "transparent",
@@ -333,7 +331,7 @@ const styles = StyleSheet.create({
     color: "#34495e",
     textAlign: "center"
   },
-  container: {
+  containerConflict: {
     flex: 1,
     marginTop: 0,
     backgroundColor: "#ecf0f1"
