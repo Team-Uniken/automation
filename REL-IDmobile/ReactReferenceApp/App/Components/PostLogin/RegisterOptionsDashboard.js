@@ -1099,7 +1099,7 @@ This method is called when the component will start to load
         }}    
         defaultNav = {isPageTitle?false:true}
         navBar={{
-          title: 'Profile & Settings',
+          title: Config.PROFILE_AND_SETTINGS_LABEL,
           visible: true,
           tint: Skin.main.NAVBAR_TINT,
           left: {
@@ -1115,7 +1115,7 @@ This method is called when the component will start to load
         }}
         navigator={this.props.navigation}
         >
-         { isPageTitle && this.renderPageTitle('Profile & Settings')}
+         { isPageTitle && this.renderPageTitle( "Profile & Settings" )}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation loaderViewHeight={loaderViewHeight}>
             {this.renderIf(this.state.showOptions,

@@ -176,7 +176,7 @@ This method is called when the component will start to load
     Util.encryptText(Main.dnaUserName).then((data) => {
       let responseJson = this.props.url.chlngJson;
       responseJson.chlng_resp[0].response = data;       
-     
+      Main.dnaPasswd = data; 
         AsyncStorage.getItem(Main.dnaUserName).then((value) => {
           if (value) {
             value = JSON.parse(value);

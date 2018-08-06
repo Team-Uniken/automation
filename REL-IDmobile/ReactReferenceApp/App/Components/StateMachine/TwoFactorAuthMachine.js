@@ -47,6 +47,7 @@ import Main from '../Container/Main';
 import EnterpriseRegister from '../../Scenes/Enterprise_Register';
 import SelfRegister from '../../Scenes/Self_Register';
 import Activation from '../Challenges/Activation_Code';
+import ActivationNoQR from '../Challenges/Activation_code_No_QR';
 import AccessCode from '../Challenges/Access_Code';
 import PasswordSet from '../Challenges/SetPassword';
 import AutoPassword from '../Challenges/auto_password';
@@ -315,7 +316,6 @@ class TwoFactorAuthMachine extends Component {
            28  -->> RDNA_RESP_STATUS_USER_SUSPENDED - User suspended  
            1   -->> RDNA_RESP_STATUS_NO_USER_ID -  user Id not present   
         */
-
         //Removing user preference when user is blocked or suspended 
         if (res.pArgs.response.StatusMsg.toLowerCase().includes("suspended") ||
           res.pArgs.response.StatusMsg.toLowerCase().includes("blocked") ||
@@ -1181,8 +1181,10 @@ class TwoFactorAuthMachine extends Component {
       return (<EnterpriseRegister navigator={nav} url={route.url} title={route.title} />);
     }
     else if (id === 'actcode') {
-  
-      return (<Activation navigator={nav} url={route.url} title={route.title} />);
+      if( Config.ACTIVATION_CODE_WITHOUT_QR === 'true' )
+        return (<ActivationNoQR navigator={nav} url={route.url} title={route.title} />);
+      else 
+        return (<Activation navigator={nav} url={route.url} title={route.title} />);
     } else if (id === 'pass') {
       if (challengeOperation == Constants.CHLNG_VERIFICATION_MODE) {
         var tbacredChallenge = this.getTBACreds();
@@ -1369,7 +1371,6 @@ class TwoFactorAuthMachine extends Component {
             screenId: firstChlngName
           });
         });
-
       }
       else {
         if (firstChlngName === 'pass' && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE == chlngJson.chlng[startIndex].challengeOperation) {
@@ -1587,30 +1588,32 @@ class TwoFactorAuthMachine extends Component {
 
   navigateToEnterpriseRegistration() {
     console.log('doNavigation:');
-    ReactRdna.resetChallenge((response) => {
-      if (response[0].error === 0) {
-        /**
-         * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
-         */
-        challengeJson = saveChallengeJson;
-        currentIndex = 0;
-        challengeJsonArr = saveChallengeJson.chlng;
-        console.log('immediate response is' + response[0].error);
-        var chlngJson1;
-        chlngJson1 = saveChallengeJson;
-        const nextChlngName = chlngJson1.chlng[0].chlng_name;
-        const chlngJson = saveChallengeJson;
-        console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
-        this.goToNextChallenge({
-          reset: true,
-          chlngJson,
-          screenId: "EnterpriseRegister",
-          currentIndex: 0,
-        });
-      } else {
-        console.log('immediate response is' + response[0].error);
-      }
-    });
+    if(Config.IS_ENTERPRISE_ENABLED === 'true') {
+      ReactRdna.resetChallenge((response) => {
+        if (response[0].error === 0) {
+          /**
+           * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
+           */
+          challengeJson = saveChallengeJson;
+          currentIndex = 0;
+          challengeJsonArr = saveChallengeJson.chlng;
+          console.log('immediate response is' + response[0].error);
+          var chlngJson1;
+          chlngJson1 = saveChallengeJson;
+          const nextChlngName = chlngJson1.chlng[0].chlng_name;
+          const chlngJson = saveChallengeJson;
+          console.log('TwoFactorAuthMachine - onCheckChallengeResponseStatus - chlngJson != null');
+          this.goToNextChallenge({
+            reset: true,
+            chlngJson,
+            screenId: "EnterpriseRegister",
+            currentIndex: 0,
+          });
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+      });
+    }
   }
 
 

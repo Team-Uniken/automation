@@ -153,6 +153,24 @@ function requireClientBasedConfig() {
                   }
                   })();
     }
+    if (Config.ENV == 'pnbverify') {
+        config = (function () {
+                  return {
+                  connectionProfile: require("../../../Connection_profiles/pnbverify.json"),
+                  sslCertificate: {
+                  data: getSSLFileContent(),
+                  password: 'uniken123$',
+                  },
+                  img: {
+                  welcome: require('../../img/pnbverify.png')
+                  },
+                  dashboard: {
+                  screenName: 'HomePage',
+                  screen: require("../Dashboard/pnbverify/HomePage").default,
+                  },
+                  }
+                  })();
+    }
 
     return config;
 }

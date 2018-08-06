@@ -8,6 +8,7 @@
  */
 import React, { Component, } from 'react';
 import ReactNative from 'react-native';
+import Config from 'react-native-config';
 
 /*
  Required for this js
@@ -32,6 +33,7 @@ class MenuItem extends Component {
           <View style={styles.menuBorder}></View>
           <TouchableHighlight
             onPress={this.props.onPress}
+            underlayColor = '#f3f3f3'
             style={styles.touch}
             >
             <Text style={styles.menuItem}>{this.props.lable}</Text>

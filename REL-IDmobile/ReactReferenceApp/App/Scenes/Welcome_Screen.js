@@ -115,9 +115,9 @@ class Welcome_Screen extends Component {
           </Text>
         </View>
         <View style={Skin.layout0.bottom.container}>
-          <Button
+          {Config.SELF_REGISTER_ENABLED === 'true' && <Button
             label={Skin.text['0']['1'].need_to_register_button}
-            onPress={this.register.bind(this)} />
+            onPress={this.register.bind(this)} />}
           <Button
             label={Skin.text['0']['1'].already_member}
             onPress={this.selectReg.bind(this)} />
