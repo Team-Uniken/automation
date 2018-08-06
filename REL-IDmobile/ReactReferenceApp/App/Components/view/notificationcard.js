@@ -263,7 +263,7 @@ export default class NotificationCard extends Component {
             var body = this.state.body;//Util.parseJSON(this.state.body);
             for (let i = 0; body && i < body.length && body.length > 1; i++) {
                 lngButtons.push(
-                    <TouchableHighlight style={[this.state.selectedLanguageBodyObjectIndex === i ? { backgroundColor: '#252E8B' } : { backgroundColor: '#315dce' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+                    <TouchableHighlight style={[this.state.selectedLanguageBodyObjectIndex === i ? { backgroundColor: '#252E8B' } : { backgroundColor: '#315dce' }, { height: 20, marginBottom: 10, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                         onPress={() => {
                             this.changeLanguage(i);
                             this.takeAction(this.props.notification, null, NotificationAction.CHANGELANG);
@@ -280,7 +280,7 @@ export default class NotificationCard extends Component {
             var body = this.state.body;//Util.parseJSON(this.state.body);
             for (let i = 0; body && i < body.length && body.length > 1; i++) {
                 lngButtons.push(
-                    <TouchableHighlight style={[this.state.selectedLanguageBodyObjectIndex === i ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
+                    <TouchableHighlight style={[this.state.selectedLanguageBodyObjectIndex === i ? { backgroundColor: Skin.color.APPROVE_BUTTON_COLOR } : { backgroundColor: 'grey' }, { height: 20, marginBottom: 10, marginRight: 5, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
                         onPress={() => {
                             this.changeLanguage(i);
                             this.takeAction(this.props.notification, null, NotificationAction.CHANGELANG);
@@ -498,7 +498,7 @@ export default class NotificationCard extends Component {
                         {lngButtons}
 
                     </View>
-                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
+                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
 
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
@@ -647,7 +647,7 @@ export default class NotificationCard extends Component {
                                         </Text>
                                     </TouchableHighlight> */}
                     </View>
-                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
+                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
@@ -661,7 +661,7 @@ export default class NotificationCard extends Component {
 
         } else if (this.props.notification.actions.length == 3) {
             return (
-                <View style={[{ flex: 1 }, Platform.OS == 'android' && this.props.expand ? { marginBottom: 20 } : { marginBottom: 0 }]}>
+                <View style={[{ flex: 1 }]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
@@ -740,7 +740,7 @@ export default class NotificationCard extends Component {
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
-                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
+                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
@@ -750,7 +750,7 @@ export default class NotificationCard extends Component {
             );
         } else {
             return (
-                <View style={[{ flex: 1 }, Platform.OS == 'android' && this.props.expand ? { marginBottom: 20 } : { marginBottom: 0 }]}>
+                <View style={[{ flex: 1 }]}>
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
@@ -822,7 +822,7 @@ export default class NotificationCard extends Component {
 
 
                     </TouchableWithoutFeedback>
-                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
+                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
                             {Skin.icon.forward}
