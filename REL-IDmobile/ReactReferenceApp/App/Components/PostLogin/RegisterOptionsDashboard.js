@@ -1115,7 +1115,7 @@ This method is called when the component will start to load
         }}
         navigator={this.props.navigation}
         >
-         { isPageTitle && this.renderPageTitle(Config.PROFILE_AND_SETTINGS_LABEL)}
+         { isPageTitle && this.renderPageTitle( "Profile & Settings" )}
         <View style={{ flex: 1, backgroundColor: Skin.main.BACKGROUND_COLOR }}>
           <MainActivation loaderViewHeight={loaderViewHeight}>
             {this.renderIf(this.state.showOptions,

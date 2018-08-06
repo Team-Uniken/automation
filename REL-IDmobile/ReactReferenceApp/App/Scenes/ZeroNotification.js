@@ -1354,7 +1354,7 @@ export default class NotificationMgmtScene extends Component {
       }}
       navigator={this.props.navigator}
     >
-      {isPageTitle && this.renderPageTitle(Main.notificationCount > 1 ? Config.NOTIFICATIONS_LABEL :  Config.SINGLE_NOTIFICATIONS_LABEL)}
+      {isPageTitle && this.renderPageTitle(Main.notificationCount > 1 ? "Notifications" : "Notification")}
       {this.loaderView()}
       <View style={{ flex: 1, backgroundColor: Skin.main.NOTIFICATION_LIST_BACKGROUND }}>
         {this.renderNotificationView(this.state.dataSource) }
