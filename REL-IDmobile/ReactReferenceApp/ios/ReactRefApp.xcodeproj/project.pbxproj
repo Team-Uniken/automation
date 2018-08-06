@@ -3252,10 +3252,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.pnbverifyuat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.pnbverify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE = "0d3d4cca-d5e9-41a7-88e1-89b263aed59b";
+				PROVISIONING_PROFILE_SPECIFIER = "PNB Verify";
 			};
 			name = Debug;
 		};
@@ -3302,10 +3302,10 @@
 					"-ObjC",
 					"-lresolv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.pnbverifyuat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.pnbverify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE = "0d3d4cca-d5e9-41a7-88e1-89b263aed59b";
+				PROVISIONING_PROFILE_SPECIFIER = "PNB Verify";
 			};
 			name = Release;
 		};
