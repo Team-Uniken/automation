@@ -114,7 +114,7 @@
 		1827D2F4210B3246006C8906 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		1827D2F5210B3246006C8906 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		1827D32E210EE33A006C8906 /* ImagesPnbVerify.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1827D32D210EE339006C8906 /* ImagesPnbVerify.xcassets */; };
-		1827D330210F2280006C8906 /* pnb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1827D32F210F2280006C8906 /* pnb.ttf */; };
+		18F5669221144C530005A421 /* pnb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F5669121144C4F0005A421 /* pnb.ttf */; };
 		1A6151AD1E4CDF5B00B3C9B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		1A6151AE1E4CDF5B00B3C9B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
 		1A6151AF1E4CDF5B00B3C9B2 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
@@ -507,13 +507,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFIRMessaging;
-		};
-		1827D0B220F622B3006C8906 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1827D0AC20F622B3006C8906 /* api-sdk.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6573EF001BA40E250085584E;
-			remoteInfo = "api-sdk";
 		};
 		1827D2C6210B3246006C8906 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -952,14 +945,13 @@
 		1801F01020F4B9F900D1317C /* StarToken-Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "StarToken-Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1801F01120F4B9FA00D1317C /* StarToken-Lite.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "StarToken-Lite.plist"; path = "/Users/apple/Documents/Workspace/GIT Workspace/REL-IDmobile/ReactReferenceApp/ios/StarToken-Lite.plist"; sourceTree = "<absolute>"; };
 		1801F03D20F4BC7900D1317C /* ImagesStarTokenLite.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStarTokenLite.xcassets; sourceTree = "<group>"; };
-		1827D0AC20F622B3006C8906 /* api-sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "api-sdk.xcodeproj"; path = "../../../../svn Workspace/api-sdk/build/ios/React_sdk/api-sdk.xcodeproj"; sourceTree = "<group>"; };
 		1827D0B620F62422006C8906 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		1827D0B820F62422006C8906 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		1827D0CA20F629C8006C8906 /* startokenlite.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = startokenlite.ttf; path = ../../../../../../Downloads/startokenlite.ttf; sourceTree = "<group>"; };
 		1827D2FB210B3246006C8906 /* pnbverify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pnbverify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1827D2FC210B3247006C8906 /* pnbverify.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pnbverify.plist; path = "/Users/apple/Documents/Workspace/GIT Workspace/REL-IDmobile/ReactReferenceApp/ios/pnbverify.plist"; sourceTree = "<absolute>"; };
 		1827D32D210EE339006C8906 /* ImagesPnbVerify.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPnbVerify.xcassets; sourceTree = "<group>"; };
-		1827D32F210F2280006C8906 /* pnb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pnb.ttf; sourceTree = "<group>"; };
+		18F5669121144C4F0005A421 /* pnb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pnb.ttf; sourceTree = "<group>"; };
 		18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LRDRCTSimpleToast.xcodeproj; path = "../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast.xcodeproj"; sourceTree = "<group>"; };
 		1A6151D81E4CDF5B00B3C9B2 /* cbc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cbc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6151EC1E4CE66200B3C9B2 /* ImagesCBC.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBC.xcassets; sourceTree = "<group>"; };
@@ -1471,14 +1463,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1827D0AD20F622B3006C8906 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1827D0B320F622B3006C8906 /* libapi-sdk.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		1827D0B420F62422006C8906 /* api-sdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1717,10 +1701,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				1827D32F210F2280006C8906 /* pnb.ttf */,
+				18F5669121144C4F0005A421 /* pnb.ttf */,
 				1827D0CA20F629C8006C8906 /* startokenlite.ttf */,
 				1827D0B420F62422006C8906 /* api-sdk */,
-				1827D0AC20F622B3006C8906 /* api-sdk.xcodeproj */,
 				65F4B5771F629265009A7D22 /* index.ios.js */,
 				657B6D421F4AF17D00AA65B5 /* cbcverify.plist */,
 				55D17EFC1F0A322800C94FA5 /* Index.js */,
@@ -2085,10 +2068,6 @@
 					ProjectRef = 0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */;
 				},
 				{
-					ProductGroup = 1827D0AD20F622B3006C8906 /* Products */;
-					ProjectRef = 1827D0AC20F622B3006C8906 /* api-sdk.xcodeproj */;
-				},
-				{
 					ProductGroup = 5599BA561F4AC0570025538D /* Products */;
 					ProjectRef = 18FC365BA672471598B9F7E1 /* LRDRCTSimpleToast.xcodeproj */;
 				},
@@ -2251,13 +2230,6 @@
 			fileType = archive.ar;
 			path = libRNFIRMessaging.a;
 			remoteRef = 1801F09320F4BF3500D1317C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1827D0B320F622B3006C8906 /* libapi-sdk.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libapi-sdk.a";
-			remoteRef = 1827D0B220F622B3006C8906 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5506A33B1EE150C000870068 /* libRCTAnimation.a */ = {
@@ -2556,7 +2528,7 @@
 				1827D2EC210B3246006C8906 /* cbcverify.plist in Resources */,
 				1827D2ED210B3246006C8906 /* LaunchScreen.xib in Resources */,
 				1827D2EE210B3246006C8906 /* gothic_0.TTF in Resources */,
-				1827D330210F2280006C8906 /* pnb.ttf in Resources */,
+				18F5669221144C530005A421 /* pnb.ttf in Resources */,
 				1827D2EF210B3246006C8906 /* clientcert.p12 in Resources */,
 				1827D2F0210B3246006C8906 /* cbc.ttf in Resources */,
 				1827D2F1210B3246006C8906 /* index.ios.js in Resources */,
