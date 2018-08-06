@@ -162,6 +162,7 @@ class ActivationCodeNoQR extends Component {
                 placeholder={'Enter Activation Code'}
                 autoFocus={true}
                 autoCorrect={false}
+                secureTextEntry={true}
                 autoCapitalize={false}
                 autoComplete={false}
                 value={this.state.activatonCode}

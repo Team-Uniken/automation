@@ -1380,7 +1380,7 @@ export default class NotificationMgmtScene extends Component {
               Events.trigger('getNoticiationHistory');
             } }>
             <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', marginBottom : Platform.OS == 'android' ? 30 : 0}}>
-              Notification History
+              {Config.NOTIFICATION_HISTORY_LABEL}
             </Text>
           </TouchableHighlight>
         }

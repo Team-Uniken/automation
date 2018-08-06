@@ -713,7 +713,7 @@ class Notifications_History extends Component {
       );
     }
 
-    if (notification.signing_status) {
+    if (notification.signing_status !== "N/A" && notification.signing_status) {
       indents.push(
         <View style={{ flexDirection: 'column', }}>
           <Text style={styles.signing_status}>Digital signing status: <Text style={{ color: Obj.highlightcolor("NA") }}>{notification.signing_status}</Text>

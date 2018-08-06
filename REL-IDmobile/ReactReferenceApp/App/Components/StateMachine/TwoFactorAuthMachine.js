@@ -170,6 +170,7 @@ class TwoFactorAuthMachine extends Component {
     Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
     Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
     Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
+
     //Events.on('showAutoPasswordCompleted','showAutoPasswordCompleted',this.showAutoPasswordCompleted);
     //Events.on('showAutoPasswordNotCompleted','showAutoPasswordNotCompleted',this.showAutoPasswordNotCompleted);
 
@@ -1613,6 +1614,27 @@ class TwoFactorAuthMachine extends Component {
           console.log('immediate response is' + response[0].error);
         }
       });
+    }else{
+      ReactRdna.resetChallenge((response) => {
+        if (response[0].error === 0) {
+          /**
+           * Pop to checkUser screen if exist in route stack or load the checkuser from initial saved challenge.
+           */
+          Events.rm('showNextChallenge', 'showNextChallenge');
+          Events.rm('showPreviousChallenge', 'showPreviousChallenge');
+          Events.rm('showCurrentChallenge', 'showCurrentChallenge');
+          Events.rm('resetChallenge', 'resetChallenge');
+          /**************************************************************/
+          Events.on('showNextChallenge', 'showNextChallenge', this.showNextChallenge);
+          Events.on('showPreviousChallenge', 'showPreviousChallenge', this.showPreviousChallenge);
+          Events.on('showCurrentChallenge', 'showCurrentChallenge', this.showCurrentChallenge);
+          Events.on('forgotPassowrd', 'forgotPassword', this.initiateForgotPasswordFlow);
+          Events.on('resetChallenge', 'resetChallenge', this.resetChallenge);
+        } else {
+          console.log('immediate response is' + response[0].error);
+        }
+      });
+
     }
   }
 
