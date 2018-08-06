@@ -53,6 +53,8 @@ export default class NotificationCard extends Component {
                 //  selectedlanguage : this.props.selectedlanguage,   //Deprecated
                 isAirlinesMsg: false,
                 isAirlinesBookingMsg: false,
+                isOfferAcceptedAndCheckedInMsg:false,
+                isCheckedInMsg:false,
                 selectedLanguageBodyObjectIndex: 0
             }
         this.updateNotificationData();
@@ -137,10 +139,15 @@ export default class NotificationCard extends Component {
                 this.state.isAirlinesMsg = true;
             else if (body[0].subject === 'New Flight Reservation')
                 this.state.isAirlinesBookingMsg = true;
-
+            else if(body[0].subject === 'Offer Accepted and Checked In')
+                this.state.isOfferAcceptedAndCheckedInMsg=true;
+            else if(body[0].subject === 'Checked In')
+                this.state.isCheckedInMsg=true;
             else {
                 this.state.isAirlinesMsg = false;
                 this.state.isAirlinesBookingMsg = false;
+                this.state.isOfferAcceptedAndCheckedInMsg=false;
+                this.state.isCheckedInMsg=false;
             }
 
 
@@ -258,8 +265,10 @@ export default class NotificationCard extends Component {
          }*/
 
         //252E8B
-
-        if (this.state.isAirlinesMsg || this.state.isAirlinesBookingMsg) {
+       // this.state.isOfferAcceptedAndCheckedInMsg= true;
+       this.state.isCheckedInMsg=true;
+       this.state.isOfferAcceptedAndCheckedInMsg =false;
+        if (this.state.isAirlinesMsg || this.state.isAirlinesBookingMsg || this.state.isOfferAcceptedAndCheckedInMsg || this.state.isCheckedInMsg) {
             var body = this.state.body;//Util.parseJSON(this.state.body);
             for (let i = 0; body && i < body.length && body.length > 1; i++) {
                 lngButtons.push(
@@ -365,8 +374,148 @@ export default class NotificationCard extends Component {
         */
 
         //Todo : this.props.notification.action or this.props.notification.actions
+        this.state.isCheckedInMsg = true;
+        if ((this.state.isCheckedInMsg || this.state.isOfferAcceptedAndCheckedInMsg) && this.props.isAirlines) {
+            //var departureFrom, departureTime, arrivalTo, arrivalTime, seatNumber, upgraded, title1, title2, window, windowData, arrInfo, info;
 
-        if (this.state.isAirlinesMsg && this.props.isAirlines) {
+            try {
+                var msg = this.state.isCheckedInMsg?"Thank you for checking in.":"Thank you for accepting your personalized upgrade offer. Your upgrade is confirmed and your credit card on file was charged.";//bodyarray[0];
+                var flightNoMsg = bodyarray[1];
+                var departureFrom = bodyarray[2].split(":")[1].split("on")[0];
+                var departureTime = bodyarray[2].split(":")[1].split("on")[1];
+                var arrivalTo = bodyarray[3].split(":")[1].split("on")[0];
+                var arrivalTime = bodyarray[3].split(":")[1].split("on")[1];
+                var seatNumber = this.state.isCheckedInMsg?"24A":"6A";//bodyarray[4];
+                var window = this.state.isCheckedInMsg?"Window Economy":"Window Business";//bodyarray[5];
+                var boardingPassMsg = bodyarray[6];
+                var boardingPassButtonLabel = bodyarray[7];
+
+                /*
+                departureFrom = bodyarray[0].split(":")[1].split("on")[0];
+                departureTime = bodyarray[0].split(":")[1].split("on")[1];
+                arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
+                arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
+                seatNumber = bodyarray[3].match(/\(.* (.*)\)/)[1];
+                upgraded = bodyarray[3].split(":")[1];
+
+                title1 = bodyarray[4];
+                title2 = bodyarray[5];
+                //var title3 = bodyarray[6];
+                window = bodyarray[6];
+                windowData = bodyarray[7];
+                arrInfo = this.state.subject.split(" ");
+                info = arrInfo[arrInfo.length - 1];*/
+            } catch (e) {
+
+                alert(e);
+            }
+
+
+            return (
+
+                <View style={{ flex: 1, backgroundColor: '#ecf0f1' }}>
+                    <ScrollView style={[style.container_notification, { backgroundColor: 'transparent' }]} contentContainer={{ flex: 1, backgroundColor: 'transparent' }}>
+                        <TouchableWithoutFeedback>
+                            <View style={style.container_notification}>
+
+                                <Card style={style.upgrade} title="" containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+
+                                    <View style={style.cards}>
+                                        <View style={[style.user, { flex: 1 }]}>
+                                            <Text style={[style.upd_text, { flex: 1, textAlign: 'center' }]}>{msg/*"Thank you for checking in"/*"Thank you for accepting your personalized upgrade offer. Your upgrade is confirmed and your credit card on file was charged"/*upgraded*/}</Text>
+                                        </View>
+                                    </View>
+
+                                </Card>
+
+                                <Card style={style.upgrade} title={flightNoMsg} containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+
+                                    <View style={style.cards}>
+
+                                        <View key={1} style={style.user}>
+                                            <Text style={[style.upd_text,{textAlign:'center'}]}>{departureFrom}</Text>
+                                            <Image
+                                                style={[style.image,{alignSelf:'center'}]}
+                                                resizeMode="cover"
+                                                source={require("../../img/depart1.png")}
+                                            />
+                                            <Text style={[style.name, { marginRight: 3, width: 90 ,textAlign:'center'}]}>{departureTime}</Text>
+                                        </View>
+
+                                        <View style={style.user}>
+                                            <Text style={[style.upd_text,{textAlign:'center'}]}>{arrivalTo}</Text>
+                                            <Image
+                                                style={[style.image,{alignSelf:'center'}]}
+                                                resizeMode="cover"
+                                                source={require("../../img/arrive1.png")}
+                                            />
+                                            <Text style={[style.name, { marginRight: 3, width: 90 ,textAlign:'center'}]}>{arrivalTime}</Text>
+                                        </View>
+
+
+                                        <View style={style.user}>
+                                            <Text style={[style.upd_text,{textAlign:'center'}]}>{seatNumber}</Text>
+                                            {this.state.isCheckedInMsg && <Image
+                                                style={[style.image,{alignSelf:'center'}]}
+                                                resizeMode="cover"
+                                                source={require("../../img/seat.png")}
+                                            />}
+                                            {this.state.isOfferAcceptedAndCheckedInMsg && <Image
+                                                style={[style.image,{alignSelf:'center'}]}
+                                                resizeMode="cover"
+                                                source={require("../../img/seat_businessclass.png")}
+                                            />}
+                                            <Text style={[style.name, { width: 70 ,textAlign:'center'}]}>{window}</Text>
+                                        </View>
+                                    </View>
+
+                                </Card>
+
+                                <Card style={style.upgrade} title="" containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+                                    <View style={style.cards}>
+                                        <View style={style.user}>
+                                            <Text style={[style.upd_text]}>{boardingPassMsg/*"Your boarding pass is available under the 'Boarding Pass' tab in the app"*/}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={[style.cards, { alignSelf: 'center' }]}>
+
+                                        <TouchableHighlight style={[{ width: '100%', marginLeft: 0, marginTop: 20, backgroundColor: "#252E8B", alignItems: 'center', justifyContent: 'center' }]}
+                                            onPress={() => {
+
+                                                // this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action)
+                                            }}>
+                                            <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                                                {boardingPassButtonLabel/*body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]/*"Show Me My Boarding Pass"*/}
+                                            </Text>
+                                        </TouchableHighlight>
+
+                                    </View>
+
+                                </Card>
+                            </View>
+                        </TouchableWithoutFeedback>
+
+                    </ScrollView>
+                    <View style={style.lngRow}>
+                        {lngButtons}
+
+                    </View>
+                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
+
+                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
+                        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
+                            {Skin.icon.forward}
+                        </Text>
+                    </TouchableHighlight>}
+
+                </View>
+
+
+            );
+
+        }
+        else if (this.state.isAirlinesMsg && this.props.isAirlines) {
             var departureFrom, departureTime, arrivalTo, arrivalTime, seatNumber, upgraded, title1, title2, window, windowData, arrInfo, info;
 
             try {
@@ -394,105 +543,105 @@ export default class NotificationCard extends Component {
 
                 <View style={{ flex: 1, backgroundColor: '#ecf0f1' }}>
                     <ScrollView style={[style.container_notification, { backgroundColor: 'transparent' }]} contentContainer={{ flex: 1, backgroundColor: 'transparent' }}>
-                    <TouchableWithoutFeedback>
-                        <View style={style.container_notification}>
-                            <Text style={style.paragraph}>
-                                {this.state.subject}
-                            </Text>
-                            <Card style={style.upgrade} title="" containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+                        <TouchableWithoutFeedback>
+                            <View style={style.container_notification}>
+                                <Text style={style.paragraph}>
+                                    {this.state.subject}
+                                </Text>
+                                <Card style={style.upgrade} title="" containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
 
-                                <View style={style.cards}>
-                                    <View key={1} style={style.user}>
-                                        <Text style={style.upd_text}>{departureFrom}</Text>
-                                        <Image
-                                            style={style.image}
-                                            resizeMode="cover"
-                                            source={require("../../img/depart1.png")}
-                                        />
-                                        <Text style={[style.name, { marginRight: 3, width: 90 }]}>{departureTime}</Text>
+                                    <View style={style.cards}>
+                                        <View key={1} style={style.user}>
+                                            <Text style={style.upd_text}>{departureFrom}</Text>
+                                            <Image
+                                                style={style.image}
+                                                resizeMode="cover"
+                                                source={require("../../img/depart1.png")}
+                                            />
+                                            <Text style={[style.name, { marginRight: 3, width: 90 }]}>{departureTime}</Text>
+                                        </View>
+
+                                        <View style={style.user}>
+                                            <Text style={style.upd_text}>{arrivalTo}</Text>
+                                            <Image
+                                                style={style.image}
+                                                resizeMode="cover"
+                                                source={require("../../img/arrive1.png")}
+                                            />
+                                            <Text style={[style.name, { marginRight: 3, width: 90 }]}>{arrivalTime}</Text>
+                                        </View>
+
+
+                                        <View style={style.user}>
+                                            <Text style={style.upd_text}>24A</Text>
+                                            <Image
+                                                style={style.image}
+                                                resizeMode="cover"
+                                                source={require("../../img/seat.png")}
+                                            />
+                                            <Text style={[style.name, { width: 70 }]}>{window}</Text>
+                                        </View>
                                     </View>
 
-                                    <View style={style.user}>
-                                        <Text style={style.upd_text}>{arrivalTo}</Text>
-                                        <Image
-                                            style={style.image}
-                                            resizeMode="cover"
-                                            source={require("../../img/arrive1.png")}
-                                        />
-                                        <Text style={[style.name, { marginRight: 3, width: 90 }]}>{arrivalTime}</Text>
+                                </Card>
+
+                                <Card style={style.upgrade} containerStyle={{ margin: 10 }} title={title1} titleStyle={style.titleStyle}>
+
+                                    <View style={style.cards}>
+                                        <View style={style.user}>
+                                            <Image
+                                                style={style.image}
+                                                resizeMode="cover"
+                                                source={require("../../img/upgrade.png")}
+                                            />
+                                            <Text style={style.upd_text}>SEAT:{seatNumber}{'\n'}</Text>
+                                        </View>
+
+                                        <View style={style.user}>
+                                            <Text style={[style.upd_text, { width: 200 }]}>{upgraded}</Text>
+                                            <TouchableHighlight style={[{ marginTop: 5, backgroundColor: "#252E8B", alignItems: 'center', justifyContent: 'center', height: 40 }]}
+                                                onPress={() => {
+                                                    this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action)
+                                                }}>
+                                                <Text style={{ color: Skin.color.WHITE, marginRight: 10, alignSelf: 'center', textAlign: 'center', marginLeft: 10, width: 180 }}>
+                                                    {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
+                                                </Text>
+                                            </TouchableHighlight>
+                                        </View>
                                     </View>
 
+                                </Card>
 
-                                    <View style={style.user}>
-                                        <Text style={style.upd_text}>24A</Text>
-                                        <Image
-                                            style={style.image}
-                                            resizeMode="cover"
-                                            source={require("../../img/seat.png")}
-                                        />
-                                        <Text style={[style.name, { width: 70 }]}>{window}</Text>
-                                    </View>
-                                </View>
+                                <Card style={style.upgrade} title={title2} containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
+                                    <View style={style.cards}>
 
-                            </Card>
 
-                            <Card style={style.upgrade} containerStyle={{ margin: 10 }} title={title1} titleStyle={style.titleStyle}>
-
-                                <View style={style.cards}>
-                                    <View style={style.user}>
-                                        <Image
-                                            style={style.image}
-                                            resizeMode="cover"
-                                            source={require("../../img/upgrade.png")}
-                                        />
-                                        <Text style={style.upd_text}>SEAT:{seatNumber}{'\n'}</Text>
-                                    </View>
-
-                                    <View style={style.user}>
-                                        <Text style={[style.upd_text, { width: 200 }]}>{upgraded}</Text>
-                                        <TouchableHighlight style={[{ marginTop: 5, backgroundColor: "#252E8B", alignItems: 'center', justifyContent: 'center', height: 40 }]}
+                                        <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#252E8B", justifyContent: 'center' }]}
                                             onPress={() => {
-                                                this.takeAction(this.props.notification, this.props.notification.actions[1].label, this.props.notification.actions[1].action)
+
+                                                this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action)
                                             }}>
-                                            <Text style={{ color: Skin.color.WHITE, marginRight: 10, alignSelf: 'center', textAlign: 'center', marginLeft: 10, width: 180 }}>
-                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[1].label]}
+                                            <Text style={{ color: Skin.color.WHITE, marginRight: 10, alignSelf: 'center', marginLeft: 10, padding: 10 }}>
+                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
                                             </Text>
                                         </TouchableHighlight>
+
+                                        <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#252E8B", alignItems: 'center', justifyContent: 'center' }]}
+                                            onPress={() => {
+
+                                                this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action)
+                                            }}>
+                                            <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                                                {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
+                                            </Text>
+                                        </TouchableHighlight>
+
                                     </View>
-                                </View>
 
-                            </Card>
-
-                            <Card style={style.upgrade} title={title2} containerStyle={{ margin: 10 }} titleStyle={style.titleStyle}>
-                                <View style={style.cards}>
-
-
-                                    <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#252E8B", justifyContent: 'center' }]}
-                                        onPress={() => {
-
-                                            this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action)
-                                        }}>
-                                        <Text style={{ color: Skin.color.WHITE, marginRight: 10, alignSelf: 'center', marginLeft: 10, padding: 10 }}>
-                                            {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]}
-                                        </Text>
-                                    </TouchableHighlight>
-
-                                    <TouchableHighlight style={[{ width: '46%', marginLeft: 0, backgroundColor: "#252E8B", alignItems: 'center', justifyContent: 'center' }]}
-                                        onPress={() => {
-
-                                            this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action)
-                                        }}>
-                                        <Text style={{ color: Skin.color.WHITE, marginRight: 10, marginLeft: 10, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-                                            {body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]}
-                                        </Text>
-                                    </TouchableHighlight>
-
-                                </View>
-
-                            </Card>
-                        </View>
+                                </Card>
+                            </View>
                         </TouchableWithoutFeedback>
-                        
+
                     </ScrollView>
                     <View style={style.lngRow}>
                         {lngButtons}
@@ -533,7 +682,7 @@ export default class NotificationCard extends Component {
             return (
 
                 <View style={{ flex: 1, backgroundColor: '#ecf0f1' }}>
-                    <ScrollView style={[style.container_notification, ]} contentContainer={{ flex: 1, backgroundColor: 'transparent' }}>
+                    <ScrollView style={[style.container_notification,]} contentContainer={{ flex: 1, backgroundColor: 'transparent' }}>
                         <View style={style.container_notification}>
                             <Text style={style.paragraph}>
                                 {this.state.subject}
