@@ -14,3 +14,4 @@
 @interface ReactRdnaModule : RCTEventEmitter<RCTBridgeModule,RDNACallbacks>
 +(void)terminateRDNA;
 @end
+
