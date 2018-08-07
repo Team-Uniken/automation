@@ -750,7 +750,7 @@ export default class NotificationCard extends Component {
 
                     {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
-                        <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false' ? style.notificationButtonVertical : style.notificationButtonHorizontal}>
+                        <View style={style.notificationButtonHorizontal}>
 
                             <TouchableHighlight style={style.confirmbutton}
                                 onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) }}
@@ -840,7 +840,7 @@ export default class NotificationCard extends Component {
 
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
-                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false' ? style.notificationButtonVertical : style.notificationButtonHorizontal}>
+                                    <View style={style.notificationButtonHorizontal}>
 
                                         <TouchableHighlight style={style.confirmbutton}
                                             onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) }}
@@ -869,30 +869,14 @@ export default class NotificationCard extends Component {
                                         </TouchableHighlight>
                                     </View>
                                 </View>}
-                                <View style={style.lngRow}>
-                                    {lngButtons}
-                                    {/* <TouchableHighlight style={[ this.state.selectedlanguage === "en" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.state.languageKey[0] } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            English
-                                        </Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={[ this.state.selectedlanguage === "gr" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.state.languageKey[1] } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            Deutsch
-                                        </Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={[ this.state.selectedlanguage === "fr" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.state.languageKey[2] } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            Français
-                                        </Text>
-                                    </TouchableHighlight> */}
-                                </View>
+                               
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
+                    <View style={style.lngRow}>
+                                    {lngButtons}
+                                    
+                                </View>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
@@ -929,7 +913,7 @@ export default class NotificationCard extends Component {
                                 {this.props.showButtons && <View style={[style.row, { marginTop: 8 }]}>
 
 
-                                    <View style={Config.ENABLE_VERTICAL_NOTIFICATION_BUTTON === 'false' ? style.notificationButtonVertical : style.notificationButtonHorizontal}>
+                                    <View style={style.notificationButtonHorizontal}>
                                         <TouchableHighlight style={style.approvebutton} onPress={() => { this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action) }}>
                                             <View style={style.text}>
                                                 <Text style={style.buttontext}>
@@ -948,33 +932,17 @@ export default class NotificationCard extends Component {
                                     </View>
 
                                 </View>}
-                                <View style={style.lngRow}>
-                                    {lngButtons}
-                                    {/* <TouchableHighlight style={[ this.state.selectedlanguage === "en" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[0]) } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            English
-                                        </Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={[ this.state.selectedlanguage === "gr" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[1]) } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            Deutsch
-                                        </Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={[ this.state.selectedlanguage === "fr" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[2]) } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            Français
-                                        </Text>
-                                    </TouchableHighlight> */}
-                                </View>
+                                
                             </View>
+                            
                         </View>
 
 
 
                     </TouchableWithoutFeedback>
+                    <View style={style.lngRow}>
+                                    {lngButtons}
+                                </View>
                     {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 10, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
                         onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) }}>
                         <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
@@ -1025,15 +993,15 @@ const style = StyleSheet.create({
     },
     notificationButtonHorizontal: {
         backgroundColor: 'transparent',
-        height: 100,
-        flex: 1,
-        flexDirection: 'column',
-    },
-    notificationButtonVertical: {
-        backgroundColor: 'transparent',
         height: 50,
         flex: 1,
         flexDirection: 'row',
+    },
+    notificationButtonVertical: {
+        backgroundColor: 'transparent',
+        height: 100,
+        flex: 1,
+        flexDirection: 'column',
     },
     amountrow: {
         flexDirection: 'row',
