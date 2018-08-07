@@ -109,6 +109,24 @@ export default class NotificationCard extends Component {
             // this.state.rejectLabel = mainMesg.lng[lng].Reject;
             // if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
             this.state.parseMessage = selectedLanguageBodyObject.message;
+
+            this.state.isAirlinesMsg = false;
+            this.state.isAirlinesBookingMsg = false;
+            this.state.isOfferAcceptedAndCheckedInMsg=false;
+            this.state.isCheckedInMsg=false;
+
+            if (body[0].subject === 'Check In for CAL2411'){
+                this.state.isAirlinesMsg = true;
+            }
+            else if (body[0].subject === 'New Flight Reservation'){
+                this.state.isAirlinesBookingMsg = true;
+            }
+            else if(body[0].subject === 'Offer Accepted and Checked In'){
+                this.state.isOfferAcceptedAndCheckedInMsg=true;
+            }
+            else if(body[0].subject === 'Checked In'){
+                this.state.isCheckedInMsg=true;
+            }
         }
 
         // else  {
