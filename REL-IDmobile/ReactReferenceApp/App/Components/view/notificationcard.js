@@ -135,19 +135,23 @@ export default class NotificationCard extends Component {
             else
                 this.changeLanguage(0);
 
-            if (body[0].subject === 'Check In for CAL2411')
+            
+            this.state.isAirlinesMsg = false;
+            this.state.isAirlinesBookingMsg = false;
+            this.state.isOfferAcceptedAndCheckedInMsg=false;
+            this.state.isCheckedInMsg=false;
+
+            if (body[0].subject === 'Check In for CAL2411'){
                 this.state.isAirlinesMsg = true;
-            else if (body[0].subject === 'New Flight Reservation')
+            }
+            else if (body[0].subject === 'New Flight Reservation'){
                 this.state.isAirlinesBookingMsg = true;
-            else if(body[0].subject === 'Offer Accepted and Checked In')
+            }
+            else if(body[0].subject === 'Offer Accepted and Checked In'){
                 this.state.isOfferAcceptedAndCheckedInMsg=true;
-            else if(body[0].subject === 'Checked In')
+            }
+            else if(body[0].subject === 'Checked In'){
                 this.state.isCheckedInMsg=true;
-            else {
-                this.state.isAirlinesMsg = false;
-                this.state.isAirlinesBookingMsg = false;
-                this.state.isOfferAcceptedAndCheckedInMsg=false;
-                this.state.isCheckedInMsg=false;
             }
 
 
@@ -229,6 +233,9 @@ export default class NotificationCard extends Component {
         var count;
         if (this.state.isAirlinesMsg) {
             count = bodyarray.length >= 4 ? 4 : bodyarray.length;
+        }
+        else if(this.state.isCheckedInMsg || this.state.isOfferAcceptedAndCheckedInMsg){
+            count = bodyarray.length >= 5 ? 5 : bodyarray.length;
         } else {
             count = bodyarray.length;
         }
@@ -265,9 +272,7 @@ export default class NotificationCard extends Component {
          }*/
 
         //252E8B
-       // this.state.isOfferAcceptedAndCheckedInMsg= true;
-       this.state.isCheckedInMsg=true;
-       this.state.isOfferAcceptedAndCheckedInMsg =false;
+      
         if (this.state.isAirlinesMsg || this.state.isAirlinesBookingMsg || this.state.isOfferAcceptedAndCheckedInMsg || this.state.isCheckedInMsg) {
             var body = this.state.body;//Util.parseJSON(this.state.body);
             for (let i = 0; body && i < body.length && body.length > 1; i++) {
@@ -301,7 +306,6 @@ export default class NotificationCard extends Component {
                     </TouchableHighlight>
                 )
             }
-
         }
 
 
@@ -374,19 +378,19 @@ export default class NotificationCard extends Component {
         */
 
         //Todo : this.props.notification.action or this.props.notification.actions
-        this.state.isCheckedInMsg = true;
+        
         if ((this.state.isCheckedInMsg || this.state.isOfferAcceptedAndCheckedInMsg) && this.props.isAirlines) {
             //var departureFrom, departureTime, arrivalTo, arrivalTime, seatNumber, upgraded, title1, title2, window, windowData, arrInfo, info;
 
             try {
-                var msg = this.state.isCheckedInMsg?"Thank you for checking in.":"Thank you for accepting your personalized upgrade offer. Your upgrade is confirmed and your credit card on file was charged.";//bodyarray[0];
+                var msg = bodyarray[0];//this.state.isCheckedInMsg?"Thank you for checking in.":"Thank you for accepting your personalized upgrade offer. Your upgrade is confirmed and your credit card on file was charged.";
                 var flightNoMsg = bodyarray[1];
                 var departureFrom = bodyarray[2].split(":")[1].split("on")[0];
                 var departureTime = bodyarray[2].split(":")[1].split("on")[1];
                 var arrivalTo = bodyarray[3].split(":")[1].split("on")[0];
                 var arrivalTime = bodyarray[3].split(":")[1].split("on")[1];
-                var seatNumber = this.state.isCheckedInMsg?"24A":"6A";//bodyarray[4];
-                var window = this.state.isCheckedInMsg?"Window Economy":"Window Business";//bodyarray[5];
+                var seatNumber = bodyarray[4].split(":")[1].trim();//this.state.isCheckedInMsg?"24A":"6A";
+                var window = bodyarray[5];//this.state.isCheckedInMsg?"Window Economy":"Window Business";
                 var boardingPassMsg = bodyarray[6];
                 var boardingPassButtonLabel = bodyarray[7];
 
