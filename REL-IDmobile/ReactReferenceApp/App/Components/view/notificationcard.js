@@ -619,7 +619,7 @@ export default class NotificationCard extends Component {
                         }
                       ]}
                       onPress={() => {
-                        // this.takeAction(this.props.notification, this.props.notification.actions[2].label, this.props.notification.actions[2].action)
+                         this.takeAction(this.props.notification, this.props.notification.actions[0].label, this.props.notification.actions[0].action)
                       }}
                     >
                       <Text
@@ -634,7 +634,7 @@ export default class NotificationCard extends Component {
                         }}
                       >
                         {
-                          boardingPassButtonLabel /*body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[2].label]/*"Show Me My Boarding Pass"*/
+                          body[this.state.selectedLanguageBodyObjectIndex].label[this.props.notification.actions[0].label]/*"Show Me My Boarding Pass"*/
                         }
                       </Text>
                     </TouchableHighlight>

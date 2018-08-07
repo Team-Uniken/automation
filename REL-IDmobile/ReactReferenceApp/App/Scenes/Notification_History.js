@@ -678,8 +678,10 @@ class Notifications_History extends Component {
       isAirlinesMsg = false;
 
       var count;    
-      if (isAirlinesMsg) {
+    if (isAirlinesMsg) {
         count = bodyarray.length >= 4 ? 4 : bodyarray.length;
+    } else if (body[0].subject === "Offer Accepted and Checked In" || body[0].subject === "Checked In") {
+      count = bodyarray.length >= 5 ? 5 : bodyarray.length;
     } else {
         count = bodyarray.length;
     }
