@@ -610,13 +610,13 @@ export default class NotificationCard extends Component {
                                 <Card style={style.upgrade} containerStyle={{ margin: 10 }} title={title1} titleStyle={style.titleStyle}>
 
                                     <View style={style.cards}>
-                                        <View style={style.user}>
+                                        <View style={[style.user,{flex:1,alignSelf:'center',marginRight:20}]}>
                                             <Image
-                                                style={style.image}
+                                                style={[style.image,{alignSelf:'center'}]}
                                                 resizeMode="cover"
                                                 source={require("../../img/upgrade.png")}
                                             />
-                                            <Text style={style.upd_text}>SEAT:{seatNumber}{'\n'}</Text>
+                                            <Text style={[style.upd_text,{alignSelf:'center'}]}>SEAT:{seatNumber}{'\n'}</Text>
                                         </View>
 
                                         <View style={style.user}>
