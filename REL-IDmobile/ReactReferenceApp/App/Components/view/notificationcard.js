@@ -891,6 +891,7 @@ export default class NotificationCard extends Component {
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
+                    
                     <View style={style.lngRow}>
                                     {lngButtons}
                                     
@@ -994,7 +995,7 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        marginTop:20
+        marginTop:10
     },
     rowMultiLang: {
         flexDirection: 'row',
