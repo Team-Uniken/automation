@@ -574,34 +574,34 @@ export default class NotificationCard extends Component {
 
                                     <View style={style.cards}>
                                         <View key={1} style={style.user}>
-                                            <Text style={style.upd_text}>{departureFrom}</Text>
+                                            <Text style={[style.upd_text,{textAlign:'center'}]}>{departureFrom}</Text>
                                             <Image
-                                                style={style.image}
+                                                style={[style.image,{alignSelf:'center'}]}
                                                 resizeMode="cover"
                                                 source={require("../../img/depart1.png")}
                                             />
-                                            <Text style={[style.name, { marginRight: 3, width: 90 }]}>{departureTime}</Text>
+                                            <Text style={[style.name, { marginRight: 3, width: 90,textAlign:'center' }]}>{departureTime}</Text>
                                         </View>
 
                                         <View style={style.user}>
-                                            <Text style={style.upd_text}>{arrivalTo}</Text>
+                                            <Text style={[style.upd_text,{textAlign:'center'}]}>{arrivalTo}</Text>
                                             <Image
-                                                style={style.image}
+                                                style={[style.image,{alignSelf:'center'}]}
                                                 resizeMode="cover"
                                                 source={require("../../img/arrive1.png")}
                                             />
-                                            <Text style={[style.name, { marginRight: 3, width: 90 }]}>{arrivalTime}</Text>
+                                            <Text style={[style.name, { marginRight: 3, width: 90,textAlign:'center' }]}>{arrivalTime}</Text>
                                         </View>
 
 
                                         <View style={style.user}>
-                                            <Text style={style.upd_text}>24A</Text>
+                                            <Text style={[style.upd_text,{textAlign:'center'}]}>24A</Text>
                                             <Image
-                                                style={style.image}
+                                                style={[style.image,{alignSelf:'center'}]}
                                                 resizeMode="cover"
                                                 source={require("../../img/seat.png")}
                                             />
-                                            <Text style={[style.name, { width: 70 }]}>{window}</Text>
+                                            <Text style={[style.name, { width: 70,textAlign:'center' }]}>{window}</Text>
                                         </View>
                                     </View>
 
@@ -837,7 +837,7 @@ export default class NotificationCard extends Component {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
                     }}>
-                        <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 20 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
+                        <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 10 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
 
                             <View style={[style.col, { flex: 1 }]}>
                                 <View style={style.row}>
@@ -911,7 +911,7 @@ export default class NotificationCard extends Component {
                         if (!this.props.showButtons)
                             this.takeAction(this.props.notification, null, NotificationAction.CLICK)
                     }}>
-                        <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 20 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
+                        <View style={[style.customerow, this.props.expand && !this.props.showHideButton ? { marginBottom: 10 } : {}, !this.props.showButtons ? { paddingBottom: 8 } : {}]}>
 
                             <View style={[style.col, { flex: 1 }]}>
                                 <View style={style.row}>
@@ -1015,6 +1015,7 @@ const style = StyleSheet.create({
         height: 50,
         flex: 1,
         flexDirection: 'row',
+        marginBottom:10
     },
     notificationButtonVertical: {
         backgroundColor: 'transparent',
