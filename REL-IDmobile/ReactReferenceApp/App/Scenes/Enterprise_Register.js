@@ -203,13 +203,13 @@ class EnterpriseRegister extends Component {
   validateAndProcced() {
     if (!(this.state.email.trim().length > 0
       && this.state.cardNumber.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
-      this.showMessage("", "All fields are mandatory", false);
+      this.showMessage("", "All fields are mandatory.", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
-      this.showMessage("", "Enter valid Email ID", false);
+      this.showMessage("", "Entered email id is invalid. Kindly provide valid email id.", false);
       return;
     }else if (this.state.cardNumber.length < 6 ) {
-        this.showMessage("", "Enter a valid 6-digit card number", false);
+        this.showMessage("", "Kindly provide valid last 6-digits of your registered card number.", false);
         return;
     }  
     // else if (!(this.state.email === this.state.confirmEmail)) {
@@ -217,7 +217,7 @@ class EnterpriseRegister extends Component {
     //   return;
     // }
      else if (this.state.phoneNumber.length < 10 ) {
-      this.showMessage("", "Enter a valid 10-digit mobile number", false);
+      this.showMessage("", "Mobile number is invalid. Kindly provide valid mobile number.", false);
       return;
     } else if (this.state.value < 90) {
       this.showMessage("", "Please move the slider to the right.", false);
@@ -226,11 +226,11 @@ class EnterpriseRegister extends Component {
       if (Main.isConnected) {
         this.registerUser();
       } else {
-        this.showMessage("", "Please check your internet connection", false);
+        this.showMessage("", "Please check your internet connection.", false);
       }
 
     } else {
-      this.showMessage("", "Please Accept Terms and Conditions", false);
+      this.showMessage("", "Please accept Terms and Conditions.", false);
     }
   }
 
@@ -457,7 +457,7 @@ class EnterpriseRegister extends Component {
                         this.refs.email.focus();
                       } } /> */}
                     <Input
-                      placeholder={'Email'}
+                      placeholder={'Email Id'}
                       ref={'email'}
                       keyboardType={'email-address'}
                       returnKeyType={'next'}

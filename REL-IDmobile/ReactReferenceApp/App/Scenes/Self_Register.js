@@ -199,14 +199,14 @@ class SelfRegister extends Component {
 
     if (!(this.state.firstName.trim().length > 0 && this.state.lastName.trim().length > 0 && this.state.email.trim().length > 0
       && this.state.phoneNumber.trim().length > 0)) {
-      this.showMessage("", "All fields are mandatory", false);
+      this.showMessage("", "All fields are mandatory.", false);
       return;
     } else if(!this.validateName(this.state.firstName)){
-      this.showMessage("", "Enter valid First Name", false);
+      this.showMessage("", "Entered first name is invalid. Kindly provide valid first name.", false);
     }else if(!this.validateName(this.state.lastName)){
-      this.showMessage("", "Enter valid Last Name", false);
+      this.showMessage("", "Entered last name is invalid. Kindly provide valid last name.", false);
     }else if (!this.validateEmail(this.state.email)) {
-      this.showMessage("", "Enter valid Email ID", false);
+      this.showMessage("", "Entered email id is invalid. Kindly provide valid email id.", false);
       return;
     } 
     // else if (!(this.state.email === this.state.confirmEmail)) {
@@ -214,7 +214,7 @@ class SelfRegister extends Component {
     //   return;
     // } 
     else if (this.state.phoneNumber.length < 10 ) {
-      this.showMessage("", "Enter a valid 10-digit mobile number", false);
+      this.showMessage("", "Mobile number is invalid. Kindly provide valid mobile number.", false);
       return;
     } else if (this.state.value < 90) {
       this.showMessage("", "Please move the slider to the right.", false);
@@ -223,11 +223,11 @@ class SelfRegister extends Component {
       if (Main.isConnected) {
         this.registerUser();
       } else {
-        this.showMessage("", "Please check your internet connection", false);
+        this.showMessage("", "Please check your internet connection.", false);
       }
 
     } else {
-      this.showMessage("", "Please Accept Terms and Conditions", false);
+      this.showMessage("", "Please accept Terms and Conditions.", false);
     }
   }
 
@@ -453,7 +453,7 @@ class SelfRegister extends Component {
                         this.refs.email.focus();
                       } } />
                     <Input
-                      placeholder={'Email'}
+                      placeholder={'Email Id'}
                       ref={'email'}
                       keyboardType={'email-address'}
                       returnKeyType={'next'}
