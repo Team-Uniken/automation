@@ -79,7 +79,7 @@ This method is called when the component will start to load
   */
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', function () {
-      this.close();
+      //this.close();
       return true;
     }.bind(this));
 
@@ -261,8 +261,6 @@ This method is called when the component will start to load
   close() {
     this.gotoSetPasswordScreen();
   }
-
-
 
   /*
     This method is used to render the componenet with all its element.

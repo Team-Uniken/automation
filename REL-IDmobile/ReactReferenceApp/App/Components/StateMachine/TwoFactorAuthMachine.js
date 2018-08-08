@@ -134,7 +134,6 @@ class TwoFactorAuthMachine extends Component {
     this.navigateToEnterpriseRegistration = this.navigateToEnterpriseRegistration.bind(this);
     this.goToNextChallenge = this.goToNextChallenge.bind(this);
     this.saveAutoPassword = this.saveAutoPassword.bind(this);
-
   }
 
   /** 

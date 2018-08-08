@@ -296,7 +296,7 @@ class Util extends Component {
   static createErrorMessage(errorCode){
     switch(errorCode){
       case 58:
-        return "User state is not valid ,please register again";
+        return "User state is not valid, please register again";
       case 63:
         return "Response time out";
       default :
