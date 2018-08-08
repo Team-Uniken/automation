@@ -272,6 +272,8 @@ class Util extends Component {
       testDateUtc = moment.utc(dateString.replace('EST', '')).add(5, 'hours');
     else if (dateString.includes("UTC"))
       testDateUtc = moment.utc(dateString.replace('UTC', ''));
+    else if (dateString.includes("IST"))
+      testDateUtc = moment.utc(dateString.replace('IST', '')).subtract(330,'minutes');
     var localDate = moment(testDateUtc).local();
     var s = localDate.format("DD/MM/YYYY HH:mm:ss");
     return s;

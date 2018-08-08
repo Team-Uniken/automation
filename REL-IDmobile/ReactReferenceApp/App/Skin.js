@@ -733,12 +733,12 @@ module.exports.layout1 = {
   },
   bottom: {
     wrap: {
-      flex: 22,
+      flex: 15,
       //height: 50,
       bottom: 0,
       left: 0,
       alignItems: 'center',
-      marginBottom:20
+      marginBottom:10
       //backgroundColor: "rgba(155,199,255,1)"
     },
     container: {
@@ -752,7 +752,7 @@ module.exports.layout1 = {
     },
     footertext: {
       color: BUTTON_BG_COLOR,
-      fontSize: 12,
+      fontSize: 15,
       textAlign: 'center',
       textDecorationLine: 'underline',
     }
@@ -2260,6 +2260,7 @@ const collection = {
     APPROVE_BUTTON_COLOR,
     REJECT_BUTTON_COLOR,
     FRAUD_BUTTON_COLOR,
+    BUTTON_BG_COLOR,
   },
   LOAD_SCREEN_IMAGE,
   STATUS_BAR_TINT_COLOUR,
