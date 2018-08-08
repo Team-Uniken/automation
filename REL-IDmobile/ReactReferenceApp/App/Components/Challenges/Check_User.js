@@ -117,7 +117,7 @@ class UserLogin extends Component {
   }
   //onTextchange method for Enter_User TextInput
   onUsernameChange(event) {
-    this.setState({ inputUsername: event.nativeEvent.text });
+    this.setState({ inputUsername: Config.CHECK_USER_UPPER_CASE === "true" ? event.nativeEvent.text.toUpperCase() : event.nativeEvent.text });
   }
 
   /*

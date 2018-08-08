@@ -1066,27 +1066,32 @@ export default class NotificationMgmtScene extends Component {
 
   showalertforReject(notification, btnLabel) {
     this.state.showingOtherAlerts = true;
-    Alert.alert(
-      'Fraud Warning',
-      'You\'ve rejected this transaction, would you like to flag it as fraud?',
-      [
-        {
-          text: 'It\'s Fraud',
-          onPress: () => {
-            this.state.showingOtherAlerts = false;
-            this.showalert(notification, btnLabel)
-          }
-        },
-        {
-          text: 'No',
-          onPress: () => {
-            this.state.showingOtherAlerts = false;
-            this.showalert(notification, notification.actions[1].label)
-          }
-        },
-        ],
-      {cancelable:false}
-    )
+    if( Config.SHOW_NOTIFICATION_FRAUD_MESSAGE === "true" ){
+      Alert.alert(
+        'Fraud Warning',
+        'You\'ve rejected this transaction, would you like to flag it as fraud?',
+        [
+          {
+            text: 'It\'s Fraud',
+            onPress: () => {
+              this.state.showingOtherAlerts = false;
+              this.showalert(notification, btnLabel)
+            }
+          },
+          {
+            text: 'No',
+            onPress: () => {
+              this.state.showingOtherAlerts = false;
+              this.showalert(notification, notification.actions[1].label)
+            }
+          },
+          ],
+        {cancelable:false}
+      )
+    } else {
+      this.state.showingOtherAlerts = false;
+      this.showalert(notification, btnLabel)
+    }
   }
 
   showalert(notification, btnLabel) {
