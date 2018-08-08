@@ -114,7 +114,7 @@ class Load extends Component {
     };
 
     this.closeStateMachine = this.closeStateMachine.bind(this);
-    this.textRange = [Config.CHECK_USER_UPPER_CASE === "true" ? 'Checking for connectivity' : 'Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
+    this.textRange = [Config.ANIMATION_WITHOUT_BETTER_MOBI === "true" ? 'Checking for connectivity' : 'Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
   openRoute(route) {
     this.props.navigator.push(route);
