@@ -694,20 +694,20 @@ export default class NotificationCard extends Component {
         info;
 
       try {
-        departureFrom = bodyarray[0].split(":")[1].split("on")[0];
-        departureTime = bodyarray[0].split(":")[1].split("on")[1];
-        arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
-        arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
-        seatNumber = bodyarray[3].match(/\(.* (.*)\)/)[1];
-        upgraded = bodyarray[3].split(":")[1];
+        departureFrom = bodyarray[0].split(":")[1].split("on")[0].trim();
+        departureTime = bodyarray[0].split(":")[1].split("on")[1].trim();
+        arrivalTo = bodyarray[1].split(":")[1].split("on")[0].trim();
+        arrivalTime = bodyarray[1].split(":")[1].split("on")[1].trim();
+        seatNumber = bodyarray[3].match(/\(.* (.*)\)/)[1].trim();
+        upgraded = bodyarray[3].split(":")[1].trim();
 
-        title1 = bodyarray[4];
-        title2 = bodyarray[5];
+        title1 = bodyarray[4].trim();
+        title2 = bodyarray[5].trim();
         //var title3 = bodyarray[6];
-        window = bodyarray[6];
+        window = bodyarray[6].trim();
         windowData = bodyarray[7];
         arrInfo = this.state.subject.split(" ");
-        info = arrInfo[arrInfo.length - 1];
+        info = arrInfo[arrInfo.length - 1].trim();
       } catch (e) {
         alert(e);
       }
@@ -965,10 +965,10 @@ export default class NotificationCard extends Component {
       var departureFrom, departureTime, arrivalTo, arrivalTime, window;
 
       try {
-        departureFrom = bodyarray[0].split(":")[1].split("on")[0];
-        departureTime = bodyarray[0].split(":")[1].split("on")[1];
-        arrivalTo = bodyarray[1].split(":")[1].split("on")[0];
-        arrivalTime = bodyarray[1].split(":")[1].split("on")[1];
+        departureFrom = bodyarray[0].split(":")[1].split("on")[0].trim();
+        departureTime = bodyarray[0].split(":")[1].split("on")[1].trim();
+        arrivalTo = bodyarray[1].split(":")[1].split("on")[0].trim();
+        arrivalTime = bodyarray[1].split(":")[1].split("on")[1].trim();
 
         //var title3 = bodyarray[6];
         //window = bodyarray[6];
@@ -992,37 +992,37 @@ export default class NotificationCard extends Component {
               >
                 <View style={style.cards}>
                   <View key={1} style={style.user}>
-                    <Text style={style.upd_text}>{departureFrom}</Text>
+                    <Text style={[style.upd_text,{textAlign:'center'}]}>{departureFrom}</Text>
                     <Image
-                      style={style.image}
+                      style={[style.image, { alignSelf: "center" }]}
                       resizeMode="cover"
                       source={require("../../img/depart1.png")}
                     />
-                    <Text style={[style.name, { marginRight: 3, width: 90 }]}>
+                    <Text style={[style.name, { marginRight: 3, width: 90,textAlign: "center" }]}>
                       {departureTime}
                     </Text>
                   </View>
 
                   <View style={style.user}>
-                    <Text style={style.upd_text}>{arrivalTo}</Text>
+                    <Text style={[style.upd_text, { textAlign: "center" }]}>{arrivalTo}</Text>
                     <Image
-                      style={style.image}
+                      style={[style.image, { alignSelf: "center" }]}
                       resizeMode="cover"
                       source={require("../../img/arrive1.png")}
                     />
-                    <Text style={[style.name, { marginRight: 3, width: 90 }]}>
+                    <Text style={[style.name, { marginRight: 3, width: 90,textAlign: "center" }]}>
                       {arrivalTime}
                     </Text>
                   </View>
 
                   <View style={style.user}>
-                    <Text style={style.upd_text}>24A</Text>
+                    <Text style={[style.upd_text, { textAlign: "center" }]}>24A</Text>
                     <Image
-                      style={style.image}
+                      style={[style.image, { alignSelf: "center" }]}
                       resizeMode="cover"
                       source={require("../../img/seat.png")}
                     />
-                    <Text style={[style.name, { width: 70 }]}>
+                    <Text style={[style.name, { width: 70,textAlign: "center" }]}>
                       Window Economy
                     </Text>
                   </View>
@@ -1050,7 +1050,7 @@ export default class NotificationCard extends Component {
 
           {this.props.showButtons && (
             <View style={[style.row, { marginTop: 8 }]}>
-              <View style={style.notificationButtonHorizontal}>
+              <View style={[style.notificationButtonHorizontal,{marginRight:10,marginLeft:10}]}>
                 <TouchableHighlight
                   style={style.confirmbutton}
                   onPress={() => {
