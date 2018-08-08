@@ -136,6 +136,7 @@ export default class NotificationCard extends Component {
             </View>
           </View>
         </Card>
+        <View style={{height:10}}/>
         </ScrollView>
       </View>
     );
