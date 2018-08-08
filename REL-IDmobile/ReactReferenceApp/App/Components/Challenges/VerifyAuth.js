@@ -56,7 +56,8 @@ class VerifyAuth extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedOption : 0
+            selectedOption : 0,
+        selectedOptionText: this.props.url.chlngJson.chlng_info[0].value,
         };
         this.close = this.close.bind(this);
         this.onSelect = this.onSelect.bind(this);
@@ -102,6 +103,21 @@ class VerifyAuth extends Component {
     onSelect(index, value){
        // alert(`Selected index: ${index} , value: ${value}`);
        this.state.selectedOption = index;
+        if(index===0){
+            if(this.props.url.chlngJson.chlng_info && 
+                this.props.url.chlngJson.chlng_info.length > 0 &&
+                this.props.url.chlngJson.chlng_info[0].value.length > 0){
+
+                    this.setState({ selectedOptionText:this.props.url.chlngJson.chlng_info[0].value});
+                }
+        }else{
+            if(this.props.url.chlngJson.chlng_info && 
+                this.props.url.chlngJson.chlng_info.length > 1 &&
+                this.props.url.chlngJson.chlng_info[1].value.length > 0){
+            
+                    this.setState({ selectedOptionText:this.props.url.chlngJson.chlng_info[1].value});
+                }
+        }
       }
 
     render() {
@@ -127,7 +143,7 @@ class VerifyAuth extends Component {
                                 {Skin.icon.logo}
                             </Text>
                             <Text style={Skin.layout0.top.subtitle}>Please select option for</Text>
-                            <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}> Secondary Device Activation</Text>
+                            <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}> New Device Activation</Text>
                             <ScrollView style={Skin.layout1.content.scrollwrap}>
                                 <View style={[Skin.layout1.content.wrap, { justifyContent: "center", alignItems: 'center' }]}>
                                     <View style={Skin.layout1.content.container}>
@@ -148,6 +164,7 @@ class VerifyAuth extends Component {
                                         <Margin
                                             space={4} />
                                     </View>
+                                    <Text style={{color:'grey',marginTop:5,marginLeft:20,marginRight:20,alignSelf:'center',textAlign:'center'}}>{this.state.selectedOptionText} </Text>
                                 </View>
                                 <View
                                     style={Skin.layout1.bottom.wrap}>

@@ -98,7 +98,7 @@ class ControlPanel extends Component {
 
     Alert.alert(
       '',
-      'Do you want to log-off',
+      'Do you want to logout?',
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
         {

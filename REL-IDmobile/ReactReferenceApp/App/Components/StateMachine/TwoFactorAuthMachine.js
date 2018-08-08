@@ -323,42 +323,71 @@ class TwoFactorAuthMachine extends Component {
           AsyncStorage.setItem("skipwelcome", "false");
           AsyncStorage.setItem("rememberuser", "empty");
         }
+
         setTimeout(() => {
-          Alert.alert(
-            'Error',
-            res.pArgs.response.StatusMsg, [{
-              text: 'OK',
-              onPress: () => {
 
-                AsyncStorage.getItem('rememberuser').then((value) => {
-                  if (value == undefined || value == null || value === 'empty') {
+          if(statusCode == 26){
+            AsyncStorage.getItem('rememberuser').then((value) => {
+              if (value == undefined || value == null || value === 'empty') {
 
-                  } else {
-                    if (value === Main.dnaUserName) {
-                      AsyncStorage.setItem("rememberuser", "empty");
+              } else {
+                if (value === Main.dnaUserName) {
+                  AsyncStorage.setItem("rememberuser", "empty");
+                }
+              }
+            });
+
+            Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
+
+              if(isEnterpriseUser === 'false' && Constants.USER_T0 === 'YES'){
+                if(statusCode = 28){
+                  this.resetChallenge();
+                }else{
+                  this.navigateToEnterpriseRegistration();
+                }
+              }else {
+                this.navigateToEnterpriseRegistration();
+              }
+            }) .catch((error) => {
+              this.navigateToEnterpriseRegistration();
+            });
+          }else{
+            Alert.alert(
+              'Error',
+              res.pArgs.response.StatusMsg, [{
+                text: 'OK',
+                onPress: () => {
+  
+                  AsyncStorage.getItem('rememberuser').then((value) => {
+                    if (value == undefined || value == null || value === 'empty') {
+  
+                    } else {
+                      if (value === Main.dnaUserName) {
+                        AsyncStorage.setItem("rememberuser", "empty");
+                      }
                     }
-                  }
-                });
-
-                Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
-
-                  if(isEnterpriseUser === 'false' && Constants.USER_T0 === 'YES'){
-                    if(statusCode = 28){
-                      this.resetChallenge();
-                    }else{
+                  });
+  
+                  Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
+  
+                    if(isEnterpriseUser === 'false' && Constants.USER_T0 === 'YES'){
+                      if(statusCode = 28){
+                        this.resetChallenge();
+                      }else{
+                        this.navigateToEnterpriseRegistration();
+                      }
+                    }else {
                       this.navigateToEnterpriseRegistration();
                     }
-                  }else {
+                  }) .catch((error) => {
                     this.navigateToEnterpriseRegistration();
-                  }
-                }) .catch((error) => {
-                  this.navigateToEnterpriseRegistration();
-                });       
-              },
-              style: 'cancel',
-            }],
-            { cancelable: false }
-          );
+                  });       
+                },
+                style: 'cancel',
+              }],
+              { cancelable: false }
+            );
+          }
         }, 100);
 
       } else {
