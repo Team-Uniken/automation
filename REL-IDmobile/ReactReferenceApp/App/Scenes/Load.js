@@ -106,7 +106,7 @@ class Load extends Component {
       // d_text_opac: new Animated.Value(0),
       // relid_opac_val: new Animated.Value(0),
       steps: new Animated.Value(0),
-      value: 0, 
+      value: "", 
       spinnerIsVisible: true,
       spinnerSize: 50,
       spinnnerType: 'ThreeBounce',
@@ -114,7 +114,7 @@ class Load extends Component {
     };
 
     this.closeStateMachine = this.closeStateMachine.bind(this);
-    this.textRange = ['Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
+    this.textRange = [Config.CHECK_USER_UPPER_CASE === "true" ? 'Checking for connectivity' : 'Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
   openRoute(route) {
     this.props.navigator.push(route);

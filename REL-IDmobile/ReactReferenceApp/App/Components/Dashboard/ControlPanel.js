@@ -98,7 +98,7 @@ class ControlPanel extends Component {
 
     Alert.alert(
       '',
-      'Do you want to logout?',
+      'Do you want to log out',
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed!') },
         {
@@ -218,7 +218,7 @@ class ControlPanel extends Component {
       }
       this.doNavigation();
     } else {
-      alert('Failed to logout with error : ' + responseJson.errCode);
+      alert('Failed to Log-Off with Error ' + responseJson.errCode);
     }
   }
 
@@ -838,47 +838,47 @@ class ControlPanel extends Component {
         <ScrollView>
           <MenuItem
             visibility={Config.ALERTS}
-            lable="Alerts"
+            lable={Config.ALERTS_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Alerts', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-              this.props.navigator.navigate('ComingSoon',{title:'Alerts'})
+              this.props.navigator.navigate('ComingSoon',{title:Config.ALERTS_LABEL})
             }}
           />
           <MenuItem
             visibility={Config.PROFILE_SETTINGS}
-            lable="Profile & Settings"
+            lable={Config.PROFILE_SETTINGS_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'RegisterOptionScene', title: 'Profile & Settings', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('RegisterOptionScene',{title:'Profile & Settings'})
+            this.props.navigator.navigate('RegisterOptionScene',{title:Config.PROFILE_SETTINGS_LABEL})
             }}
           />
           <MenuItem
             visibility={Config.DEV_MANAGMENT}
-            lable="Device Management"
+            lable={Config.DEV_MANAGMENT_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'DeviceMgmt', title: 'Self Device Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('DeviceMgmt',{title:'Self Device Managment'})
+            this.props.navigator.navigate('DeviceMgmt',{title:'Self Device Managment'})
             }}
           />
           <MenuItem
             visibility={Config.NOTIFICATIONS}
-            lable="Notifications"
+            lable={Config.NOTIFICATIONS_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'NotificationMgmt', title: 'Notification Managment', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'})
+            this.props.navigator.navigate('NotificationMgmt',{title:'Notification Managment'})
             }}
           />
           <MenuItem
             visibility={Config.NOTIFICATION_HISTORY}
-            lable="Notification History"
+            lable={Config.NOTIFICATION_HISTORY_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('Notification_History',{title:'Notification History'})
+            this.props.navigator.navigate('Notification_History',{title:Config.NOTIFICATION_HISTORY_LABEL})
             }}
           />
           {
@@ -886,7 +886,7 @@ class ControlPanel extends Component {
             [
               <MenuItem
                 visibility={Config.CHANGEQUESTION}
-                lable="Change Secret Question"
+                lable={Config.CHANGEQUESTION_LABEL}
                 onPress={() => {
               this.props.toggleDrawer(); this.getChallengesByName('secqa');
               }}
@@ -899,7 +899,7 @@ class ControlPanel extends Component {
             [
               <MenuItem
             visibility={Config.CHANGEPASSWORD}
-            lable="Change Password"
+            lable={Config.CHANGEPASSWORD_LABEL}
             onPress={() => { this.props.toggleDrawer(); this.getChallengesByName('pass'); }}
           />
             ]
@@ -907,26 +907,26 @@ class ControlPanel extends Component {
 
           <MenuItem
             visibility={Config.HELP_SUPPORT}
-            lable="Help & Support"
+            lable={Config.HELP_SUPPORT_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Help & Support', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('ComingSoon',{title:'Help & Support'})
+      this.props.navigator.navigate('ComingSoon',{title:Config.HELP_SUPPORT_LABEL})
             }}
           />
           <MenuItem
             visibility={Config.SECURE_PORTAL}
-            lable="Secure Portal"
+            lable={Config.SECURE_PORTAL_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'SecureWebView', title: 'Secure Portal', sceneConfig: Navigator.SceneConfigs.PushFromRight, url: 'http://' + Main.gatewayHost + '/demoapp/relid.html' });
-      this.props.navigator.navigate('SecureWebView',{title:'Secure Portal',url: 'http://' + Main.gatewayHost + '/demoapp/relid.html'})
+      this.props.navigator.navigate('SecureWebView',{title:Config.SECURE_PORTAL_LABEL,url: 'http://' + Main.gatewayHost + '/demoapp/relid.html'})
 
             }}
           />
           <MenuItem
             visibility={Config.OPEN_PORTAL}
-            lable="Open Portal"
+            lable={Config.OPEN_PORTAL_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
               var openSiteURL = 'https://www.google.co.in/'
@@ -948,25 +948,25 @@ class ControlPanel extends Component {
           />
           <MenuItem
             visibility={Config.SEND_APP_FEEDBACK}
-            lable="Send App Feedback"
+            lable={Config.SEND_APP_FEEDBACK_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Send App Feedback', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('ComingSoon',{title:'Send App Feedback'})
+      this.props.navigator.navigate('ComingSoon',{title:Config.SEND_APP_FEEDBACK_LABEL})
             }}
           />
           <MenuItem
             visibility={Config.LEGAL_INFO}
-            lable="Legal Info"
+            lable={Config.LEGAL_INFO_LABEL}
             onPress={() => {
               this.props.toggleDrawer();
 //              this.props.navigator.push({ id: 'ComingSoon', title: 'Legal Info', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
-      this.props.navigator.navigate('ComingSoon',{title:'Legal Info'})
+      this.props.navigator.navigate('ComingSoon',{title:Config.LEGAL_INFO_LABEL})
             }}
           />
           <MenuItem
             visibility={Config.GETCONFIG}
-            lable="Config"
+            lable={Config.GETCONFIG_LABEL}
             onPress={() => {
               this.getConfig();
               this.props.toggleDrawer();
@@ -974,7 +974,7 @@ class ControlPanel extends Component {
           />
           <MenuItem
             visibility={Config.TESTCONFIG}
-            lable="ConfigWithTerminate"
+            lable={Config.TESTCONFIG_LABEL}
             onPress={() => {
               this.testConfig();
               this.props.toggleDrawer();
@@ -982,12 +982,12 @@ class ControlPanel extends Component {
           />
           <MenuItem
             visibility={Config.LOGOUT}
-            lable="Logout"
+            lable={Config.LOGOUT_LABEL}
             onPress={this.showLogOffAlert}
           />
           <MenuItem
             visibility={Config.EXIT}
-            lable="Exit"
+            lable={Config.EXIT_LABEL}
             onPress={this.showTerminateAlert}
           />
         </ScrollView>

@@ -125,8 +125,9 @@ class UserLogin extends Component {
    */
   checkUsername() {
     var un = this.state.inputUsername;
+    if( Config.CHECK_USER_UPPER_CASE === "true" )
+      un = this.state.inputUsername.toUpperCase();
     if (Config.ENABLE_AUTO_PASSWORD === 'true') {
-
       AsyncStorage.getItem(un.trim()).then((value) => {
         if (value) {
           try {
@@ -273,7 +274,7 @@ class UserLogin extends Component {
                 placeholder={'Enter Customer-ID'}
                 autoFocus={true}
                 autoCorrect={false}
-                autoCapitalize={false}
+                autoCapitalize={Config.CHECK_USER_UPPER_CASE === "true" ? "characters" : "none"}
                 autoComplete={false}
                 value={this.state.inputUsername}
                 onSubmitEditing={this.checkUsername.bind(this)}

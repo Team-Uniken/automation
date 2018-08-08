@@ -89,6 +89,7 @@ class ActivationCodeNoQR extends Component {
    This method is used to get the user entered value and submit the same as a challenge response.
    */
   checkActivationCode() {
+    dismissKeyboard();
     let vkey = this.state.activatonCode;
     if (vkey.length > 0) {
       let responseJson = this.props.url.chlngJson;
@@ -153,7 +154,7 @@ class ActivationCodeNoQR extends Component {
                 {Skin.text['2']['1'].prompt}
               </Text>
               <Text style={Skin.layout0.top.subtitle}>
-                Verify Code {this.props.url.chlngJson.chlng_resp[0].challenge}
+                Verification Key : {this.props.url.chlngJson.chlng_resp[0].challenge}
               </Text>
               <Input
                 ref='inputUsername'
@@ -172,6 +173,9 @@ class ActivationCodeNoQR extends Component {
                 label={Skin.text['2']['1'].submit_button}
                 onPress={this.checkActivationCode.bind(this)} />
                 <KeyboardSpacer/>
+                <Text style={[Skin.layout0.top.attempt, { marginBottom: 4, marginTop: 0 }]}>
+                    Attempt left {this.props.url.chlngJson.attempts_left}
+              </Text>
             </View>
             
           </View>

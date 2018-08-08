@@ -71,6 +71,7 @@ class Input extends Component {
           value={this.props.value}
           enablesReturnKeyAutomatically={this.props.enablesReturnKeyAutomatically}
           underlineColorAndroid={'transparent'}
+          setAllCaps={this.props.setAllCaps}
           />
       </View>
     );
