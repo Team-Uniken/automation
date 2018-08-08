@@ -218,7 +218,7 @@ class ControlPanel extends Component {
       }
       this.doNavigation();
     } else {
-      alert('Failed to Log-Off with Error ' + responseJson.errCode);
+      alert('Failed to logout with error : ' + responseJson.errCode);
     }
   }
 
