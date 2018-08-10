@@ -79,7 +79,7 @@ This method is called when the component will start to load
   */
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', function () {
-      //this.close();
+      this.close();
       return true;
     }.bind(this));
 

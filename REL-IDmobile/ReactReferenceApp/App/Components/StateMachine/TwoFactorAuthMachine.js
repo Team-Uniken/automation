@@ -310,7 +310,7 @@ class TwoFactorAuthMachine extends Component {
             }
           }
         }
-      } else if (statusCode === 26 || statusCode === 28) {
+      } else if (statusCode === 26 || statusCode === 28 || statusCode === 14) {
         /*
            26  -->> RDNA_RESP_STATUS_USER_DEVICE_NOT_REGISTERED User - device not register 
            28  -->> RDNA_RESP_STATUS_USER_SUSPENDED - User suspended  
@@ -326,7 +326,7 @@ class TwoFactorAuthMachine extends Component {
 
         setTimeout(() => {
 
-          if(statusCode == 26){
+         if(statusCode == 26){
             AsyncStorage.getItem('rememberuser').then((value) => {
               if (value == undefined || value == null || value === 'empty') {
 
@@ -371,7 +371,7 @@ class TwoFactorAuthMachine extends Component {
                   Util.getUserData('isEnterpriseUser').then((isEnterpriseUser) => {
   
                     if(isEnterpriseUser === 'false' && Constants.USER_T0 === 'YES'){
-                      if(statusCode = 28){
+                      if(statusCode == 28 || statusCode == 14){
                         this.resetChallenge();
                       }else{
                         this.navigateToEnterpriseRegistration();
@@ -720,7 +720,6 @@ class TwoFactorAuthMachine extends Component {
         }
       } else {
         console.log('immediate response is' + response[0].error);
-        //        alert(response[0].error);
       }
     });
   }
