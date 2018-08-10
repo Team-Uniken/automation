@@ -168,7 +168,7 @@ class ActivationCodeNoQR extends Component {
                   { marginBottom: 10, marginTop: 0 }
                 ]}
               >
-              Activation Code has been sent {"\n"}on your Registered mobile number.
+              Activation code has been sent {"\n"}on your registered mobile number.
               </Text>
               <Input ref="inputUsername" returnKeyType={"next"} keyboardType={"default"} placeholder={"Enter Activation Code"} autoFocus={true} autoCorrect={false} secureTextEntry={true} autoCapitalize={false} autoComplete={false} value={this.state.activatonCode} onSubmitEditing={this.checkActivationCode.bind(this)} onChange={this.onActivationCodeChange.bind(this)} />
               <Button label={Skin.text["2"]["1"].submit_button} onPress={this.checkActivationCode.bind(this)} />
