@@ -128,60 +128,55 @@ class ActivationCodeNoQR extends Component {
    */
   render() {
     
-    return (
-      <MainActivation>
-        <View style={Skin.layout0.wrap.container}>          
-          <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: 'center', backgroundColor: 'transparent' }]}>
-            <View style={[Skin.layout1.title.wrap, { position: 'absolute',top:0,  backgroundColor: 'transparent' }]}>
-            <StatusBar
-            style={Skin.layout1.statusbar}
-            backgroundColor={Skin.main.STATUS_BAR_BG}
-            barStyle={'default'} />
-              <Title
-                onClose={() => {
+    return <MainActivation>
+        <View style={Skin.layout0.wrap.container}>
+          <View style={[Skin.layout1.wrap, { flex: 1 }, { justifyContent: "center", backgroundColor: "transparent" }]}>
+            <View style={[Skin.layout1.title.wrap, { position: "absolute", top: 0, backgroundColor: "transparent" }]}>
+              <StatusBar style={Skin.layout1.statusbar} backgroundColor={Skin.main.STATUS_BAR_BG} barStyle={"default"} />
+              <Title onClose={() => {
                   this.close();
-                }}>
-              </Title>
+                }} />
             </View>
-            <View style={[Skin.layout0.wrap.container, { position: 'absolute', zIndex : 99, flex: 1, height:Skin.SCREEN_HEIGHT, top : 0,alignSelf:'center',  flexDirection: 'column', justifyContent: "center", alignItems: 'center', marginBottom: 0 },Platform.OS==="ios"?{paddingTop:20}:{}]}>
-              <Text style={[Skin.layout0.top.icon]}>  
-                {Skin.icon.logo}
-              </Text>
+            <View style={[Skin.layout0.wrap.container, { position: "absolute", zIndex: 99, flex: 1, height: Skin.SCREEN_HEIGHT, top: 0, alignSelf: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: 0 }, Platform.OS === "ios" ? { paddingTop: 20 } : {}]}>
+              <Text style={[Skin.layout0.top.icon]}>{Skin.icon.logo}</Text>
+              <View >
+                <Text style={[Skin.layout1.content.top.text, {}]}>
+                  Your username is
+                </Text>
+                <Text
+                  style={[
+                    Skin.layout1.content.top.text,
+                    { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }
+                  ]}
+                >
+                  {Main.dnaUserName}
+                </Text>
+              </View>
               <Text style={Skin.layout0.top.subtitle}>
-                {Skin.text['2']['1'].subtitle}
+                {Skin.text["2"]["1"].subtitle}
               </Text>
               <Text style={Skin.layout0.top.prompt}>
-                {Skin.text['2']['1'].prompt}
+                {Skin.text["2"]["1"].prompt}
               </Text>
-              <Text style={Skin.layout0.top.subtitle}>
-                Verification Key : {this.props.url.chlngJson.chlng_resp[0].challenge}
+              <Text style={[Skin.layout0.top.subtitle,{marginBottom:10}]}>
+                Verification Key :{" "}
+                {this.props.url.chlngJson.chlng_resp[0].challenge}
               </Text>
-              <Input
-                ref='inputUsername'
-                returnKeyType={'next'}
-                keyboardType={'default'}
-                placeholder={'Enter Activation Code'}
-                autoFocus={true}
-                autoCorrect={false}
-                secureTextEntry={true}
-                autoCapitalize={false}
-                autoComplete={false}
-                value={this.state.activatonCode}
-                onSubmitEditing={this.checkActivationCode.bind(this)}
-                onChange={this.onActivationCodeChange.bind(this)} />
-              <Button
-                label={Skin.text['2']['1'].submit_button}
-                onPress={this.checkActivationCode.bind(this)} />
-                <KeyboardSpacer/>
-                <Text style={[Skin.layout0.top.attempt, { marginBottom: 4, marginTop: 0 }]}>
-                    Attempt left {this.props.url.chlngJson.attempts_left}
+              <Input ref="inputUsername" returnKeyType={"next"} keyboardType={"default"} placeholder={"Enter Activation Code"} autoFocus={true} autoCorrect={false} secureTextEntry={true} autoCapitalize={false} autoComplete={false} value={this.state.activatonCode} onSubmitEditing={this.checkActivationCode.bind(this)} onChange={this.onActivationCodeChange.bind(this)} />
+              <Button label={Skin.text["2"]["1"].submit_button} onPress={this.checkActivationCode.bind(this)} />
+              <Text
+                style={[
+                  Skin.layout0.top.attempt,
+                  { marginBottom: 4, marginTop: 0 }
+                ]}
+              >
+                Attempt left {this.props.url.chlngJson.attempts_left}
               </Text>
+              <KeyboardSpacer />
             </View>
-            
           </View>
         </View>
-      </MainActivation >
-    );
+      </MainActivation>;
   }
 }
 

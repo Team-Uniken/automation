@@ -258,8 +258,9 @@ This method is called when the component will start to load
     return 'Continue';
   }
   //showPreviousChallenge on press of cross icon.
-  close() {
-    this.gotoSetPasswordScreen();
+  close(args) {
+    if(this.state.isPatternEnabled == false)
+     this.gotoSetPasswordScreen();
   }
 
   /*
