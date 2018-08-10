@@ -379,12 +379,12 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
             @Override
             public String getApplicationName() {
-                return "DemoBanking";
+                return BuildConfig.APPLICATION_ID;
             }
 
             @Override
             public String getApplicationVersion() {
-                return "1.0.0";
+                return BuildConfig.VERSION_NAME;
             }
 
             @Override
