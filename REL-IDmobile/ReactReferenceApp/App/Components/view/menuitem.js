@@ -33,7 +33,7 @@ class MenuItem extends Component {
           <View style={styles.menuBorder}></View>
           <TouchableHighlight
             onPress={this.props.onPress}
-            underlayColor = '#f3f3f3'
+            underlayColor = {Config.DRAWER_MENU_ITEM_SELECTION_COLOR}
             style={styles.touch}
             >
             <Text style={styles.menuItem}>{this.props.lable}</Text>

@@ -2004,7 +2004,7 @@ const controlStyle = StyleSheet.create({
   menuBorder: {
     borderStyle: 'solid',
     borderWidth: 0.5,
-    borderColor: Config.LOGO_COLOR,
+    borderColor: Config.DRAWER_MENU_DIVIDER,
     marginLeft: 20,
   },
   touch: {
