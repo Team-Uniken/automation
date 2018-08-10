@@ -140,12 +140,12 @@ class ActivationCodeNoQR extends Component {
             <View style={[Skin.layout0.wrap.container, { position: "absolute", zIndex: 99, flex: 1, height: Skin.SCREEN_HEIGHT, top: 0, alignSelf: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: 0 }, Platform.OS === "ios" ? { paddingTop: 20 } : {}]}>
               <Text style={[Skin.layout0.top.icon]}>{Skin.icon.logo}</Text>
               <View >
-                <Text style={[Skin.layout1.content.top.text, {}]}>
+                <Text style={[Skin.layout0.top.subtitle]}>
                   Your username is
                 </Text>
                 <Text
                   style={[
-                    Skin.layout1.content.top.text,
+                    Skin.layout0.top.subtitle,
                     { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }
                   ]}
                 >
@@ -161,6 +161,14 @@ class ActivationCodeNoQR extends Component {
               <Text style={[Skin.layout0.top.subtitle,{marginBottom:10}]}>
                 Verification Key :{" "}
                 {this.props.url.chlngJson.chlng_resp[0].challenge}
+              </Text>
+              <Text
+                style={[
+                  Skin.layout0.top.attempt,
+                  { marginBottom: 10, marginTop: 0 }
+                ]}
+              >
+              Activation Code has been sent {"\n"}on your Registered mobile number.
               </Text>
               <Input ref="inputUsername" returnKeyType={"next"} keyboardType={"default"} placeholder={"Enter Activation Code"} autoFocus={true} autoCorrect={false} secureTextEntry={true} autoCapitalize={false} autoComplete={false} value={this.state.activatonCode} onSubmitEditing={this.checkActivationCode.bind(this)} onChange={this.onActivationCodeChange.bind(this)} />
               <Button label={Skin.text["2"]["1"].submit_button} onPress={this.checkActivationCode.bind(this)} />
