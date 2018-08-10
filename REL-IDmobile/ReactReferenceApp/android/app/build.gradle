@@ -86,8 +86,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 532
-        versionName "5.3.3"
+        versionCode 534
+        versionName "5.3.4"
 
 
         packagingOptions {
