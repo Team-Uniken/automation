@@ -106,7 +106,7 @@ class Load extends Component {
       // d_text_opac: new Animated.Value(0),
       // relid_opac_val: new Animated.Value(0),
       steps: new Animated.Value(0),
-      value: 0, 
+      value: '', 
       spinnerIsVisible: true,
       spinnerSize: 50,
       spinnnerType: 'ThreeBounce',

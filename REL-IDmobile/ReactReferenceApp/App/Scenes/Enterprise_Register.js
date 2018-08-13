@@ -201,17 +201,20 @@ class EnterpriseRegister extends Component {
 
   // check all fields are filled with valid data to call registerUser.
   validateAndProcced() {
-    if (!(this.state.email.trim().length > 0
-      && this.state.cardNumber.trim().length > 0 && this.state.phoneNumber.trim().length > 0)) {
+    //if (!(this.state.email.trim().length > 0
+    //  && this.state.cardNumber.trim().length > 0 && this.state.phoneNumber.trim().length > 0))
+      if (!(this.state.email.trim().length > 0
+       && this.state.phoneNumber.trim().length > 0))  {
       this.showMessage("", "All fields are mandatory.", false);
       return;
     } else if (!this.validateEmail(this.state.email)) {
       this.showMessage("", "Entered email id is invalid. Kindly provide valid email id.", false);
       return;
-    }else if (this.state.cardNumber.length < 6 ) {
-        this.showMessage("", "Kindly provide valid last 6-digits of your registered card number.", false);
-        return;
-    }  
+    }
+    // else if (this.state.cardNumber.length < 6 ) {
+    //     this.showMessage("", "Kindly provide valid last 6-digits of your registered card number.", false);
+    //     return;
+    // }  
     // else if (!(this.state.email === this.state.confirmEmail)) {
     //   this.showMessage("", "Entered emails do not match", false);
     //   return;
@@ -251,10 +254,11 @@ class EnterpriseRegister extends Component {
       // MOB_NUM_ID_STR, mandatory = false        // sholud be there
       // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
 
+      var cardNumber = this.state.phoneNumber.trim().slice(-6);
       var userMap = {
         "emailId": this.state.email.trim(),
         "mobNum": this.state.phoneNumber.trim(),
-        "cardNum": this.state.cardNumber.trim(),
+        "cardNum": cardNumber,
         "sessionId":this.sessionId,
         "Content-Type": "application/x-www-form-urlencoded",
         "Content-Length":"0",
@@ -471,7 +475,7 @@ class EnterpriseRegister extends Component {
                       onSubmitEditing={() => {
                         this.refs.cardNumber.focus();
                       } } />
-                    <Input
+                    {/* <Input
                       placeholder={'Card Number (Last 6 Digits)'}
                       ref={'cardNumber'}
                       keyboardType={'phone-pad'}
@@ -485,7 +489,7 @@ class EnterpriseRegister extends Component {
                       onChange={this.onCardNumberChange.bind(this) }
                       onSubmitEditing={() => {
                         this.refs.phoneNumber.focus();
-                      } } />                      
+                      } } />                       */}
                     {/* <Input
                       placeholder={'Confirm Email'}
                       ref={'confirmEmail'}
