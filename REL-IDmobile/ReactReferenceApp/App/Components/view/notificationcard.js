@@ -68,7 +68,7 @@ export default class NotificationCard extends Component {
       selectedLanguageBodyObjectIndex: 0
     };
     this.updateNotificationData();
-    this.convertUnicode = this.convertUnicode.bind(this);
+    //this.convertUnicode = this.convertUnicode.bind(this);
   }
   componentDidMount() {
     // this.updateNotificationData();
@@ -114,11 +114,11 @@ export default class NotificationCard extends Component {
       var selectedLanguageBodyObject =
         body[this.state.selectedLanguageBodyObjectIndex];
       // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-      this.state.subject = this.convertUnicode(selectedLanguageBodyObject.subject);
+      this.state.subject = Util.convertUnicode(selectedLanguageBodyObject.subject);
       // this.state.acceptLabel = mainMesg.lng[lng].Accept;
       // this.state.rejectLabel = mainMesg.lng[lng].Reject;
       // if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
-      this.state.parseMessage = this.convertUnicode(selectedLanguageBodyObject.message);
+      this.state.parseMessage = Util.convertUnicode(selectedLanguageBodyObject.message);
 
       this.state.isAirlinesMsg = false;
       this.state.isAirlinesBookingMsg = false;
@@ -228,11 +228,11 @@ export default class NotificationCard extends Component {
       // if (selectedLanguageBodyObjectIndex === i) {
       var selectedLanguageBodyObject = body[selectedLanguageBodyObjectIndex];
       //  this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-      this.state.subject = this.convertUnicode(selectedLanguageBodyObject.subject);
+      this.state.subject = Util.convertUnicode(selectedLanguageBodyObject.subject);
       //this.state.acceptLabel = mainMesg.lng[lng].Accept;
       //this.state.rejectLabel = mainMesg.lng[lng].Reject;
       //if (this.props.notification.action.length == 3) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
-      this.state.parseMessage = this.convertUnicode(selectedLanguageBodyObject.message);
+      this.state.parseMessage = Util.convertUnicode(selectedLanguageBodyObject.message);
       this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
       this.setState({ parseMessage: selectedLanguageBodyObject.message });
       // break;
@@ -240,14 +240,6 @@ export default class NotificationCard extends Component {
       // }
     }
   }
-
-   convertUnicode(input) {
-    return input.replace(/\\u(\w\w\w\w)/g,function(a,b) {
-      var charcode = parseInt(b,16);
-      return String.fromCharCode(charcode);
-    });
-  }
-  
 
   render() {
     var bodyValue = this.state.parseMessage;
