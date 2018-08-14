@@ -357,6 +357,14 @@ class Util extends Component {
     return (!str || 0 === str.length);
   }
 
+  static convertUnicode(input) {
+    return input.replace(/\\u(\w\w\w\w)/g,function(a,b) {
+      var charcode = parseInt(b,16);
+      return String.fromCharCode(charcode);
+    });
+  }
+
 }
+
 
 module.exports = Util;
