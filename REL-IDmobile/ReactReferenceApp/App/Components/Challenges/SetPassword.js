@@ -36,6 +36,7 @@ import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
+import PolicyChecker from '../Utils/PolicyChecker';
 
 
 
@@ -48,6 +49,8 @@ export default class PasswordSet extends Component {
       cPassword: '',
       userID: '',
     };
+
+    this.passwordPolicyChecker = new PolicyChecker(this.getPasswordPolicy());
   }
   /*
 This is life cycle method of the react native component.
@@ -70,14 +73,39 @@ This method is called when the component will start to load
     this.refs.cPassword.focus();
 
   }
+
+  getPasswordPolicy() {
+    //Uncomment below for local testing - this is demo policy
+    //return "maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=$ #||userIdCheck=true||msg=<Max L : 8, Min L: 4, Min UC: 1, Min LC: 1, Min SC: 2, SC Not Allowed: $ #>";
+
+    if (this.props.url.chlngJson.chlng_info &&
+      this.props.url.chlngJson.chlng_info.length > 0) {
+      var infoArr=this.props.url.chlngJson.chlng_info;
+      for (var i = 0; i < infoArr.length; i++) {
+        var info = infoArr[i];
+        if (info.key === "PasswordPolicy" && info.value && info.value.length > 0){
+          return info.value;
+        }
+      }
+
+      return null;
+    }
+  }
+
   //To check password policy
   validatePassword(textval) {
-    if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) >= 0) {
-      return false;
+    if(this.passwordPolicyChecker.isPolicyParseSuccessfull){
+        //alert(this.passwordPolicyChecker.policy);
+        return this.passwordPolicyChecker.validateCreds(Main.dnaUserName,textval).success;
+    }else{
+      if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) >= 0) {
+        return false;
+      }
+      var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+      return passwordregex.test(textval);
     }
-    var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
-    return passwordregex.test(textval);
   }
+
   /*
     onTextchange method for Password TextInput
   */
@@ -114,9 +142,13 @@ This method is called when the component will start to load
             Util.saveUserData("isAutoPasswordPattern  ", 'false');
             Events.trigger('showNextChallenge', { response: responseJson });
           } else {
+            var msg =  'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.';
+
+            if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
+                msg = this.passwordPolicyChecker.policy.msg;
             Alert.alert(
               'Password Policy',
-              'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.',
+              msg,
               [
                 { text: 'OK' }
               ]
