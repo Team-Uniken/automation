@@ -674,7 +674,7 @@ class Notifications_History extends Component {
 
     for (let i = 0; i < bodyarray.length; i++) {
       var bodyStr = bodyarray[i];
-      bodyStr = Util.replaceString('<br/>', '\n', bodyStr);
+      bodyStr = Util.convertUnicode(Util.replaceString('<br/>', '\n', bodyStr));
       bulletList.push(
         <View key={i}>
           <View style={Skin.notification.historyrow}>
@@ -726,7 +726,7 @@ class Notifications_History extends Component {
       <View style={{ width: Skin.SCREEN_WIDTH - 32, marginBottom: 8, marginLeft: 16, marginRight: 16, backgroundColor: '#fff' }}>
         <View style={[Skin.notification.historyrow, { marginBottom: 4 }]}>
           <Text style={Skin.notification.subject}>
-            {body[notification.selectedLanguageObjectIndex].subject}
+            {Util.convertUnicode(body[notification.selectedLanguageObjectIndex].subject)}
           </Text>
           <Text style={Skin.notification.time}>
             {Util.getFormatedDate(notification.create_ts)}

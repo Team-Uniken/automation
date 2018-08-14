@@ -96,11 +96,11 @@ export default class NotificationCard extends Component {
                 //var lng = this.state.languageKey[0];      
                 var selectedLanguageBodyObject = body[this.state.selectedLanguageBodyObjectIndex];
                // this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-                this.state.subject = selectedLanguageBodyObject.subject;
+                this.state.subject = Util.convertUnicode(selectedLanguageBodyObject.subject);
                // this.state.acceptLabel = mainMesg.lng[lng].Accept;
                // this.state.rejectLabel = mainMesg.lng[lng].Reject;
                // if ( this.props.notification.action.length == 3 ) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
-                this.state.parseMessage = selectedLanguageBodyObject.message;
+                this.state.parseMessage = Util.convertUnicode(selectedLanguageBodyObject.message);
             }
             
             // else  {
@@ -181,11 +181,11 @@ export default class NotificationCard extends Component {
            // if (selectedLanguageBodyObjectIndex === i) {
             var selectedLanguageBodyObject = body[selectedLanguageBodyObjectIndex];
           //  this.state.selectedlanguage = selectedLanguageBodyObject.lng;
-            this.state.subject = selectedLanguageBodyObject.subject; 
+            this.state.subject = Util.convertUnicode(selectedLanguageBodyObject.subject); 
             //this.state.acceptLabel = mainMesg.lng[lng].Accept;
             //this.state.rejectLabel = mainMesg.lng[lng].Reject;
             //if (this.props.notification.action.length == 3) this.state.fraudLabel = mainMesg.lng[lng].Fraud;
-            this.state.parseMessage = selectedLanguageBodyObject.message;
+            this.state.parseMessage = Util.convertUnicode(selectedLanguageBodyObject.message);
             this.state.selectedLanguageBodyObjectIndex = selectedLanguageBodyObjectIndex;
             this.setState({ parseMessage:  selectedLanguageBodyObject.message });
            // break;
