@@ -63,7 +63,9 @@ export default class UpdatePasswordSet extends Component {
     this.onPostUpdate = this.onPostUpdate.bind(this);
     this.onPatternClose = this.onPatternClose.bind(this);
     this.passwordPolicyChecker = new PolicyChecker(this.getPasswordPolicy());
-    this.passwordPolicy = `<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
+    this.passwordPolicy = `<html><head></head><body><ul><li>Password length must be between 8 and 16 characters</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
+    if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
+      this.passwordPolicy = this.passwordPolicyChecker.policy.msg;
   }
   /*
     This is life cycle method of the react native component.
@@ -94,7 +96,7 @@ export default class UpdatePasswordSet extends Component {
 
   getPasswordPolicy() {
     //Uncomment below for local testing - this is demo policy
-    return "maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=$ #||userIdCheck=true||msg=<Max L : 8, Min L: 4, Min UC: 1, Min LC: 1, Min SC: 2, SC Not Allowed: $ #>";
+    return `maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=#||userIdCheck=true||msg=<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
 
     if (this.props.url.chlngJson.chlng_info &&
       this.props.url.chlngJson.chlng_info.length > 0) {
@@ -196,11 +198,11 @@ export default class UpdatePasswordSet extends Component {
             responseJson.chlng_resp[0].response = pw;
             Events.trigger('showNextChallenge', { response: responseJson });
           } else {
-            var msg =  'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.';
+            /*var msg =  'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.';
 
             if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
                 msg = "Password must have:\n\n\t1. Maximum password length should be sixteen\n\t2. Minimum password length should be one\n\t3. Minimum one digit is required\n\t4. Minimum one upper case character is required\n\t5. Minimum one lower case character is required\n\t6. Minimum one special character is needed\n\t7. Can have only two repetition for a particular character\n\t8. Alphabets should be in ascending order\n\t9. Character(s) not allowed = #\n\t10. Password should not contain your user id";
-
+            */
                 //this.passwordPolicyChecker.policy.msg;
             this.setState({showPasswordPolicy:true});
 /*

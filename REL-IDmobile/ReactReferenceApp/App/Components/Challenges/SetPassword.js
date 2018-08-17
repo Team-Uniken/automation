@@ -11,6 +11,8 @@ import React, { Component, PropTypes } from 'react';
 import ReactNative from 'react-native';
 import Util from "../Utils/Util";
 import Config from 'react-native-config';
+import PasswordPolicyModal from '../view/passwordPolicyModal'
+
 
 /*
  Required for this js
@@ -49,9 +51,13 @@ export default class PasswordSet extends Component {
       password: '',
       cPassword: '',
       userID: '',
+      showPasswordPolicy:false
     };
 
+    this.passwordPolicy = `<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
     this.passwordPolicyChecker = new PolicyChecker(this.getPasswordPolicy());
+    if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
+      this.passwordPolicy = this.passwordPolicyChecker.policy.msg;
   }
   /*
 This is life cycle method of the react native component.
@@ -77,7 +83,7 @@ This method is called when the component will start to load
 
   getPasswordPolicy() {
     //Uncomment below for local testing - this is demo policy
-    //return "maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=$ #||userIdCheck=true||msg=<Max L : 8, Min L: 4, Min UC: 1, Min LC: 1, Min SC: 2, SC Not Allowed: $ #>";
+    //return `maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=#||userIdCheck=true||msg=<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
 
     if (this.props.url.chlngJson.chlng_info &&
       this.props.url.chlngJson.chlng_info.length > 0) {
@@ -143,17 +149,20 @@ This method is called when the component will start to load
             Util.saveUserData("isAutoPasswordPattern  ", 'false');
             Events.trigger('showNextChallenge', { response: responseJson });
           } else {
-            var msg =  'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.';
+           /* var msg =  'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.';
 
             if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
                 msg = this.passwordPolicyChecker.policy.msg;
-            Alert.alert(
+          */
+            
+            this.setState({showPasswordPolicy:true});
+                /*Alert.alert(
               'Password Policy',
               msg,
               [
                 { text: 'OK' }
               ]
-            );
+            );*/
           }
         } else {
           alert('Password and Confirm Password do not match');
@@ -251,10 +260,21 @@ This method is called when the component will start to load
               <Button style={Skin.layout1.bottom.button}
                 onPress={this.setPassword.bind(this) }
                 label={Skin.text['1']['1'].submit_button}/>
+                  <Text style={[Skin.layout1.bottom.footertext, {marginBottom : 20}]}
+                  onPress={ ()=>{this.setState({showPasswordPolicy:true})} }>Password Policy</Text> 
             </View>
           </View>
           <KeyboardSpacer topSpacing={50}/>
         </View>
+        <PasswordPolicyModal html={this.passwordPolicy} show={this.state.showPasswordPolicy} 
+            onAlertModalDismissed={()=>{
+              this.setState({showPasswordPolicy:false})
+            }}
+            
+            onAlertModalOk={()=>{
+              this.setState({showPasswordPolicy:false})
+            }}
+            />
       </MainActivation>
     );
 

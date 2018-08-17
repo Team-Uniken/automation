@@ -45,10 +45,9 @@ export default class PasswordPolicyModal extends Component {
               Password Policy
             </Text>
           </View>
-          <ScrollView >
-               
-                <HTML  html={this.props.html} imagesMaxWidth={Dimensions.get('window').width} containerStyle={{marginLeft:-10}} />
-               
+          
+            <ScrollView >
+                <HTML html={this.props.html} imagesMaxWidth={Dimensions.get('window').width} containerStyle={{ marginLeft: -10 }} />
             </ScrollView>
              
           <View style={styles.border}></View>
