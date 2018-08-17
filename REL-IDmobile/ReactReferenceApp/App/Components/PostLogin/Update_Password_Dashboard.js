@@ -18,6 +18,7 @@ import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, Interaction
 import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import PasswordPolicyModal from '../view/passwordPolicyModal'
 
 /*
  Use in this js
@@ -35,6 +36,7 @@ import Button from '../view/button';
 import Margin from '../view/margin';
 import Input from '../view/input';
 import Title from '../view/title';
+import PolicyChecker from '../Utils/PolicyChecker';
 
 /*
   INSTANCES
@@ -51,6 +53,7 @@ export default class UpdatePasswordSet extends Component {
       userID: '',
       erpasswd: false,
       erpattern: false,
+      showPasswordPolicy:false
     };
 
     this.close = this.close.bind(this);
@@ -58,6 +61,8 @@ export default class UpdatePasswordSet extends Component {
     this.setPassword = this.setPassword.bind(this);
     this.onPostUpdate = this.onPostUpdate.bind(this);
     this.onPatternClose = this.onPatternClose.bind(this);
+    this.passwordPolicyChecker = new PolicyChecker(this.getPasswordPolicy());
+    this.passwordPolicy = `<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
   }
   /*
     This is life cycle method of the react native component.
@@ -85,6 +90,25 @@ export default class UpdatePasswordSet extends Component {
       }
     }).done();
   }
+
+  getPasswordPolicy() {
+    //Uncomment below for local testing - this is demo policy
+    return "maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=$ #||userIdCheck=true||msg=<Max L : 8, Min L: 4, Min UC: 1, Min LC: 1, Min SC: 2, SC Not Allowed: $ #>";
+
+    if (this.props.url.chlngJson.chlng_info &&
+      this.props.url.chlngJson.chlng_info.length > 0) {
+      var infoArr=this.props.url.chlngJson.chlng_info;
+      for (var i = 0; i < infoArr.length; i++) {
+        var info = infoArr[i];
+        if (info.key === "PasswordPolicy" && info.value && info.value.length > 0){
+          return info.value;
+        }
+      }
+
+      return null;
+    }
+  }
+
   /*
   This is life cycle method of the react native component.
   This method is called when the component is Mounted/Loaded.
@@ -92,13 +116,19 @@ export default class UpdatePasswordSet extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.close);
   }
+
   //To check password policy
   validatePassword(textval) {
-    if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) >= 0) {
-      return false;
+    if (this.passwordPolicyChecker.isPolicyParseSuccessfull) {
+      return this.passwordPolicyChecker.validateCreds(Main.dnaUserName,textval).success;
     }
-    var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
-    return passwordregex.test(textval);
+    else {
+      if (textval.toUpperCase().search(Main.dnaUserName.toUpperCase()) >= 0) {
+        return false;
+      }
+      var passwordregex = /^(?=^.{8,16}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+      return passwordregex.test(textval);
+    }
   }
 
   /*   
@@ -150,7 +180,7 @@ export default class UpdatePasswordSet extends Component {
   /*
       This method is used to get the users entered paswword and confirmPassword to check both are same,
        and submit the same as a challenge response.
-    */
+    */ 
   setPassword() {
     const pw = this.state.password;
     const cpw = this.state.cPassword;
@@ -165,13 +195,21 @@ export default class UpdatePasswordSet extends Component {
             responseJson.chlng_resp[0].response = pw;
             Events.trigger('showNextChallenge', { response: responseJson });
           } else {
+            var msg =  'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.';
+
+            if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
+                msg = "Password must have:\n\n\t1. Maximum password length should be sixteen\n\t2. Minimum password length should be one\n\t3. Minimum one digit is required\n\t4. Minimum one upper case character is required\n\t5. Minimum one lower case character is required\n\t6. Minimum one special character is needed\n\t7. Can have only two repetition for a particular character\n\t8. Alphabets should be in ascending order\n\t9. Character(s) not allowed = #\n\t10. Password should not contain your user id";
+
+                //this.passwordPolicyChecker.policy.msg;
+            this.setState({showPasswordPolicy:true});
+/*
             Alert.alert(
               'Password Policy',
-              'Password should be of minimum 8 characters long with atleast 1 uppercase, 1 lowercase character, 1 numeric digit and 1 special character.Make sure user-id should not be part of the password.',
+              msg,
               [
                 { text: 'OK' }
               ]
-            );
+            );*/
           }
         } else {
           alert('Password and Confirm Password do not match');
@@ -320,6 +358,8 @@ export default class UpdatePasswordSet extends Component {
             <Button style={Skin.layout1.bottom.button}
             onPress={this.setPassword.bind(this) }
             label={Skin.text['1']['1'].submit_button}/>
+             <Text style={[Skin.layout1.bottom.footertext, {marginBottom : 20}]}
+                  onPress={ ()=>{this.setState({showPasswordPolicy:true})} }>Password Policy</Text> 
             </View>
             </View>
             <KeyboardSpacer topSpacing={0}/>
@@ -334,7 +374,15 @@ export default class UpdatePasswordSet extends Component {
             </View>
           </MainActivation>
         </View>
-
+        <PasswordPolicyModal html={this.passwordPolicy} show={this.state.showPasswordPolicy} 
+            onAlertModalDismissed={()=>{
+              this.setState({showPasswordPolicy:false})
+            }}
+            
+            onAlertModalOk={()=>{
+              this.setState({showPasswordPolicy:false})
+            }}
+            />
       </Main>
     );
 

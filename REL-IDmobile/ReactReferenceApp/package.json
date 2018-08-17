@@ -53,6 +53,7 @@
     "react-native-navbar": "^2.0.1",
     "react-native-progress": "^3.3.0",
     "react-native-progress-bar": "^0.1.2",
+    "react-native-render-html": "^3.10.0",
     "react-native-simple-events": "^1.0.1",
     "react-native-simple-modal": "^3.0.2",
     "react-native-simple-toast": "0.0.6",
