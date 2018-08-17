@@ -45,11 +45,12 @@ export default class PasswordPolicyModal extends Component {
               Password Policy
             </Text>
           </View>
-          <ScrollView>
-            <View style={{height:600}}>
-                <HTML containerStyle={{height:400}} html={this.props.html} imagesMaxWidth={Dimensions.get('window').width} />
-                </View>
-          </ScrollView>     
+          <ScrollView >
+               
+                <HTML  html={this.props.html} imagesMaxWidth={Dimensions.get('window').width} containerStyle={{marginLeft:-10}} />
+               
+            </ScrollView>
+             
           <View style={styles.border}></View>
     
           <TouchableHighlight
@@ -76,21 +77,22 @@ export default class PasswordPolicyModal extends Component {
 //Styles for alert modal
 const styles = StyleSheet.create({
     modalwrap: {
-      height: 150,
+     
       flexDirection: 'column',
       borderRadius: 15,
       backgroundColor: '#fff',
     },
     modalTitleWrap: {
+      marginTop:10,
       justifyContent: 'center',
-      flex: 1,
+      marginBottom:15
     },
     modalTitle: {
       color: Skin.colors.PRIMARY_TEXT,
       textAlign: 'center',
       justifyContent: 'center',
       alignItems: 'center',
-      fontSize: 20,
+      fontSize: 15,
       fontWeight: 'bold',
       backgroundColor: 'transparent',
     },
