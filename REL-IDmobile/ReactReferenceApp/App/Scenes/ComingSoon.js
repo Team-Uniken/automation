@@ -37,7 +37,7 @@ export default class ComingSoonScene extends Component {
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-          handler={this.goBack.bind(this)}/>);
+          handler={this.goBack.bind(this)} isBackBtnText={Config.NAVIGATION_BACKBUTTON_IS_TEXT==='true'?true:false}/>);
   }
   
   goBack(){

@@ -525,7 +525,7 @@ export default class DeviceMgmtScene extends Component {
 
   renderPageTitle(){
         return(<PageTitle title={'Connected Devices'}
-        handler={this.goBack.bind(this)} isBadge={true}/>);
+        handler={this.goBack.bind(this)} isBadge={true} isBackBtnText={Config.NAVIGATION_BACKBUTTON_IS_TEXT==='true'?true:false}/>);
   }
   
   

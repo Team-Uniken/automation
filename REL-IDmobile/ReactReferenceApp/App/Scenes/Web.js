@@ -265,7 +265,7 @@ export default class Web extends Component {
  */
   renderPageTitle(pageTitle) {
     return (<PageTitle title={pageTitle}
-      handler={this.close} />);
+      handler={this.close} isBackBtnText={Config.NAVIGATION_BACKBUTTON_IS_TEXT==='true'?true:false}/>);
   }
 
   /*

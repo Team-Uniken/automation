@@ -515,9 +515,10 @@ class Activation_Code extends Component {
               </Text> */}
             </View>            
           </View>  
+          <KeyboardSpacer topSpacing={-40} />
           <Text style={[Skin.layout1.bottom.footertext, {marginBottom : 40}]}
                   onPress={ this.registerAgain }>I do not have activation code</Text>  
-          <KeyboardSpacer topSpacing={-100} />
+          
         </View>
             <Modal
             style={styles.modalwrap}

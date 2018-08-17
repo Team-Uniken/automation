@@ -87,8 +87,9 @@ class PageTitle extends Component {
           titleTint={Config.LOGO_COLOR}
           right={''}
           left={{
-            icon: Skin.icon.hamburger,
-            iconStyle: {
+            text:this.props.isBackBtnText?'Back':'',
+            icon: this.props.isBackBtnText?'':Skin.icon.hamburger,
+            iconStyle:this.props.isBackBtnText?'': {
               fontSize: 35,
               paddingLeft: 17,
               width: 40,
