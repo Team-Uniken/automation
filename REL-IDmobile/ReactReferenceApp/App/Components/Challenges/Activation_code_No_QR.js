@@ -17,7 +17,7 @@ import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Config from 'react-native-config';
-import Finger from 'react-native-touch-id-android'
+import Finger from 'react-native-touch-id-android';
 
 import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native';
 
@@ -141,7 +141,7 @@ class ActivationCodeNoQR extends Component {
               <Text style={[Skin.layout0.top.icon]}>{Skin.icon.logo}</Text>
               <View >
                 <Text style={[Skin.layout0.top.subtitle]}>
-                  Your username is
+                  {Config.USERNAME_LABEL}
                 </Text>
                 <Text
                   style={[

@@ -19,6 +19,7 @@ import Events from 'react-native-simple-events';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
+
 /*
  Use in this js
  */
@@ -279,7 +280,7 @@ export default class UpdatePasswordSet extends Component {
                 <View style={Skin.layout1.content.wrap}>
                   <View style={Skin.layout1.content.container}>
                     <View style={Skin.layout1.content.top.container}>
-                      <Text style={[Skin.layout1.content.top.text, {}]}>Your username is</Text>
+                      <Text style={[Skin.layout1.content.top.text, {}]}> {Config.USERNAME_LABEL}</Text>
                       <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>{this.state.Username}</Text>
                       <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
                     </View>
