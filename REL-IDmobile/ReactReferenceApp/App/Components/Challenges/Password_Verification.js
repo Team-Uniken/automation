@@ -162,7 +162,7 @@ This method is called when the component is Mounted/Loaded.
                   autoCapitalize={false}
                   />                
                   <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
-                  Attempt left {this.props.url.chlngJson.attempts_left}
+                  Attempts left {this.props.url.chlngJson.attempts_left}
                 </Text>
                 <Button
                   label={Skin.text['2']['1'].submit_button}

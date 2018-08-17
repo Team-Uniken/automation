@@ -491,7 +491,7 @@ class Activation_Code extends Component {
           <View style={Skin.layout1.bottom.wrap}>
             <View style={Skin.layout1.bottom.container}>
               <Text style={[Skin.layout0.top.attempt, { marginBottom: 4, marginTop: 0 }]}>
-                Attempt left {this.props.url.chlngJson.attempts_left}
+                Attempts left {this.props.url.chlngJson.attempts_left}
               </Text>
               <Button
                 label={Skin.text['1']['1'].submit_button}

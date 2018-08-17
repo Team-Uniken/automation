@@ -141,7 +141,7 @@ class PasswordVerification extends Component {
               <View style={Skin.layout0.bottom.container}>
 
                 <Text style={Skin.layout0.top.attempt}>
-                  Attempt left {this.props.url.chlngJson.attempts_left}
+                  Attempts left {this.props.url.chlngJson.attempts_left}
                 </Text>
 
                 <Input

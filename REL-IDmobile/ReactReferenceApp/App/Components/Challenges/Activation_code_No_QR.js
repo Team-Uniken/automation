@@ -174,13 +174,13 @@ class ActivationCodeNoQR extends Component {
               <Button label={Skin.text["2"]["1"].submit_button} onPress={this.checkActivationCode.bind(this)} />
               <Text
                 style={[
-                  Skin.layout0.top.attempt,
-                  { marginBottom: 4, marginTop: 0 }
+                  
+                  { marginBottom: 0, marginTop: -20 }
                 ]}
               >
-                Attempt left {this.props.url.chlngJson.attempts_left}
+                Attempts left {this.props.url.chlngJson.attempts_left}
               </Text>
-              <KeyboardSpacer />
+              <KeyboardSpacer topSpacing={100} />
             </View>
           </View>
         </View>
