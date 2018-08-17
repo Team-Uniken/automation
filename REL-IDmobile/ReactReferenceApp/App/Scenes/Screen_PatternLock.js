@@ -8,6 +8,7 @@ import ReactNative from 'react-native';
 import Skin from '../Skin';
 import Main from '../Components/Container/Main';
 import MainActivation from '../Components/Container/MainActivation';
+import Config from 'react-native-config';
 
 import PatternView from '../Components/PatternView'; 
 import dismissKeyboard from 'dismissKeyboard';
@@ -477,7 +478,7 @@ class PatternLock extends Component {
               <View style={Skin.layout1.content.top.container}>
                 <View style={Skin.PatternLockStyle.patternLockParentContainer}>
                   <View style={Skin.PatternLockStyle.patternLockChildContainer}>
-                    <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+                    <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}> {Config.USERNAME_LABEL}</Text>
                     <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
 
                     <Text style={Skin.layout0.top.subtitle}>{this.operationMsg}</Text>

@@ -285,7 +285,7 @@ This method is called when the component will start to load
                     <Text style={[Skin.layout0.top.icon]}>
                         {Skin.icon.logo}
                           </Text>
-                          <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+                          <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}> {Config.USERNAME_LABEL}</Text>
                           <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 16 }]}>{Main.dnaUserName}</Text>
                                                
                     <View style={[{width: 100,height: 100,justifyContent: 'center',alignItems: 'center',marginBottom:70}]}>

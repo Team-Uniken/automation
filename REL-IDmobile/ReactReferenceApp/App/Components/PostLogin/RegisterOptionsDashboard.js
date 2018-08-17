@@ -975,7 +975,7 @@ This method is called when the component will start to load
   */
   renderPageTitle(pageTitle){
         return(<PageTitle title={pageTitle}
-          handler={this.goBack.bind(this)} isBadge={true}/>);
+          handler={this.goBack.bind(this)} isBadge={true} isBackBtnText={Config.NAVIGATION_BACKBUTTON_IS_TEXT==='true'?true:false}/>);
 
   }
   

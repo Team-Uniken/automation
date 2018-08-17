@@ -271,7 +271,7 @@ class UserLogin extends Component {
                 ref='inputUsername'
                 returnKeyType={'next'}
                 keyboardType={'email-address'}
-                placeholder={'Enter Customer-ID'}
+                placeholder={Config.CHECK_USER_USERNAME_PLACEHOLDER?Config.CHECK_USER_USERNAME_PLACEHOLDER:'Enter Username/Email'}
                 autoFocus={true}
                 autoCorrect={false}
                 autoCapitalize={Config.CHECK_USER_UPPER_CASE === "true" ? "characters" : "none"}

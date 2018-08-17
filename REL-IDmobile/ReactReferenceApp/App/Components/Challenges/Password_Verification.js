@@ -14,7 +14,7 @@ import React, { Component, PropTypes } from 'react';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ReactNative, { Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native'
-const dismissKeyboard = require('dismissKeyboard')
+const dismissKeyboard = require('dismissKeyboard');
 
 /*
  Use in this js
@@ -24,6 +24,7 @@ import Main from '../Container/Main';
 import MainActivation from '../Container/MainActivation';
 import OpenLinks from '../OpenLinks';
 import Util from "../Utils/Util";
+import Config from 'react-native-config';
 
 /*
  Custome View
@@ -141,7 +142,7 @@ This method is called when the component is Mounted/Loaded.
                   {Skin.icon.logo}
                 </Text>
                 <Text style={Skin.layout0.top.subtitle}>{Skin.text['2']['1'].subtitle}</Text>
-                <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}>Your username is</Text>
+                <Text style={[Skin.layout1.content.top.text, {marginBottom:8}]}> {Config.USERNAME_LABEL}</Text>
                 <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR,marginBottom:16 }]}>{Main.dnaUserName}</Text>
               </View>
               <View style={[Skin.layout0.bottom.container]}>        
@@ -161,7 +162,7 @@ This method is called when the component is Mounted/Loaded.
                   autoCapitalize={false}
                   />                
                   <Text style={[Skin.layout0.top.attempt,{marginTop:0}]}>
-                  Attempt left {this.props.url.chlngJson.attempts_left}
+                  Attempts left {this.props.url.chlngJson.attempts_left}
                 </Text>
                 <Button
                   label={Skin.text['2']['1'].submit_button}

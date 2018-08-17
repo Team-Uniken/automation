@@ -14,7 +14,8 @@ import React, { Component, PropTypes } from 'react';
 import Events from 'react-native-simple-events';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ReactNative, { Text, TextInput, View, Animated, TouchableOpacity, InteractionManager, AsyncStorage, Platform, AlertIOS, ScrollView, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native'
-const dismissKeyboard = require('dismissKeyboard')
+const dismissKeyboard = require('dismissKeyboard');
+import Config from 'react-native-config';
 
 /*
  Use in this js
@@ -127,7 +128,7 @@ This method is called when the component is Mounted/Loaded.
                                 <Text style={[Skin.layout0.top.icon]}>
                                     {Skin.icon.logo}
                                 </Text>
-                                <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}>Your username is</Text>
+                                <Text style={[Skin.layout1.content.top.text, { marginBottom: 8 }]}> {Config.USERNAME_LABEL}</Text>
                                 <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR, marginBottom: 20 }]}>swapnil.gavali@uniken.com</Text>
                                 <Text style={[Skin.layout1.content.top.text, { marginBottom: 8, fontSize: 18 }]}>Please approve enrollment of this {"\n"} device on your previously enrolled device</Text>
                             </View>

@@ -17,7 +17,7 @@ import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Config from 'react-native-config';
-import Finger from 'react-native-touch-id-android'
+import Finger from 'react-native-touch-id-android';
 
 import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native';
 
@@ -140,8 +140,11 @@ class ActivationCodeNoQR extends Component {
             <View style={[Skin.layout0.wrap.container, { position: "absolute", zIndex: 99, flex: 1, height: Skin.SCREEN_HEIGHT, top: 0, alignSelf: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: 0 }, Platform.OS === "ios" ? { paddingTop: 20 } : {}]}>
               <Text style={[Skin.layout0.top.icon]}>{Skin.icon.logo}</Text>
               <View >
+              <Text style={Skin.layout0.top.subtitle}>
+                {Skin.text["2"]["1"].subtitle}
+              </Text>
                 <Text style={[Skin.layout0.top.subtitle]}>
-                  Your username is
+                  {Config.USERNAME_LABEL}
                 </Text>
                 <Text
                   style={[
@@ -152,13 +155,11 @@ class ActivationCodeNoQR extends Component {
                   {Main.dnaUserName}
                 </Text>
               </View>
-              <Text style={Skin.layout0.top.subtitle}>
-                {Skin.text["2"]["1"].subtitle}
-              </Text>
+              
               <Text style={Skin.layout0.top.prompt}>
                 {Skin.text["2"]["1"].prompt}
               </Text>
-              <Text style={[Skin.layout0.top.subtitle,{marginBottom:10}]}>
+              <Text style={[Skin.layout0.top.subtitle,{marginBottom:10,marginTop:-10}]}>
                 Verification Key :{" "}
                 {this.props.url.chlngJson.chlng_resp[0].challenge}
               </Text>
@@ -174,13 +175,13 @@ class ActivationCodeNoQR extends Component {
               <Button label={Skin.text["2"]["1"].submit_button} onPress={this.checkActivationCode.bind(this)} />
               <Text
                 style={[
-                  Skin.layout0.top.attempt,
-                  { marginBottom: 4, marginTop: 0 }
+                  
+                  { marginBottom: 0, marginTop: -20 }
                 ]}
               >
-                Attempt left {this.props.url.chlngJson.attempts_left}
+                Attempts left {this.props.url.chlngJson.attempts_left}
               </Text>
-              <KeyboardSpacer />
+              <KeyboardSpacer topSpacing={100} />
             </View>
           </View>
         </View>

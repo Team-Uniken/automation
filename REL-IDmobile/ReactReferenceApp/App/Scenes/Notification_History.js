@@ -499,7 +499,7 @@ class Notifications_History extends Component {
   */
   renderPageTitle(pageTitle) {
     return (<PageTitle title={pageTitle}
-      handler={this.goBack.bind(this)} isBadge={true} />);
+      handler={this.goBack.bind(this)} isBadge={true} isBackBtnText={Config.NAVIGATION_BACKBUTTON_IS_TEXT==='true'?true:false}/>);
   }
   /*
      This method is used to render the componenet with all its element.

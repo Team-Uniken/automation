@@ -125,7 +125,7 @@ export default class QuestionVerification extends Component {
               { this.props.url.chlngJson.chlng_resp[0].challenge }
             </Text>
             <Text style={[Skin.layout0.top.attempt, { marginTop: 0 }]}>
-              Attempt left {this.props.url.chlngJson.attempts_left}
+              Attempts left {this.props.url.chlngJson.attempts_left}
             </Text>
           </View>
           <View style={Skin.layout0.bottom.container}>

@@ -18,6 +18,7 @@ import {View, Text, TextInput, TouchableHighlight, TouchableOpacity, Interaction
 import TouchID from 'react-native-touch-id';
 import dismissKeyboard from 'dismissKeyboard';
 import Util from "../Utils/Util";
+import Config from 'react-native-config';
 
 
 /*
@@ -260,7 +261,7 @@ export default class ForgatePassword extends Component {
             <View style={Skin.layout1.content.wrap}>
               <View style={Skin.layout1.content.container}>
                 <View style={Skin.layout1.content.top.container}>
-                  <Text style={[Skin.layout1.content.top.text, {}]}>Your username is</Text>
+                  <Text style={[Skin.layout1.content.top.text, {}]}> {Config.USERNAME_LABEL}</Text>
                   <Text style={[Skin.layout1.content.top.text, { fontSize: 18, color: Skin.colors.BUTTON_BG_COLOR }]}>{this.state.Username}</Text>
                   <Text style={[Skin.layout1.content.top.text, { marginBottom: 26 }]}>Set Your Password</Text>
                 </View>
