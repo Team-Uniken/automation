@@ -94,7 +94,6 @@ This method is called when the component will start to load
           return info.value;
         }
       }
-
       return null;
     }
   }
@@ -130,6 +129,7 @@ This method is called when the component will start to load
        and submit the same as a challenge response.
     */
   setPassword() {
+    dismissKeyboard();
     const pw = this.state.password;
     const cpw = this.state.cPassword;
     if (pw.length > 0) {
