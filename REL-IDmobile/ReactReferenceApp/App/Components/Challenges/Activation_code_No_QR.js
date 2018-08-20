@@ -139,7 +139,7 @@ class ActivationCodeNoQR extends Component {
             </View>
             <View style={[Skin.layout0.wrap.container, { position: "absolute", zIndex: 99, flex: 1, height: Skin.SCREEN_HEIGHT, top: 0, alignSelf: "center", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: 0 }, Platform.OS === "ios" ? { paddingTop: 20 } : {}]}>
               <Text style={[Skin.layout0.top.icon]}>{Skin.icon.logo}</Text>
-              <View >
+              
               <Text style={Skin.layout0.top.subtitle}>
                 {Skin.text["2"]["1"].subtitle}
               </Text>
@@ -154,7 +154,7 @@ class ActivationCodeNoQR extends Component {
                 >
                   {Main.dnaUserName}
                 </Text>
-              </View>
+            
               
               <Text style={Skin.layout0.top.prompt}>
                 {Skin.text["2"]["1"].prompt}
@@ -181,7 +181,7 @@ class ActivationCodeNoQR extends Component {
               >
                 Attempts left {this.props.url.chlngJson.attempts_left}
               </Text>
-              <KeyboardSpacer topSpacing={100} />
+              <KeyboardSpacer topSpacing={90} />
             </View>
           </View>
         </View>
