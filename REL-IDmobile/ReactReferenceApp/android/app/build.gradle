@@ -86,8 +86,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 534
-        versionName "5.3.4"
+        versionCode 535
+        versionName "5.3.5"
 
 
         packagingOptions {
@@ -245,10 +245,14 @@ android {
 }
 
 dependencies {
-    compile (project(':react-native-fcm')){
+    compile project(':react-native-touch-id')
+    compile project(':react-native-maps')
+    compile project(':react-native-fcm')
+    compile project(':react-native-extra-dimensions-android')
+    /*compile (project(':react-native-fcm')){
         exclude group: "com.google.android.gms"
         exclude group: "com.google.firebase"
-    }
+    }*/
     compile project(':react-native-touch-id-android')
     compile project(':react-native-spinkit')
     compile project(':react-native-fs')
