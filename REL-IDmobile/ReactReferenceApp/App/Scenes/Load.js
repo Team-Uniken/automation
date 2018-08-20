@@ -114,6 +114,7 @@ class Load extends Component {
     };
 
     this.closeStateMachine = this.closeStateMachine.bind(this);
+    this.connectToServer = this.connectToServer.bind(this);
     this.textRange = [Config.ANIMATION_WITHOUT_BETTER_MOBI === "true" ? 'Checking for connectivity' : 'Checking device for issues', 'Verifying device identity', 'Verifying app identity'];
   }
   openRoute(route) {
@@ -590,60 +591,17 @@ class Load extends Component {
       }
     });
 
-    AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
-      console.log('get Item, Connection Profiles:');
-      profiles = JSON.parse(profiles);
-      console.log(profiles);
-      if ((profiles == null) || (profiles.length == 0)) {
-        console.log("NOT FOUND !!!!!!!!, hence import connection profiles now");
 
-        var profileArray = erelid.Profiles;
-        var relidArray = erelid.RelIds;
-
-        for (let i = 0; i < profileArray.length; i++) {
-          var RelIdName = profileArray[i].RelId;
-
-          for (let j = 0; j < relidArray.length; j++) {
-            if (RelIdName === relidArray[j].Name) {
-              profileArray[i].RelId = relidArray[j].RelId;
-              profileArray[i].imported = "true"
-              profileArray[i].sslEnable = false
-            }
-          }
-        }
-
-        AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profileArray), () => {
-
-          AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
-            importedProfiles = JSON.parse(importedProfiles);
-
-            AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
-              this.doInitialize();
-
-            });
-          });
-        });
-
-      } else {
-
-        AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
-          currentProfile = JSON.parse(currentProfile);
-          console.log(currentProfile);
-          if (currentProfile != null && currentProfile != undefined) {
-            this.doInitialize();
-          } else {
-
-            AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
-              importedProfiles = JSON.parse(importedProfiles);
-
-              AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
-                this.doInitialize();
-              });
-            });
-          }
-        });
-      }
+    if(Config.UPDATE_BUILT_IN_PROFILE === "true"){
+    AsyncStorage.removeItem('ConnectionProfiles', (err) => {
+      AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {
+          this.connectToServer();
+      })
     });
+  }else{
+    this.connectToServer();
+  }
+
 
     // Animated.sequence([
     //   Animated.parallel([
@@ -775,6 +733,64 @@ class Load extends Component {
     } else if (currentAppState === 'inactive') {
       console.log('App State Change Inactive');
     }
+  }
+
+
+  connectToServer(){
+    AsyncStorage.getItem('ConnectionProfiles', (err, profiles) => {
+      console.log('get Item, Connection Profiles:');
+      profiles = JSON.parse(profiles);
+      console.log(profiles);
+      if ((profiles == null) || (profiles.length == 0)) {
+        console.log("NOT FOUND !!!!!!!!, hence import connection profiles now");
+
+        var profileArray = erelid.Profiles;
+        var relidArray = erelid.RelIds;
+
+        for (let i = 0; i < profileArray.length; i++) {
+          var RelIdName = profileArray[i].RelId;
+
+          for (let j = 0; j < relidArray.length; j++) {
+            if (RelIdName === relidArray[j].Name) {
+              profileArray[i].RelId = relidArray[j].RelId;
+              profileArray[i].imported = "true"
+              profileArray[i].sslEnable = false
+            }
+          }
+        }
+
+        AsyncStorage.setItem('ConnectionProfiles', JSON.stringify(profileArray), () => {
+
+          AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
+            importedProfiles = JSON.parse(importedProfiles);
+
+            AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
+              this.doInitialize();
+
+            });
+          });
+        });
+
+      } else {
+
+        AsyncStorage.getItem('CurrentConnectionProfile', (err, currentProfile) => {
+          currentProfile = JSON.parse(currentProfile);
+          console.log(currentProfile);
+          if (currentProfile != null && currentProfile != undefined) {
+            this.doInitialize();
+          } else {
+
+            AsyncStorage.getItem('ConnectionProfiles', (err, importedProfiles) => {
+              importedProfiles = JSON.parse(importedProfiles);
+
+              AsyncStorage.setItem('CurrentConnectionProfile', JSON.stringify(importedProfiles[0]), () => {
+                this.doInitialize();
+              });
+            });
+          }
+        });
+      }
+    });
   }
 
   //Perform RDNA.Initialize().
