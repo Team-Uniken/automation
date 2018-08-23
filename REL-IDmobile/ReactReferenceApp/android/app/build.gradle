@@ -245,10 +245,10 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-touch-id')
+    //compile project(':react-native-touch-id')
     compile project(':react-native-maps')
     compile project(':react-native-fcm')
-    compile project(':react-native-extra-dimensions-android')
+    //compile project(':react-native-extra-dimensions-android')
     /*compile (project(':react-native-fcm')){
         exclude group: "com.google.android.gms"
         exclude group: "com.google.firebase"
