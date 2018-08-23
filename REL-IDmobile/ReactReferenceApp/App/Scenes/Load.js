@@ -591,17 +591,7 @@ class Load extends Component {
       }
     });
 
-
-    if(Config.UPDATE_BUILT_IN_PROFILE === "true"){
-    AsyncStorage.removeItem('ConnectionProfiles', (err) => {
-      AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {
-          this.connectToServer();
-      })
-    });
-  }else{
-    this.connectToServer();
-  }
-
+    this.updateProfileIfRequiredAndConnect();
 
     // Animated.sequence([
     //   Animated.parallel([
@@ -679,6 +669,37 @@ class Load extends Component {
     if (Config.ENABLESTARTUPANIMATION === "true")
       this.animate();
   }
+
+  updateProfileIfRequiredAndConnect() {
+    AsyncStorage.getItem('ConnectionProfiles').then((profiles) => {
+      var relidMap = {}
+      for (var i = 0; i < erelid.RelIds.length; i++) {
+        relidMap[erelid.RelIds[i].Name] = erelid.RelIds[i].RelId;
+      }
+
+      var defaultRelId = relidMap[erelid.Profiles[0].RelId];
+      if (profiles) {
+        profiles = JSON.parse(profiles);
+        if (profiles[0].RelId !== defaultRelId) {
+         // alert("burnt = "+profiles[0].RelId)
+         // alert("default = "+defaultRelId)
+
+          AsyncStorage.removeItem('ConnectionProfiles', (err) => {
+            AsyncStorage.removeItem('CurrentConnectionProfile', (err) => {
+              this.connectToServer();
+            });
+          });
+        } else {
+          this.connectToServer();
+        }
+      } else {
+        this.connectToServer();
+      }
+    }).catch((err) => {
+      this.connectToServer();
+    });
+  }
+
   /*
    This is life cycle method of the react native component.
    This method is called when app state get change like pause, resume
