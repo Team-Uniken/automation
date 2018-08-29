@@ -18,7 +18,7 @@
 
 # Disabling obfuscation is useful if you collect stack traces from production crashes
 # (unless you are using a system that supports de-obfuscate the stack traces).
--dontobfuscate
+#-dontobfuscate
 
 # React Native
 
@@ -115,6 +115,15 @@
 -keep public class com.google.firebase.** { *; }
 -keep public interface com.google.firebase.** { *; }
 
+-keep class com.facebook.react.cxxbridge.ModuleRegistryHolder { *; }
+-keep class com.facebook.react.cxxbridge.CatalystInstanceImpl { *; }
+-keep class com.facebook.react.cxxbridge.JavaScriptExecutor { *; }
+-keep class com.facebook.react.bridge.queue.NativeRunnable { *; }
+-keep class com.facebook.react.bridge.ExecutorToken { *; }
+-keep class com.facebook.react.bridge.ReadableType { *; }
 
-
+-keep class com.facebook.react.bridge.CatalystInstanceImpl { *; }
+-keep class com.facebook.react.bridge.JavaScriptExecutor { *; }
+-keep class com.facebook.react.bridge.queue.NativeRunnable { *; }
+-keep class com.facebook.react.bridge.ReadableType { *; }
 
