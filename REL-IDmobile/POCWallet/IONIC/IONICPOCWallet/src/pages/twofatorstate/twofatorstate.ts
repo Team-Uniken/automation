@@ -135,6 +135,14 @@ export class TwoFactorState {
         this.handleChallenges(TwoFactorState.initialChallengesJson);
     }
 
+    doActivationLogin(userName: any, passcode: any, actCode: string) {
+        this.actCode = actCode;
+        this.userName = userName;
+        this.passcode = passcode;
+        this.method = "login";
+        this.handleChallenges(TwoFactorState.initialChallengesJson);
+    }
+
     startActivation(actCode: string, userName: string, passcode: string) {
         this.actCode = actCode;
         this.userName = userName;
