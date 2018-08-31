@@ -90,6 +90,10 @@ export class DashboardPage {
     this.navCtrl.push(NotificationHistoryPage);
   }
 
+  getErrorInfo(){
+    com.uniken.rdnaplugin.RdnaClient.getErrorInfo(this.getErrorInfoOnSuccess, this.getErrorInfoOnFailure, ["539001398"]);
+  }
+
   getRegisteredDeviceDetails() {
     com.uniken.rdnaplugin.RdnaClient.getRegisteredDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id]);
     document.addEventListener('onGetRegistredDeviceDetails', (e: any) => {
@@ -100,7 +104,7 @@ export class DashboardPage {
   }
 
   updateDeviceDetails() {
-    com.uniken.rdnaplugin.RdnaClient.updateDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id, JSON.stringify({ "device": [ { "devUUID": "2TSY20TYOSURSJAPXVSCQF7F7L11EXGVG14NT8IO60QGISJYN9", "devName": "swapnil", "status": "Update", "lastAccessedTs": "2018-05-18T09:07:35UTC", "createdTs": "2018-05-18T08:57:13UTC", "devBind": 0 } ] })]);
+    com.uniken.rdnaplugin.RdnaClient.updateDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id, JSON.stringify({ "device": [ { "devUUID": "49817EUL7UK2JOIV4JBALQGWOPX9PGPOT1T9CBZE6P3NL95VKQ", "devName": "Abhay", "status": "Update", "lastAccessedTs": "2018-08-31T14:13:21UTC", "createdTs": "2018-08-31T13:01:16UTC", "devBind": 0 } ] })]);
     document.addEventListener('onUpdateDeviceDetails', (e: any) => {
       alert("onUpdateDeviceDetails success");
       console.log("RdnaClient.js: onGetRegistredDeviceDetails********************************************************" + JSON.stringify(e));
@@ -113,6 +117,16 @@ export class DashboardPage {
   }
 
   onFailure(data) {
+    alert(data);
+    console.log("RdnaClient.js: onFailure");
+  }
+
+  getErrorInfoOnSuccess(data) {
+    alert(data);
+    console.log("RdnaClient.js: onSuccess");
+  }
+
+  getErrorInfoOnFailure(data) {
     alert(data);
     console.log("RdnaClient.js: onFailure");
   }
