@@ -287,6 +287,62 @@ export class TestPage {
     alert(data);
   }
 
+  getSDKVersion() {
+    com.uniken.rdnaplugin.RdnaClient.getSDKVersion(this.getSDKVersionSuccess, this.getSDKVersionFailure);
+  }
+
+  getSDKVersionSuccess(data) {
+    console.log("RdnaClient.js: getSDKVersionSuccess-->" + data);
+    alert(data);
+  }
+
+  getSDKVersionFailure(data) {
+    console.log("RdnaClient.js: getSDKVersionFailure-->" + data);
+    alert(data);
+  }
+
+  setApplicationVersion() {
+    com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.setApplicationVersionSuccess, this.setApplicationVersionFailure, ["5.3.5"]);
+  }
+
+  setApplicationVersionSuccess(data) {
+    console.log("RdnaClient.js: setApplicationVersionSuccess-->" + data);
+    alert(data);
+  }
+
+  setApplicationVersionFailure(data) {
+    console.log("RdnaClient.js: setApplicationVersionFailure-->" + data);
+    alert(data);
+  }
+
+  setDeviceToken() {
+    com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.setDeviceTokenSuccess, this.setDeviceTokenFailure, ["DEVICETOKEN"]);
+  }
+
+  setDeviceTokenSuccess(data) {
+    console.log("RdnaClient.js: setDeviceTokenSuccess-->" + data);
+    alert(data);
+  }
+
+  setDeviceTokenFailure(data) {
+    console.log("RdnaClient.js: setDeviceTokenFailure-->" + data);
+    alert(data);
+  }
+
+  terminate() {
+    com.uniken.rdnaplugin.RdnaClient.terminate(this.terminateSuccess, this.terminateFailure);
+  }
+
+  terminateSuccess(data) {
+    console.log("RdnaClient.js: terminateSuccess-->" + data);
+    alert(data);
+  }
+
+  terminateFailure(data) {
+    console.log("RdnaClient.js: terminateFailure-->" + data);
+    alert(data);
+  }
+
   getAgentID() {
     com.uniken.rdnaplugin.RdnaClient.getAgentID(this.getAgentIDSuccess, this.getAgentIDFailure);
   }
