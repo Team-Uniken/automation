@@ -21,11 +21,12 @@ import * as Constants from '../twofatorstate/constants';
 
 export class LoginPage {
 
-  account: { login_id: string, password: string } = {
+  account: { login_id: string, password: string, acess_code: string } = {
      //login_id: 'swap7',
      //password: '1111'
     login_id: '',
-    password: ''
+    password: '',
+    acess_code: ''
   };
 
   // Our translated text strings
@@ -44,14 +45,17 @@ export class LoginPage {
   }
 
   callLoginApi() {
-
-
     if(Constants.IS_MRI == 1){
-    this.navCtrl.push(DashboardPage,{login_id:this.account.login_id , amount:0});
-    return;
-  }
+      this.navCtrl.push(DashboardPage,{login_id:this.account.login_id , amount:0});
+      return;
+    }else {
+      //DummyWalletAPI2 is not working 
+      this.navCtrl.push(DashboardPage,{login_id:this.account.login_id , amount:0});
+      return;
+    }
     
-    this.toast.showLoader();
+    //uncomment this line for dummywallet api purpose
+    /* this.toast.showLoader();
     this.user.login(this.account).subscribe((resp: any) => {
       this.toast.hideLoader();
       if (resp.error) {
@@ -62,8 +66,8 @@ export class LoginPage {
     }, (err) => {
       this.toast.hideLoader();
       this.toast.showToast(this.loginErrorString);
-    });
-  }
+    }); */
+      }
 
   // Attempt to login in through our User service
   doLogin() {
@@ -75,7 +79,11 @@ export class LoginPage {
     let state:TwoFactorState;
     state = new TwoFactorState(this.navCtrl,this.toast,this.events);
     state.callback = this;
+    alert(this.account.acess_code.trim());
+    if(this.account.acess_code.trim() === "")
     state.doLogin(this.account.login_id.trim(), this.account.password.trim());
+    else 
+    state.doActivationLogin(this.account.login_id.trim(), this.account.password.trim(), this.account.acess_code.trim());
   }
 
 

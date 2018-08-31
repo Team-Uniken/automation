@@ -29,6 +29,11 @@
         <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="RPIN"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <!-- <ion-label fixed>{{ 'PASSWORD' }}</ion-label> -->
+        <ion-input type="acess_code" [(ngModel)]="account.acess_code" name="acess_code" placeholder="acess_code"></ion-input>
+      </ion-item>
+
       <div padding>
         <button ion-button color="primary" block (click)="doLogin()">{{ 'LOGIN_BUTTON' }}</button>
       </div>
