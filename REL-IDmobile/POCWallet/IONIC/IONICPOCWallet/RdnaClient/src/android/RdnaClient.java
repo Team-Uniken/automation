@@ -114,7 +114,7 @@ public class RdnaClient extends CordovaPlugin {
     }else if (action.equals("getServiceByTargetCoordinate")) {
       getServiceByTargetCoordinate(args);
     }else if (action.equals("getAllServices")) {
-      getAllServices(args);
+      getAllServices();
     }else if (action.equals("serviceAccessStart")) {
       serviceAccessStart(args);
     }else if (action.equals("serviceAccessStop")) {
@@ -127,10 +127,8 @@ public class RdnaClient extends CordovaPlugin {
       getConfig(args);
     }else if (action.equals("resetChallenge")) {
       resetChallenge(args);
-    }else if (action.equals("forgotPassword")) {
-      forgotPassword(args);
     }else if (action.equals("getSDKVersion")) {
-      getSDKVersion(args);
+      getSDKVersion();
     }else if (action.equals("getErrorInfo")) {
       getErrorInfo(args);
     }else if (action.equals("getSessionID")) {
@@ -251,12 +249,6 @@ public class RdnaClient extends CordovaPlugin {
       }
 
       @Override
-      public int onForgotPasswordStatus(String s) {
-        callJavaScript("onForgotPasswordStatus", s);
-        return 0;
-      }
-
-      @Override
       public int onGetPostLoginChallenges(String s) {
         callJavaScript("onGetPostLoginChallenges", s);
         return 0;
@@ -352,7 +344,7 @@ public class RdnaClient extends CordovaPlugin {
   }
 
   void getNotifications(JSONArray args) throws JSONException {
-    decideCallback(rdnaObj.getNotifications(args.getInt(0), args.getInt(1), args.getString(2), args.getString(3), args.getString(4)));
+	decideCallback(rdnaObj.getNotifications(args.getInt(0), args.getString(1), args.getInt(2), args.getString(3), args.getString(4)));
   }
 
   void updateNotifications(JSONArray args) throws JSONException {
@@ -402,7 +394,7 @@ public class RdnaClient extends CordovaPlugin {
 
   public void getErrorInfo(JSONArray args) {
     try {
-      decideCallback(rdnaObj.getErrorInfo(args.getInt(0)).name());
+      decideCallback(RDNA.getErrorInfo(args.getInt(0)).name());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -416,15 +408,15 @@ public class RdnaClient extends CordovaPlugin {
     decideCallback(rdnaObj.getDefaultCipherSalt());
   }
 
-  public void getSDKVersion(JSONArray args) {
+  public void getSDKVersion() {
     try {
-      decideCallback(rdnaObj.getSDKVersion());
+      decideCallback(RDNA.getSDKVersion());
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  public void getAllServices(JSONArray args) {
+  public void getAllServices() {
     try {
       decideCallback(rdnaObj.getAllServices());
     } catch (Exception e) {
@@ -513,14 +505,6 @@ public class RdnaClient extends CordovaPlugin {
   public void decryptHttpResponse(JSONArray args) {
     try {
       decideCallback(rdnaObj.decryptHttpResponse(args.getInt(0), args.getString(1), args.getString(2).getBytes(), args.getString(3)));
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void forgotPassword(JSONArray args) {
-    try {
-      decideCallback(rdnaObj.forgotPassword(args.getString(0)));
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -724,15 +708,15 @@ public class RdnaClient extends CordovaPlugin {
   }
 
   void createDefaultConstantSettingCallBack(String result) {
-
     try {
       if (result != null || result.length() > 0) {
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "");
         pluginResult.setKeepCallback(true);
-
+	    callbackContext.sendPluginResult(pluginResult);
       } else {
         PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, "Invalid Argument");
         pluginResult.setKeepCallback(true);
+	    callbackContext.sendPluginResult(pluginResult);
       }
     } catch (Exception e) {
       PluginResult pluginResult = new PluginResult(PluginResult.Status.ILLEGAL_ACCESS_EXCEPTION, e.toString());
@@ -751,4 +735,5 @@ public class RdnaClient extends CordovaPlugin {
     return base64decodedData;
   }
 }
+
 

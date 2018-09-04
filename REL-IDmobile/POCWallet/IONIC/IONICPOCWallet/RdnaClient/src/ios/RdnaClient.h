@@ -42,7 +42,6 @@
 -(void)decryptDataPacket:(CDVInvokedUrlCommand*)command;
 -(void)encryptHttpRequest:(CDVInvokedUrlCommand*)command;
 -(void)decryptHttpResponse:(CDVInvokedUrlCommand*)command;
--(void)forgotPassword:(CDVInvokedUrlCommand*)command;
 -(void)getPostLoginChallenges:(CDVInvokedUrlCommand*)command;
 -(void)getConfig:(CDVInvokedUrlCommand*)command;
 -(void)setCredentials:(CDVInvokedUrlCommand*)command;

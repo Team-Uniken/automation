@@ -43,83 +43,90 @@ RdnaClient.prototype.RDNALoggingLevel = {
  @brief Enum RDNAErrorID - This enum specifies all the error codes which RDNA returns back to the client.
  */
 RdnaClient.prototype.RDNAErrorID = {
-    RDNA_ERR_NONE: 0,                                  /* No Error                                             */
-    RDNA_ERR_NOT_INITIALIZED: 1,                       /* If core not initialized                              */
-    RDNA_ERR_GENERIC_ERROR: 2,                         /* If generic error occured                             */
-    RDNA_ERR_INVALID_VERSION: 3,                       /* If invalid SDK Version                               */
-    RDNA_ERR_INVALID_ARGS: 4,                          /* If invalid args are passed                           */
-    RDNA_ERR_SESSION_EXPIRED: 5,                       /* If session has expired                               */
-    RDNA_ERR_PARENT_PROXY_CONNECT_FAILED: 6,           /* If failed to connect to proxy server                 */
-    RDNA_ERR_NULL_CALLBACKS: 7,                        /* If Null callback/ptr passed in                       */
-    RDNA_ERR_INVALID_HOST: 8,                          /* If Null or empty hostname/IP                         */
-    RDNA_ERR_INVALID_PORTNUM: 9,                       /* If Invalid port number                               */
-    RDNA_ERR_INVALID_AGENT_INFO: 10,                    /* If agent info is invalid                             */
-    RDNA_ERR_FAILED_TO_CONNECT_TO_SERVER: 11,           /* If failed to connect to server                       */
-    RDNA_ERR_INVALID_SAVED_CONTEXT: 12,                 /* If Invalid saved context                             */
-    RDNA_ERR_INVALID_HTTP_REQUEST: 13,                  /* If Invalid HTTP request                              */
-    RDNA_ERR_INVALID_HTTP_RESPONSE: 14,                 /* If Invalid HTTP response                             */
-    RDNA_ERR_INVALID_CIPHERSPECS: 15,                   /* If cipherspecs is invalid                            */
-    RDNA_ERR_SERVICE_NOT_SUPPORTED: 16,                 /* If service not supported                             */
-    RDNA_ERR_FAILED_TO_GET_STREAM_PRIVACYSCOPE: 17,     /* If failed to get stream privacy scope                */
-    RDNA_ERR_FAILED_TO_GET_STREAM_TYPE: 18,             /* If failed to get stream type                         */
-    RDNA_ERR_FAILED_TO_WRITE_INTO_STREAM: 19,           /* If failed to write into data stream                  */
-    RDNA_ERR_FAILED_TO_END_STREAM: 20,                  /* If failed to end stream                              */
-    RDNA_ERR_FAILED_TO_DESTROY_STREAM: 21,              /* If failed to destroy stream                          */
-    RDNA_ERR_FAILED_TO_INITIALIZE: 22,                  /* If failed to initialize                              */
-    RDNA_ERR_FAILED_TO_PAUSERUNTIME: 23,                /* If failed to pause runtime                           */
-    RDNA_ERR_FAILED_TO_RESUMERUNTIME: 24,               /* If failed to resume runtime                          */
-    RDNA_ERR_FAILED_TO_TERMINATE: 25,                   /* If failed to terminate                               */
-    RDNA_ERR_FAILED_TO_GET_CIPHERSALT: 26,              /* If failed to get ciphersalt                          */
-    RDNA_ERR_FAILED_TO_GET_CIPHERSPECS: 27,             /* If failed to get cipherspecs                         */
-    RDNA_ERR_FAILED_TO_GET_AGENT_ID: 28,                /* If failed to get agent id                            */
-    RDNA_ERR_FAILED_TO_GET_SESSION_ID: 29,              /* If failed to get session id                          */
-    RDNA_ERR_FAILED_TO_GET_DEVICE_ID: 30,               /* If failed to get device id                           */
-    RDNA_ERR_FAILED_TO_GET_SERVICE: 31,                 /* If failed to get service                             */
-    RDNA_ERR_FAILED_TO_START_SERVICE: 32,               /* If failed to start service                           */
-    RDNA_ERR_FAILED_TO_STOP_SERVICE: 33,                /* If failed to stop service                            */
-    RDNA_ERR_FAILED_TO_ENCRYPT_DATA_PACKET: 34,         /* If failed to encrypt data packet                     */
-    RDNA_ERR_FAILED_TO_DECRYPT_DATA_PACKET: 35,         /* If failed to decrypt data packet                     */
-    RDNA_ERR_FAILED_TO_ENCRYPT_HTTP_REQUEST: 36,        /* If failed to encrypt HTTP request                    */
-    RDNA_ERR_FAILED_TO_DECRYPT_HTTP_RESPONSE: 37,       /* If failed to decrypt HTTP response                   */
-    RDNA_ERR_FAILED_TO_CREATE_PRIVACY_STREAM: 38,       /* If failed to create privacy stream                   */
-    RDNA_ERR_FAILED_TO_CHECK_CHALLENGE: 39,             /* If failed to check challenges                        */
-    RDNA_ERR_FAILED_TO_UPDATE_CHALLENGE: 40,            /* If failed to update challenges                       */
-    RDNA_ERR_FAILED_TO_GET_CONFIG: 41,                  /* If failed to get config                              */
-    RDNA_ERR_FAILED_TO_GET_ALL_CHALLENGES: 42,          /* If failed to get all challenges                      */
-    RDNA_ERR_FAILED_TO_LOGOFF: 43,                      /* If failed to log off                                 */
-    RDNA_ERR_FAILED_TO_RESET_CHALLENGE: 44,             /* If failed to reset challenge                         */
-    RDNA_ERR_FAILED_TO_DO_FORGOT_PASSWORD: 45,          /* If failed to update forgot pass operation            */
-    RDNA_ERR_FAILED_TO_GET_POST_LOGIN_CHALLENGES: 46,   /* If failed to get post login challenges               */
-    RDNA_ERR_FAILED_TO_GET_REGISTERD_DEVICE_DETAILS: 47,/* If failed to get registered device details           */
-    RDNA_ERR_FAILED_TO_UPDATE_DEVICE_DETAILS: 48,       /* If failed to update registered device details        */
-    RDNA_ERR_FAILED_TO_GET_NOTIFICATIONS: 49,           /* If failed to get notification from server            */
-    RDNA_ERR_FAILED_TO_UPDATE_NOTIFICATION: 50,         /* If failed to update notification to server           */
-    RDNA_ERR_FAILED_TO_OPEN_HTTP_CONNECTION: 51,        /* If any failure occurs while openeing http tunnel(api)*/
-    RDNA_ERR_SSL_INIT_FAILED: 52,                       /* If SSL init fails*/
-    RDNA_ERR_SSL_ACTIVITY_FAILED: 53,                   /* If any error occured during ssl in action*/
-    RDNA_ERR_DNS_FAILED: 54,                            /* If domain name resolution failed*/
-    RDNA_ERR_NET_DOWN: 55,                              /* If network is down*/
-    RDNA_ERR_SOCK_TIMEDOUT: 56,                         /* If connect timeout occured*/
-    RDNA_ERR_DNA_INTERNAL: 57,
-    //All errors above this are mapped with the internal errors
+	RDNA_ERR_NONE: 0,                              /* No Error                                             */
+	RDNA_ERR_NOT_INITIALIZED: 1,                       /* If core not initialized                              */
+	RDNA_ERR_GENERIC_ERROR: 2,                         /* If generic error occured                             */
+	RDNA_ERR_INVALID_VERSION: 3,                       /* If invalid SDK Version                               */
+	RDNA_ERR_INVALID_ARGS: 4,                          /* If invalid args are passed                           */
+	RDNA_ERR_SESSION_EXPIRED: 5,                       /* If session has expired                               */
+	RDNA_ERR_PARENT_PROXY_CONNECT_FAILED: 6,           /* If failed to connect to proxy server                 */
+	RDNA_ERR_NULL_CALLBACKS: 7,                        /* If Null callback/ptr passed in                       */
+	RDNA_ERR_INVALID_HOST: 8,                          /* If Null or empty hostname/IP                         */
+	RDNA_ERR_INVALID_PORTNUM: 9,                       /* If Invalid port number                               */
+	RDNA_ERR_INVALID_AGENT_INFO: 10,                    /* If agent info is invalid                             */
+	RDNA_ERR_FAILED_TO_CONNECT_TO_SERVER: 11,           /* If failed to connect to server                       */
+	RDNA_ERR_INVALID_SAVED_CONTEXT: 12,                 /* If Invalid saved context                             */
+	RDNA_ERR_INVALID_HTTP_REQUEST: 13,                  /* If Invalid HTTP request                              */
+	RDNA_ERR_INVALID_HTTP_RESPONSE: 14,                 /* If Invalid HTTP response                             */
+	RDNA_ERR_INVALID_CIPHERSPECS: 15,                   /* If cipherspecs is invalid                            */
+	RDNA_ERR_SERVICE_NOT_SUPPORTED: 16,                 /* If service not supported                             */
+	RDNA_ERR_FAILED_TO_GET_STREAM_PRIVACYSCOPE: 17,     /* If failed to get stream privacy scope                */
+	RDNA_ERR_FAILED_TO_GET_STREAM_TYPE: 18,             /* If failed to get stream type                         */
+	RDNA_ERR_FAILED_TO_WRITE_INTO_STREAM: 19,           /* If failed to write into data stream                  */
+	RDNA_ERR_FAILED_TO_END_STREAM: 20,                  /* If failed to end stream                              */
+	RDNA_ERR_FAILED_TO_DESTROY_STREAM: 21,              /* If failed to destroy stream                          */
+	RDNA_ERR_FAILED_TO_INITIALIZE: 22,                  /* If failed to initialize                              */
+	RDNA_ERR_FAILED_TO_PAUSERUNTIME: 23,                /* If failed to pause runtime                           */
+	RDNA_ERR_FAILED_TO_RESUMERUNTIME: 24,               /* If failed to resume runtime                          */
+	RDNA_ERR_FAILED_TO_TERMINATE: 25,                   /* If failed to terminate                               */
+	RDNA_ERR_FAILED_TO_GET_CIPHERSALT: 26,              /* If failed to get ciphersalt                          */
+	RDNA_ERR_FAILED_TO_GET_CIPHERSPECS: 27,             /* If failed to get cipherspecs                         */
+	RDNA_ERR_FAILED_TO_GET_AGENT_ID: 28,                /* If failed to get agent id                            */
+	RDNA_ERR_FAILED_TO_GET_SESSION_ID: 29,              /* If failed to get session id                          */
+	RDNA_ERR_FAILED_TO_GET_DEVICE_ID: 30,               /* If failed to get device id                           */
+	RDNA_ERR_FAILED_TO_GET_SERVICE: 31,                 /* If failed to get service                             */
+	RDNA_ERR_FAILED_TO_START_SERVICE: 32,               /* If failed to start service                           */
+	RDNA_ERR_FAILED_TO_STOP_SERVICE: 33,                /* If failed to stop service                            */
+	RDNA_ERR_FAILED_TO_ENCRYPT_DATA_PACKET: 34,         /* If failed to encrypt data packet                     */
+	RDNA_ERR_FAILED_TO_DECRYPT_DATA_PACKET: 35,         /* If failed to decrypt data packet                     */
+	RDNA_ERR_FAILED_TO_ENCRYPT_HTTP_REQUEST: 36,        /* If failed to encrypt HTTP request                    */
+	RDNA_ERR_FAILED_TO_DECRYPT_HTTP_RESPONSE: 37,       /* If failed to decrypt HTTP response                   */
+	RDNA_ERR_FAILED_TO_CREATE_PRIVACY_STREAM: 38,       /* If failed to create privacy stream                   */
+	RDNA_ERR_FAILED_TO_CHECK_CHALLENGE: 39,             /* If failed to check challenges                        */
+	RDNA_ERR_FAILED_TO_UPDATE_CHALLENGE: 40,            /* If failed to update challenges                       */
+	RDNA_ERR_FAILED_TO_GET_CONFIG: 41,                  /* If failed to get config                              */
+	RDNA_ERR_FAILED_TO_GET_ALL_CHALLENGES: 42,          /* If failed to get all challenges                      */
+	RDNA_ERR_FAILED_TO_LOGOFF: 43,                      /* If failed to log off                                 */
+	RDNA_ERR_FAILED_TO_RESET_CHALLENGE: 44,             /* If failed to reset challenge                         */
+	RDNA_ERR_FAILED_TO_DO_FORGOT_PASSWORD: 45,          /* If failed to update forgot pass operation            */
+	RDNA_ERR_FAILED_TO_GET_POST_LOGIN_CHALLENGES: 46,   /* If failed to get post login challenges               */
+	RDNA_ERR_FAILED_TO_GET_REGISTERD_DEVICE_DETAILS: 47,/* If failed to get registered device details           */
+	RDNA_ERR_FAILED_TO_UPDATE_DEVICE_DETAILS: 48,       /* If failed to update registered device details        */
+	RDNA_ERR_FAILED_TO_GET_NOTIFICATIONS: 49,           /* If failed to get notification from server            */
+	RDNA_ERR_FAILED_TO_UPDATE_NOTIFICATION: 50,         /* If failed to update notification to server           */
+	RDNA_ERR_FAILED_TO_OPEN_HTTP_CONNECTION: 51,        /* If any failure occurs while openeing http tunnel: api*/
+	RDNA_ERR_SSL_INIT_FAILED: 52,                       /* If SSL init fails*/
+	RDNA_ERR_SSL_ACTIVITY_FAILED: 53,                   /* If any error occured during ssl in action*/
+	RDNA_ERR_DNS_FAILED: 54,                            /* If domain name resolution failed*/
+	RDNA_ERR_NET_DOWN: 55,                              /* If network is down*/
+	RDNA_ERR_SOCK_TIMEDOUT: 56,                         /* If connect timeout occured*/
+	RDNA_ERR_DNA_INTERNAL: 57,                          /* Generic DNA : networking library error*/
+	//All errors above this are mapped with the internal errors
 
-    //Following error codes are local error codes
-    RDNA_ERR_INVALID_USER_MR_STATE: 58,                  /* Invalid user state in secure storage */
-    RDNA_ERR_NOTF_SIGN_INTERNAL_FAILURE: 59,            /* Failure occurred when signing notification           */
-    RDNA_ERR_FAILED_TO_PARSE_DEVICES: 60,                /* If parsing the device details failed                 */
-    RDNA_ERR_INVALID_CHALLENGE_CONFIG: 61,               /* If there is any mistake in challenge configuration   */
-    RDNA_ERR_INVALID_HTTP_API_REQ_URL: 62,               /* If URL in HTTP req is invalid                        */
-    RDNA_ERR_NO_MEMORY: 63,
-    RDNA_ERR_INVALID_CONTEXT: 64,
-    RDNA_ERR_CIPHERTEXT_LENGTH_INVALID: 65,
-    RDNA_ERR_CIPHERTEXT_EMPTY: 66,
-    RDNA_ERR_PLAINTEXT_EMPTY: 67,
-    RDNA_ERR_PLAINTEXT_LENGTH_INVALID: 68,
-    RDNA_ERR_USERID_EMPTY: 69,
-    RDNA_ERR_CHALLENGE_EMPTY: 70,
-    RDNA_ERR_FAILED_TO_SERIALIZE_JSON: 71,
-    RDNA_ERR_USECASE_EMPTY: 72,
-    RDNA_ERR_INVALID_SERVICE_NAME: 73,
+	//Following error codes are local error codes
+	RDNA_ERR_INVALID_USER_MR_STATE: 58,
+	RDNA_ERR_NOTF_SIGN_INTERNAL_FAILURE: 59,
+	RDNA_ERR_INVALID_PROXY_CREDS: 60,
+	RDNA_ERR_CONNECTION_TIMEDOUT: 61,
+	RDNA_ERR_DNS_TIMEDOUT: 62,
+	RDNA_ERR_RESPONSE_TIMEDOUT: 63,
+	RDNA_ERR_FAILED_TO_PARSE_DEVICES: 64,                /* If parsing the device details failed                 */
+	RDNA_ERR_INVALID_CHALLENGE_CONFIG: 65,               /* If there is any mistake in challenge configuration   */
+	RDNA_ERR_INVALID_HTTP_API_REQ_URL: 66,               /* If URL in HTTP req is invalid                        */
+	RDNA_ERR_NO_MEMORY: 67,
+	RDNA_ERR_INVALID_CONTEXT: 68,
+	RDNA_ERR_CIPHERTEXT_LENGTH_INVALID: 69,
+	RDNA_ERR_CIPHERTEXT_EMPTY: 70,
+	RDNA_ERR_PLAINTEXT_EMPTY: 71,
+	RDNA_ERR_PLAINTEXT_LENGTH_INVALID: 72,
+	RDNA_ERR_USERID_EMPTY: 73,
+	RDNA_ERR_CHALLENGE_EMPTY: 74,
+	RDNA_ERR_FAILED_TO_SERIALIZE_JSON: 75,
+	RDNA_ERR_USECASE_EMPTY: 76,
+	RDNA_ERR_INVALID_SERVICE_NAME: 77,
+	RDNA_ERR_DEVICE_DETAILS_EMPTY: 77,
+	RDNA_ERR_FAILED_TO_DESERIALIZE_JSON: 79,
+	RDNA_ERR_INVALID_CHALLENGE_JSON: 80
 };
 
 /*
@@ -710,7 +717,7 @@ RdnaClient.prototype.updateNotifications = function (successCallback, errorCallb
 /**
  * @param {*} successCallback - Sync callback that indicates getNotifications call was successfull.
  * @param {*} errorCallback - Sync callback that indicates getNotifications failure. Returns the error code for the error occured.
- * @param {*} options - [RECORD_COUNT, START_RECORD, ENTERPRISE_ID, START_DATE, END_DATE]
+ * @param {*} options - [RECORD_COUNT, ENTERPRISE_ID, START_RECORD, START_DATE, END_DATE]
  */
 RdnaClient.prototype.getNotifications = function (successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function () { } }
@@ -731,7 +738,7 @@ RdnaClient.prototype.getNotifications = function (successCallback, errorCallback
 /**
  * @param {*} successCallback - Sync callback that indicates getNotificationHistory call was successfull.
  * @param {*} errorCallback - Sync callback that indicates getNotificationHistory failure. Returns the error code for the error occured.
- * @param {*} options - [RECORD_COUNT, ENTERPRISE_ID, START_RECORD, START_DATE, END_DATE, NOTIFICATION_STATUS, NOTIFICATION_ACTION_PERFORMED, KEYWORD_SEARCH, DEVICE_ID]
+ * @param {*} options - [RECORD_COUNT, START_RECORD, ENTERPRISE_ID, START_DATE, END_DATE, NOTIFICATION_STATUS, NOTIFICATION_ACTION_PERFORMED, KEYWORD_SEARCH, DEVICE_ID]
  */
 RdnaClient.prototype.getNotificationHistory = function (successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function () { } }

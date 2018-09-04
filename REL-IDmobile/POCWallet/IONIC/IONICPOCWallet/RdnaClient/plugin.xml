@@ -18,11 +18,9 @@
           <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
           <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
        </config-file>
-<source-file src="src/android/RdnaClient.java" target-dir="src/com/uniken/rdnaplugin" />
-<source-file src="src/android/NetworkTask.java" target-dir="src/com/uniken/rdnaplugin" />
-<source-file src="src/android/RDNARequestUtility.java" target-dir="src/com/uniken/rdnaplugin" />
+<source-file src="src/android/RdnaClient.java" target-dir="src/com/uniken/rdnaplugin" />>
 <framework src="src/android/rdnaclient.gradle" custom="true" type="gradleReference" target="app/rdnaclient.gradle"/>
-<resource-file src="libs/app-sdk-release-v1.7.2-key-size-changed.aar" target="libs/app-sdk-release-v1.7.2-key-size-changed.aar" />
+<resource-file src="libs/REL-ID_SDK_v1.aar" target="libs/REL-ID_SDK_v1.aar" />
 </platform>
 
 <platform name="ios">
@@ -30,7 +28,7 @@
 <feature name="RdnaClient"><param name="ios-package" value="RdnaClient" /></feature>
 </config-file><source-file src="src/ios/RdnaClient.m" />
 <header-file src="src/ios/RdnaClient.h" />
-<source-file src="api-sdk/libs/libapi-sdk.a" framework="true" />
+<source-file src="api-sdk/libs/REL-ID_SDK_v1.a" framework="true" />
 <header-file src="api-sdk/include/RDNA.h" />
 <framework src="AdSupport.framework" />
 <framework src="CoreTelephony.framework" />

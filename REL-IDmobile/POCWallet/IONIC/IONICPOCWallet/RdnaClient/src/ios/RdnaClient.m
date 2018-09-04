@@ -37,7 +37,7 @@
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     //Background Thread
     @try{
-      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:[[command.arguments objectAtIndex:6] intValue] AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
       rdnaObject = rdna;
       dispatch_async(dispatch_get_main_queue(), ^(void){
         //Run UI Updates
@@ -139,7 +139,7 @@
   
   callbackID = command.callbackId;
   @try{
-    int errorCode = [rdnaObject getNotifications:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:1] intValue] withEnterpriseID:[command.arguments objectAtIndex:2] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4]];
+    int errorCode = [rdnaObject getNotifications:[[command.arguments objectAtIndex:0] intValue] withEnterpriseID:[command.arguments objectAtIndex:1] withStartIndex:[[command.arguments objectAtIndex:2]intValue] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4]];
     [self decideCallback:errorCode response:nil];
   }@catch (NSException *exception){
     [self illegalAccessCallback:exception];
@@ -150,7 +150,7 @@
   
   callbackID = command.callbackId;
   @try{
-    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withStartIndex:[[command.arguments objectAtIndex:2] intValue] withEnterpriseID:[command.arguments objectAtIndex:1] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
+    int errorCode = [rdnaObject getNotificationHistory:[[command.arguments objectAtIndex:0] intValue] withEnterpriseID:[command.arguments objectAtIndex:2] withStartIndex:[[command.arguments objectAtIndex:1]intValue] withStartDate:[command.arguments objectAtIndex:3] withEndDate:[command.arguments objectAtIndex:4] withNotificationStatus:[command.arguments objectAtIndex:5] withActionPerformed:[command.arguments objectAtIndex:6] withKeywordSearch:[command.arguments objectAtIndex:7] withDeviceID:[command.arguments objectAtIndex:8]];
     
     [self decideCallback:errorCode response:nil];
   }@catch (NSException *exception){
@@ -423,17 +423,7 @@
     [self illegalAccessCallback:exception];
   }
 }
-  
-  -(void)forgotPassword:(CDVInvokedUrlCommand*)command{
-    
-    callbackID = command.callbackId;
-    @try {
-      [self decideCallback:[rdnaObject forgotPassword:[command.arguments objectAtIndex:0]] response:nil];
-    } @catch (NSException *exception) {
-      [self illegalAccessCallback:exception];
-    }
-    
-  }
+
   
 -(void)getPostLoginChallenges:(CDVInvokedUrlCommand*)command{
   
@@ -604,10 +594,7 @@
   return applicationName;
 }
   
-- (int)onForgotPasswordStatus:(NSString *)status{
-  [self callJavaScript:@"onForgotPasswordStatus" result:status];
-  return 0;
-}
+
 
 - (int)onGetPostLoginChallenges:(NSString *)status{
   [self callJavaScript:@"onGetPostLoginChallenges" result:status];
