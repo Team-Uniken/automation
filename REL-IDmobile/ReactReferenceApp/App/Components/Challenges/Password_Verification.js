@@ -170,7 +170,7 @@ This method is called when the component is Mounted/Loaded.
                 <Text style={Skin.baseline.text_link_no_underline}
                   onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
               </View>
-              <KeyboardAvoidingView  behavior='padding' keyboardVerticalOffset={40}/>
+              <KeyboardAvoidingView  behavior='padding' keyboardVerticalOffset={60}/>
             </View>
           </View>
         </View>

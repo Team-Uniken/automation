@@ -18,7 +18,7 @@ import Config from 'react-native-config';
 import Events from 'react-native-simple-events';
 import GridView from 'react-native-grid-view';
 import TouchID from 'react-native-touch-id';
-import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar, Alert, AppState } from 'react-native'
+import { Text, View, Platform, BackHandler, AsyncStorage, StatusBar, Alert, AppState,AlertIOS } from 'react-native';
 const FBSDK = require('react-native-fbsdk');
 
 /*
@@ -29,7 +29,7 @@ import PasswordVerification from '../Components/Challenges/Password_Verification
 import MainActivation from '../Components/Container/MainActivation';
 import Main from '../Components/Container/Main';
 import Util from "../Components/Utils/Util";
-import AndroidAuth from "../Components/view/AndroidTouch"
+import AndroidAuth from "../Components/view/AndroidTouch";
 import Constants from '../Components/Utils/Constants';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
@@ -451,7 +451,8 @@ class SelectLogin extends Component {
       .then(this.authenticate('Authenticate with Touch ID'))
       .catch(error => {
         //passcodeAuth();
-        alert(('Touch ID is not enabled or supported'));
+        AlertIOS.alert('Touch ID is not enabled or supported');
+       // alert(('Touch ID is not enabled or supported'));
       });
     }else
       this.androidAuth();
@@ -477,7 +478,7 @@ class SelectLogin extends Component {
 
         }
         else {
-          alert(error.message);
+          AlertIOS.alert(error.message);
         }
       });
   }

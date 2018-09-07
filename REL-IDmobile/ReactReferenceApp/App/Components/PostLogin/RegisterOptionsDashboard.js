@@ -120,6 +120,7 @@ class RegisterOptionScene extends Component {
     this.getRegisteredDeviceDetails = this.getRegisteredDeviceDetails.bind(this);
     this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
     this.doNavigateDashBoard = this.doNavigateDashBoard.bind(this);
+    this.doUpdate = this.doUpdate.bind(this);
   }
 
   /*
@@ -169,6 +170,7 @@ This method is called when the component will start to load
 */
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', function () {
+      this.doUpdate();
       if( this.state.showAndroidAuth )
         this.setState({ showAndroidAuth : false });
       return true;
@@ -818,7 +820,7 @@ This method is called when the component will start to load
       })
       .catch(error => {
         console.log(error)
-        AlertIOS.alert(error.message);
+       
         if (error.name === 'RCTTouchIDUnknownError') {
           Alert.alert(
             'Error',
@@ -836,7 +838,7 @@ This method is called when the component will start to load
           this.authenticate();
         }
         else {
-          alert(error.message);
+          AlertIOS.alert(error.message);
         }
       });
   }
@@ -981,7 +983,8 @@ This method is called when the component will start to load
   
   goBack(){
 //    this.props.navigation.goBack();
-    this.doNavigateDashBoard();
+    //this.doNavigateDashBoard();
+    this.doUpdate();
   }
 
   render() {
@@ -1154,10 +1157,10 @@ This method is called when the component will start to load
                 <View
                   style={[Skin.layout1.bottom.wrap,{marginBottom:100}]}>
                   <View style={Skin.layout1.bottom.container}>
-                    <Button
+                    {/* <Button
                       label={Skin.text['1']['1'].submit_button}
                       onPress={this.doUpdate.bind(this) }
-                      />
+                      /> */}
                   </View>
                 </View>
                 <KeyboardSpacer topSpacing={100}/>

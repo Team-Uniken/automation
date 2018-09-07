@@ -96,7 +96,7 @@ export default class UpdatePasswordSet extends Component {
 
   getPasswordPolicy() {
     //Uncomment below for local testing - this is demo policy
-    //return `maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=#||userIdCheck=true||msg=<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
+  //return `maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=#||userIdCheck=true||msg=<html><head></head><body><ul><li>Password length must be between 8 and 16</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username</li><li>Special character '#' is not allowed</li></ul></body></html>`;
 
     if (this.props.url.chlngJson.chlng_info &&
       this.props.url.chlngJson.chlng_info.length > 0) {
@@ -362,7 +362,7 @@ export default class UpdatePasswordSet extends Component {
             onPress={this.setPassword.bind(this) }
             label={Skin.text['1']['1'].submit_button}/>
              <Text style={[Skin.layout1.bottom.footertext, {marginBottom : 20}]}
-                  onPress={ ()=>{this.setState({showPasswordPolicy:true})} }>Password Policy</Text> 
+                  onPress={ ()=>{this.setState({showPasswordPolicy:true});dismissKeyboard()} }>Password Policy</Text> 
             </View>
             </View>
             <KeyboardSpacer topSpacing={0}/>
@@ -379,10 +379,12 @@ export default class UpdatePasswordSet extends Component {
         </View>
         <PasswordPolicyModal html={this.passwordPolicy} show={this.state.showPasswordPolicy} 
             onAlertModalDismissed={()=>{
+              this.refs.password.focus();
               this.setState({showPasswordPolicy:false})
             }}
             
             onAlertModalOk={()=>{
+              this.refs.password.focus();
               this.setState({showPasswordPolicy:false})
             }}
             />

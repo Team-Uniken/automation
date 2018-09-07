@@ -293,12 +293,18 @@ text = {
             key: 'iProov',
             label: 'iProov'
           },
+          'none': {
+            key: 'none',
+            label: 'None'
+          },
+
         }
       }
     },
     '1': {
       '1': {
         submit_button: 'Submit',
+        continue_button:'Continue',
       },
       '4': {
         submit_button: 'Submit',

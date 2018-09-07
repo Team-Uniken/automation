@@ -261,17 +261,19 @@ This method is called when the component will start to load
                 onPress={this.setPassword.bind(this) }
                 label={Skin.text['1']['1'].submit_button}/>
                   <Text style={[Skin.layout1.bottom.footertext, {marginBottom : 20}]}
-                  onPress={ ()=>{this.setState({showPasswordPolicy:true})} }>Password Policy</Text> 
+                  onPress={ ()=>{this.setState({showPasswordPolicy:true}); dismissKeyboard();} }>Password Policy</Text> 
             </View>
           </View>
           <KeyboardSpacer topSpacing={50}/>
         </View>
         <PasswordPolicyModal html={this.passwordPolicy} show={this.state.showPasswordPolicy} 
             onAlertModalDismissed={()=>{
+              this.refs.password.focus();
               this.setState({showPasswordPolicy:false})
             }}
             
             onAlertModalOk={()=>{
+              this.refs.password.focus();
               this.setState({showPasswordPolicy:false})
             }}
             />

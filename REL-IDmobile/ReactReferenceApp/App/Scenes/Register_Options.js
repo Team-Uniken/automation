@@ -97,7 +97,8 @@ class Register extends Component {
       if (userPrefs) {
         try {
           userPrefs = JSON.parse(userPrefs);
-          this.setState({ modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label });
+          var initValue = Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label;
+          this.setState({ modalInitValue: initValue === 'None'?this.state.modalInitValue:initValue});
         }
         catch (e) { }
       }
@@ -782,7 +783,7 @@ class Register extends Component {
             style={Skin.layout1.bottom.wrap}>
             <View style={Skin.layout1.bottom.container}>
               <Button
-                label={Skin.text['1']['1'].submit_button}
+                label={Skin.text['1']['1'].continue_button}
                 onPress={this.doUpdate.bind(this) }
                 />
             </View>
