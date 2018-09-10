@@ -6,6 +6,7 @@ import * as Constants from './constants';
 import { DashboardPage } from '../dashboard/dashboard';
 import { LoginPage } from '../login/login';
 import { Toast } from '../toast/toast';
+import { Util } from '../twofatorstate/Util';
 
 declare var com: any;
 @Component({
@@ -15,6 +16,7 @@ declare var com: any;
 
 export class TwoFactorState {
     challengeJson: any;
+    challengeName: any;
     challengeJsonArr: any;
     userName: any;
     actCode: any;
@@ -35,6 +37,7 @@ export class TwoFactorState {
             document.removeEventListener('onCheckChallengeResponseStatus',TwoFactorState.listener)
           
         TwoFactorState.listener =  (e: any) => {
+                Util.getTimeDifference(Constants.CHECK_CHALLENGE+this.challengeName);
               this.toast.hideLoader();
               let res = JSON.parse(e.response);
               if (res.errCode == 0) {
@@ -67,18 +70,21 @@ export class TwoFactorState {
         document.addEventListener('onCheckChallengeResponseStatus',TwoFactorState.listener);
     }
 
-    checkChallenge(challenges: any, userID: string) {
+    checkChallenge(challenges: any, userID: string, challengeName: string) {
         this.toast.showLoader();
         com.uniken.rdnaplugin.RdnaClient.checkChallengeResponse(this.onSuccess, this.onFailure, [JSON.stringify(challenges), userID]);
+        Util.setTime(Constants.CHECK_CHALLENGE+challengeName)
     }
 
     handleChallenges(rdnaChallengeJson) {
        /// alert(JSON.stringify(rdnaChallengeJson));
+       this.challengeName = "";
         let rdnaChallenges = rdnaChallengeJson.chlng;
         if (rdnaChallenges != null) {
             for (var i = 0; i < rdnaChallenges.length; i++) {
                 let challenge = rdnaChallenges[i];
                 let challengeName = challenge.chlng_name;
+                this.challengeName += "-"+challenge.chlng_name;
                 if (challengeName === Constants.CHLNG_CHECK_USER) {
                     challenge.chlng_resp[0].response = this.userName;
                 }
@@ -115,7 +121,7 @@ export class TwoFactorState {
                 }
             }
 
-            this.checkChallenge(rdnaChallengeJson, this.userName);
+            this.checkChallenge(rdnaChallengeJson, this.userName, this.challengeName);
         }
     }
 

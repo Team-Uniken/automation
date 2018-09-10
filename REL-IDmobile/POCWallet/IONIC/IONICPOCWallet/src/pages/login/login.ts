@@ -12,8 +12,9 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
 import * as Constants from '../twofatorstate/constants';
+import { Util } from '../twofatorstate/Util';
 
-
+declare var com: any;
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -31,6 +32,7 @@ export class LoginPage {
 
   // Our translated text strings
   private loginErrorString: string;
+  sessionID:string;
 
   constructor(public events: Events, public navCtrl: NavController,
     public user: User,
@@ -42,7 +44,23 @@ export class LoginPage {
     })
     //this.events.subscribe('login:success', this.callLoginApi);
     this.callLoginApi = this.callLoginApi.bind(this);
+    document.addEventListener('onHttpResponse',this.activation);
+
+    com.uniken.rdnaplugin.RdnaClient.getSessionID(this.onSuccessSessionId,this.onFailureSessionId);
   }
+
+  activation(e:any) {
+    console.log(e);
+    Util.getTimeDifference(Constants.OPEN_HTTP_CONNECTION);
+    this.toast.hideLoader();
+    var jsonObj = JSON.parse(e.response);
+
+    if (jsonObj.errorCode == 0) {
+      alert("Successfully created user");
+    } else {  
+        alert("Something went wrong, please try again..!");       
+    }
+   }
 
   callLoginApi() {
     if(Constants.IS_MRI == 1){
@@ -98,4 +116,69 @@ export class LoginPage {
     }
     return true;
   }
+
+  doSignup() {
+  
+    var URL = "http://18.211.218.44:9080/rest/enrollUser.htm";
+    //console.log("---Register ---baseUrl =" + baseUrl)
+
+    // USER_ID_STR, mandatory = true          // will be email Id
+    // GROUP_NAME_STR, mandatory = true       // Hardcode
+    // SECONDARY_GROUP_NAMES_STR, mandatory = false
+    // EMAIL_ID_STR, mandatory = false          // sholud be there
+    // MOB_NUM_ID_STR, mandatory = false        // sholud be there
+    // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
+
+    var userMap = {
+      "firstName":"Akash",
+      "lastName":"Saxena",
+      "userId":"testuser",
+      "actCode":"1111",
+      "groupName":"group1",
+      "emailId":"akash.saxena@uniken.com",
+      "mobNum":"9898343366",
+      "username":"sruser",
+      "password":"1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
+      "isRELIDZeroEnabled":"true",
+      "apiversion":"v1",
+      "sessionId":this.sessionID,
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Length":"0"
+    };
+
+    com.uniken.rdnaplugin.RdnaClient.openHttpConnection(this.onSuccess, this.onFailure, [com.uniken.rdnaplugin.RdnaClient.RDNAHttpMethods.RDNA_HTTP_POST,URL,JSON.stringify(userMap),""]);  
+    Util.setTime(Constants.OPEN_HTTP_CONNECTION);  
+  }
+
+    onSuccess(data) {
+      alert("RdnaClient.js: openHttpConnectionSuccess"+data);
+      console.log("RdnaClient.js: openHttpConnectionSuccess");
+    }
+
+onFailure(data) {
+  alert("RdnaClient.js: openHttpConnectionFailure"+data);
+    console.log("RdnaClient.js: openHttpConnectionFailure");
+}
+
+onSuccessSessionId(data) {
+  console.log("RdnaClient.js: onSuccessSessionId"+data);
+  var jsonObj ;
+  try{
+    jsonObj = JSON.parse(data);
+  }catch (e){
+    console.log("parsing fails");
+  }
+ 
+  console.log("jsonObj --- "+jsonObj.response);
+  this.sessionID = jsonObj.response
+  console.log("SessionId --- "+this.sessionID);
+  //this.doSignup();
+}
+
+onFailureSessionId(data) {
+  console.log("RdnaClient.js: onFailureSessionId"+data);
+
+  this.toast.hideLoader();
+}
+
 }

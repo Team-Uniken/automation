@@ -15,4 +15,6 @@
  export const SAMPLE_ANSWER = "sampleAnswer";
  export const CHLNG_VERIFICATION_MODE = 0;
  export const  IS_MRI : number = 1;
-
+ export const INITIALIZE = "intialize";
+ export const CHECK_CHALLENGE = "checkChallenge";
+ export const OPEN_HTTP_CONNECTION = "open http connection";
