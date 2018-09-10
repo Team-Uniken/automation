@@ -45,7 +45,8 @@ export default class PolicyChecker {
 
             return true;
         }else 
-            this.parsePolicy(`maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=#||userIdCheck=true||msg=<ul><li>Password length must be between 8 and 16 characters</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username or special character #</li></ul>`);
+            return this.parsePolicy(`maxL=16||minL=8||minDg=1||minUc=1||minLc=1||minSc=1||Repetition=2||SeqCheck=ASC||charsNotAllowed=#||userIdCheck=true||msg=<ul><li>Password length must be between 8 and 16 characters</li><li>It must contain atleast a number, an upper case character, a lower case character, and a special character</li><li>It can have only two repetition for a particular character</li><li>It should not be in ascending order eg: abcd or 1234 </li><li>It should not contain your username or special character #</li></ul>`);
+            
     }
 
     validateCreds(username, password) {
@@ -220,7 +221,7 @@ export default class PolicyChecker {
 
     userIdCheck(username, password) {
         if (policy.userIdCheck != null && policy.userIdCheck === 'true')
-            return password.indexOf(username);
+            return !!~password.indexOf(username)?false:true;
         else
             return true;
     }

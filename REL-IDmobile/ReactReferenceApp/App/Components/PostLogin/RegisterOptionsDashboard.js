@@ -121,6 +121,7 @@ class RegisterOptionScene extends Component {
     this.onGetRegistredDeviceDetails = this.onGetRegistredDeviceDetails.bind(this);
     this.doNavigateDashBoard = this.doNavigateDashBoard.bind(this);
     this.doUpdate = this.doUpdate.bind(this);
+    this.getDefaultLoginView = this.getDefaultLoginView.bind(this);
   }
 
   /*
@@ -987,6 +988,24 @@ This method is called when the component will start to load
     this.doUpdate();
   }
 
+  getDefaultLoginView(){
+return[ <Margin
+  space={4}/>,
+<Text style={Skin.layout0.smalltext}>
+  Default Login Credential
+</Text>,
+<ModalPicker
+  data={this.getLoginOptions() }
+  style={Skin.baseline.select.base}
+  selectStyle={Skin.baseline.select.select}
+  selectTextStyle={Skin.baseline.select.selectText}
+  initValue={this.state.modalInitValue}
+  onChange={(option) => {
+    this.changeDefaultLogin(option)
+  } } />];
+
+  }
+
   render() {
     if (this.state.url) {
       var indents = [];
@@ -1127,20 +1146,8 @@ This method is called when the component will start to load
                   <View style={Skin.layout1.content.wrap}>
                     <View style={Skin.layout1.content.container}>
                       {indents}
-                      <Margin
-                        space={4}/>
-                      <Text style={Skin.layout0.smalltext}>
-                        Default Login Credential
-                      </Text>
-                      <ModalPicker
-                        data={this.getLoginOptions() }
-                        style={Skin.baseline.select.base}
-                        selectStyle={Skin.baseline.select.select}
-                        selectTextStyle={Skin.baseline.select.selectText}
-                        initValue={this.state.modalInitValue}
-                        onChange={(option) => {
-                          this.changeDefaultLogin(option)
-                        } } />
+                      {this.getLoginOptions().length > 3 && this.getDefaultLoginView()
+                     }
                       <Margin
                         space={4}/>
                       <Text style={[Skin.layout0.smalltext, { opacity: this.state.devnameopacity }]}>
