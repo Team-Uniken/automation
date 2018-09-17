@@ -297,12 +297,12 @@ class Util extends Component {
 
   static createErrorMessage(errorCode){
     switch(errorCode){
-      case 58:
+      case 59:
         if(Config.IS_ENTERPRISE_ENABLED!=="true")
           return "User cannot proceed, please contact admin"
         else
           return "User state is not valid, please register again";
-      case 63:
+      case 64:
         return "Response time out";
       default :
         break;
