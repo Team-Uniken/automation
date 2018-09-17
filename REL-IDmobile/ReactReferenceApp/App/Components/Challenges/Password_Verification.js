@@ -167,8 +167,11 @@ This method is called when the component is Mounted/Loaded.
                 <Button
                   label={Skin.text['2']['1'].submit_button}
                   onPress={ this.checkPassword.bind(this) }/>            
-                <Text style={Skin.baseline.text_link_no_underline}
-                  onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>
+                {
+                  (Config.ENABLE_FORGOTPASSWORD_LINK!=="false") && 
+                  
+                    <Text style={Skin.baseline.text_link_no_underline}
+                    onPress={ this.onForgotPasswordClick }>Forgot your password?</Text>}
               </View>
               <KeyboardAvoidingView  behavior='padding' keyboardVerticalOffset={60}/>
             </View>

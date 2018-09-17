@@ -1086,17 +1086,19 @@ return[ <Margin
             );
           }
       }
-
-      indents.push(
-        <Checkbox
-          onSelect={this.selectskipwelcome.bind(this) }
-          selected={this.state.welcome}
-          labelSide={"right"}
-          disabled={true}
+      
+      if (Config.ENABLE_WELCOME_SCREEN !== "false") {
+        indents.push(
+          <Checkbox
+            onSelect={this.selectskipwelcome.bind(this)}
+            selected={this.state.welcome}
+            labelSide={"right"}
+            disabled={true}
           >
-          Skip Welcome Screen
+            Skip Welcome Screen
         </Checkbox>
-      );
+        );
+      }
 
       indents.push(
         <Checkbox

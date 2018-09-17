@@ -219,23 +219,29 @@ class UserLogin extends Component {
   
   //use to clear twoFactorAuthMachine navigator
   close() {
-    dismissKeyboard();
-//    Events.trigger('closeStateMachine');
-    const resetActionshowFirstChallenge = NavigationActions.reset({
-    index: 0,
-    actions: [
-      NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-              "chlngJson": this.props.navigator.state.params.url.chlngJson,
-              "screenId": this.props.navigator.state.params.url.screenId
-              },title:this.props.navigator.state.params.url.screenId}})
-      ]
+    if (Config.ENABLE_WELCOME_SCREEN !== "false") {
+      dismissKeyboard();
+      //    Events.trigger('closeStateMachine');
+      const resetActionshowFirstChallenge = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: 'WelcomeScreen', params: {
+              url: {
+                "chlngJson": this.props.navigator.state.params.url.chlngJson,
+                "screenId": this.props.navigator.state.params.url.screenId
+              }, title: this.props.navigator.state.params.url.screenId
+            }
+          })
+        ]
       })
-    this.props.navigator.dispatch(resetActionshowFirstChallenge)
-    
-//    this.props.navigator.navigate('WelcomeScreen',{url: {
-//      "chlngJson": this.props.navigator.state.params.url.chlngJson,
-//      "screenId": this.props.navigator.state.params.url.screenId
-//      }})
+      this.props.navigator.dispatch(resetActionshowFirstChallenge)
+
+      //    this.props.navigator.navigate('WelcomeScreen',{url: {
+      //      "chlngJson": this.props.navigator.state.params.url.chlngJson,
+      //      "screenId": this.props.navigator.state.params.url.screenId
+      //      }})
+    }
   }
   /*
    This method is used to render the componenet with all its element.
@@ -251,11 +257,13 @@ class UserLogin extends Component {
             style={Skin.layout1.statusbar}
             backgroundColor={Skin.main.STATUS_BAR_BG}
             barStyle={'default'} />
+            {(Config.ENABLE_WELCOME_SCREEN!=="false") &&
+
               <Title
                 onClose={() => {
                   this.close();
                 }}>
-              </Title>
+              </Title>}
             </View>
             <View style={[Skin.layout0.wrap.container, { position: 'absolute', zIndex : 99, flex: 1, height:Skin.SCREEN_HEIGHT, top : 0,alignSelf:'center',  flexDirection: 'column', justifyContent: "center", alignItems: 'center', marginBottom: 0 },Platform.OS==="ios"?{paddingTop:20}:{}]}>
               <Text style={[Skin.layout0.top.icon]}>  

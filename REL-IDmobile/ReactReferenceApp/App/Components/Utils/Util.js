@@ -5,6 +5,8 @@ import Main from '../Container/Main';
 import { Buffer } from 'buffer';
 import moment from 'moment';
 import Finger from 'react-native-touch-id-android'
+import Config from 'react-native-config';
+
  
 import { AsyncStorage, DeviceEventEmitter, TouchableHighlight, View, WebView, Alert, Platform, AlertIOS } from 'react-native';
 import React, { Component, } from 'react';
@@ -296,7 +298,10 @@ class Util extends Component {
   static createErrorMessage(errorCode){
     switch(errorCode){
       case 58:
-        return "User state is not valid, please register again";
+        if(Config.IS_ENTERPRISE_ENABLED!=="true")
+          return "User cannot proceed, please contact admin"
+        else
+          return "User state is not valid, please register again";
       case 63:
         return "Response time out";
       default :

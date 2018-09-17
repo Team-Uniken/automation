@@ -19,6 +19,8 @@ import TouchID from 'react-native-touch-id';
 import ModalPicker from 'react-native-modal-picker'
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import AndroidAuth from "../Components/view/AndroidTouch";
+import Config from 'react-native-config';
+
 
 /*
  Use in this js
@@ -735,15 +737,18 @@ class Register extends Component {
       
    
     }
-    indents.push(
-      <Checkbox
-        onSelect={this.selectskipwelcome.bind(this) }
-        selected={this.state.welcome}
-        labelSide={"right"}
+
+    if (Config.ENABLE_WELCOME_SCREEN !== "false") {
+      indents.push(
+        <Checkbox
+          onSelect={this.selectskipwelcome.bind(this)}
+          selected={this.state.welcome}
+          labelSide={"right"}
         >
-        Skip Welcome Screen
+          Skip Welcome Screen
       </Checkbox>
-    );
+      );
+    }
 
     indents.push(
       <Checkbox

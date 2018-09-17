@@ -637,47 +637,71 @@ class ControlPanel extends Component {
     }
     console.log('doNavigation:');
     //this.props.navigator.immediatelyResetRouteStack(this.props.navigator.getCurrentRoutes().splice(-1, 0));
-    AsyncStorage.getItem('skipwelcome').then((value) => {
-      if (value != null && value != undefined && value === "true") {
-      
-//        this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
-      
-      
+    if (Config.ENABLE_WELCOME_SCREEN !== "false") {
+      AsyncStorage.getItem('skipwelcome').then((value) => {
+        if (value != null && value != undefined && value === "true") {
+          //        this.props.navigator.resetTo({ id: "Machine", title: "nextChlngName", url: { "chlngJson": chlngJson, "screenId": nextChlngName } });
+
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'StateMachine', params: {
+                  url: {
+                    chlngJson,
+                    screenId: nextChlngName,
+                    currentIndex: 0,
+                  }, title: nextChlngName
+                }
+              })
+            ]
+          })
+          this.props.navigator.dispatch(resetAction)
+
+        } else {
+          //        this.props.navigator.resetTo({
+          //          id: "Welcome_Screen",
+          //          //id: "Select_Login",
+          //          title: "nextChlngName",
+          //          url: {
+          //            "chlngJson": chlngJson,
+          //            "screenId": nextChlngName
+          //          }
+          //        });
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({
+                routeName: 'WelcomeScreen', params: {
+                  url: {
+                    chlngJson,
+                    screenId: nextChlngName,
+                    currentIndex: 0,
+                  }, title: nextChlngName
+                }
+              })
+            ]
+          })
+          this.props.navigator.dispatch(resetAction)
+        }
+      }).done();
+    } else {
       const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'StateMachine',params:{url: {
-          chlngJson,
-        screenId: nextChlngName,
-        currentIndex:0,
-          },title:nextChlngName}})
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: 'StateMachine', params: {
+              url: {
+                chlngJson,
+                screenId: nextChlngName,
+                currentIndex: 0,
+              }, title: nextChlngName
+            }
+          })
         ]
-        })
+      });
       this.props.navigator.dispatch(resetAction)
-      
-      } else {
-//        this.props.navigator.resetTo({
-//          id: "Welcome_Screen",
-//          //id: "Select_Login",
-//          title: "nextChlngName",
-//          url: {
-//            "chlngJson": chlngJson,
-//            "screenId": nextChlngName
-//          }
-//        });
-      const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
-          chlngJson,
-        screenId: nextChlngName,
-        currentIndex:0,
-          },title:nextChlngName}})
-        ]
-        })
-      this.props.navigator.dispatch(resetAction)
-      }
-    }).done();
+    }
   }
 
 
