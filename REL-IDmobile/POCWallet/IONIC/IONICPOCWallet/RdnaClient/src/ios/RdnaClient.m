@@ -37,7 +37,7 @@
   dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     //Background Thread
     @try{
-      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:[command.arguments objectAtIndex:5] RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+      errorID = [RDNA initialize:&rdna AgentInfo:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks GatewayHost:[command.arguments objectAtIndex:1] GatewayPort:[[command.arguments objectAtIndex:2] intValue] CipherSpec:[command.arguments objectAtIndex:3]  CipherSalt:[command.arguments objectAtIndex:4] ProxySettings:nil RDNASSLCertificate:nil DNSServerList:nil RDNALoggingLevel:(RDNALoggingLevel)[[command.arguments objectAtIndex:5] intValue] AppContext:self];
       rdnaObject = rdna;
       dispatch_async(dispatch_get_main_queue(), ^(void){
         //Run UI Updates
@@ -84,7 +84,7 @@
   callbackID = command.callbackId;
   @try {
     
-    int errorCode = [RDNA  resumeRuntime:&rdna SavedState:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks ProxySettings:nil RDNALoggingLevel:RDNA_NO_LOGS AppContext:self];
+    int errorCode = [RDNA  resumeRuntime:&rdna SavedState:[command.arguments objectAtIndex:0] Callbacks:clientCallbacks ProxySettings:nil RDNALoggingLevel:(RDNALoggingLevel)[[command.arguments objectAtIndex:1] intValue] AppContext:self];
     [self decideCallback:errorCode response:nil];
   } @catch (NSException *exception) {
     [self illegalAccessCallback:exception];
