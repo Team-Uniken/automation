@@ -511,7 +511,7 @@ class TwoFactorAuthMachine extends Component {
       }
     } else {
       Util.getErrorInfo(res.errCode, (error) => {
-        if (error == 58 || error == 63) {
+        if (error == 59 || error == 64) {
           /*
             58 -->>  RDNA_ERR_INVALID_USER_MR_STATE -Invalid user state in local storage 
           */
@@ -521,9 +521,9 @@ class TwoFactorAuthMachine extends Component {
               Util.createErrorMessage(error), [{
                 text: 'OK',
                 onPress: () => {
-                  if(error == 58)
+                  if(error == 59)
                     this.navigateToEnterpriseRegistration();
-                  else if (error == 63)
+                  else if (error == 64)
                     this.resetChallenge();
                 },
                 style: 'cancel',
