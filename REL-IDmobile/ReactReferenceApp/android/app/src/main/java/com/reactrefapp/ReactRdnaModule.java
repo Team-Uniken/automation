@@ -302,23 +302,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 return 0;
             }
 
-            @Override
-            public int onForgotPasswordStatus(final String rdnaStatusForgotPassword) {
-                Runnable runnable= new Runnable() {
-                    @Override
-                    public void run() {
-                        WritableMap params = Arguments.createMap();
-                        params.putString("response", rdnaStatusForgotPassword);
-
-                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("onForgotPasswordStatus", params);
-                    }
-                };
-
-                callOnMainThread(runnable);
-
-                return 0;
-            }
+//            @Override
+//            public int onForgotPasswordStatus(final String rdnaStatusForgotPassword) {
+//                Runnable runnable= new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        WritableMap params = Arguments.createMap();
+//                        params.putString("response", rdnaStatusForgotPassword);
+//
+//                        context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                                .emit("onForgotPasswordStatus", params);
+//                    }
+//                };
+//
+//                callOnMainThread(runnable);
+//
+//                return 0;
+//            }
 
             @Override
             public int onLogOff(final String status) {
@@ -749,7 +749,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             int intStartRecord = Integer.parseInt(startRecord);
             int error = -1;
             if (rdnaObj != null) {
-                error = rdnaObj.getNotifications(intRecordCount, intStartRecord, enterpriseID, startDate, endDate);
+                error = rdnaObj.getNotifications(intRecordCount, enterpriseID, intStartRecord, startDate, endDate);
             }
 
             WritableMap errorMap = Arguments.createMap();
@@ -1096,7 +1096,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
         lock.release();
     }
 
-    @ReactMethod
+    /*@ReactMethod
     public void forgotPassword(String userId,Callback callback){
         WritableArray writableArray = Arguments.createArray();
         WritableMap errorMap = Arguments.createMap();
@@ -1111,7 +1111,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 
         writableArray.pushMap(errorMap);
         callback.invoke(writableArray);
-    }
+    }*/
 
     @ReactMethod
     public void getDeviceID(Callback callback){
