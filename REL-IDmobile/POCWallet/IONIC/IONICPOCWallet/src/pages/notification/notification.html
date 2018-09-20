@@ -12,7 +12,6 @@
       <!-- <ion-item>
           <ion-input type="text" [(ngModel)]="account.login_id" name="login_id" placeholder="Login ID"></ion-input>
         </ion-item> -->
-    <div style="display:hidden">{{refresh}}</div>
     <ion-list >
       <!-- add a section header -->
       <ion-item class="item-divider">List of Objects</ion-item>
@@ -20,16 +19,17 @@
       <ion-item *ngFor="let notification of notificationList">
         <div>
           <div>
-            <span>{{notification.message.subject}}</span>
-            <span>{{notification.created_ts}}</span>
+            
+            <span>{{notification.notification_uuid}}</span>
+            <!-- <span>{{notification.created_ts}}</span> -->
           </div>
           <ul>
-            <div *ngFor="let bullet of getBulletList(notification.message.body)">
+            <!-- <div *ngFor="let bullet of getBulletList(notification.body.message)">
               <li>{{bullet}}</li>
-            </div>
+            </div> -->
           </ul>
           <div class="button-bar">
-            <button *ngFor="let button of getButtonList(notification.action)" ion-button color={{button.color}} (click)="notificationClick(notification,button.action)">{{button.label}}</button>
+            <button *ngFor="let button of getButtonList(notification.actions)" ion-button color={{button.color}} (click)="notificationClick(notification,button.action)">{{button.label}}</button>
 
           </div>
         </div>
