@@ -29,11 +29,12 @@ export class TestPage {
 
   constructor(public navCtrl: NavController, public toast: Toast) {
 
-    this.serviceName = 'port_forward';
-    this.ip = "127.0.0.1";
+    this.serviceName = 'wshservice';
+    this.ip = "10.0.0.179";
     this.port = 9080;
    // this.serviceStringJson = "{\"serviceName\": \"serv3_portF\",\"targetHNIP\": \"99.99.99.99\",\"app_uuid\": \"415a4174-c0c3-4ee4-8931-04c5f325db0c\",\"accessServerName\": \"cluster1\",\"targetPort\": 9999,\"portInfo\": {\"isAutoStartedPort\": 0,\"isLocalhostOnly\": 1,\"isStarted\": 0,\"isPrivacyEnabled\": 1,\"portType\": 1,\"port\": 9999}}";
-    this.serviceStringJson = "{\"serviceName\": \"port_forward\", \"targetHNIP\": \"127.0.0.1\", \"app_uuid\": \"729f64e2-5a67-11e8-a9f4-e6cfa37cafc2\", \"accessServerName\": \"uniken\", \"targetPort\": 9080, \"portInfo\": { \"isAutoStartedPort\": 1, \"isLocalhostOnly\": 1, \"isStarted\": 1, \"isPrivacyEnabled\": 0, \"portType\": 1, \"port\": 8443 }}";
+   // this.serviceStringJson = "{\"serviceName\": \"port_forward\", \"targetHNIP\": \"127.0.0.1\", \"app_uuid\": \"729f64e2-5a67-11e8-a9f4-e6cfa37cafc2\", \"accessServerName\": \"uniken\", \"targetPort\": 9080, \"portInfo\": { \"isAutoStartedPort\": 1, \"isLocalhostOnly\": 1, \"isStarted\": 1, \"isPrivacyEnabled\": 0, \"portType\": 1, \"port\": 8443 }}";
+    this.serviceStringJson = "{\"serviceName\": \"wshservice\", \"targetHNIP\": \"10.0.0.179\", \"accessServerName\": \"uniken\", \"targetPort\": 9080, \"portInfo\": { \"isAutoStartedPort\": 0, \"isLocalhostOnly\": 0, \"isStarted\": 0, \"isPrivacyEnabled\": 0, \"portType\": 2, \"port\": 0 }}";
     this.cipherSalt = "";
     this.cipherSpect = "";
     this.plainText = "uniken";
@@ -74,6 +75,7 @@ export class TestPage {
   }
 
   getServiceByServiceNameFailure(data) {
+    Util.deleteAPITime(Constants.SERVICENAME);
     console.log("RdnaClient.js: getServiceByServiceNameFailure-->" + data);
     alert(data);
   }
@@ -87,11 +89,12 @@ export class TestPage {
   getServiceByTargetCoordinateSuccess(data) {
     var timedifference = Util.getTimeDifference(Constants.SERVICEBYTARGETCOORDINATE);
     console.log ('TwoFactorAuthMachine - serviceByTargetCoordinateTimeDifference '+timedifference);
-    console.log("RdnaClient.js: getServiceByServiceNameSuccess-->" + data);
+    console.log("RdnaClient.js: getServiceByTargetCoordinateSuccess-->" + data);
     alert(data);
   }
 
   getServiceByTargetCoordinateFailure(data) {
+    Util.deleteAPITime(Constants.SERVICEBYTARGETCOORDINATE);
     console.log("RdnaClient.js: getServiceByTargetCoordinateFailure-->" + data);
     alert(data);
   }
@@ -103,6 +106,10 @@ export class TestPage {
   }
 
   getAllServicesSuccess(data) {
+
+    //let jsonObj: any;
+   // jsonObj = JSON.parse(data);
+   // this.serviceStringJson = jsonObj.response;
     var timedifference = Util.getTimeDifference(Constants.ALLSERVICES);
     console.log ('TwoFactorAuthMachine - allServicesTimeDifference '+timedifference);
     console.log("RdnaClient.js: getAllServicesSuccess-->" + data);
@@ -110,6 +117,7 @@ export class TestPage {
   }
 
   getAllServicesFailure(data) {
+    Util.deleteAPITime(Constants.ALLSERVICES);
     console.log("RdnaClient.js: getAllServicesFailure-->" + data);
     alert(data);
   }
@@ -128,6 +136,7 @@ export class TestPage {
   }
 
   serviceAccessStartFailure(data) {
+    Util.deleteAPITime(Constants.SERVICEACCESSSTART);
     console.log("RdnaClient.js: serviceAccessStartSuccess-->" + data);
     alert(data);
   }
@@ -144,6 +153,7 @@ export class TestPage {
     alert(data);
   };
   serviceAccessStopFailure(data) {
+    Util.deleteAPITime(Constants.SERVICEACCESSSTOP);
     console.log("RdnaClient.js: serviceAccessStopFailure-->" + data);
     alert(data);
   };
@@ -162,6 +172,7 @@ export class TestPage {
   }
 
   serviceAccessStartAllFailure(data) {
+    Util.deleteAPITime(Constants.SERVICEACCESSSTARTALL);
     console.log("RdnaClient.js: serviceAccessStartAllFailure-->" + data);
     alert(data);
   }
@@ -180,6 +191,7 @@ export class TestPage {
   }
 
   serviceAccessStopAllFailure(data) {
+    Util.deleteAPITime(Constants.SERVICEACCESSSTOPALL);
     console.log("RdnaClient.js: serviceAccessStopAllFailure-->" + data);
     alert(data);
   }
