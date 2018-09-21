@@ -11,6 +11,8 @@ import { elementDef } from '@angular/core/src/view/element';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
+import { Util } from '../twofatorstate/Util';
+import * as Constants from '../twofatorstate/constants';
 
 
 declare var com;
@@ -57,7 +59,10 @@ export class NotificationPage {
       document.removeEventListener('onUpdateNotification', NotificationPage.updateListener)
     }
     NotificationPage.getNotificationListener = (e: any) => {
+     
       console.log("***********************"+this.replaceString("\n","\\n",e.response));
+      var timedifference = Util.getTimeDifference(Constants.NOTIFICATION);
+      console.log('TwoFactorAuthMachine - notificationTimedifference '+timedifference);
       this._ngZone.run(() => {
         
       const res = JSON.parse(this.replaceString("\n","\\n",e.response));
@@ -67,6 +72,7 @@ export class NotificationPage {
         if (statusCode === 100) {
           if (res.pArgs.response.ResponseData) {
             var count = res.pArgs.response.ResponseData.notifications.length;
+            
             this.notificationList = res.pArgs.response.ResponseData.notifications;
           }
         }
@@ -116,7 +122,8 @@ export class NotificationPage {
     var enterpriseID: string = "";
     var startDate: string = "";
     var endDate: string = "";
-    com.uniken.rdnaplugin.RdnaClient.getNotifications(this.initSuccess, this.initFailure, [recordCount, startIndex, enterpriseID, startDate, endDate]);
+    com.uniken.rdnaplugin.RdnaClient.getNotifications(this.initSuccess, this.initFailure, [recordCount, enterpriseID,startIndex,startDate, endDate]);
+    Util.setTime(Constants.NOTIFICATION);
   }
 
    replaceString(find, replace, str) {

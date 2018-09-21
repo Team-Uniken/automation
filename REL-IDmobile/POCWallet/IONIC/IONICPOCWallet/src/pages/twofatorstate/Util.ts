@@ -11,12 +11,16 @@ export class Util {
     }
 
      static getTimeDifference(methodName){
-        APITIMINGDIFFERENCE[methodName] = (Math.floor(Date.now() / 1000)) - APITIMING[methodName];
+        return APITIMINGDIFFERENCE[methodName] = (Math.floor(Date.now() / 1000)) - APITIMING[methodName];
         //delete APITIMING [methodName];
     }
 
     static getAPITIMINGDIFFERENCE(){
         return APITIMINGDIFFERENCE;
+    }
+
+    static deleteAPITime(methodName){
+         delete APITIMING [methodName];
     }
 
 }

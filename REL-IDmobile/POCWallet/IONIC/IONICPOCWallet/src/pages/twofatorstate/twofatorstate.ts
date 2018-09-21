@@ -37,7 +37,9 @@ export class TwoFactorState {
             document.removeEventListener('onCheckChallengeResponseStatus',TwoFactorState.listener)
           
         TwoFactorState.listener =  (e: any) => {
-                Util.getTimeDifference(Constants.CHECK_CHALLENGE+this.challengeName);
+                var timedifference = Util.getTimeDifference(Constants.CHECK_CHALLENGE+this.challengeName);
+                console.log ('TwoFactorAuthMachine - challengeName '+this.challengeName);
+                console.log('TwoFactorAuthMachine - Timedifference '+timedifference);
               this.toast.hideLoader();
               let res = JSON.parse(e.response);
               if (res.errCode == 0) {

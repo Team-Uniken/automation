@@ -4,6 +4,8 @@ import { LoginPage } from '../login/login';
 import { RegisterPage } from '../register/register';
 import { Toast } from '../toast/toast';
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
+import { Util } from '../twofatorstate/Util';
+import * as Constants from '../twofatorstate/constants';
 
 declare var com: any;
 @Component({
@@ -61,9 +63,12 @@ export class TestPage {
 
   getServiceByServiceName() {
     com.uniken.rdnaplugin.RdnaClient.getServiceByServiceName(this.getServiceByServiceNameSuccess, this.getServiceByServiceNameFailure, [this.serviceName]);
+    Util.setTime(Constants.SERVICENAME);
   }
 
   getServiceByServiceNameSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SERVICENAME);
+    console.log ('TwoFactorAuthMachine - serviceNameTimeDifference '+timedifference);
     console.log("RdnaClient.js: getServiceByServiceNameSuccess-->" + data);
     alert(data);
   }
@@ -76,9 +81,12 @@ export class TestPage {
 
   getServiceByTargetCoordinate() {
     com.uniken.rdnaplugin.RdnaClient.getServiceByTargetCoordinate(this.getServiceByTargetCoordinateSuccess, this.getServiceByTargetCoordinateFailure, [this.ip, this.port]);
+    Util.setTime(Constants.SERVICEBYTARGETCOORDINATE);
   }
 
   getServiceByTargetCoordinateSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SERVICEBYTARGETCOORDINATE);
+    console.log ('TwoFactorAuthMachine - serviceByTargetCoordinateTimeDifference '+timedifference);
     console.log("RdnaClient.js: getServiceByServiceNameSuccess-->" + data);
     alert(data);
   }
@@ -91,9 +99,12 @@ export class TestPage {
 
   getAllServices() {
     com.uniken.rdnaplugin.RdnaClient.getAllServices(this.getAllServicesSuccess, this.getAllServicesFailure);
+    Util.setTime(Constants.ALLSERVICES);
   }
 
   getAllServicesSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.ALLSERVICES);
+    console.log ('TwoFactorAuthMachine - allServicesTimeDifference '+timedifference);
     console.log("RdnaClient.js: getAllServicesSuccess-->" + data);
     alert(data);
   }
@@ -106,9 +117,12 @@ export class TestPage {
 
   serviceAccessStart() {
     com.uniken.rdnaplugin.RdnaClient.serviceAccessStart(this.serviceAccessStartSuccess, this.serviceAccessStartFailure, [this.serviceStringJson]);
+    Util.setTime(Constants.SERVICEACCESSSTART);
   }
 
   serviceAccessStartSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SERVICEACCESSSTART);
+    console.log ('TwoFactorAuthMachine - serviceAccessStartTimeDifference '+timedifference);
     console.log("RdnaClient.js: serviceAccessStartSuccess-->" + data);
     alert(data);
   }
@@ -121,8 +135,11 @@ export class TestPage {
 
   serviceAccessStop() {
     com.uniken.rdnaplugin.RdnaClient.serviceAccessStop(this.serviceAccessStopSuccess, this.serviceAccessStopFailure, [this.serviceStringJson]);
+    Util.setTime(Constants.SERVICEACCESSSTOP);
   }
   serviceAccessStopSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SERVICEACCESSSTOP);
+    console.log ('TwoFactorAuthMachine - serviceAccessStartTimeDifference '+timedifference);
     console.log("RdnaClient.js: serviceAccessStopSuccess-->" + data);
     alert(data);
   };
@@ -134,9 +151,12 @@ export class TestPage {
 
   serviceAccessStartAll() {
     com.uniken.rdnaplugin.RdnaClient.serviceAccessStartAll(this.serviceAccessStartAllSuccess, this.serviceAccessStartAllFailure);
+    Util.setTime(Constants.SERVICEACCESSSTARTALL);
   }
 
   serviceAccessStartAllSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SERVICEACCESSSTARTALL);
+    console.log ('TwoFactorAuthMachine - serviceAccessStartAllTimeDifference '+timedifference);
     console.log("RdnaClient.js: serviceAccessStartAllSuccess-->" + data);
     alert(data);
   }
@@ -149,9 +169,12 @@ export class TestPage {
 
   serviceAccessStopAll() {
     com.uniken.rdnaplugin.RdnaClient.serviceAccessStopAll(this.serviceAccessStopAllSuccess, this.serviceAccessStopAllSuccess);
+    Util.setTime(Constants.SERVICEACCESSSTOPALL);
   }
 
   serviceAccessStopAllSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SERVICEACCESSSTOPALL);
+    console.log ('TwoFactorAuthMachine - serviceAccessStopAllTimeDifference '+timedifference);
     console.log("RdnaClient.js: serviceAccessStopAllSuccess-->" + data);
     alert(data);
   }
@@ -166,12 +189,14 @@ export class TestPage {
 
   getDefaultCipherSpec() {
     com.uniken.rdnaplugin.RdnaClient.getDefaultCipherSpec(this.getDefaultCipherSpecSuccess, this.getDefaultCipherSpecFailure);
+    Util.setTime(Constants.DEFAULTCIPHERSPEC);
   }
   getDefaultCipherSpecSuccess(data) {
     let jsonObj: any;
     jsonObj = JSON.parse(data);
     this.cipherSpect = jsonObj.response;
-
+    var timedifference = Util.getTimeDifference(Constants.DEFAULTCIPHERSPEC);
+    console.log ('TwoFactorAuthMachine - defaultCipherTimeDifference '+timedifference);
     console.log("RdnaClient.js: getDefaultCipherSpecSuccess-->" + data);
     alert(data);
   }
@@ -185,12 +210,14 @@ export class TestPage {
 
   getDefaultCipherSalt() {
     com.uniken.rdnaplugin.RdnaClient.getDefaultCipherSalt(this.getDefaultCipherSaltSuccess, this.getDefaultCipherSaltFailure);
+    Util.setTime(Constants.DEFAULTCIPHERSALT);
   }
   getDefaultCipherSaltSuccess(data) {
     let jsonObj: any;
     jsonObj = JSON.parse(data);
     this.cipherSalt = jsonObj.response;
-
+    var timedifference = Util.getTimeDifference(Constants.DEFAULTCIPHERSALT);
+    console.log ('TwoFactorAuthMachine - defaultCipherSaltTimeDifference '+timedifference);
     console.log("RdnaClient.js: getDefaultCipherSaltSuccess-->" + data);
     alert(data);
   }
@@ -204,14 +231,18 @@ export class TestPage {
 
   encryptDataPacket() {
     com.uniken.rdnaplugin.RdnaClient.encryptDataPacket(this.encryptDataPacketSuccess, this.encryptDataPacketFailure, [com.uniken.rdnaplugin.RdnaClient.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, this.cipherSpect, this.cipherSalt, this.plainText]);
+    Util.setTime(Constants.ENCRYPTDATAPACKET);
   }
 
   encryptDataPacketSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.ENCRYPTDATAPACKET);
+    console.log ('TwoFactorAuthMachine - encryptDataPacketTimeDifference '+timedifference);
+    console.log("RdnaClient.js: encryptDataPacketSuccess-->" + data);
     let jsonObj: any;
     jsonObj = JSON.parse(data);
     this.encryptDataPacketOutput = jsonObj.response;
 
-    console.log("RdnaClient.js: encryptDataPacketSuccess-->" + data);
+    
     alert(data);
   }
   encryptDataPacketFailure(data) {
@@ -222,9 +253,13 @@ export class TestPage {
 
   decryptDataPacket() {
     com.uniken.rdnaplugin.RdnaClient.decryptDataPacket(this.decryptDataPacketSuccess, this.decryptDataPacketFailure, [com.uniken.rdnaplugin.RdnaClient.RDNAPrivacyScope.RDNA_PRIVACY_SCOPE_DEVICE, this.cipherSpect, this.cipherSalt, this.encryptDataPacketOutput]);
+    Util.setTime(Constants.DECRYPTDATAPACKET);
   }
 
   decryptDataPacketSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.DECRYPTDATAPACKET);
+    console.log ('TwoFactorAuthMachine - decryptDataPacketTimeDifference '+timedifference);
+    console.log("RdnaClient.js: decryptDataPacketSuccess-->" + data);
     let jsonObj: any;
     jsonObj = JSON.parse(data);
     this.decryptDataPacketOutput = jsonObj.response;
@@ -275,9 +310,12 @@ export class TestPage {
 
   getSessionID() {
     com.uniken.rdnaplugin.RdnaClient.getSessionID(this.getSessionIDSuccess, this.getSessionIDFailure);
+    Util.setTime(Constants.SESSIONID);
   }
 
   getSessionIDSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SESSIONID);
+    console.log ('TwoFactorAuthMachine - sessionIDTimeDifference '+timedifference);
     console.log("RdnaClient.js: getSessionIDSuccess-->" + data);
     alert(data);
   }
@@ -289,9 +327,12 @@ export class TestPage {
 
   getSDKVersion() {
     com.uniken.rdnaplugin.RdnaClient.getSDKVersion(this.getSDKVersionSuccess, this.getSDKVersionFailure);
+    Util.setTime(Constants.SDKVERSION);
   }
 
   getSDKVersionSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.SDKVERSION);
+    console.log ('TwoFactorAuthMachine - sdkVersionTimeDifference '+timedifference);
     console.log("RdnaClient.js: getSDKVersionSuccess-->" + data);
     alert(data);
   }
@@ -302,10 +343,13 @@ export class TestPage {
   }
 
   setApplicationVersion() {
-    com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.setApplicationVersionSuccess, this.setApplicationVersionFailure, ["5.3.5"]);
+    com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.setApplicationVersionSuccess, this.setApplicationVersionFailure, ["5.3.7"]);
+    Util.setTime(Constants.APPLICATIONVERSION);
   }
 
   setApplicationVersionSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.APPLICATIONVERSION);
+    console.log ('TwoFactorAuthMachine - setApplicationVersionSuccessTimeDifference '+timedifference);
     console.log("RdnaClient.js: setApplicationVersionSuccess-->" + data);
     alert(data);
   }
@@ -317,9 +361,12 @@ export class TestPage {
 
   setDeviceToken() {
     com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.setDeviceTokenSuccess, this.setDeviceTokenFailure, ["DEVICETOKEN"]);
+    Util.setTime(Constants.DEVICETOKEN);
   }
 
   setDeviceTokenSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.DEVICETOKEN);
+    console.log ('TwoFactorAuthMachine - setDeviceTokenSuccessTimeDifference '+timedifference);
     console.log("RdnaClient.js: setDeviceTokenSuccess-->" + data);
     alert(data);
   }
@@ -331,9 +378,12 @@ export class TestPage {
 
   terminate() {
     com.uniken.rdnaplugin.RdnaClient.terminate(this.terminateSuccess, this.terminateFailure);
+    Util.setTime(Constants.TERMINATE);
   }
 
   terminateSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.TERMINATE);
+    console.log ('TwoFactorAuthMachine - terminateSuccessTimeDifference '+timedifference);
     console.log("RdnaClient.js: terminateSuccess-->" + data);
     alert(data);
   }
@@ -345,9 +395,12 @@ export class TestPage {
 
   getAgentID() {
     com.uniken.rdnaplugin.RdnaClient.getAgentID(this.getAgentIDSuccess, this.getAgentIDFailure);
+    Util.setTime(Constants.AGENTID);
   }
 
   getAgentIDSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.AGENTID);
+    console.log ('TwoFactorAuthMachine - getAgentIDSuccessTimeDifference '+timedifference);
     console.log("RdnaClient.js: getAgentIDSuccess-->" + data);
     alert(data);
   }
@@ -359,9 +412,12 @@ export class TestPage {
 
   getDeviceID() {
     com.uniken.rdnaplugin.RdnaClient.getDeviceID(this.getDeviceIDSuccess, this.getDeviceIDFailure);
+    Util.setTime(Constants.DEVICEID);
   }
 
   getDeviceIDSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.DEVICEID);
+    console.log ('TwoFactorAuthMachine - getDeviceIDSuccesssTimeDifference '+timedifference);
     console.log("RdnaClient.js: getDeviceIDSuccess-->" + data);
     alert(data);
   }

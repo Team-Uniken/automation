@@ -6,6 +6,9 @@ import { User } from '../../providers/providers';
 import { NotificationPage } from '../notification/notification';
 import { NotificationHistoryPage } from '../notificationhistory/notificationhistory';
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
+import { Util } from '../twofatorstate/Util';
+import * as Constants from '../twofatorstate/constants';
+declare var updateDeviceDetails: any;
 declare var com: any;
 @Component({
   selector: 'page-dashboard',
@@ -24,8 +27,8 @@ export class DashboardPage {
   };
 
   // Our translated text strings
-  private signupErrorString: string;
-
+  private signupErrorString: string;c
+  updateDeviceDetails: any;
 
   amount: any;
   constructor(public navCtrl: NavController,
@@ -90,24 +93,53 @@ export class DashboardPage {
     this.navCtrl.push(NotificationHistoryPage);
   }
 
-  getErrorInfo(){
+  getErrorInfo() {
     com.uniken.rdnaplugin.RdnaClient.getErrorInfo(this.getErrorInfoOnSuccess, this.getErrorInfoOnFailure, ["539001398"]);
   }
 
+  showTimeDifferenc() {
+    var timeDifference = "";
+    var timeDifferenceMap = Util.getAPITIMINGDIFFERENCE();
+    Object.keys(timeDifferenceMap).forEach((key) => {
+      timeDifference += key + "-" + timeDifferenceMap[key] + "\n";
+    });
+    alert(timeDifference);
+
+  }
+
+
   getRegisteredDeviceDetails() {
     com.uniken.rdnaplugin.RdnaClient.getRegisteredDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id]);
+    Util.setTime(Constants.REGISTERDEVICEDETAILS);
     document.addEventListener('onGetRegistredDeviceDetails', (e: any) => {
-      alert("onGetRegistredDeviceDetails success");
+      //alert("onGetRegistredDeviceDetails success");
+      // this.registerDeviceDetailsData = JSON.stringify(e);
+      //const res = JSON.parse(e.respnose);
+      const jsonOBJ = JSON.parse(e.response);;
+      //alert("ErrorCode : " + jsonOBJ.errCode);
+      //alert("1");
+      this.updateDeviceDetails = jsonOBJ;
+      //alert("2");
+      this.updateDeviceDetails.pArgs.response.ResponseData.device[0].devName = "Undefined";
+      //alert("3");
+      this.updateDeviceDetails.pArgs.response.ResponseData.device[0].status = "Update";
+      alert("Device values changed " + this.updateDeviceDetails);
+      alert("Device values changed " + updateDeviceDetails);
       console.log("RdnaClient.js: onGetRegistredDeviceDetails********************************************************" + JSON.stringify(e));
+      var timedifference = Util.getTimeDifference(Constants.REGISTERDEVICEDETAILS);
+      console.log('TwoFactorAuthMachine - registerDeviceDetailsTimedifference ' + timedifference);
     });
 
   }
 
-  updateDeviceDetails() {
-    com.uniken.rdnaplugin.RdnaClient.updateDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id, JSON.stringify({ "device": [ { "devUUID": "49817EUL7UK2JOIV4JBALQGWOPX9PGPOT1T9CBZE6P3NL95VKQ", "devName": "Abhay", "status": "Update", "lastAccessedTs": "2018-08-31T14:13:21UTC", "createdTs": "2018-08-31T13:01:16UTC", "devBind": 0 } ] })]);
+  updateDeviceDetailsValue() {
+    com.uniken.rdnaplugin.RdnaClient.updateDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id, JSON.stringify(this.updateDeviceDetails)]);
+    Util.setTime(Constants.UPDATEDEVICEDETAILS);
     document.addEventListener('onUpdateDeviceDetails', (e: any) => {
-      alert("onUpdateDeviceDetails success");
+      alert("UPDATEDEVICEDETAILS " + e.respnose);
       console.log("RdnaClient.js: onGetRegistredDeviceDetails********************************************************" + JSON.stringify(e));
+      var timedifference = Util.getTimeDifference(Constants.UPDATEDEVICEDETAILS);
+      console.log('TwoFactorAuthMachine - updateDeviceDetailsTimedifference ' + timedifference);
     });
   }
 

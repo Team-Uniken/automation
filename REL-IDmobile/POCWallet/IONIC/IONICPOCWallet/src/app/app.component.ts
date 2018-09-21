@@ -42,81 +42,117 @@ export class MyApp {
       console.log('Push notifications not initialized. Cordova is not available - Run in physical device');
       return;
     }
-    const options: PushOptions = {
+    // const options: PushOptions = {
+    //   android: {
+    //     senderID: 'YOUR_SENDER_ID'
+    //   },
+    //   ios: {
+    //     alert: 'true',
+    //     badge: false,
+    //     sound: 'true'
+    //   },
+    //   windows: {}
+    // };
+
+    const push = this.push.init({
       android: {
-        senderID: 'YOUR_SENDER_ID'
       },
       ios: {
-        alert: 'true',
-        badge: false,
-        sound: 'true'
+        alert: "true",
+        badge: "true",
+        sound: "true"
       },
       windows: {}
-    };
-    const pushObject: PushObject = this.push.init(options);
-
-    pushObject.on('registration').subscribe((data: any) => {
-      console.log('device token -> ' + data.registrationId);
-      var tokenid:string;
-      tokenid = data.registrationId;
-      if(tokenid)
-      com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.updateSuccess,this.updateFailure,[tokenid]);
-      //TODO - send device token to server
     });
+    
+    //const pushObject: PushObject = this.push.init(options);
 
-    pushObject.on('notification').subscribe((data: any) => {
-      console.log('message -> ' + data.message);
-      //if user using app and push notification comes
-      /*if (data.additionalData.foreground) {
-        // if application open, show popup
-        let confirmAlert = this.alertCtrl.create({
-          title: 'New Notification',
-          message: data.message,
-          buttons: [{
-            text: 'Ignore',
-            role: 'cancel'
-          }, {
-            text: 'View',
-            handler: () => {
-              //TODO: Your logic here
-              //this.nav.push(DetailsPage, { message: data.message });
-            }
-          }]
-        });
-        confirmAlert.present();
-      } else {
-        //if user NOT using app and push notification comes
-        //TODO: Your logic on click of push notification directly
-        //this.nav.push(DetailsPage, { message: data.message });
-        console.log('Push notification clicked');
-      }*/
-      if(TwoFactorState.isLoginToDashboard == true){
+    // pushObject.on('registration').subscribe((data: any) => {
+    //   console.log('device token -> ' + data.registrationId);
+    //   var tokenid:string;
+    //   tokenid = data.registrationId;
+    //   if(tokenid)
+    //   com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.updateSuccess,this.updateFailure,[tokenid]);
+    //   //TODO - send device token to server
+    // });
 
-        var vc:ViewController ;
-         vc = this.nav.getByIndex((this.nav.length()) -1);
-            alert("dashboard");
-         //if(typeof vc === 'NotificationPage')
+    const options: PushOptions = {
+      android: {},
+      ios: {
+          alert: 'true',
+          badge: true,
+          sound: 'false'
+      },
+      windows: {}
+   };
+   
+   const pushObject: PushObject = this.push.init(options);
+   
+   
+   pushObject.on('registration').subscribe((registration: any) => {
+   com.uniken.rdnaplugin.RdnaClient.setDeviceToken(this.updateSuccess,this.updateFailure,[registration.registrationId]);
+   });
 
-      }else{
+   pushObject.on('notification').subscribe((notification: any) => {alert('APNS11 '+notification);
+  });
+   pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+   
+   
+
+    // pushObject.on('notification').subscribe((data: any) => {
+    //   console.log('message -> ' + data.message);
+    //   alert('APNS '+data.message);
+    //   //if user using app and push notification comes
+    //   /*if (data.additionalData.foreground) {
+    //     // if application open, show popup
+    //     let confirmAlert = this.alertCtrl.create({
+    //       title: 'New Notification',
+    //       message: data.message,
+    //       buttons: [{
+    //         text: 'Ignore',
+    //         role: 'cancel'
+    //       }, {
+    //         text: 'View',
+    //         handler: () => {
+    //           //TODO: Your logic here
+    //           //this.nav.push(DetailsPage, { message: data.message });
+    //         }
+    //       }]
+    //     });
+    //     confirmAlert.present();
+    //   } else {
+    //     //if user NOT using app and push notification comes
+    //     //TODO: Your logic on click of push notification directly
+    //     //this.nav.push(DetailsPage, { message: data.message });
+    //     console.log('Push notification clicked');
+    //   }*/
+    //   if(TwoFactorState.isLoginToDashboard == true){
+
+    //     var vc:ViewController ;
+    //      vc = this.nav.getByIndex((this.nav.length()) -1);
+    //         alert("dashboard");
+    //      //if(typeof vc === 'NotificationPage')
+
+    //   }else{
      
-        let confirmAlert = this.alertCtrl.create({
-          title: 'New Notification',
-          message: data.message,
-          buttons: [{
-            text: 'Ignore',
-            role: 'cancel'
-          }, {
-            text: 'View',
-            handler: () => {
-              //TODO: Your logic here
-              //this.nav.push(DetailsPage, { message: data.message });
-            }
-          }]
-        });
-      }
+    //     let confirmAlert = this.alertCtrl.create({
+    //       title: 'New Notification',
+    //       message: data.message,
+    //       buttons: [{
+    //         text: 'Ignore',
+    //         role: 'cancel'
+    //       }, {
+    //         text: 'View',
+    //         handler: () => {
+    //           //TODO: Your logic here
+    //           //this.nav.push(DetailsPage, { message: data.message });
+    //         }
+    //       }]
+    //     });
+    //   }
     
 
-    });
+    // });
 
     pushObject.on('error').subscribe(error => alert('Error with Push plugin' + error));
 }

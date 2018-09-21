@@ -23,11 +23,9 @@ declare var com: any;
 export class LoginPage {
 
   account: { login_id: string, password: string, acess_code: string } = {
-     //login_id: 'swap7',
-     //password: '1111'
-    login_id: '',
-    password: '',
-    acess_code: ''
+    login_id: 'Abhay',
+    password: 'Uniken123$',
+    acess_code: '1111'
   };
 
   // Our translated text strings
@@ -52,7 +50,9 @@ export class LoginPage {
 
   activation(e:any) {
     console.log(e);
-    Util.getTimeDifference(Constants.OPEN_HTTP_CONNECTION);
+   var timedifference = Util.getTimeDifference(Constants.OPEN_HTTP_CONNECTION);
+   console.log('login - ActivateUserTimedifference '+timedifference);
+
     this.toast.hideLoader();
     var jsonObj = JSON.parse(e.response);
 
@@ -120,9 +120,9 @@ export class LoginPage {
 
   doSignup() {
   
-    alert(this.sessionID);
+   alert(this.sessionID);
 
-    var URL = "http://18.211.218.44:9080/rest/enrollUser.htm";
+    var URL = Constants.HOSTNAME+"enrollUser.htm";
     //console.log("---Register ---baseUrl =" + baseUrl)
 
     // USER_ID_STR, mandatory = true          // will be email Id
@@ -133,13 +133,13 @@ export class LoginPage {
     // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
 
     var userMap = {
-      "firstName":"Akash",
-      "lastName":"Saxena",
-      "userId":"testuser",
+      "firstName":this.account.login_id,
+      "lastName":"kulkarni",
+      "userId":this.account.login_id,
       "actCode":"1111",
       "groupName":"group1",
-      "emailId":"akash.saxena@uniken.com",
-      "mobNum":"9898343366",
+      "emailId":"onkar.kulkarni@uniken.com",
+      "mobNum":"9168086688",
       "username":"sruser",
       "password":"1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
       "isRELIDZeroEnabled":"true",
@@ -150,14 +150,16 @@ export class LoginPage {
     };
 
     com.uniken.rdnaplugin.RdnaClient.openHttpConnection(this.onSuccess, this.onFailure, [com.uniken.rdnaplugin.RdnaClient.RDNAHttpMethods.RDNA_HTTP_POST,URL,JSON.stringify(userMap),""]);  
-    Util.setTime(Constants.OPEN_HTTP_CONNECTION);  
+    Util.setTime(Constants.OPEN_HTTP_CONNECTION); 
+    
+    
   }
 
   doSignupDevice() {
   
     alert(this.sessionID);
 
-    var URL = "http://18.211.218.44:9080/rest/enrollUserDevice.htm";
+    var URL = Constants.HOSTNAME+"enrollUserDevice.htm";
     //console.log("---Register ---baseUrl =" + baseUrl)
 
     // USER_ID_STR, mandatory = true          // will be email Id
@@ -168,7 +170,7 @@ export class LoginPage {
     // IS_RELIDZERO_ENABLED, mandatory = true     // hardcode
 
     var userMap = {
-      "userId":"testuser",
+      "userId":this.account.login_id,
       "actCode":"1111",
       "username":"sruser",
       "password":"1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
@@ -185,6 +187,7 @@ export class LoginPage {
     onSuccess(data) {
       alert("RdnaClient.js: openHttpConnectionSuccess"+data);
       console.log("RdnaClient.js: openHttpConnectionSuccess");
+      this.activation;
     }
 
   onFailure(data) {
@@ -213,5 +216,17 @@ onFailureSessionId(data) {
 
   this.toast.hideLoader();
 }
+
+showTimeDifferenc()
+  {
+    var timeDifference = "";
+    var timeDifferenceMap = Util.getAPITIMINGDIFFERENCE();
+    Object.keys(timeDifferenceMap).forEach((key)=>{
+      timeDifference += key+"-"+timeDifferenceMap[key]+"\n";   
+    });    
+    alert(timeDifference);
+  }
+
+
 
 }

@@ -11,6 +11,8 @@ import { elementDef } from '@angular/core/src/view/element';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map'
 import { TwoFactorState } from '../twofatorstate/twofatorstate';
+import { Util } from '../twofatorstate/Util';
+import * as Constants from '../twofatorstate/constants';
 
 
 declare var com;
@@ -56,6 +58,8 @@ export class NotificationHistoryPage {
     
     NotificationHistoryPage.getNotificationHistoryListener = (e: any) => {
       console.log("***********************"+this.replaceString("\n","\\n",e.response));
+      var timedifference = Util.getTimeDifference(Constants.NOTIFICATIONHISTORY);
+      console.log('TwoFactorAuthMachine - notificationHistoryTimedifference '+timedifference);
       this._ngZone.run(() => {
         
       //const res = JSON.parse(this.replaceString("\n","\\n",e.response));
@@ -94,6 +98,7 @@ export class NotificationHistoryPage {
     var keywordSearch: string = "";
     var deviceID: string = "";
     com.uniken.rdnaplugin.RdnaClient.getNotificationHistory(this.initSuccess, this.initFailure, [recordCount, enterpriseID,startIndex, startDate, endDate,notificationStatus,actionPerformed,keywordSearch,deviceID]);
+    Util.setTime(Constants.NOTIFICATIONHISTORY);
   }
 
    replaceString(find, replace, str) {
