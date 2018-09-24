@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams, Platform, Alert } from 'ionic-angular';
 import { Toast } from '../toast/toast';
 import { User } from '../../providers/providers';
 import { NotificationPage } from '../notification/notification';
@@ -133,7 +133,7 @@ export class DashboardPage {
   }
 
   updateDeviceDetailsValue() {
-    com.uniken.rdnaplugin.RdnaClient.updateDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id, JSON.stringify(this.updateDeviceDetails)]);
+    com.uniken.rdnaplugin.RdnaClient.updateDeviceDetails(this.onSuccess, this.onFailure, [this.account.login_id, JSON.stringify(this.updateDeviceDetails.pArgs.response.ResponseData)]);
     Util.setTime(Constants.UPDATEDEVICEDETAILS);
     document.addEventListener('onUpdateDeviceDetails', (e: any) => {
       alert("UPDATEDEVICEDETAILS " + e.respnose);
@@ -141,6 +141,19 @@ export class DashboardPage {
       var timedifference = Util.getTimeDifference(Constants.UPDATEDEVICEDETAILS);
       console.log('TwoFactorAuthMachine - updateDeviceDetailsTimedifference ' + timedifference);
     });
+  }
+
+  getAllChallenges(){
+    com.uniken.rdnaplugin.RdnaClient.getAllChallenges(this.getAllChallengesSuccess, this.getAllChallengesFailure, [this.account.login_id]);
+    Util.setTime(Constants.GET_ALL_CHALLENGES);
+    document.addEventListener('onGetAllChallengeStatus', (e: any) => {
+      alert("GET_ALL_CHALLENGES"+e.respnose);
+      Util.getTimeDifference(Constants.GET_ALL_CHALLENGES);
+    });
+  }
+
+  updateAllChallenges(){
+
   }
 
   onSuccess(data) {
@@ -161,6 +174,14 @@ export class DashboardPage {
   getErrorInfoOnFailure(data) {
     alert(data);
     console.log("RdnaClient.js: onFailure");
+  }
+
+  getAllChallengesSuccess(data){
+
+  }
+
+  getAllChallengesFailure(data){
+    
   }
 
 }

@@ -33,6 +33,7 @@
  export const SESSIONID ="sessionID";
  export const SDKVERSION ="sdkVersion";
  export const NOTIFICATION = "notification";
+ export const UPDATE_NOTIFICATION = "update notification";
  export const NOTIFICATIONHISTORY = "notificationHistory";
  export const REGISTERDEVICEDETAILS = "registeredDeviceDetails";
  export const UPDATEDEVICEDETAILS = "updateDeviceDetails";
@@ -41,5 +42,7 @@
  export const TERMINATE = "terminate";
  export const AGENTID = "agentID";
  export const DEVICEID = "deviceID";
+ export const GET_ALL_CHALLENGES = "getAllChallenges";
+ export const UPDATE_ALL_CHALLENGES = "updateChallenges";
  
  export const HOSTNAME = "http://10.0.0.179:9080/rest/";

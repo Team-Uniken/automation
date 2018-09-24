@@ -81,6 +81,7 @@ export class NotificationPage {
     };
 
     NotificationPage.updateListener = (e: any) => {
+    Util.getTimeDifference(Constants.UPDATE_NOTIFICATION);
       //this.toast.hideLoader();
       this._ngZone.run(() => {
       const res = JSON.parse(e.response);
@@ -187,6 +188,7 @@ export class NotificationPage {
 
   callUpdateNotification(notificationID:string,action:string){
     com.uniken.rdnaplugin.RdnaClient.updateNotifications(this.updateSuccess,this.updateFailure,[notificationID,action]);
+    Util.setTime(Constants.UPDATE_NOTIFICATION);
   }
 
 
