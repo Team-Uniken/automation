@@ -23,8 +23,8 @@ declare var com: any;
 export class LoginPage {
 
   account: { login_id: string, password: string, acess_code: string } = {
-    login_id: 'Abhay',
-    password: 'Uniken123$',
+    login_id: 'Nikhil',
+    password: '1234',
     acess_code: '1111'
   };
 

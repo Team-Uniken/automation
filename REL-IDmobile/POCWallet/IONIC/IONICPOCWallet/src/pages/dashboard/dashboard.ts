@@ -147,12 +147,51 @@ export class DashboardPage {
     com.uniken.rdnaplugin.RdnaClient.getAllChallenges(this.getAllChallengesSuccess, this.getAllChallengesFailure, [this.account.login_id]);
     Util.setTime(Constants.GET_ALL_CHALLENGES);
     document.addEventListener('onGetAllChallengeStatus', (e: any) => {
-      alert("GET_ALL_CHALLENGES"+e.respnose);
+
+      const jsonOBJ = JSON.parse(e.response);;
+      this.updateDeviceDetails = jsonOBJ;
+      // this.updateDeviceDetails.pArgs.response.ResponseData.chlng[0].chlng_resp[0].response = "1234";
+
+      alert("GET_ALL_CHALLENGES "+this.updateDeviceDetails.pArgs.response.ResponseData.chlng[0].chlng_resp[0].challenge);
       Util.getTimeDifference(Constants.GET_ALL_CHALLENGES);
+
+      // const jsonOBJ = JSON.parse(e.response);;
+      // this.updateDeviceDetails = jsonOBJ;
+      this.updateDeviceDetails.pArgs.response.ResponseData.chlng[0].chlng_resp[0].response = "1234";
+    
+      alert("Password values changed updated:" + this.updateDeviceDetails.pArgs.response.ResponseData.chlng[0].chlng_resp[0].response);
+      
     });
   }
 
-  updateAllChallenges(){
+  getConfig(){
+    alert("In Get Config");
+    com.uniken.rdnaplugin.RdnaClient.getConfig(this.getConfigSuccess, this.getConfigFailure, [JSON.stringify({ chlng: 'all' })]);
+    Util.setTime(Constants.GET_CONFIG);
+    document.addEventListener('onConfigReceived', (e: any) => {
+
+      Util.getTimeDifference(Constants.GET_CONFIG);
+      console.log("get config response:"+e.respnose);
+      alert("get config successfully:" + e.respnose);
+      
+    });
+  }
+
+  updateChallenge(){
+    alert("Calling update challenges");
+    com.uniken.rdnaplugin.RdnaClient.updateChallenges(this.updateChallengesSuccess, this.updateChallengesFailure, [JSON.stringify(this.updateDeviceDetails.pArgs.response.ResponseData), this.account.login_id]);
+    Util.setTime(Constants.UPDATE_ALL_CHALLENGES);
+    alert("update Challenge called");
+    document.addEventListener('onUpdateChallengeStatus', (e: any) => {
+
+      const jsonOBJ = JSON.parse(e.response);;
+      this.updateDeviceDetails = jsonOBJ;
+
+      Util.getTimeDifference(Constants.UPDATE_ALL_CHALLENGES);
+      console.log("update challenge response"+JSON.stringify(jsonOBJ));
+      alert("Challenge updated successfully:" + this.updateDeviceDetails);
+      
+    });
 
   }
 
@@ -181,6 +220,22 @@ export class DashboardPage {
   }
 
   getAllChallengesFailure(data){
+    
+  }
+
+  updateChallengesSuccess(data){
+
+  }
+
+  updateChallengesFailure(data){
+    
+  }
+
+  getConfigSuccess(data){
+
+  }
+
+  getConfigFailure(data){
     
   }
 

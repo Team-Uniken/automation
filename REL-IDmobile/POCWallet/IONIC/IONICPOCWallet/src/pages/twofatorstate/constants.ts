@@ -44,5 +44,6 @@
  export const DEVICEID = "deviceID";
  export const GET_ALL_CHALLENGES = "getAllChallenges";
  export const UPDATE_ALL_CHALLENGES = "updateChallenges";
+ export const GET_CONFIG = "getConfig";
  
- export const HOSTNAME = "http://10.0.0.179:9080/rest/";
+ export const HOSTNAME = "http://18.211.218.44:9080/rest/";
