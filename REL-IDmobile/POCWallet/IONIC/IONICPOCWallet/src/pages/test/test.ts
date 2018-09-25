@@ -112,7 +112,7 @@ export class TestPage {
   }
 
   getAllServicesSuccess(data) {
-    alert("Sucess get all service"+data);
+    // alert("Sucess get all service"+data);
     // let jsonObj: any;
     // // jsonObj = JSON.parse(data);
 
@@ -120,14 +120,14 @@ export class TestPage {
     // console.log(" getAllServicesSuccess with stringfy-->" + JSON.stringify(data));
 
     const jsonOBJ = JSON.parse(data);
-    alert("service parsed successfully");
-    alert(jsonOBJ.response);
+    // alert("service parsed successfully");
+    // alert(jsonOBJ.response);
     const serviceJSON = JSON.parse(jsonOBJ.response);
     this.serviceDetails = serviceJSON;
+    var timedifference = Util.getTimeDifference(Constants.ALLSERVICES);
     alert(this.serviceDetails[0].accessServerName);
     // this.allServiceDetail = jsonOBJ;
 
-    var timedifference = Util.getTimeDifference(Constants.ALLSERVICES);
     console.log ('TwoFactorAuthMachine - allServicesTimeDifference '+timedifference);
     console.log("RdnaClient.js: getAllServicesSuccess-->" + data);
     alert(data);
@@ -142,7 +142,7 @@ export class TestPage {
 
 
   serviceAccessStart() {
-    com.uniken.rdnaplugin.RdnaClient.serviceAccessStart(this.serviceAccessStartSuccess, this.serviceAccessStartFailure, [this.serviceDetails[0]]);
+    com.uniken.rdnaplugin.RdnaClient.serviceAccessStart(this.serviceAccessStartSuccess, this.serviceAccessStartFailure, [JSON.stringify(this.serviceDetails[0])]);
     Util.setTime(Constants.SERVICEACCESSSTART);
   }
 
@@ -161,7 +161,7 @@ export class TestPage {
 
 
   serviceAccessStop() {
-    com.uniken.rdnaplugin.RdnaClient.serviceAccessStop(this.serviceAccessStopSuccess, this.serviceAccessStopFailure, [this.serviceDetails[0]]);
+    com.uniken.rdnaplugin.RdnaClient.serviceAccessStop(this.serviceAccessStopSuccess, this.serviceAccessStopFailure, [JSON.stringify(this.serviceDetails[0])]);
     Util.setTime(Constants.SERVICEACCESSSTOP);
   }
   serviceAccessStopSuccess(data) {

@@ -178,6 +178,19 @@ export class DashboardPage {
     });
   }
 
+  logOff(){
+    // alert("Log off called")
+    com.uniken.rdnaplugin.RdnaClient.logOff(this.onSuccessLogOff,this.onFailureLogOff,[this.account.login_id]);
+    Util.setTime(Constants.LOG_OFF);
+    document.addEventListener('onLogOff', (e: any) => {
+
+      Util.getTimeDifference(Constants.LOG_OFF);
+      console.log("Log Off response"+JSON.stringify(e));
+      alert("Log Off called successfully:" + e);
+      
+    });
+  }
+
   updateChallenge(){
     alert("Calling update challenges");
     com.uniken.rdnaplugin.RdnaClient.updateChallenges(this.updateChallengesSuccess, this.updateChallengesFailure, [JSON.stringify(this.updateDeviceDetails.pArgs.response.ResponseData), this.account.login_id]);
@@ -185,6 +198,7 @@ export class DashboardPage {
     alert("update Challenge called");
     document.addEventListener('onUpdateChallengeStatus', (e: any) => {
 
+      alert("InAsync logOff");
       const jsonOBJ = JSON.parse(e.response);;
       this.updateDeviceDetails = jsonOBJ;
 
@@ -194,6 +208,16 @@ export class DashboardPage {
       
     });
 
+  }
+
+  onSuccessLogOff(data) {
+    alert("Log off success:" + data);
+    console.log("RdnaClient.js: Log off success");
+  }
+
+  onFailureLogOff(data) {
+    alert("Log off failed" + data);
+    console.log("RdnaClient.js: Log off failed");
   }
 
   onSuccess(data) {
