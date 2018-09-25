@@ -90,6 +90,7 @@ export class HomePage {
     Object.keys(timeDifferenceMap).forEach((key)=>{
       timeDifference += key+"-"+timeDifferenceMap[key]+"\n";   
     });    
+    console.log(timeDifference);
     alert(timeDifference);
   }
   

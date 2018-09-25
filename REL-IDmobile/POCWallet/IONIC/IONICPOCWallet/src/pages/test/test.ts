@@ -25,7 +25,7 @@ export class TestPage {
   plainHttpRequest: string;
   encryptHttpRequestOutput: string;
   decryptHttpResponseOutput: string;
-
+  allServiceDetail: any;
 
   constructor(public navCtrl: NavController, public toast: Toast) {
 
@@ -106,14 +106,23 @@ export class TestPage {
   }
 
   getAllServicesSuccess(data) {
+    alert("Sucess get all service");
+    // let jsonObj: any;
+    // // jsonObj = JSON.parse(data);
 
-    //let jsonObj: any;
-   // jsonObj = JSON.parse(data);
-   // this.serviceStringJson = jsonObj.response;
+    // console.log(" getAllServicesSuccess-->" + data);
+    // console.log(" getAllServicesSuccess with stringfy-->" + JSON.stringify(data));
+
+    const jsonOBJ = JSON.parse(data);
+    alert("service parsed successfully");
+    alert(jsonOBJ);
+    // this.allServiceDetail = jsonOBJ;
+
     var timedifference = Util.getTimeDifference(Constants.ALLSERVICES);
     console.log ('TwoFactorAuthMachine - allServicesTimeDifference '+timedifference);
     console.log("RdnaClient.js: getAllServicesSuccess-->" + data);
     alert(data);
+    alert("Service name:"+ this.allServiceDetail.pArgs.response[0].serviceName);
   }
 
   getAllServicesFailure(data) {

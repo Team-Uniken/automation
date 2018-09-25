@@ -27,7 +27,7 @@ export class DashboardPage {
   };
 
   // Our translated text strings
-  private signupErrorString: string;c
+  private signupErrorString: string;
   updateDeviceDetails: any;
 
   amount: any;
@@ -103,6 +103,7 @@ export class DashboardPage {
     Object.keys(timeDifferenceMap).forEach((key) => {
       timeDifference += key + "-" + timeDifferenceMap[key] + "\n";
     });
+    console.log(timeDifference);
     alert(timeDifference);
 
   }
@@ -148,7 +149,7 @@ export class DashboardPage {
     Util.setTime(Constants.GET_ALL_CHALLENGES);
     document.addEventListener('onGetAllChallengeStatus', (e: any) => {
 
-      const jsonOBJ = JSON.parse(e.response);;
+      const jsonOBJ = JSON.parse(e.response);
       this.updateDeviceDetails = jsonOBJ;
       // this.updateDeviceDetails.pArgs.response.ResponseData.chlng[0].chlng_resp[0].response = "1234";
 
