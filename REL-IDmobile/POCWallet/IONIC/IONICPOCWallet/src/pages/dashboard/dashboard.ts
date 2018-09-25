@@ -95,6 +95,7 @@ export class DashboardPage {
 
   getErrorInfo() {
     com.uniken.rdnaplugin.RdnaClient.getErrorInfo(this.getErrorInfoOnSuccess, this.getErrorInfoOnFailure, ["539001398"]);
+    Util.setTime(Constants.ERROR_INFO);
   }
 
   showTimeDifferenc() {
@@ -192,13 +193,10 @@ export class DashboardPage {
   }
 
   updateChallenge(){
-    alert("Calling update challenges");
     com.uniken.rdnaplugin.RdnaClient.updateChallenges(this.updateChallengesSuccess, this.updateChallengesFailure, [JSON.stringify(this.updateDeviceDetails.pArgs.response.ResponseData), this.account.login_id]);
     Util.setTime(Constants.UPDATE_ALL_CHALLENGES);
-    alert("update Challenge called");
     document.addEventListener('onUpdateChallengeStatus', (e: any) => {
 
-      alert("InAsync logOff");
       const jsonOBJ = JSON.parse(e.response);;
       this.updateDeviceDetails = jsonOBJ;
 
@@ -231,6 +229,7 @@ export class DashboardPage {
   }
 
   getErrorInfoOnSuccess(data) {
+    var timedifference = Util.getTimeDifference(Constants.REGISTERDEVICEDETAILS);
     alert(data);
     console.log("RdnaClient.js: onSuccess");
   }

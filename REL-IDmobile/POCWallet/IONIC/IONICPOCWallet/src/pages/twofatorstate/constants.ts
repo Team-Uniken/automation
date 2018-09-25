@@ -46,5 +46,6 @@
  export const UPDATE_ALL_CHALLENGES = "updateChallenges";
  export const GET_CONFIG = "getConfig";
  export const LOG_OFF = "logOff";
+ export const ERROR_INFO = "getErrorInfo";
  
  export const HOSTNAME = "http://qa1-uniken.com:9080/rest/";
