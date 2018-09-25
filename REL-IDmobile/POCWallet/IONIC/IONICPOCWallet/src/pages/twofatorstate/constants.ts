@@ -46,4 +46,4 @@
  export const UPDATE_ALL_CHALLENGES = "updateChallenges";
  export const GET_CONFIG = "getConfig";
  
- export const HOSTNAME = "http://18.211.218.44:9080/rest/";
+ export const HOSTNAME = "http://qa1-uniken.com:9080/rest/";

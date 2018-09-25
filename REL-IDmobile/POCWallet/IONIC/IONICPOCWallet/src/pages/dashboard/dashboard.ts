@@ -28,7 +28,7 @@ export class DashboardPage {
 
   // Our translated text strings
   private signupErrorString: string;
-  updateDeviceDetails: any;
+  public updateDeviceDetails: any;
 
   amount: any;
   constructor(public navCtrl: NavController,

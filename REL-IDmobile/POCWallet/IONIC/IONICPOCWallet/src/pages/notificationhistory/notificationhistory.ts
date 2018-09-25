@@ -57,6 +57,8 @@ export class NotificationHistoryPage {
     }
     
     NotificationHistoryPage.getNotificationHistoryListener = (e: any) => {
+
+      alert("Completed NotificationHistory: " + e.response);
       console.log("***********************"+this.replaceString("\n","\\n",e.response));
       var timedifference = Util.getTimeDifference(Constants.NOTIFICATIONHISTORY);
       console.log('TwoFactorAuthMachine - notificationHistoryTimedifference '+timedifference);
@@ -167,6 +169,7 @@ export class NotificationHistoryPage {
 
   initSuccess(data) {
     // this.toast.hideLoader();
+    alert("notificationHistory: "+ data);
     console.log("RdnaClient.js: initSuccess");
   }
 

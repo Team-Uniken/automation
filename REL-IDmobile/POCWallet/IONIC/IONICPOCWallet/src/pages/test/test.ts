@@ -26,6 +26,7 @@ export class TestPage {
   encryptHttpRequestOutput: string;
   decryptHttpResponseOutput: string;
   allServiceDetail: any;
+  serviceDetails: any;
 
   constructor(public navCtrl: NavController, public toast: Toast) {
 
@@ -51,7 +52,12 @@ export class TestPage {
     this.encryptDataPacketSuccess = this.encryptDataPacketSuccess.bind(this);
     this.encryptHttpRequestSuccess = this.encryptHttpRequestSuccess.bind(this);
     this.decryptHttpResponseSuccess = this.decryptHttpResponseSuccess.bind(this);
-
+    this.getAllServicesSuccess = this.getAllServicesSuccess.bind(this);
+    this.getServiceByServiceNameSuccess = this.getServiceByServiceNameSuccess.bind(this);
+    this.getServiceByTargetCoordinate = this.getServiceByTargetCoordinate.bind(this);
+    this.serviceAccessStart = this.serviceAccessStart.bind(this);
+    this.serviceAccessStop = this.serviceAccessStop.bind(this);
+    
   }
 
 
@@ -63,7 +69,7 @@ export class TestPage {
   }
 
   getServiceByServiceName() {
-    com.uniken.rdnaplugin.RdnaClient.getServiceByServiceName(this.getServiceByServiceNameSuccess, this.getServiceByServiceNameFailure, [this.serviceName]);
+    com.uniken.rdnaplugin.RdnaClient.getServiceByServiceName(this.getServiceByServiceNameSuccess, this.getServiceByServiceNameFailure, [this.serviceDetails[0].serviceName]);
     Util.setTime(Constants.SERVICENAME);
   }
 
@@ -82,7 +88,7 @@ export class TestPage {
 
 
   getServiceByTargetCoordinate() {
-    com.uniken.rdnaplugin.RdnaClient.getServiceByTargetCoordinate(this.getServiceByTargetCoordinateSuccess, this.getServiceByTargetCoordinateFailure, [this.ip, this.port]);
+    com.uniken.rdnaplugin.RdnaClient.getServiceByTargetCoordinate(this.getServiceByTargetCoordinateSuccess, this.getServiceByTargetCoordinateFailure, [this.serviceDetails[0].targetHNIP, this.serviceDetails[0].targetPort]);
     Util.setTime(Constants.SERVICEBYTARGETCOORDINATE);
   }
 
@@ -106,7 +112,7 @@ export class TestPage {
   }
 
   getAllServicesSuccess(data) {
-    alert("Sucess get all service");
+    alert("Sucess get all service"+data);
     // let jsonObj: any;
     // // jsonObj = JSON.parse(data);
 
@@ -115,14 +121,17 @@ export class TestPage {
 
     const jsonOBJ = JSON.parse(data);
     alert("service parsed successfully");
-    alert(jsonOBJ);
+    alert(jsonOBJ.response);
+    const serviceJSON = JSON.parse(jsonOBJ.response);
+    this.serviceDetails = serviceJSON;
+    alert(this.serviceDetails[0].accessServerName);
     // this.allServiceDetail = jsonOBJ;
 
     var timedifference = Util.getTimeDifference(Constants.ALLSERVICES);
     console.log ('TwoFactorAuthMachine - allServicesTimeDifference '+timedifference);
     console.log("RdnaClient.js: getAllServicesSuccess-->" + data);
     alert(data);
-    alert("Service name:"+ this.allServiceDetail.pArgs.response[0].serviceName);
+    // alert("Service name:"+ this.allServiceDetail.pArgs.response[0].serviceName);
   }
 
   getAllServicesFailure(data) {
@@ -133,7 +142,7 @@ export class TestPage {
 
 
   serviceAccessStart() {
-    com.uniken.rdnaplugin.RdnaClient.serviceAccessStart(this.serviceAccessStartSuccess, this.serviceAccessStartFailure, [this.serviceStringJson]);
+    com.uniken.rdnaplugin.RdnaClient.serviceAccessStart(this.serviceAccessStartSuccess, this.serviceAccessStartFailure, [this.serviceDetails[0]]);
     Util.setTime(Constants.SERVICEACCESSSTART);
   }
 
@@ -152,7 +161,7 @@ export class TestPage {
 
 
   serviceAccessStop() {
-    com.uniken.rdnaplugin.RdnaClient.serviceAccessStop(this.serviceAccessStopSuccess, this.serviceAccessStopFailure, [this.serviceStringJson]);
+    com.uniken.rdnaplugin.RdnaClient.serviceAccessStop(this.serviceAccessStopSuccess, this.serviceAccessStopFailure, [this.serviceDetails[0]]);
     Util.setTime(Constants.SERVICEACCESSSTOP);
   }
   serviceAccessStopSuccess(data) {
