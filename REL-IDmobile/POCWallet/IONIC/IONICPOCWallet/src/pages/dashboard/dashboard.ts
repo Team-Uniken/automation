@@ -229,7 +229,7 @@ export class DashboardPage {
   }
 
   getErrorInfoOnSuccess(data) {
-    var timedifference = Util.getTimeDifference(Constants.REGISTERDEVICEDETAILS);
+    var timedifference = Util.getTimeDifference(Constants.ERROR_INFO);
     alert(data);
     console.log("RdnaClient.js: onSuccess");
   }
