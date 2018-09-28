@@ -1997,6 +1997,9 @@
 					5528FF9A1F21F73C00560B76 = {
 						DevelopmentTeam = F78S5YW242;
 						SystemCapabilities = {
+							com.apple.AccessWiFi = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
