@@ -154,8 +154,7 @@ This method is called when the component will start to load
             if(this.passwordPolicyChecker.isPolicyParseSuccessfull && this.passwordPolicyChecker.policy.msg)
                 msg = this.passwordPolicyChecker.policy.msg;
           */
-            
-            this.setState({showPasswordPolicy:true});
+            this.setState({ password: "", cPassword: "",showPasswordPolicy:true });
                 /*Alert.alert(
               'Password Policy',
               msg,

@@ -204,7 +204,8 @@ export default class UpdatePasswordSet extends Component {
                 msg = "Password must have:\n\n\t1. Maximum password length should be sixteen\n\t2. Minimum password length should be one\n\t3. Minimum one digit is required\n\t4. Minimum one upper case character is required\n\t5. Minimum one lower case character is required\n\t6. Minimum one special character is needed\n\t7. Can have only two repetition for a particular character\n\t8. Alphabets should be in ascending order\n\t9. Character(s) not allowed = #\n\t10. Password should not contain your user id";
             */
                 //this.passwordPolicyChecker.policy.msg;
-            this.setState({showPasswordPolicy:true});
+            this.setState({ password: "", cPassword: "",showPasswordPolicy:true });
+          
 /*
             Alert.alert(
               'Password Policy',
