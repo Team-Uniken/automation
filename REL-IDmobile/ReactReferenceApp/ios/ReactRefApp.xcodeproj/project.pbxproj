@@ -228,6 +228,50 @@
 		552BB7B81E1BA0B90009F274 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		552BB7BD1E1BA0B90009F274 /* logo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 558654DF1E12689500B01A6A /* logo.ttf */; };
 		5535B2861EE03A32007AE1B6 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B2831EE034EE007AE1B6 /* libReactNativeConfig.a */; };
+		5537E7D2216614D400390CB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
+		5537E7D3216614D400390CB2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
+		5537E7D4216614D400390CB2 /* RelIDRequestInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228071CB50BEA00AD7F6C /* RelIDRequestInterceptor.m */; };
+		5537E7D5216614D400390CB2 /* RDNARequestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 656228051CB50BEA00AD7F6C /* RDNARequestUtility.m */; };
+		5537E7D6216614D400390CB2 /* ReactRdnaModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81601CC9129C009E6168 /* ReactRdnaModule.m */; };
+		5537E7D8216614D400390CB2 /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5599BA5B1F4AC0570025538D /* libLRDRCTSimpleToast.a */; };
+		5537E7D9216614D400390CB2 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559A9DD01F28966900D8F3FD /* libRNSpinkit.a */; };
+		5537E7DA216614D400390CB2 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		5537E7DB216614D400390CB2 /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B8427F1EE015B2006364A1 /* libjschelpers.a */; };
+		5537E7DC216614D400390CB2 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B842771EE015B2006364A1 /* libyoga.a */; };
+		5537E7DD216614D400390CB2 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B04AA1EE6AC4B004B7659 /* libAirMaps.a */; };
+		5537E7DE216614D400390CB2 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B1E31EE02F1E007AE1B6 /* libRCTFBSDK.a */; };
+		5537E7DF216614D400390CB2 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5506A33B1EE150C000870068 /* libRCTAnimation.a */; };
+		5537E7E0216614D400390CB2 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B2831EE034EE007AE1B6 /* libReactNativeConfig.a */; };
+		5537E7E1216614D400390CB2 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD681D9526890075C15D /* libstdc++.tbd */; };
+		5537E7E2216614D400390CB2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */; };
+		5537E7E3216614D400390CB2 /* libRCTTouchId.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD5C1D9524ED0075C15D /* libRCTTouchId.a */; };
+		5537E7E4216614D400390CB2 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
+		5537E7E5216614D400390CB2 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
+		5537E7E6216614D400390CB2 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
+		5537E7E7216614D400390CB2 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		5537E7E8216614D400390CB2 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 557EE008211D53CF001A93B0 /* libapi-sdk.a */; };
+		5537E7E9216614D400390CB2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */; };
+		5537E7EA216614D400390CB2 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		5537E7EB216614D400390CB2 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		5537E7EC216614D400390CB2 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		5537E7ED216614D400390CB2 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		5537E7EE216614D400390CB2 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		5537E7EF216614D400390CB2 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		5537E7F0216614D400390CB2 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		5537E7F1216614D400390CB2 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */; };
+		5537E7F2216614D400390CB2 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D11DBE0C620052D415 /* Bolts.framework */; };
+		5537E7F3216614D400390CB2 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		5537E7F4216614D400390CB2 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D1C7F086DA4D7381CA2170 /* libRCTCamera.a */; };
+		5537E7F6216614D400390CB2 /* cbcverify.plist in Resources */ = {isa = PBXBuildFile; fileRef = 657B6D421F4AF17D00AA65B5 /* cbcverify.plist */; };
+		5537E7F7216614D400390CB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 654F81C71CC9FAD5009E6168 /* LaunchScreen.xib */; };
+		5537E7F8216614D400390CB2 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
+		5537E7F9216614D400390CB2 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
+		5537E7FA216614D400390CB2 /* cbc.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 551EE2DD1E51BAE400ADAD6C /* cbc.ttf */; };
+		5537E7FB216614D400390CB2 /* index.ios.js in Resources */ = {isa = PBXBuildFile; fileRef = 65F4B5771F629265009A7D22 /* index.ios.js */; };
+		5537E7FD216614D400390CB2 /* account.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6524EF021EAA4A5D00E6E3CB /* account.ttf */; };
+		5537E7FE216614D400390CB2 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
+		5537E7FF216614D400390CB2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
+		5537E834216619B800390CB2 /* ImagesChathamRetail.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5537E833216619B800390CB2 /* ImagesChathamRetail.xcassets */; };
 		555B04931EE67E99004B7659 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B1E31EE02F1E007AE1B6 /* libRCTFBSDK.a */; };
 		555B04CC1EE6BDF2004B7659 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B04AA1EE6AC4B004B7659 /* libAirMaps.a */; };
 		556268621EEE65CB0008AC49 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B842771EE015B2006364A1 /* libyoga.a */; };
@@ -558,6 +602,13 @@
 			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
 			remoteInfo = ReactNativeConfig;
 		};
+		5537E7D0216614D400390CB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
+			remoteInfo = React;
+		};
 		555B04A91EE6AC4B004B7659 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A728ECE08D5431186AF0AB1 /* AirMaps.xcodeproj */;
@@ -867,6 +918,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5537E801216614D400390CB2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		558C99B61E7BF7A30002C56F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -961,6 +1022,9 @@
 		5528FFCF1F21F73C00560B76 /* cbc_verify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cbc_verify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5528FFD11F21F88500560B76 /* ImagesCBCVerify.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBCVerify.xcassets; sourceTree = "<group>"; };
 		552BB7C21E1BA0B90009F274 /* SandP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SandP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5537E805216614D400390CB2 /* chatham_retail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatham_retail.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5537E806216614D500390CB2 /* cbc_verify copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cbc_verify copy-Info.plist"; path = "/Users/swapnil/Desktop/react_update/REL-IDmobile/ReactReferenceApp/ios/cbc_verify copy-Info.plist"; sourceTree = "<absolute>"; };
+		5537E833216619B800390CB2 /* ImagesChathamRetail.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesChathamRetail.xcassets; sourceTree = "<group>"; };
 		557EE006211D53CF001A93B0 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		557EE008211D53CF001A93B0 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
 		557EE013211D54BA001A93B0 /* startokenlite.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = startokenlite.ttf; sourceTree = "<group>"; };
@@ -1232,6 +1296,42 @@
 				552BB7B11E1BA0B90009F274 /* libRCTText.a in Frameworks */,
 				552BB7B21E1BA0B90009F274 /* libRCTVibration.a in Frameworks */,
 				552BB7B31E1BA0B90009F274 /* libRCTWebSocket.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5537E7D7216614D400390CB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5537E7D8216614D400390CB2 /* libLRDRCTSimpleToast.a in Frameworks */,
+				5537E7D9216614D400390CB2 /* libRNSpinkit.a in Frameworks */,
+				5537E7DA216614D400390CB2 /* libReact.a in Frameworks */,
+				5537E7DB216614D400390CB2 /* libjschelpers.a in Frameworks */,
+				5537E7DC216614D400390CB2 /* libyoga.a in Frameworks */,
+				5537E7DD216614D400390CB2 /* libAirMaps.a in Frameworks */,
+				5537E7DE216614D400390CB2 /* libRCTFBSDK.a in Frameworks */,
+				5537E7DF216614D400390CB2 /* libRCTAnimation.a in Frameworks */,
+				5537E7E0216614D400390CB2 /* libReactNativeConfig.a in Frameworks */,
+				5537E7E1216614D400390CB2 /* libstdc++.tbd in Frameworks */,
+				5537E7E2216614D400390CB2 /* FBSDKLoginKit.framework in Frameworks */,
+				5537E7E3216614D400390CB2 /* libRCTTouchId.a in Frameworks */,
+				5537E7E4216614D400390CB2 /* libTouchID.a in Frameworks */,
+				5537E7E5216614D400390CB2 /* libRNFS.a in Frameworks */,
+				5537E7E6216614D400390CB2 /* libRCTPushNotification.a in Frameworks */,
+				5537E7E7216614D400390CB2 /* libRCTActionSheet.a in Frameworks */,
+				5537E7E8216614D400390CB2 /* libapi-sdk.a in Frameworks */,
+				5537E7E9216614D400390CB2 /* FBSDKCoreKit.framework in Frameworks */,
+				5537E7EA216614D400390CB2 /* libRCTGeolocation.a in Frameworks */,
+				5537E7EB216614D400390CB2 /* libRCTImage.a in Frameworks */,
+				5537E7EC216614D400390CB2 /* libRCTLinking.a in Frameworks */,
+				5537E7ED216614D400390CB2 /* libRCTNetwork.a in Frameworks */,
+				5537E7EE216614D400390CB2 /* libRCTSettings.a in Frameworks */,
+				5537E7EF216614D400390CB2 /* libRCTText.a in Frameworks */,
+				5537E7F0216614D400390CB2 /* libRCTVibration.a in Frameworks */,
+				5537E7F1216614D400390CB2 /* FBSDKShareKit.framework in Frameworks */,
+				5537E7F2216614D400390CB2 /* Bolts.framework in Frameworks */,
+				5537E7F3216614D400390CB2 /* libRCTWebSocket.a in Frameworks */,
+				5537E7F4216614D400390CB2 /* libRCTCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1593,6 +1693,7 @@
 		654F81C41CC9FAD5009E6168 /* ReactRefApp */ = {
 			isa = PBXGroup;
 			children = (
+				5537E833216619B800390CB2 /* ImagesChathamRetail.xcassets */,
 				1827D32D210EE339006C8906 /* ImagesPnbVerify.xcassets */,
 				1801F03D20F4BC7900D1317C /* ImagesStarTokenLite.xcassets */,
 				55AF31921E7BFDAF003C0E3C /* ImagesStockRELIDMobile.xcassets */,
@@ -1732,6 +1833,7 @@
 				654F81D61CC9FAE3009E6168 /* ReactRefAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				55B94DB91FA3146200AE0D58 /* Recovered References */,
+				5537E806216614D500390CB2 /* cbc_verify copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1750,6 +1852,7 @@
 				5528FFCF1F21F73C00560B76 /* cbc_verify.app */,
 				1801F01020F4B9F900D1317C /* StarToken-Lite.app */,
 				1827D2FB210B3246006C8906 /* pnbverify.app */,
+				5537E805216614D400390CB2 /* chatham_retail.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1875,6 +1978,26 @@
 			name = SandP;
 			productName = "Hello World";
 			productReference = 552BB7C21E1BA0B90009F274 /* SandP.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5537E7CE216614D400390CB2 /* chatham_retail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5537E802216614D400390CB2 /* Build configuration list for PBXNativeTarget "chatham_retail" */;
+			buildPhases = (
+				5537E7D1216614D400390CB2 /* Sources */,
+				5537E7D7216614D400390CB2 /* Frameworks */,
+				5537E7F5216614D400390CB2 /* Resources */,
+				5537E800216614D400390CB2 /* Bundle React Native code and images */,
+				5537E801216614D400390CB2 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5537E7CF216614D400390CB2 /* PBXTargetDependency */,
+			);
+			name = chatham_retail;
+			productName = "Hello World";
+			productReference = 5537E805216614D400390CB2 /* chatham_retail.app */;
 			productType = "com.apple.product-type.application";
 		};
 		558C998C1E7BF7A30002C56F /* REL-IDMobile */ = {
@@ -2012,6 +2135,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					5537E7CE216614D400390CB2 = {
+						DevelopmentTeam = F78S5YW242;
 					};
 					558C998C1E7BF7A30002C56F = {
 						DevelopmentTeam = 2S999FKG5P;
@@ -2167,6 +2293,7 @@
 				5528FF9A1F21F73C00560B76 /* cbc_verify */,
 				1801EFD920F4B9F900D1317C /* StarToken-Lite */,
 				1827D2C4210B3246006C8906 /* pnbverify */,
+				5537E7CE216614D400390CB2 /* chatham_retail */,
 			);
 		};
 /* End PBXProject section */
@@ -2592,6 +2719,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5537E7F5216614D400390CB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5537E7F6216614D400390CB2 /* cbcverify.plist in Resources */,
+				5537E7F7216614D400390CB2 /* LaunchScreen.xib in Resources */,
+				5537E7F8216614D400390CB2 /* gothic_0.TTF in Resources */,
+				5537E834216619B800390CB2 /* ImagesChathamRetail.xcassets in Resources */,
+				5537E7F9216614D400390CB2 /* clientcert.p12 in Resources */,
+				5537E7FA216614D400390CB2 /* cbc.ttf in Resources */,
+				5537E7FB216614D400390CB2 /* index.ios.js in Resources */,
+				5537E7FD216614D400390CB2 /* account.ttf in Resources */,
+				5537E7FE216614D400390CB2 /* icomoon.ttf in Resources */,
+				5537E7FF216614D400390CB2 /* App in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		558C99AC1E7BF7A30002C56F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2749,6 +2893,20 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		5537E800216614D400390CB2 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
 		558C99B51E7BF7A30002C56F /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2880,6 +3038,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5537E7D1216614D400390CB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5537E7D2216614D400390CB2 /* main.m in Sources */,
+				5537E7D3216614D400390CB2 /* AppDelegate.m in Sources */,
+				5537E7D4216614D400390CB2 /* RelIDRequestInterceptor.m in Sources */,
+				5537E7D5216614D400390CB2 /* RDNARequestUtility.m in Sources */,
+				5537E7D6216614D400390CB2 /* ReactRdnaModule.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		558C998D1E7BF7A30002C56F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2945,6 +3115,11 @@
 			isa = PBXTargetDependency;
 			name = React;
 			targetProxy = 5528FF9C1F21F73C00560B76 /* PBXContainerItemProxy */;
+		};
+		5537E7CF216614D400390CB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = React;
+			targetProxy = 5537E7D0216614D400390CB2 /* PBXContainerItemProxy */;
 		};
 		556268691EEE694D0008AC49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3623,6 +3798,110 @@
 			};
 			name = Release;
 		};
+		5537E803216614D400390CB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					React_Dist,
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios",
+				);
+				INFOPLIST_FILE = chatham_retail.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional\n-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"$(PROJECT_DIR)/ActiveShieldSDKLib",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lresolv",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.chathamretail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
+				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+			};
+			name = Debug;
+		};
+		5537E804216614D400390CB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Uniken India Private Limited";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Uniken India Private Limited";
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F78S5YW242;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = React_Dist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios",
+				);
+				INFOPLIST_FILE = chatham_retail.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional\n-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/api-sdk/libs",
+					"$(PROJECT_DIR)/api-sdk",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"\"$(SRCROOT)/ReactRefApp\"",
+					"$(PROJECT_DIR)/ActiveShieldSDKLib",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lresolv",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.chathamretail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
+				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+			};
+			name = Release;
+		};
 		558C99B81E7BF7A30002C56F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4208,6 +4487,15 @@
 			buildConfigurations = (
 				552BB7C01E1BA0B90009F274 /* Debug */,
 				552BB7C11E1BA0B90009F274 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5537E802216614D400390CB2 /* Build configuration list for PBXNativeTarget "chatham_retail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5537E803216614D400390CB2 /* Debug */,
+				5537E804216614D400390CB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
