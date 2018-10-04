@@ -55,7 +55,7 @@ const image1 = require('../../../img/imgFingerPrint.png');
 const image2 = require('../../../img/imgFingerPrint.png');
 const image3 = require('../../../img/retail.png');
 
-var data = [{title:"You image title", image: image1}, {title:"Your Image title",image: image2},{title:"Your Image title",image: image2},{title:"Your Image title",image: image2}];
+var data = [{title:"Shop by Category",image: image2},{title:"Special Offers",image: image2},{title:"Weekly Ad and Catalog",image: image2},{title:"Graphic of some retail shipping items", image: image1},];
 
 
 export default class AccountsScene extends Component {
@@ -339,8 +339,8 @@ export default class AccountsScene extends Component {
             }} />
 
           <View style={{ width: 300, height: 50, position: 'absolute', left: 60, top: Platform.OS=='android'?8:30 }}>
-            <Text style={{ fontSize: 18, color: 'white', backgroundColor: 'transparent' }}>
-              {"Your Store: Chatham,"}
+            <Text style={{ fontSize: 18, color: 'white',fontWeight:'bold' ,backgroundColor: 'transparent' }}>
+              {"Your Store: Chatham"}
             </Text>
             <Text style={{ fontSize: 13, color: 'white', backgroundColor: 'transparent' }}>
               {"Open now until 9 PM"}
