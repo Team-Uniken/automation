@@ -4,7 +4,7 @@
  */
 
 import React, { Component, PropTypes } from 'react';
-import ReactNative, { View, Text, StyleSheet,ListView, Image ,Platform,TouchableOpacity} from 'react-native'
+import ReactNative, { View, Text, StyleSheet,ListView, Image ,TextInput,Platform,ScrollView,TouchableOpacity} from 'react-native'
 import Events from 'react-native-simple-events';
 //import { FormattedCurrency } from 'react-native-globalize';
 import Skin from '../../../Skin';
@@ -15,7 +15,7 @@ import PayBillsScene from './PayBills';
 import DepositsScene from './Deposits';
 import FindBranchScene from './FindBranch';
 import Row from './Row';
-import { SearchBar } from 'react-native-elements'
+//import { SearchBar } from 'react-native-elements'
 
 /*
   CALLED
@@ -305,101 +305,111 @@ export default class AccountsScene extends Component {
   }
 
   render() {
-    
+
     return (
-     <Main
+      <Main
         controlPanel={ControlPanel}
         navigator={this.props.navigation}
         defaultNav={false}
-         bottomMenu={{
+        bottomMenu={{
           visible: true,
           active: this.state.tabChanged,
         }}>
-            
 
-<View style={{ height: Platform.OS === 'android' ? 87 : 107 }}>
-        <NavBar
-          tintColor={'#fff'}
-          statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-          statusBarLight={'light-content'}
-          titleStyle={Skin.navbar.title.titleStyle}
-          title={''}
-          titleTint={Config.LOGO_COLOR}
-          right={''}
-          left={{
-            text:this.props.isBackBtnText?'Back':'',
-            icon: this.props.isBackBtnText?'':Skin.icon.hamburger,
-            iconStyle:this.props.isBackBtnText?'': {
-              fontSize: 50,
-              paddingLeft: 17,
-              width: 50,
-              color: Config.BUTTON_BG_COLOR,
-            },
-            handler: this.props.handler
-          }} />
 
-         <View style={{ width:300,height:50, position: 'absolute', left: 60,top:30 }}> 
-        <Text style={{fontSize: 18,color:'black',backgroundColor:'transparent'}}
-          >
-          {"Your Store: Chatham,"}
-        </Text>
-        <Text style={{fontSize: 13,color:'black',backgroundColor:'transparent'}}
-          >
-          {"Open now until 9 PM"}
-        </Text>
-        </View> 
-        {/* <SearchBar
-  onChangeText={''}
-  onClearText={''}
-  placeholder='Type Here...' /> */}
+        <View style={{ height: Platform.OS === 'android' ? 140 : 107}}>
+          <NavBar
+            tintColor={Skin.BUTTON_BG_COLOR}
+            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
+            statusBarLight={'light-content'}
+            titleStyle={Skin.navbar.title.titleStyle}
+            title={''}
+            titleTint={Config.LOGO_COLOR}
+            right={''}
+            left={{
+              text: this.props.isBackBtnText ? 'Back' : '',
+              icon: this.props.isBackBtnText ? '' : Skin.icon.hamburger,
+              iconStyle: this.props.isBackBtnText ? '' : {
+                fontSize: 50,
+                paddingLeft: 17,
+                width: 50,
+                color: 'white',
+              },
+              handler: this.props.handler
+            }} />
 
-        <View style={{ width:50,height:50, position: 'absolute', right: 10 }}>
-           <TouchableOpacity underlayColor='transparent' onPress={this.onPressNotificationView}>
-          <Text style={{
-            color: Skin.color.BUTTON_BG_COLOR,
-            textAlign: 'center',
-            fontSize: 35,
-            height:50,
-            fontWeight: 'normal',
-            top: Platform.OS === 'android' ? 12 : 32.5,
-            backgroundColor: 'transparent',
-            fontFamily: Skin.font.ICON_FONT
-          }}>{Skin.icon.bell}</Text>
-          
-          {this.state.badgeValue > 0 && <Badge style={{
-            top: Platform.OS === 'android' ? -45 : -24,
-            right: -25,
-          }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
-            {this.state.badgeValue>9?"9+":this.state.badgeValue}
+          <View style={{ width: 300, height: 50, position: 'absolute', left: 60, top: Platform.OS=='android'?8:30 }}>
+            <Text style={{ fontSize: 18, color: 'white', backgroundColor: 'transparent' }}>
+              {"Your Store: Chatham,"}
+            </Text>
+            <Text style={{ fontSize: 13, color: 'white', backgroundColor: 'transparent' }}>
+              {"Open now until 9 PM"}
+            </Text>
+          </View>
 
-          </Badge>}
-</TouchableOpacity>
-
+        <View style={{backgroundColor:Skin.BUTTON_BG_COLOR}}>
+          <View style={{ backgroundColor: 'white', height: 60, margin: 10, flexDirection: 'row' }}>
+            <Text style={[styles.searchIcons, { marginLeft: 15 }]}>{Skin.icon.bell}</Text>
+            <TextInput style={styles.searchBar} underlineColorAndroid='transparent' placeholder="Search"></TextInput>
+            <Text style={styles.searchIcons}>{Skin.icon.bell}</Text>
+            <Text style={[styles.searchIcons, { marginRight: 15 }]}>{Skin.icon.bell}</Text>
+          </View>
         </View>
- 
 
-      </View>
+          <View style={{ width: 50, height: 50, position: 'absolute', right: 10 }}>
+            <TouchableOpacity underlayColor='transparent' onPress={this.onPressNotificationView}>
+              <Text style={{
+                color: 'white',
+                textAlign: 'center',
+                fontSize: 35,
+                height: 50,
+                fontWeight: 'normal',
+                top: Platform.OS === 'android' ? 12 : 32.5,
+                backgroundColor: 'transparent',
+                fontFamily: Skin.font.ICON_FONT
+              }}>{Skin.icon.bell}</Text>
 
+              {this.state.badgeValue > 0 && <Badge style={{
+                top: Platform.OS === 'android' ? -45 : -24,
+                right: -25,
+              }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
+                {this.state.badgeValue > 9 ? "9+" : this.state.badgeValue}
 
-        
-               {/* <PageTitle title={this.state.titleString}
+              </Badge>}
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* <PageTitle title={this.state.titleString}
                 handler={this.triggerDrawer}/> */}
-    
+        <ScrollView>
         <View style={{
-                       flex: 1,
-                       backgroundColor: Skin.main.BACKGROUND_COLOR
-                     }}>
+          flex: 1,
+          backgroundColor: Skin.main.BACKGROUND_COLOR}}>
 
-      
-      {this.getComponent()}
+          {this.getComponent()}
         </View>
+        </ScrollView>
       </Main>
-      );
+    );
   }
-  
+
 }
 
 const styles = StyleSheet.create({
+  searchBar:{
+    flex:1,
+    backgroundColor:'transparent'
+  },
+  searchIcons:{
+    fontFamily: Skin.font.ICON_FONT,
+    fontSize: 25,
+    width:30,
+    marginTop:15,
+    height:30,
+    marginRight:5,
+    color:Skin.BUTTON_BG_COLOR,
+    textAlign:'center'
+  },
   rowwrap: {
     flexDirection: 'row',
     alignItems: 'center',
