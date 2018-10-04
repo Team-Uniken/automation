@@ -89,6 +89,8 @@ class Register extends Component {
     this.androidAuth = this.androidAuth.bind(this);
     this.saveDefaultLoginPrefs = this.saveDefaultLoginPrefs.bind(this);
     this.getDefaultLoginView = this.getDefaultLoginView.bind(this);
+    this._clickHandler = this._clickHandler.bind(this);
+    this.authenticate = this.authenticate.bind(this);
   }
   /*
   This is life cycle method of the react native component.
@@ -500,28 +502,39 @@ class Register extends Component {
     console.log(TouchID);
     if( Platform.OS == 'ios' ){
     TouchID.isSupported()
-      .then(this.authenticate)
+      .then(this.authenticate('Set up Touch ID to Log In'))
       .catch(error => {
-        passcodeAuth();
+        AlertIOS.alert('Touch ID is not enabled or supported');
       });
     }else
       this.androidAuth();
   }
 
-  authenticate() {
-    return TouchID.authenticate('Set up Touch ID to Log In')
+  authenticate(msg) {
+    return TouchID.authenticate(msg)
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         obj.encrypytPasswdiOS();
       })
       .catch(error => {
         console.log(error)
+        // AlertIOS.alert(error.message);
+        if (error.name === "LAErrorUserFallback"){
+        this.authenticate("Authentication failed, Please try again");
+      }else if (error.name === 'RCTTouchIDUnknownError') {
+        this.authenticate("Authentication failed, Please try again");
+      } else if (error.name === 'LAErrorAuthenticationFailed') {
+        thi.authenticate('Set up Touch ID to Log In');
         AlertIOS.alert(error.message);
+      } else if(error.name === 'RCTTouchIDNotSupported'){
+        AlertIOS.alert(('Touch ID is not enabled or supported'));
+      }else {
+        AlertIOS.alert(error.message);
+      }
+
       });
   }
-
-  passcodeAuth() {
-  }
+  
 
   encrypytPasswdiOS() {
       AsyncStorage.getItem(Main.dnaUserName).then((value) => {
@@ -554,7 +567,6 @@ class Register extends Component {
     } else {
       AsyncStorage.setItem("skipwelcome", "false");
     }
-
     if (this.state.facebook == true) {
 
       if (onUpdateChallengeStatusSubscription) {

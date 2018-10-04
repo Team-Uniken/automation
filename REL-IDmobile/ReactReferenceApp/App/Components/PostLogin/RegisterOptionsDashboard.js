@@ -807,7 +807,8 @@ This method is called when the component will start to load
     TouchID.isSupported()
       .then(this.authenticate)
       .catch(error => {
-        passcodeAuth();
+        //passcodeAuth();
+        AlertIOS.alert('Touch ID is not enabled or supported');
       });
     }else
       this.androidAuth();
@@ -882,6 +883,13 @@ This method is called when the component will start to load
       AsyncStorage.setItem("skipwelcome", "false");
     }
 
+    if (this.state.rememberusername.length > 0) {
+      //this.setState({ rememberusername: '\u2714' });
+      AsyncStorage.getItem('userId').then((value) => {
+      AsyncStorage.setItem("rememberuser", value);
+      });
+      }
+      
     if (this.state.facebook != this.state.isFacebookRegisteredWithServer) {
 
       if (Main.isConnected) {
