@@ -1018,7 +1018,7 @@ export default class NotificationMgmtScene extends Component {
 
     var selectedLanguageBodyObjectIndex = this.state.selectedLanguageMap[notificationData.notification.notification_uuid];
 
-    return <ClientBasedConfig.notification {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
+    return <ClientBasedConfig.notification {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} isAirlines={true} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
