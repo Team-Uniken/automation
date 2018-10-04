@@ -14,6 +14,7 @@ import ContactScene from './Contact';
 import PayBillsScene from './PayBills';
 import DepositsScene from './Deposits';
 import FindBranchScene from './FindBranch';
+import Row from './Row';
 import { SearchBar } from 'react-native-elements'
 
 /*
@@ -50,18 +51,34 @@ const iconcolor = {
   3: Skin.colors.ACCENT,
 };
 
+const image1 = require('../../../img/imgFingerPrint.png');
+const image2 = require('../../../img/imgFingerPrint.png');
+const image3 = require('../../../img/retail.png');
+
+var data = [{title:"You image title", image: image1}, {title:"Your Image title",image: image2},{title:"Your Image title",image: image2},{title:"Your Image title",image: image2}];
+
 
 export default class AccountsScene extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
-    this.state = { dataSource: ds.cloneWithRowsAndSections([]), tabChanged:1,activeTab :1,titleString:"Accounts"};
+    // const ds = new ListView.DataSource({
+    //   rowHasChanged: (r1, r2) => r1 !== r2,
+    //   sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+    // });
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+     
+    this.state = {
+       dataSource: ds.cloneWithRows(data),
+        tabChanged:1,
+        activeTab :1,
+        titleString:"Accounts"
+        
+      };
     self = this;
     this.tabChanged = this.tabChanged.bind(this);
+    //this.getDashboard = this.getDashboard.bind(this);
+    this.getComponent = this.getComponent.bind(this);    
   }
 
   /**
@@ -70,7 +87,7 @@ export default class AccountsScene extends Component {
    */
   componentDidMount() {
     this.getMyNotifications();
-    this.getAccountDetails();
+    //this.getAccountDetails();
       Events.on('tabChanged', 'tabChanged', this.tabChanged);
   }
 
@@ -167,18 +184,18 @@ export default class AccountsScene extends Component {
     return 0;
   }
 
-  cleanRowData(rowData) {
-    const cleanData = {
-      title: (rowData.nickname === '') ? rowData.accountName : rowData.nickname,
-      icon: icons[rowData.accountType],
-      iconcolor: iconcolor[rowData.accountType],
-      acctnum: rowData.accountID,
-      total: rowData.accountBalance,
-      totalcolor: (rowData.accountBalance > 0) ? Skin.colors.POSITIVE_ACCENT : Skin.colors.SECONDARY_TEXT,
-    };
-    // <Text style={{color: iconcolor[rowData.accountType]}}>{icons[rowData.accountType]}</Text>
-    return cleanData;
-  }
+  // cleanRowData(rowData) {
+  //   const cleanData = {
+  //     title: (rowData.nickname === '') ? rowData.accountName : rowData.nickname,
+  //     icon: icons[rowData.accountType],
+  //     iconcolor: iconcolor[rowData.accountType],
+  //     acctnum: rowData.accountID,
+  //     total: rowData.accountBalance,
+  //     totalcolor: (rowData.accountBalance > 0) ? Skin.colors.POSITIVE_ACCENT : Skin.colors.SECONDARY_TEXT,
+  //   };
+  //   // <Text style={{color: iconcolor[rowData.accountType]}}>{icons[rowData.accountType]}</Text>
+  //   return cleanData;
+  // }
 
   /**
    * Splits the account data blob into sections and data rows
@@ -218,51 +235,62 @@ export default class AccountsScene extends Component {
     console.log('trigger')
     Events.trigger('toggleDrawer')
   }
-  renderRow(rowData) {
-    const cleanData = self.cleanRowData(rowData);
-    return (
-      <ListItem>
-        <View style={styles.rowwrap}>
-          <View style={styles.iconwrap}>
-            <Text style={[styles.icon, {
-                           color: cleanData.iconcolor
-                         }]}>
-              {cleanData.icon}
-            </Text>
-          </View>
-          <View style={styles.namewrap}>
-            <Text
-              numberOfLines={1}
-              style={styles.nametext}>
-              {cleanData.title}
-            </Text>
-            <Text
-              numberOfLines={1}
-              style={styles.numtext}>
-              {cleanData.acctnum}
-            </Text>
-          </View>
-          <View style={styles.totalwrap}>
-            <View style={{ flex: 1 }}>
+  // renderRow(rowData) {
+  //   const cleanData = self.cleanRowData(rowData);
+  //   return (
+  //     <ListItem>
+  //       <View style={styles.rowwrap}>
+  //         <View style={styles.iconwrap}>
+  //           <Text style={[styles.icon, {
+  //                          color: cleanData.iconcolor
+  //                        }]}>
+  //             {cleanData.icon}
+  //           </Text>
+  //         </View>
+  //         <View style={styles.namewrap}>
+  //           <Text
+  //             numberOfLines={1}
+  //             style={styles.nametext}>
+  //             {cleanData.title}
+  //           </Text>
+  //           <Text
+  //             numberOfLines={1}
+  //             style={styles.numtext}>
+  //             {cleanData.acctnum}
+  //           </Text>
+  //         </View>
+  //         <View style={styles.totalwrap}>
+  //           <View style={{ flex: 1 }}>
       
-            </View>
-          </View>
-        </View>
-      </ListItem>
-      );
-  }
+  //           </View>
+  //         </View>
+  //       </View>
+  //     </ListItem>
+  //     );
+  // }
   
   tabChanged(e){
   
     this.setState({ tabChanged: e ,activeTab:e,titleString :titleStringArray[e-1]});
   }
+
+ 
   
   getComponent(){
     if(this.state.tabChanged===1){
-      return(<ListView
+      return([
+        <View style={{flex:1,flexDirection:'column',alignItems:'stretch',justifyContent:'flex-start'}}>
+        <View style={{}}>
+      <ListView
+        style={{}} //Don't forget this too
+        contentContainerStyle={{ flexDirection: 'column', flexWrap: 'wrap' }}
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderSectionHeader={this.renderSectionHeader} />)
+        renderRow={(data) => <Row {...data} />} /> 
+        </View>
+        <Image source={image3} style={{alignSelf: 'center',resizeMode:'stretch'}}>  
+    </Image>
+    </View>
+      ]);
     }else if(this.state.tabChanged===2){
       return(<PayBillsScene/>)
     }else if(this.state.tabChanged===3){
