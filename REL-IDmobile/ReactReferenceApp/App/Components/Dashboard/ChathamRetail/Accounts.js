@@ -310,7 +310,7 @@ export default class AccountsScene extends Component {
         }}>
 
 
-        <View style={{ height: Platform.OS === 'android' ? 140 : 140}}>
+        <View style={{ height: Platform.OS === 'android' ? 140 : 156}}>
           <NavBar
             tintColor={Skin.BUTTON_BG_COLOR}
             statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
@@ -374,7 +374,7 @@ export default class AccountsScene extends Component {
         </View>
         {/* <PageTitle title={this.state.titleString}
                 handler={this.triggerDrawer}/> */}
-        <ScrollView>
+        <ScrollView style={{backgroundColor:'white'}}>
         <View style={{
           flex: 1,
           backgroundColor: Skin.main.BACKGROUND_COLOR}}>

@@ -326,11 +326,11 @@ export default class NotificationCard extends Component {
 
                                     { bulletList }
               
-                                    <View style={style.row}>
+                                    {/* <View style={style.row}>
                                         <Text style={style.bold}>
                                             {amount}
                                         </Text>
-                                    </View>
+                                    </View> */}
                                 </View>
 
                                 {this.props.expand && <View style={{ flex: 1 }}/>}
