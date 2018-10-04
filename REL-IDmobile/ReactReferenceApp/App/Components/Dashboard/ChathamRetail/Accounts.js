@@ -53,7 +53,7 @@ const iconcolor = {
 
 const image1 = require('../../../img/imgFingerPrint.png');
 const image2 = require('../../../img/imgFingerPrint.png');
-const image3 = require('../../../img/retail.png');
+const image3 = require('../../../img/retail.jpg');
 
 var data = [{title:"Shop by Category",image: image2},{title:"Special Offers",image: image2},{title:"Weekly Ad and Catalog",image: image2},{title:"Graphic of some retail shipping items", image: image1},];
 
