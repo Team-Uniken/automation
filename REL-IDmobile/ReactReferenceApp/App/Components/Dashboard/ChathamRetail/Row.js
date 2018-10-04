@@ -1,10 +1,12 @@
 import React from 'react'
+import Skin from '../../../Skin';
+
 import { StyleSheet, Dimensions, Platform, Image, View, Text } from 'react-native';
 const Row = (props) => (
   <View style={{ flexDirection: 'column', height: 60 }}>
-    <View style={{ flexDirection: 'row', height: 60 }}>
-      <Image source={props.image} style={{ width: 20, height: 20, alignSelf: 'center', marginLeft: 25 }}>
-      </Image>
+    <View style={{ flexDirection: 'row', height: 60,alignItems:'center'}}>
+      <Text source={props.image} style={styles.listIcons}>{Skin.icon.bell}
+      </Text>
 
       <Text style={{
         fontSize: 16, alignSelf: 'center', marginLeft: 20,
@@ -12,8 +14,21 @@ const Row = (props) => (
       }}>{props.title}</Text>
 
     </View>
-    <View style={{ backgroundColor: 'gray', height: 1, marginLeft: 75 }}></View>
+    <View style={{ backgroundColor: 'gray', height: 0.7, marginLeft: 75 }}></View>
   </View>
 )
+
+const styles = StyleSheet.create({
+  listIcons:{
+    fontFamily: Skin.font.ICON_FONT,
+    fontSize: 30,
+    width:30,
+    height:30,
+    marginLeft: 25,
+    alignSelf: 'center',
+    color:Skin.BUTTON_BG_COLOR,
+    textAlign:'center'
+  }});
+
 
 export default Row

@@ -287,20 +287,13 @@ export default class AccountsScene extends Component {
         dataSource={this.state.dataSource}
         renderRow={(data) => <Row {...data} />} /> 
         </View>
+        <View style={{ backgroundColor: 'gray',marginTop:5,marginBottom:5, height: 0.7 }}></View>
         <Image source={image3} style={{alignSelf: 'center',resizeMode:'stretch'}}>  
     </Image>
     </View>
       ]);
-    }else if(this.state.tabChanged===2){
-      return(<PayBillsScene/>)
-    }else if(this.state.tabChanged===3){
-      return(<DepositsScene/>)
-    }
-    else if(this.state.tabChanged===4){
-      return(<FindBranchScene/>)
-    }
-    else{
-      return(<ContactScene/>)
+    }else{
+      return (<View style={{backgroundColor:'white',flex:1}}></View>);
     }
   }
 
@@ -317,7 +310,7 @@ export default class AccountsScene extends Component {
         }}>
 
 
-        <View style={{ height: Platform.OS === 'android' ? 140 : 107}}>
+        <View style={{ height: Platform.OS === 'android' ? 140 : 140}}>
           <NavBar
             tintColor={Skin.BUTTON_BG_COLOR}
             statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}

@@ -182,7 +182,7 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/cbc.png')
                 },
-                bottomMenu: require("../view/cbcbottomMenu"),
+                bottomMenu: require("../view/chathamretailBottomMenu"),
                 dashboard: {
                     screenName: 'Accounts',
                     screen: require('../Dashboard/ChathamRetail/Accounts').default,
