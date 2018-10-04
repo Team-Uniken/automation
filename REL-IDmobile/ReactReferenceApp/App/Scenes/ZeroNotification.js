@@ -22,6 +22,7 @@ import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import AndroidAuth from "../Components/view/AndroidTouch"
 import NotificationCard from '../Components/view/notificationcard';
+import {ClientBasedConfig} from '../Components/Utils/LocalConfig';
 import MainActivation from '../Components/Container/MainActivation';
 import { NavigationActions} from 'react-navigation';
 const Spinner = require('react-native-spinkit');
@@ -1017,12 +1018,12 @@ export default class NotificationMgmtScene extends Component {
 
     var selectedLanguageBodyObjectIndex = this.state.selectedLanguageMap[notificationData.notification.notification_uuid];
 
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
+    return <ClientBasedConfig.notification {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
     const { notification, btnLabel, action, selectedLanguageBodyObjectIndex } = bundle; 
-    switch (action) {
+    switch (action.toLowerCase()) {
       case "accept":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
@@ -1044,6 +1045,10 @@ export default class NotificationMgmtScene extends Component {
         this.restoreDataStore();
       case "changelang":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
+        break;
+        default:
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
+        this.showalert(notification, btnLabel);
         break;
     }
   }
@@ -1335,7 +1340,7 @@ export default class NotificationMgmtScene extends Component {
   renderWithMain() {
 
     return (
-      <MainActivation>
+      <MainActivation >
     <Main
       drawerState={{
         open: false,
