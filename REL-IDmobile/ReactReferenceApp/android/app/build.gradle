@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite",pnb:".env.pnbverify"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite",pnb:".env.pnbverify",chathamretail:".env.chathamretail"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -170,6 +170,12 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
+        releaseChathamRetail {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
     }
 
     flavorDimensions "default"
@@ -218,6 +224,11 @@ android {
         pnb{
             applicationId 'com.uniken.pnbverifyuat'
             signingConfig signingConfigs.releasePNBVerify
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
+        }
+        chathamretail{
+            applicationId 'com.uniken.chathamretail'
+            signingConfig signingConfigs.releaseChathamRetail
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
     }

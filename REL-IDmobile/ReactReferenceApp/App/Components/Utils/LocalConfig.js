@@ -171,6 +171,25 @@ function requireClientBasedConfig() {
                   }
                   })();
     }
+    if (Config.ENV == 'chathamretail') {
+        config = (function () {
+            return {
+                connectionProfile: require("../../../Connection_profiles/chathamretail.json"),
+                sslCertificate: {
+                    data: getSSLFileContent(),
+                    password: 'uniken123$',
+                },
+                img: {
+                    welcome: require('../../img/cbc.png')
+                },
+                bottomMenu: require("../view/cbcbottomMenu"),
+                dashboard: {
+                    screenName: 'Accounts',
+                    screen: require('../Dashboard/ChathamRetail/Accounts').default,
+                }
+            }
+        })();
+    }
 
     return config;
 }
