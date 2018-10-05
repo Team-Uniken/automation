@@ -1018,7 +1018,7 @@ export default class NotificationMgmtScene extends Component {
 
     var selectedLanguageBodyObjectIndex = this.state.selectedLanguageMap[notificationData.notification.notification_uuid];
 
-    return <ClientBasedConfig.notification {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} isAirlines={true} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
+    return <ClientBasedConfig.notification {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} isAirlines={this.view.isAirlines} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
@@ -1192,6 +1192,7 @@ export default class NotificationMgmtScene extends Component {
               view: {
                 expand: true,
                 showButtons: true,
+                isAirlines:true,
                 showHideButton: Main.notificationCount > 1
               }
             })(dataSource.getRowData(0, 0))}
@@ -1209,7 +1210,8 @@ export default class NotificationMgmtScene extends Component {
             state:{selectedLanguageMap:this.state.selectedLanguageMap},
             view: {
               expand: false,
-              showButtons: false
+              showButtons: false,
+              isAirlines:false,
             }
           })} />
     }
