@@ -220,11 +220,24 @@ export default class NotificationCard extends Component {
       profileKeyPair[keyValue[0]] = keyValue[1];
       uiElementArray.push([
         <View style={style.user}>
-          <Text style={[{ fontWeight: "bold", marginTop: i==0?0:10,marginBottom: 3, fontSize: 16 }]}>
+          <Text
+            style={[
+              {
+                fontWeight: "bold",
+                marginTop: i == 0 ? 0 : 10,
+                marginBottom: 3,
+                fontSize: 16
+              }
+            ]}
+          >
             {keyValue[0]}
           </Text>
-          <Text style={[{ marginBottom: 10, fontSize: 13 }]}>{keyValue[1]}</Text>
-          {bodyArray.length-1 > i && <View style={{ height: 1, backgroundColor: "gray" }} />}
+          <Text style={[{ marginBottom: 10, fontSize: 13 }]}>
+            {keyValue[1]}
+          </Text>
+          {bodyArray.length - 1 > i && (
+            <View style={{ height: 1, backgroundColor: "gray" }} />
+          )}
         </View>
       ]);
     }
@@ -359,49 +372,32 @@ export default class NotificationCard extends Component {
 
     //Todo : this.props.notification.action or this.props.notification.actions
 
-    if (true  && this.props.isAirlines) {
+    if (true && this.props.isAirlines) {
       return (
         <View style={{ flex: 1, backgroundColor: "#ecf0f1" }}>
-              <ScrollView>
-                  <View>
-                      <Card
-                          style={style.upgrade}
-                          containerStyle={{ margin: 10 }}
-                          title={this.state.subject}
-                          titleStyle={style.titleStyle}
-                      >
-                          {this.renderChathamRetailNotification(bodyarray)}
-                      </Card>
-                     
+          <ScrollView>
+            <View>
+              <Card
+                style={style.upgrade}
+                containerStyle={{ margin: 10 }}
+                title={this.state.subject}
+                titleStyle={style.titleStyle}
+              >
+                {this.renderChathamRetailNotification(bodyarray)}
+              </Card>
             </View>
-
           </ScrollView>
           {this.props.expand && <View style={{ flex: 1 }} />}
 
+        
           {this.props.showButtons && (
-            <View style={[style.row, { marginTop: 8 }]}>
+            <View
+              style={[
+                style.row,
+                { marginTop: 8, marginRight: 10, marginLeft: 10 }
+              ]}
+            >
               <View style={style.notificationButton}>
-                <TouchableHighlight
-                  style={style.commanbtn}
-                  onPress={() => {
-                    this.takeAction(
-                      this.props.notification,
-                      this.props.notification.actions[0].label,
-                      NotificationAction.ACCEPT
-                    );
-                  }}
-                >
-                  <View style={style.text}>
-                    <Text style={style.buttontext}>
-                      {
-                        body[this.state.selectedLanguageBodyObjectIndex].label[
-                          this.props.notification.actions[0].label
-                        ]
-                      }
-                    </Text>
-                  </View>
-                </TouchableHighlight>
-
                 <TouchableHighlight
                   style={style.commanbtn}
                   onPress={() => {
@@ -446,14 +442,73 @@ export default class NotificationCard extends Component {
               </View>
             </View>
           )}
+           {this.props.showButtons && (
+            <View
+              style={[
+                style.row,
+                { marginTop: 3, marginRight: 10, marginLeft: 10 ,marginBottom:5}
+              ]}
+            >
+              <View style={style.notificationButton}>
+                <TouchableHighlight
+                  style={style.commanbtn}
+                  onPress={() => {
+                    this.takeAction(
+                      this.props.notification,
+                      this.props.notification.actions[0].label,
+                      NotificationAction.ACCEPT
+                    );
+                  }}
+                >
+                  <View style={style.text}>
+                    <Text style={style.buttontext}>
+                      {
+                        body[this.state.selectedLanguageBodyObjectIndex].label[
+                          this.props.notification.actions[0].label
+                        ]
+                      }
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              </View>
+            </View>
+          )}
           <View style={style.lngRow}>{lngButtons}</View>
-          
-                    {this.props.showHideButton && <TouchableHighlight style={{ height: 20, marginBottom: 20, marginTop: 5, width: 40, alignSelf: 'center', borderBottomRightRadius: 10, borderBottomLeftRadius: 10, backgroundColor: 'grey', alignItems: 'center' }}
-                        onPress={() => { this.takeAction(this.props.notification, null, NotificationAction.HIDE) } }>
-                        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'normal', fontFamily: Skin.font.ICON_FONT, transform: [{ rotate: "270deg" }] }}>
-                            {Skin.icon.forward}
-                        </Text>
-                    </TouchableHighlight>}
+
+          {this.props.showHideButton && (
+            <TouchableHighlight
+              style={{
+                height: 20,
+                marginBottom: 20,
+                marginTop: 5,
+                width: 40,
+                alignSelf: "center",
+                borderBottomRightRadius: 10,
+                borderBottomLeftRadius: 10,
+                backgroundColor: "grey",
+                alignItems: "center"
+              }}
+              onPress={() => {
+                this.takeAction(
+                  this.props.notification,
+                  null,
+                  NotificationAction.HIDE
+                );
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: "white",
+                  fontWeight: "normal",
+                  fontFamily: Skin.font.ICON_FONT,
+                  transform: [{ rotate: "270deg" }]
+                }}
+              >
+                {Skin.icon.forward}
+              </Text>
+            </TouchableHighlight>
+          )}
         </View>
       );
     } else if (this.props.notification.actions.length == 3) {
@@ -938,7 +993,7 @@ const style = StyleSheet.create({
          height:56,*/
     flex: 1,
     margin: 2,
-    backgroundColor: '#252E8B'
+    backgroundColor: "#252E8B"
   },
   upd_text: {
     fontSize: 16,
@@ -969,6 +1024,7 @@ const style = StyleSheet.create({
   },
   upgrade: {
     flexDirection: "row",
+    flex:1,
     color: "#34495e",
     fontSize: 8,
     margin: 5,
