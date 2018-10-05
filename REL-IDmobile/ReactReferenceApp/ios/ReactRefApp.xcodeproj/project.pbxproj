@@ -227,6 +227,10 @@
 		552BB7B71E1BA0B90009F274 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		552BB7B81E1BA0B90009F274 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		552BB7BD1E1BA0B90009F274 /* logo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 558654DF1E12689500B01A6A /* logo.ttf */; };
+		552BF11721675C8500AA0ABB /* chatham_retail.plist in Resources */ = {isa = PBXBuildFile; fileRef = 552BF11521675C8300AA0ABB /* chatham_retail.plist */; };
+		552BF11821675C8500AA0ABB /* chatham_retail.plist in Resources */ = {isa = PBXBuildFile; fileRef = 552BF11521675C8300AA0ABB /* chatham_retail.plist */; };
+		552BF11921675C8500AA0ABB /* chathamretail.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 552BF11621675C8400AA0ABB /* chathamretail.ttf */; };
+		552BF11A21675C8500AA0ABB /* chathamretail.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 552BF11621675C8400AA0ABB /* chathamretail.ttf */; };
 		5535B2861EE03A32007AE1B6 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B2831EE034EE007AE1B6 /* libReactNativeConfig.a */; };
 		5537E7D2216614D400390CB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81CB1CC9FAD5009E6168 /* main.m */; };
 		5537E7D3216614D400390CB2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F81C61CC9FAD5009E6168 /* AppDelegate.m */; };
@@ -249,8 +253,6 @@
 		5537E7E5216614D400390CB2 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
 		5537E7E6216614D400390CB2 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
 		5537E7E7216614D400390CB2 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		5537E7E8216614D400390CB2 /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 557EE008211D53CF001A93B0 /* libapi-sdk.a */; };
-		5537E7E9216614D400390CB2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */; };
 		5537E7EA216614D400390CB2 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
 		5537E7EB216614D400390CB2 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		5537E7EC216614D400390CB2 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -272,6 +274,7 @@
 		5537E7FE216614D400390CB2 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A6FB9CB1D0771E40058BB47 /* icomoon.ttf */; };
 		5537E7FF216614D400390CB2 /* App in Resources */ = {isa = PBXBuildFile; fileRef = 6567FBCA1CC1122F00AC6A04 /* App */; };
 		5537E834216619B800390CB2 /* ImagesChathamRetail.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5537E833216619B800390CB2 /* ImagesChathamRetail.xcassets */; };
+		554C88E32167701A00BA0A8D /* libapi-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 557EE008211D53CF001A93B0 /* libapi-sdk.a */; };
 		555B04931EE67E99004B7659 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5535B1E31EE02F1E007AE1B6 /* libRCTFBSDK.a */; };
 		555B04CC1EE6BDF2004B7659 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 555B04AA1EE6AC4B004B7659 /* libAirMaps.a */; };
 		556268621EEE65CB0008AC49 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B842771EE015B2006364A1 /* libyoga.a */; };
@@ -1022,6 +1025,8 @@
 		5528FFCF1F21F73C00560B76 /* cbc_verify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cbc_verify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5528FFD11F21F88500560B76 /* ImagesCBCVerify.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesCBCVerify.xcassets; sourceTree = "<group>"; };
 		552BB7C21E1BA0B90009F274 /* SandP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SandP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		552BF11521675C8300AA0ABB /* chatham_retail.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = chatham_retail.plist; sourceTree = "<group>"; };
+		552BF11621675C8400AA0ABB /* chathamretail.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chathamretail.ttf; sourceTree = "<group>"; };
 		5537E805216614D400390CB2 /* chatham_retail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatham_retail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5537E806216614D500390CB2 /* cbc_verify copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cbc_verify copy-Info.plist"; path = "/Users/swapnil/Desktop/react_update/REL-IDmobile/ReactReferenceApp/ios/cbc_verify copy-Info.plist"; sourceTree = "<absolute>"; };
 		5537E833216619B800390CB2 /* ImagesChathamRetail.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesChathamRetail.xcassets; sourceTree = "<group>"; };
@@ -1319,8 +1324,7 @@
 				5537E7E5216614D400390CB2 /* libRNFS.a in Frameworks */,
 				5537E7E6216614D400390CB2 /* libRCTPushNotification.a in Frameworks */,
 				5537E7E7216614D400390CB2 /* libRCTActionSheet.a in Frameworks */,
-				5537E7E8216614D400390CB2 /* libapi-sdk.a in Frameworks */,
-				5537E7E9216614D400390CB2 /* FBSDKCoreKit.framework in Frameworks */,
+				554C88E32167701A00BA0A8D /* libapi-sdk.a in Frameworks */,
 				5537E7EA216614D400390CB2 /* libRCTGeolocation.a in Frameworks */,
 				5537E7EB216614D400390CB2 /* libRCTImage.a in Frameworks */,
 				5537E7EC216614D400390CB2 /* libRCTLinking.a in Frameworks */,
@@ -1802,6 +1806,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				552BF11521675C8300AA0ABB /* chatham_retail.plist */,
+				552BF11621675C8400AA0ABB /* chathamretail.ttf */,
 				557EE004211D53CF001A93B0 /* api-sdk */,
 				65F4B5771F629265009A7D22 /* index.ios.js */,
 				55D17EFC1F0A322800C94FA5 /* Index.js */,
@@ -2731,7 +2737,9 @@
 				5537E7FA216614D400390CB2 /* cbc.ttf in Resources */,
 				5537E7FB216614D400390CB2 /* index.ios.js in Resources */,
 				5537E7FD216614D400390CB2 /* account.ttf in Resources */,
+				552BF11A21675C8500AA0ABB /* chathamretail.ttf in Resources */,
 				5537E7FE216614D400390CB2 /* icomoon.ttf in Resources */,
+				552BF11821675C8500AA0ABB /* chatham_retail.plist in Resources */,
 				5537E7FF216614D400390CB2 /* App in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2775,8 +2783,10 @@
 			files = (
 				65F4B5781F629265009A7D22 /* index.ios.js in Resources */,
 				65127E101D795B4000FB36E1 /* LaunchScreen.xib in Resources */,
+				552BF11721675C8500AA0ABB /* chatham_retail.plist in Resources */,
 				55F31D931F17530200C198C3 /* clientcert.p12 in Resources */,
 				65127E111D795B4000FB36E1 /* icomoon.ttf in Resources */,
+				552BF11921675C8500AA0ABB /* chathamretail.ttf in Resources */,
 				65127E121D795B4000FB36E1 /* App in Resources */,
 				551EE2DE1E51BAE400ADAD6C /* cbc.ttf in Resources */,
 				65127E131D795B4000FB36E1 /* gothic_0.TTF in Resources */,
@@ -3848,7 +3858,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.chathamretail;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = ChathamRetail_InHouseDistribution;
 			};
 			name = Debug;
 		};
@@ -3898,7 +3908,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.uniken.chathamretail;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "825beb6e-e74a-43de-9f69-c51e3baca515";
-				PROVISIONING_PROFILE_SPECIFIER = "CBC Verify InHouse Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = ChathamRetail_InHouseDistribution;
 			};
 			name = Release;
 		};
