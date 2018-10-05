@@ -96,22 +96,22 @@ BottomMenu.propTypes = {
 BottomMenu.defaultProps = {
     list: {
 		1:{
-			icon:'\ue900',
+			icon:'\ue903',
 			title:'Shop',
 			link: 'Shop',
 		},
 		2:{
-			icon:'\ue900',
+			icon:'\ue9bb',
 			title:'My List',			
 			link: 'My List',
 		},
 		3:{
-			icon:'\ue900',
+			icon:'\ue93f',
 			title:'Wallet',				
 			link: 'Wallet',
 		},
 		4:{
-			icon:'\ue900',
+			icon:'\ue971',
 			title:'Account',				
 			link: 'Account',
 		}

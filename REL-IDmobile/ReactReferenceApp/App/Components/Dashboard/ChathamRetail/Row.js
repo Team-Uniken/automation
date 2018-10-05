@@ -5,7 +5,7 @@ import { StyleSheet, Dimensions, Platform, Image, View, Text } from 'react-nativ
 const Row = (props) => (
   <View style={{ flexDirection: 'column', height: 60 }}>
     <View style={{ flexDirection: 'row', height: 60,alignItems:'center'}}>
-      <Text source={props.image} style={styles.listIcons}>{Skin.icon.bell}
+      <Text style={styles.listIcons}>{props.image}
       </Text>
 
       <Text style={{
@@ -20,7 +20,7 @@ const Row = (props) => (
 
 const styles = StyleSheet.create({
   listIcons:{
-    fontFamily: Skin.font.ICON_FONT,
+    fontFamily: Skin.font.LOGO_FONT,
     fontSize: 30,
     width:30,
     height:30,

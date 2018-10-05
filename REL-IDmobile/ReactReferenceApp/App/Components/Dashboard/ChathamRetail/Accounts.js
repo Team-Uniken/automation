@@ -51,11 +51,11 @@ const iconcolor = {
   3: Skin.colors.ACCENT,
 };
 
-const image1 = require('../../../img/imgFingerPrint.png');
-const image2 = require('../../../img/imgFingerPrint.png');
-const image3 = require('../../../img/retail.jpg');
+// const image1 = require('../../../img/imgFingerPrint.png');
+// const image2 = require('../../../img/imgFingerPrint.png');
+ const image3 = require('../../../img/retail.jpg');
 
-var data = [{title:"Shop by Category",image: image2},{title:"Special Offers",image: image2},{title:"Weekly Ad and Catalog",image: image2},{title:"Graphic of some retail shipping items", image: image1},];
+var data = [{title:"Shop by Category",image: '\ue95c'},{title:"Special Offers",image: '\ue93a'},{title:"Weekly Ad and Catalog",image: '\ue920'}];
 
 
 export default class AccountsScene extends Component {
@@ -323,9 +323,9 @@ export default class AccountsScene extends Component {
               text: this.props.isBackBtnText ? 'Back' : '',
               icon: this.props.isBackBtnText ? '' : Skin.icon.hamburger,
               iconStyle: this.props.isBackBtnText ? '' : {
-                fontSize: 50,
+              fontSize: 35,
                 paddingLeft: 17,
-                width: 50,
+                width: 40,
                 color: 'white',
               },
               handler: this.props.handler
@@ -333,7 +333,7 @@ export default class AccountsScene extends Component {
 
           <View style={{ width: 300, height: 50, position: 'absolute', left: 60, top: Platform.OS=='android'?8:30 }}>
             <Text style={{ fontSize: 18, color: 'white',fontWeight:'bold' ,backgroundColor: 'transparent' }}>
-              {"Your Store: Chatham"}
+              {"Your Store: Chatham, NJ"}
             </Text>
             <Text style={{ fontSize: 13, color: 'white', backgroundColor: 'transparent' }}>
               {"Open now until 9 PM"}
@@ -342,15 +342,28 @@ export default class AccountsScene extends Component {
 
         <View style={{backgroundColor:Skin.BUTTON_BG_COLOR}}>
           <View style={{ backgroundColor: 'white', height: 60, margin: 10, flexDirection: 'row' }}>
-            <Text style={[styles.searchIcons, { marginLeft: 15 }]}>{Skin.icon.bell}</Text>
+            <Text style={[styles.searchIcons, { marginLeft: 15 }]}>{'\ue986'}</Text>
             <TextInput style={styles.searchBar} underlineColorAndroid='transparent' placeholder="Search"></TextInput>
-            <Text style={styles.searchIcons}>{Skin.icon.bell}</Text>
-            <Text style={[styles.searchIcons, { marginRight: 15 }]}>{Skin.icon.bell}</Text>
+            <Text style={styles.searchIcons}>{'\ue91e'}</Text>
+            <Text style={[styles.searchIcons, { marginRight: 15 }]}>{'\ue937'}</Text>
           </View>
         </View>
 
-          <View style={{ width: 50, height: 50, position: 'absolute', right: 10 }}>
-            <TouchableOpacity underlayColor='transparent' onPress={this.onPressNotificationView}>
+          <View style={{ width: 80, height: 50, position: 'absolute', right: 10 }}>
+            <TouchableOpacity underlayColor='transparent' style={{flexDirection:'row'}}onPress={this.onPressNotificationView}>
+            <Text style={{
+                color: 'white',
+                fontSize: 30,
+                height: 40,
+                marginTop:3,
+                textAlign:'center',
+                marginRight:20,
+                fontWeight: 'normal',
+                top: Platform.OS === 'android' ? 12 : 32.5,
+                backgroundColor: 'transparent',
+                fontFamily: Skin.font.LOGO_FONT
+              }}>{'\ue93a'}</Text>
+
               <Text style={{
                 color: 'white',
                 textAlign: 'center',
@@ -391,10 +404,11 @@ export default class AccountsScene extends Component {
 const styles = StyleSheet.create({
   searchBar:{
     flex:1,
+    fontSize:18,
     backgroundColor:'transparent'
   },
   searchIcons:{
-    fontFamily: Skin.font.ICON_FONT,
+    fontFamily: Skin.font.LOGO_FONT,
     fontSize: 25,
     width:30,
     marginTop:15,
