@@ -34,7 +34,7 @@ const RDNARequestUtility = ReactNative.NativeModules.RDNARequestUtility;
 import ControlPanel from '../ControlPanel';
 import Config from 'react-native-config';
 import NavBar from '../../view/navbar.js';
-import PageTitle from '../../view/pagetitle.js';
+import PageTitle from '../../view/pagetitleChathamRetail';
 
 var sud =0;
 let self;
@@ -309,84 +309,8 @@ export default class AccountsScene extends Component {
           active: this.state.tabChanged,
         }}>
 
-
-        <View style={{ height: Platform.OS === 'android' ? 140 : 156}}>
-          <NavBar
-            tintColor={Skin.BUTTON_BG_COLOR}
-            statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
-            statusBarLight={'light-content'}
-            titleStyle={Skin.navbar.title.titleStyle}
-            title={''}
-            titleTint={Config.LOGO_COLOR}
-            right={''}
-            left={{
-              text: this.props.isBackBtnText ? 'Back' : '',
-              icon: this.props.isBackBtnText ? '' : Skin.icon.hamburger,
-              iconStyle: this.props.isBackBtnText ? '' : {
-              fontSize: 35,
-                paddingLeft: 17,
-                width: 40,
-                color: 'white',
-              },
-              handler: this.props.handler
-            }} />
-
-          <View style={{ width: 300, height: 50, position: 'absolute', left: 60, top: Platform.OS=='android'?8:30 }}>
-            <Text style={{ fontSize: 18, color: 'white',fontWeight:'bold' ,backgroundColor: 'transparent' }}>
-              {"Your Store: Chatham, NJ"}
-            </Text>
-            <Text style={{ fontSize: 13, color: 'white', backgroundColor: 'transparent' }}>
-              {"Open now until 9 PM"}
-            </Text>
-          </View>
-
-        <View style={{backgroundColor:Skin.BUTTON_BG_COLOR}}>
-          <View style={{ backgroundColor: 'white', height: 60, margin: 10, flexDirection: 'row' }}>
-            <Text style={[styles.searchIcons, { marginLeft: 15 }]}>{'\ue986'}</Text>
-            <TextInput style={styles.searchBar} underlineColorAndroid='transparent' placeholder="Search"></TextInput>
-            <Text style={styles.searchIcons}>{'\ue91e'}</Text>
-            <Text style={[styles.searchIcons, { marginRight: 15 }]}>{'\ue937'}</Text>
-          </View>
-        </View>
-
-          <View style={{ width: 80, height: 50, position: 'absolute', right: 10 }}>
-            <TouchableOpacity underlayColor='transparent' style={{flexDirection:'row'}}onPress={this.onPressNotificationView}>
-            <Text style={{
-                color: 'white',
-                fontSize: 30,
-                height: 40,
-                marginTop:3,
-                textAlign:'center',
-                marginRight:20,
-                fontWeight: 'normal',
-                top: Platform.OS === 'android' ? 12 : 32.5,
-                backgroundColor: 'transparent',
-                fontFamily: Skin.font.LOGO_FONT
-              }}>{'\ue93a'}</Text>
-
-              <Text style={{
-                color: 'white',
-                textAlign: 'center',
-                fontSize: 35,
-                height: 50,
-                fontWeight: 'normal',
-                top: Platform.OS === 'android' ? 12 : 32.5,
-                backgroundColor: 'transparent',
-                fontFamily: Skin.font.ICON_FONT
-              }}>{Skin.icon.bell}</Text>
-
-              {this.state.badgeValue > 0 && <Badge style={{
-                top: Platform.OS === 'android' ? -45 : -24,
-                right: -25,
-              }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
-                {this.state.badgeValue > 9 ? "9+" : this.state.badgeValue}
-
-              </Badge>}
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* <PageTitle title={this.state.titleString}
-                handler={this.triggerDrawer}/> */}
+        { <PageTitle title={""} isBadge={true}
+                handler={this.triggerDrawer}/> }
         <ScrollView style={{backgroundColor:'white'}}>
         <View style={{
           flex: 1,
@@ -398,7 +322,6 @@ export default class AccountsScene extends Component {
       </Main>
     );
   }
-
 }
 
 const styles = StyleSheet.create({

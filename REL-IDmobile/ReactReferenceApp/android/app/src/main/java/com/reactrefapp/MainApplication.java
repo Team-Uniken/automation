@@ -8,6 +8,7 @@ import android.support.v7.appcompat.*;
 //import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
@@ -97,6 +98,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new VectorIconsPackage(),
             new FIRMessagingPackage(),
                     new FingerprintPackage(),
                     new RNSpinkitPackage(),

@@ -64,21 +64,21 @@
     "react-native-swipe-list-view": "0.3.1",
     "react-native-touch-id": "4.0.1",
     "react-native-touch-id-android": "git+https://github.com/Team-Uniken/react-native-touch-id-android.git",
-    "react-native-vector-icons": "^6.0.0",
+    "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^1.0.0-beta.21",
     "react-timer-mixin": "^0.13.3",
     "url-parse": "^1.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "1.9.2",
     "esformatter-jsx": "^7.0.1",
     "eslint": "^2.11.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.1.1",
-    "babel-jest": "20.0.3",
-    "babel-preset-react-native": "1.9.2",
     "jest": "20.0.4",
     "react-test-renderer": "16.0.0-alpha.12"
   }
