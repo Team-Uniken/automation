@@ -699,8 +699,7 @@ export default class NotificationCard extends Component {
             Platform.OS == "android" && this.props.expand
               ? { marginBottom: 20 }
               : { marginBottom: 0 }
-          ]}
-        >
+          ]}>
           <TouchableWithoutFeedback
             style={{ flex: 1 }}
             onPress={() => {
@@ -710,8 +709,7 @@ export default class NotificationCard extends Component {
                   null,
                   NotificationAction.CLICK
                 );
-            }}
-          >
+            }}>
             <View
               style={[
                 style.customerow,
@@ -719,8 +717,7 @@ export default class NotificationCard extends Component {
                   ? { marginBottom: 20 }
                   : {},
                 !this.props.showButtons ? { paddingBottom: 8 } : {}
-              ]}
-            >
+              ]} >
               <View style={[style.col, { flex: 1 }]}>
                 <View style={style.row}>
                   <Text style={style.subject}>{this.state.subject}</Text>
@@ -780,24 +777,6 @@ export default class NotificationCard extends Component {
                 )}
                 <View style={style.lngRow}>
                   {lngButtons}
-                  {/* <TouchableHighlight style={[ this.state.selectedlanguage === "en" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[0]) } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            English
-                                        </Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={[ this.state.selectedlanguage === "gr" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[1]) } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            Deutsch
-                                        </Text>
-                                    </TouchableHighlight>
-                                    <TouchableHighlight style={[ this.state.selectedlanguage === "fr" ? {backgroundColor : Skin.color.APPROVE_BUTTON_COLOR } : {backgroundColor : 'grey' }, {  height: 20, marginBottom: 5, marginTop: 5, marginRight: 5, alignSelf: 'center',  borderBottomRightRadius: 10, borderBottomLeftRadius: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10, alignItems: 'center' }]}
-                                        onPress={() => {  this.changeLanguage(this.state.languageKey[2]) } }>
-                                        <Text style={{color: Skin.color.WHITE, marginRight: 10, marginLeft: 10}}>
-                                            Français
-                                        </Text>
-                                    </TouchableHighlight> */}
                 </View>
               </View>
             </View>
@@ -896,7 +875,7 @@ const style = StyleSheet.create({
     fontWeight: "bold",
     color: Skin.BLACK_TEXT_COLOR,
     width: 188,
-    flex: 3,
+    flex: 7,
     textAlign: "left",
     opacity: 1,
     backgroundColor: "transparent"
@@ -906,7 +885,7 @@ const style = StyleSheet.create({
     color: Skin.BLACK_TEXT_COLOR,
     textAlign: "right",
     opacity: 0.6,
-    flex: 2,
+    flex: 3,
     backgroundColor: "transparent"
     //width: SCREEN_WIDTH - 230,
   },
