@@ -152,11 +152,11 @@ Skin.botmenu = StyleSheet.create({
 	},
 	wrap:{
 		flexDirection:'row',
-		height: 80
+		height: 70
 	},
 	icon:{
 		fontFamily: Skin.font.LOGO_FONT,
-		fontSize: 30,
+		fontSize: 25,
 		paddingTop: 15,
 		color: Skin.colors.TEXT_COLOR,
 		flex:2,
@@ -165,6 +165,8 @@ Skin.botmenu = StyleSheet.create({
 	title:{
 		fontSize: 10,
 		fontWeight: 'bold',
+		marginBottom:10,
+		height:30,
 		color: Skin.colors.TEXT_COLOR,
 		flex:1,
 		textAlign: 'center'

@@ -1200,7 +1200,7 @@ export default class NotificationMgmtScene extends Component {
       );
     } else {
       return <ListView
-        style ={{flex: 1,marginBottom : 40 }}
+        style ={{flex: 1,marginBottom : 20 }}
         ref="listView"
         automaticallyAdjustContentInsets={false}
         dataSource={dataSource}
@@ -1342,7 +1342,7 @@ export default class NotificationMgmtScene extends Component {
   renderWithMain() {
 
     return (
-      <MainActivation >
+    <MainActivation useFlex={true}>
     <Main
       drawerState={{
         open: false,
@@ -1372,7 +1372,7 @@ export default class NotificationMgmtScene extends Component {
         {this.renderNotificationView(this.state.dataSource) }
         {Main.notificationCount == 0 && this._renderMessage() }
         {Main.notificationCount == 0 &&
-          <TouchableHighlight style={{ height: Platform.OS == 'android' ? 70 : 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
+          <TouchableHighlight style={{ height:50, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
               //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
               //      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
@@ -1391,7 +1391,7 @@ export default class NotificationMgmtScene extends Component {
               });
               Events.trigger('getNoticiationHistory');
             } }>
-            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', marginBottom : Platform.OS == 'android' ? 30 : 0}}>
+            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold'}}>
               {Config.NOTIFICATION_HISTORY_LABEL}
             </Text>
           </TouchableHighlight>

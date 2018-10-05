@@ -14,16 +14,16 @@ const Row = (props) => (
       }}>{props.title}</Text>
 
     </View>
-    <View style={{ backgroundColor: 'gray', height: 0.7, marginLeft: 75 }}></View>
+    <View style={{ backgroundColor: 'gray', height: 0.7, marginLeft: 67 }}></View>
   </View>
 )
 
 const styles = StyleSheet.create({
   listIcons:{
     fontFamily: Skin.font.LOGO_FONT,
-    fontSize: 30,
-    width:30,
-    height:30,
+    fontSize: 23,
+    width:23,
+    height:23,
     marginLeft: 25,
     alignSelf: 'center',
     color:Skin.BUTTON_BG_COLOR,

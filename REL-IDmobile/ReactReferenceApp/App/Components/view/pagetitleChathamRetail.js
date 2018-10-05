@@ -122,7 +122,7 @@ class PageTitle extends Component {
                 height: 40,
                 marginTop:3,
                 textAlign:'center',
-                marginRight:20,
+                marginRight:10,
                 fontWeight: 'normal',
                 top: Platform.OS === 'android' ? 12 : 32.5,
                 backgroundColor: 'transparent',
@@ -135,6 +135,7 @@ class PageTitle extends Component {
               textAlign: 'center',
               fontSize: 35,
               height: 50,
+              marginRight:10,
               fontWeight: 'normal',
               top: Platform.OS === 'android' ? 12 : 32.5,
               backgroundColor: 'transparent',
@@ -143,7 +144,7 @@ class PageTitle extends Component {
 
             {this.state.badgeValue > 0 && <Badge style={{
               top: Platform.OS === 'android' ? -45 : -24,
-              right: -25,
+              right: -17,
             }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
               {this.state.badgeValue > 9 ? "9+" : this.state.badgeValue}
 

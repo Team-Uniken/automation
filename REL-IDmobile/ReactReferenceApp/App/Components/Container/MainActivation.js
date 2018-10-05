@@ -439,7 +439,7 @@ class MainActivation extends Component {
         <View style={Skin.activationStyle.container} onPress={this.dismiss} >
           {this.loaderView(this.props.loaderViewHeight) }
 
-          <View style={[, { opacity: 1, height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH }, this.props.style ? this.props.style : {}]}>
+          <View style={[, { opacity: 1},this.props.useFlex?{flex:1}:{height: Skin.SCREEN_HEIGHT, width: Skin.SCREEN_WIDTH }, this.props.style ? this.props.style : {}]}>
             {this.props.children}
           </View>
 

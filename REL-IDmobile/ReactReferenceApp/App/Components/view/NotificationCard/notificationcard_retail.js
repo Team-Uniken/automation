@@ -375,8 +375,13 @@ export default class NotificationCard extends Component {
     if (true && this.props.isAirlines) {
       return (
         <View style={{ flex: 1, backgroundColor: "#ecf0f1" }}>
-          <ScrollView>
-            <View>
+          <ScrollView
+            style={[
+              { backgroundColor: "transparent" }
+            ]}
+            contentContainer={{ flex: 1, backgroundColor: "transparent" }}>
+            <TouchableWithoutFeedback>
+            <View style={style.container_notification}>
               <Card
                 style={style.upgrade}
                 containerStyle={{ margin: 10 }}
@@ -386,6 +391,7 @@ export default class NotificationCard extends Component {
                 {this.renderChathamRetailNotification(bodyarray)}
               </Card>
             </View>
+            </TouchableWithoutFeedback>
           </ScrollView>
           {this.props.expand && <View style={{ flex: 1 }} />}
 
@@ -479,8 +485,7 @@ export default class NotificationCard extends Component {
             <TouchableHighlight
               style={{
                 height: 20,
-                marginBottom: 20,
-                marginTop: 5,
+                marginBottom: 10,
                 width: 40,
                 alignSelf: "center",
                 borderBottomRightRadius: 10,
@@ -943,7 +948,7 @@ const style = StyleSheet.create({
   },
 
   buttontext: {
-    fontSize: SCREEN_WIDTH <= 320 ? 18 : 20,
+    fontSize: SCREEN_WIDTH <= 320 ? 14 : 16,
     color: Skin.color.WHITE,
     textAlign: "center",
     opacity: 1
