@@ -189,7 +189,7 @@ function requireClientBasedConfig() {
                     password: 'uniken123$',
                 },
                 img: {
-                    welcome: require('../../img/cbc.png')
+                    welcome: require('../../img/chathamretail2.png')
                 },
                 bottomMenu: require("../view/chathamretailBottomMenu"),
                 notification:require("../view/NotificationCard/notificationcard_retail").default,
