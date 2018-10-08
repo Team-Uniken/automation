@@ -213,40 +213,34 @@ export default class NotificationCard extends Component {
   }
 
 
-   urlify(text) {
-    var urlRegex = /(https?:\/\/[^\s]+)/g;
-    return text.replace(urlRegex, function(url) {
-        return url;
-    })
-    // or alternatively
-    // return text.replace(urlRegex, '<a href="$1">$1</a>')
-}
+  goToURL(url) {
+    Linking.canOpenURL(url.trim()).then(supported => {
+      if (supported) {
+        Linking.openURL(url.trim());
+      } else {
+        console.log('Don\'t know how to open URI: ' + url.trim());
+      }
+    });
+  }
 
-goToURL(url) {
-  
-  Linking.canOpenURL(url.trim()).then(supported => {
-    if (supported) {
-      Linking.openURL(url.trim());
+
+  getTextViewWithCondition(str) {
+
+    if (str.match(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g)) {
+      var matches = [];
+
+      str.replace(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g, function () {
+        matches.push(Array.prototype.slice.call(arguments, 1, 4))
+      });
+      return (<Text style={[{ marginBottom: 10, fontSize: 13, color: 'blue', textDecorationLine: 'underline' }]} onPress={() => this.goToURL(matches[0][1])}>
+        {matches[0][2]}
+      </Text>);
+
     } else {
-    console.log('Don\'t know how to open URI: ' + url.trim());
-   }
-  });
-}
-
-
-
-getTextViewWithCondition(str){
-
-  if(str.match(/(https?:\/\/[^\s]+)/g)){
-    return (<Text style={[{ marginBottom: 10, fontSize: 13 ,color:'blue',textDecorationLine:'underline'}]} onPress={() => this.goToURL(str)}>
-      {str}
-    </Text>);
-
-  }else{
-    return (<Text style={[{ marginBottom: 10, fontSize: 13 }]}>
-      {str}
-    </Text>);
-}
+      return (<Text style={[{ marginBottom: 10, fontSize: 13 }]}>
+        {str}
+      </Text>);
+    }
   }
 
   
@@ -271,8 +265,8 @@ getTextViewWithCondition(str){
           >
             {keyValue[0]}
           </Text>
-          {this.getTextViewWithCondition(keyValue.length >= 3?this.urlify(keyValue[1]+':'+keyValue[2]):keyValue[1])}
-         
+          {this.getTextViewWithCondition(keyValue.length >= 3 ? keyValue[1] + ':' + keyValue[2] : keyValue[1])}
+
           {bodyArray.length - 1 > i && (
             <View style={{ height: 1, backgroundColor: "gray" }} />
           )}
