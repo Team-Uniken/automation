@@ -675,6 +675,20 @@ class Notifications_History extends Component {
     for (let i = 0; i < bodyarray.length; i++) {
       var bodyStr = bodyarray[i];
       bodyStr = Util.convertUnicode(Util.replaceString('<br/>', '\n', bodyStr));
+      var keyValue = bodyStr.split(":");
+      if(keyValue.length >= 3){
+        var str = keyValue.length >= 3 ? keyValue[1] + ':' + keyValue[2] : keyValue[1];
+
+        if (str.match(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g)) {
+          var matches = [];
+    
+          str.replace(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g, function () {
+            matches.push(Array.prototype.slice.call(arguments, 1, 4))
+          });
+
+          bodyStr =  keyValue[0]+":"+matches[0][2];
+        }
+      }
       bulletList.push(
         <View key={i}>
           <View style={Skin.notification.historyrow}>

@@ -292,7 +292,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.android.support:multidex:1.0.2'
 
-    compile ('com.better.workspace.lib:agent:4.4.4'){
+    compile ('com.better.workspace.lib:agent:4.4.2.patch'){
         exclude group: "com.google.android.gms"
     }
 

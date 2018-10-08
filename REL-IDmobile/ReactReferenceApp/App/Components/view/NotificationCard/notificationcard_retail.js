@@ -225,7 +225,6 @@ export default class NotificationCard extends Component {
 
 
   getTextViewWithCondition(str) {
-
     if (str.match(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g)) {
       var matches = [];
 
@@ -265,8 +264,7 @@ export default class NotificationCard extends Component {
           >
             {keyValue[0]}
           </Text>
-          {this.getTextViewWithCondition(keyValue.length >= 3 ? keyValue[1] + ':' + keyValue[2] : keyValue[1])}
-
+          {keyValue.length>1 && this.getTextViewWithCondition(keyValue.length >= 3 ? keyValue[1] + ':' + keyValue[2] : keyValue[1])}
           {bodyArray.length - 1 > i && (
             <View style={{ height: 1, backgroundColor: "gray" }} />
           )}
@@ -287,6 +285,21 @@ export default class NotificationCard extends Component {
     for (let i = 0; i < bodyarray.length; i++) {
       var bodyStr = bodyarray[i];
       bodyStr = Util.replaceString("<br/>", "\n", bodyStr);
+      var keyValue = bodyStr.split(":");
+      if(keyValue.length >= 3){
+        var str = keyValue.length >= 3 ? keyValue[1] + ':' + keyValue[2] : keyValue[1];
+
+        if (str.match(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g)) {
+          var matches = [];
+    
+          str.replace(/[^<]*(<a href="([^"]+)">([^<]+)<\/a>)/g, function () {
+            matches.push(Array.prototype.slice.call(arguments, 1, 4))
+          });
+
+          bodyStr =  keyValue[0]+":"+matches[0][2];
+        }
+      }
+
       bulletList.push(
         <View key={i}>
           <View
