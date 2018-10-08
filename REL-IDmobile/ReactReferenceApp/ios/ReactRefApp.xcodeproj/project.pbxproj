@@ -1028,7 +1028,6 @@
 		552BF11521675C8300AA0ABB /* chatham_retail.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = chatham_retail.plist; sourceTree = "<group>"; };
 		552BF11621675C8400AA0ABB /* chathamretail.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chathamretail.ttf; sourceTree = "<group>"; };
 		5537E805216614D400390CB2 /* chatham_retail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatham_retail.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5537E806216614D500390CB2 /* cbc_verify copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cbc_verify copy-Info.plist"; path = "/Users/swapnil/Desktop/react_update/REL-IDmobile/ReactReferenceApp/ios/cbc_verify copy-Info.plist"; sourceTree = "<absolute>"; };
 		5537E833216619B800390CB2 /* ImagesChathamRetail.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesChathamRetail.xcassets; sourceTree = "<group>"; };
 		557EE006211D53CF001A93B0 /* RDNA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDNA.h; sourceTree = "<group>"; };
 		557EE008211D53CF001A93B0 /* libapi-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libapi-sdk.a"; sourceTree = "<group>"; };
@@ -1839,7 +1838,6 @@
 				654F81D61CC9FAE3009E6168 /* ReactRefAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				55B94DB91FA3146200AE0D58 /* Recovered References */,
-				5537E806216614D500390CB2 /* cbc_verify copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

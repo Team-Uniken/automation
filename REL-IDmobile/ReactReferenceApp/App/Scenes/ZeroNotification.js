@@ -1046,6 +1046,11 @@ export default class NotificationMgmtScene extends Component {
       case "changelang":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         break;
+
+       case "remind me again" :
+       this.goBack();
+       break;
+       
         default:
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);

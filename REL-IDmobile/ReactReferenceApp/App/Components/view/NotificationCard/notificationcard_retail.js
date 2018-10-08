@@ -22,7 +22,8 @@ import {
   View,
   Alert,
   Platform,
-  ScrollView
+  ScrollView,
+  Linking
 } from "react-native";
 import { NativeModules, NativeEventEmitter } from "react-native";
 import Modal from "react-native-simple-modal";
@@ -211,6 +212,44 @@ export default class NotificationCard extends Component {
     }
   }
 
+
+   urlify(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+        return url;
+    })
+    // or alternatively
+    // return text.replace(urlRegex, '<a href="$1">$1</a>')
+}
+
+goToURL(url) {
+  
+  Linking.canOpenURL(url.trim()).then(supported => {
+    if (supported) {
+      Linking.openURL(url.trim());
+    } else {
+    console.log('Don\'t know how to open URI: ' + url.trim());
+   }
+  });
+}
+
+
+
+getTextViewWithCondition(str){
+
+  if(str.match(/(https?:\/\/[^\s]+)/g)){
+    return (<Text style={[{ marginBottom: 10, fontSize: 13 ,color:'blue',textDecorationLine:'underline'}]} onPress={() => this.goToURL(str)}>
+      {str}
+    </Text>);
+
+  }else{
+    return (<Text style={[{ marginBottom: 10, fontSize: 13 }]}>
+      {str}
+    </Text>);
+}
+  }
+
+  
   renderChathamRetailNotification(bodyArray) {
     //  var = bodyArray.split(":");
     var uiElementArray = [];
@@ -232,9 +271,8 @@ export default class NotificationCard extends Component {
           >
             {keyValue[0]}
           </Text>
-          <Text style={[{ marginBottom: 10, fontSize: 13 }]}>
-            {keyValue[1]}
-          </Text>
+          {this.getTextViewWithCondition(keyValue.length >= 3?this.urlify(keyValue[1]+':'+keyValue[2]):keyValue[1])}
+         
           {bodyArray.length - 1 > i && (
             <View style={{ height: 1, backgroundColor: "gray" }} />
           )}
@@ -410,7 +448,7 @@ export default class NotificationCard extends Component {
                     this.takeAction(
                       this.props.notification,
                       this.props.notification.actions[1].label,
-                      NotificationAction.REJECT
+                      this.props.notification.actions[1].action
                     );
                   }}
                 >
@@ -431,7 +469,7 @@ export default class NotificationCard extends Component {
                     this.takeAction(
                       this.props.notification,
                       this.props.notification.actions[2].label,
-                      NotificationAction.FRAUD
+                      this.props.notification.actions[2].action
                     );
                   }}
                 >
@@ -462,7 +500,7 @@ export default class NotificationCard extends Component {
                     this.takeAction(
                       this.props.notification,
                       this.props.notification.actions[0].label,
-                      NotificationAction.ACCEPT
+                      this.props.notification.actions[0].action
                     );
                   }}
                 >

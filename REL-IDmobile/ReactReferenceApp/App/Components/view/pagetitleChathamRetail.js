@@ -98,7 +98,7 @@ class PageTitle extends Component {
           
          <View style={{ width: 300, height: 50, position: 'absolute', left: 60, top: Platform.OS=='android'?8:30 }}>
             <Text style={{ fontSize: 18, color: 'white',fontWeight:'bold' ,backgroundColor: 'transparent' }}>
-              {"Your Store: Chatham, NJ"}
+              {"Chatham Retail"}
             </Text>
             <Text style={{ fontSize: 13, color: 'white', backgroundColor: 'transparent' }}>
               {"Open now until 9 PM"}
