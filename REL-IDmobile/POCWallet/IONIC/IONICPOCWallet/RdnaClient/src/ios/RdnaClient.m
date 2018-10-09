@@ -191,7 +191,8 @@
     [self illegalAccessCallback:exception];
   }
 }
-  
+
+/*
 -(void)setApplicationName:(CDVInvokedUrlCommand*)command{
   
   @try {
@@ -201,7 +202,9 @@
     [self illegalAccessCallback:exception];
   }
 }
-  
+*/
+
+/*
 -(void)setApplicationVersion:(CDVInvokedUrlCommand*)command{
   
   @try {
@@ -211,6 +214,7 @@
     [self illegalAccessCallback:exception];
   }
 }
+*/	
   
 - (void)setDeviceToken:(CDVInvokedUrlCommand*)command{
   callbackID = command.callbackId;
@@ -586,13 +590,13 @@
   return 0;
 }
  
-- (NSString *)getApplicationVersion{
+/*- (NSString *)getApplicationVersion{
   return applicationVersion;
-}
+}*/
   
-- (NSString *)getApplicationName{
+/*- (NSString *)getApplicationName{
   return applicationName;
-}
+}*/
   
 
 

@@ -782,7 +782,7 @@ RdnaClient.prototype.setDeviceToken = function (successCallback, errorCallback, 
  * @param {*} errorCallback - Sync callback that indicates setApplicationName failure. Returns the error if any.
  * @param {*} options - [APPLICATION_NAME]
  */
-RdnaClient.prototype.setApplicationName = function (successCallback, errorCallback, options) {
+/*RdnaClient.prototype.setApplicationName = function (successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function () { } }
 
     if (typeof errorCallback != "function") {
@@ -796,14 +796,14 @@ RdnaClient.prototype.setApplicationName = function (successCallback, errorCallba
     }
 
     cordova.exec(successCallback, errorCallback, "RdnaClient", "setApplicationName", options);
-};
+};*/
 
 /**
  * @param {*} successCallback - Sync callback that indicates setApplicationVersion call was successfull.
  * @param {*} errorCallback - Sync callback that indicates setApplicationVersion failure. Returns the error if any.
  * @param {*} options - [APPLICATION_VERSION]
  */
-RdnaClient.prototype.setApplicationVersion = function (successCallback, errorCallback, options) {
+/*RdnaClient.prototype.setApplicationVersion = function (successCallback, errorCallback, options) {
     if (errorCallback == null) { errorCallback = function () { } }
 
     if (typeof errorCallback != "function") {
@@ -817,7 +817,7 @@ RdnaClient.prototype.setApplicationVersion = function (successCallback, errorCal
     }
 
     cordova.exec(successCallback, errorCallback, "RdnaClient", "setApplicationVersion", options);
-};
+};*/
 
 /**
  * @param {*} successCallback - Sync callback that indicates getPostLoginChallenges call was successfull.
