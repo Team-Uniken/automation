@@ -122,6 +122,7 @@ class RegisterOptionScene extends Component {
     this.doNavigateDashBoard = this.doNavigateDashBoard.bind(this);
     this.doUpdate = this.doUpdate.bind(this);
     this.getDefaultLoginView = this.getDefaultLoginView.bind(this);
+    this.savePreferences = this.savePreferences.bind (this);
   }
 
   /*
@@ -165,6 +166,8 @@ This method is called when the component will start to load
 
     this.getDeviceUUID();
   }
+
+  
   /*
   This is life cycle method of the react native component.
   This method is called when the component is Mounted/Loaded.
@@ -239,6 +242,28 @@ This method is called when the component will start to load
       });
     });
   }
+
+  componentWillUnmount() { 
+    
+  }
+
+savePreferences ()
+{
+  this.saveDefaultLoginPrefs();
+  if (this.state.welcome == true) {
+    AsyncStorage.setItem("skipwelcome", "true");
+  } else {
+    AsyncStorage.setItem("skipwelcome", "false");
+  }
+
+  if (this.state.rememberusername.length > 0) {
+    //this.setState({ rememberusername: '\u2714' });
+    AsyncStorage.getItem('userId').then((value) => {
+    AsyncStorage.setItem("rememberuser", value);
+    });
+    }
+  //this.doUpdate();
+}
 
   getDeviceUUID() {
     ReactRdna.getDeviceID((response) => {
@@ -578,6 +603,7 @@ This method is called when the component will start to load
   changeDefaultLogin(option) {
     this.state.defaultLogin = option.key;
     this.setState({ defaultLogin: option.key })
+    this.savePreferences();
   }
 
   //call to save defaultLogin option 
@@ -939,7 +965,7 @@ This method is called when the component will start to load
   }
   // navigate to dashboard
   doNavigateDashBoard() {
-     this.props.navigation.goBack();
+         this.props.navigation.goBack();
 //    const ResetToDashboardScreen = NavigationActions.reset({
 //      
 //    index: 1,
@@ -950,6 +976,7 @@ This method is called when the component will start to load
 //      });
 //    this.props.navigation.dispatch(ResetToDashboardScreen)
   }
+
 
 
   selectCheckBox(args) {
