@@ -777,47 +777,48 @@ RdnaClient.prototype.setDeviceToken = function (successCallback, errorCallback, 
     cordova.exec(successCallback, errorCallback, "RdnaClient", "setDeviceToken", options);
 };
 
+
 /**
  * @param {*} successCallback - Sync callback that indicates setApplicationName call was successfull.
  * @param {*} errorCallback - Sync callback that indicates setApplicationName failure. Returns the error if any.
  * @param {*} options - [APPLICATION_NAME]
  */
-RdnaClient.prototype.setApplicationName = function (successCallback, errorCallback, options) {
-    if (errorCallback == null) { errorCallback = function () { } }
+// RdnaClient.prototype.setApplicationName = function (successCallback, errorCallback, options) {
+//     if (errorCallback == null) { errorCallback = function () { } }
 
-    if (typeof errorCallback != "function") {
-        console.log("RdnaClient.setApplicationName    failure: failure parameter not a function");
-        return;
-    }
+//     if (typeof errorCallback != "function") {
+//         console.log("RdnaClient.setApplicationName    failure: failure parameter not a function");
+//         return;
+//     }
 
-    if (typeof successCallback != "function") {
-        console.log("RdnaClient.setApplicationName     failure: success callback parameter must be a function");
-        return;
-    }
+//     if (typeof successCallback != "function") {
+//         console.log("RdnaClient.setApplicationName     failure: success callback parameter must be a function");
+//         return;
+//     }
 
-    cordova.exec(successCallback, errorCallback, "RdnaClient", "setApplicationName", options);
-};
+//     cordova.exec(successCallback, errorCallback, "RdnaClient", "setApplicationName", options);
+// };
 
 /**
  * @param {*} successCallback - Sync callback that indicates setApplicationVersion call was successfull.
  * @param {*} errorCallback - Sync callback that indicates setApplicationVersion failure. Returns the error if any.
  * @param {*} options - [APPLICATION_VERSION]
  */
-RdnaClient.prototype.setApplicationVersion = function (successCallback, errorCallback, options) {
-    if (errorCallback == null) { errorCallback = function () { } }
+// RdnaClient.prototype.setApplicationVersion = function (successCallback, errorCallback, options) {
+//     if (errorCallback == null) { errorCallback = function () { } }
 
-    if (typeof errorCallback != "function") {
-        console.log("RdnaClient.setApplicationVersion   failure: failure parameter not a function");
-        return;
-    }
+//     if (typeof errorCallback != "function") {
+//         console.log("RdnaClient.setApplicationVersion   failure: failure parameter not a function");
+//         return;
+//     }
 
-    if (typeof successCallback != "function") {
-        console.log("RdnaClient.setApplicationVersion    failure: success callback parameter must be a function");
-        return;
-    }
+//     if (typeof successCallback != "function") {
+//         console.log("RdnaClient.setApplicationVersion    failure: success callback parameter must be a function");
+//         return;
+//     }
 
-    cordova.exec(successCallback, errorCallback, "RdnaClient", "setApplicationVersion", options);
-};
+//     cordova.exec(successCallback, errorCallback, "RdnaClient", "setApplicationVersion", options);
+// };
 
 /**
  * @param {*} successCallback - Sync callback that indicates getPostLoginChallenges call was successfull.
