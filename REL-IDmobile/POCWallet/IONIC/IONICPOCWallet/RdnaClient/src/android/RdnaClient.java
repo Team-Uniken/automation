@@ -90,11 +90,13 @@ public class RdnaClient extends CordovaPlugin {
         getDefaultCipherSpec();
       } else if (action.equals("setDeviceToken")) {
         setDeviceToken(args);
-      } else if (action.equals("setApplicationName")) {
+      } 
+	  /*else if (action.equals("setApplicationName")) {
         setApplicationName(args);
       } else if (action.equals("setApplicationVersion")) {
         setApplicationVersion(args);
-      } else if (action.equals("encryptDataPacket")) {
+      }*/ 
+	  else if (action.equals("encryptDataPacket")) {
         encryptDataPacket(args);
       } else if (action.equals("decryptDataPacket")) {
         decryptDataPacket(args);
@@ -243,15 +245,15 @@ public class RdnaClient extends CordovaPlugin {
         return 0;
       }
 
-      @Override
+      /*@Override
       public String getApplicationName() {
         return applicationName;
-      }
+      }*/
 
-      @Override
+      /*@Override
       public String getApplicationVersion() {
         return applicationVersion;
-      }
+      }*/
 
       @Override
       public int onGetPostLoginChallenges(String s) {
@@ -362,15 +364,15 @@ public class RdnaClient extends CordovaPlugin {
     decideCallback(rdnaObj.updateDeviceDetails(args.getString(0), args.getString(1)));
   }
 
-  void setApplicationName(JSONArray args) throws JSONException {
+  /*void setApplicationName(JSONArray args) throws JSONException {
     applicationName = args.getString(0);
     createDefaultConstantSettingCallBack(applicationName);
-  }
+  }*/
 
-  void setApplicationVersion(JSONArray args) throws JSONException {
+  /*void setApplicationVersion(JSONArray args) throws JSONException {
     applicationVersion = args.getString(0);
     createDefaultConstantSettingCallBack(applicationVersion);
-  }
+  }*/
 
   void setDeviceToken(JSONArray args) throws JSONException {
     deviceToken = args.getString(0);
