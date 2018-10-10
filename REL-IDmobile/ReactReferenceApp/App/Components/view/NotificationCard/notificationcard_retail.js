@@ -417,7 +417,7 @@ export default class NotificationCard extends Component {
 
     //Todo : this.props.notification.action or this.props.notification.actions
 
-    if (true && this.props.isAirlines) {
+    if ( this.props.expand) {
       return (
         <View style={{ flex: 1, backgroundColor: "#ecf0f1" }}>
           <ScrollView
