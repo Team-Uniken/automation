@@ -22,6 +22,7 @@ import Util from "../Components/Utils/Util";
 import PageTitle from '../Components/view/pagetitle';
 import AndroidAuth from "../Components/view/AndroidTouch"
 import NotificationCard from '../Components/view/notificationcard';
+import {ClientBasedConfig} from '../Components/Utils/LocalConfig';
 import MainActivation from '../Components/Container/MainActivation';
 import { NavigationActions} from 'react-navigation';
 const Spinner = require('react-native-spinkit');
@@ -1017,12 +1018,12 @@ export default class NotificationMgmtScene extends Component {
 
     var selectedLanguageBodyObjectIndex = this.state.selectedLanguageMap[notificationData.notification.notification_uuid];
 
-    return <NotificationCard {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
+    return <ClientBasedConfig.notification {...notificationData} style={Skin.appointmentrow.row} isAdditionalAuthSupported={isAdditionalAuthSupported} expand={this.view.expand} showButtons={this.view.showButtons} showHideButton={this.view.showHideButton} selectedLanguageBodyObjectIndex={selectedLanguageBodyObjectIndex}/>
   }
 
   onNotificationAction(bundle) {
     const { notification, btnLabel, action, selectedLanguageBodyObjectIndex } = bundle; 
-    switch (action) {
+    switch (action.toLowerCase()) {
       case "accept":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
         this.showalert(notification, btnLabel);
@@ -1044,6 +1045,15 @@ export default class NotificationMgmtScene extends Component {
         this.restoreDataStore();
       case "changelang":
         this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
+        break;
+
+       case "remind me again" :
+       this.goBack();
+       break;
+       
+        default:
+        this.state.selectedLanguageMap[notification.notification_uuid] = selectedLanguageBodyObjectIndex;
+        this.showalert(notification, btnLabel);
         break;
     }
   }
@@ -1194,7 +1204,7 @@ export default class NotificationMgmtScene extends Component {
       );
     } else {
       return <ListView
-        style ={{flex: 1,marginBottom : 40 }}
+        style ={{flex: 1,marginBottom : 20 }}
         ref="listView"
         automaticallyAdjustContentInsets={false}
         dataSource={dataSource}
@@ -1204,7 +1214,7 @@ export default class NotificationMgmtScene extends Component {
             state:{selectedLanguageMap:this.state.selectedLanguageMap},
             view: {
               expand: false,
-              showButtons: false
+              showButtons: false,
             }
           })} />
     }
@@ -1335,7 +1345,7 @@ export default class NotificationMgmtScene extends Component {
   renderWithMain() {
 
     return (
-      <MainActivation>
+    <MainActivation useFlex={true}>
     <Main
       drawerState={{
         open: false,
@@ -1365,7 +1375,7 @@ export default class NotificationMgmtScene extends Component {
         {this.renderNotificationView(this.state.dataSource) }
         {Main.notificationCount == 0 && this._renderMessage() }
         {Main.notificationCount == 0 &&
-          <TouchableHighlight style={{ height: Platform.OS == 'android' ? 70 : 40, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
+          <TouchableHighlight style={{ height:50, width: Skin.SCREEN_WIDTH, justifyContent: 'center', marginTop: 5, backgroundColor: Skin.color.APPROVE_BUTTON_COLOR }}
             onPress={() => {
               //              this.props.navigator.replace({ id: 'Notification_History', title: 'Notification History', sceneConfig: Navigator.SceneConfigs.PushFromRight, });
               //      this.props.navigation.navigate('Notification_History',{title:'Notification History'},{...this.props.navigation.state.params})
@@ -1384,7 +1394,7 @@ export default class NotificationMgmtScene extends Component {
               });
               Events.trigger('getNoticiationHistory');
             } }>
-            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold', marginBottom : Platform.OS == 'android' ? 30 : 0}}>
+            <Text style={{ fontSize: 16, alignSelf: 'center', textAlign: 'center', color: 'white', fontWeight: 'bold'}}>
               {Config.NOTIFICATION_HISTORY_LABEL}
             </Text>
           </TouchableHighlight>

@@ -1,0 +1,228 @@
+{
+  "project_info": {
+    "project_number": "668109773856",
+    "firebase_url": "https://commercial-bank-of-chatham.firebaseio.com",
+    "project_id": "commercial-bank-of-chatham",
+    "storage_bucket": "commercial-bank-of-chatham.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:6706089e57ca6061",
+        "android_client_info": {
+          "package_name": "com.uniken.boiverify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:6c53c3baea626749",
+        "android_client_info": {
+          "package_name": "com.uniken.cbc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:4ad56436868789d0",
+        "android_client_info": {
+          "package_name": "com.uniken.cbc.verifybeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:6f2d863c99bef3aa",
+        "android_client_info": {
+          "package_name": "com.uniken.cbcbeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:c7babb5b08757cc8",
+        "android_client_info": {
+          "package_name": "com.uniken.chathamairlines"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:a749f5159b5d8804",
+        "android_client_info": {
+          "package_name": "com.uniken.chathamretail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668109773856:android:03a4907592d590af",
+        "android_client_info": {
+          "package_name": "com.uniken.pnbverifyuat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668109773856-8ks903jb2vau323esn06h5q5u37qlqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9GPHcL1QgzzGw78rMuN13ohrTsmp1YiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

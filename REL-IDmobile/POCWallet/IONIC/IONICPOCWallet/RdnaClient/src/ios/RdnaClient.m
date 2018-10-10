@@ -192,7 +192,7 @@
   }
 }
 
-/*
+/* 
 -(void)setApplicationName:(CDVInvokedUrlCommand*)command{
   
   @try {
@@ -202,9 +202,7 @@
     [self illegalAccessCallback:exception];
   }
 }
-*/
-
-/*
+  
 -(void)setApplicationVersion:(CDVInvokedUrlCommand*)command{
   
   @try {
@@ -213,8 +211,7 @@
   } @catch (NSException *exception) {
     [self illegalAccessCallback:exception];
   }
-}
-*/	
+}*/
   
 - (void)setDeviceToken:(CDVInvokedUrlCommand*)command{
   callbackID = command.callbackId;
@@ -590,13 +587,13 @@
   return 0;
 }
  
-/*- (NSString *)getApplicationVersion{
-  return applicationVersion;
-}*/
+// - (NSString *)getApplicationVersion{
+//   return applicationVersion;
+// }
   
-/*- (NSString *)getApplicationName{
-  return applicationName;
-}*/
+// - (NSString *)getApplicationName{
+//   return applicationName;
+// }
   
 
 

@@ -302,6 +302,11 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 return 0;
             }
 
+            @Override
+            public int onForgotPasswordStatus(String s) {
+                return 0;
+            }
+
 //            @Override
 //            public int onForgotPasswordStatus(final String rdnaStatusForgotPassword) {
 //                Runnable runnable= new Runnable() {
@@ -749,7 +754,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             int intStartRecord = Integer.parseInt(startRecord);
             int error = -1;
             if (rdnaObj != null) {
-                error = rdnaObj.getNotifications(intRecordCount, enterpriseID, intStartRecord, startDate, endDate);
+                error = rdnaObj.getNotifications(intRecordCount, intStartRecord,enterpriseID, startDate, endDate);
             }
 
             WritableMap errorMap = Arguments.createMap();

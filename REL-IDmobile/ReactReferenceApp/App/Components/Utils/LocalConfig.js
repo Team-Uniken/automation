@@ -17,6 +17,7 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/sandp.png')
                 },
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'homepage',
                     screen: require('../Dashboard/SandP/homepage').default,
@@ -36,6 +37,7 @@ function requireClientBasedConfig() {
                     welcome: require('../../img/nwd.png')
                 },
                 bottomMenu: require("../view/bottomMenu"),
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'Deals',
                     screen: require('../Dashboard/NWD/Deals').default,
@@ -54,6 +56,7 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/stock.png')
                 },
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'Deals',
                     screen: require("../Dashboard/Stock/Deals").default,
@@ -72,6 +75,7 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/ubs.png')
                 },
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'homepage',
                     screen: require('../Dashboard/Ubs/homepage').default,
@@ -91,6 +95,7 @@ function requireClientBasedConfig() {
                     welcome: require('../../img/cbc.png')
                 },
                 bottomMenu: require("../view/cbcbottomMenu"),
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'Accounts',
                     screen: require('../Dashboard/CBC/Accounts').default,
@@ -110,6 +115,7 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/rmobile.png')
                 },
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'Deals',
                     screen: require('../Dashboard/REL-IDMobile/Deals').default,
@@ -128,6 +134,7 @@ function requireClientBasedConfig() {
                 img: {
                     welcome: require('../../img/cbc.png')
                 },
+                notification:require("../view/notificationcard").default,
                 dashboard: {
                     screenName: 'HomePage',
                     screen: require("../Dashboard/CBCVerify/HomePage").default,
@@ -146,6 +153,7 @@ function requireClientBasedConfig() {
                   img: {
                   welcome: require('../../img/startokenlite.png')
                   },
+                  notification:require("../view/notificationcard").default,
                   dashboard: {
                   screenName: 'HomePage',
                   screen: require("../Dashboard/startokenlite/HomePage").default,
@@ -164,12 +172,33 @@ function requireClientBasedConfig() {
                   img: {
                   welcome: require('../../img/pnbverify.png')
                   },
+                  notification:require("../view/notificationcard").default,
                   dashboard: {
                   screenName: 'HomePage',
                   screen: require("../Dashboard/pnbverify/HomePage").default,
                   },
                   }
                   })();
+    }
+    if (Config.ENV == 'chathamretail') {
+        config = (function () {
+            return {
+                connectionProfile: require("../../../Connection_profiles/chathamretail.json"),
+                sslCertificate: {
+                    data: getSSLFileContent(),
+                    password: 'uniken123$',
+                },
+                img: {
+                    welcome: require('../../img/chathamretail2.png')
+                },
+                bottomMenu: require("../view/chathamretailBottomMenu"),
+                notification:require("../view/NotificationCard/notificationcard_retail").default,
+                dashboard: {
+                    screenName: 'Accounts',
+                    screen: require('../Dashboard/ChathamRetail/Accounts').default,
+                }
+            }
+        })();
     }
 
     return config;

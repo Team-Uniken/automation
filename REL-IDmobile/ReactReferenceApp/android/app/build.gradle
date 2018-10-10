@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite",pnb:".env.pnbverify"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite",pnb:".env.pnbverify",chathamretail:".env.chathamretail"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -170,6 +170,12 @@ android {
             keyAlias "uniken"
             keyPassword "uniken123\$"
         }
+        releaseChathamRetail {
+            storeFile file("reactandroid.jks")
+            storePassword "uniken123\$"
+            keyAlias "uniken"
+            keyPassword "uniken123\$"
+        }
     }
 
     flavorDimensions "default"
@@ -220,6 +226,11 @@ android {
             signingConfig signingConfigs.releasePNBVerify
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
+        chathamretail{
+            applicationId 'com.uniken.chathamretail'
+            signingConfig signingConfigs.releaseChathamRetail
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
+        }
     }
 
     buildTypes {
@@ -245,6 +256,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
     //compile project(':react-native-touch-id')
     compile project(':react-native-maps')
     compile project(':react-native-fcm')
@@ -280,7 +292,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.android.support:multidex:1.0.2'
 
-    compile ('com.better.workspace.lib:agent:4.4.2'){
+    compile ('com.better.workspace.lib:agent:4.4.2.patch'){
         exclude group: "com.google.android.gms"
     }
 
