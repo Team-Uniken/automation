@@ -523,7 +523,7 @@ RCT_EXPORT_METHOD (getDeviceID:(RCTResponseSenderBlock)callback){
   int errorID = 0;
   NSMutableString *deviceId;
   errorID = [rdnaObject getDeviceID:&deviceId];
-  NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":deviceId};
+    NSDictionary *dictionary = @{@"error":[NSNumber numberWithInt:errorID],@"response":deviceId==nil?@"":deviceId};
   NSArray *responseArray = [[NSArray alloc]initWithObjects:dictionary, nil];
   dispatch_async(dispatch_get_main_queue(), ^{
     callback(@[responseArray]);
