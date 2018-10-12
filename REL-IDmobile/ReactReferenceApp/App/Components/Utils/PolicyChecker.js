@@ -221,7 +221,7 @@ export default class PolicyChecker {
 
     userIdCheck(username, password) {
         if (policy.userIdCheck != null && policy.userIdCheck === 'true')
-            return !!~password.indexOf(username)?false:true;
+            return !!~password.toLowerCase().indexOf(username.toLowerCase())?false:true;
         else
             return true;
     }
