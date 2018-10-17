@@ -216,6 +216,8 @@ class ControlPanel extends Component {
         RDNARequestUtility.setHttpProxyHost('127.0.0.1', pPort, (response) => { });
         Web.proxy = pPort;
       }
+      Events.trigger('updateBadge', 0);
+          Main.notificationCount = 0;
       this.doNavigation();
     } else {
       alert('Failed to logout with error: ' + responseJson.errCode);

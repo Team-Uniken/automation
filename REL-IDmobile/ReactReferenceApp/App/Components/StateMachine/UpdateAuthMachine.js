@@ -196,7 +196,7 @@ class UpdateAuthMachine extends Component {
             // alert(res.pArgs.response.StatusMsg);
             Alert.alert(
               "",
-              "User credential updated successfully.",
+              "Credential updated successfully.",
               [
                 {
                   text: "OK",
