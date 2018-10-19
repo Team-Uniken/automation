@@ -511,10 +511,10 @@ export default class DeviceMgmtScene extends Component {
           <Text style={styles.leftLabels}>Last Access: </Text>
           <Text style={styles.rightLabels}>{Util.getFormatedDate(lastAccessedTs)}</Text>
         </View>
-        <View style={styles.itemRow}>
+        {/* <View style={styles.itemRow}>
           <Text style={styles.leftLabels}>Binding: </Text>
           <Text style={styles.rightLabels}>{deviceBinding}</Text>
-        </View>
+        </View> */}
       </View>
     );
   }
