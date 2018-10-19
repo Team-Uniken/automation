@@ -8,14 +8,21 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
     </head>
     <body>
-
-    <div class="full-screen">
-        <img src="img/cbc_tranperant.png" alt="Nature" class="responsive"   >
-        <h2 class="custom-text-center" style="margin-top:40px;">Checking for connectivity</h2>
-        <div class="bottom-right">v1.0</div>
-    </div>
         
+        <div class="outer-container">
+            <div class="inner-container">
+              <div class="centered-content">
+                       
+                <img src="img/cbc_logo.png" alt="Nature" style="height:60%;width:40%;">
+                <h2>Welcome to CBC Verify</h2>
+                <input type="text" class="input-text" name="First Name" placeholder="Enter Username/Email"><br>
+                <button id="checkUser" class="button" style="margin-top:20px;">Submit</button>
+
+              </div>
+            </div>
+         </div>
+
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/check_user.js"></script>
     </body>
 </html>

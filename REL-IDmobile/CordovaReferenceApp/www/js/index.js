@@ -27,7 +27,14 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
+        // this.receivedEvent('deviceready');
+        // alert("device ready");
+        setTimeout(function(){  //Beginning of code that should run AFTER the timeout
+            //lots more code
+            // alert("Called timeout");
+            window.location.href = "welcome.html";
+        },3000);
+        
     },
 
     // Update DOM on a Received Event
