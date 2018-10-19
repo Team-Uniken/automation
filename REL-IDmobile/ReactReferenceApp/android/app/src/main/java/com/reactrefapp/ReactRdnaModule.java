@@ -302,7 +302,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 return 0;
             }
 
-            @Override
+            /*@Override
             public int onForgotPasswordStatus(String s) {
                 return 0;
             }
@@ -323,7 +323,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 //                callOnMainThread(runnable);
 //
 //                return 0;
-//            }
+//            }*/
 
             @Override
             public int onLogOff(final String status) {
@@ -382,7 +382,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 return rdnaiwaCreds;
             }
 
-            @Override
+            /*@Override
             public String getApplicationName() {
                 return BuildConfig.APPLICATION_ID;
             }
@@ -390,7 +390,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             @Override
             public String getApplicationVersion() {
                 return BuildConfig.VERSION_NAME;
-            }
+            }*/
 
             @Override
             public int onGetPostLoginChallenges(final String rdnaGetPostLoginStatus) {
@@ -754,7 +754,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             int intStartRecord = Integer.parseInt(startRecord);
             int error = -1;
             if (rdnaObj != null) {
-                error = rdnaObj.getNotifications(intRecordCount, intStartRecord,enterpriseID, startDate, endDate);
+                error = rdnaObj.getNotifications(intRecordCount, enterpriseID, intStartRecord, startDate, endDate);
             }
 
             WritableMap errorMap = Arguments.createMap();
