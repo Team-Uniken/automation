@@ -610,8 +610,9 @@ module.exports.layout1 = {
     wrap: {
       //backgroundColor: '#ae0000',
       //flex: 12,
-      minHeight: 76,
+      minHeight: 85,
       zIndex: 100,
+      marginBottom:10,
       //alignItems: 'center',
     },
     container: {
@@ -806,6 +807,7 @@ const navbar = module.exports.navbar = {
   statusBar: {
     tint: BACKGROUND_COLOR,
     light: false,
+    hidden:false,
   }
 }
 
