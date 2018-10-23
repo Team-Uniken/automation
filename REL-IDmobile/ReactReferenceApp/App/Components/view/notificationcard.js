@@ -298,6 +298,7 @@ export default class NotificationCard extends Component {
     var bodyValue = this.state.parseMessage;
     var bodyarray = bodyValue.split("\n");
     var amount = bodyarray[3];
+    var font = 22;
     var bulletList = [];
     this.state.isMapEnabled = false;
     for (let i = 0; i < bodyarray.length; i++) {
