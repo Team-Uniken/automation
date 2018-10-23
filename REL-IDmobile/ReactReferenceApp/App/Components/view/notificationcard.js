@@ -6,12 +6,14 @@
  ALWAYS NEED
  */
 import React, { Component } from "react";
-import ReactNative from "react-native";
+import {ReactNative, Dimensions} from "react-native";
 
 /*
  Required for this js
  */
 import Events from "react-native-simple-events";
+import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 import {
   StyleSheet,
   Text,
@@ -32,6 +34,8 @@ import Util from "../Utils/Util";
  */
 import Skin from "../../Skin";
 
+const { width, height } = Dimensions.get('window');
+
 /*
  INSTANCES
  */
@@ -49,6 +53,7 @@ export default class NotificationCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMapEnabled: false,
       body: this.props.notification.body,
       parseMessage: "",
       // acceptLabel : "",
@@ -57,9 +62,18 @@ export default class NotificationCard extends Component {
       subject: "",
       //  languageKey : "",
       //  selectedlanguage : this.props.selectedlanguage,   //Deprecated
-      selectedLanguageBodyObjectIndex: 0
+      selectedLanguageBodyObjectIndex: 0,
+      ipAddress: "121.11.112.11",
+      markerDescription: "description",
+      region: {
+        latitude: 18.5635,
+        longitude: 73.7663,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }
     };
     this.updateNotificationData();
+    //this.setRegion();
   }
   componentDidMount() {
     // this.updateNotificationData();
@@ -150,6 +164,21 @@ export default class NotificationCard extends Component {
   // onNotificationLanguageChanged(){
   //     if( !this.props.showHideButton ) this.takeAction(null, null, NotificationAction.HIDE);
   // }
+
+  setRegion(){
+    /* this.setState({
+      region: {
+        latitude: 18.5635,
+        longitude: 73.7663,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }
+    }) */
+    this.state.region.latitude = 18.5635;
+    this.state.region.longitude = 73.7663;
+    this.state.region.latitudeDelta = 0.0922;
+    this.state.region.longitudeDelta = 0.0421;
+  }
 
   takeAction(notification, btnLabel, action) {
     var bundle = {
@@ -246,23 +275,46 @@ export default class NotificationCard extends Component {
     var bodyarray = bodyValue.split("\n");
     var amount = bodyarray[3];
     var font = 22;
+    //var showMap = false;
 
     var bulletList = [];
 
     for (let i = 0; i < bodyarray.length; i++) {
       var bodyStr = bodyarray[i];
-      bodyStr = Util.replaceString("<br/>", "\n", bodyStr);
-      bulletList.push(
-        <View key={i}>
-          <View
-            style={[style.row, { width: SCREEN_WIDTH - 62, paddingRight: 10 }]}
-          >
-            <Text style={style.dot}>{"\u2022"}</Text>
-            <Text style={style.body}>{bodyStr}</Text>
+      bodyStr = Util.replaceString("<br/>", "\n", bodyStr);   
+      if(bodyStr.includes("Location")) {
+        var ASPECT_RATIO = width / height;
+        var location = bodyStr.split(":");
+        var cordinates = location[1].split(",");
+        if(cordinates.length >= 1) {
+          this.state.region.latitude = parseFloat(cordinates[0]);
+          this.state.region.longitude = parseFloat(cordinates[1]);
+          /* this.state.ipAddress = cordinates[2];
+          this.state.markerDescription = cordinates[3]; */
+          this.state.region.latitudeDelta = 0.0122;
+          this.state.region.longitudeDelta = this.state.region.latitudeDelta * ASPECT_RATIO;
+        }
+        this.state.isMapEnabled = true;
+        //showMap = true;
+      }else {     
+        bulletList.push(
+          <View key={i}>
+            <View
+              style={[style.row, { width: SCREEN_WIDTH - 62, paddingRight: 10 }]}
+            >
+              <Text style={style.dot}>{"\u2022"}</Text>
+              <Text style={style.body}>{bodyStr}</Text>
+            </View>
           </View>
-        </View>
-      );
+        );
+      }
     }
+
+    /* if(showMap === true ){
+      //this.setRegion();
+     
+      //this.setState({isMapEnabled : true});
+    } */
 
     var lngButtons = [];
     /* for (let i = 0; i < this.state.languageKey.length && this.state.languageKey.length > 1; i++ ){
@@ -374,7 +426,7 @@ export default class NotificationCard extends Component {
           style={[
             { flex: 1 },
             Platform.OS == "android" && this.props.expand
-              ? { marginBottom: 20 }
+              ? { marginBottom: 5 }
               : { marginBottom: 0 }
           ]}
         >
@@ -416,7 +468,28 @@ export default class NotificationCard extends Component {
                                     </View> */}
                 </View>
 
-                {this.props.expand && <View style={{ flex: 1 }} />}
+              {this.state.isMapEnabled && this.props.expand && <MapView
+                  style={[{flex:1, marginTop:10}]}
+                  scrollEnabled={true}
+                  zoomEnabled={true}
+                  pitchEnabled={true}
+                  rotateEnabled={false}
+                    initialRegion={{
+                      latitude: this.state.region.latitude,
+                      longitude: this.state.region.longitude,
+                      latitudeDelta: this.state.region.latitudeDelta,
+                      longitudeDelta: this.state.region.longitudeDelta,
+                    }}
+                  >                  
+                  <Marker
+                      /* title={this.state.ipAddress}
+                      description={this.state.markerDescription} */
+                      coordinate={ this.state.region }
+                      />
+                  </MapView>}
+
+
+                {this.props.expand && !this.state.isMapEnabled && <View style={{ flex: 1 }} />}
 
                 {this.props.showButtons && (
                   <View style={[style.row, { marginTop: 8 }]}>
