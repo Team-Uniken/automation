@@ -20,6 +20,7 @@ import Config from 'react-native-config';
  */
 import Skin from '../../Skin';
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+import { isIphoneX } from 'react-native-iphone-x-helper'
 
 class Setting extends Component {
   render() {
@@ -29,7 +30,7 @@ class Setting extends Component {
           color: Config.VERSION_COLOR,
           fontSize: 16,
           position: 'absolute',
-          bottom: 0,
+          bottom: (isIphoneX()?20:0),
           right:0,
           width:50,
           height: 24,
