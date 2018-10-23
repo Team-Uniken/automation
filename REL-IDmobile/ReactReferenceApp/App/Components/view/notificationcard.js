@@ -298,11 +298,8 @@ export default class NotificationCard extends Component {
     var bodyValue = this.state.parseMessage;
     var bodyarray = bodyValue.split("\n");
     var amount = bodyarray[3];
-    var font = 22;
-    //var showMap = false;
-
     var bulletList = [];
-
+    this.state.isMapEnabled = false;
     for (let i = 0; i < bodyarray.length; i++) {
       var bodyStr = bodyarray[i];
       bodyStr = Util.replaceString("<br/>", "\n", bodyStr);   
@@ -319,7 +316,6 @@ export default class NotificationCard extends Component {
           this.state.region.longitudeDelta = this.state.region.latitudeDelta * ASPECT_RATIO;
         }
         this.state.isMapEnabled = true;
-        //showMap = true;
       }else {     
         bulletList.push(
           <View key={i}>
@@ -764,7 +760,7 @@ export default class NotificationCard extends Component {
             <TouchableHighlight
               style={{
                 height: 20,
-                marginBottom: 20,
+                marginBottom: 5,
                 marginTop: 5,
                 width: 40,
                 alignSelf: "center",
