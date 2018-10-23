@@ -270,6 +270,30 @@ export default class NotificationCard extends Component {
     }
   }
 
+  getMapView(){
+    return(
+      <MapView
+        style={[{flex:1, marginTop:10}]}
+        scrollEnabled={true}
+        zoomEnabled={true}
+        pitchEnabled={true}
+        rotateEnabled={false}
+          initialRegion={{
+            latitude: this.state.region.latitude,
+            longitude: this.state.region.longitude,
+            latitudeDelta: this.state.region.latitudeDelta,
+            longitudeDelta: this.state.region.longitudeDelta,
+          }}
+        >                  
+        <Marker
+            /* title={this.state.ipAddress}
+            description={this.state.markerDescription} */
+            coordinate={ this.state.region }
+            />
+      </MapView>
+    )
+  }
+
   render() {
     var bodyValue = this.state.parseMessage;
     var bodyarray = bodyValue.split("\n");
@@ -426,8 +450,7 @@ export default class NotificationCard extends Component {
           style={[
             { flex: 1 },
             Platform.OS == "android" && this.props.expand
-              ? { marginBottom: 5 }
-              : { marginBottom: 0 }
+              ? { marginBottom: 5 } : { marginBottom: 0 }
           ]}
         >
           <TouchableWithoutFeedback
@@ -468,25 +491,7 @@ export default class NotificationCard extends Component {
                                     </View> */}
                 </View>
 
-              {this.state.isMapEnabled && this.props.expand && <MapView
-                  style={[{flex:1, marginTop:10}]}
-                  scrollEnabled={true}
-                  zoomEnabled={true}
-                  pitchEnabled={true}
-                  rotateEnabled={false}
-                    initialRegion={{
-                      latitude: this.state.region.latitude,
-                      longitude: this.state.region.longitude,
-                      latitudeDelta: this.state.region.latitudeDelta,
-                      longitudeDelta: this.state.region.longitudeDelta,
-                    }}
-                  >                  
-                  <Marker
-                      /* title={this.state.ipAddress}
-                      description={this.state.markerDescription} */
-                      coordinate={ this.state.region }
-                      />
-                  </MapView>}
+              {this.state.isMapEnabled && this.props.expand && this.getMapView()}
 
 
                 {this.props.expand && !this.state.isMapEnabled && <View style={{ flex: 1 }} />}
@@ -584,7 +589,7 @@ export default class NotificationCard extends Component {
             <TouchableHighlight
               style={{
                 height: 20,
-                marginBottom: 20,
+                marginBottom: 5,
                 marginTop: 5,
                 width: 40,
                 alignSelf: "center",
@@ -622,8 +627,7 @@ export default class NotificationCard extends Component {
           style={[
             { flex: 1 },
             Platform.OS == "android" && this.props.expand
-              ? { marginBottom: 20 }
-              : { marginBottom: 0 }
+              ? { marginBottom: 5 } : { marginBottom: 0 }
           ]}
         >
           <TouchableWithoutFeedback
@@ -656,7 +660,11 @@ export default class NotificationCard extends Component {
 
                 <View style={[style.col, { marginTop: 4 }]}>{bulletList}</View>
 
-                {this.props.expand && <View style={{ flex: 1 }} />}
+                {this.state.isMapEnabled && this.props.expand && this.getMapView()}
+
+                {this.props.expand && !this.state.isMapEnabled && <View style={{ flex: 1 }} />}
+
+                {/* this.props.expand && <View style={{ flex: 1 }} /> */}
 
                 {this.props.showButtons &&
                   this.props.notification.actions.length == 2 && (
@@ -796,10 +804,10 @@ const style = StyleSheet.create({
   customerow: {
     backgroundColor: Skin.color.WHITE,
     flex: 1,
-    paddingTop: 8,
-    paddingRight: 8,
-    paddingLeft: 8,
-    marginTop: 20,
+    paddingTop: 4,
+    paddingRight: 4,
+    paddingLeft: 4,
+    marginTop: 10,
     width: SCREEN_WIDTH - 32,
     alignSelf: "center"
   },
