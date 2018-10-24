@@ -14,7 +14,7 @@ var app = {
     },
 
     btnRgstr: function() {
-        window.location.href = "verification_without_qr.html";
+        window.location.href = "verification_with_qr.html";
     },
 
 };

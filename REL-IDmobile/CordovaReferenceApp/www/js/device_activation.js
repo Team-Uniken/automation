@@ -2,8 +2,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        document.getElementById("btnEntPwd").addEventListener("click", this.btnEntPwd.bind(this), false);    
-        document.getElementById("btnForgotPass").addEventListener("click", this.btnForgotPass.bind(this), false);
+        document.getElementById("deviceActive").addEventListener("click", this.deviceActive.bind(this), false);    
     },
 
     // deviceready Event Handler
@@ -14,14 +13,11 @@ var app = {
         // this.receivedEvent('deviceready');
     },
 
-    btnEntPwd: function() {
-        window.location.href = "dashboard.html";
+    deviceActive: function() {
+        window.location.href = "forgot_password.html";
     },
 
 
-    btnForgotPass: function() {
-        window.location.href = "device_activation.html";
-    },
 };
 
 app.initialize();
