@@ -175,7 +175,6 @@
 		5528FFAF1F21F73C00560B76 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6582FD651D95256E0075C15D /* libTouchID.a */; };
 		5528FFB01F21F73C00560B76 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65281C2F1D6C34EA00F15ACE /* libRCTPushNotification.a */; };
 		5528FFB11F21F73C00560B76 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		5528FFB21F21F73C00560B76 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */; };
 		5528FFB31F21F73C00560B76 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
 		5528FFB51F21F73C00560B76 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		5528FFB61F21F73C00560B76 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -372,6 +371,66 @@
 		55D351891E1E0F7C00806F82 /* gothic_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 656227EB1CB50B2300AD7F6C /* gothic_0.TTF */; };
 		55D3518E1E1E0F7C00806F82 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 654F81CA1CC9FAD5009E6168 /* Info.plist */; };
 		55D351981E1E128C00806F82 /* ImagesStock.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55D351961E1E126F00806F82 /* ImagesStock.xcassets */; };
+		55EB2A2A217F45D90083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A32217F45FE0083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A33217F45FE0083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A38217F471B0083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A39217F471B0083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A3B217F472A0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A3C217F472A0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A3E217F49C30083C3B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A3D217F49C20083C3B5 /* Accelerate.framework */; };
+		55EB2A40217F49CD0083C3B5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A3F217F49CD0083C3B5 /* CoreData.framework */; };
+		55EB2A42217F49D50083C3B5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A41217F49D50083C3B5 /* CoreGraphics.framework */; };
+		55EB2A44217F49DE0083C3B5 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A43217F49DE0083C3B5 /* CoreImage.framework */; };
+		55EB2A46217F49E60083C3B5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A45217F49E60083C3B5 /* CoreLocation.framework */; };
+		55EB2A48217F49ED0083C3B5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A47217F49ED0083C3B5 /* CoreTelephony.framework */; };
+		55EB2A4A217F49F40083C3B5 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A49217F49F40083C3B5 /* CoreText.framework */; };
+		55EB2A4C217F49FA0083C3B5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A4B217F49FA0083C3B5 /* GLKit.framework */; };
+		55EB2A4E217F4A030083C3B5 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A4D217F4A030083C3B5 /* ImageIO.framework */; };
+		55EB2A50217F4A120083C3B5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A4F217F4A120083C3B5 /* libc++.tbd */; };
+		55EB2A52217F4A1B0083C3B5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A51217F4A1B0083C3B5 /* libz.tbd */; };
+		55EB2A54217F4A220083C3B5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A53217F4A220083C3B5 /* OpenGLES.framework */; };
+		55EB2A56217F4A2F0083C3B5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A55217F4A2F0083C3B5 /* QuartzCore.framework */; };
+		55EB2A58217F4A360083C3B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A57217F4A360083C3B5 /* SystemConfiguration.framework */; };
+		55EB2A5A217F4A470083C3B5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A59217F4A470083C3B5 /* UIKit.framework */; };
+		55EB2A5C21803DCD0083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A5D21803F170083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A5E21803F180083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A5F21803F1A0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6021803F1B0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6121803F1C0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6221803F1C0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6321803F1F0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6421803F1F0083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6521803F200083C3B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */; };
+		55EB2A6621803F270083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6721803F280083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6821803F280083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6921803F290083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6A21803F290083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6B21803F2A0083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6C21803F2A0083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6D21803F2B0083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6E21803F2B0083C3B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */; };
+		55EB2A6F21803F2F0083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7021803F300083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7121803F300083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7221803F310083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7321803F310083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7421803F320083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7521803F330083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7621803F330083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7721803F340083C3B5 /* GoogleMapsBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */; };
+		55EB2A7821803F370083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7921803F380083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7A21803F380083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7B21803F390083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7C21803F390083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7D21803F3A0083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7E21803F3A0083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A7F21803F3B0083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A8021803F3C0083C3B5 /* GoogleMapsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */; };
+		55EB2A81218044D90083C3B5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */; };
 		55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F31D581F16063000C198C3 /* libRNFS.a */; };
 		55F31D931F17530200C198C3 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
 		55F31D941F17530200C198C3 /* clientcert.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 55F31D921F17530200C198C3 /* clientcert.p12 */; };
@@ -911,16 +970,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5528FFCB1F21F73C00560B76 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5537E801216614D400390CB2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1019,6 +1068,7 @@
 		1BB691276A414138A7C4F6C1 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
 		3475BFD97D954F819B1A2E01 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		5506A3341EE150C000870068 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		55197DDC217F3E77001B168B /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../../../../Downloads/0646cf0bd434ed77-GoogleMaps-1.10.1/GoogleMapsSDKDemos/GoogleMaps.framework"; sourceTree = "<group>"; };
 		551E56071E1CE0EE004F007A /* ImagesS&PGlobal.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ImagesS&PGlobal.xcassets"; sourceTree = "<group>"; };
 		551EE2DD1E51BAE400ADAD6C /* cbc.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cbc.ttf; sourceTree = "<group>"; };
 		551EE2DF1E51BB1200ADAD6C /* cbc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cbc.plist; sourceTree = "<group>"; };
@@ -1040,6 +1090,25 @@
 		55D17EFC1F0A322800C94FA5 /* Index.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = Index.js; path = ../Index.js; sourceTree = "<group>"; };
 		55D351941E1E0F7C00806F82 /* stock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D351961E1E126F00806F82 /* ImagesStock.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesStock.xcassets; sourceTree = "<group>"; };
+		55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsCore.framework; sourceTree = "<group>"; };
+		55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMapsBase.framework; sourceTree = "<group>"; };
+		55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
+		55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		55EB2A3D217F49C20083C3B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		55EB2A3F217F49CD0083C3B5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		55EB2A41217F49D50083C3B5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		55EB2A43217F49DE0083C3B5 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		55EB2A45217F49E60083C3B5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		55EB2A47217F49ED0083C3B5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		55EB2A49217F49F40083C3B5 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		55EB2A4B217F49FA0083C3B5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		55EB2A4D217F4A030083C3B5 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		55EB2A4F217F4A120083C3B5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		55EB2A51217F4A1B0083C3B5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		55EB2A53217F4A220083C3B5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		55EB2A55217F4A2F0083C3B5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		55EB2A57217F4A360083C3B5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		55EB2A59217F4A470083C3B5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		55F31D921F17530200C198C3 /* clientcert.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = clientcert.p12; sourceTree = "<group>"; };
 		5A302D3D19354BB9B400DA70 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		617F92D6FBF04371B6760DC9 /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
@@ -1104,6 +1173,7 @@
 				55074FA31EE81CA700BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074FA21EE81C2F00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				55074F931EE7EEFA00BF6DC8 /* libRCTAnimation.a in Frameworks */,
+				55EB2A7921803F380083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				6582FD691D9526890075C15D /* libstdc++.tbd in Frameworks */,
 				654B80D91DBE0C620052D415 /* FBSDKLoginKit.framework in Frameworks */,
 				6582FD5E1D9525000075C15D /* libRCTTouchId.a in Frameworks */,
@@ -1119,9 +1189,11 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				55EB2A6B21803F2A0083C3B5 /* GoogleMaps.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				654B80DB1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */,
 				654B80D51DBE0C620052D415 /* Bolts.framework in Frameworks */,
+				55EB2A6F21803F2F0083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5797D192178A4FEB996EFD7F /* libRCTCamera.a in Frameworks */,
 			);
@@ -1135,12 +1207,14 @@
 				1801EFE420F4B9F900D1317C /* libRNSpinkit.a in Frameworks */,
 				1801EFE520F4B9F900D1317C /* libReact.a in Frameworks */,
 				1801EFE620F4B9F900D1317C /* libjschelpers.a in Frameworks */,
+				55EB2A7521803F330083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				1801EFE720F4B9F900D1317C /* libyoga.a in Frameworks */,
 				1801EFE820F4B9F900D1317C /* libAirMaps.a in Frameworks */,
 				1801EFE920F4B9F900D1317C /* libRCTFBSDK.a in Frameworks */,
 				1801F0AB20F4C0A000D1317C /* libRCTCamera.a in Frameworks */,
 				1801EFEA20F4B9F900D1317C /* libRCTAnimation.a in Frameworks */,
 				1801EFEB20F4B9F900D1317C /* libReactNativeConfig.a in Frameworks */,
+				55EB2A7E21803F3A0083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				1801EFEC20F4B9F900D1317C /* libstdc++.tbd in Frameworks */,
 				1801EFED20F4B9F900D1317C /* FBSDKLoginKit.framework in Frameworks */,
 				1801EFEE20F4B9F900D1317C /* libRCTTouchId.a in Frameworks */,
@@ -1149,6 +1223,7 @@
 				1801EFF120F4B9F900D1317C /* libRCTPushNotification.a in Frameworks */,
 				557EE011211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				1801EFF220F4B9F900D1317C /* libRCTActionSheet.a in Frameworks */,
+				55EB2A6C21803F2A0083C3B5 /* GoogleMaps.framework in Frameworks */,
 				1801EFF420F4B9F900D1317C /* FBSDKCoreKit.framework in Frameworks */,
 				1801EFF520F4B9F900D1317C /* libRCTGeolocation.a in Frameworks */,
 				1801EFF620F4B9F900D1317C /* libRCTImage.a in Frameworks */,
@@ -1171,12 +1246,14 @@
 				1827D2CF210B3246006C8906 /* libRNSpinkit.a in Frameworks */,
 				1827D2D0210B3246006C8906 /* libReact.a in Frameworks */,
 				1827D2D1210B3246006C8906 /* libjschelpers.a in Frameworks */,
+				55EB2A7621803F330083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				1827D2D2210B3246006C8906 /* libyoga.a in Frameworks */,
 				1827D2D3210B3246006C8906 /* libAirMaps.a in Frameworks */,
 				1827D2D4210B3246006C8906 /* libRCTFBSDK.a in Frameworks */,
 				1827D2D5210B3246006C8906 /* libRCTAnimation.a in Frameworks */,
 				1827D2D6210B3246006C8906 /* libReactNativeConfig.a in Frameworks */,
 				1827D2D7210B3246006C8906 /* libstdc++.tbd in Frameworks */,
+				55EB2A7F21803F3B0083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				1827D2D8210B3246006C8906 /* FBSDKLoginKit.framework in Frameworks */,
 				1827D2D9210B3246006C8906 /* libRCTTouchId.a in Frameworks */,
 				1827D2DA210B3246006C8906 /* libTouchID.a in Frameworks */,
@@ -1185,6 +1262,7 @@
 				1827D2DD210B3246006C8906 /* libRCTActionSheet.a in Frameworks */,
 				557EE012211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				1827D2DF210B3246006C8906 /* FBSDKCoreKit.framework in Frameworks */,
+				55EB2A6D21803F2B0083C3B5 /* GoogleMaps.framework in Frameworks */,
 				1827D2E0210B3246006C8906 /* libRCTGeolocation.a in Frameworks */,
 				1827D2E1210B3246006C8906 /* libRCTImage.a in Frameworks */,
 				1827D2E2210B3246006C8906 /* libRCTLinking.a in Frameworks */,
@@ -1207,12 +1285,14 @@
 				559A9DD41F2896E000D8F3FD /* libRNSpinkit.a in Frameworks */,
 				5562686A1EEE69F50008AC49 /* libReact.a in Frameworks */,
 				556268641EEE65E20008AC49 /* libjschelpers.a in Frameworks */,
+				55EB2A7321803F310083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				556268621EEE65CB0008AC49 /* libyoga.a in Frameworks */,
 				555B04CC1EE6BDF2004B7659 /* libAirMaps.a in Frameworks */,
 				555B04931EE67E99004B7659 /* libRCTFBSDK.a in Frameworks */,
 				5506A35C1EE150DE00870068 /* libRCTAnimation.a in Frameworks */,
 				5535B2861EE03A32007AE1B6 /* libReactNativeConfig.a in Frameworks */,
 				1A6151B51E4CDF5B00B3C9B2 /* libstdc++.tbd in Frameworks */,
+				55EB2A7C21803F390083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				55F31D5C1F1609B400C198C3 /* libRNFS.a in Frameworks */,
 				1A6151B71E4CDF5B00B3C9B2 /* FBSDKLoginKit.framework in Frameworks */,
 				1A6151B81E4CDF5B00B3C9B2 /* libRCTTouchId.a in Frameworks */,
@@ -1221,6 +1301,7 @@
 				1A6151BC1E4CDF5B00B3C9B2 /* libRCTActionSheet.a in Frameworks */,
 				557EE00E211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				1A6151BD1E4CDF5B00B3C9B2 /* FBSDKCoreKit.framework in Frameworks */,
+				55EB2A6721803F280083C3B5 /* GoogleMaps.framework in Frameworks */,
 				1A6151BE1E4CDF5B00B3C9B2 /* libRCTGeolocation.a in Frameworks */,
 				1A6151BF1E4CDF5B00B3C9B2 /* libRCTImage.a in Frameworks */,
 				1A6151C01E4CDF5B00B3C9B2 /* libRCTLinking.a in Frameworks */,
@@ -1239,6 +1320,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55EB2A5A217F4A470083C3B5 /* UIKit.framework in Frameworks */,
+				55EB2A58217F4A360083C3B5 /* SystemConfiguration.framework in Frameworks */,
+				55EB2A56217F4A2F0083C3B5 /* QuartzCore.framework in Frameworks */,
+				55EB2A54217F4A220083C3B5 /* OpenGLES.framework in Frameworks */,
+				55EB2A52217F4A1B0083C3B5 /* libz.tbd in Frameworks */,
+				55EB2A50217F4A120083C3B5 /* libc++.tbd in Frameworks */,
+				55EB2A4E217F4A030083C3B5 /* ImageIO.framework in Frameworks */,
+				55EB2A4C217F49FA0083C3B5 /* GLKit.framework in Frameworks */,
+				55EB2A4A217F49F40083C3B5 /* CoreText.framework in Frameworks */,
+				55EB2A48217F49ED0083C3B5 /* CoreTelephony.framework in Frameworks */,
+				55EB2A46217F49E60083C3B5 /* CoreLocation.framework in Frameworks */,
+				55EB2A44217F49DE0083C3B5 /* CoreImage.framework in Frameworks */,
+				55EB2A42217F49D50083C3B5 /* CoreGraphics.framework in Frameworks */,
+				55EB2A40217F49CD0083C3B5 /* CoreData.framework in Frameworks */,
+				55EB2A3E217F49C30083C3B5 /* Accelerate.framework in Frameworks */,
 				5599BA7F1F4AC2600025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				559A9DD61F28A7CA00D8F3FD /* libRNSpinkit.a in Frameworks */,
 				5528FFA51F21F73C00560B76 /* libReact.a in Frameworks */,
@@ -1256,7 +1352,9 @@
 				5528FFB01F21F73C00560B76 /* libRCTPushNotification.a in Frameworks */,
 				5528FFB11F21F73C00560B76 /* libRCTActionSheet.a in Frameworks */,
 				557EE010211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
-				5528FFB21F21F73C00560B76 /* FBSDKCoreKit.framework in Frameworks */,
+				55EB2A39217F471B0083C3B5 /* GoogleMaps.framework in Frameworks */,
+				55EB2A5C21803DCD0083C3B5 /* GoogleMapsCore.framework in Frameworks */,
+				55EB2A33217F45FE0083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				5528FFB31F21F73C00560B76 /* libRCTGeolocation.a in Frameworks */,
 				5528FFB51F21F73C00560B76 /* libRCTImage.a in Frameworks */,
 				5528FFB61F21F73C00560B76 /* libRCTLinking.a in Frameworks */,
@@ -1264,6 +1362,7 @@
 				5528FFB81F21F73C00560B76 /* libRCTSettings.a in Frameworks */,
 				5528FFB91F21F73C00560B76 /* libRCTText.a in Frameworks */,
 				5528FFBA1F21F73C00560B76 /* libRCTVibration.a in Frameworks */,
+				55EB2A81218044D90083C3B5 /* FBSDKCoreKit.framework in Frameworks */,
 				5528FFBC1F21F73C00560B76 /* FBSDKShareKit.framework in Frameworks */,
 				5528FFBD1F21F73C00560B76 /* Bolts.framework in Frameworks */,
 				5528FFBE1F21F73C00560B76 /* libRCTWebSocket.a in Frameworks */,
@@ -1278,6 +1377,8 @@
 				5599BAD21F4ADB910025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				557EE00B211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				55074FA81EE81F0500BF6DC8 /* libReactNativeConfig.a in Frameworks */,
+				55EB2A7821803F370083C3B5 /* GoogleMapsCore.framework in Frameworks */,
+				55EB2A7021803F300083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				55074FA71EE81EFE00BF6DC8 /* libRCTCamera.a in Frameworks */,
 				55074FA61EE81EF800BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074FA51EE81EF200BF6DC8 /* libAirMaps.a in Frameworks */,
@@ -1297,6 +1398,7 @@
 				552BB7AE1E1BA0B90009F274 /* FBSDKLoginKit.framework in Frameworks */,
 				552BB7AF1E1BA0B90009F274 /* Bolts.framework in Frameworks */,
 				552BB7B01E1BA0B90009F274 /* libRCTSettings.a in Frameworks */,
+				55EB2A6A21803F290083C3B5 /* GoogleMaps.framework in Frameworks */,
 				552BB7B11E1BA0B90009F274 /* libRCTText.a in Frameworks */,
 				552BB7B21E1BA0B90009F274 /* libRCTVibration.a in Frameworks */,
 				552BB7B31E1BA0B90009F274 /* libRCTWebSocket.a in Frameworks */,
@@ -1322,8 +1424,10 @@
 				5537E7E4216614D400390CB2 /* libTouchID.a in Frameworks */,
 				5537E7E5216614D400390CB2 /* libRNFS.a in Frameworks */,
 				5537E7E6216614D400390CB2 /* libRCTPushNotification.a in Frameworks */,
+				55EB2A7721803F340083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				5537E7E7216614D400390CB2 /* libRCTActionSheet.a in Frameworks */,
 				554C88E32167701A00BA0A8D /* libapi-sdk.a in Frameworks */,
+				55EB2A8021803F3C0083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				5537E7EA216614D400390CB2 /* libRCTGeolocation.a in Frameworks */,
 				5537E7EB216614D400390CB2 /* libRCTImage.a in Frameworks */,
 				5537E7EC216614D400390CB2 /* libRCTLinking.a in Frameworks */,
@@ -1334,6 +1438,7 @@
 				5537E7F1216614D400390CB2 /* FBSDKShareKit.framework in Frameworks */,
 				5537E7F2216614D400390CB2 /* Bolts.framework in Frameworks */,
 				5537E7F3216614D400390CB2 /* libRCTWebSocket.a in Frameworks */,
+				55EB2A6E21803F2B0083C3B5 /* GoogleMaps.framework in Frameworks */,
 				5537E7F4216614D400390CB2 /* libRCTCamera.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1345,6 +1450,8 @@
 				5599BAAA1F4ADB660025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				557EE00F211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				55074FB11EE8239A00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
+				55EB2A7D21803F3A0083C3B5 /* GoogleMapsCore.framework in Frameworks */,
+				55EB2A7421803F320083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				55074FB01EE8238300BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074F971EE7EF2600BF6DC8 /* libRCTAnimation.a in Frameworks */,
 				558C99961E7BF7A30002C56F /* libstdc++.tbd in Frameworks */,
@@ -1364,6 +1471,7 @@
 				558C99A41E7BF7A30002C56F /* libRCTText.a in Frameworks */,
 				558C99A51E7BF7A30002C56F /* libRCTVibration.a in Frameworks */,
 				558C99A61E7BF7A30002C56F /* FBSDKShareKit.framework in Frameworks */,
+				55EB2A6621803F270083C3B5 /* GoogleMaps.framework in Frameworks */,
 				558C99A71E7BF7A30002C56F /* Bolts.framework in Frameworks */,
 				558C99A81E7BF7A30002C56F /* libRCTWebSocket.a in Frameworks */,
 				558C99AA1E7BF7A30002C56F /* libRCTCamera.a in Frameworks */,
@@ -1383,12 +1491,15 @@
 				55D351701E1E0F7C00806F82 /* FBSDKLoginKit.framework in Frameworks */,
 				55D351711E1E0F7C00806F82 /* libRCTTouchId.a in Frameworks */,
 				55D351721E1E0F7C00806F82 /* libTouchID.a in Frameworks */,
+				55EB2A7121803F300083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				557EE00C211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				650DBBCA2017433600BDE5A5 /* libRNFS.a in Frameworks */,
 				55D351731E1E0F7C00806F82 /* libRCTPushNotification.a in Frameworks */,
 				55D351741E1E0F7C00806F82 /* libReact.a in Frameworks */,
 				55D351751E1E0F7C00806F82 /* libRCTActionSheet.a in Frameworks */,
 				55D351761E1E0F7C00806F82 /* FBSDKCoreKit.framework in Frameworks */,
+				55EB2A6921803F290083C3B5 /* GoogleMaps.framework in Frameworks */,
+				55EB2A7A21803F380083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				55D351771E1E0F7C00806F82 /* libRCTGeolocation.a in Frameworks */,
 				55D351781E1E0F7C00806F82 /* libRCTImage.a in Frameworks */,
 				55D351791E1E0F7C00806F82 /* libRCTLinking.a in Frameworks */,
@@ -1407,6 +1518,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55EB2A32217F45FE0083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				55074F921EE7EEEA00BF6DC8 /* libRCTAnimation.a in Frameworks */,
 				55074F911EE7EC2B00BF6DC8 /* libRCTCamera.a in Frameworks */,
 				6582FD6A1D9526920075C15D /* libstdc++.tbd in Frameworks */,
@@ -1414,6 +1526,7 @@
 				6582FD5F1D9525050075C15D /* libRCTTouchId.a in Frameworks */,
 				65127E031D795B4000FB36E1 /* libRCTPushNotification.a in Frameworks */,
 				65127E041D795B4000FB36E1 /* libReact.a in Frameworks */,
+				55EB2A2A217F45D90083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				65127E051D795B4000FB36E1 /* libRCTActionSheet.a in Frameworks */,
 				650DBBCB2017433A00BDE5A5 /* libRNFS.a in Frameworks */,
 				654B80D81DBE0C620052D415 /* FBSDKCoreKit.framework in Frameworks */,
@@ -1422,6 +1535,7 @@
 				65127E081D795B4000FB36E1 /* libRCTLinking.a in Frameworks */,
 				654B80DC1DBE0C620052D415 /* FBSDKShareKit.framework in Frameworks */,
 				65127E091D795B4000FB36E1 /* libRCTNetwork.a in Frameworks */,
+				55EB2A38217F471B0083C3B5 /* GoogleMaps.framework in Frameworks */,
 				654B80DA1DBE0C620052D415 /* FBSDKLoginKit.framework in Frameworks */,
 				557EE009211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				654B80D61DBE0C620052D415 /* Bolts.framework in Frameworks */,
@@ -1447,12 +1561,14 @@
 				552BAFCF20185B4C00C77A5D /* libjschelpers.a in Frameworks */,
 				552BAFCE20185A9C00C77A5D /* libAirMaps.a in Frameworks */,
 				552BAFA4201859FD00C77A5D /* libRNSpinkit.a in Frameworks */,
+				55EB2A7221803F310083C3B5 /* GoogleMapsBase.framework in Frameworks */,
 				5599BAD01F4ADB7A0025538D /* libLRDRCTSimpleToast.a in Frameworks */,
 				55074FAE1EE822EA00BF6DC8 /* libReactNativeConfig.a in Frameworks */,
 				55074FAD1EE822BC00BF6DC8 /* libRCTFBSDK.a in Frameworks */,
 				55074F961EE7EF1C00BF6DC8 /* libRCTAnimation.a in Frameworks */,
 				65D7F7271E308FC8009ACC25 /* libstdc++.tbd in Frameworks */,
 				65D7F7291E308FC8009ACC25 /* FBSDKLoginKit.framework in Frameworks */,
+				55EB2A7B21803F390083C3B5 /* GoogleMapsCore.framework in Frameworks */,
 				65D7F72A1E308FC8009ACC25 /* libRCTTouchId.a in Frameworks */,
 				65D7F72B1E308FC8009ACC25 /* libTouchID.a in Frameworks */,
 				65D7F72C1E308FC8009ACC25 /* libRCTPushNotification.a in Frameworks */,
@@ -1461,6 +1577,7 @@
 				65D7F72F1E308FC8009ACC25 /* FBSDKCoreKit.framework in Frameworks */,
 				557EE00D211D53CF001A93B0 /* libapi-sdk.a in Frameworks */,
 				65D7F7301E308FC8009ACC25 /* libRCTGeolocation.a in Frameworks */,
+				55EB2A6821803F280083C3B5 /* GoogleMaps.framework in Frameworks */,
 				65D7F7311E308FC8009ACC25 /* libRCTImage.a in Frameworks */,
 				650DBB9F2017432B00BDE5A5 /* libRNFS.a in Frameworks */,
 				65D7F7321E308FC8009ACC25 /* libRCTLinking.a in Frameworks */,
@@ -1570,6 +1687,22 @@
 		1A7F21EE1DBEC10800D90531 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55EB2A59217F4A470083C3B5 /* UIKit.framework */,
+				55EB2A57217F4A360083C3B5 /* SystemConfiguration.framework */,
+				55EB2A55217F4A2F0083C3B5 /* QuartzCore.framework */,
+				55EB2A53217F4A220083C3B5 /* OpenGLES.framework */,
+				55EB2A51217F4A1B0083C3B5 /* libz.tbd */,
+				55EB2A4F217F4A120083C3B5 /* libc++.tbd */,
+				55EB2A4D217F4A030083C3B5 /* ImageIO.framework */,
+				55EB2A4B217F49FA0083C3B5 /* GLKit.framework */,
+				55EB2A49217F49F40083C3B5 /* CoreText.framework */,
+				55EB2A47217F49ED0083C3B5 /* CoreTelephony.framework */,
+				55EB2A45217F49E60083C3B5 /* CoreLocation.framework */,
+				55EB2A43217F49DE0083C3B5 /* CoreImage.framework */,
+				55EB2A41217F49D50083C3B5 /* CoreGraphics.framework */,
+				55EB2A3F217F49CD0083C3B5 /* CoreData.framework */,
+				55EB2A3D217F49C20083C3B5 /* Accelerate.framework */,
+				55197DDC217F3E77001B168B /* GoogleMaps.framework */,
 				654B80D21DBE0C620052D415 /* FBSDKCoreKit.framework */,
 				654B80D31DBE0C620052D415 /* FBSDKLoginKit.framework */,
 				654B80D41DBE0C620052D415 /* FBSDKShareKit.framework */,
@@ -1805,6 +1938,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				55EB2A3A217F472A0083C3B5 /* GoogleMaps.bundle */,
+				55EB2A37217F471B0083C3B5 /* GoogleMaps.framework */,
+				55EB2A31217F45FE0083C3B5 /* GoogleMapsBase.framework */,
+				55EB2A28217F45D80083C3B5 /* GoogleMapsCore.framework */,
 				552BF11521675C8300AA0ABB /* chatham_retail.plist */,
 				552BF11621675C8400AA0ABB /* chathamretail.ttf */,
 				557EE004211D53CF001A93B0 /* api-sdk */,
@@ -1952,7 +2089,6 @@
 				5528FFA31F21F73C00560B76 /* Frameworks */,
 				5528FFC01F21F73C00560B76 /* Resources */,
 				5528FFCA1F21F73C00560B76 /* Bundle React Native code and images */,
-				5528FFCB1F21F73C00560B76 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2634,6 +2770,7 @@
 				55C924B31EB3661B00DA8083 /* account.ttf in Resources */,
 				654F81D11CC9FAD5009E6168 /* Images.xcassets in Resources */,
 				654F81D21CC9FAD5009E6168 /* Info.plist in Resources */,
+				55EB2A6221803F1C0083C3B5 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2642,6 +2779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1801F00220F4B9F900D1317C /* LaunchScreen.xib in Resources */,
+				55EB2A6321803F1F0083C3B5 /* GoogleMaps.bundle in Resources */,
 				1801F00320F4B9F900D1317C /* gothic_0.TTF in Resources */,
 				557EE016211D54DD001A93B0 /* StarToken-Lite.plist in Resources */,
 				1801F00420F4B9F900D1317C /* clientcert.p12 in Resources */,
@@ -2664,6 +2802,7 @@
 				1827D2EE210B3246006C8906 /* gothic_0.TTF in Resources */,
 				18F5669221144C530005A421 /* pnb.ttf in Resources */,
 				1827D2EF210B3246006C8906 /* clientcert.p12 in Resources */,
+				55EB2A6421803F1F0083C3B5 /* GoogleMaps.bundle in Resources */,
 				557EE018211D55ED001A93B0 /* pnbverify.plist in Resources */,
 				1827D2F0210B3246006C8906 /* cbc.ttf in Resources */,
 				1827D2F1210B3246006C8906 /* index.ios.js in Resources */,
@@ -2686,6 +2825,7 @@
 				6524EF031EAA4A5D00E6E3CB /* account.ttf in Resources */,
 				1A6151CD1E4CDF5B00B3C9B2 /* icomoon.ttf in Resources */,
 				1A6151CE1E4CDF5B00B3C9B2 /* App in Resources */,
+				55EB2A5E21803F180083C3B5 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2694,6 +2834,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				657B6D431F4AF17D00AA65B5 /* cbcverify.plist in Resources */,
+				55EB2A3C217F472A0083C3B5 /* GoogleMaps.bundle in Resources */,
 				5528FFC11F21F73C00560B76 /* LaunchScreen.xib in Resources */,
 				5528FFC21F21F73C00560B76 /* gothic_0.TTF in Resources */,
 				5528FFC31F21F73C00560B76 /* clientcert.p12 in Resources */,
@@ -2711,6 +2852,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551E56091E1CE406004F007A /* ImagesS&PGlobal.xcassets in Resources */,
+				55EB2A6121803F1C0083C3B5 /* GoogleMaps.bundle in Resources */,
 				552BB7B51E1BA0B90009F274 /* LaunchScreen.xib in Resources */,
 				552BB7B61E1BA0B90009F274 /* icomoon.ttf in Resources */,
 				552BB7B71E1BA0B90009F274 /* App in Resources */,
@@ -2733,6 +2875,7 @@
 				5537E834216619B800390CB2 /* ImagesChathamRetail.xcassets in Resources */,
 				5537E7F9216614D400390CB2 /* clientcert.p12 in Resources */,
 				5537E7FA216614D400390CB2 /* cbc.ttf in Resources */,
+				55EB2A6521803F200083C3B5 /* GoogleMaps.bundle in Resources */,
 				5537E7FB216614D400390CB2 /* index.ios.js in Resources */,
 				5537E7FD216614D400390CB2 /* account.ttf in Resources */,
 				552BF11A21675C8500AA0ABB /* chathamretail.ttf in Resources */,
@@ -2755,6 +2898,7 @@
 				558C99B01E7BF7A30002C56F /* App in Resources */,
 				656D4F071E7C0B6000965ED6 /* relidmobile.plist in Resources */,
 				558C99B11E7BF7A30002C56F /* gothic_0.TTF in Resources */,
+				55EB2A5D21803F170083C3B5 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2763,6 +2907,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D351981E1E128C00806F82 /* ImagesStock.xcassets in Resources */,
+				55EB2A6021803F1B0083C3B5 /* GoogleMaps.bundle in Resources */,
 				55D351861E1E0F7C00806F82 /* LaunchScreen.xib in Resources */,
 				55D351871E1E0F7C00806F82 /* icomoon.ttf in Resources */,
 				55D351881E1E0F7C00806F82 /* App in Resources */,
@@ -2786,6 +2931,7 @@
 				65127E111D795B4000FB36E1 /* icomoon.ttf in Resources */,
 				552BF11921675C8500AA0ABB /* chathamretail.ttf in Resources */,
 				65127E121D795B4000FB36E1 /* App in Resources */,
+				55EB2A3B217F472A0083C3B5 /* GoogleMaps.bundle in Resources */,
 				551EE2DE1E51BAE400ADAD6C /* cbc.ttf in Resources */,
 				65127E131D795B4000FB36E1 /* gothic_0.TTF in Resources */,
 				65127E141D795B4000FB36E1 /* Images.xcassets in Resources */,
@@ -2802,6 +2948,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65D7F73F1E308FC8009ACC25 /* LaunchScreen.xib in Resources */,
+				55EB2A5F21803F1A0083C3B5 /* GoogleMaps.bundle in Resources */,
 				65D7F7891E309A1F009ACC25 /* ImagesUBS.xcassets in Resources */,
 				65D7F7401E308FC8009ACC25 /* icomoon.ttf in Resources */,
 				65D7F7411E308FC8009ACC25 /* App in Resources */,
@@ -3603,7 +3750,6 @@
 		5528FFCD1F21F73C00560B76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
@@ -3625,7 +3771,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
-					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios/**",
 				);
 				INFOPLIST_FILE = cbcverify.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional\n-traditional";
@@ -3657,7 +3803,6 @@
 		5528FFCE1F21F73C00560B76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = ReactRefApp/ReactRefApp.entitlements;
@@ -3675,7 +3820,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
-					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios",
+					"\"$(SRCROOT)/../App/react-native-camera/ios $(SRCROOT)/../node_modules/react-native-fcm/ios/**",
 				);
 				INFOPLIST_FILE = cbcverify.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional\n-traditional";

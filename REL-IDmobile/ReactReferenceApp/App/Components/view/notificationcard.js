@@ -270,7 +270,7 @@ export default class NotificationCard extends Component {
     }
   }
 
-  getMapView(){
+  getMapView(latitudev,longitudev,latitudeDeltav,longitudeDeltav){
     return(
       <MapView
         style={[{flex:1, marginTop:10}]}
@@ -279,10 +279,10 @@ export default class NotificationCard extends Component {
         pitchEnabled={true}
         rotateEnabled={false}
           initialRegion={{
-            latitude: this.state.region.latitude,
-            longitude: this.state.region.longitude,
-            latitudeDelta: this.state.region.latitudeDelta,
-            longitudeDelta: this.state.region.longitudeDelta,
+            latitude: latitudev,
+            longitude: longitudev,
+            latitudeDelta: latitudeDeltav,
+            longitudeDelta: longitudeDeltav,
           }}
         >                  
         <Marker
@@ -308,13 +308,14 @@ export default class NotificationCard extends Component {
         var ASPECT_RATIO = width / height;
         var location = bodyStr.split(":");
         var cordinates = location[1].split(",");
+        var latitude,longitude,latitudeDelta,longitudeDelta;
         if(cordinates.length >= 1) {
-          this.state.region.latitude = parseFloat(cordinates[0]);
-          this.state.region.longitude = parseFloat(cordinates[1]);
+          latitude = parseFloat(cordinates[0]);
+          longitude = parseFloat(cordinates[1]);
           /* this.state.ipAddress = cordinates[2];
           this.state.markerDescription = cordinates[3]; */
-          this.state.region.latitudeDelta = 0.0122;
-          this.state.region.longitudeDelta = this.state.region.latitudeDelta * ASPECT_RATIO;
+          latitudeDelta = 0.0122;
+          longitudeDelta = latitudeDelta * ASPECT_RATIO;
         }
         this.state.isMapEnabled = true;
       }else {     
@@ -488,7 +489,7 @@ export default class NotificationCard extends Component {
                                     </View> */}
                 </View>
 
-              {this.state.isMapEnabled && this.props.expand && this.getMapView()}
+              {this.state.isMapEnabled && this.props.expand && this.getMapView(latitude,longitude,latitudeDelta,longitudeDelta)}
 
 
                 {this.props.expand && !this.state.isMapEnabled && <View style={{ flex: 1 }} />}
@@ -657,7 +658,7 @@ export default class NotificationCard extends Component {
 
                 <View style={[style.col, { marginTop: 4 }]}>{bulletList}</View>
 
-                {this.state.isMapEnabled && this.props.expand && this.getMapView()}
+                {this.state.isMapEnabled && this.props.expand && this.getMapView(latitude,longitude,latitudeDelta,longitudeDelta)}
 
                 {this.props.expand && !this.state.isMapEnabled && <View style={{ flex: 1 }} />}
 
