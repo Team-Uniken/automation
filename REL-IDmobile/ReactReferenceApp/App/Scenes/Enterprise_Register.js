@@ -29,6 +29,7 @@ import MainActivation from '../Components/Container/MainActivation';
 import Util from '../Components/Utils/Util'
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
+const constant = require('../Components/Utils/Constants');
 
 /*
  Custome View
@@ -376,7 +377,7 @@ class EnterpriseRegister extends Component {
       return (
         <WebView
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'https://demos.uniken.com/dist-docs/terms-and-conditions.html' }}
+          source={{ uri: constant.PRIVACY_POLICY_LINK }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"
@@ -391,7 +392,7 @@ class EnterpriseRegister extends Component {
         <WebViewAndroid
           style={{ height: 200 }}
           automaticallyAdjustContentInsets={false}
-          source={{ uri: 'https://demos.uniken.com/dist-docs/terms-and-conditions.html' }}
+          source={{ uri: constant.PRIVACY_POLICY_LINK  }}
           javaScriptEnable
           domStorageEnabled
           decelerationRate="normal"

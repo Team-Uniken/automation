@@ -7,9 +7,6 @@
 	<key>com.apple.developer.networking.wifi-info</key>
 	<true/>
 	<key>keychain-access-groups</key>
-	<array>
-		<string>$(AppIdentifierPrefix)com.uniken.relidmobile</string>
-		<string>$(AppIdentifierPrefix)com.uniken.boiverify</string>
-	</array>
+	<array/>
 </dict>
 </plist>

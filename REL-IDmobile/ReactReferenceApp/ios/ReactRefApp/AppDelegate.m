@@ -14,7 +14,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "ReactRdnaModule.h"
 #import "RCTPushNotificationManager.h"
-
+@import GoogleMaps;
 @implementation AppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -35,6 +35,7 @@
   
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
+  [GMSServices provideAPIKey:@"AIzaSyCd06Hx2OY4lnhXfKwL0G7MOtmp78JMwBo"];
   //  return YES;
   //  NSURL *jsCodeLocation;
   //    #ifdef React_Dev

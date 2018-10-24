@@ -10,11 +10,11 @@ import React, { Component } from 'react';
 import ReactNative, { Platform, TouchableHighlight,TouchableOpacity} from 'react-native';
 import NavBar from './navbar.js';
 import IconBadge from 'react-native-icon-badge';
-import Badge from 'react-native-smart-badge'
+import Badge from 'react-native-smart-badge';
 import Events from 'react-native-simple-events';
-import Main from '../Container/Main'
-import Config from 'react-native-config'
-
+import Main from '../Container/Main';
+import Config from 'react-native-config';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 /*
  Required for this js
@@ -77,7 +77,7 @@ class PageTitle extends Component {
   render() {
     return (
 
-      <View style={{ height: Platform.OS === 'android' ? 87 : 107 }}>
+      <View style={{ height: Platform.OS === 'android' ? 87 : (isIphoneX()?131:107) }}>
         <NavBar
           tintColor={'#fff'}
           statusBarTint={Skin.STATUS_BAR_TINT_COLOUR}
@@ -111,13 +111,13 @@ class PageTitle extends Component {
             fontSize: 35,
             height:50,
             fontWeight: 'normal',
-            top: Platform.OS === 'android' ? 12 : 32.5,
+            top: Platform.OS === 'android' ? 12 : (isIphoneX()?54.5:32.5),
             backgroundColor: 'transparent',
             fontFamily: Skin.font.ICON_FONT
           }}>{Skin.icon.bell}</Text>
           
           {this.state.badgeValue > 0 && <Badge style={{
-            top: Platform.OS === 'android' ? -45 : -24,
+            top: Platform.OS === 'android' ? -45 : (isIphoneX()?0:-24) ,
             right: -25,
           }} minWidth={12} minHeight={12} extraPaddingHorizontal={2} textStyle={{ color: '#fff', }} >
             {this.state.badgeValue>9?"9+":this.state.badgeValue}

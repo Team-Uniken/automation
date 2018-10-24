@@ -19,7 +19,7 @@ import { ClientBasedConfig } from '../Utils/LocalConfig';
 import Events from 'react-native-simple-events';
 import Config from 'react-native-config';
 
-import { View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView, Platform, Linking, InteractionManager, DeviceEventEmitter ,StatusBar} from 'react-native';
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import Communications from 'react-native-communications';
 var dismissKeyboard = require('react-native-dismiss-keyboard');
@@ -35,7 +35,7 @@ var constant = require('../Utils/Constants');
 var ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 const RDNARequestUtility = require('react-native').NativeModules.RDNARequestUtility;
 import { NavigationActions} from 'react-navigation';
-
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 
 /*
@@ -859,8 +859,10 @@ class ControlPanel extends Component {
 
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.controlHeader}>{Skin.admin.MENU_TITLE}</Text>
+      <View style={[styles.container]}>
+    
+        <Text style={[styles.controlHeader,{marginTop:isIphoneX()?44:0}]}>{Skin.admin.MENU_TITLE}</Text>
+
         <ScrollView>
           <MenuItem
             visibility={Config.ALERTS}
