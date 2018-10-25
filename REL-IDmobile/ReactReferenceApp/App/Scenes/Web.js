@@ -161,7 +161,7 @@ export default class Web extends Component {
   getWebView() {
     var tempUrl
     if (Config.ENV === 'cbcverify' || Config.ENV === 'ubs'|| Config.ENV === 'startokenlite' || Config.ENV === 'pnbverify'
-    || Config.ENV === 'chathamretail') {
+    || Config.ENV === 'chathamretail' || Config.ENV === 'cbcverifybeta') {
       tempUrl = this.props.url;
     }else{
       tempUrl = this.props.navigation.state.params.url;

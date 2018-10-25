@@ -201,6 +201,26 @@ function requireClientBasedConfig() {
         })();
     }
 
+    if (Config.ENV == 'cbcverifybeta') {
+        config = (function () {
+            return {
+                connectionProfile: require("../../../Connection_profiles/cbcverifybeta.json"),
+                sslCertificate: {
+                    data: getSSLFileContent(),
+                    password: 'uniken123$',
+                },
+                img: {
+                    welcome: require('../../img/cbc.png')
+                },
+                notification:require("../view/notificationcard").default,
+                dashboard: {
+                    screenName: 'HomePage',
+                    screen: require("../Dashboard/CBCVerify/HomePage").default,
+                },
+            }
+        })();
+    }
+
     return config;
 }
 
