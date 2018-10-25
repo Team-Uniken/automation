@@ -52,11 +52,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) camera use</string>
+	<string>This app need to access your camera to scar QR code for user verification.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>location</string>
+	<string>This app needs the location to take latitude and longitude of a particular device at every specified time interval for the purpose of geofencing.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>This app needs the location to take latitude and longitude of a particular device at every specified time interval for the purpose of geofencing.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>microphone</string>
 	<key>UIAppFonts</key>
