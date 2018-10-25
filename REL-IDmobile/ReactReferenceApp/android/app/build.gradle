@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
 
-project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite",pnb:".env.pnbverify",chathamretail:".env.chathamretail"]
+project.ext.envConfigFiles = [ nwd: ".env.nwd", sandp: ".env.sandp", stock:".env.stock", ubs:".env.ubs",cbcverifybeta:".env.cbcverifybeta",cbc:".env.cbc",cbcverify:".env.cbcverify",relidmobile:".env.relidmobile",startokenlite:".env.startokenlite",pnb:".env.pnbverify",chathamretail:".env.chathamretail"]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 
@@ -86,8 +86,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 542
-        versionName "5.4.2"
+        versionCode 543
+        versionName "5.4.3"
 
 
         packagingOptions {
@@ -231,6 +231,11 @@ android {
             signingConfig signingConfigs.releaseChathamRetail
             resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
         }
+        cbcverifybeta{
+            applicationId 'com.uniken.cbc.verifybeta'
+            signingConfig signingConfigs.releaseCbcverify
+            resValue "string", "ANALYSIS_AUTHORITY", "${applicationId}.analysis.shield.provider"
+        }
     }
 
     buildTypes {
@@ -276,7 +281,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'app-sdk-release', ext: 'aar')
+    compile(name: 'REL_ID-SDK-V6(AppName_versionremoved)', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')
