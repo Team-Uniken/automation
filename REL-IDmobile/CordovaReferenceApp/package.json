@@ -10,17 +10,21 @@
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",
     "dependencies": {
+        "com.uniken.rdnaplugin": "file:RdnaClient",
         "cordova-android": "^7.1.1",
+        "cordova-browser": "^5.0.4",
         "cordova-plugin-qrscanner": "^2.6.0",
         "cordova-plugin-whitelist": "^1.3.3"
     },
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {},
-            "cordova-plugin-qrscanner": {}
+            "cordova-plugin-qrscanner": {},
+            "com.uniken.rdnaplugin": {}
         },
         "platforms": [
-            "android"
+            "android",
+            "browser"
         ]
     }
 }

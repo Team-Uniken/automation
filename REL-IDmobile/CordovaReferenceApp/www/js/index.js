@@ -29,11 +29,12 @@ var app = {
     onDeviceReady: function() {
         // this.receivedEvent('deviceready');
         // alert("device ready");
-        setTimeout(function(){  //Beginning of code that should run AFTER the timeout
-            //lots more code
-            // alert("Called timeout");
-            window.location.href = "welcome.html";
-        },3000);
+        // setTimeout(function(){  //Beginning of code that should run AFTER the timeout
+        //     //lots more code
+        //     window.location.href = "welcome.html";
+        // },3000);
+
+        initRELID();
         
     },
 

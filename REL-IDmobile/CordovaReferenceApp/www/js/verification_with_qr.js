@@ -15,7 +15,8 @@ var app = {
     },
 
     btnVfyWithtQR: function() {
-        window.location.href = "question_answer.html";
+      enrollDevice();
+        // window.location.href = "question_answer.html";
     },
 
     onDone: function(err, status){
