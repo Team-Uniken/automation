@@ -359,7 +359,7 @@ class SelfRegister extends Component {
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
-          alert('Please enter a valid username');
+          alert(Config.CHECK_USER_USERNAME_ALERT);
         }, 100);
       });
     }

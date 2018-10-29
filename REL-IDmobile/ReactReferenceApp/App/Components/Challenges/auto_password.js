@@ -101,7 +101,17 @@ This method is called when the component will start to load
         if (error.name === 'LAErrorUserCancel' || error.name === "LAErrorUserFallback")
           this.gotoSetPasswordScreen();
         else if (error.name === 'RCTTouchIDUnknownError') {
-          this.authenticate("Authentication failed, Please try again");
+          Alert.alert(
+            'Error',
+            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+              text: 'OK',
+              onPress: () => {
+                // exit(0);
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
         } else if (error.name === 'LAErrorAuthenticationFailed') {
           thi.authenticate('Set up Touch ID to Log In');
           alert(error.message);

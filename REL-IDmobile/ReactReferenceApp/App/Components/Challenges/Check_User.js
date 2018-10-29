@@ -19,7 +19,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Config from 'react-native-config';
 import Finger from 'react-native-touch-id-android'
 
-import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView } from 'react-native';
+import { Text, View, Animated, InteractionManager, AsyncStorage, Platform, BackHandler, StatusBar, KeyboardAvoidingView,AlertIOS } from 'react-native';
 
 /*
  Use in this js
@@ -206,7 +206,9 @@ class UserLogin extends Component {
       dismissKeyboard();
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
-        alert('Please enter a valid username');
+       // alert('Please enter a valid username');
+       alert (Config.CHECK_USER_USERNAME_ALERT);
+      
       });
     }
   }

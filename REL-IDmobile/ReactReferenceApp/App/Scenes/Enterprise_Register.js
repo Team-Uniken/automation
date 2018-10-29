@@ -157,13 +157,13 @@ class EnterpriseRegister extends Component {
 
   //use to clear twoFactorAuthMachine navigator
   close() {
-    dismissKeyboard();
-//    Events.trigger('closeStateMachine'); 
-//    const backAction = NavigationActions.back({
-//    key: null
-//      })
-//    this.props.navigation.dispatch(backAction);
-    const resetActionshowFirstChallenge = NavigationActions.reset({
+   /* dismissKeyboard();
+   Events.trigger('closeStateMachine'); 
+   const backAction = NavigationActions.back({
+   key: null
+     })
+   this.props.navigation.dispatch(backAction);*/
+  /*const resetActionshowFirstChallenge = NavigationActions.reset({
     index: 0,
     actions: [
       NavigationActions.navigate({ routeName: 'WelcomeScreen',params:{url: {
@@ -172,7 +172,25 @@ class EnterpriseRegister extends Component {
         },title:this.props.navigator.state.params.url.screenId}})
       ]
       })
-    this.props.navigator.dispatch(resetActionshowFirstChallenge) 
+    this.props.navigator.dispatch(resetActionshowFirstChallenge);*/
+
+    ReactRdna.resetChallenge((response) => {
+      if (response[0].error === 0) {
+      
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'StateMachine',params:{url: { 
+          "chlngJson":this.props.navigator.state.params.url.chlngJson,
+        "screenId": "checkuser",
+        "currentIndex":0
+          },title:''}})
+        ]
+        })
+      this.props.navigator.dispatch(resetAction);
+      }
+    });
+
   }
   //check entered email is valid or not
   validateEmail(email) {
@@ -349,7 +367,7 @@ class EnterpriseRegister extends Component {
       AsyncStorage.setItem("userId", "empty");
       InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
-          this.showMessage("", 'Please enter a valid username', false);
+          this.showMessage("", Config.CHECK_USER_USERNAME_ALERT, false);
         }, 100);
       });
     }
