@@ -33,9 +33,7 @@ var app = {
         //     //lots more code
         //     window.location.href = "welcome.html";
         // },3000);
-
         initRELID();
-        
     },
 
     // Update DOM on a Received Event
