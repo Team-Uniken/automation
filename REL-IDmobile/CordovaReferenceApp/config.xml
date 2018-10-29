@@ -25,5 +25,7 @@
     </platform>
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
     <preference name="Orientation" value="portrait" />
+    <plugin name="com.uniken.rdnaplugin" spec="./RdnaClient" />
     <engine name="android" spec="^7.1.1" />
+    <engine name="browser" spec="^5.0.4" />
 </widget>
