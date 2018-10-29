@@ -129,6 +129,15 @@ class ControlPanel extends Component {
       onGetNotificationsSubscription.remove();
       onGetNotificationsSubscription = null;
     }
+
+    //Save latest logged in user if rememberuser is enabled
+    AsyncStorage.getItem('rememberuser').then((value)=>{
+      if(value!=undefined && value!=null && value!=='empty'){
+        if(value !== Main.dnaUserName && Main.dnaUserName){
+          AsyncStorage.setItem('rememberuser',Main.dnaUserName);
+        }
+      }
+    });
    
     isAutoPassword = false;
     isAutoPasswordPattern = false;
