@@ -15,12 +15,12 @@ var app = {
     },
 
     btnEntPwd: function() {
-        window.location.href = "dashboard.html";
+        window.location.href = "../dashboard/dashboard.html";
     },
 
 
     btnForgotPass: function() {
-        window.location.href = "device_activation.html";
+        window.location.href = "../enterprise_registration/new_device_activation.html";
     },
 };
 

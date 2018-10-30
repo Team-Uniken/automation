@@ -15,8 +15,10 @@ var app = {
     },
 
     btnVfyWithtQR: function() {
-      enrollDevice();
+      // enrollDevice();
         // window.location.href = "question_answer.html";
+        alert("Activation code: "+document.getElementById("activationCodeBox").value);
+        gotToNextChallenge(document.getElementById("activationCodeBox").value);
     },
 
     onDone: function(err, status){
@@ -36,14 +38,20 @@ var app = {
                 // an error occurred, or the scan was canceled (error code `6`)
             } else {
                 // The scan completed, display the contents of the QR code:
-                alert(text);
+                // alert(text);
+                let qrScanText = JSON.parse(text);
+                // alert("Verification code"+qrScanText.value);
+                document.getElementById("activationCodeBox").value = qrScanText.value; 
+
                 QRScanner.hide(function(status){
                   console.log(status);
                 });
                 QRScanner.destroy(function(status){
                   console.log(status);
                 });
-                document.body.style.backgroundColor = "red";
+                
+                gotToNextChallenge(qrScanText.value);
+
             }
             }
         

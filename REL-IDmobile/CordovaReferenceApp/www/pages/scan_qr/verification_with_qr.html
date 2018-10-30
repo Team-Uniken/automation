@@ -5,7 +5,7 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="../../css/index.css">
     </head>
     <body>
 
@@ -17,9 +17,9 @@
                     
                 <h2 class="text-white">Step 1: Verify Code rhYusk</h2>
                 <h2 class="text-white">Step 2: Scan QR Code</h2>
-                <img src="img/cam_focus.png" alt="Nature" style="text-align: center; height: 170px;width: 170px;margin: 10px;">
+                <img src="../../img/cam_focus.png" alt="Nature" style="text-align: center; height: 170px;width: 170px;margin: 10px;">
         
-                <input type="text" class="input-text" placeholder="or Enter Activation Code" style="width: 200px;"><br>
+                <input type="text" id="activationCodeBox" class="input-text" placeholder="or Enter Activation Code" style="width: 200px;"><br>
               </div>
             </div>
          </div>
@@ -32,8 +32,12 @@
 
          </div>
 
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/verification_with_qr.js"></script>
-        <script type="text/javascript" src="js/RDNASingleton.js"></script>
+        <script type="text/javascript" src="../../cordova.js"></script>
+        <script type="text/javascript" src="../util/constant.js"></script>
+        <script type="text/javascript" src="../util/database_util.js"></script>
+        <script type="text/javascript" src="../scan_qr/verification_with_qr.js"></script>
+        <script type="text/javascript" src="../two_factor_state/RDNASingleton.js"></script>
+        <script type="text/javascript" src="../two_factor_state/twoFactorState.js"></script>
+
     </body>
 </html>

@@ -2,7 +2,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        document.getElementById("btnCnfmPass").addEventListener("click", this.btnCnfmPass.bind(this), false);    
+        document.getElementById("checkUser").addEventListener("click", this.checkUser.bind(this), false);    
     },
 
     // deviceready Event Handler
@@ -13,8 +13,8 @@ var app = {
         // this.receivedEvent('deviceready');
     },
 
-    btnCnfmPass: function() {
-        window.location.href = "dashboard.html";
+    checkUser: function() {
+        window.location.href = "../password/enter_password.html";
     },
 
 

@@ -1,0 +1,63 @@
+const constant = {
+
+    CONST_CYPHER_SALT : "salt",      //Cipher salt to be used
+    CONST_CYPHER_SPEC : "AES/128/CBC/PKCS7Padding:SHA-1",//Cipher mode to be used
+    USER_ID           : "userId",
+    LOGGED_IN_USERID : "loggedInUserId",
+    CHLNG_TBACRED          : "tbacred",
+    CHLNG_CHECK_USER       : "checkuser",
+    CHLNG_ACTIVATION_CODE  : "actcode",           
+     CHLNG_SEC_QA           : "secqa",
+    CHLNG_PASS             : "pass",
+    CHLNG_DEV_BIND         : "devbind",
+    CHLNG_DEV_NAME         : "devname",
+    CHLNG_OTP              : "otp",
+    CHLNG_SECONDARY_SEC_QA : "secondarySecqa",
+    SAMPLE_QUESTION : "sampleQuestion",
+    SAMPLE_ANSWER : "sampleAnswer",
+    CHLNG_VERIFICATION_MODE : 0,
+     IS_MRI  : 1,
+    INITIALIZE : "intialize",
+    CHECK_CHALLENGE : "checkChallenge",
+    OPEN_HTTP_CONNECTION : "open http connection",
+    SERVICENAME : "serviceName",
+    SERVICEBYTARGETCOORDINATE : "serviceByTargetCoordinate",
+    ALLSERVICES : "allServices",
+    SERVICEACCESSSTART : "serviceAccessStart",
+    SERVICEACCESSSTOP : "serviceAccessStop",
+    SERVICEACCESSSTARTALL : "serviceAccessStartAll",
+    SERVICEACCESSSTOPALL : "serviceAccessStopAll",
+    DEFAULTCIPHERSPEC : "defaultCipherSpec",
+    DEFAULTCIPHERSALT : "defaultCipherSalt",
+    ENCRYPTDATAPACKET : "encryptDataPacket",
+    DECRYPTDATAPACKET : "decryptDataPacket",
+    ENCRYPTHTTPREQUEST :"encryptHttpRequest",
+    SESSIONID :"sessionID",
+    SDKVERSION :"sdkVersion",
+    NOTIFICATION : "notification",
+    UPDATE_NOTIFICATION : "update notification",
+    NOTIFICATIONHISTORY : "notificationHistory",
+    REGISTERDEVICEDETAILS : "registeredDeviceDetails",
+    UPDATEDEVICEDETAILS : "updateDeviceDetails",
+    APPLICATIONVERSION : "applicationVersion",
+    DEVICETOKEN : "deviceToken",
+    TERMINATE : "terminate",
+    AGENTID : "agentID",
+    DEVICEID : "deviceID",
+    GET_ALL_CHALLENGES : "getAllChallenges",
+    UPDATE_ALL_CHALLENGES : "updateChallenges",
+    GET_CONFIG : "getConfig",
+    LOG_OFF : "logOff",
+    ERROR_INFO : "getErrorInfo",
+    
+    CHALLENGES_AFTR_INIT : "challenges_after_init",
+    CURRENT_CHALLENGES : "current_challenges",
+    CHALLENGE_INDEX : "current_challenge_no",
+
+    RESPONSE_VALUE_INDEX : 0,
+    
+    HOSTNAME : "http://qa1-uniken.com:9080/rest/",
+    
+
+}
+

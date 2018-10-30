@@ -2,7 +2,8 @@ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        document.getElementById("checkUser").addEventListener("click", this.checkUser.bind(this), false);    
+        document.getElementById("btnSignup").addEventListener("click", this.btnSignup.bind(this), false);
+        document.getElementById("btnLogIn").addEventListener("click", this.btnLogIn.bind(this), false);
     },
 
     // deviceready Event Handler
@@ -13,10 +14,13 @@ var app = {
         // this.receivedEvent('deviceready');
     },
 
-    checkUser: function() {
-        window.location.href = "enter_password.html";
+    btnSignup: function() {
+        window.location.href = "../self_register/registration.html";
     },
 
+    btnLogIn: function() {
+        window.location.href = "../check_user/check_user.html";
+    }
 
 };
 
