@@ -33,6 +33,10 @@ var app = {
         //     //lots more code
         //     window.location.href = "welcome.html";
         // },3000);
+
+        //set challenge index to zero for further use
+        saveToStorage(constant.CHALLENGE_INDEX,0);
+        //start init RELID SDK 
         initRELID();
     },
 
