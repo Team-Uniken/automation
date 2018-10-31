@@ -31,7 +31,7 @@ import Main from '../Components/Container/Main';
  */
 import Button from '../Components/view/button';
 import Setting from '../Components/view/setting';
-
+const ReactRdna = require('react-native').NativeModules.ReactRdnaModule;
 
 
 /*
@@ -49,6 +49,15 @@ class Welcome_Screen extends Component {
     obj=this;
     BackHandler.addEventListener('hardwareBackPress', function doNothing() { return true;})
   //  Events.on('closeStateMachine', 'closeStateMachine', this.closeStateMachine);
+  }
+
+  componentDidMount(){
+    ReactRdna.getSessionID((response)=>{
+      if(response[0].error ==0){
+        alert(response[0].response);
+        //this.sessionId = response[0].response;
+      }
+    });
   }
 
 //call on click of already a member to show next challenge(checkUser).
