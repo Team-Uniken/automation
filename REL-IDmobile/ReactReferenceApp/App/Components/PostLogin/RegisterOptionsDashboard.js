@@ -886,7 +886,7 @@ savePreferences ()
 
        Alert.alert(
         'Error',
-        'Authentication was canceled because the user tapped the fallback button (Enter Password), Please enable Touch ID from Setting', [{
+        'Authentication was canceled because the user tapped the fallback button (Enter Password).', [{
           text: 'OK',
           onPress: () => {
             this.authenticate('Set up Touch ID to Log In');
