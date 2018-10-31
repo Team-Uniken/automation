@@ -418,7 +418,8 @@ export default class NotificationMgmtScene extends Component {
       selectedAction: '',
       showLoader: false,
       refreshing: false,
-      selectedLanguageMap : {}
+      selectedLanguageMap: {},
+      biometryType: null,
     };
 
     this.isAutoPassword = false;
@@ -530,8 +531,11 @@ export default class NotificationMgmtScene extends Component {
   authenticateWithTouchIDIfSupported() {
     console.log(TouchID);
     if (Platform.OS === 'ios') {
-    TouchID.isSupported()
-      .then(this.authenticateTouchID)
+      TouchID.isSupported()
+        .then((biometryType) => {
+          this.setState({ biometryType });
+          this.authenticateTouchID();
+        })
       .catch(error => {
         Alert.alert(
           '',
@@ -553,7 +557,7 @@ export default class NotificationMgmtScene extends Component {
   }
 
   authenticateTouchID() {
-    return TouchID.authenticate("Authenticate with Touch ID")
+    return TouchID.authenticate(`Authenticate with ${this.state.biometryType}`)
       .then(success => {
         this.state.showTouchOrPattern =false;
         this.onTouchIDAuthenticationDone();

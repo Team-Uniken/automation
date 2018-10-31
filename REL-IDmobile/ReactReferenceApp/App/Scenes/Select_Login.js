@@ -68,7 +68,8 @@ class SelectLogin extends Component {
       refresh: false,
       showPasswordVerify: false,
       isTouchIDPresent: false,
-      showAndroidAuth : false
+      showAndroidAuth : false,
+      biometryType: null,
     }
 
     global.loggedInUsingPatternOrTouch = null;
@@ -87,6 +88,7 @@ class SelectLogin extends Component {
     this.checkIfUserDefaultLoginAvailable = this.checkIfUserDefaultLoginAvailable.bind(this);
     this.goToPasswordWhenAdditonalAuthFails = this.goToPasswordWhenAdditonalAuthFails.bind(this);
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
+    this.getCredTypeName = this.getCredTypeName.bind(this);
   
 
     Util.getUserData("isAutoPassword").then((value) => {
@@ -289,11 +291,13 @@ class SelectLogin extends Component {
     } 
     if (this.state.isRegistered && this.state.isTouchIDPresent) {
         if (this.state.dataSource) { 
-          this.state.dataSource.push({ cred_type: 'touchid', is_registered: true });
+          
+          this.state.dataSource.push({ cred_type: this.state.biometryType==='FaceId'?'faceid':'touchid', is_registered: true });
         }
     }    
 
     if (this.state.dataSource.length > 0 && !(isAutoPassword || isAutoPasswordPattern)) {
+     
       this.state.dataSource.push({ cred_type: 'password', is_registered: true });
     }
   }
@@ -332,10 +336,12 @@ class SelectLogin extends Component {
    * false if not supported
    */
   isTouchPresent() {
+    var $this = this;
     return new Promise(function (resolve, reject) {
       TouchID.isSupported()
-        .then((supported) => {
+        .then((biometryType) => {
           // Success code
+          $this.setState({ biometryType });
           resolve("success");
         })
         .catch((error) => {
@@ -447,9 +453,13 @@ class SelectLogin extends Component {
   _clickHandler() {
     console.log(TouchID);
     if (Platform.OS === 'ios') {
+      var $this = this;
     TouchID.isSupported()
-      .then(this.authenticate('Authenticate with Touch ID'))
-      .catch(error => {
+      .then((biometryType) => {
+        $this.setState({ biometryType });
+        console.log('TouchID is supported.');
+        this.authenticate(`Authenticate with ${this.state.biometryType}`);
+      }).catch(error => {
         //passcodeAuth();
         AlertIOS.alert('Touch ID is not enabled or supported');
        // alert(('Touch ID is not enabled or supported'));
@@ -555,6 +565,17 @@ class SelectLogin extends Component {
     })
   }
 
+  getCredTypeName(cred_type){
+    if(cred_type === 'touchid'){
+      if(this.state.biometryType === 'FaceID'){
+        return Skin.text['0']['2'].credTypes['faceid'].label;
+      }else{
+        return Skin.text['0']['2'].credTypes['touchid'].label;
+      }
+    }else{
+      return Skin.text['0']['2'].credTypes[cred_type].label;
+    }
+  }
   //return logintypebutton depends on item supply.
   renderItem(item) {
     return (
@@ -562,7 +583,7 @@ class SelectLogin extends Component {
         <LoginTypeButton
           label={Skin.icon[item.cred_type]}
           onPress={() => { this.loginWith(item.cred_type); }}
-          text={Skin.text['0']['2'].credTypes[item.cred_type].label} />
+          text={this.getCredTypeName(item.cred_type)} />
       </View>
     );
   }

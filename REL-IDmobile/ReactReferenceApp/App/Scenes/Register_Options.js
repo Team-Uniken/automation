@@ -79,7 +79,8 @@ class Register extends Component {
       modalInitValue: "Select Default Login",
       devname: "Device Name",
       devnameopacity: 0,
-      showAndroidAuth : false
+      showAndroidAuth : false,
+      biometryType : null
     };
 
     this.facebookResponseCallback = this.facebookResponseCallback.bind(this);
@@ -98,11 +99,24 @@ class Register extends Component {
   */
   componentWillMount() {
     Events.trigger('hideLoader', true);
+    TouchID.isSupported()
+    . then((biometryType) => {
+      // Success code
+      $this.setState({ biometryType });
+      console.log('TouchID is supported.')
+    }).catch(error => {
+      //AlertIOS.alert('Touch ID is not enabled or supported');
+    });
     AsyncStorage.getItem(Main.dnaUserName).then((userPrefs) => {
       if (userPrefs) {
         try {
           userPrefs = JSON.parse(userPrefs);
-          var initValue = Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label;
+          var initValue;
+          if(userPrefs.defaultLogin === 'touchid')
+            initValue = Skin.text['0']['2'].credTypes[this.props.url.touchCred.biometryType ==='FaceID'?'faceid':'touchid'].label;
+          else
+            initValue = Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label;
+          
           this.setState({ modalInitValue: initValue === 'None'?this.state.modalInitValue:initValue});
         }
         catch (e) { }
@@ -272,11 +286,11 @@ class Register extends Component {
     }
 
     if (this.props.url.touchCred.isTouch == true) {
-      data.push(Skin.text['0']['2'].credTypes['touchid']);      
+      data.push(this.state.biometryType==='FaceID'? Skin.text['0']['2'].credTypes['faceid'] :Skin.text['0']['2'].credTypes['touchid']);
     } else if (this.state.pattern) {
       data.push(Skin.text['0']['2'].credTypes['pattern']);
     } else if (this.state.touchid) {
-      data.push(Skin.text['0']['2'].credTypes['touchid']);
+      data.push(this.state.biometryType==='FaceID'? Skin.text['0']['2'].credTypes['faceid'] :Skin.text['0']['2'].credTypes['touchid']);
     } else if (this.props.url.touchCred.isPattern == true)
       data.push(Skin.text['0']['2'].credTypes['pattern']);
     return data
@@ -501,9 +515,14 @@ class Register extends Component {
   _clickHandler() {
     console.log(TouchID);
     if( Platform.OS == 'ios' ){
+      var $this = this;
     TouchID.isSupported()
-      .then(this.authenticate('Set up Touch ID to Log In'))
-      .catch(error => {
+      . then((biometryType) => {
+        // Success code
+        $this.setState({ biometryType });
+        console.log('TouchID is supported.');
+        this.authenticate(`Set up ${this.state.biometryType} to Log In`);
+      }).catch(error => {
         AlertIOS.alert('Touch ID is not enabled or supported');
       });
     }else
@@ -524,7 +543,7 @@ class Register extends Component {
       }else if (error.name === 'RCTTouchIDUnknownError') {
         this.authenticate("Authentication failed, Please try again");
       } else if (error.name === 'LAErrorAuthenticationFailed') {
-        thi.authenticate('Set up Touch ID to Log In');
+        thi.authenticate(`Set up ${this.state.biometryType} to Log In`);
         AlertIOS.alert(error.message);
       } else if(error.name === 'RCTTouchIDNotSupported'){
         AlertIOS.alert(('Touch ID is not enabled or supported'));
@@ -737,7 +756,7 @@ class Register extends Component {
               selected={this.state.touchid}
               labelSide={"right"}
               >
-              Enable TouchID Login
+               {`Enable ${this.props.url.touchCred.biometryType} Login` }
             </Checkbox>
           );
         }

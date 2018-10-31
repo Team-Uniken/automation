@@ -57,6 +57,8 @@
 	<string>This app needs the location to take latitude and longitude of a particular device at every specified time interval for the purpose of geofencing.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs the location to take latitude and longitude of a particular device at every specified time interval for the purpose of geofencing.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Enabling Face ID allow you quick and secure access to your account.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>gothic_0.TTF</string>

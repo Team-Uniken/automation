@@ -297,6 +297,10 @@ text = {
             key: 'none',
             label: 'None'
           },
+          'faceid': {
+            key: 'touchid',
+            label: 'FaceID',
+          },
 
         }
       }

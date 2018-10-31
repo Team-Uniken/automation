@@ -102,7 +102,8 @@ class RegisterOptionScene extends Component {
       initDefaultLoginValue: true,
       open: false,
       rpass: null,
-      showAndroidAuth : false
+      showAndroidAuth : false,
+      biometryType: null,
     };
 
     this.isTouchIDPresent = false;
@@ -206,6 +207,9 @@ This method is called when the component will start to load
           try {
             userPrefs = JSON.parse(userPrefs);
             this.state.defaultLogin = userPrefs.defaultLogin;
+            if(userPrefs.defaultLogin === 'touchid')
+            this.setState({ modalInitValue: Skin.text['0']['2'].credTypes[this.state.biometryType ==='FaceID'?'faceid':'touchid'].label });
+            else
             this.setState({ modalInitValue: Skin.text['0']['2'].credTypes[userPrefs.defaultLogin].label });
           }
           catch (e) { }
@@ -404,8 +408,9 @@ savePreferences ()
   isTouchPresent() {
     var $this = this;
     TouchID.isSupported()
-      .then((supported) => {
+      .then((biometryType) => {
         // Success code
+        $this.setState({ biometryType });
         console.log('TouchID is supported.');
         $this.isTouchIDPresent = true;
       })
@@ -591,7 +596,7 @@ savePreferences ()
           }      
         } else {
           if (this.state.touchid) {
-            data.push(Skin.text['0']['2'].credTypes['touchid']);
+            data.push(this.state.biometryType==='FaceID'? Skin.text['0']['2'].credTypes['faceid'] :Skin.text['0']['2'].credTypes['touchid']);
           }
         }
       }
@@ -829,10 +834,16 @@ savePreferences ()
 
   _clickHandler() {
     console.log(TouchID);
+    var $this = this;
     if (Platform.OS === "ios") {
     TouchID.isSupported()
-      .then(this.authenticate('Set up Touch ID to Log In'))
-      .catch(error => {
+    .then((biometryType) => {
+      // Success code
+      $this.setState({ biometryType });
+      console.log('TouchID is supported.');
+      $this.isTouchIDPresent = true;
+      this.authenticate(`Set up ${this.state.biometryType} to Log In`);
+    }).catch(error => {
         //passcodeAuth();
         AlertIOS.alert('Touch ID is not enabled or supported');
       });
@@ -840,88 +851,47 @@ savePreferences ()
       this.androidAuth();
   }
 
-  // authenticate() {
-  //   TouchID.authenticate('Set up Touch ID to Log In')
-  //     .then(success => {
-  //       //AlertIOS.alert('Authenticated Successfully');
-  //       obj.encrypytPasswdiOS();
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-       
-  //       if (error.name === 'RCTTouchIDUnknownError') {
-  //         Alert.alert(
-  //           'Error',
-  //           'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
-  //             text: 'OK',
-  //             onPress: () => {
-  //               // exit(0);
-  //             },
-  //             style: 'cancel',
-  //           }],
-  //           { cancelable: false }
-  //         );
-
-  //       } else if (error.name === "LAErrorUserFallback" || error.name === 'LAErrorUserCancel') {
-  //         this.authenticate();
-  //       }
-  //       else {
-  //         AlertIOS.alert(error.message);
-  //       }
-  //     });
-  // }
-
-
+  
   authenticate(msg) {
-    return TouchID.authenticate(msg)
+    TouchID.authenticate(msg)
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         obj.encrypytPasswdiOS();
       })
       .catch(error => {
         console.log(error)
-        // AlertIOS.alert(error.message);
-        if (error.name === "LAErrorUserFallback"){
-       // this.authenticate('Authentication was canceled because the user tapped the fallback button (Enter)');
+       
+        if (error.name === 'RCTTouchIDUnknownError') {
+          Alert.alert(
+            'Error',
+            `Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable ${this.state.biometryType} from Setting`, [{
+              text: 'OK',
+              onPress: () => {
+                // exit(0);
+              },
+              style: 'cancel',
+            }],
+            { cancelable: false }
+          );
 
-       Alert.alert(
-        'Error',
-        'Authentication was canceled because the user tapped the fallback button (Enter Password), Please enable Touch ID from Setting', [{
-          text: 'OK',
-          onPress: () => {
-            this.authenticate('Set up Touch ID to Log In');
-          },
-          style: 'cancel',
-        }],
-        { cancelable: false }
-       );
-
-      }else if(error.name === 'RCTTouchIDUnknownError') {
-        Alert.alert(
-          'Error',
-          'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+        } else if (error.name === "LAErrorUserFallback") {
+          Alert.alert(
+            'Error',
+            'Authentication was canceled because the user tapped the fallback button (Enter Password).', [{
             text: 'OK',
             onPress: () => {
-              // exit(0);
+            this.authenticate(`Set up ${this.state.biometryType} to Log In`);
             },
             style: 'cancel',
-          }],
-          { cancelable: false }
-        );
-
-      }else if (error.name === 'LAErrorAuthenticationFailed') {
-        thi.authenticate('Set up Touch ID to Log In');
-        AlertIOS.alert(error.message);
-      } else if(error.name === 'RCTTouchIDNotSupported'){
-        AlertIOS.alert(('Touch ID is not enabled or supported'));
-      }else {
-        AlertIOS.alert(error.message);
-      }
-
+            }],
+            { cancelable: false }
+            );
+        }
+        else {
+          AlertIOS.alert(error.message);
+        }
       });
   }
-
-
 
   passcodeAuth() {
     alert(('Touch ID is not enabled or supported'));
@@ -1161,6 +1131,7 @@ return[ <Margin
               </Checkbox>
             );          
         }    
+      
           if (this.isTouchIDPresent) {
             indents.push(
               <Checkbox
@@ -1168,7 +1139,7 @@ return[ <Margin
                 selected={this.state.touchid}
                 labelSide={"right"}
                 >
-                Enable TouchID Login 
+                {`Enable ${this.state.biometryType} Login` }
               </Checkbox>
             );
           }

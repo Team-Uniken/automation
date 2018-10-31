@@ -114,6 +114,9 @@ class TwoFactorAuthMachine extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      biometryType: null,
+    };
     console.log('---------- Machine param ');
     this.onCheckChallengeResponseStatus = this.onCheckChallengeResponseStatus.bind(this);
     this.onForgotPasswordStatus = this.onForgotPasswordStatus.bind(this);
@@ -483,7 +486,8 @@ class TwoFactorAuthMachine extends Component {
                         chlngsCount: challengeJsonArr.length,
                         currentIndex: 0,
                         isTouchAvailable: this.isTouchIDPresent,
-                        screenId: 'AutoPassword'
+                        screenId: 'AutoPassword',
+                        biometryType: this.state.biometryType,
                       });
 
                     } else if ((nextChlngName === 'pass' && Platform.OS === "android" && Config.ENABLE_AUTO_PASSWORD === 'true' && Constants.CHLNG_VERIFICATION_MODE != challengeJson.chlng[0].challengeOperation && this.isTouchIDPresent == false)) {
@@ -493,6 +497,7 @@ class TwoFactorAuthMachine extends Component {
                         chlngsCount: challengeJson.length,
                         isTouchAvailable: this.isTouchIDPresent,
                         screenId: 'AutoPassword',
+                        biometryType: this.state.biometryType,
                         currentIndex: 0,
                       });
                     } else {
@@ -594,8 +599,9 @@ class TwoFactorAuthMachine extends Component {
   isTouchPresent() {
     var $this = this;
     TouchID.isSupported()
-      .then((supported) => {
+      .then((biometryType) => {
         // Success code
+        $this.setState({ biometryType });
         console.log('Touch ID is supported.');
         $this.isTouchIDPresent = true;
       })
@@ -1076,7 +1082,7 @@ class TwoFactorAuthMachine extends Component {
                   actions: [
                     NavigationActions.navigate({
                       routeName: 'StateMachine', params: {
-                        url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent, "isPattern": value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
+                        url: { chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": true, "isSupported": $this.isTouchIDPresent,biometryType:$this.state.biometryType,"isPattern": value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' },
                         title: 'RegisterOption'
                       }
                     })
@@ -1089,7 +1095,7 @@ class TwoFactorAuthMachine extends Component {
 
               } else {
 
-                this.goToNextChallenge({ chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, "isPattern": value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' });
+                this.goToNextChallenge({ chlngJson: { "chlng": arrTba }, currentIndex: 0, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent, biometryType:$this.state.biometryType,"isPattern": value.ERPattern && value.ERPattern !== "empty" ? true : false }, screenId: 'RegisterOption' });
 
                 //              this.props.navigation.navigate('RegisterOption',{url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } }})
                 //                    this.stateNavigator.push({ id: 'RegisterOption', title: 'RegisterOption', url: { chlngJson: { "chlng": arrTba }, touchCred: { "isTouch": false, "isSupported": $this.isTouchIDPresent } } });

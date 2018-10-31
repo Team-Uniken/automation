@@ -84,7 +84,7 @@ This method is called when the component will start to load
     }.bind(this));
 
     if (Platform.OS === "ios")
-      this.authenticate('Set up Touch ID to Log In');
+      this.authenticate('Set up ${this.props.biometryType} to Log In');
     else 
       this.isAndroidTouchAvailable();
   }
@@ -103,7 +103,7 @@ This method is called when the component will start to load
         else if (error.name === 'RCTTouchIDUnknownError') {
           Alert.alert(
             'Error',
-            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+            `Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable ${this.props.url.biometryType} from Setting`, [{
               text: 'OK',
               onPress: () => {
                 // exit(0);
@@ -113,10 +113,10 @@ This method is called when the component will start to load
             { cancelable: false }
           );
         } else if (error.name === 'LAErrorAuthenticationFailed') {
-          thi.authenticate('Set up Touch ID to Log In');
+          this.authenticate(`Set up ${this.props.url.biometryType} to Log In`);
           alert(error.message);
         } else if(error.name === 'RCTTouchIDNotSupported'){
-          alert(('Touch ID is not enabled or supported'));
+          alert(`${this.props.url.biometryType} is not enabled or supported`);
         }else {
           alert(error.message);
         }
@@ -303,7 +303,7 @@ This method is called when the component will start to load
                             label={Skin.icon['touchid']}
                              onPress={() => { 
                               if (Platform.OS === "ios")
-                               this.authenticate();
+                               this.authenticate('Set up ${this.props.biometryType} to Log In');
                               else
                               this.isAndroidTouchAvailable();
                              }}

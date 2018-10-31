@@ -59,6 +59,7 @@ class UserLogin extends Component {
 //      challenge: this.props.url.chlngJson,
       failureMessage: '',
       isLoaderVisible: false,
+      biometryType: null,
     };
 
     this.login = this.login.bind(this);
@@ -136,9 +137,10 @@ class UserLogin extends Component {
             if (value.ERPasswd && value.ERPasswd !== "empty" && value.isAutoPassword ==='true' ) {
               if (Platform.OS === 'ios') {
               TouchID.isSupported()
-                .then((supported) => {
+                .then((biometryType) => {
                   // Success code
                   console.log('TouchID is supported.');
+                  this.setState({ biometryType });
                   this.login();
                 })
                 .catch((error) => {
