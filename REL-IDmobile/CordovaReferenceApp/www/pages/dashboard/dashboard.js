@@ -21,6 +21,9 @@ var app = {
         // // cordova.InAppBrowser.open('http://www.myapp.com', '_self', 'location=yes');
         // bkpLink.text = targetUrl;
         // window.location.replace(targetUrl);
+        document.addEventListener("backbutton", function (e) {
+            e.preventDefault();
+        }, false );
     },
 
 };

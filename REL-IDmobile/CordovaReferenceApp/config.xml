@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.uniken.cbcverify.cordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.uniken.cbcverify.cordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CBCVerify</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -26,6 +26,14 @@
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
     <preference name="Orientation" value="portrait" />
     <plugin name="com.uniken.rdnaplugin" spec="./RdnaClient" />
+    <platform name="android">
+        <icon density="ldpi" src="www/img/cbc_logo.png" />
+        <icon density="mdpi" src="www/img/cbc_logo.png" />
+        <icon density="hdpi" src="www/img/cbc_logo.png" />
+        <icon density="xhdpi" src="www/img/cbc_logo.png" />
+        <icon density="xxhdpi" src="www/img/cbc_logo.png" />
+        <icon density="xxxhdpi" src="www/img/cbc_logo.png" />
+    </platform>
     <engine name="android" spec="^7.1.1" />
     <engine name="browser" spec="^5.0.4" />
 </widget>

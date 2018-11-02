@@ -26,16 +26,16 @@ function asyncResponse(e){
 
 		window.location.href = "../welcome/welcome.html";
 	} else {
-		alert("Initialization Failed: " + objRDNAInit.errCode);
+		showAlert("Initialization Failed: " + objRDNAInit.errCode);
 	}
 }
 
 function onInitCompleted(e){
-    // alert("Sync init completed: Sucessfully"+JSON.parse(e));
+    // showAlert("Sync init completed: Sucessfully"+JSON.parse(e));
 }
 
 function onError(e){
-    // alert("Sync init completed: Failed"+JSON.parse(e));
+    // showAlert("Sync init completed: Failed"+JSON.parse(e));
 }
 
 function getSessionID(){
@@ -51,7 +51,7 @@ function onSuccessSessionId(data) {
 	  }
 
 	  this.sessionID = sessionObj.response;
-	  alert(this.sessionID);
+	  showAlert(this.sessionID);
 	
 }
   
@@ -59,26 +59,19 @@ function onFailureSessionId(data) {
 	console.log("RdnaClient.js: onFailureSessionId"+data);
 }
 
-account = {
-    login_id: 'Nikhil',
-    password: '1234',
-    acess_code: '1111'
-  };
-
-
-function enrollUser() {
+let enrollUser = (firstName, lastName, usrEmail, mobileNo) => {
 	getSessionID();
 
 	 var URL = hostName + "enrollUser.htm";
 	 
 	 var userMap = {
-	   "firstName":this.account.login_id,
-	   "lastName":"kanawade",
-	   "userId":this.account.login_id,
+	   "firstName":firstName,
+	   "lastName":lastName,
+	   "userId":usrEmail,
 	   "actCode":"1111",
 	   "groupName":"group1",
-	   "emailId":"nikhil.kanawade@uniken.com",
-	   "mobNum":"9168086688",
+	   "emailId":usrEmail,
+	   "mobNum":mobileNo,
 	   "username":"sruser",
 	   "password":"1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
 	   "isRELIDZeroEnabled":"true",
@@ -88,7 +81,7 @@ function enrollUser() {
 	   "Content-Length":"0"
 	 };
  
-	//  alert(getFromStorage(constant.CHALLENGES_AFTR_INIT));
+	//  showAlert(getFromStorage(constant.CHALLENGES_AFTR_INIT));
 	 com.uniken.rdnaplugin.RdnaClient.openHttpConnection(this.onSuccess, this.onFailure, [com.uniken.rdnaplugin.RdnaClient.RDNAHttpMethods.RDNA_HTTP_POST,URL,JSON.stringify(userMap),""]);  
 	 
 	 document.addEventListener('onHttpResponse', this.openAsyncResponse.bind(this), false);	 
@@ -96,20 +89,20 @@ function enrollUser() {
 
 function onSuccess(data) {
 	console.log("EnrollUser: openHttpConnectionSuccess");
-	alert("User enroll successfully");
+	showAlert("User enroll successfully");
 	// window.location.href = "../scan_qr/verification_with_qr.html";
 }
 
 function onFailure(data) {
 	  console.log("EnrollUser: openHttpConnectionFailure");
-	  alert("User enroll Failed");
+	  showAlert("User enroll Failed");
 }
 
-function enrollDevice() {
+function enrollDevice(usrName) {
 	getSessionID();
     var URL = hostName+"enrollUserDevice.htm";
     var userMap = {
-      "userId":this.account.login_id,
+      "userId": usrName,
       "actCode":"1111",
       "username":"sruser",
       "password":"1e99b14aa45d6add97271f8e06adacda4e521ad98a4ed18e38cfb0715e7841d2",
@@ -125,11 +118,11 @@ function enrollDevice() {
   }
 
     function onSuccessDevice(data) {
-      alert("device regis success: "+data);
+      showAlert("device regis success: "+data);
     }
 
   	function onFailureDevice(data) {
-    alert("device regis fail: "+data);
+    showAlert("device regis fail: "+data);
 	 }
 	 
 	 function openAsyncResponse(data){
@@ -137,12 +130,13 @@ function enrollDevice() {
 				console.log("OpenHttpRespon:"+JSON.stringify(objOpenHttp));
 				
 				if (objOpenHttp.errorCode == 0) {
-					alert("Success openHttp: " + objOpenHttp.errorCode);
+					showAlert("Success openHttp: " + objOpenHttp.errorCode);
 					// window.location.href = "welcome.html";
-					// alert("Index Saved: "+ getFromStorage(constant.CHALLENGE_INDEX));
+					// showAlert("Index Saved: "+ getFromStorage(constant.CHALLENGE_INDEX));
+					saveToStorage(constant.USER_ID,objOpenHttp.response.httpRequest.headers.userId)
 					gotToNextChallenge(objOpenHttp.response.httpRequest.headers.userId);
 				} else {
-					alert("Fail openHttp: "+objOpenHttp.errorCode);
+					showAlert("Fail openHttp: "+objOpenHttp.errorCode);
 				}
 
 	  // window.location.href = "../set_qa/question_answer.html";

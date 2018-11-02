@@ -26,21 +26,21 @@
               <div class="centered-content">
 
         <div style="text-align: center; margin-top: 20px;"  >
-            <input type="text" class="input-text" name="First Name" placeholder="First Name"><br>
-            <input type="text" class="input-text" name="Last Name" placeholder="Last Name"><br>
-            <input type="text" class="input-text" name="Email Id" placeholder="Email Id"><br>
-            <input type="text" class="input-text" name="Last Name" placeholder="Last Name"><br>
+            <input type="text" id="inputTxtFN" class="input-text" name="First Name" placeholder="First Name"><br>
+            <input type="text" id="inputTxtLN" class="input-text" name="Last Name" placeholder="Last Name"><br>
+            <input type="email" id="inputTxtEmail" class="input-text" name="Email Id" placeholder="Email Id"><br>
+            <input type="tel" id="inputTxtMNo" class="input-text" name="Mobile No" placeholder="Mobile No"><br>
         </div>
 
         <h2 style="text-align: center; margin-top: 30px;" >Slide to prove you're human</h2>
 
         <div class="slidecontainer" style="text-align: center;">
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                <input type="range" min="1" max="100" value="0" class="slider" id="humanSlider">
         </div>
 
         <div style="text-align: center; margin-Top: 20px">
         <label class="container-checkbox"><u>Terms and Conditions</u>
-                <input type="checkbox" checked="checked">
+                <input id="checkbxTC" type="checkbox" checked="checked">
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -55,6 +55,7 @@
             
         <script type="text/javascript" src="../../cordova.js"></script>
         <script type="text/javascript" src="../util/constant.js"></script>
+        <script type="text/javascript" src="../util/common.js"></script>
         <script type="text/javascript" src="../util/database_util.js"></script>
         <script type="text/javascript" src="../self_register/registration.js"></script>
         <script type="text/javascript" src="../two_factor_state/RDNASingleton.js"></script>

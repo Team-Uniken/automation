@@ -19,7 +19,7 @@ var app = {
     },
 
     btnLogIn: function() {
-        window.location.href = "../check_user/check_user.html";
+        // window.location.href = "../check_user/check_user.html";
     }
 
 };

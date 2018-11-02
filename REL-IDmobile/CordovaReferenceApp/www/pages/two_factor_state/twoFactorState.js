@@ -1,6 +1,4 @@
-// var actCode;
-var userName;
-var method;
+// var userName;
 var valueChlg;
 var challengeName = "";
 
@@ -11,7 +9,6 @@ var challengeName = "";
 
 let gotToNextChallenge = (value) => {
     this.valueChlg = value;
-    this.userName = "Nikhil";
     this.handleChallenges(getFromStorage(constant.CURRENT_CHALLENGES));
 }
 
@@ -28,7 +25,7 @@ function handleChallenges(rdnaChallengeJson){
              console.log("Challenge name is: " +challengeName);
              this.challengeName += "-"+rdnaJson.chlng[currentChalngIndex].chlng_name;
              if (challengeName === constant.CHLNG_CHECK_USER) {
-                 rdnaJson.chlng[currentChalngIndex].chlng_resp[constant.RESPONSE_VALUE_INDEX].response = this.userName;
+                 rdnaJson.chlng[currentChalngIndex].chlng_resp[constant.RESPONSE_VALUE_INDEX].response = this.valueChlg;
                  updateChallengeIndex(rdnaJson);
              }
              else if (challengeName === constant.CHLNG_OTP) {
@@ -65,11 +62,12 @@ function handleChallenges(rdnaChallengeJson){
                  updateChallengeIndex(rdnaJson);
              }
              else if (challengeName === (constant.CHLNG_DEV_NAME)) {
-                 rdnaJson.chlng[currentChalngIndex].chlng_resp[constant.RESPONSE_VALUE_INDEX].response = "My Droid";
+                 rdnaJson.chlng[currentChalngIndex].chlng_resp[constant.RESPONSE_VALUE_INDEX].response = this.valueChlg;
                  updateChallengeIndex(rdnaJson);
              }
          } else {
-            this.checkChallenge(rdnaJson, this.userName, this.challengeName);
+            let usrName = getFromStorage(constant.USER_ID);
+            this.checkChallenge(rdnaJson, usrName, this.challengeName);
          }
 
         //  this.checkChallenge(rdnaJson, this.userName, this.challengeName);
@@ -81,16 +79,17 @@ function handleChallenges(rdnaChallengeJson){
     //increment the current challenge count
     var chlngIndex = getFromStorage(constant.CHALLENGE_INDEX);
     saveToStorage(constant.CHALLENGE_INDEX,parseInt(chlngIndex)+parseInt(1));
-    // alert("Updated Index: "+ getFromStorage(constant.CHALLENGE_INDEX));
+    // showAlert("Updated Index: "+ getFromStorage(constant.CHALLENGE_INDEX));
 
+    showAlert("updating the challenge:"+JSON.stringify(rdnaJson));
     saveToStorage(constant.CURRENT_CHALLENGES,JSON.stringify(rdnaJson));
     //  let rdnaChallenges = rdnaJson.chlng;
      if (rdnaJson.chlng != null) {
          var currentChalngIndex = getFromStorage(constant.CHALLENGE_INDEX);
             if ( currentChalngIndex>=0 && currentChalngIndex<rdnaJson.chlng.length) {
-                let challenge = rdnaJson.chlng[currentChalngIndex];
+                // let challenge = rdnaJson.chlng[currentChalngIndex];
                 // let challengeName = challenge.chlng_name;
-                challengeNavigator(challenge);
+                challengeNavigator(rdnaJson);
             }else{
                 this.handleChallenges(JSON.stringify(rdnaJson));
             }
@@ -99,22 +98,22 @@ function handleChallenges(rdnaChallengeJson){
  }
 
 function checkChallenge(challenges, userID, challengeName) {
-    alert("called check challenge"+JSON.stringify(challenges));
+    showAlert("called check challenge"+JSON.stringify(challenges));
     com.uniken.rdnaplugin.RdnaClient.checkChallengeResponse(this.onSuccessChallenge, this.onFailureChallenge, [JSON.stringify(challenges), userID]);
     document.addEventListener('onCheckChallengeResponseStatus',this.asyncCheckChlng.bind(this), false);
 }
 
 
 function onSuccessChallenge(data){
-    alert("Check challenge success"+ data);
+    showAlert("Check challenge success"+ data);
 }
 
 function onFailureChallenge(data){
-    alert("Check challenge failed"+ data);
+    showAlert("Check challenge failed"+ data);
 }
 
 function asyncCheckChlng(e){
-    alert("In async challenge response"+e.response);
+    // showAlert("In async challenge response"+e.response);
     
     let res = JSON.parse(e.response);
     if (res.errCode == 0) {
@@ -127,32 +126,26 @@ function asyncCheckChlng(e){
 
             if (res.pArgs.response.ResponseData) {
                 let challengeJson = res.pArgs.response.ResponseData;
-                alert("Sucess checkUser:"+ challengeJson.chlng);
                 let challengeJsonArr = challengeJson.chlng;
                 if (challengeJsonArr != null){
                     // this.handleChallenges(JSON.stringify(challengeJson));
                     saveToStorage(constant.CURRENT_CHALLENGES,JSON.stringify(challengeJson));
                     challengeNavigator(challengeJson);
                 }
-            } else
-                // if(this.method === "login"){
-                //    this.callback.callLoginApi();
-                // }
-                // else{
-                //   this.callback.doDashboard();
-                alert("Challenge completed");
-                // }
+            } else{
+                showAlert("Challenge completed");
+                window.location.href = "../dashboard/dashboard.html";
+            }
         } else {
-            alert(statusMsg);
+            showAlert(statusMsg);
         }
     } else {
-        alert("Internal system error\nErrorCode : " + res.errCode);
+        showAlert("Internal system error\nErrorCode : " + res.errCode);
     }
 }
 
 function challengeNavigator(challengeJson){
 
-    alert("In challenge Navi"+JSON.stringify(challengeJson));
     switch(getChallengeName(challengeJson)){
 
         case  constant.CHLNG_CHECK_USER:
@@ -166,7 +159,7 @@ function challengeNavigator(challengeJson){
             break;
             
         case  constant.CHLNG_ACTIVATION_CODE:
-            alert("Called verification page");
+            showAlert("Called verification page");
             window.location.href = "../scan_qr/verification_with_qr.html";
             break;
             
@@ -174,18 +167,22 @@ function challengeNavigator(challengeJson){
             break;
             
         case  constant.CHLNG_PASS:
-                alert("Enter Password");
+                showAlert("Enter Password");
                 window.location.href = "../password/confirm_password.html";
             break;
             
         case  constant.CHLNG_DEV_BIND:
+            showAlert("In Dev Bind");
+            gotToNextChallenge(true);
             break;
             
         case constant.CHLNG_DEV_NAME:
+            showAlert("In Dev Name");
+            gotToNextChallenge("Moto G device");
             break;
 
         default:
-                window.location.href = "../dashboard/dashboard.html";
+                // window.location.href = "../dashboard/dashboard.html";
             break;
     }
 }
