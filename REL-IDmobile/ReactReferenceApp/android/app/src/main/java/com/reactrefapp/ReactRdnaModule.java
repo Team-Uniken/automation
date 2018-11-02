@@ -3,6 +3,8 @@ package com.reactrefapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.telecom.Call;
@@ -16,6 +18,7 @@ import android.webkit.WebView;
 //import com.better.workspace.lib.model.ThreatType;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -42,12 +45,15 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by uniken on 5/4/16.
@@ -68,6 +74,8 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     private HashMap<Integer,Callback> callbackHashMap = new HashMap<>();
     private final int ERROR_HEALTH_CHECK_FAILED = 1000;
     AlertDialog alertDialog = null;
+    AlertDialog alertDialogBetter = null;
+    String betterMessage = "";
     boolean isResumeSuccess = true, isPauseSuccess = true;
     private static final String PAUSE_RESUME_ERROR_MESSAGE = "Please wait, While we resume our SDK";
 
@@ -78,6 +86,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
     }
 
     void showOrUpdateThreatAlert(String msg,final DialogInterface.OnClickListener clickListener){
+        betterMessage += "\n"+msg;
         if(context.getCurrentActivity()!=null) {
             if (alertDialog == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context.getCurrentActivity());
@@ -95,8 +104,33 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 alertDialog = builder.create();
             }
 
-            alertDialog.setMessage(msg);
+            alertDialog.setMessage(betterMessage);
             alertDialog.show();
+        }
+
+    }
+
+    void showOrUpdateThreatAlertBetter(String msg,final DialogInterface.OnClickListener clickListener){
+        betterMessage += "\n"+msg;
+        if(context.getCurrentActivity()!=null) {
+            if (alertDialogBetter == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context.getCurrentActivity());
+                builder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        clickListener.onClick(dialog, which);
+                        alertDialogBetter = null;
+                    }
+                });
+                builder.setCancelable(false)
+                        .setTitle("Error");
+
+                alertDialogBetter = builder.create();
+            }
+
+            alertDialogBetter.setMessage(betterMessage);
+            alertDialogBetter.show();
         }
 
     }
@@ -535,6 +569,23 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             @Override
             public int onSdkLogPrintRequest(RDNA.RDNALoggingLevel rdnaLoggingLevel,final String s) {
                 Log.e("RDNA-CORE",rdnaLoggingLevel.name()+ " : "+s);
+
+                if(rdnaLoggingLevel == RDNA.RDNALoggingLevel.RDNA_LOG_NOTIFY && s.contains("HealthCheck")) {
+                    betterMessage += s + "\n---------------------";
+                    /*Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            showOrUpdateThreatAlert("App Package Name - " + getApplicationContext().getPackageName() + "\nBetter Version - 4.4.2.patch \n"
+                                    + s + "\nNumber of apps installed - " + getInstalledApps(), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                        }
+                    };
+                    callOnMainThread(runnable);
+ */               }
                 return 0;
             }
 
@@ -553,6 +604,7 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                         showOrUpdateThreatAlert("Threats detected on your system : \n" + msg, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                betterMessage = "";
                                 if(rdnaObj!=null)
                                     rdnaObj.terminate();
                                 if(getCurrentActivity()!=null)
@@ -593,6 +645,9 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
                 callback.invoke(writableArray);
             }
         }).start();
+
+        //betterTesting(agentInfo, authGatewayHNIP, authGatewayPort, cipherSpecs, cipherSalt, callback);
+
 
 //
 //        new Thread(new Runnable()
@@ -646,6 +701,28 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
 //            }
 //        }).start();
     }
+
+    public void showBetterMessage(final String message){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                showOrUpdateThreatAlert( "\n"+message, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       /* betterMessage = "";
+                        if(rdnaObj!=null)
+                            rdnaObj.terminate();
+                        if(getCurrentActivity()!=null)
+                            ActivityCompat.finishAffinity(getCurrentActivity());*/
+                    }
+                });
+            }
+        };
+        callOnMainThread(runnable);
+    }
+
+
 
     @ReactMethod
     public void resetChallenge( Callback callback){
@@ -988,6 +1065,20 @@ public class ReactRdnaModule extends ReactContextBaseJavaModule {
             showErrorMessage(PAUSE_RESUME_ERROR_MESSAGE);
         }
         callback.invoke(statusMap);
+    }
+
+    public static int getInstalledApps() {
+        ArrayList<String> appList = new ArrayList<>();
+        List<PackageInfo> packList = getApplicationContext().getPackageManager().getInstalledPackages(0);
+        for (int i=0; i < packList.size(); i++) {
+            PackageInfo packInfo = packList.get(i);
+            if (  (packInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                String appName = "Number of apps";
+                appList.add(appName);
+                Log.e("App >" + Integer.toString(i), appName);
+            }
+        }
+        return appList.size();
     }
 
     @ReactMethod
