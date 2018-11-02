@@ -831,7 +831,7 @@ savePreferences ()
     console.log(TouchID);
     if (Platform.OS === "ios") {
     TouchID.isSupported()
-      .then(this.authenticate)
+      .then(this.authenticate('Set up Touch ID to Log In'))
       .catch(error => {
         //passcodeAuth();
         AlertIOS.alert('Touch ID is not enabled or supported');
@@ -840,36 +840,88 @@ savePreferences ()
       this.androidAuth();
   }
 
-  authenticate() {
-    TouchID.authenticate('Set up Touch ID to Log In')
+  // authenticate() {
+  //   TouchID.authenticate('Set up Touch ID to Log In')
+  //     .then(success => {
+  //       //AlertIOS.alert('Authenticated Successfully');
+  //       obj.encrypytPasswdiOS();
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+       
+  //       if (error.name === 'RCTTouchIDUnknownError') {
+  //         Alert.alert(
+  //           'Error',
+  //           'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+  //             text: 'OK',
+  //             onPress: () => {
+  //               // exit(0);
+  //             },
+  //             style: 'cancel',
+  //           }],
+  //           { cancelable: false }
+  //         );
+
+  //       } else if (error.name === "LAErrorUserFallback" || error.name === 'LAErrorUserCancel') {
+  //         this.authenticate();
+  //       }
+  //       else {
+  //         AlertIOS.alert(error.message);
+  //       }
+  //     });
+  // }
+
+
+  authenticate(msg) {
+    return TouchID.authenticate(msg)
       .then(success => {
         //AlertIOS.alert('Authenticated Successfully');
         obj.encrypytPasswdiOS();
       })
       .catch(error => {
         console.log(error)
-       
-        if (error.name === 'RCTTouchIDUnknownError') {
-          Alert.alert(
-            'Error',
-            'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
-              text: 'OK',
-              onPress: () => {
-                // exit(0);
-              },
-              style: 'cancel',
-            }],
-            { cancelable: false }
-          );
+        // AlertIOS.alert(error.message);
+        if (error.name === "LAErrorUserFallback"){
+       // this.authenticate('Authentication was canceled because the user tapped the fallback button (Enter)');
 
-        } else if (error.name === "LAErrorUserFallback") {
-          this.authenticate();
-        }
-        else {
-          AlertIOS.alert(error.message);
-        }
+       Alert.alert(
+        'Error',
+        'Authentication was canceled because the user tapped the fallback button (Enter Password).', [{
+          text: 'OK',
+          onPress: () => {
+            this.authenticate('Set up Touch ID to Log In');
+          },
+          style: 'cancel',
+        }],
+        { cancelable: false }
+       );
+
+      }else if(error.name === 'RCTTouchIDUnknownError') {
+        Alert.alert(
+          'Error',
+          'Authentication was not successful, because there were too many failed attempts and is now locked ,Please enable Touch ID from Setting', [{
+            text: 'OK',
+            onPress: () => {
+              // exit(0);
+            },
+            style: 'cancel',
+          }],
+          { cancelable: false }
+        );
+
+      }else if (error.name === 'LAErrorAuthenticationFailed') {
+        thi.authenticate('Set up Touch ID to Log In');
+        AlertIOS.alert(error.message);
+      } else if(error.name === 'RCTTouchIDNotSupported'){
+        AlertIOS.alert(('Touch ID is not enabled or supported'));
+      }else {
+        AlertIOS.alert(error.message);
+      }
+
       });
   }
+
+
 
   passcodeAuth() {
     alert(('Touch ID is not enabled or supported'));

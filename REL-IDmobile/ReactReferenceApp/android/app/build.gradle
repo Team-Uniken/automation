@@ -86,8 +86,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 543
-        versionName "5.4.3"
+        versionCode 544
+        versionName "5.4.4"
 
 
         packagingOptions {
@@ -281,7 +281,7 @@ dependencies {
     //compile fileTree(include: ['*.jar'], dir: 'libs')
     // From node_modules
     compile project(':react-native-fbsdk')
-    compile(name: 'REL_ID-SDK-V6(AppName_versionremoved)', ext: 'aar')
+    compile(name: 'app-sdk-release_v2.0.2', ext: 'aar')
     compile(name: 'android-patternview-release', ext: 'aar')
     //compile project(':ExtraDimensions')
   //  compile project(':react-native-push-notification')
